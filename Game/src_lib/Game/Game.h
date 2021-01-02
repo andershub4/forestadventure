@@ -4,12 +4,14 @@
 *	See file LICENSE for full license details.
 */
 
-#include "Game/Game.h"
+#pragma once
 
-int main()
+namespace FA {
+
+class Game
 {
-	FA::Game game;
-	game.GameLoop();
+public:
+	void GameLoop();
+};
 
-	return 0;
-}
+} // namespace FA

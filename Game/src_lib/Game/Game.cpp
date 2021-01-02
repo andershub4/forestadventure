@@ -4,12 +4,16 @@
 *	See file LICENSE for full license details.
 */
 
-#include "Game/Game.h"
+#include "Game.h"
 
-int main()
+#include <iostream>
+
+namespace FA
 {
-	FA::Game game;
-	game.GameLoop();
 
-	return 0;
+void Game::GameLoop()
+{
+	std::cout << "Hello world!" << std::endl;
 }
+
+} // namespace FA
