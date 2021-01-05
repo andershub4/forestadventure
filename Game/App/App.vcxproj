@@ -88,12 +88,22 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\sfml\include;$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdparty\sfml\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-system-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(SolutionDir)3rdparty\sfml\dll\openal32.dll" "$(TargetDir)openal32.dll"
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-audio-d-2.dll" "$(TargetDir)sfml-audio-d-2.dll"
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-graphics-d-2.dll" "$(TargetDir)sfml-graphics-d-2.dll"
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-network-d-2.dll" "$(TargetDir)sfml-network-d-2.dll"
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-system-d-2.dll" "$(TargetDir)sfml-system-d-2.dll"
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-window-d-2.dll" "$(TargetDir)sfml-window-d-2.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -103,14 +113,24 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\sfml\include;$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdparty\sfml\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-system.lib;sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(SolutionDir)3rdparty\sfml\dll\openal32.dll" "$(TargetDir)openal32.dll"
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-audio-2.dll" "$(TargetDir)sfml-audio-2.dll"
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-graphics-2.dll" "$(TargetDir)sfml-graphics-2.dll"
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-network-2.dll" "$(TargetDir)sfml-network-2.dll"
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-system-2.dll" "$(TargetDir)sfml-system-2.dll"
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-window-2.dll" "$(TargetDir)sfml-window-2.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

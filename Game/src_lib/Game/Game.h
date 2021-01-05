@@ -6,12 +6,25 @@
 
 #pragma once
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+
 namespace FA {
 
 class Game
 {
 public:
+	Game();
 	void GameLoop();
+
+public:
+	static const sf::Vector2u screen;
+	static const sf::Vector2u centerScreen;
+
+private:
+	sf::RenderWindow window_;
+	sf::View view_;
+	sf::RectangleShape rectShape_;
 };
 
 } // namespace FA
