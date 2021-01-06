@@ -29,6 +29,11 @@ Game::Game()
 #endif
 	window_.setFramerateLimit(120);
 	rectShape_.setPosition(sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
+
+	texture_.loadFromFile("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/idle/hero-idle-front.png");
+	rectShape_.setTexture(&texture_);
+	constexpr int size = 64;
+	rectShape_.setSize({ static_cast<float>(size), static_cast<float>(size) });
 }
 
 

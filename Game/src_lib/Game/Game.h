@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 namespace FA {
 
@@ -25,6 +26,7 @@ private:
 	sf::RenderWindow window_;
 	sf::View view_;
 	sf::RectangleShape rectShape_;
+	sf::Texture texture_;
 };
 
 } // namespace FA
