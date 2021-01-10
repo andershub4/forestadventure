@@ -32,11 +32,10 @@ Game::Game()
 	window_.setFramerateLimit(120);
 	rectShape_.setPosition(sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
 
-	const sf::Texture& texture = textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-front.png");
-	auto validTexture = (texture.getSize().x != 0) && (texture.getSize().y != 0);
-	if (validTexture) {
-		SpriteSheet spriteSheet("heroWalkFront", &texture, { 6, 1 });
-		rectShape_.setTexture(&texture);
+	auto texture = textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-front.png");
+	if (texture != nullptr) {
+		SpriteSheet spriteSheet("heroWalkFront", texture, { 6, 1 });
+		rectShape_.setTexture(texture);
 		SpriteSheet::FrameData f = spriteSheet.Scan({ 0, 0 }, 6, 0);
 		rectShape_.setTextureRect(f.frames_.at(0));
 	}

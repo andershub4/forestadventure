@@ -8,19 +8,22 @@
 
 namespace FA {
 
-const sf::Texture& TextureManager::GetTexture(const std::string& file)
+const sf::Texture* TextureManager::GetTexture(const std::string& file)
 {
 	auto it = textures_.find(file);
 
 	if (it != textures_.end())
-		return it->second; // if it exist, return it
+		return it->second.get(); // if it exist, return texture
 
-	// else, load and save it for later
-	sf::Texture& texture = textures_[file]; // implicit creation
+	auto texture = std::make_unique<sf::Texture>();
 
-	texture.loadFromFile(file);
-
-	return texture;
+	if (texture->loadFromFile(file)) {
+		textures_.emplace(file, std::move(texture));
+		return textures_.at(file).get();
+	}
+	else {
+		return nullptr;
+	}
 }
 
 } // namespace FA

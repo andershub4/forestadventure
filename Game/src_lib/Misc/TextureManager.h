@@ -7,6 +7,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <memory>
 
 #include <SFML/Graphics/Texture.hpp>
 
@@ -15,10 +16,10 @@ namespace FA {
 class TextureManager
 {
 public:
-	const sf::Texture& GetTexture(const std::string& file);
+	const sf::Texture* GetTexture(const std::string& file);
 
 private:
-	std::unordered_map<std::string, sf::Texture> textures_;
+	std::unordered_map<std::string, std::unique_ptr<sf::Texture>> textures_;
 };
 
 } // namespace FA
