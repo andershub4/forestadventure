@@ -27,11 +27,19 @@ public:
 
 	AnimationGroup(float switchTime);
 
-	void AddAnimation(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
-	Animation* GetAnimation(Dir dir);
+	void RegisterAnimationInfo(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
+	std::unique_ptr<Animation> CreateAnimation(Dir dir, sf::RectangleShape& rectShape) const;
 
 private:
-	std::unordered_map<Dir, std::unique_ptr<Animation>> animationMap_;
+	struct AnimationInfo
+	{
+		const sf::Texture* texture_ = nullptr;
+		std::vector<sf::IntRect> frames_;
+		unsigned int defaultFrame_ = 0;
+		float switchTime_ = 0;
+	};
+
+	std::unordered_map<Dir, AnimationInfo> animationInfoMap_;
 	float switchTime_ = 0;
 
 public:

@@ -21,14 +21,15 @@ namespace FA {
 class Animation
 {
 public:
-	Animation(const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, float switchTime);
+	Animation() = default;
+	Animation(sf::RectangleShape* rectShape, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, float switchTime);
 
 	void Update(float deltaTime); //delta time; time since previous time to current frame
 	void Start();
 	void Stop();
-	void ApplyTo(sf::RectangleShape& rectShape);
 
 private:
+	sf::RectangleShape* rectShape_ = nullptr;
 	const sf::Texture* texture_ = nullptr;
 	bool isStopped_ = true;
 	float time_; //time since we last switched frame
@@ -37,7 +38,6 @@ private:
 	std::vector<sf::IntRect> frames_;
 	unsigned int nFrames_;
 	unsigned int defaultFrame_;
-	sf::RectangleShape* rectShape_ = nullptr;
 };
 
 } // namespace FA

@@ -15,20 +15,21 @@ AnimationGroup::AnimationGroup(float switchTime)
 {}
 
 
-void AnimationGroup::AddAnimation(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX)
+void AnimationGroup::RegisterAnimationInfo(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX)
 {
-	animationMap_[dir] = std::make_unique<Animation>(texture, mirrorX ? MirrorX(frames) : frames, defaultFrame, switchTime_);
+	animationInfoMap_[dir] = { texture, mirrorX ? MirrorX(frames) : frames, defaultFrame, switchTime_ };
 }
 
 
-Animation* AnimationGroup::GetAnimation(Dir dir)
+std::unique_ptr<Animation> AnimationGroup::CreateAnimation(Dir dir, sf::RectangleShape& rectShape) const
 {
-	auto it = animationMap_.find(dir);
-	if (it != animationMap_.end()) {
-		return animationMap_.at(dir).get();
+	auto it = animationInfoMap_.find(dir);
+	if (it != animationInfoMap_.end()) {
+		auto info = animationInfoMap_.at(dir);
+		return std::make_unique<Animation>(&rectShape, info.texture_, info.frames_, info.defaultFrame_, switchTime_);
 	}
 	else {
-		std::cout << "AnimationGroup::GetAnimation dir: " << static_cast<unsigned int>(dir) << " does not exist" << std::endl;
+		std::cout << "AnimationGroup::CreateAnimation dir: " << static_cast<unsigned int>(dir) << " does not exist" << std::endl;
 		return nullptr;
 	}
 }

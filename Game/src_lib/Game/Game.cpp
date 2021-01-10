@@ -37,9 +37,9 @@ Game::Game()
 
 	auto texture = textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-side.png");
 	if (texture != nullptr) {
-		SpriteSheet spriteSheet("heroWalkFront", texture, { 6, 1 });
+		SpriteSheet spriteSheet("heroWalkSide", texture, { 6, 1 });
 		SpriteSheet::FrameData f = spriteSheet.Scan({ 0, 0 }, 6, 0);
-		animationGroup_.AddAnimation(AnimationGroup::Dir::Left, f.texture_, f.frames_, f.defaultFrame_, true);
+		animationGroup_.RegisterAnimationInfo(AnimationGroup::Dir::Left, f.texture_, f.frames_, f.defaultFrame_, true);
 	}
 }
 
@@ -49,9 +49,8 @@ void Game::GameLoop()
 	std::cout << "Enter GameLoop" << std::endl;
 	sf::Clock clock;
 
-	auto animation = animationGroup_.GetAnimation(AnimationGroup::Dir::Left);
+	auto animation = animationGroup_.CreateAnimation(AnimationGroup::Dir::Left, rectShape_);
 	if (animation) {
-		animation->ApplyTo(rectShape_);
 		animation->Start();
 	}
 
