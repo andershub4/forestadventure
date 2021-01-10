@@ -48,8 +48,12 @@ Game::Game()
 void Game::GameLoop()
 {
 	std::cout << "Enter GameLoop" << std::endl;
+	sf::Clock clock;
 
 	while (window_.isOpen()) {
+		sf::Time elapsed = clock.restart();
+		float deltaTime = elapsed.asSeconds();
+
 		sf::Event event;
 		while (window_.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
