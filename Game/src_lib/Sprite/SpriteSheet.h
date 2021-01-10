@@ -24,7 +24,7 @@ class SpriteSheet
 public:
 	struct FrameData
 	{
-		const sf::Texture* texture = nullptr;
+		const sf::Texture* texture_ = nullptr;
 		unsigned int defaultFrame_ = 0;
 		std::vector<sf::IntRect> frames_;
 	};
