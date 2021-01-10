@@ -27,12 +27,15 @@ public:
 
 	AnimationGroup(float switchTime);
 
-	void AddAnimation(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame);
+	void AddAnimation(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
 	Animation* GetAnimation(Dir dir);
 
 private:
 	std::unordered_map<Dir, std::unique_ptr<Animation>> animationMap_;
 	float switchTime_ = 0;
+
+public:
+	std::vector<sf::IntRect> MirrorX(const std::vector<sf::IntRect>& frames) const;
 };
 
 } // namespace FA

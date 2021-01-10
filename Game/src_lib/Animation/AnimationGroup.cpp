@@ -15,9 +15,9 @@ AnimationGroup::AnimationGroup(float switchTime)
 {}
 
 
-void AnimationGroup::AddAnimation(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame)
+void AnimationGroup::AddAnimation(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX)
 {
-	animationMap_[dir] = std::make_unique<Animation>(texture, frames, defaultFrame, switchTime_);
+	animationMap_[dir] = std::make_unique<Animation>(texture, mirrorX ? MirrorX(frames) : frames, defaultFrame, switchTime_);
 }
 
 
@@ -31,6 +31,17 @@ Animation* AnimationGroup::GetAnimation(Dir dir)
 		std::cout << "AnimationGroup::GetAnimation dir: " << static_cast<unsigned int>(dir) << " does not exist" << std::endl;
 		return nullptr;
 	}
+}
+
+
+std::vector<sf::IntRect> AnimationGroup::MirrorX(const std::vector<sf::IntRect>& frames) const
+{
+	std::vector<sf::IntRect> mirrorFrames;
+	for (const auto& frame : frames) {
+		mirrorFrames.emplace_back(frame.left + frame.width, frame.top, -frame.width, frame.height);
+	}
+
+	return mirrorFrames;
 }
 
 } // namespace FA

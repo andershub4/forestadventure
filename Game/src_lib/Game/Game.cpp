@@ -35,11 +35,11 @@ Game::Game()
 	constexpr int size = 64;
 	rectShape_.setSize({ static_cast<float>(size), static_cast<float>(size) });
 
-	auto texture = textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-front.png");
+	auto texture = textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-side.png");
 	if (texture != nullptr) {
 		SpriteSheet spriteSheet("heroWalkFront", texture, { 6, 1 });
 		SpriteSheet::FrameData f = spriteSheet.Scan({ 0, 0 }, 6, 0);
-		animationGroup_.AddAnimation(AnimationGroup::Dir::Down, f.texture_, f.frames_, f.defaultFrame_);
+		animationGroup_.AddAnimation(AnimationGroup::Dir::Left, f.texture_, f.frames_, f.defaultFrame_, true);
 	}
 }
 
@@ -49,7 +49,7 @@ void Game::GameLoop()
 	std::cout << "Enter GameLoop" << std::endl;
 	sf::Clock clock;
 
-	auto animation = animationGroup_.GetAnimation(AnimationGroup::Dir::Down);
+	auto animation = animationGroup_.GetAnimation(AnimationGroup::Dir::Left);
 	if (animation) {
 		animation->ApplyTo(rectShape_);
 		animation->Start();
