@@ -48,11 +48,11 @@ std::vector<sf::IntRect> SpriteSheet::GenerateFrames(const sf::Vector2u& uvCoord
 	std::vector<sf::IntRect> frames;
 	//build frames from left to right
 	for (unsigned int i = 0; i < nFrames; i++) {
-		int x = static_cast<int>((uvCoord.x * frameSize) + i * frameSize);
-		int y = static_cast<int>(uvCoord.y * frameSize);
-		int left = static_cast<int>(frameSize);
-		int top = static_cast<int>(frameSize);
-		sf::IntRect frame = { x, y, left, top };
+		int left = static_cast<int>((uvCoord.x * frameSize) + i * frameSize);
+		int top = static_cast<int>(uvCoord.y * frameSize);
+		int width = static_cast<int>(frameSize);
+		int height = static_cast<int>(frameSize);
+		sf::IntRect frame = { left, top, width, height };
 		frames.push_back(frame);
 	}
 
