@@ -10,6 +10,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include "Misc/TextureManager.h"
+#include "Animation/AnimationGroup.h"
 
 namespace FA {
 
@@ -28,6 +29,7 @@ private:
 	sf::View view_;
 	sf::RectangleShape rectShape_;
 	TextureManager textureManager_;
+	AnimationGroup animationGroup_;
 };
 
 } // namespace FA

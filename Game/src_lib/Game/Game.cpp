@@ -19,7 +19,7 @@ const sf::Vector2u Game::screen = { 1280, 780 };
 const sf::Vector2u Game::centerScreen = { Game::screen.x / 2, Game::screen.y / 2 };
 
 Game::Game()
-	: rectShape_(sf::Vector2f(1.0, 1.0))
+	: rectShape_(sf::Vector2f(1.0, 1.0)), animationGroup_(0.1f)
 {
 	std::cout << "Create main window" << std::endl;
 #ifdef _DEBUG
@@ -31,17 +31,15 @@ Game::Game()
 #endif
 	window_.setFramerateLimit(120);
 	rectShape_.setPosition(sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
+	constexpr int size = 64;
+	rectShape_.setSize({ static_cast<float>(size), static_cast<float>(size) });
 
 	auto texture = textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-front.png");
 	if (texture != nullptr) {
 		SpriteSheet spriteSheet("heroWalkFront", texture, { 6, 1 });
-		rectShape_.setTexture(texture);
 		SpriteSheet::FrameData f = spriteSheet.Scan({ 0, 0 }, 6, 0);
-		rectShape_.setTextureRect(f.frames_.at(0));
+		animationGroup_.AddAnimation(AnimationGroup::Dir::Down, f.texture_, f.frames_, f.defaultFrame_);
 	}
-	
-	constexpr int size = 64;
-	rectShape_.setSize({ static_cast<float>(size), static_cast<float>(size) });
 }
 
 
@@ -49,6 +47,12 @@ void Game::GameLoop()
 {
 	std::cout << "Enter GameLoop" << std::endl;
 	sf::Clock clock;
+
+	auto animation = animationGroup_.GetAnimation(AnimationGroup::Dir::Down);
+	if (animation) {
+		animation->ApplyTo(rectShape_);
+		animation->Start();
+	}
 
 	while (window_.isOpen()) {
 		sf::Time elapsed = clock.restart();
@@ -60,6 +64,9 @@ void Game::GameLoop()
 				window_.close();
 		}
 
+		if (animation) animation->Update(deltaTime);
+
+		window_.clear();
 		window_.draw(rectShape_);
 		window_.display();
 	}
