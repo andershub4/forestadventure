@@ -19,7 +19,7 @@ const sf::Vector2u Game::screen = { 1280, 780 };
 const sf::Vector2u Game::centerScreen = { Game::screen.x / 2, Game::screen.y / 2 };
 
 Game::Game()
-	: rectShape_(sf::Vector2f(1.0, 1.0)), animationGroup_(0.1f)
+	: dotShape_(sf::Vector2f(1.0, 1.0)), animationGroup_(0.1f)
 {
 	std::cout << "Create main window" << std::endl;
 #ifdef _DEBUG
@@ -30,6 +30,7 @@ Game::Game()
 	window_.setView(view_);
 #endif
 	window_.setFramerateLimit(120);
+	dotShape_.setPosition(sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
 	rectShape_.setPosition(sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
 	constexpr int size = 64;
 	rectShape_.setSize({ static_cast<float>(size), static_cast<float>(size) });
@@ -68,6 +69,7 @@ void Game::GameLoop()
 
 		window_.clear();
 		window_.draw(rectShape_);
+		window_.draw(dotShape_);
 		window_.display();
 	}
 

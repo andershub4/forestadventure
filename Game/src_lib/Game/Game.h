@@ -27,6 +27,7 @@ public:
 private:
 	sf::RenderWindow window_;
 	sf::View view_;
+	sf::RectangleShape dotShape_;
 	sf::RectangleShape rectShape_;
 	TextureManager textureManager_;
 	AnimationGroup animationGroup_;
