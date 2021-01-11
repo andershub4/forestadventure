@@ -30,6 +30,20 @@ Game::Game()
 	window_.setView(view_);
 #endif
 	window_.setFramerateLimit(120);
+
+#ifdef _DEBUG
+	if (!font_.loadFromFile("assets/font/hinted-CelloSans-Medium.ttf"))	{
+		std::cout << "Could not load hinted-CelloSans-Medium" << std::endl;
+	}
+
+	sceneText_.setFont(font_);
+	sceneText_.setString("GamePlayScene");
+	sceneText_.setCharacterSize(24);
+	sceneText_.setFillColor(sf::Color::White);
+	sf::Vector2f sceneTextPos(0.0f, 0.0f);
+	sceneText_.setPosition(sceneTextPos);
+#endif
+
 	dotShape_.setPosition(sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
 	rectShape_.setPosition(sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
 	constexpr int size = 64;
@@ -168,6 +182,9 @@ void Game::GameLoop()
 		animationHandler_.Update(deltaTime);
 
 		window_.clear();
+#ifdef _DEBUG
+		window_.draw(sceneText_);
+#endif
 		window_.draw(rectShape_);
 		window_.draw(dotShape_);
 		window_.display();

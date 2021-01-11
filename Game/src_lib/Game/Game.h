@@ -8,6 +8,10 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#ifdef _DEBUG
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
+#endif
 
 #include "Misc/TextureManager.h"
 #include "Animation/AnimationHandler.h"
@@ -31,6 +35,10 @@ private:
 	sf::RectangleShape rectShape_;
 	TextureManager textureManager_;
 	AnimationHandler animationHandler_;
+#ifdef _DEBUG
+	sf::Font font_;
+	sf::Text sceneText_;
+#endif
 };
 
 } // namespace FA
