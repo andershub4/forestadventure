@@ -32,7 +32,7 @@ Game::Game()
 	window_.setFramerateLimit(120);
 
 #ifdef _DEBUG
-	if (!font_.loadFromFile("assets/font/hinted-CelloSans-Medium.ttf"))	{
+	if (!font_.loadFromFile("assets/font/cello-sans/hinted-CelloSans-Medium.ttf"))	{
 		std::cout << "Could not load hinted-CelloSans-Medium" << std::endl;
 	}
 
