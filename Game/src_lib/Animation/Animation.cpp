@@ -12,7 +12,6 @@ Animation::Animation(sf::RectangleShape* rectShape, const sf::Texture* texture, 
 	: rectShape_(rectShape), texture_(texture), frames_(frames), switchTime_(switchTime), time_(0.0), defaultFrame_(defaultFrame), iFrame_(defaultFrame)
 {
 	nFrames_ = frames.size();
-
 	rectShape_->setTexture(texture_);
 	rectShape_->setTextureRect(frames_[defaultFrame_]);
 }
@@ -20,7 +19,7 @@ Animation::Animation(sf::RectangleShape* rectShape, const sf::Texture* texture, 
 
 void Animation::Update(float deltaTime)
 {
-	if (!isStopped_ && frames_.size() > 1) {
+	if (!isStopped_ && nFrames_ > 1) {
 		time_ += deltaTime;
 
 		while (time_ >= switchTime_) {
