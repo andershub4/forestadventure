@@ -34,7 +34,13 @@ void AnimationHandler::SetAnimation(FrameType frameType, FaceDir dir, sf::Rectan
 
 void AnimationHandler::RegisterAnimationInfo(FrameType frameType, FaceDir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX)
 {
-	animationInfoMap_[{frameType, dir}] = { texture, mirrorX ? MirrorX(frames) : frames, defaultFrame, switchTime_ };
+	auto it = animationInfoMap_.find({ frameType, dir });
+	if (it != animationInfoMap_.end()) {
+		std::cout << "AnimationHandler::RegisterAnimationInfo frameType: " << static_cast<unsigned int>(frameType) << " dir: " << static_cast<unsigned int>(dir) << " is already registered" << std::endl;
+	}
+	else {
+		animationInfoMap_[{frameType, dir}] = { texture, mirrorX ? MirrorX(frames) : frames, defaultFrame, switchTime_ };
+	}
 }
 
 
