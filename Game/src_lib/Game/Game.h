@@ -10,7 +10,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include "Misc/TextureManager.h"
-#include "Animation/AnimationGroup.h"
+#include "Animation/AnimationHandler.h"
 
 namespace FA {
 
@@ -30,7 +30,7 @@ private:
 	sf::RectangleShape dotShape_;
 	sf::RectangleShape rectShape_;
 	TextureManager textureManager_;
-	AnimationGroup animationGroup_;
+	AnimationHandler animationHandler_;
 };
 
 } // namespace FA

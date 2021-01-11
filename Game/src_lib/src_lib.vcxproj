@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Animation\AnimationGroup.h" />
+    <ClInclude Include="Animation\AnimationHandler.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Misc\TextureManager.h" />
     <ClInclude Include="Sprite\SpriteSheet.h" />
@@ -150,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Animation\AnimationGroup.cpp" />
+    <ClCompile Include="Animation\AnimationHandler.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Misc\TextureManager.cpp" />
     <ClCompile Include="Sprite\SpriteSheet.cpp" />

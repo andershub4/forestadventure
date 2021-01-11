@@ -25,6 +25,7 @@ class AnimationGroup
 public:
 	enum class Dir { Up, Right, Down, Left };
 
+	AnimationGroup() = default;
 	AnimationGroup(float switchTime);
 
 	void RegisterAnimationInfo(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
