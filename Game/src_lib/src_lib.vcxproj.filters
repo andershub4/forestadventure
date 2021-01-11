@@ -27,9 +27,6 @@
     <ClCompile Include="Animation\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Animation\AnimationGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Animation\AnimationHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,9 +42,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Animation\Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation\AnimationGroup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Animation\AnimationHandler.h">
