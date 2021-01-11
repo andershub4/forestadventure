@@ -21,7 +21,7 @@ void AnimationHandler::Update(float deltaTime)
 }
 
 
-void AnimationHandler::SetAnimation(FrameType frameType, AnimationGroup::Dir dir, sf::RectangleShape& rectShape, bool start)
+void AnimationHandler::SetAnimation(FrameType frameType, AnimationGroup::FaceDir dir, sf::RectangleShape& rectShape, bool start)
 {
 	auto it = handlerMap_.find(frameType);
 

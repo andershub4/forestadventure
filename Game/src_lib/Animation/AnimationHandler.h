@@ -21,7 +21,7 @@ public:
 	AnimationHandler(float switchTime);
 
 	void Update(float deltaTime);
-	void SetAnimation(FrameType frameType, AnimationGroup::Dir dir, sf::RectangleShape& rectShape, bool start);
+	void SetAnimation(FrameType frameType, AnimationGroup::FaceDir dir, sf::RectangleShape& rectShape, bool start);
 	AnimationGroup& AddAnimationGroup(FrameType frameType);
 	void Start();
 	void Stop();

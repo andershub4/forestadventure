@@ -15,13 +15,13 @@ AnimationGroup::AnimationGroup(float switchTime)
 {}
 
 
-void AnimationGroup::RegisterAnimationInfo(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX)
+void AnimationGroup::RegisterAnimationInfo(FaceDir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX)
 {
 	animationInfoMap_[dir] = { texture, mirrorX ? MirrorX(frames) : frames, defaultFrame, switchTime_ };
 }
 
 
-std::unique_ptr<Animation> AnimationGroup::CreateAnimation(Dir dir, sf::RectangleShape& rectShape) const
+std::unique_ptr<Animation> AnimationGroup::CreateAnimation(FaceDir dir, sf::RectangleShape& rectShape) const
 {
 	auto it = animationInfoMap_.find(dir);
 	if (it != animationInfoMap_.end()) {

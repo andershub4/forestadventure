@@ -23,13 +23,13 @@ namespace FA {
 class AnimationGroup
 {
 public:
-	enum class Dir { Up, Right, Down, Left };
+	enum class FaceDir { Up, Right, Down, Left };
 
 	AnimationGroup() = default;
 	AnimationGroup(float switchTime);
 
-	void RegisterAnimationInfo(Dir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
-	std::unique_ptr<Animation> CreateAnimation(Dir dir, sf::RectangleShape& rectShape) const;
+	void RegisterAnimationInfo(FaceDir dir, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
+	std::unique_ptr<Animation> CreateAnimation(FaceDir dir, sf::RectangleShape& rectShape) const;
 
 private:
 	struct AnimationInfo
@@ -40,7 +40,7 @@ private:
 		float switchTime_ = 0;
 	};
 
-	std::unordered_map<Dir, AnimationInfo> animationInfoMap_;
+	std::unordered_map<FaceDir, AnimationInfo> animationInfoMap_;
 	float switchTime_ = 0;
 
 public:
