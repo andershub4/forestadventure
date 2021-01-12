@@ -50,5 +50,8 @@
     <ClInclude Include="Fwd\SfmlFwd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

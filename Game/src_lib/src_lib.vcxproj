@@ -145,6 +145,7 @@
     <ClInclude Include="Animation\AnimationHandler.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Game\Version.h" />
     <ClInclude Include="Misc\TextureManager.h" />
     <ClInclude Include="Sprite\SpriteSheet.h" />
   </ItemGroup>

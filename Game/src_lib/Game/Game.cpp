@@ -10,6 +10,7 @@
 
 #include <SFML/Window/Event.hpp>
 
+#include "Version.h"
 #include "Sprite/SpriteSheet.h"
 
 namespace FA
@@ -21,11 +22,14 @@ const sf::Vector2u Game::centerScreen = { Game::screen.x / 2, Game::screen.y / 2
 Game::Game()
 	: dotShape_(sf::Vector2f(1.0, 1.0)), animationHandler_(0.1f)
 {
+	std::cout << "Start up " << FA_APP_NAME << " v" << FA_APP_VERSION << std::endl;
+
 	std::cout << "Create main window" << std::endl;
 #ifdef _DEBUG
-	window_.create(sf::VideoMode(screen.x, screen.y), "ForestAdventure");
+	const std::string title = std::string(FA_APP_NAME) + " v" + FA_APP_VERSION;
+	window_.create(sf::VideoMode(screen.x, screen.y), title);
 #else
-	window_.create(sf::VideoMode::getDesktopMode(), "ForestAdventure", sf::Style::Fullscreen);
+	window_.create(sf::VideoMode::getDesktopMode(), FA_APP_NAME, sf::Style::Fullscreen);
 	view_.reset(sf::FloatRect(0.0, 0.0, static_cast<float>(screen.x), static_cast<float>(screen.y)));
 	window_.setView(view_);
 #endif
