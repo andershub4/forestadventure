@@ -9,13 +9,16 @@
 #include <unordered_map>
 #include <memory>
 
-#include <SFML/Graphics/Texture.hpp>
+#include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
 class TextureManager
 {
 public:
+	TextureManager();
+	~TextureManager();
+
 	const sf::Texture* GetTexture(const std::string& file);
 
 private:

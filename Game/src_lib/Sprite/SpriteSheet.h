@@ -12,10 +12,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Rect.hpp>
 
-namespace sf
-{
-class Texture;
-}
+#include "Fwd/SfmlFwd.h"
 
 namespace FA {
 

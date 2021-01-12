@@ -47,5 +47,8 @@
     <ClInclude Include="Animation\AnimationHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Fwd\SfmlFwd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

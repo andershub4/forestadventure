@@ -6,7 +6,15 @@
 
 #include "TextureManager.h"
 
+#include <SFML/Graphics/Texture.hpp>
+
 namespace FA {
+
+TextureManager::TextureManager() = default;
+
+
+TextureManager::~TextureManager() = default;
+
 
 const sf::Texture* TextureManager::GetTexture(const std::string& file)
 {

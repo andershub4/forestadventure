@@ -9,12 +9,8 @@
 #include <vector>
 
 #include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
 
-namespace sf
-{
-class Texture;
-}
+#include "Fwd/SfmlFwd.h"
 
 namespace FA {
 

@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Animation\AnimationHandler.h" />
+    <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Misc\TextureManager.h" />
     <ClInclude Include="Sprite\SpriteSheet.h" />

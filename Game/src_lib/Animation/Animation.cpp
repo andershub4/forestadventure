@@ -6,6 +6,8 @@
 
 #include "Animation.h"
 
+#include <SFML/Graphics/RectangleShape.hpp>
+
 namespace FA {
 
 Animation::Animation(sf::RectangleShape* rectShape, const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, float switchTime)
