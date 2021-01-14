@@ -28,9 +28,11 @@ Logger::Logger(const std::string& fileName)
         OpeningLines();
     }
 
+#ifdef _DEBUG
     if (!logStream_.is_open()) {
         std::cerr << "Could not open logfile for writing" << std::endl;
     }
+#endif
 }
 
 

@@ -7,7 +7,9 @@
 #pragma once
 
 #include <fstream>
+#ifdef _DEBUG
 #include <iostream>
+#endif
 #include <string>
 
 namespace FA {
@@ -31,8 +33,10 @@ public:
             if (currSize_ > maxSize_) {
                 logStream_ << std::endl << std::endl;
                 logStream_ << "Logfile closing - file too large - " << fileName_ << std::endl;
+#ifdef _DEBUG
                 std::cout << std::endl << std::endl;
                 std::cout << "Logfile closing - file too large - " << fileName_ << std::endl;
+#endif
                 logStream_.close();
             }
         }
