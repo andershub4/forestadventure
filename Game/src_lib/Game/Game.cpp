@@ -26,7 +26,8 @@ const sf::Vector2u Game::centerScreen = { Game::screen.x / 2, Game::screen.y / 2
 Game::Game()
 	: dotShape_(sf::Vector2f(1.0, 1.0)), animationHandler_(0.1f)
 {
-	LOG_INFO("Start up ", FA_APP_NAME, " v", FA_APP_VERSION);
+	LOG_INFO("Start up ", FA_APP_NAME, " version ", FA_APP_VERSION);
+	LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
 
 	RedirectSfmlLogEntries();
 
