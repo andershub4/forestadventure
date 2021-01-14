@@ -6,9 +6,9 @@
 
 #include "SpriteSheet.h"
 
-#include <iostream>
-
 #include <SFML/Graphics/Texture.hpp>
+
+#include "Utils/Logger.h"
 
 namespace FA {
 
@@ -37,7 +37,7 @@ unsigned int SpriteSheet::CalcFrameSize() const
 	if (frameCount_.x > 0)
 		return textureSize.x / frameCount_.x;
 	else
-		std::cout << "SpriteSheet::CalcFrameSize can't calculate frameSize due to frameCount.x " << frameCount_.x << std::endl;
+		LOG_ERROR("Can't calculate frameSize due to frameCount.x  ", frameCount_.x);
 
 	return 0;
 }

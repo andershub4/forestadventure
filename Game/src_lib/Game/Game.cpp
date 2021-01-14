@@ -6,10 +6,9 @@
 
 #include "Game.h"
 
-#include <iostream>
-
 #include <SFML/Window/Event.hpp>
 
+#include "Utils/Logger.h"
 #include "Version.h"
 #include "Sprite/SpriteSheet.h"
 
@@ -22,9 +21,9 @@ const sf::Vector2u Game::centerScreen = { Game::screen.x / 2, Game::screen.y / 2
 Game::Game()
 	: dotShape_(sf::Vector2f(1.0, 1.0)), animationHandler_(0.1f)
 {
-	std::cout << "Start up " << FA_APP_NAME << " v" << FA_APP_VERSION << std::endl;
+	LOG_INFO("Start up ", FA_APP_NAME, " v", FA_APP_VERSION);
 
-	std::cout << "Create main window" << std::endl;
+	LOG_INFO("Create main window");
 #ifdef _DEBUG
 	const std::string title = std::string(FA_APP_NAME) + " v" + FA_APP_VERSION;
 	window_.create(sf::VideoMode(screen.x, screen.y), title);
@@ -37,7 +36,7 @@ Game::Game()
 
 #ifdef _DEBUG
 	if (!font_.loadFromFile("assets/font/cello-sans/hinted-CelloSans-Medium.ttf"))	{
-		std::cout << "Could not load hinted-CelloSans-Medium" << std::endl;
+		LOG_ERROR("Could not load hinted-CelloSans-Medium");
 	}
 
 	sceneText_.setFont(font_);
@@ -129,7 +128,7 @@ Game::Game()
 
 void Game::GameLoop()
 {
-	std::cout << "Enter GameLoop" << std::endl;
+	LOG_INFO_ENTER_FUNC();
 	sf::Clock clock;
 
 	AnimationHandler::FrameType frameType = AnimationHandler::FrameType::Move;
@@ -194,7 +193,7 @@ void Game::GameLoop()
 		window_.display();
 	}
 
-	std::cout << "Exit GameLoop" << std::endl;
+	LOG_INFO_EXIT_FUNC();
 }
 
 } // namespace FA

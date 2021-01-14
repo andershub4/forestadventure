@@ -6,7 +6,7 @@
 
 #include "AnimationHandler.h"
 
-#include <iostream>
+#include "Utils/Logger.h"
 
 namespace FA {
 
@@ -36,7 +36,7 @@ void AnimationHandler::RegisterAnimationInfo(FrameType frameType, FaceDir dir, c
 {
 	auto it = animationInfoMap_.find({ frameType, dir });
 	if (it != animationInfoMap_.end()) {
-		std::cout << "AnimationHandler::RegisterAnimationInfo frameType: " << static_cast<unsigned int>(frameType) << " dir: " << static_cast<unsigned int>(dir) << " is already registered" << std::endl;
+		LOG_WARN("frameType: ", static_cast<unsigned int>(frameType), " dir: ", static_cast<unsigned int>(dir), " is already registered");
 	}
 	else {
 		animationInfoMap_[{frameType, dir}] = { texture, mirrorX ? MirrorX(frames) : frames, defaultFrame, switchTime_ };
@@ -64,7 +64,7 @@ std::unique_ptr<Animation> AnimationHandler::CreateAnimation(FrameType frameType
 		return std::make_unique<Animation>(&rectShape, info.texture_, info.frames_, info.defaultFrame_, switchTime_);
 	}
 	else {
-		std::cout << "AnimationHandler::CreateAnimation frameType: " << static_cast<unsigned int>(frameType) << " dir: " << static_cast<unsigned int>(dir) << " does not exist" << std::endl;
+		LOG_ERROR("frameType: ", static_cast<unsigned int>(frameType), " dir: ", static_cast<unsigned int>(dir), " does not exist");
 		return nullptr;
 	}
 }
