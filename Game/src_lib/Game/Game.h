@@ -6,6 +6,9 @@
 
 #pragma once
 
+#include <memory>
+#include <iosfwd>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #ifdef _DEBUG
@@ -22,6 +25,7 @@ class Game
 {
 public:
 	Game();
+	~Game();
 	void GameLoop();
 
 public:
@@ -29,6 +33,7 @@ public:
 	static const sf::Vector2u centerScreen;
 
 private:
+	std::unique_ptr<std::ofstream> sfmlLogStream_;
 	sf::RenderWindow window_;
 	sf::View view_;
 	sf::RectangleShape dotShape_;
@@ -39,6 +44,9 @@ private:
 	sf::Font font_;
 	sf::Text sceneText_;
 #endif
+
+private:
+	void RedirectSfmlLogEntries();
 };
 
 } // namespace FA

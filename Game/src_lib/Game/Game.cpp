@@ -6,9 +6,14 @@
 
 #include "Game.h"
 
+#include <fstream>
+
 #include <SFML/Window/Event.hpp>
+#include <SFML/System/Err.hpp>
+#include <SFML/Config.hpp>
 
 #include "Utils/Logger.h"
+#include "Utils/Path.h"
 #include "Version.h"
 #include "Sprite/SpriteSheet.h"
 
@@ -22,6 +27,8 @@ Game::Game()
 	: dotShape_(sf::Vector2f(1.0, 1.0)), animationHandler_(0.1f)
 {
 	LOG_INFO("Start up ", FA_APP_NAME, " v", FA_APP_VERSION);
+
+	RedirectSfmlLogEntries();
 
 	LOG_INFO("Create main window");
 #ifdef _DEBUG
@@ -126,6 +133,12 @@ Game::Game()
 }
 
 
+Game::~Game()
+{
+	sfmlLogStream_->close();
+}
+
+
 void Game::GameLoop()
 {
 	LOG_INFO_ENTER_FUNC();
@@ -194,6 +207,20 @@ void Game::GameLoop()
 	}
 
 	LOG_INFO_EXIT_FUNC();
+}
+
+
+void Game::RedirectSfmlLogEntries()
+{
+	sfmlLogStream_ = std::make_unique<std::ofstream>();
+	const std::string sfmlLog = "sfml-log.txt";
+	sfmlLogStream_->open(GetExePath() + "\\/"+ sfmlLog);
+
+	if (sfmlLogStream_->is_open()) {
+		LOG_INFO("Redirecting sfml log entries to ", sfmlLog);
+		(*sfmlLogStream_) << "SFML version " << SFML_VERSION_MAJOR  << "." << SFML_VERSION_MINOR  << std::endl;
+		sf::err().rdbuf(sfmlLogStream_->rdbuf());
+	}
 }
 
 } // namespace FA
