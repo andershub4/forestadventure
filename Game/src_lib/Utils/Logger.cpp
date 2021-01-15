@@ -1,8 +1,8 @@
 /*
-*	Copyright (C) 2021 Anders Wennmo
-*	This file is part of forestadventure which is released under MIT license.
-*	See file LICENSE for full license details.
-*/
+ *	Copyright (C) 2021 Anders Wennmo
+ *	This file is part of forestadventure which is released under MIT license.
+ *	See file LICENSE for full license details.
+ */
 
 #include "Logger.h"
 
@@ -17,7 +17,6 @@ Logger& Logger::Instance()
     static Logger logger(GetExePath() + "\\/log.txt");
     return logger;
 }
-
 
 Logger::Logger(const std::string& fileName)
     : fileName_(fileName)
@@ -35,14 +34,13 @@ Logger::Logger(const std::string& fileName)
 #endif
 }
 
-
-Logger::~Logger() {
+Logger::~Logger()
+{
     if (logStream_.is_open()) {
         ClosingLines();
         logStream_.close();
     }
 }
-
 
 void Logger::StartLine(const LogLevel& logLevel, const std::string& funcName)
 {
@@ -51,14 +49,12 @@ void Logger::StartLine(const LogLevel& logLevel, const std::string& funcName)
     Log(ss.str());
 }
 
-
 void Logger::EndLine()
 {
     std::stringstream ss;
     ss << std::endl;
     Log(ss.str());
 }
-
 
 void Logger::OpeningLines()
 {
@@ -68,7 +64,6 @@ void Logger::OpeningLines()
     Log(ss.str());
 }
 
-
 void Logger::ClosingLines()
 {
     std::stringstream ss;
@@ -77,25 +72,23 @@ void Logger::ClosingLines()
     Log(ss.str());
 }
 
-
 std::string Logger::ToStr(const LogLevel& logLevel) const
 {
     std::string str;
 
     switch (logLevel) {
-    case LogLevel::ERROR:
-        str = "ERROR";
-        break;
-    case LogLevel::WARNING:
-        str = "WARNING";
-        break;
-    case LogLevel::INFO:
-        str = "INFO";
-        break;
+        case LogLevel::ERROR:
+            str = "ERROR";
+            break;
+        case LogLevel::WARNING:
+            str = "WARNING";
+            break;
+        case LogLevel::INFO:
+            str = "INFO";
+            break;
     }
 
     return str;
 }
 
-
-} // namespace FA
+}  // namespace FA

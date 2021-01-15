@@ -1,0 +1,19 @@
+BasedOnStyle: Google
+AllowShortFunctionsOnASingleLine: false
+BraceWrapping:
+  AfterClass:      true
+  AfterFunction:   true
+  AfterStruct:     true
+  AfterUnion:      true
+  BeforeCatch:     true
+  BeforeElse:      true
+  SplitEmptyFunction: false
+BreakBeforeBraces: Custom
+BreakConstructorInitializersBeforeComma: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+IncludeBlocks: 'Preserve'
+IndentWidth: 4
+ColumnLimit: 120
+Standard: c++14
+AccessModifierOffset: -4
+SortIncludes: true
