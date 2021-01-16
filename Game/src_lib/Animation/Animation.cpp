@@ -22,7 +22,7 @@ Animation::Animation(sf::RectangleShape* rectShape, const sf::Texture* texture, 
 {
     nFrames_ = frames.size();
     rectShape_->setTexture(texture_);
-    rectShape_->setTextureRect(frames_[defaultFrame_]);
+    if (defaultFrame_ < nFrames_) rectShape_->setTextureRect(frames_.at(defaultFrame_));
 }
 
 void Animation::Update(float deltaTime)
