@@ -82,9 +82,9 @@ void MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& func, T d
     Log(data, rest...);
 }
 
-#define LOG_INFO(...) MakeLogEntry(Logger::LogLevel::INFO, __FUNCTION__, __VA_ARGS__);
-#define LOG_WARN(...) MakeLogEntry(Logger::LogLevel::WARNING, __FUNCTION__, __VA_ARGS__);
-#define LOG_ERROR(...) MakeLogEntry(Logger::LogLevel::ERROR, __FUNCTION__, __VA_ARGS__);
+#define LOG_INFO(...) MakeLogEntry(FA::Logger::LogLevel::INFO, __FUNCTION__, __VA_ARGS__);
+#define LOG_WARN(...) MakeLogEntry(FA::Logger::LogLevel::WARNING, __FUNCTION__, __VA_ARGS__);
+#define LOG_ERROR(...) MakeLogEntry(FA::Logger::LogLevel::ERROR, __FUNCTION__, __VA_ARGS__);
 
 #define LOG_INFO_ENTER_FUNC() LOG_INFO("ENTER");
 #define LOG_INFO_EXIT_FUNC() LOG_INFO("EXIT");
