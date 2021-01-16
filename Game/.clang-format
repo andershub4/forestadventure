@@ -1,5 +1,5 @@
 BasedOnStyle: Google
-AllowShortFunctionsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: 'Inline'
 BraceWrapping:
   AfterClass:      true
   AfterFunction:   true
