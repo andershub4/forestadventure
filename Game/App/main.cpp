@@ -4,12 +4,24 @@
  *	See file LICENSE for full license details.
  */
 
+#include <iostream>
+
 #include "Game/Game.h"
+#include "Utils/Logger.h"
 
 int main()
 {
-    FA::Game game;
-    game.GameLoop();
+    LOG_INFO_ENTER_FUNC();
 
-    return 0;
+    try {
+        FA::Game game;
+        game.GameLoop();
+    }
+    catch (const std::exception& e) {
+        LOG_ERROR("Exception catched: ", e.what());
+        return EXIT_FAILURE;
+    }
+
+    LOG_INFO_EXIT_FUNC();
+    return EXIT_SUCCESS;
 }
