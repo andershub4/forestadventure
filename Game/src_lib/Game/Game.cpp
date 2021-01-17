@@ -7,12 +7,17 @@
 #include "Game.h"
 
 #include <fstream>
+#include <memory>
 
 #include <SFML/Config.hpp>
 #include <SFML/System/Err.hpp>
-#include <SFML/Window/Event.hpp>
 
+#include "Message/BroadcastMessage/CloseWindowMessage.h"
+#include "Message/BroadcastMessage/IsKeyPressedMessage.h"
+#include "Message/BroadcastMessage/KeyboardPressedMessage.h"
+#include "Message/BroadcastMessage/KeyboardReleasedMessage.h"
 #include "Sprite/SpriteSheet.h"
+#include "System/InputSystem.h"
 #include "Utils/Logger.h"
 #include "Utils/Path.h"
 #include "Version.h"
@@ -23,7 +28,6 @@ const sf::Vector2u Game::screen = {1280, 780};
 const sf::Vector2u Game::centerScreen = {Game::screen.x / 2, Game::screen.y / 2};
 
 Game::Game()
-    : animationHandler_(0.1f)
 {
     LOG_INFO("Start up ", FA_APP_NAME, " version ", FA_APP_VERSION);
     LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
@@ -33,10 +37,18 @@ Game::Game()
 #ifdef _DEBUG
     InitDebugSceneGraphics();
 #endif
-    rectShape_.setPosition(sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
+    auto cb = [this](std::shared_ptr<Message> message) { OnMessage(message); };
+    messageBus_.AddSubscriber("game",
+                              {MessageType::IsKeyPressed, MessageType::KeyboardPressed, MessageType::KeyboardReleased,
+                               MessageType::CloseWindow},
+                              cb);
+
+    entity_.rectShape_.setPosition(
+        sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
     constexpr int size = 64;
-    rectShape_.setSize({static_cast<float>(size), static_cast<float>(size)});
+    entity_.rectShape_.setSize({static_cast<float>(size), static_cast<float>(size)});
     InitAnimations();
+    entity_.SetAnimation();
 }
 
 Game::~Game()
@@ -48,62 +60,19 @@ void Game::GameLoop()
 {
     LOG_INFO_ENTER_FUNC();
     sf::Clock clock;
-
-    AnimationHandler::FrameType frameType = AnimationHandler::FrameType::Move;
-    AnimationHandler::FaceDir dir = AnimationHandler::FaceDir::Up;
-    bool setAnimation = false;
-    animationHandler_.SetAnimation(frameType, dir, rectShape_, true);
+    InputSystem inputSystem(messageBus_, window_);
 
     while (window_.isOpen()) {
         sf::Time elapsed = clock.restart();
         float deltaTime = elapsed.asSeconds();
 
-        sf::Event event;
-        while (window_.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window_.close();
-            }
-            else if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Right) {
-                    dir = AnimationHandler::FaceDir::Right;
-                    setAnimation = true;
-                }
-                else if (event.key.code == sf::Keyboard::Left) {
-                    dir = AnimationHandler::FaceDir::Left;
-                    setAnimation = true;
-                }
-                else if (event.key.code == sf::Keyboard::Up) {
-                    dir = AnimationHandler::FaceDir::Up;
-                    setAnimation = true;
-                }
-                else if (event.key.code == sf::Keyboard::Down) {
-                    dir = AnimationHandler::FaceDir::Down;
-                    setAnimation = true;
-                }
-                else if (event.key.code == sf::Keyboard::Num1) {
-                    frameType = AnimationHandler::FrameType::Idle;
-                    setAnimation = true;
-                }
-                else if (event.key.code == sf::Keyboard::Num2) {
-                    frameType = AnimationHandler::FrameType::Move;
-                    setAnimation = true;
-                }
-                else if (event.key.code == sf::Keyboard::Num3) {
-                    frameType = AnimationHandler::FrameType::Attack;
-                    setAnimation = true;
-                }
-            }
-        }
+        inputSystem.Update(deltaTime);
+        messageBus_.DispatchMessages();
 
-        if (setAnimation) {
-            animationHandler_.SetAnimation(frameType, dir, rectShape_, true);
-            setAnimation = false;
-        }
-
-        animationHandler_.Update(deltaTime);
+        entity_.Update(deltaTime);
 
         window_.clear();
-        window_.draw(rectShape_);
+        entity_.Draw(window_);
 #ifdef _DEBUG
         window_.draw(sceneText_);
         window_.draw(dotShape_);
@@ -112,6 +81,55 @@ void Game::GameLoop()
     }
 
     LOG_INFO_EXIT_FUNC();
+}
+
+void Game::OnMessage(std::shared_ptr<Message> message)
+{
+    if (message->GetMessageType() == MessageType::KeyboardPressed) {
+    }
+    else if (message->GetMessageType() == MessageType::KeyboardReleased) {
+    }
+    else if (message->GetMessageType() == MessageType::IsKeyPressed) {
+        auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(message);
+        auto key = m->GetKey();
+        if (key == Keyboard::Key::Right) {
+            entity_.dir_ = AnimationHandler::FaceDir::Right;
+            entity_.SetAnimation();
+        }
+        else if (key == Keyboard::Key::Left) {
+            entity_.dir_ = AnimationHandler::FaceDir::Left;
+            entity_.SetAnimation();
+        }
+        else if (key == Keyboard::Key::Up) {
+            entity_.dir_ = AnimationHandler::FaceDir::Up;
+            entity_.SetAnimation();
+        }
+        else if (key == Keyboard::Key::Down) {
+            entity_.dir_ = AnimationHandler::FaceDir::Down;
+            entity_.SetAnimation();
+        }
+        else if (key == Keyboard::Key::Num1) {
+            entity_.frameType_ = AnimationHandler::FrameType::Idle;
+            entity_.SetAnimation();
+        }
+        else if (key == Keyboard::Key::Num2) {
+            entity_.frameType_ = AnimationHandler::FrameType::Move;
+            entity_.SetAnimation();
+        }
+        else if (key == Keyboard::Key::Num3) {
+            entity_.frameType_ = AnimationHandler::FrameType::Attack;
+            entity_.SetAnimation();
+        }
+        else if (key == Keyboard::Key::Escape) {
+            window_.close();
+        }
+    }
+    else if (message->GetMessageType() == MessageType::CloseWindow) {
+        window_.close();
+    }
+    else {
+        // cant happened
+    }
 }
 
 void Game::RedirectSfmlLogEntries()
@@ -167,26 +185,26 @@ void Game::InitAnimations()
     if (textureWalkSide != nullptr) {
         SpriteSheet spriteSheet("heroWalkSide", textureWalkSide, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Left,
-                                                f.texture_, f.frames_, f.defaultFrame_, true);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Right,
-                                                f.texture_, f.frames_, f.defaultFrame_);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Left, f.texture_,
+                                      f.frames_, f.defaultFrame_, true);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Right, f.texture_,
+                                      f.frames_, f.defaultFrame_);
     }
     auto textureWalkFront =
         textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-front.png");
     if (textureWalkFront != nullptr) {
         SpriteSheet spriteSheet("heroWalkFront", textureWalkFront, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Down,
-                                                f.texture_, f.frames_, f.defaultFrame_);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Down, f.texture_,
+                                      f.frames_, f.defaultFrame_);
     }
     auto textureWalkBack =
         textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-back-walk.png");
     if (textureWalkBack != nullptr) {
         SpriteSheet spriteSheet("heroWalkBack", textureWalkBack, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Up,
-                                                f.texture_, f.frames_, f.defaultFrame_);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Up, f.texture_,
+                                      f.frames_, f.defaultFrame_);
     }
 
     auto textureAttackSide =
@@ -194,26 +212,26 @@ void Game::InitAnimations()
     if (textureAttackSide != nullptr) {
         SpriteSheet spriteSheet("heroAttackSide", textureAttackSide, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Left,
-                                                f.texture_, f.frames_, f.defaultFrame_, true);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Right,
-                                                f.texture_, f.frames_, f.defaultFrame_);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Left, f.texture_,
+                                      f.frames_, f.defaultFrame_, true);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Right, f.texture_,
+                                      f.frames_, f.defaultFrame_);
     }
     auto textureAttackFront =
         textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack/hero-attack-front.png");
     if (textureAttackFront != nullptr) {
         SpriteSheet spriteSheet("heroAttackFront", textureAttackFront, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Down,
-                                                f.texture_, f.frames_, f.defaultFrame_);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Down, f.texture_,
+                                      f.frames_, f.defaultFrame_);
     }
     auto textureAttackBack =
         textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack/hero-attack-back.png");
     if (textureAttackBack != nullptr) {
         SpriteSheet spriteSheet("heroAttackBack", textureAttackBack, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Up,
-                                                f.texture_, f.frames_, f.defaultFrame_);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Up, f.texture_,
+                                      f.frames_, f.defaultFrame_);
     }
 
     auto textureIdleSide =
@@ -221,26 +239,26 @@ void Game::InitAnimations()
     if (textureIdleSide != nullptr) {
         SpriteSheet spriteSheet("heroIdleSide", textureIdleSide, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Left,
-                                                f.texture_, f.frames_, f.defaultFrame_, true);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Right,
-                                                f.texture_, f.frames_, f.defaultFrame_);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Left, f.texture_,
+                                      f.frames_, f.defaultFrame_, true);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Right, f.texture_,
+                                      f.frames_, f.defaultFrame_);
     }
     auto textureIdleFront =
         textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/idle/hero-idle-front.png");
     if (textureIdleFront != nullptr) {
         SpriteSheet spriteSheet("heroIdleFront", textureIdleFront, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Down,
-                                                f.texture_, f.frames_, f.defaultFrame_);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Down, f.texture_,
+                                      f.frames_, f.defaultFrame_);
     }
     auto textureIdleBack =
         textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/idle/hero-idle-back.png");
     if (textureIdleBack != nullptr) {
         SpriteSheet spriteSheet("heroIdleBack", textureIdleBack, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
-        animationHandler_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Up,
-                                                f.texture_, f.frames_, f.defaultFrame_);
+        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Up, f.texture_,
+                                      f.frames_, f.defaultFrame_);
     }
 }
 

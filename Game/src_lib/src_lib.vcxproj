@@ -143,11 +143,20 @@
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Animation\AnimationHandler.h" />
+    <ClInclude Include="Enum\KeyboardKey.h" />
+    <ClInclude Include="Enum\MessageType.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Version.h" />
+    <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
+    <ClInclude Include="Message\BroadcastMessage\KeyboardPressedMessage.h" />
+    <ClInclude Include="Message\BroadcastMessage\KeyboardReleasedMessage.h" />
+    <ClInclude Include="Message\BroadcastMessage\CloseWindowMessage.h" />
+    <ClInclude Include="Message\Message.h" />
+    <ClInclude Include="Message\MessageBus.h" />
     <ClInclude Include="Misc\TextureManager.h" />
     <ClInclude Include="Sprite\SpriteSheet.h" />
+    <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Utils\Logger.h" />
     <ClInclude Include="Utils\Path.h" />
   </ItemGroup>
@@ -155,8 +164,14 @@
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Animation\AnimationHandler.cpp" />
     <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />
+    <ClCompile Include="Message\BroadcastMessage\KeyboardPressedMessage.cpp" />
+    <ClCompile Include="Message\BroadcastMessage\KeyboardReleasedMessage.cpp" />
+    <ClCompile Include="Message\Message.cpp" />
+    <ClCompile Include="Message\MessageBus.cpp" />
     <ClCompile Include="Misc\TextureManager.cpp" />
     <ClCompile Include="Sprite\SpriteSheet.cpp" />
+    <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />
     <ClCompile Include="Utils\Path.cpp" />
   </ItemGroup>

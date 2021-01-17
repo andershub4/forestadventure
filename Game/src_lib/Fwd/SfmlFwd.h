@@ -18,5 +18,6 @@ class RectangleShape;
 class Texture;
 class RenderWindow;
 class RenderTarget;
+class Event;
 
 }  // namespace sf
