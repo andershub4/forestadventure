@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <unordered_set>
+
 #include "Enum/KeyboardKey.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -23,10 +25,10 @@ public:
 private:
     sf::RenderWindow& window_;
     MessageBus& messageBus_;
+    std::unordered_set<Keyboard::Key> keyPressed_;
 
 private:
-    void PushEvent(const sf::Event& event);
-    Keyboard::Key IsKeyPressed() const;
+    void ProcessEvent(const sf::Event& event);
 };
 
 }  // namespace FA

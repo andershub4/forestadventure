@@ -6,8 +6,6 @@
 
 #include "InputSystem.h"
 
-#include <unordered_map>
-
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
@@ -40,33 +38,28 @@ void InputSystem::Update(float deltaTime)
     sf::Event event;
 
     while (window_.pollEvent(event)) {
-        PushEvent(event);
-    }
-
-    auto key = IsKeyPressed();
-    if (key != Keyboard::Key::Undefined) {
-        auto msg = std::make_shared<IsKeyPressedMessage>(key);
-        messageBus_.PushMessage(msg);
+        ProcessEvent(event);
     }
 }
 
-void InputSystem::PushEvent(const sf::Event& event)
+void InputSystem::ProcessEvent(const sf::Event& event)
 {
     switch (event.type) {
         case sf::Event::KeyPressed: {
             auto it = supportedKeys.find(event.key.code);
-            if (it != supportedKeys.end()) {
-                auto msg = std::make_shared<KeyboardPressedMessage>(it->second);
-                messageBus_.PushMessage(msg);
-            }
+            auto key = (it != supportedKeys.end()) ? it->second : Keyboard::Key::Undefined;
+            keyPressed_.clear();  // Let only one key be considered as pressed one at a time
+            if (key != Keyboard::Key::Undefined) keyPressed_.insert(key);
+            auto msg = std::make_shared<KeyboardPressedMessage>(key);
+            messageBus_.PushMessage(msg);
             break;
         }
         case sf::Event::KeyReleased: {
             auto it = supportedKeys.find(event.key.code);
-            if (it != supportedKeys.end()) {
-                auto msg = std::make_shared<KeyboardReleasedMessage>(it->second);
-                messageBus_.PushMessage(msg);
-            }
+            auto key = (it != supportedKeys.end()) ? it->second : Keyboard::Key::Undefined;
+            if (key != Keyboard::Key::Undefined) keyPressed_.erase(key);
+            auto msg = std::make_shared<KeyboardReleasedMessage>(key);
+            messageBus_.PushMessage(msg);
             break;
         }
         case sf::Event::Closed: {
@@ -75,19 +68,12 @@ void InputSystem::PushEvent(const sf::Event& event)
             break;
         }
     }
-}
 
-Keyboard::Key InputSystem::IsKeyPressed() const
-{
-    auto key = Keyboard::Key::Undefined;
-
-    for (auto entry : supportedKeys) {
-        if (sf::Keyboard::isKeyPressed(entry.first)) {
-            key = entry.second;
-        }
+    // This will give continuously messages when key is pressed. It is equivalent to sf::Keyboard::isKeyPressed(...).
+    for (auto key : keyPressed_) {
+        auto msg = std::make_shared<IsKeyPressedMessage>(key);
+        messageBus_.PushMessage(msg);
     }
-
-    return key;
 }
 
 }  // namespace FA
