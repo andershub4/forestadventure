@@ -21,7 +21,7 @@ void AnimationHandler::Update(float deltaTime)
 
 void AnimationHandler::SetAnimation(FrameType frameType, FaceDir dir, sf::RectangleShape& rectShape, bool start)
 {
-    if (frameType != currentFrameType_ || currentDir_ != dir) {
+    if (frameType != currentFrameType_ || dir != currentDir_) {
         currentFrameType_ = frameType;
         currentDir_ = dir;
         currentAnimation_ = CreateAnimation(frameType, dir, rectShape);
