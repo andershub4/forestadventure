@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Animation\AnimationHandler.h" />
+    <ClInclude Include="Entity\Entity.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Animation\AnimationHandler.cpp" />
+    <ClCompile Include="Entity\Entity.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />
     <ClCompile Include="Message\BroadcastMessage\KeyboardPressedMessage.cpp" />

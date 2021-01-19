@@ -16,7 +16,6 @@
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyboardPressedMessage.h"
 #include "Message/BroadcastMessage/KeyboardReleasedMessage.h"
-#include "Sprite/SpriteSheet.h"
 #include "System/InputSystem.h"
 #include "Utils/Logger.h"
 #include "Utils/Path.h"
@@ -28,6 +27,7 @@ const sf::Vector2u Game::screen = {1280, 780};
 const sf::Vector2u Game::centerScreen = {Game::screen.x / 2, Game::screen.y / 2};
 
 Game::Game()
+    : entity_(textureManager_)
 {
     LOG_INFO("Start up ", FA_APP_NAME, " version ", FA_APP_VERSION);
     LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
@@ -42,13 +42,6 @@ Game::Game()
                               {MessageType::IsKeyPressed, MessageType::KeyboardPressed, MessageType::KeyboardReleased,
                                MessageType::CloseWindow},
                               cb);
-
-    entity_.rectShape_.setPosition(
-        sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
-    constexpr int size = 64;
-    entity_.rectShape_.setSize({static_cast<float>(size), static_cast<float>(size)});
-    InitAnimations();
-    entity_.SetAnimation();
 }
 
 Game::~Game()
@@ -93,32 +86,25 @@ void Game::OnMessage(std::shared_ptr<Message> message)
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(message);
         auto key = m->GetKey();
         if (key == Keyboard::Key::Right) {
-            entity_.dir_ = AnimationHandler::FaceDir::Right;
-            entity_.SetAnimation();
+            entity_.SetFaceDir(AnimationHandler::FaceDir::Right);
         }
         else if (key == Keyboard::Key::Left) {
-            entity_.dir_ = AnimationHandler::FaceDir::Left;
-            entity_.SetAnimation();
+            entity_.SetFaceDir(AnimationHandler::FaceDir::Left);
         }
         else if (key == Keyboard::Key::Up) {
-            entity_.dir_ = AnimationHandler::FaceDir::Up;
-            entity_.SetAnimation();
+            entity_.SetFaceDir(AnimationHandler::FaceDir::Up);
         }
         else if (key == Keyboard::Key::Down) {
-            entity_.dir_ = AnimationHandler::FaceDir::Down;
-            entity_.SetAnimation();
+            entity_.SetFaceDir(AnimationHandler::FaceDir::Down);
         }
         else if (key == Keyboard::Key::Num1) {
-            entity_.frameType_ = AnimationHandler::FrameType::Idle;
-            entity_.SetAnimation();
+            entity_.SetFrameType(AnimationHandler::FrameType::Idle);
         }
         else if (key == Keyboard::Key::Num2) {
-            entity_.frameType_ = AnimationHandler::FrameType::Move;
-            entity_.SetAnimation();
+            entity_.SetFrameType(AnimationHandler::FrameType::Move);
         }
         else if (key == Keyboard::Key::Num3) {
-            entity_.frameType_ = AnimationHandler::FrameType::Attack;
-            entity_.SetAnimation();
+            entity_.SetFrameType(AnimationHandler::FrameType::Attack);
         }
         else if (key == Keyboard::Key::Escape) {
             window_.close();
@@ -177,89 +163,5 @@ void Game::InitDebugSceneGraphics()
     dotShape_.setPosition(sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
 }
 #endif
-
-void Game::InitAnimations()
-{
-    auto textureWalkSide =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-side.png");
-    if (textureWalkSide != nullptr) {
-        SpriteSheet spriteSheet("heroWalkSide", textureWalkSide, {6, 1});
-        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Left, f.texture_,
-                                      f.frames_, f.defaultFrame_, true);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Right, f.texture_,
-                                      f.frames_, f.defaultFrame_);
-    }
-    auto textureWalkFront =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-front.png");
-    if (textureWalkFront != nullptr) {
-        SpriteSheet spriteSheet("heroWalkFront", textureWalkFront, {6, 1});
-        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Down, f.texture_,
-                                      f.frames_, f.defaultFrame_);
-    }
-    auto textureWalkBack =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-back-walk.png");
-    if (textureWalkBack != nullptr) {
-        SpriteSheet spriteSheet("heroWalkBack", textureWalkBack, {6, 1});
-        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Up, f.texture_,
-                                      f.frames_, f.defaultFrame_);
-    }
-
-    auto textureAttackSide =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack/hero-attack-side.png");
-    if (textureAttackSide != nullptr) {
-        SpriteSheet spriteSheet("heroAttackSide", textureAttackSide, {3, 1});
-        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Left, f.texture_,
-                                      f.frames_, f.defaultFrame_, true);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Right, f.texture_,
-                                      f.frames_, f.defaultFrame_);
-    }
-    auto textureAttackFront =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack/hero-attack-front.png");
-    if (textureAttackFront != nullptr) {
-        SpriteSheet spriteSheet("heroAttackFront", textureAttackFront, {3, 1});
-        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Down, f.texture_,
-                                      f.frames_, f.defaultFrame_);
-    }
-    auto textureAttackBack =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack/hero-attack-back.png");
-    if (textureAttackBack != nullptr) {
-        SpriteSheet spriteSheet("heroAttackBack", textureAttackBack, {3, 1});
-        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Attack, AnimationHandler::FaceDir::Up, f.texture_,
-                                      f.frames_, f.defaultFrame_);
-    }
-
-    auto textureIdleSide =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/idle/hero-idle-side.png");
-    if (textureIdleSide != nullptr) {
-        SpriteSheet spriteSheet("heroIdleSide", textureIdleSide, {1, 1});
-        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Left, f.texture_,
-                                      f.frames_, f.defaultFrame_, true);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Right, f.texture_,
-                                      f.frames_, f.defaultFrame_);
-    }
-    auto textureIdleFront =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/idle/hero-idle-front.png");
-    if (textureIdleFront != nullptr) {
-        SpriteSheet spriteSheet("heroIdleFront", textureIdleFront, {1, 1});
-        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Down, f.texture_,
-                                      f.frames_, f.defaultFrame_);
-    }
-    auto textureIdleBack =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/idle/hero-idle-back.png");
-    if (textureIdleBack != nullptr) {
-        SpriteSheet spriteSheet("heroIdleBack", textureIdleBack, {1, 1});
-        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
-        entity_.RegisterAnimationInfo(AnimationHandler::FrameType::Idle, AnimationHandler::FaceDir::Up, f.texture_,
-                                      f.frames_, f.defaultFrame_);
-    }
-}
 
 }  // namespace FA

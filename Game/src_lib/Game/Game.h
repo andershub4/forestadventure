@@ -16,35 +16,11 @@
 #include <SFML/Graphics/Text.hpp>
 #endif
 
-#include "Animation/AnimationHandler.h"
+#include "Entity/Entity.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 
 namespace FA {
-
-class Entity
-{
-public:
-    Entity()
-        : animationHandler_(0.1f)
-    {}
-    AnimationHandler::FrameType frameType_ = AnimationHandler::FrameType::Move;
-    AnimationHandler::FaceDir dir_ = AnimationHandler::FaceDir::Up;
-    sf::RectangleShape rectShape_;
-
-    void Update(float deltaTime) { animationHandler_.Update(deltaTime); }
-    void Draw(sf::RenderWindow& window) { window.draw(rectShape_); }
-    void RegisterAnimationInfo(AnimationHandler::FrameType frameType, AnimationHandler::FaceDir dir,
-                               const sf::Texture* texture, const std::vector<sf::IntRect>& frames,
-                               unsigned int defaultFrame, bool mirrorX = false)
-    {
-        animationHandler_.RegisterAnimationInfo(frameType, dir, texture, frames, defaultFrame, mirrorX);
-    }
-    void SetAnimation() { animationHandler_.SetAnimation(frameType_, dir_, rectShape_, true); }
-
-private:
-    AnimationHandler animationHandler_;
-};
 
 class Game
 {
@@ -62,8 +38,8 @@ private:
     std::unique_ptr<std::ofstream> sfmlLogStream_;
     sf::RenderWindow window_;
     sf::View view_;
-    Entity entity_;
     TextureManager textureManager_;
+    Entity entity_;
 #ifdef _DEBUG
     sf::RectangleShape dotShape_;
     sf::Font font_;
@@ -77,7 +53,6 @@ private:
 #ifdef _DEBUG
     void InitDebugSceneGraphics();
 #endif
-    void InitAnimations();
 };
 
 }  // namespace FA
