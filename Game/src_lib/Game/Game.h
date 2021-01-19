@@ -17,7 +17,7 @@
 #endif
 
 #include "Layer.h"
-#include "Level/Level.h"
+#include "SceneComponent/Level/Level.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 
