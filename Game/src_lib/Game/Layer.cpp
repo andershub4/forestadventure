@@ -28,7 +28,7 @@ void Layer::Display()
 
 void Layer::Clear()
 {
-    renderTexture_.clear();
+    renderTexture_.clear(sf::Color::Transparent);
 }
 
 void Layer::DrawTo(sf::RenderTarget& renderTarget)
