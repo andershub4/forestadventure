@@ -27,16 +27,14 @@ const sf::Vector2u Game::screen = {1280, 780};
 const sf::Vector2u Game::centerScreen = {Game::screen.x / 2, Game::screen.y / 2};
 
 Game::Game()
-    : level_(messageBus_, textureManager_)
+    : sceneHelper_(messageBus_, "GamePlayScene")
+    , level_(messageBus_, textureManager_)
 {
     LOG_INFO("Start up ", FA_APP_NAME, " version ", FA_APP_VERSION);
     LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
 
     RedirectSfmlLogEntries();
     InitWindow();
-#ifdef _DEBUG
-    InitDebugSceneGraphics();
-#endif
     auto cb = [this](std::shared_ptr<Message> message) { OnMessage(message); };
     messageBus_.AddSubscriber("game",
                               {MessageType::IsKeyPressed, MessageType::KeyboardPressed, MessageType::KeyboardReleased,
@@ -69,8 +67,8 @@ void Game::GameLoop()
         level_.DrawTo(levelLayer_);
         levelLayer_.DrawTo(window_);
 #ifdef _DEBUG
-        window_.draw(sceneText_);
-        window_.draw(dotShape_);
+        sceneHelper_.DrawTo(sceneHelperLayer_);
+        sceneHelperLayer_.DrawTo(window_);
 #endif
         window_.display();
     }
@@ -125,24 +123,5 @@ void Game::InitWindow()
 #endif
     window_.setFramerateLimit(120);
 }
-
-#ifdef _DEBUG
-void Game::InitDebugSceneGraphics()
-{
-    if (!font_.loadFromFile("assets/font/cello-sans/hinted-CelloSans-Medium.ttf")) {
-        LOG_ERROR("Could not load hinted-CelloSans-Medium");
-    }
-
-    sceneText_.setFont(font_);
-    sceneText_.setString("GamePlayScene");
-    sceneText_.setCharacterSize(24);
-    sceneText_.setFillColor(sf::Color::White);
-    sf::Vector2f sceneTextPos(0.0f, 0.0f);
-    sceneText_.setPosition(sceneTextPos);
-
-    dotShape_.setSize(sf::Vector2f(1.0, 1.0));
-    dotShape_.setPosition(sf::Vector2f(static_cast<float>(centerScreen.x), static_cast<float>(centerScreen.y)));
-}
-#endif
 
 }  // namespace FA

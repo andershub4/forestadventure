@@ -9,17 +9,13 @@
 #include <iosfwd>
 #include <memory>
 
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#ifdef _DEBUG
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/Text.hpp>
-#endif
 
 #include "Layer.h"
-#include "SceneComponent/Level/Level.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
+#include "SceneComponent/Level/Level.h"
+#include "SceneComponent/SceneHelper/SceneHelper.h"
 
 namespace FA {
 
@@ -42,19 +38,13 @@ private:
     TextureManager textureManager_;
     Level level_;
     Layer levelLayer_;
-#ifdef _DEBUG
-    sf::RectangleShape dotShape_;
-    sf::Font font_;
-    sf::Text sceneText_;
-#endif
+    SceneHelper sceneHelper_;
+    Layer sceneHelperLayer_;
 
 private:
     void RedirectSfmlLogEntries();
     void OnMessage(std::shared_ptr<Message> message);
     void InitWindow();
-#ifdef _DEBUG
-    void InitDebugSceneGraphics();
-#endif
 };
 
 }  // namespace FA
