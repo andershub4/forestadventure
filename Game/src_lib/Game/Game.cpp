@@ -27,7 +27,7 @@ const sf::Vector2u Game::screen = {1280, 780};
 const sf::Vector2u Game::centerScreen = {Game::screen.x / 2, Game::screen.y / 2};
 
 Game::Game()
-    : entity_(messageBus_, textureManager_)
+    : level_(messageBus_, textureManager_)
 {
     LOG_INFO("Start up ", FA_APP_NAME, " version ", FA_APP_VERSION);
     LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
@@ -62,10 +62,10 @@ void Game::GameLoop()
         inputSystem.Update(deltaTime);
         messageBus_.DispatchMessages();
 
-        entity_.Update(deltaTime);
+        level_.Update(deltaTime);
 
         window_.clear();
-        entity_.Draw(window_);
+        level_.DrawTo(window_);
 #ifdef _DEBUG
         window_.draw(sceneText_);
         window_.draw(dotShape_);

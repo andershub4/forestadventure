@@ -16,7 +16,7 @@
 #include <SFML/Graphics/Text.hpp>
 #endif
 
-#include "Entity/Entity.h"
+#include "Level/Level.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 
@@ -39,7 +39,7 @@ private:
     sf::RenderWindow window_;
     sf::View view_;
     TextureManager textureManager_;
-    Entity entity_;
+    Level level_;
 #ifdef _DEBUG
     sf::RectangleShape dotShape_;
     sf::Font font_;
