@@ -9,22 +9,25 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include "Animation/AnimationHandler.h"
+#include "Enum/KeyboardKey.h"
 
 namespace FA {
 
+class MessageBus;
+class Message;
 class TextureManager;
 
 class Entity
 {
 public:
-    Entity(TextureManager& textureManager);
+    Entity(MessageBus& messageBus, TextureManager& textureManager);
 
     void Update(float deltaTime);
     void Draw(sf::RenderWindow& window);
-    void SetFrameType(AnimationHandler::FrameType frameType);
-    void SetFaceDir(AnimationHandler::FaceDir dir);
+    void OnMessage(std::shared_ptr<Message> msg);
 
 private:
+    MessageBus& messageBus_;
     AnimationHandler animationHandler_;
     sf::RectangleShape rectShape_;
     AnimationHandler::FrameType frameType_ = AnimationHandler::FrameType::Move;
@@ -32,6 +35,9 @@ private:
 
 private:
     void InitAnimation(TextureManager& textureManager);
+    void SetFrameType(AnimationHandler::FrameType frameType);
+    void SetFaceDir(AnimationHandler::FaceDir dir);
+    void OnIsKeyPressed(Keyboard::Key key);
 };
 
 }  // namespace FA

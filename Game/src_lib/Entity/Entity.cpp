@@ -7,13 +7,18 @@
 #include "Entity.h"
 
 #include "Game/Game.h"
+#include "Message/BroadcastMessage/IsKeyPressedMessage.h"
+#include "Message/MessageBus.h"
 #include "Sprite/SpriteSheet.h"
 
 namespace FA {
 
-Entity::Entity(TextureManager& textureManager)
-    : animationHandler_(0.1f)
+Entity::Entity(MessageBus& messageBus, TextureManager& textureManager)
+    : messageBus_(messageBus)
+    , animationHandler_(0.1f)
 {
+    messageBus_.AddSubscriber("entity", MessageType::IsKeyPressed,
+                              [this](std::shared_ptr<Message> message) { OnMessage(message); });
     rectShape_.setPosition(
         sf::Vector2f(static_cast<float>(Game::centerScreen.x), static_cast<float>(Game::centerScreen.y)));
     constexpr int size = 64;
@@ -32,6 +37,16 @@ void Entity::Draw(sf::RenderWindow& window)
     window.draw(rectShape_);
 }
 
+void Entity::OnMessage(std::shared_ptr<Message> msg)
+{
+    if (msg->GetMessageType() == MessageType::IsKeyPressed) {
+        // TODO: Implement a mechanism to disable handling of IsKeyPressed when game is paused.
+        auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
+        auto key = m->GetKey();
+        OnIsKeyPressed(key);
+    }
+}
+
 void Entity::SetFrameType(AnimationHandler::FrameType frameType)
 {
     frameType_ = frameType;
@@ -42,6 +57,31 @@ void Entity::SetFaceDir(AnimationHandler::FaceDir dir)
 {
     dir_ = dir;
     animationHandler_.SetAnimation(frameType_, dir_, rectShape_, true);
+}
+
+void Entity::OnIsKeyPressed(Keyboard::Key key)
+{
+    if (key == Keyboard::Key::Right) {
+        SetFaceDir(AnimationHandler::FaceDir::Right);
+    }
+    else if (key == Keyboard::Key::Left) {
+        SetFaceDir(AnimationHandler::FaceDir::Left);
+    }
+    else if (key == Keyboard::Key::Up) {
+        SetFaceDir(AnimationHandler::FaceDir::Up);
+    }
+    else if (key == Keyboard::Key::Down) {
+        SetFaceDir(AnimationHandler::FaceDir::Down);
+    }
+    else if (key == Keyboard::Key::Num1) {
+        SetFrameType(AnimationHandler::FrameType::Idle);
+    }
+    else if (key == Keyboard::Key::Num2) {
+        SetFrameType(AnimationHandler::FrameType::Move);
+    }
+    else if (key == Keyboard::Key::Num3) {
+        SetFrameType(AnimationHandler::FrameType::Attack);
+    }
 }
 
 void Entity::InitAnimation(TextureManager& textureManager)

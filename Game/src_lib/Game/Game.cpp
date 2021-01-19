@@ -27,7 +27,7 @@ const sf::Vector2u Game::screen = {1280, 780};
 const sf::Vector2u Game::centerScreen = {Game::screen.x / 2, Game::screen.y / 2};
 
 Game::Game()
-    : entity_(textureManager_)
+    : entity_(messageBus_, textureManager_)
 {
     LOG_INFO("Start up ", FA_APP_NAME, " version ", FA_APP_VERSION);
     LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
@@ -85,6 +85,7 @@ void Game::OnMessage(std::shared_ptr<Message> message)
     else if (message->GetMessageType() == MessageType::IsKeyPressed) {
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(message);
         auto key = m->GetKey();
+        /*
         if (key == Keyboard::Key::Right) {
             entity_.SetFaceDir(AnimationHandler::FaceDir::Right);
         }
@@ -107,6 +108,10 @@ void Game::OnMessage(std::shared_ptr<Message> message)
             entity_.SetFrameType(AnimationHandler::FrameType::Attack);
         }
         else if (key == Keyboard::Key::Escape) {
+            window_.close();
+        }
+        */
+        if (key == Keyboard::Key::Escape) {
             window_.close();
         }
     }
