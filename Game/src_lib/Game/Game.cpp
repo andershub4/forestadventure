@@ -79,41 +79,15 @@ void Game::GameLoop()
 void Game::OnMessage(std::shared_ptr<Message> message)
 {
     if (message->GetMessageType() == MessageType::KeyboardPressed) {
+        auto m = std::dynamic_pointer_cast<KeyboardPressedMessage>(message);
+        auto key = m->GetKey();
+        if (key == Keyboard::Key::Escape) {
+            window_.close();
+        }
     }
     else if (message->GetMessageType() == MessageType::KeyboardReleased) {
     }
     else if (message->GetMessageType() == MessageType::IsKeyPressed) {
-        auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(message);
-        auto key = m->GetKey();
-        /*
-        if (key == Keyboard::Key::Right) {
-            entity_.SetFaceDir(AnimationHandler::FaceDir::Right);
-        }
-        else if (key == Keyboard::Key::Left) {
-            entity_.SetFaceDir(AnimationHandler::FaceDir::Left);
-        }
-        else if (key == Keyboard::Key::Up) {
-            entity_.SetFaceDir(AnimationHandler::FaceDir::Up);
-        }
-        else if (key == Keyboard::Key::Down) {
-            entity_.SetFaceDir(AnimationHandler::FaceDir::Down);
-        }
-        else if (key == Keyboard::Key::Num1) {
-            entity_.SetFrameType(AnimationHandler::FrameType::Idle);
-        }
-        else if (key == Keyboard::Key::Num2) {
-            entity_.SetFrameType(AnimationHandler::FrameType::Move);
-        }
-        else if (key == Keyboard::Key::Num3) {
-            entity_.SetFrameType(AnimationHandler::FrameType::Attack);
-        }
-        else if (key == Keyboard::Key::Escape) {
-            window_.close();
-        }
-        */
-        if (key == Keyboard::Key::Escape) {
-            window_.close();
-        }
     }
     else if (message->GetMessageType() == MessageType::CloseWindow) {
         window_.close();
