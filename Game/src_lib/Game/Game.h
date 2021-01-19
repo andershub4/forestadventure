@@ -16,6 +16,7 @@
 #include <SFML/Graphics/Text.hpp>
 #endif
 
+#include "Layer.h"
 #include "Level/Level.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
@@ -40,6 +41,7 @@ private:
     sf::View view_;
     TextureManager textureManager_;
     Level level_;
+    Layer levelLayer_;
 #ifdef _DEBUG
     sf::RectangleShape dotShape_;
     sf::Font font_;

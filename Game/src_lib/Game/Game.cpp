@@ -65,7 +65,9 @@ void Game::GameLoop()
         level_.Update(deltaTime);
 
         window_.clear();
-        level_.DrawTo(window_);
+
+        level_.DrawTo(levelLayer_);
+        levelLayer_.DrawTo(window_);
 #ifdef _DEBUG
         window_.draw(sceneText_);
         window_.draw(dotShape_);

@@ -148,6 +148,7 @@
     <ClInclude Include="Enum\MessageType.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Game\Layer.h" />
     <ClInclude Include="Game\Version.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="Animation\AnimationHandler.cpp" />
     <ClCompile Include="Entity\Entity.cpp" />
     <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Game\Layer.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />
     <ClCompile Include="Message\BroadcastMessage\KeyboardPressedMessage.cpp" />

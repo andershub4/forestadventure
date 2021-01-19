@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/Entity.h"
+#include "Game/Layer.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 
@@ -21,9 +22,11 @@ Level::Level(MessageBus& messageBus, TextureManager& textureManager)
 
 Level::~Level() = default;
 
-void Level::DrawTo(sf::RenderWindow& window)
+void Level::DrawTo(Layer& layer)
 {
-    entity_.Draw(window);
+    layer.Clear();
+    entity_.DrawTo(layer);
+    layer.Display();
 }
 
 void Level::Update(float deltaTime)

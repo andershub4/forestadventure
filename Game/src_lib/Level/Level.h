@@ -12,6 +12,7 @@ namespace FA {
 
 class MessageBus;
 class TextureManager;
+class Layer;
 
 class Level
 {
@@ -20,7 +21,7 @@ public:
     virtual ~Level();
 
     void Update(float deltaTime);
-    void DrawTo(sf::RenderWindow& window);
+    void DrawTo(Layer& layer);
 
 private:
     MessageBus& messageBus_;

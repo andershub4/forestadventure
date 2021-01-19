@@ -7,6 +7,7 @@
 #include "Entity.h"
 
 #include "Game/Game.h"
+#include "Game/Layer.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/MessageBus.h"
 #include "Sprite/SpriteSheet.h"
@@ -32,9 +33,9 @@ void Entity::Update(float deltaTime)
     animationHandler_.Update(deltaTime);
 }
 
-void Entity::Draw(sf::RenderWindow& window)
+void Entity::DrawTo(Layer& layer)
 {
-    window.draw(rectShape_);
+    layer.Draw(rectShape_);
 }
 
 void Entity::OnMessage(std::shared_ptr<Message> msg)

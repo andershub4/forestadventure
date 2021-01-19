@@ -16,6 +16,7 @@ namespace FA {
 class MessageBus;
 class Message;
 class TextureManager;
+class Layer;
 
 class Entity
 {
@@ -23,7 +24,7 @@ public:
     Entity(MessageBus& messageBus, TextureManager& textureManager);
 
     void Update(float deltaTime);
-    void Draw(sf::RenderWindow& window);
+    void DrawTo(Layer& layer);
     void OnMessage(std::shared_ptr<Message> msg);
 
 private:
