@@ -6,13 +6,13 @@
 
 #include "Layer.h"
 
-#include "Game.h"
+#include "Constant/Screen.h"
 
 namespace FA {
 
 Layer::Layer()
 {
-    renderTexture_.create(Game::screen.x, Game::screen.y);
+    renderTexture_.create(constant::Screen::width, constant::Screen::height);
     sprite_.setTexture(renderTexture_.getTexture());
 }
 

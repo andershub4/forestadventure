@@ -26,10 +26,6 @@ public:
     ~Game();
     void GameLoop();
 
-public:
-    static const sf::Vector2u screen;
-    static const sf::Vector2u centerScreen;
-
 private:
     MessageBus messageBus_;
     std::unique_ptr<std::ofstream> sfmlLogStream_;

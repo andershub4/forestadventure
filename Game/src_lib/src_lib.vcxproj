@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Animation\AnimationHandler.h" />
+    <ClInclude Include="Constant\Screen.h" />
     <ClInclude Include="Entity\Entity.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />

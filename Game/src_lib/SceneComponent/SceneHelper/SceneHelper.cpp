@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Game/Game.h"
+#include "Constant/Screen.h"
 #include "Game/Layer.h"
 #include "Message/MessageBus.h"
 #include "Utils/Logger.h"
@@ -30,8 +30,7 @@ SceneHelper::SceneHelper(MessageBus& messageBus, const std::string& sceneName)
     sceneText_.setPosition(sceneTextPos);
 
     dotShape_.setSize(sf::Vector2f(1.0, 1.0));
-    dotShape_.setPosition(
-        sf::Vector2f(static_cast<float>(Game::centerScreen.x), static_cast<float>(Game::centerScreen.y)));
+    dotShape_.setPosition(constant::Screen::centerX_f, constant::Screen::centerY_f);
 }
 
 SceneHelper::~SceneHelper() = default;

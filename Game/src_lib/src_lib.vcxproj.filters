@@ -134,5 +134,8 @@
     <ClInclude Include="SceneComponent\SceneHelper\SceneHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Constant\Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

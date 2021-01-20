@@ -12,6 +12,7 @@
 #include <SFML/Config.hpp>
 #include <SFML/System/Err.hpp>
 
+#include "Constant/Screen.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyboardPressedMessage.h"
@@ -22,9 +23,6 @@
 #include "Version.h"
 
 namespace FA {
-
-const sf::Vector2u Game::screen = {1280, 780};
-const sf::Vector2u Game::centerScreen = {Game::screen.x / 2, Game::screen.y / 2};
 
 Game::Game()
     : sceneHelper_(messageBus_, "GamePlayScene")
@@ -115,10 +113,10 @@ void Game::InitWindow()
     LOG_INFO("Create main window");
 #ifdef _DEBUG
     const std::string title = std::string(FA_APP_NAME) + " v" + FA_APP_VERSION;
-    window_.create(sf::VideoMode(screen.x, screen.y), title);
+    window_.create(sf::VideoMode(constant::Screen::width, constant::Screen::height), title);
 #else
     window_.create(sf::VideoMode::getDesktopMode(), FA_APP_NAME, sf::Style::Fullscreen);
-    view_.reset(sf::FloatRect(0.0, 0.0, static_cast<float>(screen.x), static_cast<float>(screen.y)));
+    view_.reset(sf::FloatRect(0.0, 0.0, constant::Screen::width_f, constant::Screen::height_f));
     window_.setView(view_);
 #endif
     window_.setFramerateLimit(120);

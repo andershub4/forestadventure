@@ -6,10 +6,11 @@
 
 #include "Entity.h"
 
-#include "Game/Game.h"
+#include "Constant/Screen.h"
 #include "Game/Layer.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/MessageBus.h"
+#include "Misc/TextureManager.h"
 #include "Sprite/SpriteSheet.h"
 
 namespace FA {
@@ -20,8 +21,7 @@ Entity::Entity(MessageBus& messageBus, TextureManager& textureManager)
 {
     messageBus_.AddSubscriber("entity", MessageType::IsKeyPressed,
                               [this](std::shared_ptr<Message> message) { OnMessage(message); });
-    rectShape_.setPosition(
-        sf::Vector2f(static_cast<float>(Game::centerScreen.x), static_cast<float>(Game::centerScreen.y)));
+    rectShape_.setPosition(constant::Screen::centerX_f, constant::Screen::centerY_f);
     constexpr int size = 64;
     rectShape_.setSize({static_cast<float>(size), static_cast<float>(size)});
     InitAnimation(textureManager);
