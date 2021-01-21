@@ -8,6 +8,8 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
+#include "Utils/Logger.h"
+
 namespace FA {
 
 TextureManager::TextureManager() = default;
@@ -27,6 +29,7 @@ const sf::Texture* TextureManager::GetTexture(const std::string& file)
         return textures_.at(file).get();
     }
     else {
+        LOG_ERROR("Could not load ", file);
         return nullptr;
     }
 }
