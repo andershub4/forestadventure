@@ -155,8 +155,8 @@
     <ClInclude Include="Movement\Movement.h" />
     <ClInclude Include="SceneComponent\Level\Level.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
-    <ClInclude Include="Message\BroadcastMessage\KeyboardPressedMessage.h" />
-    <ClInclude Include="Message\BroadcastMessage\KeyboardReleasedMessage.h" />
+    <ClInclude Include="Message\BroadcastMessage\KeyPressedMessage.h" />
+    <ClInclude Include="Message\BroadcastMessage\KeyReleasedMessage.h" />
     <ClInclude Include="Message\BroadcastMessage\CloseWindowMessage.h" />
     <ClInclude Include="Message\Message.h" />
     <ClInclude Include="Message\MessageBus.h" />
@@ -177,8 +177,8 @@
     <ClCompile Include="Movement\Movement.cpp" />
     <ClCompile Include="SceneComponent\Level\Level.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />
-    <ClCompile Include="Message\BroadcastMessage\KeyboardPressedMessage.cpp" />
-    <ClCompile Include="Message\BroadcastMessage\KeyboardReleasedMessage.cpp" />
+    <ClCompile Include="Message\BroadcastMessage\KeyPressedMessage.cpp" />
+    <ClCompile Include="Message\BroadcastMessage\KeyReleasedMessage.cpp" />
     <ClCompile Include="Message\Message.cpp" />
     <ClCompile Include="Message\MessageBus.cpp" />
     <ClCompile Include="Misc\TextureManager.cpp" />

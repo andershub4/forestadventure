@@ -4,11 +4,11 @@
  *	See file LICENSE for full license details.
  */
 
-#include "KeyboardReleasedMessage.h"
+#include "KeyReleasedMessage.h"
 
 namespace FA {
 
-KeyboardReleasedMessage::KeyboardReleasedMessage(Keyboard::Key key)
+KeyReleasedMessage::KeyReleasedMessage(Keyboard::Key key)
     : key_(key)
 {}
 

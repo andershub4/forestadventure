@@ -14,8 +14,8 @@
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
-#include "Message/BroadcastMessage/KeyboardPressedMessage.h"
-#include "Message/BroadcastMessage/KeyboardReleasedMessage.h"
+#include "Message/BroadcastMessage/KeyPressedMessage.h"
+#include "Message/BroadcastMessage/KeyReleasedMessage.h"
 #include "Message/MessageBus.h"
 #include "Utils/Logger.h"
 
@@ -60,14 +60,14 @@ void InputSystem::ProcessEvent(const sf::Event& event)
         case sf::Event::KeyPressed: {
             auto it = supportedKeys.find(event.key.code);
             auto key = (it != supportedKeys.end()) ? it->second : Keyboard::Key::Undefined;
-            auto msg = std::make_shared<KeyboardPressedMessage>(key);
+            auto msg = std::make_shared<KeyPressedMessage>(key);
             messageBus_.PushMessage(msg);
             break;
         }
         case sf::Event::KeyReleased: {
             auto it = supportedKeys.find(event.key.code);
             auto key = (it != supportedKeys.end()) ? it->second : Keyboard::Key::Undefined;
-            auto msg = std::make_shared<KeyboardReleasedMessage>(key);
+            auto msg = std::make_shared<KeyReleasedMessage>(key);
             messageBus_.PushMessage(msg);
             break;
         }

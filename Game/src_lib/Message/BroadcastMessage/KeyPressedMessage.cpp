@@ -4,11 +4,11 @@
  *	See file LICENSE for full license details.
  */
 
-#include "KeyboardPressedMessage.h"
+#include "KeyPressedMessage.h"
 
 namespace FA {
 
-KeyboardPressedMessage::KeyboardPressedMessage(Keyboard::Key key)
+KeyPressedMessage::KeyPressedMessage(Keyboard::Key key)
     : key_(key)
 {}
 

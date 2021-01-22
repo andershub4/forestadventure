@@ -10,7 +10,7 @@
 #include "Game/Layer.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
-#include "Message/BroadcastMessage/KeyboardPressedMessage.h"
+#include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 #include "Sprite/SpriteSheet.h"
@@ -23,7 +23,7 @@ Entity::Entity(MessageBus& messageBus, TextureManager& textureManager)
     , movement_(&rectShape_, 120)
 {
     messageBus_.AddSubscriber("entity",
-                              {MessageType::IsKeyPressed, MessageType::KeyboardPressed, MessageType::IsKeyReleased},
+                              {MessageType::IsKeyPressed, MessageType::KeyPressed, MessageType::IsKeyReleased},
                               [this](std::shared_ptr<Message> message) { OnMessage(message); });
     rectShape_.setPosition(constant::Screen::centerX_f, constant::Screen::centerY_f);
     constexpr int size = 64;
@@ -54,8 +54,8 @@ void Entity::OnMessage(std::shared_ptr<Message> msg)
     else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
         movement_.Stop();
     }
-    else if (msg->GetMessageType() == MessageType::KeyboardPressed) {
-        auto m = std::dynamic_pointer_cast<KeyboardPressedMessage>(msg);
+    else if (msg->GetMessageType() == MessageType::KeyPressed) {
+        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
         auto key = m->GetKey();
         OnKeyboardPressed(key);
     }

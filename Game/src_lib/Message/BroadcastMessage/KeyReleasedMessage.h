@@ -12,13 +12,13 @@
 
 namespace FA {
 
-class KeyboardReleasedMessage : public Message
+class KeyReleasedMessage : public Message
 {
 public:
-    KeyboardReleasedMessage(Keyboard::Key key);
+    KeyReleasedMessage(Keyboard::Key key);
 
-    virtual MessageType GetMessageType() const override { return MessageType::KeyboardReleased; }
-    virtual std::string Name() const override { return "KeyboardReleased"; }
+    virtual MessageType GetMessageType() const override { return MessageType::KeyReleased; }
+    virtual std::string Name() const override { return "KeyReleased"; }
 
     Keyboard::Key GetKey() const { return key_; }
 

@@ -14,8 +14,8 @@
 #include "Constant/Screen.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
-#include "Message/BroadcastMessage/KeyboardPressedMessage.h"
-#include "Message/BroadcastMessage/KeyboardReleasedMessage.h"
+#include "Message/BroadcastMessage/KeyPressedMessage.h"
+#include "Message/BroadcastMessage/KeyReleasedMessage.h"
 #include "System/InputSystem.h"
 #include "Utils/Logger.h"
 #include "Utils/Path.h"
@@ -32,7 +32,7 @@ Game::Game()
     InitWindow();
     auto cb = [this](std::shared_ptr<Message> message) { OnMessage(message); };
     messageBus_.AddSubscriber("game",
-                              {MessageType::IsKeyPressed, MessageType::KeyboardPressed, MessageType::KeyboardReleased,
+                              {MessageType::IsKeyPressed, MessageType::KeyPressed, MessageType::KeyReleased,
                                MessageType::CloseWindow},
                               cb);
     LOG_INFO_EXIT_FUNC();
@@ -69,14 +69,14 @@ void Game::GameLoop()
 
 void Game::OnMessage(std::shared_ptr<Message> message)
 {
-    if (message->GetMessageType() == MessageType::KeyboardPressed) {
-        auto m = std::dynamic_pointer_cast<KeyboardPressedMessage>(message);
+    if (message->GetMessageType() == MessageType::KeyPressed) {
+        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(message);
         auto key = m->GetKey();
         if (key == Keyboard::Key::Escape) {
             window_.close();
         }
     }
-    else if (message->GetMessageType() == MessageType::KeyboardReleased) {
+    else if (message->GetMessageType() == MessageType::KeyReleased) {
     }
     else if (message->GetMessageType() == MessageType::IsKeyPressed) {
     }
