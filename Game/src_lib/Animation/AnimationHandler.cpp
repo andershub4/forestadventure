@@ -19,12 +19,20 @@ void AnimationHandler::Update(float deltaTime)
     if (currentAnimation_) currentAnimation_->Update(deltaTime);
 }
 
-void AnimationHandler::SetAnimation(FrameType frameType, FaceDir dir, sf::RectangleShape& rectShape, bool start)
+void AnimationHandler::ChangeAnimation(FrameType frameType, sf::RectangleShape& rectShape, bool start)
 {
-    if (frameType != currentFrameType_ || dir != currentDir_) {
+    if (frameType != currentFrameType_) {
         currentFrameType_ = frameType;
+        currentAnimation_ = CreateAnimation(currentFrameType_, currentDir_, rectShape);
+        if (start) Start();
+    }
+}
+
+void AnimationHandler::ChangeAnimation(FaceDir dir, sf::RectangleShape& rectShape, bool start)
+{
+    if (dir != currentDir_) {
         currentDir_ = dir;
-        currentAnimation_ = CreateAnimation(frameType, dir, rectShape);
+        currentAnimation_ = CreateAnimation(currentFrameType_, currentDir_, rectShape);
         if (start) Start();
     }
 }
@@ -41,6 +49,14 @@ void AnimationHandler::RegisterAnimationInfo(FrameType frameType, FaceDir dir, c
     else {
         animationInfoMap_[{frameType, dir}] = {texture, mirrorX ? MirrorX(frames) : frames, defaultFrame, switchTime_};
     }
+}
+
+void AnimationHandler::Init(FrameType frameType, FaceDir dir, sf::RectangleShape& rectShape, bool start)
+{
+    currentFrameType_ = frameType;
+    currentDir_ = dir;
+    currentAnimation_ = CreateAnimation(currentFrameType_, currentDir_, rectShape);
+    if (start) Start();
 }
 
 void AnimationHandler::Start()

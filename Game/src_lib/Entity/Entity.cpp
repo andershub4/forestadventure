@@ -28,8 +28,8 @@ Entity::Entity(MessageBus& messageBus, TextureManager& textureManager)
     rectShape_.setPosition(constant::Screen::centerX_f, constant::Screen::centerY_f);
     constexpr int size = 64;
     rectShape_.setSize({static_cast<float>(size), static_cast<float>(size)});
-    InitAnimation(textureManager);
-    animationHandler_.SetAnimation(frameType_, dir_, rectShape_, true);
+    RegisterAnimationInfo(textureManager);
+    animationHandler_.Init(AnimationHandler::FrameType::Move, AnimationHandler::FaceDir::Down, rectShape_, true);
 }
 
 void Entity::Update(float deltaTime)
@@ -61,52 +61,40 @@ void Entity::OnMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void Entity::SetFrameType(AnimationHandler::FrameType frameType)
-{
-    frameType_ = frameType;
-    animationHandler_.SetAnimation(frameType_, dir_, rectShape_, true);
-}
-
-void Entity::SetFaceDir(AnimationHandler::FaceDir dir)
-{
-    dir_ = dir;
-    animationHandler_.SetAnimation(frameType_, dir_, rectShape_, true);
-}
-
 void Entity::OnIsKeyPressed(Keyboard::Key key)
 {
     if (key == Keyboard::Key::Right) {
         movement_.SetDirection(Movement::Direction::Right);
-        SetFaceDir(AnimationHandler::FaceDir::Right);
+        animationHandler_.ChangeAnimation(AnimationHandler::FaceDir::Right, rectShape_);
     }
     else if (key == Keyboard::Key::Left) {
         movement_.SetDirection(Movement::Direction::Left);
-        SetFaceDir(AnimationHandler::FaceDir::Left);
+        animationHandler_.ChangeAnimation(AnimationHandler::FaceDir::Left, rectShape_);
     }
     else if (key == Keyboard::Key::Up) {
         movement_.SetDirection(Movement::Direction::Up);
-        SetFaceDir(AnimationHandler::FaceDir::Up);
+        animationHandler_.ChangeAnimation(AnimationHandler::FaceDir::Up, rectShape_);
     }
     else if (key == Keyboard::Key::Down) {
         movement_.SetDirection(Movement::Direction::Down);
-        SetFaceDir(AnimationHandler::FaceDir::Down);
+        animationHandler_.ChangeAnimation(AnimationHandler::FaceDir::Down, rectShape_);
     }
 }
 
 void Entity::OnKeyboardPressed(Keyboard::Key key)
 {
     if (key == Keyboard::Key::Num1) {
-        SetFrameType(AnimationHandler::FrameType::Idle);
+        animationHandler_.ChangeAnimation(AnimationHandler::FrameType::Idle, rectShape_);
     }
     else if (key == Keyboard::Key::Num2) {
-        SetFrameType(AnimationHandler::FrameType::Move);
+        animationHandler_.ChangeAnimation(AnimationHandler::FrameType::Move, rectShape_);
     }
     else if (key == Keyboard::Key::Num3) {
-        SetFrameType(AnimationHandler::FrameType::Attack);
+        animationHandler_.ChangeAnimation(AnimationHandler::FrameType::Attack, rectShape_);
     }
 }
 
-void Entity::InitAnimation(TextureManager& textureManager)
+void Entity::RegisterAnimationInfo(TextureManager& textureManager)
 {
     auto textureWalkSide =
         textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-side.png");

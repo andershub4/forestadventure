@@ -23,9 +23,11 @@ public:
     AnimationHandler(float switchTime);
 
     void Update(float deltaTime);
-    void SetAnimation(FrameType frameType, FaceDir dir, sf::RectangleShape& rectShape, bool start);
+    void ChangeAnimation(FrameType frameType, sf::RectangleShape& rectShape, bool start = true);
+    void ChangeAnimation(FaceDir dir, sf::RectangleShape& rectShape, bool start = true);
     void RegisterAnimationInfo(FrameType frameType, FaceDir dir, const sf::Texture* texture,
                                const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
+    void Init(FrameType frameType, FaceDir dir, sf::RectangleShape& rectShape, bool start = false);
 
     void Start();
     void Stop();

@@ -33,13 +33,9 @@ private:
     AnimationHandler animationHandler_;
     Movement movement_;
     sf::RectangleShape rectShape_;
-    AnimationHandler::FrameType frameType_ = AnimationHandler::FrameType::Move;
-    AnimationHandler::FaceDir dir_ = AnimationHandler::FaceDir::Up;
 
 private:
-    void InitAnimation(TextureManager& textureManager);
-    void SetFrameType(AnimationHandler::FrameType frameType);
-    void SetFaceDir(AnimationHandler::FaceDir dir);
+    void RegisterAnimationInfo(TextureManager& textureManager);
     void OnIsKeyPressed(Keyboard::Key key);
     void OnKeyboardPressed(Keyboard::Key key);
 };
