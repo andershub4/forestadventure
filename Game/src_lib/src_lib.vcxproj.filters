@@ -66,6 +66,9 @@
     <ClCompile Include="SceneComponent\SceneHelper\SceneHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -135,6 +138,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Constant\Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,10 +4,12 @@
  *	See file LICENSE for full license details.
  */
 
-#pragma once
+#include "IsKeyReleasedMessage.h"
 
 namespace FA {
 
-enum class MessageType { Undefined, KeyboardPressed, KeyboardReleased, IsKeyPressed, IsKeyReleased, CloseWindow };
+IsKeyReleasedMessage::IsKeyReleasedMessage(Keyboard::Key key)
+    : key_(key)
+{}
 
 }  // namespace FA

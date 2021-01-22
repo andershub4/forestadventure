@@ -25,10 +25,12 @@ public:
 private:
     sf::RenderWindow& window_;
     MessageBus& messageBus_;
-    std::unordered_set<Keyboard::Key> keyPressed_;
+    Keyboard::Key activeKey_ = Keyboard::Key::Undefined;
 
 private:
     void ProcessEvent(const sf::Event& event);
+    void IsKeyPressed(Keyboard::Key& pressedKey, Keyboard::Key& releasedKey) const;
+    void ProcessIsKeyPressed();
 };
 
 }  // namespace FA

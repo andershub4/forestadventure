@@ -6,14 +6,18 @@
 
 #include "InputSystem.h"
 
+#include <algorithm>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
+#include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyboardPressedMessage.h"
 #include "Message/BroadcastMessage/KeyboardReleasedMessage.h"
 #include "Message/MessageBus.h"
+#include "Utils/Logger.h"
 
 namespace {
 
@@ -23,6 +27,12 @@ std::unordered_map<sf::Keyboard::Key, FA::Keyboard::Key> supportedKeys = {
     {sf::Keyboard::Return, FA::Keyboard::Key::Return}, {sf::Keyboard::Escape, FA::Keyboard::Key::Escape},
     {sf::Keyboard::Num1, FA::Keyboard::Key::Num1},     {sf::Keyboard::Num2, FA::Keyboard::Key::Num2},
     {sf::Keyboard::Num3, FA::Keyboard::Key::Num3}};
+
+std::unordered_map<sf::Keyboard::Key, FA::Keyboard::Key> supportedInstantKeys = {
+    {sf::Keyboard::Left, FA::Keyboard::Key::Left},
+    {sf::Keyboard::Right, FA::Keyboard::Key::Right},
+    {sf::Keyboard::Down, FA::Keyboard::Key::Down},
+    {sf::Keyboard::Up, FA::Keyboard::Key::Up}};
 
 }  // namespace
 
@@ -40,6 +50,8 @@ void InputSystem::Update(float deltaTime)
     while (window_.pollEvent(event)) {
         ProcessEvent(event);
     }
+
+    ProcessIsKeyPressed();
 }
 
 void InputSystem::ProcessEvent(const sf::Event& event)
@@ -48,8 +60,6 @@ void InputSystem::ProcessEvent(const sf::Event& event)
         case sf::Event::KeyPressed: {
             auto it = supportedKeys.find(event.key.code);
             auto key = (it != supportedKeys.end()) ? it->second : Keyboard::Key::Undefined;
-            keyPressed_.clear();  // Let only one key be considered as pressed one at a time
-            if (key != Keyboard::Key::Undefined) keyPressed_.insert(key);
             auto msg = std::make_shared<KeyboardPressedMessage>(key);
             messageBus_.PushMessage(msg);
             break;
@@ -57,7 +67,6 @@ void InputSystem::ProcessEvent(const sf::Event& event)
         case sf::Event::KeyReleased: {
             auto it = supportedKeys.find(event.key.code);
             auto key = (it != supportedKeys.end()) ? it->second : Keyboard::Key::Undefined;
-            if (key != Keyboard::Key::Undefined) keyPressed_.erase(key);
             auto msg = std::make_shared<KeyboardReleasedMessage>(key);
             messageBus_.PushMessage(msg);
             break;
@@ -68,10 +77,42 @@ void InputSystem::ProcessEvent(const sf::Event& event)
             break;
         }
     }
+}
 
-    // This will give continuously messages when key is pressed. It is equivalent to sf::Keyboard::isKeyPressed(...).
-    for (auto key : keyPressed_) {
-        auto msg = std::make_shared<IsKeyPressedMessage>(key);
+void InputSystem::IsKeyPressed(Keyboard::Key& pressedKey, Keyboard::Key& releasedKey) const
+{
+    std::vector<Keyboard::Key> pressedKeys;
+    for (auto key : supportedInstantKeys) {
+        if (sf::Keyboard::isKeyPressed(key.first)) {
+            pressedKeys.push_back(key.second);
+        }
+    }
+
+    if (pressedKey == Keyboard::Key::Undefined) {
+        if (!pressedKeys.empty()) pressedKey = pressedKeys.front();
+    }
+    else {
+        if (std::find(pressedKeys.begin(), pressedKeys.end(), pressedKey) == pressedKeys.end()) {
+            releasedKey = pressedKey;
+            pressedKey = Keyboard::Key::Undefined;
+            if (!pressedKeys.empty()) pressedKey = pressedKeys.front();
+        }
+    }
+}
+
+void InputSystem::ProcessIsKeyPressed()
+{
+    Keyboard::Key pressedKey = activeKey_;
+    Keyboard::Key releasedKey = Keyboard::Key::Undefined;
+    IsKeyPressed(pressedKey, releasedKey);
+    activeKey_ = pressedKey;
+
+    if (pressedKey != Keyboard::Key::Undefined) {
+        auto msg = std::make_shared<IsKeyPressedMessage>(pressedKey);
+        messageBus_.PushMessage(msg);
+    }
+    if (releasedKey != Keyboard::Key::Undefined) {
+        auto msg = std::make_shared<IsKeyReleasedMessage>(releasedKey);
         messageBus_.PushMessage(msg);
     }
 }
