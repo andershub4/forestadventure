@@ -9,6 +9,8 @@
 #include "Constant/Screen.h"
 #include "Game/Layer.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
+#include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
+#include "Message/BroadcastMessage/KeyboardPressedMessage.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 #include "Sprite/SpriteSheet.h"
@@ -18,8 +20,10 @@ namespace FA {
 Entity::Entity(MessageBus& messageBus, TextureManager& textureManager)
     : messageBus_(messageBus)
     , animationHandler_(0.1f)
+    , movement_(&rectShape_, 120)
 {
-    messageBus_.AddSubscriber("entity", MessageType::IsKeyPressed,
+    messageBus_.AddSubscriber("entity",
+                              {MessageType::IsKeyPressed, MessageType::KeyboardPressed, MessageType::IsKeyReleased},
                               [this](std::shared_ptr<Message> message) { OnMessage(message); });
     rectShape_.setPosition(constant::Screen::centerX_f, constant::Screen::centerY_f);
     constexpr int size = 64;
@@ -30,6 +34,7 @@ Entity::Entity(MessageBus& messageBus, TextureManager& textureManager)
 
 void Entity::Update(float deltaTime)
 {
+    movement_.Update(deltaTime);
     animationHandler_.Update(deltaTime);
 }
 
@@ -40,11 +45,19 @@ void Entity::DrawTo(Layer& layer)
 
 void Entity::OnMessage(std::shared_ptr<Message> msg)
 {
+    // TODO: Implement a mechanism to disable handling of IsKeyPressed when game is paused.
     if (msg->GetMessageType() == MessageType::IsKeyPressed) {
-        // TODO: Implement a mechanism to disable handling of IsKeyPressed when game is paused.
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
         auto key = m->GetKey();
         OnIsKeyPressed(key);
+    }
+    else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
+        movement_.Stop();
+    }
+    else if (msg->GetMessageType() == MessageType::KeyboardPressed) {
+        auto m = std::dynamic_pointer_cast<KeyboardPressedMessage>(msg);
+        auto key = m->GetKey();
+        OnKeyboardPressed(key);
     }
 }
 
@@ -63,18 +76,26 @@ void Entity::SetFaceDir(AnimationHandler::FaceDir dir)
 void Entity::OnIsKeyPressed(Keyboard::Key key)
 {
     if (key == Keyboard::Key::Right) {
+        movement_.SetDirection(Movement::Direction::Right);
         SetFaceDir(AnimationHandler::FaceDir::Right);
     }
     else if (key == Keyboard::Key::Left) {
+        movement_.SetDirection(Movement::Direction::Left);
         SetFaceDir(AnimationHandler::FaceDir::Left);
     }
     else if (key == Keyboard::Key::Up) {
+        movement_.SetDirection(Movement::Direction::Up);
         SetFaceDir(AnimationHandler::FaceDir::Up);
     }
     else if (key == Keyboard::Key::Down) {
+        movement_.SetDirection(Movement::Direction::Down);
         SetFaceDir(AnimationHandler::FaceDir::Down);
     }
-    else if (key == Keyboard::Key::Num1) {
+}
+
+void Entity::OnKeyboardPressed(Keyboard::Key key)
+{
+    if (key == Keyboard::Key::Num1) {
         SetFrameType(AnimationHandler::FrameType::Idle);
     }
     else if (key == Keyboard::Key::Num2) {

@@ -152,6 +152,7 @@
     <ClInclude Include="Game\Layer.h" />
     <ClInclude Include="Game\Version.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h" />
+    <ClInclude Include="Movement\Movement.h" />
     <ClInclude Include="SceneComponent\Level\Level.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
     <ClInclude Include="Message\BroadcastMessage\KeyboardPressedMessage.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Layer.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp" />
+    <ClCompile Include="Movement\Movement.cpp" />
     <ClCompile Include="SceneComponent\Level\Level.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />
     <ClCompile Include="Message\BroadcastMessage\KeyboardPressedMessage.cpp" />

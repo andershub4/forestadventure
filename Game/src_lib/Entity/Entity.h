@@ -10,6 +10,7 @@
 
 #include "Animation/AnimationHandler.h"
 #include "Enum/KeyboardKey.h"
+#include "Movement/Movement.h"
 
 namespace FA {
 
@@ -30,6 +31,7 @@ public:
 private:
     MessageBus& messageBus_;
     AnimationHandler animationHandler_;
+    Movement movement_;
     sf::RectangleShape rectShape_;
     AnimationHandler::FrameType frameType_ = AnimationHandler::FrameType::Move;
     AnimationHandler::FaceDir dir_ = AnimationHandler::FaceDir::Up;
@@ -39,6 +41,7 @@ private:
     void SetFrameType(AnimationHandler::FrameType frameType);
     void SetFaceDir(AnimationHandler::FaceDir dir);
     void OnIsKeyPressed(Keyboard::Key key);
+    void OnKeyboardPressed(Keyboard::Key key);
 };
 
 }  // namespace FA
