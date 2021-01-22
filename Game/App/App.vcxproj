@@ -162,6 +162,7 @@ copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-window-2.dll" "$(TargetDir)sfml-wi
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SfmlLog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src_lib\src_lib.vcxproj">
@@ -170,6 +171,7 @@ copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-window-2.dll" "$(TargetDir)sfml-wi
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SfmlLog.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="App.rc" />

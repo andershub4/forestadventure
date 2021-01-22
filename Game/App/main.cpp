@@ -8,12 +8,15 @@
 
 #include "Game/Game.h"
 #include "Utils/Logger.h"
+#include "SfmlLog.h"
 
 int main()
 {
     LOG_INFO_ENTER_FUNC();
 
     try {
+        FA::SfmlLog sfmlLog;
+        sfmlLog.Init();
         FA::Game game;
         game.GameLoop();
     }

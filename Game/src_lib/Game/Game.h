@@ -6,9 +6,6 @@
 
 #pragma once
 
-#include <iosfwd>
-#include <memory>
-
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Layer.h"
@@ -23,12 +20,10 @@ class Game
 {
 public:
     Game();
-    ~Game();
     void GameLoop();
 
 private:
     MessageBus messageBus_;
-    std::unique_ptr<std::ofstream> sfmlLogStream_;
     sf::RenderWindow window_;
     sf::View view_;
     TextureManager textureManager_;
@@ -38,7 +33,6 @@ private:
     Layer sceneHelperLayer_;
 
 private:
-    void RedirectSfmlLogEntries();
     void OnMessage(std::shared_ptr<Message> message);
     void InitWindow();
 };

@@ -10,7 +10,6 @@
 #include <memory>
 
 #include <SFML/Config.hpp>
-#include <SFML/System/Err.hpp>
 
 #include "Constant/Screen.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
@@ -31,18 +30,12 @@ Game::Game()
     LOG_INFO("Start up ", FA_APP_NAME, " version ", FA_APP_VERSION);
     LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
 
-    RedirectSfmlLogEntries();
     InitWindow();
     auto cb = [this](std::shared_ptr<Message> message) { OnMessage(message); };
     messageBus_.AddSubscriber("game",
                               {MessageType::IsKeyPressed, MessageType::KeyboardPressed, MessageType::KeyboardReleased,
                                MessageType::CloseWindow},
                               cb);
-}
-
-Game::~Game()
-{
-    sfmlLogStream_->close();
 }
 
 void Game::GameLoop()
@@ -92,19 +85,6 @@ void Game::OnMessage(std::shared_ptr<Message> message)
     }
     else {
         // cant happened
-    }
-}
-
-void Game::RedirectSfmlLogEntries()
-{
-    sfmlLogStream_ = std::make_unique<std::ofstream>();
-    const std::string sfmlLog = "sfml-log.txt";
-    sfmlLogStream_->open(GetExePath() + "\\/" + sfmlLog);
-
-    if (sfmlLogStream_->is_open()) {
-        LOG_INFO("Redirecting sfml log entries to ", sfmlLog);
-        (*sfmlLogStream_) << "SFML version " << SFML_VERSION_MAJOR << "." << SFML_VERSION_MINOR << std::endl;
-        sf::err().rdbuf(sfmlLogStream_->rdbuf());
     }
 }
 
