@@ -27,8 +27,7 @@ Game::Game()
     : sceneHelper_(messageBus_, "GamePlayScene")
     , level_(messageBus_, textureManager_)
 {
-    LOG_INFO("Start up ", FA_APP_NAME, " version ", FA_APP_VERSION);
-    LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
+    LOG_INFO_ENTER_FUNC();
 
     InitWindow();
     auto cb = [this](std::shared_ptr<Message> message) { OnMessage(message); };
@@ -36,6 +35,7 @@ Game::Game()
                               {MessageType::IsKeyPressed, MessageType::KeyboardPressed, MessageType::KeyboardReleased,
                                MessageType::CloseWindow},
                               cb);
+    LOG_INFO_EXIT_FUNC();
 }
 
 void Game::GameLoop()

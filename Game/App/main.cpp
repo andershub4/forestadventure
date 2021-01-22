@@ -4,15 +4,18 @@
  *	See file LICENSE for full license details.
  */
 
-#include <iostream>
+#include <SFML/Config.hpp>
 
 #include "Game/Game.h"
-#include "Utils/Logger.h"
+#include "Game/Version.h"
 #include "SfmlLog.h"
+#include "Utils/Logger.h"
 
 int main()
 {
     LOG_INFO_ENTER_FUNC();
+    LOG_INFO(FA_APP_NAME, " version ", FA_APP_VERSION);
+    LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
 
     try {
         FA::SfmlLog sfmlLog;
