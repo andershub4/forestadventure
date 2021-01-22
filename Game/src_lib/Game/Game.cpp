@@ -13,9 +13,7 @@
 
 #include "Constant/Screen.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
-#include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
-#include "Message/BroadcastMessage/KeyReleasedMessage.h"
 #include "System/InputSystem.h"
 #include "Utils/Logger.h"
 #include "Utils/Path.h"
@@ -31,10 +29,8 @@ Game::Game()
 
     InitWindow();
     auto cb = [this](std::shared_ptr<Message> message) { OnMessage(message); };
-    messageBus_.AddSubscriber("game",
-                              {MessageType::IsKeyPressed, MessageType::KeyPressed, MessageType::KeyReleased,
-                               MessageType::CloseWindow},
-                              cb);
+    messageBus_.AddSubscriber("game", {MessageType::KeyPressed, MessageType::CloseWindow}, cb);
+
     LOG_INFO_EXIT_FUNC();
 }
 
@@ -75,10 +71,6 @@ void Game::OnMessage(std::shared_ptr<Message> message)
         if (key == Keyboard::Key::Escape) {
             window_.close();
         }
-    }
-    else if (message->GetMessageType() == MessageType::KeyReleased) {
-    }
-    else if (message->GetMessageType() == MessageType::IsKeyPressed) {
     }
     else if (message->GetMessageType() == MessageType::CloseWindow) {
         window_.close();
