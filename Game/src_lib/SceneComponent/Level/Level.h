@@ -6,6 +6,9 @@
 
 #pragma once
 
+#include <memory>
+
+#include "Animation/AnimationFactory.h"
 #include "Entity/Entity.h"
 
 namespace FA {
@@ -25,7 +28,11 @@ public:
 
 private:
     MessageBus& messageBus_;
-    Entity entity_;
+    AnimationFactory animationFactory_;
+    std::unique_ptr<Entity> entity_;
+
+private:
+    void RegisterAnimationInfo(TextureManager& textureManager);
 };
 
 }  // namespace FA

@@ -8,29 +8,28 @@
 
 #include <map>
 #include <memory>
+#include <vector>
 
-#include "Animation.h"
+#include <SFML/Graphics/Rect.hpp>
+
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
+#include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
-class AnimationHandler
+class Animation;
+
+class AnimationFactory
 {
 public:
-    AnimationHandler() = default;
-    AnimationHandler(float switchTime);
+    AnimationFactory() = default;
+    AnimationFactory(const AnimationFactory&) = default;
+    AnimationFactory(float switchTime);
 
-    void Update(float deltaTime);
-    void ChangeAnimation(FrameType frameType, sf::RectangleShape& rectShape, bool start = true);
-    void ChangeAnimation(FaceDirection dir, sf::RectangleShape& rectShape, bool start = true);
-    void ChangeAnimation(FrameType frameType, FaceDirection dir, sf::RectangleShape& rectShape, bool start = true);
+    std::unique_ptr<Animation> Create(FrameType frameType, FaceDirection dir, sf::RectangleShape& rectShape) const;
     void RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
                                const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
-    void Init(FrameType frameType, FaceDirection dir, sf::RectangleShape& rectShape, bool start = false);
-
-    void Start();
-    void Stop();
 
 private:
     struct AnimationInfo
@@ -43,13 +42,10 @@ private:
     using Key = std::pair<FrameType, FaceDirection>;
     std::map<Key, AnimationInfo> animationInfoMap_;
     float switchTime_ = 0;
-    std::unique_ptr<Animation> currentAnimation_ = nullptr;
     FrameType currentFrameType_ = FrameType::Undefined;
     FaceDirection currentDir_ = FaceDirection::Down;
 
 private:
-    std::unique_ptr<Animation> CreateAnimation(FrameType frameType, FaceDirection dir,
-                                               sf::RectangleShape& rectShape) const;
     std::vector<sf::IntRect> MirrorX(const std::vector<sf::IntRect>& frames) const;
 };
 

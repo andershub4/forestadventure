@@ -142,8 +142,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
-    <ClInclude Include="Animation\AnimationHandler.h" />
+    <ClInclude Include="Animation\AnimationFactory.h" />
     <ClInclude Include="Constant\Screen.h" />
+    <ClInclude Include="EntityState\EntityStateMachine.h" />
+    <ClInclude Include="EntityState\State\EntityState.h" />
+    <ClInclude Include="EntityState\State\EntityStateIdle.h" />
+    <ClInclude Include="EntityState\State\EntityStateMove.h" />
     <ClInclude Include="Entity\Entity.h" />
     <ClInclude Include="Enum\FaceDirection.h" />
     <ClInclude Include="Enum\FrameType.h" />
@@ -172,7 +176,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
-    <ClCompile Include="Animation\AnimationHandler.cpp" />
+    <ClCompile Include="Animation\AnimationFactory.cpp" />
+    <ClCompile Include="EntityState\EntityStateMachine.cpp" />
+    <ClCompile Include="EntityState\State\EntityState.cpp" />
+    <ClCompile Include="EntityState\State\EntityStateIdle.cpp" />
+    <ClCompile Include="EntityState\State\EntityStateMove.cpp" />
     <ClCompile Include="Entity\Entity.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Layer.cpp" />

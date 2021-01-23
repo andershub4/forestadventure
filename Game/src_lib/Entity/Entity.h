@@ -8,7 +8,8 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-#include "Animation/AnimationHandler.h"
+#include "Animation/AnimationFactory.h"
+#include "EntityState/EntityStateMachine.h"
 #include "Enum/KeyboardKey.h"
 #include "Movement/Movement.h"
 
@@ -16,28 +17,34 @@ namespace FA {
 
 class MessageBus;
 class Message;
-class TextureManager;
 class Layer;
+class Animation;
 
 class Entity
 {
 public:
-    Entity(MessageBus& messageBus, TextureManager& textureManager);
+    Entity(MessageBus& messageBus, const AnimationFactory& animationFactory);
+    ~Entity();
 
     void Update(float deltaTime);
     void DrawTo(Layer& layer);
     void OnMessage(std::shared_ptr<Message> msg);
 
-private:
-    MessageBus& messageBus_;
-    AnimationHandler animationHandler_;
-    Movement movement_;
-    sf::RectangleShape rectShape_;
+    void StartMove(MoveDirection moveDir, FaceDirection faceDir, FrameType frameType);
+    void StopMove(MoveDirection moveDir, FaceDirection faceDir);
+    void StartIdle(MoveDirection moveDir, FaceDirection faceDir, FrameType frameType);
+    void StopIdle(MoveDirection moveDir, FaceDirection faceDir) {}
 
 private:
-    void RegisterAnimationInfo(TextureManager& textureManager);
+    MessageBus& messageBus_;
+    AnimationFactory animationFactory_;
+    std::unique_ptr<Animation> animation_ = nullptr;
+    Movement movement_;
+    sf::RectangleShape rectShape_;
+    EntityStateMachine stateMachine_;
+
+private:
     void OnIsKeyPressed(Keyboard::Key key);
-    void OnKeyboardPressed(Keyboard::Key key);
 };
 
 }  // namespace FA

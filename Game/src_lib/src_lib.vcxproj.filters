@@ -27,9 +27,6 @@
     <ClCompile Include="Animation\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Animation\AnimationHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,6 +69,21 @@
     <ClCompile Include="Message\BroadcastMessage\KeyReleasedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EntityState\EntityStateMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityState\State\EntityState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityState\State\EntityStateIdle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityState\State\EntityStateMove.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\AnimationFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -84,9 +96,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Animation\Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation\AnimationHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Fwd\SfmlFwd.h">
@@ -156,6 +165,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\FrameType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityState\EntityStateMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityState\State\EntityState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityState\State\EntityStateIdle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityState\State\EntityStateMove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\AnimationFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
