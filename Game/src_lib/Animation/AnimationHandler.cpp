@@ -37,6 +37,16 @@ void AnimationHandler::ChangeAnimation(FaceDirection dir, sf::RectangleShape& re
     }
 }
 
+void AnimationHandler::ChangeAnimation(FrameType frameType, FaceDirection dir, sf::RectangleShape& rectShape, bool start)
+{
+    if (frameType != currentFrameType_ || dir != currentDir_) {
+        currentFrameType_ = frameType;
+        currentDir_ = dir;
+        currentAnimation_ = CreateAnimation(currentFrameType_, currentDir_, rectShape);
+        if (start) Start();
+    }
+}
+
 void AnimationHandler::RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
                                              const std::vector<sf::IntRect>& frames, unsigned int defaultFrame,
                                              bool mirrorX)
