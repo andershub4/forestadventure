@@ -63,7 +63,7 @@ void Entity::StartMove(MoveDirection moveDir, FaceDirection faceDir, FrameType f
 
 void Entity::StopMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    movement_.Stop();
+    movement_.SetDirection(MoveDirection::None);
 }
 
 void Entity::StartIdle(MoveDirection moveDir, FaceDirection faceDir, FrameType frameType)

@@ -8,6 +8,6 @@
 
 namespace FA {
 
-enum class MoveDirection { Up, Right, Down, Left };
+enum class MoveDirection { None, Up, Right, Down, Left };
 
 }  // namespace FA

@@ -10,7 +10,8 @@
 
 namespace {
 
-const std::unordered_map<FA::MoveDirection, sf::Vector2f> dirToVector = {{FA::MoveDirection::Up, {0.0, -1.0}},
+const std::unordered_map<FA::MoveDirection, sf::Vector2f> dirToVector = {{FA::MoveDirection::None, {0.0, 0.0}},
+                                                                         {FA::MoveDirection::Up, {0.0, -1.0}},
                                                                          {FA::MoveDirection::Right, {1.0, 0.0}},
                                                                          {FA::MoveDirection::Down, {0.0, 1.0}},
                                                                          {FA::MoveDirection::Left, {-1.0, 0.0}}};
@@ -35,11 +36,6 @@ void Movement::SetDirection(MoveDirection direction)
     if (it != dirToVector.end()) {
         movementVector_ = it->second * velocity_;
     }
-}
-
-void Movement::Stop()
-{
-    movementVector_ = {};
 }
 
 }  // namespace FA
