@@ -9,8 +9,6 @@
 #include <fstream>
 #include <memory>
 
-#include <SFML/Config.hpp>
-
 #include "Constant/Screen.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
