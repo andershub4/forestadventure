@@ -9,18 +9,18 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include "Enum/MoveDirection.h"
+
 namespace FA {
 
 class Movement
 {
 public:
-    enum class Direction { Up, Right, Down, Left };
-
     Movement(sf::RectangleShape* rectShape, float velocity);
 
     void Update(float deltaTime);
 
-    void SetDirection(Direction direction);
+    void SetDirection(MoveDirection direction);
     void Stop();
 
 private:

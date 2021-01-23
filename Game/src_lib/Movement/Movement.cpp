@@ -10,11 +10,10 @@
 
 namespace {
 
-const std::unordered_map<FA::Movement::Direction, sf::Vector2f> dirToVector = {
-    {FA::Movement::Direction::Up, {0.0, -1.0}},
-    {FA::Movement::Direction::Right, {1.0, 0.0}},
-    {FA::Movement::Direction::Down, {0.0, 1.0}},
-    {FA::Movement::Direction::Left, {-1.0, 0.0}}};
+const std::unordered_map<FA::MoveDirection, sf::Vector2f> dirToVector = {{FA::MoveDirection::Up, {0.0, -1.0}},
+                                                                         {FA::MoveDirection::Right, {1.0, 0.0}},
+                                                                         {FA::MoveDirection::Down, {0.0, 1.0}},
+                                                                         {FA::MoveDirection::Left, {-1.0, 0.0}}};
 
 }  // namespace
 
@@ -30,7 +29,7 @@ void Movement::Update(float deltaTime)
     rectShape_->move(movementVector_.x * deltaTime, movementVector_.y * deltaTime);
 }
 
-void Movement::SetDirection(Direction direction)
+void Movement::SetDirection(MoveDirection direction)
 {
     auto it = dirToVector.find(direction);
     if (it != dirToVector.end()) {

@@ -145,6 +145,9 @@
     <ClInclude Include="Animation\AnimationHandler.h" />
     <ClInclude Include="Constant\Screen.h" />
     <ClInclude Include="Entity\Entity.h" />
+    <ClInclude Include="Enum\FaceDirection.h" />
+    <ClInclude Include="Enum\FrameType.h" />
+    <ClInclude Include="Enum\MoveDirection.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />

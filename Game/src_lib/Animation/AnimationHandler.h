@@ -10,24 +10,23 @@
 #include <memory>
 
 #include "Animation.h"
+#include "Enum/FaceDirection.h"
+#include "Enum/FrameType.h"
 
 namespace FA {
 
 class AnimationHandler
 {
 public:
-    enum class FrameType { Undefined, Idle, Move, Attack };
-    enum class FaceDir { Up, Right, Down, Left };
-
     AnimationHandler() = default;
     AnimationHandler(float switchTime);
 
     void Update(float deltaTime);
     void ChangeAnimation(FrameType frameType, sf::RectangleShape& rectShape, bool start = true);
-    void ChangeAnimation(FaceDir dir, sf::RectangleShape& rectShape, bool start = true);
-    void RegisterAnimationInfo(FrameType frameType, FaceDir dir, const sf::Texture* texture,
+    void ChangeAnimation(FaceDirection dir, sf::RectangleShape& rectShape, bool start = true);
+    void RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
                                const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
-    void Init(FrameType frameType, FaceDir dir, sf::RectangleShape& rectShape, bool start = false);
+    void Init(FrameType frameType, FaceDirection dir, sf::RectangleShape& rectShape, bool start = false);
 
     void Start();
     void Stop();
@@ -40,15 +39,16 @@ private:
         unsigned int defaultFrame_ = 0;
         float switchTime_ = 0;
     };
-    using Key = std::pair<FrameType, FaceDir>;
+    using Key = std::pair<FrameType, FaceDirection>;
     std::map<Key, AnimationInfo> animationInfoMap_;
     float switchTime_ = 0;
     std::unique_ptr<Animation> currentAnimation_ = nullptr;
     FrameType currentFrameType_ = FrameType::Undefined;
-    FaceDir currentDir_ = FaceDir::Down;
+    FaceDirection currentDir_ = FaceDirection::Down;
 
 private:
-    std::unique_ptr<Animation> CreateAnimation(FrameType frameType, FaceDir dir, sf::RectangleShape& rectShape) const;
+    std::unique_ptr<Animation> CreateAnimation(FrameType frameType, FaceDirection dir,
+                                               sf::RectangleShape& rectShape) const;
     std::vector<sf::IntRect> MirrorX(const std::vector<sf::IntRect>& frames) const;
 };
 

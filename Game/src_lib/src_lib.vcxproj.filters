@@ -149,5 +149,14 @@
     <ClInclude Include="Message\BroadcastMessage\KeyReleasedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Enum\MoveDirection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum\FaceDirection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum\FrameType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -28,7 +28,7 @@ void AnimationHandler::ChangeAnimation(FrameType frameType, sf::RectangleShape& 
     }
 }
 
-void AnimationHandler::ChangeAnimation(FaceDir dir, sf::RectangleShape& rectShape, bool start)
+void AnimationHandler::ChangeAnimation(FaceDirection dir, sf::RectangleShape& rectShape, bool start)
 {
     if (dir != currentDir_) {
         currentDir_ = dir;
@@ -37,7 +37,7 @@ void AnimationHandler::ChangeAnimation(FaceDir dir, sf::RectangleShape& rectShap
     }
 }
 
-void AnimationHandler::RegisterAnimationInfo(FrameType frameType, FaceDir dir, const sf::Texture* texture,
+void AnimationHandler::RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
                                              const std::vector<sf::IntRect>& frames, unsigned int defaultFrame,
                                              bool mirrorX)
 {
@@ -51,7 +51,7 @@ void AnimationHandler::RegisterAnimationInfo(FrameType frameType, FaceDir dir, c
     }
 }
 
-void AnimationHandler::Init(FrameType frameType, FaceDir dir, sf::RectangleShape& rectShape, bool start)
+void AnimationHandler::Init(FrameType frameType, FaceDirection dir, sf::RectangleShape& rectShape, bool start)
 {
     currentFrameType_ = frameType;
     currentDir_ = dir;
@@ -69,7 +69,7 @@ void AnimationHandler::Stop()
     if (currentAnimation_) currentAnimation_->Stop();
 }
 
-std::unique_ptr<Animation> AnimationHandler::CreateAnimation(FrameType frameType, FaceDir dir,
+std::unique_ptr<Animation> AnimationHandler::CreateAnimation(FrameType frameType, FaceDirection dir,
                                                              sf::RectangleShape& rectShape) const
 {
     auto it = animationInfoMap_.find({frameType, dir});
