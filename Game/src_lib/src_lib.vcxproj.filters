@@ -84,6 +84,9 @@
     <ClCompile Include="Animation\AnimationFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EntityState\State\EntityStateAttack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -180,6 +183,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Animation\AnimationFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityState\State\EntityStateAttack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

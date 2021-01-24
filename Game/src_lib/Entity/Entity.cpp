@@ -10,6 +10,7 @@
 #include "Game/Layer.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
+#include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/MessageBus.h"
 
 namespace FA {
@@ -18,7 +19,8 @@ Entity::Entity(MessageBus& messageBus, const AnimationFactory& animationFactory)
     : messageBus_(messageBus)
     , stateMachine_(&rectShape_, FaceDirection::Down, MoveDirection::Down, animationFactory, 120.0)
 {
-    messageBus_.AddSubscriber("entity", {MessageType::IsKeyPressed, MessageType::IsKeyReleased},
+    messageBus_.AddSubscriber("entity",
+                              {MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed},
                               [this](std::shared_ptr<Message> message) { OnMessage(message); });
     rectShape_.setPosition(constant::Screen::centerX_f, constant::Screen::centerY_f);
     constexpr int size = 64;
@@ -47,6 +49,13 @@ void Entity::OnMessage(std::shared_ptr<Message> msg)
     }
     else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
         stateMachine_.OnStopMove();
+    }
+    else if (msg->GetMessageType() == MessageType::KeyPressed) {
+        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
+        auto key = m->GetKey();
+        if (key == Keyboard::Key::RControl) {
+            stateMachine_.OnStartAttack();
+        }
     }
 }
 

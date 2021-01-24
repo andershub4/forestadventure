@@ -40,6 +40,7 @@ public:
 
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
+    virtual void OnStartAttack() {}
 
     void SwitchState(std::unique_ptr<EntityState> newState);
 

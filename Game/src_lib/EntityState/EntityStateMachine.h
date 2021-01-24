@@ -22,6 +22,7 @@ public:
 
     void OnStartMove(MoveDirection moveDir, FaceDirection faceDir);
     void OnStopMove();
+    void OnStartAttack();
 
 private:
     std::unique_ptr<EntityState> currentState_;

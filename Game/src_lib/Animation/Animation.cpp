@@ -33,6 +33,7 @@ void Animation::Update(float deltaTime)
         while (time_ >= switchTime_) {
             time_ -= switchTime_;
             ++iFrame_ %= nFrames_;
+            isCompleted_ = (iFrame_ == 0);
         }
 
         rectShape_->setTextureRect(frames_[iFrame_]);
@@ -48,6 +49,11 @@ void Animation::Stop()
 {
     isStopped_ = true;
     iFrame_ = defaultFrame_;
+}
+
+bool Animation::IsCompleted() const
+{
+    return isCompleted_;
 }
 
 }  // namespace FA

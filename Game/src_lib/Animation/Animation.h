@@ -24,6 +24,7 @@ public:
     void Update(float deltaTime);  // delta time; time since previous time to current frame
     void Start();
     void Stop();
+    bool IsCompleted() const;
 
 private:
     sf::RectangleShape* rectShape_ = nullptr;
@@ -35,6 +36,7 @@ private:
     std::vector<sf::IntRect> frames_;
     unsigned int nFrames_;
     unsigned int defaultFrame_;
+    bool isCompleted_ = false;
 };
 
 }  // namespace FA

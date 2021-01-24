@@ -7,6 +7,7 @@
 #include "EntityStateIdle.h"
 
 #include "Animation/Animation.h"
+#include "EntityStateAttack.h"
 #include "EntityStateMove.h"
 
 namespace FA {
@@ -32,6 +33,11 @@ void EntityStateIdle::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
     stateData_.moveDir_ = moveDir;
     stateData_.faceDir_ = faceDir;
     SwitchState<EntityStateMove>();
+}
+
+void EntityStateIdle::OnStartAttack()
+{
+    SwitchState<EntityStateAttack>();
 }
 
 }  // namespace FA

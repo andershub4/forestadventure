@@ -26,7 +26,7 @@ std::unordered_map<sf::Keyboard::Key, FA::Keyboard::Key> supportedKeys = {
     {sf::Keyboard::Down, FA::Keyboard::Key::Down},     {sf::Keyboard::Up, FA::Keyboard::Key::Up},
     {sf::Keyboard::Return, FA::Keyboard::Key::Return}, {sf::Keyboard::Escape, FA::Keyboard::Key::Escape},
     {sf::Keyboard::Num1, FA::Keyboard::Key::Num1},     {sf::Keyboard::Num2, FA::Keyboard::Key::Num2},
-    {sf::Keyboard::Num3, FA::Keyboard::Key::Num3}};
+    {sf::Keyboard::Num3, FA::Keyboard::Key::Num3},     {sf::Keyboard::RControl, FA::Keyboard::Key::RControl}};
 
 std::unordered_map<sf::Keyboard::Key, FA::Keyboard::Key> supportedInstantKeys = {
     {sf::Keyboard::Left, FA::Keyboard::Key::Left},
