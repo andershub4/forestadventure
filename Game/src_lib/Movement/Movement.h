@@ -21,7 +21,6 @@ public:
     void Update(float deltaTime);
 
     void SetDirection(MoveDirection direction);
-    void Stop();
 
 private:
     float velocity_{};
