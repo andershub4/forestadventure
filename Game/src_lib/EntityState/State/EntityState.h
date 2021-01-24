@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 
+#include "Animation/AnimationFactory.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 
@@ -22,13 +23,17 @@ class EntityState
 public:
     struct StateData
     {
-        MoveDirection moveDir_;
-        FaceDirection faceDir_;
+        MoveDirection moveDir_ = MoveDirection::None;
+        FaceDirection faceDir_ = FaceDirection::Down;
+        AnimationFactory animationFactory_;
+        float velocity_ = 0.0;
+        sf::RectangleShape* rectShape_ = nullptr;
     };
 
-    EntityState(EntityStateMachine& stateMachine, Entity& entity, StateData& stateData);
+    EntityState(EntityStateMachine& stateMachine, StateData& stateData);
     virtual ~EntityState();
 
+    virtual void Update(float deltaTime) = 0;
     virtual std::string Name() const = 0;
     virtual void Enter() {}
     virtual void Exit() {}
@@ -43,12 +48,11 @@ public:
     {
         static_assert(std::is_base_of<EntityState, StateT>::value, "StateT must derive from EntityState");
 
-        SwitchState(std::make_unique<StateT>(stateMachine_, entity_, stateData_, std::forward<Args>(args)...));
+        SwitchState(std::make_unique<StateT>(stateMachine_, stateData_, std::forward<Args>(args)...));
     }
 
 protected:
     StateData& stateData_;
-    Entity& entity_;
 
 private:
     EntityStateMachine& stateMachine_;

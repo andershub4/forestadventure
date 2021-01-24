@@ -11,11 +11,15 @@
 
 namespace FA {
 
-EntityStateMachine::EntityStateMachine(Entity& entity, FaceDirection faceDir, MoveDirection moveDir)
+EntityStateMachine::EntityStateMachine(sf::RectangleShape* rectShape, FaceDirection faceDir, MoveDirection moveDir,
+                                       const AnimationFactory& animationFactory, float velocity)
 {
     stateData_.faceDir_ = faceDir;
     stateData_.moveDir_ = moveDir;
-    currentState_ = std::make_unique<EntityStateIdle>(*this, entity, stateData_);
+    stateData_.animationFactory_ = animationFactory;
+    stateData_.velocity_ = velocity;
+    stateData_.rectShape_ = rectShape;
+    currentState_ = std::make_unique<EntityStateIdle>(*this, stateData_);
     // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }
@@ -24,6 +28,11 @@ EntityStateMachine::~EntityStateMachine()
 {
     // LOG_INFO("Exit ", currentState_->Name());
     currentState_->Exit();
+}
+
+void EntityStateMachine::Update(float deltaTime)
+{
+    currentState_->Update(deltaTime);
 }
 
 void EntityStateMachine::SetState(std::unique_ptr<EntityState> newState)

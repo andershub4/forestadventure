@@ -13,9 +13,11 @@ namespace FA {
 class EntityStateMachine
 {
 public:
-    EntityStateMachine(Entity& entity, FaceDirection faceDir, MoveDirection moveDir);
+    EntityStateMachine(sf::RectangleShape* rectShape, FaceDirection faceDir, MoveDirection moveDir,
+                       const AnimationFactory& animationFactory, float velocity);
     ~EntityStateMachine();
 
+    void Update(float deltaTime);
     void SetState(std::unique_ptr<EntityState> newState);
 
     void OnStartMove(MoveDirection moveDir, FaceDirection faceDir);

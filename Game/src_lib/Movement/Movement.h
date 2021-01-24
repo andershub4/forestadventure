@@ -16,6 +16,7 @@ namespace FA {
 class Movement
 {
 public:
+    Movement() = default;
     Movement(sf::RectangleShape* rectShape, float velocity);
 
     void Update(float deltaTime);

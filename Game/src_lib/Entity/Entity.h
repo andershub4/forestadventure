@@ -8,17 +8,14 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-#include "Animation/AnimationFactory.h"
 #include "EntityState/EntityStateMachine.h"
 #include "Enum/KeyboardKey.h"
-#include "Movement/Movement.h"
 
 namespace FA {
 
 class MessageBus;
 class Message;
 class Layer;
-class Animation;
 
 class Entity
 {
@@ -30,16 +27,8 @@ public:
     void DrawTo(Layer& layer);
     void OnMessage(std::shared_ptr<Message> msg);
 
-    void StartMove(MoveDirection moveDir, FaceDirection faceDir, FrameType frameType);
-    void StopMove(MoveDirection moveDir, FaceDirection faceDir);
-    void StartIdle(MoveDirection moveDir, FaceDirection faceDir, FrameType frameType);
-    void StopIdle(MoveDirection moveDir, FaceDirection faceDir) {}
-
 private:
     MessageBus& messageBus_;
-    AnimationFactory animationFactory_;
-    std::unique_ptr<Animation> animation_ = nullptr;
-    Movement movement_;
     sf::RectangleShape rectShape_;
     EntityStateMachine stateMachine_;
 

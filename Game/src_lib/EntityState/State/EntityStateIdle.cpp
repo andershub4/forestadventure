@@ -6,20 +6,25 @@
 
 #include "EntityStateIdle.h"
 
-#include "Entity/Entity.h"
+#include "Animation/Animation.h"
 #include "EntityStateMove.h"
 
 namespace FA {
 
-EntityStateIdle::EntityStateIdle(EntityStateMachine& stateMachine, Entity& entity, StateData& stateData)
-    : EntityState(stateMachine, entity, stateData)
+EntityStateIdle::EntityStateIdle(EntityStateMachine& stateMachine, StateData& stateData)
+    : EntityState(stateMachine, stateData)
 {}
 
 EntityStateIdle::~EntityStateIdle() = default;
 
+void EntityStateIdle::Update(float deltaTime)
+{
+    if (animation_) animation_->Update(deltaTime);
+}
+
 void EntityStateIdle::Enter()
 {
-    entity_.StartIdle(stateData_.moveDir_, stateData_.faceDir_, FrameType::Idle);
+    animation_ = stateData_.animationFactory_.Create(FrameType::Idle, stateData_.faceDir_, stateData_.rectShape_);
 }
 
 void EntityStateIdle::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

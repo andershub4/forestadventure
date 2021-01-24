@@ -27,7 +27,7 @@ public:
     AnimationFactory(const AnimationFactory&) = default;
     AnimationFactory(float switchTime);
 
-    std::unique_ptr<Animation> Create(FrameType frameType, FaceDirection dir, sf::RectangleShape& rectShape) const;
+    std::unique_ptr<Animation> Create(FrameType frameType, FaceDirection dir, sf::RectangleShape* rectShape) const;
     void RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
                                const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
 

@@ -7,14 +7,12 @@
 
 #include "EntityState.h"
 
-#include "Entity/Entity.h"
 #include "EntityState/EntityStateMachine.h"
 
 namespace FA {
 
-EntityState::EntityState(EntityStateMachine& stateMachine, Entity& entity, StateData& stateData)
+EntityState::EntityState(EntityStateMachine& stateMachine, StateData& stateData)
     : stateMachine_(stateMachine)
-    , entity_(entity)
     , stateData_(stateData)
 {}
 

@@ -6,7 +6,6 @@
 
 #include "Entity.h"
 
-#include "Animation/Animation.h"
 #include "Constant/Screen.h"
 #include "Game/Layer.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -17,9 +16,7 @@ namespace FA {
 
 Entity::Entity(MessageBus& messageBus, const AnimationFactory& animationFactory)
     : messageBus_(messageBus)
-    , animationFactory_(animationFactory)
-    , movement_(&rectShape_, 120)
-    , stateMachine_(*this, FaceDirection::Down, MoveDirection::Down)
+    , stateMachine_(&rectShape_, FaceDirection::Down, MoveDirection::Down, animationFactory, 120.0)
 {
     messageBus_.AddSubscriber("entity", {MessageType::IsKeyPressed, MessageType::IsKeyReleased},
                               [this](std::shared_ptr<Message> message) { OnMessage(message); });
@@ -32,8 +29,7 @@ Entity::~Entity() = default;
 
 void Entity::Update(float deltaTime)
 {
-    movement_.Update(deltaTime);
-    if (animation_) animation_->Update(deltaTime);
+    stateMachine_.Update(deltaTime);
 }
 
 void Entity::DrawTo(Layer& layer)
@@ -52,23 +48,6 @@ void Entity::OnMessage(std::shared_ptr<Message> msg)
     else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
         stateMachine_.OnStopMove();
     }
-}
-
-void Entity::StartMove(MoveDirection moveDir, FaceDirection faceDir, FrameType frameType)
-{
-    movement_.SetDirection(moveDir);
-    animation_ = animationFactory_.Create(frameType, faceDir, rectShape_);
-    animation_->Start();
-}
-
-void Entity::StopMove(MoveDirection moveDir, FaceDirection faceDir)
-{
-    movement_.SetDirection(MoveDirection::None);
-}
-
-void Entity::StartIdle(MoveDirection moveDir, FaceDirection faceDir, FrameType frameType)
-{
-    animation_ = animationFactory_.Create(frameType, faceDir, rectShape_);
 }
 
 void Entity::OnIsKeyPressed(Keyboard::Key key)

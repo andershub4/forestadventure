@@ -13,13 +13,17 @@ namespace FA {
 class EntityStateIdle : public EntityState
 {
 public:
-    EntityStateIdle(EntityStateMachine& stateMachine, Entity& entity, StateData& stateData);
+    EntityStateIdle(EntityStateMachine& stateMachine, StateData& stateData);
     virtual ~EntityStateIdle();
 
+    virtual void Update(float deltaTime) override;
     virtual std::string Name() const override { return "EntityStateIdle"; }
     virtual void Enter() override;
 
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) override;
+
+private:
+    std::unique_ptr<Animation> animation_ = nullptr;
 };
 
 }  // namespace FA
