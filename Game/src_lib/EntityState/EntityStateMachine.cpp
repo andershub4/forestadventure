@@ -59,4 +59,9 @@ void EntityStateMachine::OnStartAttack()
     currentState_->OnStartAttack();
 }
 
+void EntityStateMachine::OnStartAttackWeapon()
+{
+    currentState_->OnStartAttackWeapon();
+}
+
 }  // namespace FA

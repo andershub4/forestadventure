@@ -8,6 +8,6 @@
 
 namespace FA {
 
-enum class FrameType { Undefined, Idle, Move, Attack };
+enum class FrameType { Undefined, Idle, Move, Attack, AttackWeapon };
 
 }  // namespace FA

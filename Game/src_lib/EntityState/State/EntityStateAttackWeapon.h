@@ -10,19 +10,17 @@
 
 namespace FA {
 
-class EntityStateIdle : public EntityState
+class EntityStateAttackWeapon : public EntityState
 {
 public:
-    EntityStateIdle(EntityStateMachine& stateMachine, StateData& stateData);
-    virtual ~EntityStateIdle();
+    EntityStateAttackWeapon(EntityStateMachine& stateMachine, StateData& stateData);
+    virtual ~EntityStateAttackWeapon();
 
     virtual void Update(float deltaTime) override;
-    virtual std::string Name() const override { return "EntityStateIdle"; }
+    virtual std::string Name() const override { return "EntityStateAttackWeapon"; }
     virtual void Enter() override;
 
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) override;
-    virtual void OnStartAttack() override;
-    virtual void OnStartAttackWeapon() override;
 
 private:
     std::unique_ptr<Animation> animation_ = nullptr;

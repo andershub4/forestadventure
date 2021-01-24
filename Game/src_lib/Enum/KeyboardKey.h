@@ -10,7 +10,7 @@ namespace FA {
 
 namespace Keyboard {
 
-enum class Key { Undefined, Left, Right, Up, Down, Num1, Num2, Num3, Return, Escape, RControl };
+enum class Key { Undefined, Left, Right, Up, Down, Num1, Num2, Num3, Return, Escape, RControl, Space };
 
 }  // namespace Keyboard
 

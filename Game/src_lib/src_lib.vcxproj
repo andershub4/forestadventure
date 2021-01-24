@@ -147,6 +147,7 @@
     <ClInclude Include="EntityState\EntityStateMachine.h" />
     <ClInclude Include="EntityState\State\EntityStateAttack.h" />
     <ClInclude Include="EntityState\State\EntityState.h" />
+    <ClInclude Include="EntityState\State\EntityStateAttackWeapon.h" />
     <ClInclude Include="EntityState\State\EntityStateIdle.h" />
     <ClInclude Include="EntityState\State\EntityStateMove.h" />
     <ClInclude Include="Entity\Entity.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="EntityState\EntityStateMachine.cpp" />
     <ClCompile Include="EntityState\State\EntityState.cpp" />
     <ClCompile Include="EntityState\State\EntityStateAttack.cpp" />
+    <ClCompile Include="EntityState\State\EntityStateAttackWeapon.cpp" />
     <ClCompile Include="EntityState\State\EntityStateIdle.cpp" />
     <ClCompile Include="EntityState\State\EntityStateMove.cpp" />
     <ClCompile Include="Entity\Entity.cpp" />

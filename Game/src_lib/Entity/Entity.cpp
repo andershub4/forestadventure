@@ -56,6 +56,9 @@ void Entity::OnMessage(std::shared_ptr<Message> msg)
         if (key == Keyboard::Key::RControl) {
             stateMachine_.OnStartAttack();
         }
+        else if (key == Keyboard::Key::Space) {
+            stateMachine_.OnStartAttackWeapon();
+        }
     }
 }
 

@@ -94,6 +94,33 @@ void Level::RegisterAnimationInfo(TextureManager& textureManager)
                                                 f.defaultFrame_);
     }
 
+    auto textureAttackSideWeapon = textureManager.GetTexture(
+        "assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack-weapon/hero-attack-side-weapon.png");
+    if (textureAttackSideWeapon != nullptr) {
+        SpriteSheet spriteSheet("heroAttackWeaponSide", textureAttackSideWeapon, {3, 1});
+        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
+        animationFactory_.RegisterAnimationInfo(FrameType::AttackWeapon, FaceDirection::Left, f.texture_, f.frames_,
+                                                f.defaultFrame_, true);
+        animationFactory_.RegisterAnimationInfo(FrameType::AttackWeapon, FaceDirection::Right, f.texture_, f.frames_,
+                                                f.defaultFrame_);
+    }
+    auto textureAttackFrontWeapon = textureManager.GetTexture(
+        "assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack-weapon/hero-attack-front-weapon.png");
+    if (textureAttackFrontWeapon != nullptr) {
+        SpriteSheet spriteSheet("heroAttackWeaponFront", textureAttackFrontWeapon, {3, 1});
+        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
+        animationFactory_.RegisterAnimationInfo(FrameType::AttackWeapon, FaceDirection::Down, f.texture_, f.frames_,
+                                                f.defaultFrame_);
+    }
+    auto textureAttackBackWeapon = textureManager.GetTexture(
+        "assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack-weapon/hero-attack-back-weapon.png");
+    if (textureAttackBackWeapon != nullptr) {
+        SpriteSheet spriteSheet("heroAttackWeaponBack", textureAttackBackWeapon, {3, 1});
+        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
+        animationFactory_.RegisterAnimationInfo(FrameType::AttackWeapon, FaceDirection::Up, f.texture_, f.frames_,
+                                                f.defaultFrame_);
+    }
+
     auto textureIdleSide =
         textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/idle/hero-idle-side.png");
     if (textureIdleSide != nullptr) {
