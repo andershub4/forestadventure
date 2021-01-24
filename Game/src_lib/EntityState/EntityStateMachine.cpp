@@ -54,14 +54,14 @@ void EntityStateMachine::OnStopMove()
     currentState_->OnStopMove();
 }
 
-void EntityStateMachine::OnStartAttack()
+void EntityStateMachine::OnAttack()
 {
-    currentState_->OnStartAttack();
+    currentState_->OnAttack();
 }
 
-void EntityStateMachine::OnStartAttackWeapon()
+void EntityStateMachine::OnAttackWeapon()
 {
-    currentState_->OnStartAttackWeapon();
+    currentState_->OnAttackWeapon();
 }
 
 }  // namespace FA

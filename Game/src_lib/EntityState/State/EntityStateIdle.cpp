@@ -36,12 +36,12 @@ void EntityStateIdle::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
     SwitchState<EntityStateMove>();
 }
 
-void EntityStateIdle::OnStartAttack()
+void EntityStateIdle::OnAttack()
 {
     SwitchState<EntityStateAttack>();
 }
 
-void EntityStateIdle::OnStartAttackWeapon()
+void EntityStateIdle::OnAttackWeapon()
 {
     SwitchState<EntityStateAttackWeapon>();
 }

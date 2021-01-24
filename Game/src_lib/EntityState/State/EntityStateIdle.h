@@ -21,8 +21,8 @@ public:
     virtual void Enter() override;
 
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) override;
-    virtual void OnStartAttack() override;
-    virtual void OnStartAttackWeapon() override;
+    virtual void OnAttack() override;
+    virtual void OnAttackWeapon() override;
 
 private:
     std::unique_ptr<Animation> animation_ = nullptr;

@@ -54,10 +54,10 @@ void Entity::OnMessage(std::shared_ptr<Message> msg)
         auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
         auto key = m->GetKey();
         if (key == Keyboard::Key::RControl) {
-            stateMachine_.OnStartAttack();
+            stateMachine_.OnAttack();
         }
         else if (key == Keyboard::Key::Space) {
-            stateMachine_.OnStartAttackWeapon();
+            stateMachine_.OnAttackWeapon();
         }
     }
 }
