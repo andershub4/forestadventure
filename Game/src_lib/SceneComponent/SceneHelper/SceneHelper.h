@@ -29,6 +29,8 @@ private:
     sf::RectangleShape dotShape_;
     sf::Font font_;
     sf::Text sceneText_;
+    sf::Text fpsText_;
+    sf::Text fpsNumberText_;
 };
 
 }  // namespace FA

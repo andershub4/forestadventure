@@ -46,6 +46,7 @@ void Game::GameLoop()
         messageBus_.DispatchMessages();
 
         level_.Update(deltaTime);
+        sceneHelper_.Update(deltaTime);
 
         window_.clear();
 
