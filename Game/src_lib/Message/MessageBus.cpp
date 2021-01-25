@@ -33,6 +33,13 @@ void MessageBus::RemoveSubscriber(const std::string& subscriber, MessageType mes
     subscribers.erase(removeMe, subscribers.end());
 }
 
+void MessageBus::RemoveSubscriber(const std::string& subscriber, const std::vector<MessageType>& messageTypes)
+{
+    for (auto messageType : messageTypes) {
+        RemoveSubscriber(subscriber, messageType);
+    }
+}
+
 void MessageBus::PushMessage(std::shared_ptr<Message> message)
 {
     queue_.push(message);

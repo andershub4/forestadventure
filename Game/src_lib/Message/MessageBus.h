@@ -28,6 +28,7 @@ public:
     void AddSubscriber(const std::string& subscriber, const std::vector<MessageType>& messageTypes,
                        MessageCB onMessage);
     void RemoveSubscriber(const std::string& subscriber, MessageType messageType);
+    void RemoveSubscriber(const std::string& subscriber, const std::vector<MessageType>& messageTypes);
     void PushMessage(std::shared_ptr<Message> message);
     void DispatchMessages();
 

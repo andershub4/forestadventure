@@ -27,7 +27,11 @@ Entity::Entity(MessageBus& messageBus, const AnimationFactory& animationFactory)
     rectShape_.setSize({static_cast<float>(size), static_cast<float>(size)});
 }
 
-Entity::~Entity() = default;
+Entity::~Entity()
+{
+    messageBus_.RemoveSubscriber("entity",
+                                 {MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
+}
 
 void Entity::Update(float deltaTime)
 {
