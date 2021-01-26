@@ -11,15 +11,16 @@
 #include "Layer.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
-#include "SceneComponent/Level/Level.h"
-#include "SceneComponent/SceneHelper/SceneHelper.h"
 
 namespace FA {
+
+class SceneComponent;
 
 class Game
 {
 public:
     Game();
+    ~Game();
     void GameLoop();
 
 private:
@@ -27,9 +28,9 @@ private:
     sf::RenderWindow window_;
     sf::View view_;
     TextureManager textureManager_;
-    Level level_;
+    std::unique_ptr<SceneComponent> level_ = nullptr;
     Layer levelLayer_;
-    SceneHelper sceneHelper_;
+    std::unique_ptr<SceneComponent> sceneHelper_ = nullptr;
     Layer sceneHelperLayer_;
 
 private:

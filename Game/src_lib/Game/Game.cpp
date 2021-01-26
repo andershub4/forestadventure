@@ -12,6 +12,8 @@
 #include "Constant/Screen.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
+#include "SceneComponent/SceneComponentHelper.h"
+#include "SceneComponent/SceneComponentLevel.h"
 #include "System/InputSystem.h"
 #include "Utils/Logger.h"
 #include "Utils/Path.h"
@@ -20,8 +22,6 @@
 namespace FA {
 
 Game::Game()
-    : sceneHelper_(messageBus_, "GamePlayScene")
-    , level_(messageBus_, textureManager_)
 {
     LOG_INFO_ENTER_FUNC();
 
@@ -29,8 +29,13 @@ Game::Game()
     auto cb = [this](std::shared_ptr<Message> message) { OnMessage(message); };
     messageBus_.AddSubscriber("game", {MessageType::KeyPressed, MessageType::CloseWindow}, cb);
 
+    sceneHelper_ = std::make_unique<SceneComponentHelper>(messageBus_, "GamePlayScene");
+    level_ = std::make_unique<SceneComponentLevel>(messageBus_, textureManager_);
+
     LOG_INFO_EXIT_FUNC();
 }
+
+Game::~Game() = default;
 
 void Game::GameLoop()
 {
@@ -45,15 +50,15 @@ void Game::GameLoop()
         inputSystem.Update(deltaTime);
         messageBus_.DispatchMessages();
 
-        level_.Update(deltaTime);
-        sceneHelper_.Update(deltaTime);
+        level_->Update(deltaTime);
+        sceneHelper_->Update(deltaTime);
 
         window_.clear();
 
-        level_.DrawTo(levelLayer_);
+        level_->DrawTo(levelLayer_);
         levelLayer_.DrawTo(window_);
 #ifdef _DEBUG
-        sceneHelper_.DrawTo(sceneHelperLayer_);
+        sceneHelper_->DrawTo(sceneHelperLayer_);
         sceneHelperLayer_.DrawTo(window_);
 #endif
         window_.display();

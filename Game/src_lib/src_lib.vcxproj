@@ -162,7 +162,7 @@
     <ClInclude Include="Game\Version.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h" />
     <ClInclude Include="Movement\Movement.h" />
-    <ClInclude Include="SceneComponent\Level\Level.h" />
+    <ClInclude Include="SceneComponent\SceneComponentLevel.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
     <ClInclude Include="Message\BroadcastMessage\KeyPressedMessage.h" />
     <ClInclude Include="Message\BroadcastMessage\KeyReleasedMessage.h" />
@@ -170,7 +170,8 @@
     <ClInclude Include="Message\Message.h" />
     <ClInclude Include="Message\MessageBus.h" />
     <ClInclude Include="Misc\TextureManager.h" />
-    <ClInclude Include="SceneComponent\SceneHelper\SceneHelper.h" />
+    <ClInclude Include="SceneComponent\SceneComponent.h" />
+    <ClInclude Include="SceneComponent\SceneComponentHelper.h" />
     <ClInclude Include="Sprite\SpriteSheet.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Utils\Logger.h" />
@@ -190,14 +191,15 @@
     <ClCompile Include="Game\Layer.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp" />
     <ClCompile Include="Movement\Movement.cpp" />
-    <ClCompile Include="SceneComponent\Level\Level.cpp" />
+    <ClCompile Include="SceneComponent\SceneComponentLevel.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />
     <ClCompile Include="Message\BroadcastMessage\KeyPressedMessage.cpp" />
     <ClCompile Include="Message\BroadcastMessage\KeyReleasedMessage.cpp" />
     <ClCompile Include="Message\Message.cpp" />
     <ClCompile Include="Message\MessageBus.cpp" />
     <ClCompile Include="Misc\TextureManager.cpp" />
-    <ClCompile Include="SceneComponent\SceneHelper\SceneHelper.cpp" />
+    <ClCompile Include="SceneComponent\SceneComponent.cpp" />
+    <ClCompile Include="SceneComponent\SceneComponentHelper.cpp" />
     <ClCompile Include="Sprite\SpriteSheet.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />

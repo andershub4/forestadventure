@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Level.h"
+#include "SceneComponentLevel.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -16,29 +16,29 @@
 
 namespace FA {
 
-Level::Level(MessageBus& messageBus, TextureManager& textureManager)
-    : messageBus_(messageBus)
+SceneComponentLevel::SceneComponentLevel(MessageBus& messageBus, TextureManager& textureManager)
+    : SceneComponent(messageBus)
     , animationFactory_(0.1f)
 {
     RegisterAnimationInfo(textureManager);
     entity_ = std::make_unique<Entity>(messageBus, animationFactory_);
 }
 
-Level::~Level() = default;
+SceneComponentLevel::~SceneComponentLevel() = default;
 
-void Level::DrawTo(Layer& layer)
+void SceneComponentLevel::DrawTo(Layer& layer)
 {
     layer.Clear();
     entity_->DrawTo(layer);
     layer.Display();
 }
 
-void Level::Update(float deltaTime)
+void SceneComponentLevel::Update(float deltaTime)
 {
     entity_->Update(deltaTime);
 }
 
-void Level::RegisterAnimationInfo(TextureManager& textureManager)
+void SceneComponentLevel::RegisterAnimationInfo(TextureManager& textureManager)
 {
     auto textureWalkSide =
         textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-side.png");

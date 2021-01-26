@@ -51,12 +51,6 @@
     <ClCompile Include="Game\Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneComponent\Level\Level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneComponent\SceneHelper\SceneHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -88,6 +82,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EntityState\State\EntityStateAttackWeapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneComponent\SceneComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneComponent\SceneComponentLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneComponent\SceneComponentHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,12 +143,6 @@
     <ClInclude Include="Game\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneComponent\Level\Level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneComponent\SceneHelper\SceneHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Constant\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -192,6 +189,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EntityState\State\EntityStateAttackWeapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneComponent\SceneComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneComponent\SceneComponentLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneComponent\SceneComponentHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

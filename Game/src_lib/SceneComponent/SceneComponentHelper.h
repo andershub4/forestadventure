@@ -10,22 +10,20 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include "SceneComponent.h"
+
 namespace FA {
 
-class MessageBus;
-class Layer;
-
-class SceneHelper
+class SceneComponentHelper : public SceneComponent
 {
 public:
-    SceneHelper(MessageBus& messageBus, const std::string& sceneName);
-    virtual ~SceneHelper();
+    SceneComponentHelper(MessageBus& messageBus, const std::string& sceneName);
+    virtual ~SceneComponentHelper();
 
-    void Update(float deltaTime);
-    void DrawTo(Layer& layer);
+    virtual void Update(float deltaTime) override;
+    virtual void DrawTo(Layer& layer) override;
 
 private:
-    MessageBus& messageBus_;
     sf::RectangleShape dotShape_;
     sf::Font font_;
     sf::Text sceneText_;

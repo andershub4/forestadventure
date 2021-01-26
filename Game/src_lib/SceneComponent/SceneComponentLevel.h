@@ -9,25 +9,23 @@
 #include <memory>
 
 #include "Animation/AnimationFactory.h"
-#include "Entity/Entity.h"
+#include "SceneComponent.h"
 
 namespace FA {
 
-class MessageBus;
 class TextureManager;
-class Layer;
+class Entity;
 
-class Level
+class SceneComponentLevel : public SceneComponent
 {
 public:
-    Level(MessageBus& messageBus, TextureManager& textureManager);
-    virtual ~Level();
+    SceneComponentLevel(MessageBus& messageBus, TextureManager& textureManager);
+    virtual ~SceneComponentLevel();
 
-    void Update(float deltaTime);
-    void DrawTo(Layer& layer);
+    virtual void Update(float deltaTime) override;
+    virtual void DrawTo(Layer& layer) override;
 
 private:
-    MessageBus& messageBus_;
     AnimationFactory animationFactory_;
     std::unique_ptr<Entity> entity_;
 
