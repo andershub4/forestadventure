@@ -26,11 +26,12 @@ SceneComponentLevel::SceneComponentLevel(MessageBus& messageBus, TextureManager&
 
 SceneComponentLevel::~SceneComponentLevel() = default;
 
-void SceneComponentLevel::DrawTo(Layer& layer)
+void SceneComponentLevel::DrawTo(sf::RenderTarget& renderTarget)
 {
-    layer.Clear();
-    entity_->DrawTo(layer);
-    layer.Display();
+    layer_.Clear();
+    entity_->DrawTo(layer_);
+    layer_.Display();
+    layer_.DrawTo(renderTarget);
 }
 
 void SceneComponentLevel::Update(float deltaTime)

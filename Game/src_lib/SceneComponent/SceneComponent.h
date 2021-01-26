@@ -6,10 +6,11 @@
 
 #pragma once
 
+#include "Game/Layer.h"
+
 namespace FA {
 
 class MessageBus;
-class Layer;
 
 class SceneComponent
 {
@@ -18,7 +19,10 @@ public:
     virtual ~SceneComponent();
 
     virtual void Update(float deltaTime) = 0;
-    virtual void DrawTo(Layer& layer) = 0;
+    virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
+
+protected:
+    Layer layer_;
 
 private:
     MessageBus& messageBus_;

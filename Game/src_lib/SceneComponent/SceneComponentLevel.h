@@ -23,7 +23,7 @@ public:
     virtual ~SceneComponentLevel();
 
     virtual void Update(float deltaTime) override;
-    virtual void DrawTo(Layer& layer) override;
+    virtual void DrawTo(sf::RenderTarget& renderTarget) override;
 
 private:
     AnimationFactory animationFactory_;

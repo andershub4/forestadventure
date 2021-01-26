@@ -29,8 +29,10 @@ Game::Game()
     auto cb = [this](std::shared_ptr<Message> message) { OnMessage(message); };
     messageBus_.AddSubscriber("game", {MessageType::KeyPressed, MessageType::CloseWindow}, cb);
 
-    sceneHelper_ = std::make_unique<SceneComponentHelper>(messageBus_, "GamePlayScene");
-    level_ = std::make_unique<SceneComponentLevel>(messageBus_, textureManager_);
+    sceneComponents_[SceneComponentId::Level] = std::make_unique<SceneComponentLevel>(messageBus_, textureManager_);
+#ifdef _DEBUG
+    sceneComponents_[SceneComponentId::Helper] = std::make_unique<SceneComponentHelper>(messageBus_, "GamePlayScene");
+#endif
 
     LOG_INFO_EXIT_FUNC();
 }
@@ -50,17 +52,16 @@ void Game::GameLoop()
         inputSystem.Update(deltaTime);
         messageBus_.DispatchMessages();
 
-        level_->Update(deltaTime);
-        sceneHelper_->Update(deltaTime);
+        for (const auto& component : sceneComponents_) {
+            component.second->Update(deltaTime);
+        }
 
         window_.clear();
 
-        level_->DrawTo(levelLayer_);
-        levelLayer_.DrawTo(window_);
-#ifdef _DEBUG
-        sceneHelper_->DrawTo(sceneHelperLayer_);
-        sceneHelperLayer_.DrawTo(window_);
-#endif
+        for (const auto& component : sceneComponents_) {
+            component.second->DrawTo(window_);
+        }
+
         window_.display();
     }
 

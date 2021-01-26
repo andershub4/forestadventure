@@ -200,5 +200,8 @@
     <ClInclude Include="SceneComponent\SceneComponentHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Enum\SceneComponentId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

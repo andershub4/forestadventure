@@ -156,6 +156,7 @@
     <ClInclude Include="Enum\MoveDirection.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />
+    <ClInclude Include="Enum\SceneComponentId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Layer.h" />

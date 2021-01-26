@@ -21,7 +21,7 @@ public:
     virtual ~SceneComponentHelper();
 
     virtual void Update(float deltaTime) override;
-    virtual void DrawTo(Layer& layer) override;
+    virtual void DrawTo(sf::RenderTarget& renderTarget) override;
 
 private:
     sf::RectangleShape dotShape_;

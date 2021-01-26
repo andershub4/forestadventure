@@ -51,14 +51,15 @@ SceneComponentHelper::SceneComponentHelper(MessageBus& messageBus, const std::st
 
 SceneComponentHelper::~SceneComponentHelper() = default;
 
-void SceneComponentHelper::DrawTo(Layer& layer)
+void SceneComponentHelper::DrawTo(sf::RenderTarget& renderTarget)
 {
-    layer.Clear();
-    layer.Draw(sceneText_);
-    layer.Draw(fpsText_);
-    layer.Draw(fpsNumberText_);
-    layer.Draw(dotShape_);
-    layer.Display();
+    layer_.Clear();
+    layer_.Draw(sceneText_);
+    layer_.Draw(fpsText_);
+    layer_.Draw(fpsNumberText_);
+    layer_.Draw(dotShape_);
+    layer_.Display();
+    layer_.DrawTo(renderTarget);
 }
 
 void SceneComponentHelper::Update(float deltaTime)
