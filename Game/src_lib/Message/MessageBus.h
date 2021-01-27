@@ -36,7 +36,7 @@ private:
     struct Subscriber
     {
         std::string name_;
-        MessageCB onMessage_;
+        MessageCB onMessage_ = nullptr;
     };
 
     std::unordered_map<MessageType, std::vector<Subscriber>> subscribersMap_;

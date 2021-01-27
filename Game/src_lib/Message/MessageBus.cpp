@@ -29,7 +29,9 @@ void MessageBus::RemoveSubscriber(const std::string& subscriber, MessageType mes
     auto& subscribers = subscribersMap_[messageType];
     auto removeMe = std::remove_if(subscribers.begin(), subscribers.end(),
                                    [subscriber](Subscriber& s) { return s.name_ == subscriber; });
-
+    // If a subscriber is removed in dispatch loop, it will still be accessible in the loop.
+    // Prevent the callback execution by setting nullptr.
+    removeMe->onMessage_ = nullptr;
     subscribers.erase(removeMe, subscribers.end());
 }
 
@@ -52,7 +54,7 @@ void MessageBus::DispatchMessages()
         auto type = msg->GetMessageType();
         const auto& subscribers = subscribersMap_[type];
         for (const auto& subscriber : subscribers) {
-            subscriber.onMessage_(msg);
+            if (subscriber.onMessage_ != nullptr) subscriber.onMessage_(msg);
         }
 
         queue_.pop();
