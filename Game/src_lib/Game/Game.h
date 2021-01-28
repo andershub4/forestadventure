@@ -14,8 +14,6 @@
 
 namespace FA {
 
-class SceneComponent;
-
 class Game
 {
 public:
