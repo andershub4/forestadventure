@@ -144,6 +144,7 @@
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Animation\AnimationFactory.h" />
     <ClInclude Include="Constant\Screen.h" />
+    <ClInclude Include="Effect\FadeAnimation.h" />
     <ClInclude Include="EntityState\EntityStateMachine.h" />
     <ClInclude Include="EntityState\State\EntityStateAttack.h" />
     <ClInclude Include="EntityState\State\EntityState.h" />
@@ -186,6 +187,7 @@
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Animation\AnimationFactory.cpp" />
+    <ClCompile Include="Effect\FadeAnimation.cpp" />
     <ClCompile Include="EntityState\EntityStateMachine.cpp" />
     <ClCompile Include="EntityState\State\EntityState.cpp" />
     <ClCompile Include="EntityState\State\EntityStateAttack.cpp" />

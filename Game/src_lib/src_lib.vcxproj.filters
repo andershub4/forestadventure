@@ -108,6 +108,9 @@
     <ClCompile Include="SceneComponent\SceneComponentIntro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Effect\FadeAnimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -231,6 +234,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneComponent\SceneComponentIntro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\FadeAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
