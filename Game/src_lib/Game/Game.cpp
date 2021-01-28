@@ -12,8 +12,6 @@
 #include "Constant/Screen.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
-#include "SceneComponent/SceneComponentHelper.h"
-#include "SceneComponent/SceneComponentLevel.h"
 #include "System/InputSystem.h"
 #include "Utils/Logger.h"
 #include "Utils/Path.h"
@@ -22,17 +20,13 @@
 namespace FA {
 
 Game::Game()
+    : sceneManager_(messageBus_, textureManager_)
 {
     LOG_INFO_ENTER_FUNC();
 
     InitWindow();
     auto cb = [this](std::shared_ptr<Message> message) { OnMessage(message); };
     messageBus_.AddSubscriber("game", {MessageType::KeyPressed, MessageType::CloseWindow}, cb);
-
-    sceneComponents_[SceneComponentId::Level] = std::make_unique<SceneComponentLevel>(messageBus_, textureManager_);
-#ifdef _DEBUG
-    sceneComponents_[SceneComponentId::Helper] = std::make_unique<SceneComponentHelper>(messageBus_, "GamePlayScene");
-#endif
 
     LOG_INFO_EXIT_FUNC();
 }
@@ -45,25 +39,21 @@ void Game::GameLoop()
     sf::Clock clock;
     InputSystem inputSystem(messageBus_, window_);
 
-    while (window_.isOpen()) {
+    while (sceneManager_.IsRunning()) {
         sf::Time elapsed = clock.restart();
         float deltaTime = elapsed.asSeconds();
 
         inputSystem.Update(deltaTime);
         messageBus_.DispatchMessages();
 
-        for (const auto& component : sceneComponents_) {
-            component.second->Update(deltaTime);
-        }
+        sceneManager_.Update(deltaTime);
 
         window_.clear();
-
-        for (const auto& component : sceneComponents_) {
-            component.second->DrawTo(window_);
-        }
-
+        sceneManager_.DrawTo(window_);
         window_.display();
     }
+
+    window_.close();
 
     LOG_INFO_EXIT_FUNC();
 }
@@ -71,14 +61,10 @@ void Game::GameLoop()
 void Game::OnMessage(std::shared_ptr<Message> message)
 {
     if (message->GetMessageType() == MessageType::KeyPressed) {
-        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(message);
-        auto key = m->GetKey();
-        if (key == Keyboard::Key::Escape) {
-            window_.close();
-        }
+        sceneManager_.OnKeyPressed(message);
     }
     else if (message->GetMessageType() == MessageType::CloseWindow) {
-        window_.close();
+        sceneManager_.OnCloseWindow(message);  
     }
     else {
         // cant happened

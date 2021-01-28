@@ -6,13 +6,11 @@
 
 #pragma once
 
-#include <map>
-
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Enum/SceneComponentId.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
+#include "GameScene/GameSceneManager.h"
 
 namespace FA {
 
@@ -30,7 +28,7 @@ private:
     sf::RenderWindow window_;
     sf::View view_;
     TextureManager textureManager_;
-    std::map<SceneComponentId, std::unique_ptr<SceneComponent>> sceneComponents_;
+    GameSceneManager sceneManager_;
 
 private:
     void OnMessage(std::shared_ptr<Message> message);

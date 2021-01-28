@@ -8,6 +8,6 @@
 
 namespace FA {
 
-enum class SceneComponentId { Level, Helper };
+enum class SceneComponentId { Level, Intro, Helper };
 
 }  // namespace FA
