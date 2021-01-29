@@ -11,7 +11,8 @@
 namespace FA {
 
 FadeAnimation::FadeAnimation(const sf::Vector2f& size, float seconds)
-    : fadeRect_(size)
+    : Effect(size)
+    , fadeRect_(size)
     , targetTime_(sf::seconds(seconds))
 {
     fadeRect_.setFillColor(sf::Color(0, 0, 0, 0));
