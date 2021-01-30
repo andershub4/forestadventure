@@ -20,8 +20,9 @@ public:
     SceneComponentHelper(MessageBus& messageBus, const std::string& sceneName);
     virtual ~SceneComponentHelper();
 
+    virtual SceneComponentId GetId() const override { return SceneComponentId::Helper; }
     virtual void Update(float deltaTime) override;
-    virtual void DrawTo(sf::RenderTarget& renderTarget) override;
+    virtual void Draw() override;
 
 private:
     sf::RectangleShape dotShape_;

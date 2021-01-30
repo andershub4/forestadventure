@@ -10,12 +10,12 @@
 
 #include "EntityState/EntityStateMachine.h"
 #include "Enum/KeyboardKey.h"
+#include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
 class MessageBus;
 class Message;
-class Layer;
 
 class Entity
 {
@@ -24,7 +24,7 @@ public:
     ~Entity();
 
     void Update(float deltaTime);
-    void DrawTo(Layer& layer);
+    void DrawTo(sf::RenderTarget& renderTarget);
     void OnMessage(std::shared_ptr<Message> msg);
 
 private:

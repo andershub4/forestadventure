@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "GameScene/Scene/GameSceneIntro.h"
+#include "GameScene/Transition/GameTransitionFade.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "SceneComponent/SceneComponentHelper.h"
 #include "SceneComponent/SceneComponentLevel.h"
@@ -16,7 +17,7 @@
 namespace FA {
 
 GameScenePlay::GameScenePlay(GameSceneManager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-                             SceneComponents& sceneComponents, SceneData& sceneData)
+                             GameSceneManager::SceneComponents& sceneComponents, GameSceneManager::SceneData& sceneData)
     : GameScene(sceneManager, messageBus, textureManager, sceneComponents, sceneData)
 {}
 
@@ -33,15 +34,19 @@ void GameScenePlay::Enter()
 
 void GameScenePlay::DrawTo(sf::RenderTarget& renderTarget)
 {
-    for (const auto& component : sceneComponents_) {
-        component.second->DrawTo(renderTarget);
+    for (const auto& entry : sceneComponents_) {
+        auto& component = entry.second;
+        component->Clear();
+        component->Draw();
+        component->DrawTo(renderTarget);
     }
 }
 
 void GameScenePlay::Update(float deltaTime)
 {
-    for (const auto& component : sceneComponents_) {
-        component.second->Update(deltaTime);
+    for (const auto& entry : sceneComponents_) {
+        auto& component = entry.second;
+        component->Update(deltaTime);
     }
 }
 
@@ -53,7 +58,7 @@ void GameScenePlay::OnKeyPressed(std::shared_ptr<Message> message)
         sceneData_.isRunning_ = false;
     }
     else if (key == Keyboard::Key::Return) {
-        SwitchScene<GameSceneIntro>();
+        SwitchScene<GameSceneIntro, GameTransitionFade>({SceneComponentId::Level});
     }
 }
 

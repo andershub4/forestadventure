@@ -18,8 +18,9 @@ public:
     SceneComponentIntro(MessageBus& messageBus);
     virtual ~SceneComponentIntro();
 
+    virtual SceneComponentId GetId() const override { return SceneComponentId::Intro; }
     virtual void Update(float deltaTime) override;
-    virtual void DrawTo(sf::RenderTarget& renderTarget) override;
+    virtual void Draw() override;
 
 private:
     sf::RectangleShape rect_;

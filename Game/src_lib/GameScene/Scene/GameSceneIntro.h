@@ -14,7 +14,7 @@ class GameSceneIntro : public GameScene
 {
 public:
     GameSceneIntro(GameSceneManager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-                   SceneComponents& sceneComponents, SceneData& sceneData);
+                   GameSceneManager::SceneComponents& sceneComponents, GameSceneManager::SceneData& sceneData);
     virtual ~GameSceneIntro();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;

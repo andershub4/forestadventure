@@ -9,7 +9,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/Entity.h"
-#include "Game/Layer.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 #include "Sprite/SpriteSheet.h"
@@ -26,12 +25,9 @@ SceneComponentLevel::SceneComponentLevel(MessageBus& messageBus, TextureManager&
 
 SceneComponentLevel::~SceneComponentLevel() = default;
 
-void SceneComponentLevel::DrawTo(sf::RenderTarget& renderTarget)
+void SceneComponentLevel::Draw()
 {
-    layer_.Clear();
-    entity_->DrawTo(layer_);
-    layer_.Display();
-    layer_.DrawTo(renderTarget);
+    entity_->DrawTo(renderTexture_);
 }
 
 void SceneComponentLevel::Update(float deltaTime)

@@ -6,12 +6,34 @@
 
 #include "SceneComponent.h"
 
+#include "Constant/Screen.h"
+#include "Effect/Effect.h"
+
 namespace FA {
 
 SceneComponent::SceneComponent(MessageBus& messageBus)
     : messageBus_(messageBus)
-{}
+{
+    renderTexture_.create(constant::Screen::width, constant::Screen::height);
+    sprite_.setTexture(renderTexture_.getTexture());
+}
 
 SceneComponent::~SceneComponent() = default;
+
+void SceneComponent::Clear()
+{
+    renderTexture_.clear(sf::Color::Transparent);
+}
+
+void SceneComponent::DrawTo(sf::RenderTarget& renderTarget)
+{
+    renderTexture_.display();
+    renderTarget.draw(sprite_);
+}
+
+void SceneComponent::Draw(const Effect& effect)
+{
+    effect.DrawTo(renderTexture_);
+}
 
 }  // namespace FA

@@ -6,11 +6,15 @@
 
 #pragma once
 
-#include "Game/Layer.h"
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+
+#include "Enum/SceneComponentId.h"
 
 namespace FA {
 
 class MessageBus;
+class Effect;
 
 class SceneComponent
 {
@@ -18,11 +22,17 @@ public:
     SceneComponent(MessageBus& messageBus);
     virtual ~SceneComponent();
 
+    virtual SceneComponentId GetId() const = 0;
     virtual void Update(float deltaTime) = 0;
-    virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
+    virtual void Draw() = 0;
+
+    void Clear();
+    void DrawTo(sf::RenderTarget& renderTarget);
+    void Draw(const Effect& effect);
 
 protected:
-    Layer layer_;
+    sf::Sprite sprite_;
+    sf::RenderTexture renderTexture_;
 
 private:
     MessageBus& messageBus_;

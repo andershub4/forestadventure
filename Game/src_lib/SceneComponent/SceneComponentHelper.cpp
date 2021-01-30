@@ -11,7 +11,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Screen.h"
-#include "Game/Layer.h"
 #include "Message/MessageBus.h"
 #include "Utils/Logger.h"
 
@@ -51,15 +50,12 @@ SceneComponentHelper::SceneComponentHelper(MessageBus& messageBus, const std::st
 
 SceneComponentHelper::~SceneComponentHelper() = default;
 
-void SceneComponentHelper::DrawTo(sf::RenderTarget& renderTarget)
+void SceneComponentHelper::Draw()
 {
-    layer_.Clear();
-    layer_.Draw(sceneText_);
-    layer_.Draw(fpsText_);
-    layer_.Draw(fpsNumberText_);
-    layer_.Draw(dotShape_);
-    layer_.Display();
-    layer_.DrawTo(renderTarget);
+    renderTexture_.draw(sceneText_);
+    renderTexture_.draw(fpsText_);
+    renderTexture_.draw(fpsNumberText_);
+    renderTexture_.draw(dotShape_);
 }
 
 void SceneComponentHelper::Update(float deltaTime)

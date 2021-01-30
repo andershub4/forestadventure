@@ -7,6 +7,7 @@
 #include "GameSceneManager.h"
 
 #include "GameScene/Scene/GameSceneIntro.h"
+#include "GameScene/Scene/GameSceneTransition.h"
 #include "Message/Message.h"
 #include "Utils/Logger.h"
 
@@ -32,6 +33,14 @@ void GameSceneManager::SetScene(std::unique_ptr<GameScene> newScene)
     currentScene_ = std::move(newScene);
     // LOG_INFO("Enter ", currentScene_->Name());
     currentScene_->Enter();
+}
+
+void GameSceneManager::SetTransitionScene(MessageBus& messageBus, TextureManager& textureManager,
+                                          std::unique_ptr<GameTransition> transition,
+                                          const std::vector<SceneComponentId>& ids)
+{
+    SetScene(std::make_unique<GameSceneTransition>(*this, messageBus, textureManager, sceneComponents_, sceneData_,
+                                                   std::move(transition), ids));
 }
 
 void GameSceneManager::DrawTo(sf::RenderTarget& renderTarget)

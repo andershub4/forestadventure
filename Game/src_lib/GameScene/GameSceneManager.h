@@ -6,15 +6,44 @@
 
 #pragma once
 
-#include "GameScene/Scene/GameScene.h"
+#include <map>
+#include <memory>
+
+#include "Enum/SceneComponentId.h"
+#include "Fwd/SfmlFwd.h"
+#include "SceneComponent/SceneComponent.h"
 
 namespace FA {
+
+class GameScene;
+class MessageBus;
+class TextureManager;
+class Message;
+class GameTransition;
 
 class GameSceneManager
 {
 public:
+    using SceneComponents = std::map<SceneComponentId, std::unique_ptr<SceneComponent>>;
+
+    struct SceneData
+    {
+        bool isRunning_ = true;
+    };
+
     GameSceneManager(MessageBus& messageBus, TextureManager& textureManager);
     ~GameSceneManager();
+
+    template <class SceneT, class TransitionT>
+    void SetScene(MessageBus& messageBus, TextureManager& textureManager, const std::vector<SceneComponentId>& ids)
+    {
+        auto createStateCB = [this](MessageBus& messageBus, TextureManager& textureManager) {
+            return std::make_unique<SceneT>(*this, messageBus, textureManager, sceneComponents_, sceneData_);
+        };
+
+        auto transition = std::make_unique<TransitionT>(createStateCB);
+        SetTransitionScene(messageBus, textureManager, std::move(transition), ids);
+    }
 
     void SetScene(std::unique_ptr<GameScene> newScene);
 
@@ -30,8 +59,11 @@ public:
 
 private:
     std::unique_ptr<GameScene> currentScene_;
-    GameScene::SceneData sceneData_;
-    GameScene::SceneComponents sceneComponents_;
+    SceneData sceneData_;
+    SceneComponents sceneComponents_;
+
+    void SetTransitionScene(MessageBus& messageBus, TextureManager& textureManager,
+                            std::unique_ptr<GameTransition> transition, const std::vector<SceneComponentId>& ids);
 };
 
 }  // namespace FA

@@ -6,8 +6,9 @@
 
 #include "Entity.h"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+
 #include "Constant/Screen.h"
-#include "Game/Layer.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -38,9 +39,9 @@ void Entity::Update(float deltaTime)
     stateMachine_.Update(deltaTime);
 }
 
-void Entity::DrawTo(Layer& layer)
+void Entity::DrawTo(sf::RenderTarget& renderTarget)
 {
-    layer.Draw(rectShape_);
+    renderTarget.draw(rectShape_);
 }
 
 void Entity::OnMessage(std::shared_ptr<Message> msg)

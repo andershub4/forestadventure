@@ -6,12 +6,10 @@
 
 #include "GameScene.h"
 
-#include "GameScene/GameSceneManager.h"
-
 namespace FA {
 
 GameScene::GameScene(GameSceneManager &sceneManager, MessageBus &messageBus, TextureManager &textureManager,
-                     SceneComponents &sceneComponents, SceneData &sceneData)
+                     GameSceneManager::SceneComponents &sceneComponents, GameSceneManager::SceneData &sceneData)
     : sceneManager_(sceneManager)
     , messageBus_(messageBus)
     , textureManager_(textureManager)

@@ -16,7 +16,8 @@
 namespace FA {
 
 GameSceneIntro::GameSceneIntro(GameSceneManager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-                               SceneComponents& sceneComponents, SceneData& sceneData)
+                               GameSceneManager::SceneComponents& sceneComponents,
+                               GameSceneManager::SceneData& sceneData)
     : GameScene(sceneManager, messageBus, textureManager, sceneComponents, sceneData)
 {}
 
@@ -33,15 +34,19 @@ void GameSceneIntro::Enter()
 
 void GameSceneIntro::DrawTo(sf::RenderTarget& renderTarget)
 {
-    for (const auto& component : sceneComponents_) {
-        component.second->DrawTo(renderTarget);
+    for (const auto& entry : sceneComponents_) {
+        auto& component = entry.second;
+        component->Clear();
+        component->Draw();
+        component->DrawTo(renderTarget);
     }
 }
 
 void GameSceneIntro::Update(float deltaTime)
 {
-    for (const auto& component : sceneComponents_) {
-        component.second->Update(deltaTime);
+    for (const auto& entry : sceneComponents_) {
+        auto& component = entry.second;
+        component->Update(deltaTime);
     }
 }
 
@@ -53,7 +58,7 @@ void GameSceneIntro::OnKeyPressed(std::shared_ptr<Message> message)
         sceneData_.isRunning_ = false;
     }
     else if (key == Keyboard::Key::Return) {
-        SwitchScene<GameScenePlay>();
+        SwitchScene<GameScenePlay>({});
     }
 }
 

@@ -9,7 +9,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Screen.h"
-#include "Game/Layer.h"
 #include "Message/MessageBus.h"
 
 namespace FA {
@@ -23,12 +22,9 @@ SceneComponentIntro::SceneComponentIntro(MessageBus& messageBus)
 
 SceneComponentIntro::~SceneComponentIntro() = default;
 
-void SceneComponentIntro::DrawTo(sf::RenderTarget& renderTarget)
+void SceneComponentIntro::Draw()
 {
-    layer_.Clear();
-    layer_.Draw(rect_);
-    layer_.Display();
-    layer_.DrawTo(renderTarget);
+    renderTexture_.draw(rect_);
 }
 
 void SceneComponentIntro::Update(float deltaTime)

@@ -22,8 +22,9 @@ public:
     SceneComponentLevel(MessageBus& messageBus, TextureManager& textureManager);
     virtual ~SceneComponentLevel();
 
+    virtual SceneComponentId GetId() const override { return SceneComponentId::Level; }
     virtual void Update(float deltaTime) override;
-    virtual void DrawTo(sf::RenderTarget& renderTarget) override;
+    virtual void Draw() override;
 
 private:
     AnimationFactory animationFactory_;

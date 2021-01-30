@@ -14,7 +14,7 @@ class GameScenePlay : public GameScene
 {
 public:
     GameScenePlay(GameSceneManager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-                  SceneComponents& sceneComponents, SceneData& sceneData);
+                  GameSceneManager::SceneComponents& sceneComponents, GameSceneManager::SceneData& sceneData);
     virtual ~GameScenePlay();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
