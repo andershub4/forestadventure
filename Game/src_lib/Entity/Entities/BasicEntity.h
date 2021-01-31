@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-#include "EntityState/EntityStateMachine.h"
+#include "Entity/StateMachine.h"
 #include "Enum/KeyboardKey.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -17,11 +17,13 @@ namespace FA {
 class MessageBus;
 class Message;
 
-class Entity
+namespace Entity {
+
+class BasicEntity
 {
 public:
-    Entity(MessageBus& messageBus, const AnimationFactory& animationFactory);
-    ~Entity();
+    BasicEntity(MessageBus& messageBus, const AnimationFactory& animationFactory);
+    ~BasicEntity();
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
@@ -31,7 +33,7 @@ public:
 private:
     MessageBus& messageBus_;
     sf::RectangleShape rectShape_;
-    EntityStateMachine stateMachine_;
+    StateMachine stateMachine_;
     bool processMessages_ = true;
 
 private:
@@ -40,5 +42,7 @@ private:
 private:
     void HandleMessage(std::shared_ptr<Message> msg);
 };
+
+}  // namespace Entity
 
 }  // namespace FA

@@ -6,18 +6,20 @@
 
 #pragma once
 
-#include "EntityState.h"
+#include "BasicState.h"
 
 namespace FA {
 
-class EntityStateIdle : public EntityState
+namespace Entity {
+
+class IdleState : public BasicState
 {
 public:
-    EntityStateIdle(EntityStateMachine& stateMachine, StateData& stateData);
-    virtual ~EntityStateIdle();
+    IdleState(StateMachine& stateMachine, StateData& stateData);
+    virtual ~IdleState();
 
     virtual void Update(float deltaTime) override;
-    virtual std::string Name() const override { return "EntityStateIdle"; }
+    virtual std::string Name() const override { return "IdleState"; }
     virtual void Enter() override;
 
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) override;
@@ -27,5 +29,7 @@ public:
 private:
     std::unique_ptr<Animation> animation_ = nullptr;
 };
+
+}  // namespace Entity
 
 }  // namespace FA

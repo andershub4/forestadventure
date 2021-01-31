@@ -4,42 +4,46 @@
  *	See file LICENSE for full license details.
  */
 
-#include "EntityStateAttackWeapon.h"
+#include "AttackWeaponState.h"
 
 #include "Animation/Animation.h"
-#include "EntityStateIdle.h"
-#include "EntityStateMove.h"
+#include "IdleState.h"
+#include "MoveState.h"
 
 namespace FA {
 
-EntityStateAttackWeapon::EntityStateAttackWeapon(EntityStateMachine& stateMachine, StateData& stateData)
-    : EntityState(stateMachine, stateData)
+namespace Entity {
+
+AttackWeaponState::AttackWeaponState(StateMachine& stateMachine, StateData& stateData)
+    : BasicState(stateMachine, stateData)
 {}
 
-EntityStateAttackWeapon::~EntityStateAttackWeapon() = default;
+AttackWeaponState::~AttackWeaponState() = default;
 
-void EntityStateAttackWeapon::Update(float deltaTime)
+void AttackWeaponState::Update(float deltaTime)
 {
     if (animation_) {
         animation_->Update(deltaTime);
         if (animation_->IsCompleted()) {
-            SwitchState<EntityStateIdle>();
+            SwitchState<IdleState>();
         }
     }
 }
 
-void EntityStateAttackWeapon::Enter()
+void AttackWeaponState::Enter()
 {
     animation_ =
         stateData_.animationFactory_.Create(FrameType::AttackWeapon, stateData_.faceDir_, stateData_.rectShape_);
     animation_->Start();
 }
 
-void EntityStateAttackWeapon::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
+void AttackWeaponState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
     stateData_.moveDir_ = moveDir;
     stateData_.faceDir_ = faceDir;
-    SwitchState<EntityStateMove>();
+    SwitchState<MoveState>();
 }
+
+}  // namespace Entity
 
 }  // namespace FA

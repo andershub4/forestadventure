@@ -13,8 +13,13 @@
 
 namespace FA {
 
+namespace Entity {
+
+class BasicEntity;
+
+}
+
 class TextureManager;
-class Entity;
 
 class SceneComponentLevel : public SceneComponent
 {
@@ -29,7 +34,7 @@ public:
 
 private:
     AnimationFactory animationFactory_;
-    std::unique_ptr<Entity> entity_;
+    std::unique_ptr<Entity::BasicEntity> entity_;
 
 private:
     void RegisterAnimationInfo(TextureManager& textureManager);

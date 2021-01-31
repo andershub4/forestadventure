@@ -4,41 +4,45 @@
  *	See file LICENSE for full license details.
  */
 
-#include "EntityStateAttack.h"
+#include "AttackState.h"
 
 #include "Animation/Animation.h"
-#include "EntityStateIdle.h"
-#include "EntityStateMove.h"
+#include "IdleState.h"
+#include "MoveState.h"
 
 namespace FA {
 
-EntityStateAttack::EntityStateAttack(EntityStateMachine& stateMachine, StateData& stateData)
-    : EntityState(stateMachine, stateData)
+namespace Entity {
+
+AttackState::AttackState(StateMachine& stateMachine, StateData& stateData)
+    : BasicState(stateMachine, stateData)
 {}
 
-EntityStateAttack::~EntityStateAttack() = default;
+AttackState::~AttackState() = default;
 
-void EntityStateAttack::Update(float deltaTime)
+void AttackState::Update(float deltaTime)
 {
     if (animation_) {
         animation_->Update(deltaTime);
         if (animation_->IsCompleted()) {
-            SwitchState<EntityStateIdle>();
+            SwitchState<IdleState>();
         }
     }
 }
 
-void EntityStateAttack::Enter()
+void AttackState::Enter()
 {
     animation_ = stateData_.animationFactory_.Create(FrameType::Attack, stateData_.faceDir_, stateData_.rectShape_);
     animation_->Start();
 }
 
-void EntityStateAttack::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
+void AttackState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
     stateData_.moveDir_ = moveDir;
     stateData_.faceDir_ = faceDir;
-    SwitchState<EntityStateMove>();
+    SwitchState<MoveState>();
 }
+
+}  // namespace Entity
 
 }  // namespace FA

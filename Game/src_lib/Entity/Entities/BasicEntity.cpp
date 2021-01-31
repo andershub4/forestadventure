@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Entity.h"
+#include "BasicEntity.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -16,7 +16,9 @@
 
 namespace FA {
 
-Entity::Entity(MessageBus& messageBus, const AnimationFactory& animationFactory)
+namespace Entity {
+
+BasicEntity::BasicEntity(MessageBus& messageBus, const AnimationFactory& animationFactory)
     : messageBus_(messageBus)
     , stateMachine_(&rectShape_, FaceDirection::Down, MoveDirection::Down, animationFactory, 120.0)
 {
@@ -28,30 +30,30 @@ Entity::Entity(MessageBus& messageBus, const AnimationFactory& animationFactory)
     rectShape_.setSize({static_cast<float>(size), static_cast<float>(size)});
 }
 
-Entity::~Entity()
+BasicEntity::~BasicEntity()
 {
     messageBus_.RemoveSubscriber("entity",
                                  {MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
-void Entity::Update(float deltaTime)
+void BasicEntity::Update(float deltaTime)
 {
     stateMachine_.Update(deltaTime);
 }
 
-void Entity::DrawTo(sf::RenderTarget& renderTarget)
+void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
     renderTarget.draw(rectShape_);
 }
 
-void Entity::OnMessage(std::shared_ptr<Message> msg)
+void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
 {
     if (processMessages_) {
         HandleMessage(msg);
     }
 }
 
-void Entity::HandleMessage(std::shared_ptr<Message> msg)
+void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
 {
     if (msg->GetMessageType() == MessageType::IsKeyPressed) {
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
@@ -73,7 +75,7 @@ void Entity::HandleMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void Entity::OnIsKeyPressed(Keyboard::Key key)
+void BasicEntity::OnIsKeyPressed(Keyboard::Key key)
 {
     if (key == Keyboard::Key::Right) {
         stateMachine_.OnStartMove(MoveDirection::Right, FaceDirection::Right);
@@ -88,5 +90,7 @@ void Entity::OnIsKeyPressed(Keyboard::Key key)
         stateMachine_.OnStartMove(MoveDirection::Down, FaceDirection::Down);
     }
 }
+
+}  // namespace Entity
 
 }  // namespace FA

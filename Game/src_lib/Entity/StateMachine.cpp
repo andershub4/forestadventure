@@ -4,38 +4,40 @@
  *	See file LICENSE for full license details.
  */
 
-#include "EntityStateMachine.h"
+#include "StateMachine.h"
 
-#include "EntityState/State/EntityStateIdle.h"
+#include "States/IdleState.h"
 #include "Utils/Logger.h"
 
 namespace FA {
 
-EntityStateMachine::EntityStateMachine(sf::RectangleShape* rectShape, FaceDirection faceDir, MoveDirection moveDir,
-                                       const AnimationFactory& animationFactory, float velocity)
+namespace Entity {
+
+StateMachine::StateMachine(sf::RectangleShape* rectShape, FaceDirection faceDir, MoveDirection moveDir,
+                           const AnimationFactory& animationFactory, float velocity)
 {
     stateData_.faceDir_ = faceDir;
     stateData_.moveDir_ = moveDir;
     stateData_.animationFactory_ = animationFactory;
     stateData_.velocity_ = velocity;
     stateData_.rectShape_ = rectShape;
-    currentState_ = std::make_unique<EntityStateIdle>(*this, stateData_);
+    currentState_ = std::make_unique<IdleState>(*this, stateData_);
     // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }
 
-EntityStateMachine::~EntityStateMachine()
+StateMachine::~StateMachine()
 {
     // LOG_INFO("Exit ", currentState_->Name());
     currentState_->Exit();
 }
 
-void EntityStateMachine::Update(float deltaTime)
+void StateMachine::Update(float deltaTime)
 {
     currentState_->Update(deltaTime);
 }
 
-void EntityStateMachine::SetState(std::unique_ptr<EntityState> newState)
+void StateMachine::SetState(std::unique_ptr<BasicState> newState)
 {
     // LOG_INFO("Exit ", currentState_->Name());
     currentState_->Exit();
@@ -44,24 +46,26 @@ void EntityStateMachine::SetState(std::unique_ptr<EntityState> newState)
     currentState_->Enter();
 }
 
-void EntityStateMachine::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
+void StateMachine::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
     currentState_->OnStartMove(moveDir, faceDir);
 }
 
-void EntityStateMachine::OnStopMove()
+void StateMachine::OnStopMove()
 {
     currentState_->OnStopMove();
 }
 
-void EntityStateMachine::OnAttack()
+void StateMachine::OnAttack()
 {
     currentState_->OnAttack();
 }
 
-void EntityStateMachine::OnAttackWeapon()
+void StateMachine::OnAttackWeapon()
 {
     currentState_->OnAttackWeapon();
 }
+
+}  // namespace Entity
 
 }  // namespace FA

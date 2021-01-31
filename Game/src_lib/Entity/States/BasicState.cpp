@@ -5,22 +5,26 @@
  *	See file LICENSE for full license details.
  */
 
-#include "EntityState.h"
+#include "BasicState.h"
 
-#include "EntityState/EntityStateMachine.h"
+#include "Entity/StateMachine.h"
 
 namespace FA {
 
-EntityState::EntityState(EntityStateMachine& stateMachine, StateData& stateData)
+namespace Entity {
+
+BasicState::BasicState(StateMachine& stateMachine, StateData& stateData)
     : stateMachine_(stateMachine)
     , stateData_(stateData)
 {}
 
-EntityState::~EntityState() = default;
+BasicState::~BasicState() = default;
 
-void EntityState::SwitchState(std::unique_ptr<EntityState> newState)
+void BasicState::SwitchState(std::unique_ptr<BasicState> newState)
 {
     stateMachine_.SetState(std::move(newState));
 }
+
+}  // namespace Entity
 
 }  // namespace FA

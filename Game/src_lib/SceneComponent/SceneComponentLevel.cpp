@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Entity.h"
+#include "Entity/Entities/BasicEntity.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 #include "Sprite/SpriteSheet.h"
@@ -20,7 +20,7 @@ SceneComponentLevel::SceneComponentLevel(MessageBus& messageBus, TextureManager&
     , animationFactory_(0.1f)
 {
     RegisterAnimationInfo(textureManager);
-    entity_ = std::make_unique<Entity>(messageBus, animationFactory_);
+    entity_ = std::make_unique<Entity::BasicEntity>(messageBus, animationFactory_);
 }
 
 SceneComponentLevel::~SceneComponentLevel() = default;

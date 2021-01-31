@@ -4,41 +4,45 @@
  *	See file LICENSE for full license details.
  */
 
-#include "EntityStateMove.h"
+#include "MoveState.h"
 
 #include "Animation/Animation.h"
-#include "EntityStateIdle.h"
+#include "IdleState.h"
 
 namespace FA {
 
-EntityStateMove::EntityStateMove(EntityStateMachine& stateMachine, StateData& stateData)
-    : EntityState(stateMachine, stateData)
+namespace Entity {
+
+MoveState::MoveState(StateMachine& stateMachine, StateData& stateData)
+    : BasicState(stateMachine, stateData)
     , movement_(stateData_.rectShape_, stateData_.velocity_)
 {}
 
-EntityStateMove::~EntityStateMove() = default;
+MoveState::~MoveState() = default;
 
-void EntityStateMove::Update(float deltaTime)
+void MoveState::Update(float deltaTime)
 {
     if (animation_) animation_->Update(deltaTime);
     movement_.Update(deltaTime);
 }
 
-void EntityStateMove::Enter()
+void MoveState::Enter()
 {
     movement_.SetDirection(stateData_.moveDir_);
     animation_ = stateData_.animationFactory_.Create(FrameType::Move, stateData_.faceDir_, stateData_.rectShape_);
     animation_->Start();
 }
 
-void EntityStateMove::Exit()
+void MoveState::Exit()
 {
     movement_.SetDirection(MoveDirection::None);
 }
 
-void EntityStateMove::OnStopMove()
+void MoveState::OnStopMove()
 {
-    SwitchState<EntityStateIdle>();
+    SwitchState<IdleState>();
 }
+
+}  // namespace Entity
 
 }  // namespace FA

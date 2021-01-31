@@ -45,9 +45,6 @@
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,25 +57,7 @@
     <ClCompile Include="Message\BroadcastMessage\KeyReleasedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EntityState\EntityStateMachine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityState\State\EntityState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityState\State\EntityStateIdle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityState\State\EntityStateMove.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Animation\AnimationFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityState\State\EntityStateAttack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityState\State\EntityStateAttackWeapon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SceneComponent\SceneComponent.cpp">
@@ -121,6 +100,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Effect\Effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\StateMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\States\BasicState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\States\AttackState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\States\AttackWeaponState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\States\IdleState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\States\MoveState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Entities\BasicEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,9 +167,6 @@
     <ClInclude Include="Enum\KeyboardKey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Constant\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -197,25 +194,7 @@
     <ClInclude Include="Enum\FrameType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntityState\EntityStateMachine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityState\State\EntityState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityState\State\EntityStateIdle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityState\State\EntityStateMove.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Animation\AnimationFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityState\State\EntityStateAttack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityState\State\EntityStateAttackWeapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneComponent\SceneComponent.h">
@@ -261,6 +240,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Effect\Effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\StateMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\States\BasicState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\States\AttackState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\States\AttackWeaponState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\States\IdleState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\States\MoveState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Entities\BasicEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

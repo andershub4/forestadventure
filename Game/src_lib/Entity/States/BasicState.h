@@ -15,10 +15,12 @@
 
 namespace FA {
 
-class EntityStateMachine;
-class Entity;
+namespace Entity {
 
-class EntityState
+class StateMachine;
+class BasicEntity;
+
+class BasicState
 {
 public:
     struct StateData
@@ -30,8 +32,8 @@ public:
         sf::RectangleShape* rectShape_ = nullptr;
     };
 
-    EntityState(EntityStateMachine& stateMachine, StateData& stateData);
-    virtual ~EntityState();
+    BasicState(StateMachine& stateMachine, StateData& stateData);
+    virtual ~BasicState();
 
     virtual void Update(float deltaTime) = 0;
     virtual std::string Name() const = 0;
@@ -43,12 +45,12 @@ public:
     virtual void OnAttack() {}
     virtual void OnAttackWeapon() {}
 
-    void SwitchState(std::unique_ptr<EntityState> newState);
+    void SwitchState(std::unique_ptr<BasicState> newState);
 
     template <class StateT, typename... Args>
     void SwitchState(Args&&... args)
     {
-        static_assert(std::is_base_of<EntityState, StateT>::value, "StateT must derive from EntityState");
+        static_assert(std::is_base_of<BasicState, StateT>::value, "StateT must derive from BasicState");
 
         SwitchState(std::make_unique<StateT>(stateMachine_, stateData_, std::forward<Args>(args)...));
     }
@@ -57,7 +59,9 @@ protected:
     StateData& stateData_;
 
 private:
-    EntityStateMachine& stateMachine_;
+    StateMachine& stateMachine_;
 };
+
+}  // namespace Entity
 
 }  // namespace FA
