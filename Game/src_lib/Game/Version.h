@@ -7,4 +7,4 @@
 #pragma once
 
 #define FA_APP_NAME "ForestAdventure"
-#define FA_APP_VERSION "0.0.7"
+#define FA_APP_VERSION "0.0.8"
