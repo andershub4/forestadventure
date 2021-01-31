@@ -9,7 +9,7 @@
 #include <memory>
 
 #include "Animation/AnimationFactory.h"
-#include "SceneComponent.h"
+#include "BasicComponent.h"
 
 namespace FA {
 
@@ -21,11 +21,13 @@ class BasicEntity;
 
 class TextureManager;
 
-class SceneComponentLevel : public SceneComponent
+namespace Scene {
+
+class LevelComponent : public BasicComponent
 {
 public:
-    SceneComponentLevel(MessageBus& messageBus, TextureManager& textureManager);
-    virtual ~SceneComponentLevel();
+    LevelComponent(MessageBus& messageBus, TextureManager& textureManager);
+    virtual ~LevelComponent();
 
     virtual SceneComponentId GetId() const override { return SceneComponentId::Level; }
     virtual void Update(float deltaTime) override;
@@ -39,5 +41,7 @@ private:
 private:
     void RegisterAnimationInfo(TextureManager& textureManager);
 };
+
+}  // namespace Scene
 
 }  // namespace FA

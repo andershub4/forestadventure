@@ -9,43 +9,46 @@
 #include <map>
 #include <memory>
 
+#include "Components/BasicComponent.h"
 #include "Enum/SceneComponentId.h"
 #include "Fwd/SfmlFwd.h"
-#include "SceneComponent/SceneComponent.h"
 
 namespace FA {
 
-class GameScene;
 class MessageBus;
 class TextureManager;
 class Message;
-class GameTransition;
 
-class GameSceneManager
+namespace Scene {
+
+class BasicScene;
+class BasicTransition;
+
+class Manager
 {
 public:
-    using SceneComponents = std::map<SceneComponentId, std::unique_ptr<SceneComponent>>;
+    using Components = std::map<SceneComponentId, std::unique_ptr<BasicComponent>>;
 
-    struct SceneData
+    struct Data
     {
         bool isRunning_ = true;
     };
 
-    GameSceneManager(MessageBus& messageBus, TextureManager& textureManager);
-    ~GameSceneManager();
+    Manager(MessageBus& messageBus, TextureManager& textureManager);
+    ~Manager();
 
     template <class SceneT, class TransitionT>
     void SetScene(MessageBus& messageBus, TextureManager& textureManager, const std::vector<SceneComponentId>& ids)
     {
         auto createStateCB = [this](MessageBus& messageBus, TextureManager& textureManager) {
-            return std::make_unique<SceneT>(*this, messageBus, textureManager, sceneComponents_, sceneData_);
+            return std::make_unique<SceneT>(*this, messageBus, textureManager, components_, data_);
         };
 
         auto transition = std::make_unique<TransitionT>(createStateCB);
         SetTransitionScene(messageBus, textureManager, std::move(transition), ids);
     }
 
-    void SetScene(std::unique_ptr<GameScene> newScene);
+    void SetScene(std::unique_ptr<BasicScene> newScene);
 
     void DrawTo(sf::RenderTarget& renderTarget);
     void Update(float deltaTime);
@@ -58,12 +61,14 @@ public:
     void OnCloseWindow(std::shared_ptr<Message> message);
 
 private:
-    std::unique_ptr<GameScene> currentScene_;
-    SceneData sceneData_;
-    SceneComponents sceneComponents_;
+    std::unique_ptr<BasicScene> currentScene_;
+    Data data_;
+    Components components_;
 
     void SetTransitionScene(MessageBus& messageBus, TextureManager& textureManager,
-                            std::unique_ptr<GameTransition> transition, const std::vector<SceneComponentId>& ids);
+                            std::unique_ptr<BasicTransition> transition, const std::vector<SceneComponentId>& ids);
 };
+
+}  // namespace Scene
 
 }  // namespace FA

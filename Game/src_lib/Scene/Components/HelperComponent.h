@@ -10,15 +10,17 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include "SceneComponent.h"
+#include "BasicComponent.h"
 
 namespace FA {
 
-class SceneComponentHelper : public SceneComponent
+namespace Scene {
+
+class HelperComponent : public BasicComponent
 {
 public:
-    SceneComponentHelper(MessageBus& messageBus, const std::string& sceneName);
-    virtual ~SceneComponentHelper();
+    HelperComponent(MessageBus& messageBus, const std::string& sceneName);
+    virtual ~HelperComponent();
 
     virtual SceneComponentId GetId() const override { return SceneComponentId::Helper; }
     virtual void Update(float deltaTime) override;
@@ -32,5 +34,7 @@ private:
     sf::Text fpsText_;
     sf::Text fpsNumberText_;
 };
+
+}  // namespace Scene
 
 }  // namespace FA

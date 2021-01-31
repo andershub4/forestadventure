@@ -10,7 +10,7 @@
 
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
-#include "GameScene/GameSceneManager.h"
+#include "Scene/Manager.h"
 
 namespace FA {
 
@@ -26,7 +26,7 @@ private:
     sf::RenderWindow window_;
     sf::View view_;
     TextureManager textureManager_;
-    GameSceneManager sceneManager_;
+    Scene::Manager sceneManager_;
 
 private:
     void OnMessage(std::shared_ptr<Message> message);

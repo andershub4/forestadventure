@@ -4,36 +4,40 @@
  *	See file LICENSE for full license details.
  */
 
-#include "SceneComponent.h"
+#include "BasicComponent.h"
 
 #include "Constant/Screen.h"
 #include "Effect/Effect.h"
 
 namespace FA {
 
-SceneComponent::SceneComponent(MessageBus& messageBus)
+namespace Scene {
+
+BasicComponent::BasicComponent(MessageBus& messageBus)
     : messageBus_(messageBus)
 {
     renderTexture_.create(constant::Screen::width, constant::Screen::height);
     sprite_.setTexture(renderTexture_.getTexture());
 }
 
-SceneComponent::~SceneComponent() = default;
+BasicComponent::~BasicComponent() = default;
 
-void SceneComponent::Clear()
+void BasicComponent::Clear()
 {
     renderTexture_.clear(sf::Color::Transparent);
 }
 
-void SceneComponent::DrawTo(sf::RenderTarget& renderTarget)
+void BasicComponent::DrawTo(sf::RenderTarget& renderTarget)
 {
     renderTexture_.display();
     renderTarget.draw(sprite_);
 }
 
-void SceneComponent::Draw(const Effect& effect)
+void BasicComponent::Draw(const Effect& effect)
 {
     effect.DrawTo(renderTexture_);
 }
+
+}  // namespace Scene
 
 }  // namespace FA

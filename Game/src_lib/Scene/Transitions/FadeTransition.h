@@ -6,24 +6,28 @@
 
 #pragma once
 
+#include "BasicTransition.h"
 #include "Effect/FadeAnimation.h"
-#include "GameTransition.h"
 
 namespace FA {
 
-class GameTransitionFade : public GameTransition
+namespace Scene {
+
+class FadeTransition : public BasicTransition
 {
 public:
-    GameTransitionFade(CreateSceneFn nextSceneFn);
-    virtual ~GameTransitionFade();
+    FadeTransition(CreateSceneFn nextSceneFn);
+    virtual ~FadeTransition();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
-    virtual void DrawTo(SceneComponent& sceneComponent) override;
+    virtual void DrawTo(BasicComponent& component) override;
     virtual void Update(float deltaTime) override;
     virtual bool IsFinished() const override;
 
 private:
     FadeAnimation fade_;
 };
+
+}  // namespace Scene
 
 }  // namespace FA

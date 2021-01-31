@@ -6,23 +6,27 @@
 
 #pragma once
 
-#include "GameScene.h"
+#include "BasicScene.h"
 
 namespace FA {
 
-class GameSceneIntro : public GameScene
+namespace Scene {
+
+class PlayScene : public BasicScene
 {
 public:
-    GameSceneIntro(GameSceneManager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-                   GameSceneManager::SceneComponents& sceneComponents, GameSceneManager::SceneData& sceneData);
-    virtual ~GameSceneIntro();
+    PlayScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
+              Manager::Components& components, Manager::Data& data);
+    virtual ~PlayScene();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
     virtual void Update(float deltaTime) override;
-    virtual std::string Name() const override { return "GameSceneIntro"; }
+    virtual std::string Name() const override { return "PlayScene"; }
 
     virtual void OnKeyPressed(std::shared_ptr<Message> message) override;
     virtual void Enter() override;
 };
+
+}  // namespace Scene
 
 }  // namespace FA

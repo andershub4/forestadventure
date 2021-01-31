@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "SceneComponentIntro.h"
+#include "IntroComponent.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -13,21 +13,25 @@
 
 namespace FA {
 
-SceneComponentIntro::SceneComponentIntro(MessageBus& messageBus)
-    : SceneComponent(messageBus)
+namespace Scene {
+
+IntroComponent::IntroComponent(MessageBus& messageBus)
+    : BasicComponent(messageBus)
 {
     rect_.setSize(sf::Vector2f(constant::Screen::width_f, 24.0));
     rect_.setPosition(0.0, constant::Screen::centerY_f);
 }
 
-SceneComponentIntro::~SceneComponentIntro() = default;
+IntroComponent::~IntroComponent() = default;
 
-void SceneComponentIntro::Draw()
+void IntroComponent::Draw()
 {
     renderTexture_.draw(rect_);
 }
 
-void SceneComponentIntro::Update(float deltaTime)
+void IntroComponent::Update(float deltaTime)
 {}
+
+}  // namespace Scene
 
 }  // namespace FA

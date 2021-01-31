@@ -13,29 +13,34 @@
 
 namespace FA {
 
-class GameScene;
 class MessageBus;
 class TextureManager;
-class SceneComponent;
 
-class GameTransition
+namespace Scene {
+
+class BasicScene;
+class BasicComponent;
+
+class BasicTransition
 {
 public:
-    using CreateSceneFn = std::function<std::unique_ptr<GameScene>(MessageBus&, TextureManager&)>;
+    using CreateSceneFn = std::function<std::unique_ptr<BasicScene>(MessageBus&, TextureManager&)>;
 
-    GameTransition() = default;
-    GameTransition(CreateSceneFn nextSceneFn);
-    virtual ~GameTransition();
+    BasicTransition() = default;
+    BasicTransition(CreateSceneFn nextSceneFn);
+    virtual ~BasicTransition();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
-    virtual void DrawTo(SceneComponent& sceneComponent) = 0;
+    virtual void DrawTo(BasicComponent& component) = 0;
     virtual void Update(float deltaTime) = 0;
     virtual bool IsFinished() const = 0;
 
-    std::unique_ptr<GameScene> CreateNextScene(MessageBus& messageBus, TextureManager& textureManager) const;
+    std::unique_ptr<BasicScene> CreateNextScene(MessageBus& messageBus, TextureManager& textureManager) const;
 
 private:
     CreateSceneFn nextSceneFn_;
 };
+
+}  // namespace Scene
 
 }  // namespace FA

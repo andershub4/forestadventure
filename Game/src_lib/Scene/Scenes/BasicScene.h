@@ -11,8 +11,8 @@
 #include <unordered_set>
 
 #include "Fwd/SfmlFwd.h"
-#include "GameScene/GameSceneManager.h"
-#include "GameScene/Transition/GameTransitionNone.h"
+#include "Scene/Manager.h"
+#include "Scene/Transitions/NoneTransition.h"
 
 namespace FA {
 
@@ -20,12 +20,14 @@ class TextureManager;
 class MessageBus;
 class Message;
 
-class GameScene
+namespace Scene {
+
+class BasicScene
 {
 public:
-    GameScene(GameSceneManager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-              GameSceneManager::SceneComponents& sceneComponents, GameSceneManager::SceneData& sceneData);
-    virtual ~GameScene();
+    BasicScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
+               Manager::Components& components, Manager::Data& data);
+    virtual ~BasicScene();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
     virtual void Update(float deltaTime) = 0;
@@ -40,26 +42,28 @@ public:
 
     bool IsRunning() const;
 
-    void SwitchScene(std::unique_ptr<GameScene> newScene);
+    void SwitchScene(std::unique_ptr<BasicScene> newScene);
 
-    template <class SceneT, class TransitionT = GameTransitionNone>
+    template <class SceneT, class TransitionT = NoneTransition>
     void SwitchScene(const std::vector<SceneComponentId>& ids)
     {
-        static_assert(std::is_base_of<GameScene, SceneT>::value, "SceneT must derive from GameScene");
-        static_assert(std::is_base_of<GameTransition, TransitionT>::value,
-                      "TransitionT must derive from GameTransition");
+        static_assert(std::is_base_of<BasicScene, SceneT>::value, "SceneT must derive from BasicScene");
+        static_assert(std::is_base_of<BasicTransition, TransitionT>::value,
+                      "TransitionT must derive from BasicTransition");
 
         sceneManager_.SetScene<SceneT, TransitionT>(messageBus_, textureManager_, ids);
     }
 
 protected:
-    GameSceneManager::SceneData& sceneData_;
-    GameSceneManager::SceneComponents& sceneComponents_;
+    Manager::Data& data_;
+    Manager::Components& components_;
     TextureManager& textureManager_;
     MessageBus& messageBus_;
 
 private:
-    GameSceneManager& sceneManager_;
+    Manager& sceneManager_;
 };
+
+}  // namespace Scene
 
 }  // namespace FA

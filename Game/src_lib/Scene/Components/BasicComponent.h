@@ -16,11 +16,13 @@ namespace FA {
 class MessageBus;
 class Effect;
 
-class SceneComponent
+namespace Scene {
+
+class BasicComponent
 {
 public:
-    SceneComponent(MessageBus& messageBus);
-    virtual ~SceneComponent();
+    BasicComponent(MessageBus& messageBus);
+    virtual ~BasicComponent();
 
     virtual SceneComponentId GetId() const = 0;
     virtual void Update(float deltaTime) = 0;
@@ -38,5 +40,7 @@ protected:
 private:
     MessageBus& messageBus_;
 };
+
+}  // namespace Scene
 
 }  // namespace FA

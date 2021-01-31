@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "SceneComponentHelper.h"
+#include "HelperComponent.h"
 
 #include <cmath>
 
@@ -16,8 +16,10 @@
 
 namespace FA {
 
-SceneComponentHelper::SceneComponentHelper(MessageBus& messageBus, const std::string& sceneName)
-    : SceneComponent(messageBus)
+namespace Scene {
+
+HelperComponent::HelperComponent(MessageBus& messageBus, const std::string& sceneName)
+    : BasicComponent(messageBus)
 {
     if (!font_.loadFromFile("assets/font/cello-sans/hinted-CelloSans-Medium.ttf")) {
         LOG_ERROR("Could not load hinted-CelloSans-Medium");
@@ -48,9 +50,9 @@ SceneComponentHelper::SceneComponentHelper(MessageBus& messageBus, const std::st
     dotShape_.setPosition(constant::Screen::centerX_f, constant::Screen::centerY_f);
 }
 
-SceneComponentHelper::~SceneComponentHelper() = default;
+HelperComponent::~HelperComponent() = default;
 
-void SceneComponentHelper::Draw()
+void HelperComponent::Draw()
 {
     renderTexture_.draw(sceneText_);
     renderTexture_.draw(fpsText_);
@@ -58,10 +60,12 @@ void SceneComponentHelper::Draw()
     renderTexture_.draw(dotShape_);
 }
 
-void SceneComponentHelper::Update(float deltaTime)
+void HelperComponent::Update(float deltaTime)
 {
     unsigned int fps = static_cast<unsigned int>(std::floor(1.0f / deltaTime));
     fpsNumberText_.setString(std::to_string(fps));
 }
+
+}  // namespace Scene
 
 }  // namespace FA

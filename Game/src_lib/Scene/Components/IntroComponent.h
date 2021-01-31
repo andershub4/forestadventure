@@ -8,15 +8,17 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-#include "SceneComponent.h"
+#include "BasicComponent.h"
 
 namespace FA {
 
-class SceneComponentIntro : public SceneComponent
+namespace Scene {
+
+class IntroComponent : public BasicComponent
 {
 public:
-    SceneComponentIntro(MessageBus& messageBus);
-    virtual ~SceneComponentIntro();
+    IntroComponent(MessageBus& messageBus);
+    virtual ~IntroComponent();
 
     virtual SceneComponentId GetId() const override { return SceneComponentId::Intro; }
     virtual void Update(float deltaTime) override;
@@ -26,5 +28,7 @@ public:
 private:
     sf::RectangleShape rect_;
 };
+
+}  // namespace Scene
 
 }  // namespace FA

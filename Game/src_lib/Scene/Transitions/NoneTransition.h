@@ -6,20 +6,24 @@
 
 #pragma once
 
-#include "GameTransition.h"
+#include "BasicTransition.h"
 
 namespace FA {
 
-class GameTransitionNone : public GameTransition
+namespace Scene {
+
+class NoneTransition : public BasicTransition
 {
 public:
-    GameTransitionNone(CreateSceneFn nextSceneFn);
-    virtual ~GameTransitionNone();
+    NoneTransition(CreateSceneFn nextSceneFn);
+    virtual ~NoneTransition();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
-    virtual void DrawTo(SceneComponent& sceneComponent) override;
+    virtual void DrawTo(BasicComponent& component) override;
     virtual void Update(float deltaTime) override;
     virtual bool IsFinished() const { return true; }
 };
+
+}  // namespace Scene
 
 }  // namespace FA
