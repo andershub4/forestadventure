@@ -28,7 +28,10 @@ GameSceneTransition::~GameSceneTransition() = default;
 
 void GameSceneTransition::Enter()
 {
-    // TODO: loop all components and disable inputs
+    for (const auto& entry : sceneComponents_) {
+        auto& component = entry.second;
+        component->ProcessMessages(false);
+    }
 }
 
 void GameSceneTransition::DrawTo(sf::RenderTarget& renderTarget)

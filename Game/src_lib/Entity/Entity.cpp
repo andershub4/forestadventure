@@ -46,7 +46,13 @@ void Entity::DrawTo(sf::RenderTarget& renderTarget)
 
 void Entity::OnMessage(std::shared_ptr<Message> msg)
 {
-    // TODO: Implement a mechanism to disable handling of IsKeyPressed when game is paused.
+    if (processMessages_) {
+        HandleMessage(msg);
+    }
+}
+
+void Entity::HandleMessage(std::shared_ptr<Message> msg)
+{
     if (msg->GetMessageType() == MessageType::IsKeyPressed) {
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
         auto key = m->GetKey();

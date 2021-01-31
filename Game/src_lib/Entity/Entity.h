@@ -26,14 +26,19 @@ public:
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
     void OnMessage(std::shared_ptr<Message> msg);
+    void ProcessMessages(bool process) { processMessages_ = process; }
 
 private:
     MessageBus& messageBus_;
     sf::RectangleShape rectShape_;
     EntityStateMachine stateMachine_;
+    bool processMessages_ = true;
 
 private:
     void OnIsKeyPressed(Keyboard::Key key);
+
+private:
+    void HandleMessage(std::shared_ptr<Message> msg);
 };
 
 }  // namespace FA

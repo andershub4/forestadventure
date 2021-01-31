@@ -25,6 +25,7 @@ public:
     virtual SceneComponentId GetId() const override { return SceneComponentId::Level; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
+    virtual void ProcessMessages(bool process) override;
 
 private:
     AnimationFactory animationFactory_;

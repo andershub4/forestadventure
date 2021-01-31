@@ -23,6 +23,7 @@ public:
     virtual SceneComponentId GetId() const override { return SceneComponentId::Helper; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
+    virtual void ProcessMessages(bool process) override {}
 
 private:
     sf::RectangleShape dotShape_;

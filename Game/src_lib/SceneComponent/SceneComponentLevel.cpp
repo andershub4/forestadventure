@@ -35,6 +35,11 @@ void SceneComponentLevel::Update(float deltaTime)
     entity_->Update(deltaTime);
 }
 
+void SceneComponentLevel::ProcessMessages(bool process)
+{
+    entity_->ProcessMessages(process);
+}
+
 void SceneComponentLevel::RegisterAnimationInfo(TextureManager& textureManager)
 {
     auto textureWalkSide =
