@@ -40,11 +40,11 @@ public:
     template <class SceneT, class TransitionT>
     void SetScene(MessageBus& messageBus, TextureManager& textureManager, const std::vector<ComponentId>& ids)
     {
-        auto createStateCB = [this](MessageBus& messageBus, TextureManager& textureManager) {
+        auto createSceneFn = [this](MessageBus& messageBus, TextureManager& textureManager) {
             return std::make_unique<SceneT>(*this, messageBus, textureManager, components_, data_);
         };
 
-        auto transition = std::make_unique<TransitionT>(createStateCB);
+        auto transition = std::make_unique<TransitionT>(createSceneFn);
         SetTransitionScene(messageBus, textureManager, std::move(transition), ids);
     }
 
