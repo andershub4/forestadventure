@@ -21,7 +21,7 @@ class TransitionScene : public BasicScene
 public:
     TransitionScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
                     Manager::Components& components, Manager::Data& Data, std::unique_ptr<BasicTransition> transition,
-                    const std::vector<SceneComponentId>& ids);
+                    const std::vector<ComponentId>& ids);
     virtual ~TransitionScene();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
@@ -32,7 +32,7 @@ public:
 
 private:
     std::unique_ptr<BasicTransition> transition_ = nullptr;
-    std::vector<SceneComponentId> ids_;
+    std::vector<ComponentId> ids_;
 };
 
 }  // namespace Scene

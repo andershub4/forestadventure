@@ -17,7 +17,7 @@ namespace Scene {
 
 TransitionScene::TransitionScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
                                  Manager::Components& components, Manager::Data& data,
-                                 std::unique_ptr<BasicTransition> transition, const std::vector<SceneComponentId>& ids)
+                                 std::unique_ptr<BasicTransition> transition, const std::vector<ComponentId>& ids)
     : BasicScene(sceneManager, messageBus, textureManager, components, data)
     , transition_(std::move(transition))
     , ids_(ids)

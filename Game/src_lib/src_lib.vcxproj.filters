@@ -197,9 +197,6 @@
     <ClInclude Include="Animation\AnimationFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enum\SceneComponentId.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Effect\FadeAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -261,6 +258,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Transitions\NullTransition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ComponentId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

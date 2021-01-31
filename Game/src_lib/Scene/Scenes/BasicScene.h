@@ -45,7 +45,7 @@ public:
     void SwitchScene(std::unique_ptr<BasicScene> newScene);
 
     template <class SceneT, class TransitionT = NullTransition>
-    void SwitchScene(const std::vector<SceneComponentId>& ids)
+    void SwitchScene(const std::vector<ComponentId>& ids)
     {
         static_assert(std::is_base_of<BasicScene, SceneT>::value, "SceneT must derive from BasicScene");
         static_assert(std::is_base_of<BasicTransition, TransitionT>::value,

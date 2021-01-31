@@ -9,7 +9,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Enum/SceneComponentId.h"
+#include "Scene/ComponentId.h"
 
 namespace FA {
 
@@ -24,7 +24,7 @@ public:
     BasicComponent(MessageBus& messageBus);
     virtual ~BasicComponent();
 
-    virtual SceneComponentId GetId() const = 0;
+    virtual ComponentId GetId() const = 0;
     virtual void Update(float deltaTime) = 0;
     virtual void Draw() = 0;
     virtual void ProcessMessages(bool process) = 0;

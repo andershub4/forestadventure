@@ -22,7 +22,7 @@ public:
     HelperComponent(MessageBus& messageBus, const std::string& sceneName);
     virtual ~HelperComponent();
 
-    virtual SceneComponentId GetId() const override { return SceneComponentId::Helper; }
+    virtual ComponentId GetId() const override { return ComponentId::Helper; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void ProcessMessages(bool process) override {}

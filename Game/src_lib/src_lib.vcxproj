@@ -158,7 +158,7 @@
     <ClInclude Include="Enum\MoveDirection.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />
-    <ClInclude Include="Enum\SceneComponentId.h" />
+    <ClInclude Include="Scene\ComponentId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Scene\Manager.h" />
     <ClInclude Include="Scene\Scenes\BasicScene.h" />

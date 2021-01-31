@@ -27,9 +27,9 @@ IntroScene::~IntroScene() = default;
 void IntroScene::Enter()
 {
     components_.clear();
-    components_[SceneComponentId::Intro] = std::make_unique<IntroComponent>(messageBus_);
+    components_[ComponentId::Intro] = std::make_unique<IntroComponent>(messageBus_);
 #ifdef _DEBUG
-    components_[SceneComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, Name());
+    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, Name());
 #endif
 }
 

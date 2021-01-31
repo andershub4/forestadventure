@@ -28,9 +28,9 @@ PlayScene::~PlayScene() = default;
 void PlayScene::Enter()
 {
     components_.clear();
-    components_[SceneComponentId::Level] = std::make_unique<LevelComponent>(messageBus_, textureManager_);
+    components_[ComponentId::Level] = std::make_unique<LevelComponent>(messageBus_, textureManager_);
 #ifdef _DEBUG
-    components_[SceneComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, Name());
+    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, Name());
 #endif
 }
 
@@ -60,7 +60,7 @@ void PlayScene::OnKeyPressed(std::shared_ptr<Message> message)
         data_.isRunning_ = false;
     }
     else if (key == Keyboard::Key::Return) {
-        SwitchScene<IntroScene, FadeTransition>({SceneComponentId::Level});
+        SwitchScene<IntroScene, FadeTransition>({ComponentId::Level});
     }
 }
 

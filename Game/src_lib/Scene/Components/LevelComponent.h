@@ -29,7 +29,7 @@ public:
     LevelComponent(MessageBus& messageBus, TextureManager& textureManager);
     virtual ~LevelComponent();
 
-    virtual SceneComponentId GetId() const override { return SceneComponentId::Level; }
+    virtual ComponentId GetId() const override { return ComponentId::Level; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void ProcessMessages(bool process) override;

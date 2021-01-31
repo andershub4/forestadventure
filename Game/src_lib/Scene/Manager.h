@@ -9,8 +9,8 @@
 #include <map>
 #include <memory>
 
+#include "ComponentId.h"
 #include "Components/BasicComponent.h"
-#include "Enum/SceneComponentId.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -27,7 +27,7 @@ class BasicTransition;
 class Manager
 {
 public:
-    using Components = std::map<SceneComponentId, std::unique_ptr<BasicComponent>>;
+    using Components = std::map<ComponentId, std::unique_ptr<BasicComponent>>;
 
     struct Data
     {
@@ -38,7 +38,7 @@ public:
     ~Manager();
 
     template <class SceneT, class TransitionT>
-    void SetScene(MessageBus& messageBus, TextureManager& textureManager, const std::vector<SceneComponentId>& ids)
+    void SetScene(MessageBus& messageBus, TextureManager& textureManager, const std::vector<ComponentId>& ids)
     {
         auto createStateCB = [this](MessageBus& messageBus, TextureManager& textureManager) {
             return std::make_unique<SceneT>(*this, messageBus, textureManager, components_, data_);
@@ -66,7 +66,7 @@ private:
     Components components_;
 
     void SetTransitionScene(MessageBus& messageBus, TextureManager& textureManager,
-                            std::unique_ptr<BasicTransition> transition, const std::vector<SceneComponentId>& ids);
+                            std::unique_ptr<BasicTransition> transition, const std::vector<ComponentId>& ids);
 };
 
 }  // namespace Scene

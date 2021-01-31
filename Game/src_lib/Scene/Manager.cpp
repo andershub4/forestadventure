@@ -38,7 +38,7 @@ void Manager::SetScene(std::unique_ptr<BasicScene> newScene)
 }
 
 void Manager::SetTransitionScene(MessageBus& messageBus, TextureManager& textureManager,
-                                 std::unique_ptr<BasicTransition> transition, const std::vector<SceneComponentId>& ids)
+                                 std::unique_ptr<BasicTransition> transition, const std::vector<ComponentId>& ids)
 {
     SetScene(std::make_unique<TransitionScene>(*this, messageBus, textureManager, components_, data_,
                                                std::move(transition), ids));
