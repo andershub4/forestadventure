@@ -120,7 +120,7 @@
     <ClCompile Include="Scene\Transitions\FadeTransition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\Transitions\NoneTransition.cpp">
+    <ClCompile Include="Scene\Transitions\NullTransition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -260,7 +260,7 @@
     <ClInclude Include="Scene\Transitions\FadeTransition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\Transitions\NoneTransition.h">
+    <ClInclude Include="Scene\Transitions\NullTransition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

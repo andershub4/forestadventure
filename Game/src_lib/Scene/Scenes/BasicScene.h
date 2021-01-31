@@ -12,7 +12,7 @@
 
 #include "Fwd/SfmlFwd.h"
 #include "Scene/Manager.h"
-#include "Scene/Transitions/NoneTransition.h"
+#include "Scene/Transitions/NullTransition.h"
 
 namespace FA {
 
@@ -44,7 +44,7 @@ public:
 
     void SwitchScene(std::unique_ptr<BasicScene> newScene);
 
-    template <class SceneT, class TransitionT = NoneTransition>
+    template <class SceneT, class TransitionT = NullTransition>
     void SwitchScene(const std::vector<SceneComponentId>& ids)
     {
         static_assert(std::is_base_of<BasicScene, SceneT>::value, "SceneT must derive from BasicScene");

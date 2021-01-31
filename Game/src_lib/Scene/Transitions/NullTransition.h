@@ -12,11 +12,11 @@ namespace FA {
 
 namespace Scene {
 
-class NoneTransition : public BasicTransition
+class NullTransition : public BasicTransition
 {
 public:
-    NoneTransition(CreateSceneFn nextSceneFn);
-    virtual ~NoneTransition();
+    NullTransition(CreateSceneFn nextSceneFn);
+    virtual ~NullTransition();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
     virtual void DrawTo(BasicComponent& component) override;

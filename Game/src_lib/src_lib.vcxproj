@@ -167,7 +167,7 @@
     <ClInclude Include="Scene\Scenes\TransitionScene.h" />
     <ClInclude Include="Scene\Transitions\BasicTransition.h" />
     <ClInclude Include="Scene\Transitions\FadeTransition.h" />
-    <ClInclude Include="Scene\Transitions\NoneTransition.h" />
+    <ClInclude Include="Scene\Transitions\NullTransition.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Version.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h" />
@@ -207,7 +207,7 @@
     <ClCompile Include="Scene\Scenes\TransitionScene.cpp" />
     <ClCompile Include="Scene\Transitions\BasicTransition.cpp" />
     <ClCompile Include="Scene\Transitions\FadeTransition.cpp" />
-    <ClCompile Include="Scene\Transitions\NoneTransition.cpp" />
+    <ClCompile Include="Scene\Transitions\NullTransition.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp" />
     <ClCompile Include="Movement\Movement.cpp" />

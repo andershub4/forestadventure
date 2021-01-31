@@ -4,25 +4,25 @@
  *	See file LICENSE for full license details.
  */
 
-#include "NoneTransition.h"
+#include "NullTransition.h"
 
 namespace FA {
 
 namespace Scene {
 
-NoneTransition::NoneTransition(CreateSceneFn nextSceneFn)
+NullTransition::NullTransition(CreateSceneFn nextSceneFn)
     : BasicTransition(nextSceneFn)
 {}
 
-NoneTransition::~NoneTransition() = default;
+NullTransition::~NullTransition() = default;
 
-void NoneTransition::DrawTo(sf::RenderTarget& renderTarget)
+void NullTransition::DrawTo(sf::RenderTarget& renderTarget)
 {}
 
-void NoneTransition::DrawTo(BasicComponent& component)
+void NullTransition::DrawTo(BasicComponent& component)
 {}
 
-void NoneTransition::Update(float deltaTime)
+void NullTransition::Update(float deltaTime)
 {}
 
 }  // namespace Scene
