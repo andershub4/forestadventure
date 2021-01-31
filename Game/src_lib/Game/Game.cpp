@@ -36,6 +36,7 @@ Game::~Game() = default;
 void Game::GameLoop()
 {
     LOG_INFO_ENTER_FUNC();
+
     sf::Clock clock;
     InputSystem inputSystem(messageBus_, window_);
 
@@ -67,7 +68,7 @@ void Game::OnMessage(std::shared_ptr<Message> message)
         sceneManager_.OnCloseWindow(message);  
     }
     else {
-        // cant happened
+        // cant happen
     }
 }
 
