@@ -14,8 +14,9 @@ namespace FA {
 
 namespace Entity {
 
-AttackWeaponState::AttackWeaponState(StateMachine& stateMachine, StateData& stateData)
-    : BasicState(stateMachine, stateData)
+AttackWeaponState::AttackWeaponState(StateMachine& stateMachine, const AnimationFactory& animationFactory,
+                                     StateData& stateData)
+    : BasicState(stateMachine, animationFactory, stateData)
 {}
 
 AttackWeaponState::~AttackWeaponState() = default;
@@ -32,8 +33,7 @@ void AttackWeaponState::Update(float deltaTime)
 
 void AttackWeaponState::Enter()
 {
-    animation_ =
-        stateData_.animationFactory_.Create(FrameType::AttackWeapon, stateData_.faceDir_, stateData_.rectShape_);
+    animation_ = animationFactory_.Create(FrameType::AttackWeapon, stateData_.faceDir_, stateData_.rectShape_);
     animation_->Start();
 }
 

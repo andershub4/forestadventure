@@ -15,8 +15,8 @@ namespace FA {
 
 namespace Entity {
 
-IdleState::IdleState(StateMachine& stateMachine, StateData& stateData)
-    : BasicState(stateMachine, stateData)
+IdleState::IdleState(StateMachine& stateMachine, const AnimationFactory& animationFactory, StateData& stateData)
+    : BasicState(stateMachine, animationFactory, stateData)
 {}
 
 IdleState::~IdleState() = default;
@@ -28,7 +28,7 @@ void IdleState::Update(float deltaTime)
 
 void IdleState::Enter()
 {
-    animation_ = stateData_.animationFactory_.Create(FrameType::Idle, stateData_.faceDir_, stateData_.rectShape_);
+    animation_ = animationFactory_.Create(FrameType::Idle, stateData_.faceDir_, stateData_.rectShape_);
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

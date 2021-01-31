@@ -18,10 +18,9 @@ StateMachine::StateMachine(sf::RectangleShape* rectShape, FaceDirection faceDir,
 {
     stateData_.faceDir_ = faceDir;
     stateData_.moveDir_ = moveDir;
-    stateData_.animationFactory_ = animationFactory;
     stateData_.velocity_ = velocity;
     stateData_.rectShape_ = rectShape;
-    currentState_ = std::make_unique<IdleState>(*this, stateData_);
+    currentState_ = std::make_unique<IdleState>(*this, animationFactory, stateData_);
     // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }

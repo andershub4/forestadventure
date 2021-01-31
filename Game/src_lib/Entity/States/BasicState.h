@@ -27,12 +27,11 @@ public:
     {
         MoveDirection moveDir_ = MoveDirection::None;
         FaceDirection faceDir_ = FaceDirection::Down;
-        AnimationFactory animationFactory_;
         float velocity_ = 0.0;
         sf::RectangleShape* rectShape_ = nullptr;
     };
 
-    BasicState(StateMachine& stateMachine, StateData& stateData);
+    BasicState(StateMachine& stateMachine, const AnimationFactory& animationFactory, StateData& stateData);
     virtual ~BasicState();
 
     virtual void Update(float deltaTime) = 0;
@@ -52,11 +51,13 @@ public:
     {
         static_assert(std::is_base_of<BasicState, StateT>::value, "StateT must derive from BasicState");
 
-        SwitchState(std::make_unique<StateT>(stateMachine_, stateData_, std::forward<Args>(args)...));
+        SwitchState(
+            std::make_unique<StateT>(stateMachine_, animationFactory_, stateData_, std::forward<Args>(args)...));
     }
 
 protected:
     StateData& stateData_;
+    const AnimationFactory& animationFactory_;
 
 private:
     StateMachine& stateMachine_;

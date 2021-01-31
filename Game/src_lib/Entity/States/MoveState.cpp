@@ -13,8 +13,8 @@ namespace FA {
 
 namespace Entity {
 
-MoveState::MoveState(StateMachine& stateMachine, StateData& stateData)
-    : BasicState(stateMachine, stateData)
+MoveState::MoveState(StateMachine& stateMachine, const AnimationFactory& animationFactory, StateData& stateData)
+    : BasicState(stateMachine, animationFactory, stateData)
     , movement_(stateData_.rectShape_, stateData_.velocity_)
 {}
 
@@ -29,7 +29,7 @@ void MoveState::Update(float deltaTime)
 void MoveState::Enter()
 {
     movement_.SetDirection(stateData_.moveDir_);
-    animation_ = stateData_.animationFactory_.Create(FrameType::Move, stateData_.faceDir_, stateData_.rectShape_);
+    animation_ = animationFactory_.Create(FrameType::Move, stateData_.faceDir_, stateData_.rectShape_);
     animation_->Start();
 }
 
