@@ -6,10 +6,6 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <unordered_set>
-
 #include "Fwd/SfmlFwd.h"
 #include "Scene/Manager.h"
 #include "Scene/Transitions/NullTransition.h"
