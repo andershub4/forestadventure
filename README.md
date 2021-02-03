@@ -6,7 +6,7 @@ Forest Adventure is a 2D game, currenly in a very early development stage. The t
 
 ## Building
 
-The development is currently made using Visual Studio 2019 [Community](https://www.visualstudio.com/vs/community/).
+The development is currently made by using Visual Studio 2019 [Community](https://www.visualstudio.com/vs/community/).
 
 ## Used Libraries
 
