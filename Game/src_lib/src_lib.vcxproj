@@ -158,6 +158,7 @@
     <ClInclude Include="Enum\MoveDirection.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />
+    <ClInclude Include="Misc\Random.h" />
     <ClInclude Include="Scene\ComponentId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Scene\Manager.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Scene\Components\HelperComponent.h" />
     <ClInclude Include="Sprite\SpriteSheet.h" />
     <ClInclude Include="System\InputSystem.h" />
+    <ClInclude Include="Tile\TileMap.h" />
     <ClInclude Include="Utils\Logger.h" />
     <ClInclude Include="Utils\Path.h" />
   </ItemGroup>
@@ -200,6 +202,7 @@
     <ClCompile Include="Entity\States\IdleState.cpp" />
     <ClCompile Include="Entity\States\MoveState.cpp" />
     <ClCompile Include="Entity\Entities\BasicEntity.cpp" />
+    <ClCompile Include="Misc\Random.cpp" />
     <ClCompile Include="Scene\Manager.cpp" />
     <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
     <ClCompile Include="Scene\Scenes\IntroScene.cpp" />
@@ -223,6 +226,7 @@
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
     <ClCompile Include="Sprite\SpriteSheet.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
+    <ClCompile Include="Tile\TileMap.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />
     <ClCompile Include="Utils\Path.cpp" />
   </ItemGroup>

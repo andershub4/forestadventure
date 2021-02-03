@@ -10,6 +10,7 @@
 
 #include "Animation/AnimationFactory.h"
 #include "BasicComponent.h"
+#include "Tile/TileMap.h"
 
 namespace FA {
 
@@ -37,6 +38,7 @@ public:
 private:
     AnimationFactory animationFactory_;
     std::unique_ptr<Entity::BasicEntity> entity_;
+    Tile::TileMap tileMap_;
 
 private:
     void RegisterAnimationInfo(TextureManager& textureManager);

@@ -20,15 +20,22 @@ namespace Scene {
 LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureManager)
     : BasicComponent(messageBus)
     , animationFactory_(0.1f)
+    , tileMap_()
 {
     RegisterAnimationInfo(textureManager);
     entity_ = std::make_unique<Entity::BasicEntity>(messageBus, animationFactory_);
+
+    auto textureTileSet = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
+    if (textureTileSet != nullptr) {
+        tileMap_.Load(textureTileSet);
+    }
 }
 
 LevelComponent::~LevelComponent() = default;
 
 void LevelComponent::Draw()
 {
+    tileMap_.Draw(renderTexture_);
     entity_->DrawTo(renderTexture_);
 }
 
