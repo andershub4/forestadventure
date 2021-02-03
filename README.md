@@ -1,7 +1,12 @@
 ![forest adventure](Screenshots/v011.png)
 
 # Forest Adventure
-Forest Adventure is a 2D game.
+
+Forest Adventure is a 2D game, currenly in a very early development stage. The title for this game is not settled yet, Forest Adventure is just a working name. It is currently available for Windows (x86).
+
+## Building
+
+The development is currently made using Visual Studio 2019 [Community](https://www.visualstudio.com/vs/community/).
 
 ## Used Libraries
 
