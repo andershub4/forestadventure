@@ -8,7 +8,7 @@
 
 #include <algorithm>
 
-#include "Scene/Components/BasicComponent.h"
+#include "Scene/Components/HelperComponent.h"
 #include "Scene/Transitions/BasicTransition.h"
 
 namespace FA {
@@ -27,6 +27,9 @@ TransitionScene::~TransitionScene() = default;
 
 void TransitionScene::Enter()
 {
+#ifdef _DEBUG
+    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, Name());
+#endif
     for (const auto& entry : components_) {
         auto& component = entry.second;
         component->ProcessMessages(false);
