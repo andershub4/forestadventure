@@ -6,7 +6,7 @@
 
 #include "TileMap.h"
 
-#include <map>
+#include <unordered_map>
 
 #include "Constant/Screen.h"
 #include "Misc/Random.h"
@@ -15,10 +15,10 @@ namespace FA {
 
 namespace Tile {
 
-const std::map<TileMap::Id, sf::IntRect> mapLookup = {{TileMap::Id::BasicGround, {208, 288, 15, 15}},
-                                                      {TileMap::Id::Ground1, {240, 400, 15, 15}},
-                                                      {TileMap::Id::GroundPlant, {240, 368, 15, 15}},
-                                                      {TileMap::Id::GreenPlant, {208, 400, 15, 15}}};
+const std::unordered_map<TileMap::Id, sf::IntRect> mapLookup = {{TileMap::Id::BasicGround, {208, 288, 15, 15}},
+                                                                {TileMap::Id::Ground1, {240, 400, 15, 15}},
+                                                                {TileMap::Id::GroundPlant, {240, 368, 15, 15}},
+                                                                {TileMap::Id::GreenPlant, {208, 400, 15, 15}}};
 
 TileMap::TileMap()
 {
