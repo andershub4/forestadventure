@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Constant/Screen.h"
 #include "Entity/Entities/BasicEntity.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
@@ -21,6 +22,8 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
     : BasicComponent(messageBus)
     , animationFactory_(0.1f)
     , tileMap_()
+    , view_({constant::Screen::centerX_f, constant::Screen::centerY_f},
+            {constant::Screen::width_f, constant::Screen::height_f})
 {
     RegisterAnimationInfo(textureManager);
     entity_ = std::make_unique<Entity::BasicEntity>(messageBus, animationFactory_);
@@ -42,11 +45,37 @@ void LevelComponent::Draw()
 void LevelComponent::Update(float deltaTime)
 {
     entity_->Update(deltaTime);
+
+    auto p = entity_->GetPosition();
+    auto viewPosition = CalcViewPosition(p);
+    view_.setCenter(viewPosition);
+    renderTexture_.setView(view_);
 }
 
 void LevelComponent::ProcessMessages(bool process)
 {
     entity_->ProcessMessages(process);
+}
+
+sf::Vector2f LevelComponent::CalcViewPosition(const sf::Vector2f& position) const
+{
+    auto viewPosition = sf::Vector2f(position.x, position.y);
+
+    if (position.x <= constant::Screen::centerX_f) {
+        viewPosition.x = constant::Screen::centerX_f;
+    }
+    else if (position.x >= (tileMap_.GetSize().x - constant::Screen::centerX_f)) {
+        viewPosition.x = tileMap_.GetSize().x - constant::Screen::centerX_f;
+    }
+
+    if (position.y <= constant::Screen::centerY_f) {
+        viewPosition.y = constant::Screen::centerY_f;
+    }
+    else if (position.y >= (tileMap_.GetSize().y - constant::Screen::centerY_f)) {
+        viewPosition.y = tileMap_.GetSize().y - constant::Screen::centerY_f;
+    }
+
+    return viewPosition;
 }
 
 void LevelComponent::RegisterAnimationInfo(TextureManager& textureManager)

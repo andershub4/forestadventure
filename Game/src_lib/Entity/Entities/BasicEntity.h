@@ -29,6 +29,7 @@ public:
     void DrawTo(sf::RenderTarget& renderTarget);
     void OnMessage(std::shared_ptr<Message> msg);
     void ProcessMessages(bool process) { processMessages_ = process; }
+    sf::Vector2f GetPosition() const;
 
 private:
     MessageBus& messageBus_;

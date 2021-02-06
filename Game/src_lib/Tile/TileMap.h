@@ -24,8 +24,18 @@ public:
     ~TileMap();
     void Load(const sf::Texture *texture);
     void Draw(sf::RenderTarget &renderTarget);
+    sf::Vector2u GetSize() const;
 
 private:
+    static const unsigned int nTilesXPerScreen{43};
+    static const unsigned int nTilesYPerScreen{26};
+    static const unsigned int nScreensX{2};
+    static const unsigned int nScreensY{2};
+    static const unsigned int scale{2};
+    static const unsigned int tileSize{15};
+    static const unsigned int nCols{nTilesXPerScreen * nScreensX};
+    static const unsigned int nRows{nTilesYPerScreen * nScreensY};
+
     sf::Sprite tileMap_;
     sf::RenderTexture renderTexture_;
 

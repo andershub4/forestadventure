@@ -39,9 +39,11 @@ private:
     AnimationFactory animationFactory_;
     std::unique_ptr<Entity::BasicEntity> entity_;
     Tile::TileMap tileMap_;
+    sf::View view_;
 
 private:
     void RegisterAnimationInfo(TextureManager& textureManager);
+    sf::Vector2f CalcViewPosition(const sf::Vector2f& position) const;
 };
 
 }  // namespace Scene

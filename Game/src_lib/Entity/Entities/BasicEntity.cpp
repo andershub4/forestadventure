@@ -53,6 +53,11 @@ void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
     }
 }
 
+sf::Vector2f BasicEntity::GetPosition() const
+{
+    return rectShape_.getPosition();
+}
+
 void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
 {
     if (msg->GetMessageType() == MessageType::IsKeyPressed) {

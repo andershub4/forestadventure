@@ -22,24 +22,20 @@ const std::unordered_map<TileMap::Id, sf::IntRect> mapLookup = {{TileMap::Id::Ba
 
 TileMap::TileMap()
 {
-    renderTexture_.create(constant::Screen::width, constant::Screen::height);
+    renderTexture_.create(nCols * tileSize * scale, nRows * tileSize * scale);
 }
 
 TileMap::~TileMap() = default;
 
 void TileMap::Load(const sf::Texture* texture)
 {
-    unsigned int tileSize = 15;
-    float scale = 2.0;
     float x = 0;
     float y = 0;
-    unsigned int cols = 43;
-    unsigned int rows = 26;
     sf::Sprite tile(*texture);
 
-    for (unsigned int row = 0; row < rows; row++) {
+    for (unsigned int row = 0; row < nRows; row++) {
         x = 0;
-        for (unsigned int col = 0; col < cols; col++) {
+        for (unsigned int col = 0; col < nCols; col++) {
             auto id = RandomizeId();
             auto it = mapLookup.find(id);
 
@@ -61,6 +57,11 @@ void TileMap::Load(const sf::Texture* texture)
 void TileMap::Draw(sf::RenderTarget& renderTarget)
 {
     renderTarget.draw(tileMap_);
+}
+
+sf::Vector2u TileMap::GetSize() const
+{
+    return renderTexture_.getSize();
 }
 
 TileMap::Id TileMap::RandomizeId() const
