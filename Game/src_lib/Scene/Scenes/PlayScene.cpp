@@ -60,6 +60,8 @@ void PlayScene::OnKeyPressed(std::shared_ptr<Message> message)
         data_.isRunning_ = false;
     }
     else if (key == Keyboard::Key::Return) {
+        // TODO: If player press Return, while pressing an arrow key, Transition scene is shown.
+        // However, player is still moving (and input is disabled).
         SwitchScene<IntroScene, FadeTransition>({ComponentId::Level});
     }
 }
