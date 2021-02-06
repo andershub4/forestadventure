@@ -27,12 +27,12 @@ public:
     sf::Vector2u GetSize() const;
 
 private:
-    static const unsigned int nTilesXPerScreen{43};
-    static const unsigned int nTilesYPerScreen{26};
+    static const unsigned int nTilesXPerScreen{40};
+    static const unsigned int nTilesYPerScreen{24};
     static const unsigned int nScreensX{2};
     static const unsigned int nScreensY{2};
     static const unsigned int scale{2};
-    static const unsigned int tileSize{15};
+    static const unsigned int tileSize{16};
     static const unsigned int nCols{nTilesXPerScreen * nScreensX};
     static const unsigned int nRows{nTilesYPerScreen * nScreensY};
 

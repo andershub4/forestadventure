@@ -15,10 +15,10 @@ namespace FA {
 
 namespace Tile {
 
-const std::unordered_map<TileMap::Id, sf::IntRect> mapLookup = {{TileMap::Id::BasicGround, {208, 288, 15, 15}},
-                                                                {TileMap::Id::Ground1, {240, 400, 15, 15}},
-                                                                {TileMap::Id::GroundPlant, {240, 368, 15, 15}},
-                                                                {TileMap::Id::GreenPlant, {208, 400, 15, 15}}};
+const std::unordered_map<TileMap::Id, sf::IntRect> mapLookup = {{TileMap::Id::BasicGround, {208, 288, 16, 16}},
+                                                                {TileMap::Id::Ground1, {240, 400, 16, 16}},
+                                                                {TileMap::Id::GroundPlant, {240, 368, 16, 16}},
+                                                                {TileMap::Id::GreenPlant, {208, 400, 16, 16}}};
 
 TileMap::TileMap()
 {
