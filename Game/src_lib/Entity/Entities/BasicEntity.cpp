@@ -48,7 +48,7 @@ void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 
 void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
 {
-    if (processMessages_) {
+    if (enableInput_) {
         HandleMessage(msg);
     }
 }

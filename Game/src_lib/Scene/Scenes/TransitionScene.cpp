@@ -32,7 +32,7 @@ void TransitionScene::Enter()
 #endif
     for (const auto& entry : components_) {
         auto& component = entry.second;
-        component->ProcessMessages(false);
+        component->EnableInput(false);
     }
 }
 

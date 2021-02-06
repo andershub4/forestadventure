@@ -52,9 +52,9 @@ void LevelComponent::Update(float deltaTime)
     renderTexture_.setView(view_);
 }
 
-void LevelComponent::ProcessMessages(bool process)
+void LevelComponent::EnableInput(bool enable)
 {
-    entity_->ProcessMessages(process);
+    entity_->EnableInput(enable);
 }
 
 sf::Vector2f LevelComponent::CalcViewPosition(const sf::Vector2f& position) const

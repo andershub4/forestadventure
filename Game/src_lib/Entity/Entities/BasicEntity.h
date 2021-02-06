@@ -28,14 +28,14 @@ public:
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
     void OnMessage(std::shared_ptr<Message> msg);
-    void ProcessMessages(bool process) { processMessages_ = process; }
+    void EnableInput(bool enable) { enableInput_ = enable; }
     sf::Vector2f GetPosition() const;
 
 private:
     MessageBus& messageBus_;
     sf::RectangleShape rectShape_;
     StateMachine stateMachine_;
-    bool processMessages_ = true;
+    bool enableInput_ = true;
 
 private:
     void OnIsKeyPressed(Keyboard::Key key);

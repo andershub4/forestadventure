@@ -33,7 +33,7 @@ public:
     virtual ComponentId GetId() const override { return ComponentId::Level; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
-    virtual void ProcessMessages(bool process) override;
+    virtual void EnableInput(bool enable) override;
 
 private:
     AnimationFactory animationFactory_;
