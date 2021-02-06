@@ -23,7 +23,7 @@ public:
     TileMap();
     ~TileMap();
     void Load(const sf::Texture *texture);
-    void Draw(sf::RenderTarget &renderTarget);
+    void DrawTo(sf::RenderTarget &renderTarget);
     sf::Vector2u GetSize() const;
 
 private:

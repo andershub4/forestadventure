@@ -54,7 +54,7 @@ void TileMap::Load(const sf::Texture* texture)
     tileMap_.setTexture(renderTexture_.getTexture());
 }
 
-void TileMap::Draw(sf::RenderTarget& renderTarget)
+void TileMap::DrawTo(sf::RenderTarget& renderTarget)
 {
     renderTarget.draw(tileMap_);
 }

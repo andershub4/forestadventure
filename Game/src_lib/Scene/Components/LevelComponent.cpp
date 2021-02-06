@@ -38,7 +38,7 @@ LevelComponent::~LevelComponent() = default;
 
 void LevelComponent::Draw()
 {
-    tileMap_.Draw(renderTexture_);
+    tileMap_.DrawTo(renderTexture_);
     entity_->DrawTo(renderTexture_);
 }
 
