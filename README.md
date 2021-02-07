@@ -1,4 +1,4 @@
-![forest adventure](Screenshots/v011.png)
+![forest adventure](Images/v011.png)
 
 # Forest Adventure
 
