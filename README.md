@@ -26,8 +26,12 @@ The PNG files found in the tiny-RPG-forest-files folder are licensed under CC0 v
 
 The TTF files found in the cello-sans folder are licensed under the SIL Open Font License, Version 1.1.
 
+The TTF file found in the intuitive folder are licensed under the SIL Open Font License, Version 1.1.
+
 ## Credits
 
 [ansimuz](https://ansimuz.itch.io/tiny-rpg-forest) : tiny-RPG-forest-files
 
 [Alfredo Marco Pradil](https://fontlibrary.org/en/font/cello-sans) : cello-sans 
+
+[Bruno de Souza Le„o ](https://fontlibrary.org/en/font/intuitive) : intuitive
