@@ -6,7 +6,8 @@
 
 #pragma once
 
-#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 #include "BasicComponent.h"
 
@@ -26,7 +27,9 @@ public:
     virtual void EnableInput(bool enable) override {}
 
 private:
-    sf::RectangleShape rect_;
+    sf::Font font_;
+    sf::Text introText_;
+    sf::Text pressText_;
 };
 
 }  // namespace Scene

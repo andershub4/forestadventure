@@ -10,6 +10,7 @@
 
 #include "Constant/Screen.h"
 #include "Message/MessageBus.h"
+#include "Utils/Logger.h"
 
 namespace FA {
 
@@ -18,15 +19,35 @@ namespace Scene {
 IntroComponent::IntroComponent(MessageBus& messageBus)
     : BasicComponent(messageBus)
 {
-    rect_.setSize(sf::Vector2f(constant::Screen::width_f, 24.0));
-    rect_.setPosition(0.0, constant::Screen::centerY_f);
+    if (!font_.loadFromFile("assets/font/intuitive/intuitive.ttf")) {
+        LOG_ERROR("Could not load intuitive");
+    }
+
+    introText_.setFont(font_);
+    introText_.setString("<ForestAdventure>");
+    introText_.setCharacterSize(64);
+    introText_.setFillColor(sf::Color::White);
+    auto bounds1 = introText_.getGlobalBounds();
+    auto w1 = bounds1.width;
+    sf::Vector2f introTextPos(constant::Screen::width_f / 2 - w1 / 2, 300.0f);
+    introText_.setPosition(introTextPos);
+
+    pressText_.setFont(font_);
+    pressText_.setString("Press <ENTER> to start play");
+    pressText_.setCharacterSize(24);
+    pressText_.setFillColor(sf::Color::White);
+    auto bounds2 = pressText_.getGlobalBounds();
+    auto w2 = bounds2.width;
+    sf::Vector2f pressTextPos(constant::Screen::width_f / 2 - w2 / 2, 400.0f);
+    pressText_.setPosition(pressTextPos);
 }
 
 IntroComponent::~IntroComponent() = default;
 
 void IntroComponent::Draw()
 {
-    renderTexture_.draw(rect_);
+    renderTexture_.draw(introText_);
+    renderTexture_.draw(pressText_);
 }
 
 void IntroComponent::Update(float deltaTime)
