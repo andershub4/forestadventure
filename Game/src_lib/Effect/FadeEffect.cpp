@@ -4,35 +4,31 @@
  *	See file LICENSE for full license details.
  */
 
-#include "FadeAnimation.h"
+#include "FadeEffect.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
 namespace FA {
 
-FadeAnimation::FadeAnimation(const sf::Vector2f& size, float seconds)
-    : Effect(size)
+FadeEffect::FadeEffect(const sf::Vector2f& position, const sf::Vector2f& size, float seconds)
+    : BasicEffect()
     , fadeRect_(size)
     , targetTime_(sf::seconds(seconds))
 {
+    fadeRect_.setPosition(position);
     fadeRect_.setFillColor(sf::Color(0, 0, 0, 0));
 }
 
-void FadeAnimation::DrawTo(sf::RenderTarget& renderTarget) const
+void FadeEffect::DrawTo(sf::RenderTarget& renderTarget) const
 {
     renderTarget.draw(fadeRect_);
 }
 
-void FadeAnimation::Update(float deltaTime)
+void FadeEffect::Update(float deltaTime)
 {
     currentTime_ = clock_.getElapsedTime();
     float currentAlpha = startAlpha_ + (endAlpha_ - startAlpha_) * (currentTime_ / targetTime_);
     fadeRect_.setFillColor(sf::Color(0, 0, 0, static_cast<unsigned int>(currentAlpha)));
-}
-
-bool FadeAnimation::IsFinished() const
-{
-    return currentTime_ >= targetTime_;
 }
 
 }  // namespace FA

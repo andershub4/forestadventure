@@ -21,6 +21,7 @@ class BasicEntity;
 }
 
 class TextureManager;
+class BasicEffect;
 
 namespace Scene {
 
@@ -34,12 +35,15 @@ public:
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void EnableInput(bool enable) override;
+    virtual void EnterTransition(const BasicTransition& transition) override;
+    virtual void ExitTransition(const BasicTransition& transition) override;
 
 private:
     AnimationFactory animationFactory_;
     std::unique_ptr<Entity::BasicEntity> entity_;
     Tile::TileMap tileMap_;
     sf::View view_;
+    std::unique_ptr<BasicEffect> effect_ = nullptr;
 
 private:
     void RegisterAnimationInfo(TextureManager& textureManager);

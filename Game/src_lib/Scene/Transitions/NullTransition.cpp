@@ -5,25 +5,22 @@
  */
 
 #include "NullTransition.h"
+#include "Effect/NullEffect.h"
 
 namespace FA {
 
 namespace Scene {
 
 NullTransition::NullTransition(CreateSceneFn nextSceneFn)
-    : BasicTransition(nextSceneFn)
+    : BasicTransition(0.0, nextSceneFn)
 {}
 
 NullTransition::~NullTransition() = default;
 
-void NullTransition::DrawTo(sf::RenderTarget& renderTarget)
-{}
-
-void NullTransition::DrawTo(BasicComponent& component)
-{}
-
-void NullTransition::Update(float deltaTime)
-{}
+std::unique_ptr<BasicEffect> NullTransition::CreateEffect(const sf::Vector2f& position, const sf::Vector2f& size) const
+{
+    return std::make_unique<NullEffect>();
+}
 
 }  // namespace Scene
 

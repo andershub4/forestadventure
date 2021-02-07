@@ -18,10 +18,8 @@ public:
     NullTransition(CreateSceneFn nextSceneFn);
     virtual ~NullTransition();
 
-    virtual void DrawTo(sf::RenderTarget& renderTarget) override;
-    virtual void DrawTo(BasicComponent& component) override;
-    virtual void Update(float deltaTime) override;
-    virtual bool IsFinished() const { return true; }
+    virtual std::unique_ptr<BasicEffect> CreateEffect(const sf::Vector2f& position,
+                                                      const sf::Vector2f& size) const override;
 };
 
 }  // namespace Scene

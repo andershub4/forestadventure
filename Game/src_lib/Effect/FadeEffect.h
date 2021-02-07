@@ -10,18 +10,17 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 
-#include "Effect.h"
+#include "BasicEffect.h"
 
 namespace FA {
 
-class FadeAnimation : public Effect
+class FadeEffect : public BasicEffect
 {
 public:
-    FadeAnimation(const sf::Vector2f& size, float seconds);
+    FadeEffect(const sf::Vector2f& position, const sf::Vector2f& size, float seconds);
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) const override;
     virtual void Update(float deltaTime) override;
-    virtual bool IsFinished() const override;
 
 private:
     sf::Clock clock_;

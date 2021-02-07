@@ -14,9 +14,11 @@
 namespace FA {
 
 class MessageBus;
-class Effect;
+class BasicEffect;
 
 namespace Scene {
+
+class BasicTransition;
 
 class BasicComponent
 {
@@ -28,10 +30,11 @@ public:
     virtual void Update(float deltaTime) = 0;
     virtual void Draw() = 0;
     virtual void EnableInput(bool enable) = 0;
+    virtual void EnterTransition(const BasicTransition& transition) {}
+    virtual void ExitTransition(const BasicTransition& transition) {}
 
     void Clear();
     void DrawTo(sf::RenderTarget& renderTarget);
-    void Draw(const Effect& effect);
 
 protected:
     sf::Sprite sprite_;

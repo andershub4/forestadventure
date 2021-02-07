@@ -6,24 +6,18 @@
 
 #pragma once
 
-#include <SFML/System/Vector2.hpp>
-
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
-class Effect
+class BasicEffect
 {
 public:
-    Effect(const sf::Vector2f& size);
-    virtual ~Effect();
+    BasicEffect();
+    virtual ~BasicEffect();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) const = 0;
     virtual void Update(float deltaTime) = 0;
-    virtual bool IsFinished() const = 0;
-
-private:
-    sf::Vector2f size_;
 };
 
 }  // namespace FA

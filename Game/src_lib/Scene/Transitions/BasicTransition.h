@@ -9,12 +9,16 @@
 #include <functional>
 #include <memory>
 
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Time.hpp>
+
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
 class MessageBus;
 class TextureManager;
+class BasicEffect;
 
 namespace Scene {
 
@@ -27,18 +31,22 @@ public:
     using CreateSceneFn = std::function<std::unique_ptr<BasicScene>(MessageBus&, TextureManager&)>;
 
     BasicTransition() = default;
-    BasicTransition(CreateSceneFn nextSceneFn);
+    BasicTransition(float seconds, CreateSceneFn nextSceneFn);
     virtual ~BasicTransition();
 
-    virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
-    virtual void DrawTo(BasicComponent& component) = 0;
-    virtual void Update(float deltaTime) = 0;
-    virtual bool IsFinished() const = 0;
+    virtual void Update(float deltaTime) {}
+    virtual std::unique_ptr<BasicEffect> CreateEffect(const sf::Vector2f& position, const sf::Vector2f& size) const = 0;
 
     std::unique_ptr<BasicScene> CreateNextScene(MessageBus& messageBus, TextureManager& textureManager) const;
+    bool IsFinished() const;
+
+protected:
+    float seconds_ = 0;
 
 private:
+    sf::Clock clock_;
     CreateSceneFn nextSceneFn_;
+    sf::Time targetTime_;
 };
 
 }  // namespace Scene

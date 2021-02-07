@@ -4,16 +4,13 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Effect.h"
-
-#include <SFML/Graphics/RenderWindow.hpp>
+#include "BasicEffect.h"
 
 namespace FA {
 
-Effect::Effect(const sf::Vector2f& size)
-    : size_(size)
+BasicEffect::BasicEffect()
 {}
 
-Effect::~Effect() = default;
+BasicEffect::~BasicEffect() = default;
 
 }  // namespace FA

@@ -9,9 +9,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Screen.h"
+#include "Effect/BasicEffect.h"
 #include "Entity/Entities/BasicEntity.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
+#include "Scene/Transitions/BasicTransition.h"
 #include "Sprite/SpriteSheet.h"
 
 namespace FA {
@@ -40,11 +42,13 @@ void LevelComponent::Draw()
 {
     tileMap_.DrawTo(renderTexture_);
     entity_->DrawTo(renderTexture_);
+    if (effect_) effect_->DrawTo(renderTexture_);
 }
 
 void LevelComponent::Update(float deltaTime)
 {
     entity_->Update(deltaTime);
+    if (effect_) effect_->Update(deltaTime);
 
     auto p = entity_->GetPosition();
     auto viewPosition = CalcViewPosition(p);
@@ -55,6 +59,21 @@ void LevelComponent::Update(float deltaTime)
 void LevelComponent::EnableInput(bool enable)
 {
     entity_->EnableInput(enable);
+}
+
+void LevelComponent::EnterTransition(const BasicTransition& transition)
+{
+    auto size = view_.getSize();
+    auto position = view_.getCenter();
+    position.x = position.x - size.x / 2;
+    position.y = position.y - size.y / 2;
+
+    effect_ = transition.CreateEffect(position, size);
+}
+
+void LevelComponent::ExitTransition(const BasicTransition& transition)
+{
+    effect_.reset();
 }
 
 sf::Vector2f LevelComponent::CalcViewPosition(const sf::Vector2f& position) const

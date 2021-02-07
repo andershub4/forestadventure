@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <vector>
-
 #include "BasicScene.h"
 
 namespace FA {
@@ -20,8 +18,7 @@ class TransitionScene : public BasicScene
 {
 public:
     TransitionScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-                    Manager::Components& components, Manager::Data& Data, std::unique_ptr<BasicTransition> transition,
-                    const std::vector<ComponentId>& ids);
+                    Manager::Components& components, Manager::Data& Data, std::unique_ptr<BasicTransition> transition);
     virtual ~TransitionScene();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
@@ -29,10 +26,10 @@ public:
     virtual std::string Name() const override { return "TransitionScene"; }
 
     virtual void Enter() override;
+    virtual void Exit() override;
 
 private:
     std::unique_ptr<BasicTransition> transition_ = nullptr;
-    std::vector<ComponentId> ids_;
 };
 
 }  // namespace Scene

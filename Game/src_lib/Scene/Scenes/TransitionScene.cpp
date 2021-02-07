@@ -6,8 +6,6 @@
 
 #include "TransitionScene.h"
 
-#include <algorithm>
-
 #include "Scene/Components/HelperComponent.h"
 #include "Scene/Transitions/BasicTransition.h"
 
@@ -17,10 +15,9 @@ namespace Scene {
 
 TransitionScene::TransitionScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
                                  Manager::Components& components, Manager::Data& data,
-                                 std::unique_ptr<BasicTransition> transition, const std::vector<ComponentId>& ids)
+                                 std::unique_ptr<BasicTransition> transition)
     : BasicScene(sceneManager, messageBus, textureManager, components, data)
     , transition_(std::move(transition))
-    , ids_(ids)
 {}
 
 TransitionScene::~TransitionScene() = default;
@@ -32,7 +29,16 @@ void TransitionScene::Enter()
 #endif
     for (const auto& entry : components_) {
         auto& component = entry.second;
+        component->EnterTransition(*transition_);
         component->EnableInput(false);
+    }
+}
+
+void TransitionScene::Exit()
+{
+    for (const auto& entry : components_) {
+        auto& component = entry.second;
+        component->ExitTransition(*transition_);
     }
 }
 
@@ -42,10 +48,6 @@ void TransitionScene::DrawTo(sf::RenderTarget& renderTarget)
         auto& component = entry.second;
         component->Clear();
         component->Draw();
-        if (std::find(ids_.begin(), ids_.end(), component->GetId()) != ids_.end()) {
-            transition_->DrawTo(*component);
-        }
-
         component->DrawTo(renderTarget);
     }
 }

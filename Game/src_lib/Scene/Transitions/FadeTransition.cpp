@@ -14,30 +14,14 @@ namespace FA {
 namespace Scene {
 
 FadeTransition::FadeTransition(CreateSceneFn nextSceneFn)
-    : BasicTransition(nextSceneFn)
-    , fade_(sf::Vector2f(constant::Screen::width_f, constant::Screen::height_f), 1.0f)
+    : BasicTransition(1.0f, nextSceneFn)
 {}
 
 FadeTransition::~FadeTransition() = default;
 
-void FadeTransition::DrawTo(sf::RenderTarget& renderTarget)
+std::unique_ptr<BasicEffect> FadeTransition::CreateEffect(const sf::Vector2f& position, const sf::Vector2f& size) const
 {
-    fade_.DrawTo(renderTarget);
-}
-
-void FadeTransition::DrawTo(BasicComponent& component)
-{
-    component.Draw(fade_);
-}
-
-void FadeTransition::Update(float deltaTime)
-{
-    fade_.Update(deltaTime);
-}
-
-bool FadeTransition::IsFinished() const
-{
-    return fade_.IsFinished();
+    return std::make_unique<FadeEffect>(position, size, seconds_);
 }
 
 }  // namespace Scene

@@ -59,7 +59,7 @@ void IntroScene::OnKeyPressed(std::shared_ptr<Message> message)
         data_.isRunning_ = false;
     }
     else if (key == Keyboard::Key::Return) {
-        SwitchScene<PlayScene>({});
+        SwitchScene<PlayScene>();
     }
 }
 

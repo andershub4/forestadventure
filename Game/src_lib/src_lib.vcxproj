@@ -144,8 +144,9 @@
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Animation\AnimationFactory.h" />
     <ClInclude Include="Constant\Screen.h" />
-    <ClInclude Include="Effect\Effect.h" />
-    <ClInclude Include="Effect\FadeAnimation.h" />
+    <ClInclude Include="Effect\BasicEffect.h" />
+    <ClInclude Include="Effect\FadeEffect.h" />
+    <ClInclude Include="Effect\NullEffect.h" />
     <ClInclude Include="Entity\StateMachine.h" />
     <ClInclude Include="Entity\States\AttackState.h" />
     <ClInclude Include="Entity\States\BasicState.h" />
@@ -193,8 +194,9 @@
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Animation\AnimationFactory.cpp" />
-    <ClCompile Include="Effect\Effect.cpp" />
-    <ClCompile Include="Effect\FadeAnimation.cpp" />
+    <ClCompile Include="Effect\BasicEffect.cpp" />
+    <ClCompile Include="Effect\FadeEffect.cpp" />
+    <ClCompile Include="Effect\NullEffect.cpp" />
     <ClCompile Include="Entity\StateMachine.cpp" />
     <ClCompile Include="Entity\States\BasicState.cpp" />
     <ClCompile Include="Entity\States\AttackState.cpp" />

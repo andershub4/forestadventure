@@ -7,7 +7,6 @@
 #include "BasicComponent.h"
 
 #include "Constant/Screen.h"
-#include "Effect/Effect.h"
 
 namespace FA {
 
@@ -31,11 +30,6 @@ void BasicComponent::DrawTo(sf::RenderTarget& renderTarget)
 {
     renderTexture_.display();
     renderTarget.draw(sprite_);
-}
-
-void BasicComponent::Draw(const Effect& effect)
-{
-    effect.DrawTo(renderTexture_);
 }
 
 }  // namespace Scene

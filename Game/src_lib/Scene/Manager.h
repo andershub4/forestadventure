@@ -9,7 +9,6 @@
 #include <map>
 #include <memory>
 
-#include "ComponentId.h"
 #include "Components/BasicComponent.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -38,14 +37,14 @@ public:
     ~Manager();
 
     template <class SceneT, class TransitionT>
-    void SetScene(MessageBus& messageBus, TextureManager& textureManager, const std::vector<ComponentId>& ids)
+    void SetScene(MessageBus& messageBus, TextureManager& textureManager)
     {
         auto createSceneFn = [this](MessageBus& messageBus, TextureManager& textureManager) {
             return std::make_unique<SceneT>(*this, messageBus, textureManager, components_, data_);
         };
 
         auto transition = std::make_unique<TransitionT>(createSceneFn);
-        SetTransitionScene(messageBus, textureManager, std::move(transition), ids);
+        SetTransitionScene(messageBus, textureManager, std::move(transition));
     }
 
     void SetScene(std::unique_ptr<BasicScene> newScene);
@@ -66,7 +65,7 @@ private:
     Components components_;
 
     void SetTransitionScene(MessageBus& messageBus, TextureManager& textureManager,
-                            std::unique_ptr<BasicTransition> transition, const std::vector<ComponentId>& ids);
+                            std::unique_ptr<BasicTransition> transition);
 };
 
 }  // namespace Scene
