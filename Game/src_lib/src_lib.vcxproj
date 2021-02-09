@@ -147,6 +147,7 @@
     <ClInclude Include="Effect\BasicEffect.h" />
     <ClInclude Include="Effect\FadeEffect.h" />
     <ClInclude Include="Effect\NullEffect.h" />
+    <ClInclude Include="Entity\Entities\PlayerEntity.h" />
     <ClInclude Include="Entity\StateMachine.h" />
     <ClInclude Include="Entity\States\AttackState.h" />
     <ClInclude Include="Entity\States\BasicState.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="Effect\BasicEffect.cpp" />
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />
+    <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Entity\StateMachine.cpp" />
     <ClCompile Include="Entity\States\BasicState.cpp" />
     <ClCompile Include="Entity\States\AttackState.cpp" />

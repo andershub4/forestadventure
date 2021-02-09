@@ -6,10 +6,13 @@
 
 #pragma once
 
+#include <vector>
+
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include "Entity/StateMachine.h"
 #include "Enum/KeyboardKey.h"
+#include "Enum/MessageType.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -22,14 +25,30 @@ namespace Entity {
 class BasicEntity
 {
 public:
-    BasicEntity(MessageBus& messageBus, const AnimationFactory& animationFactory);
-    ~BasicEntity();
+    BasicEntity(MessageBus& messageBus, const sf::Vector2u pos, unsigned int size, FaceDirection faceDir,
+                MoveDirection moveDir, const AnimationFactory& animationFactory, float speed);
+    virtual ~BasicEntity();
+
+    virtual std::string Name() const = 0;
+    virtual void OnCreate() {}
+    virtual void OnDestroy() {}
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
-    void OnMessage(std::shared_ptr<Message> msg);
     void EnableInput(bool enable) { enableInput_ = enable; }
     sf::Vector2f GetPosition() const;
+
+protected:
+    void Subscribe(const std::vector<MessageType>& messageTypes);
+    void Unsubscribe(const std::vector<MessageType>& messageTypes);
+    void StartMove(MoveDirection moveDir, FaceDirection faceDir);
+    void StopMove();
+    void Attack();
+    void AttackWeapon();
+
+    virtual void OnIsKeyPressed(Keyboard::Key key) {}
+    virtual void OnIsKeyReleased(Keyboard::Key key) {}
+    virtual void OnKeyPressed(Keyboard::Key key) {}
 
 private:
     MessageBus& messageBus_;
@@ -38,9 +57,7 @@ private:
     bool enableInput_ = true;
 
 private:
-    void OnIsKeyPressed(Keyboard::Key key);
-
-private:
+    void OnMessage(std::shared_ptr<Message> msg);
     void HandleMessage(std::shared_ptr<Message> msg);
 };
 

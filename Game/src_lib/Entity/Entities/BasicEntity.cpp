@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Constant/Screen.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -18,23 +17,16 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(MessageBus& messageBus, const AnimationFactory& animationFactory)
+BasicEntity::BasicEntity(MessageBus& messageBus, const sf::Vector2u pos, unsigned int size, FaceDirection faceDir,
+                         MoveDirection moveDir, const AnimationFactory& animationFactory, float speed)
     : messageBus_(messageBus)
-    , stateMachine_(&rectShape_, FaceDirection::Down, MoveDirection::Down, animationFactory, 120.0)
+    , stateMachine_(&rectShape_, faceDir, moveDir, animationFactory, speed)
 {
-    messageBus_.AddSubscriber("entity",
-                              {MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed},
-                              [this](std::shared_ptr<Message> message) { OnMessage(message); });
-    rectShape_.setPosition(constant::Screen::centerX_f, constant::Screen::centerY_f);
-    constexpr int size = 64;
+    rectShape_.setPosition(static_cast<sf::Vector2f>(pos));
     rectShape_.setSize({static_cast<float>(size), static_cast<float>(size)});
 }
 
-BasicEntity::~BasicEntity()
-{
-    messageBus_.RemoveSubscriber("entity",
-                                 {MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
-}
+BasicEntity::~BasicEntity() = default;
 
 void BasicEntity::Update(float deltaTime)
 {
@@ -66,34 +58,45 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
         OnIsKeyPressed(key);
     }
     else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
-        stateMachine_.OnStopMove();
+        auto m = std::dynamic_pointer_cast<IsKeyReleasedMessage>(msg);
+        auto key = m->GetKey();
+        OnIsKeyReleased(key);
     }
     else if (msg->GetMessageType() == MessageType::KeyPressed) {
         auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
         auto key = m->GetKey();
-        if (key == Keyboard::Key::RControl) {
-            stateMachine_.OnAttack();
-        }
-        else if (key == Keyboard::Key::Space) {
-            stateMachine_.OnAttackWeapon();
-        }
+        OnKeyPressed(key);
     }
 }
 
-void BasicEntity::OnIsKeyPressed(Keyboard::Key key)
+void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    if (key == Keyboard::Key::Right) {
-        stateMachine_.OnStartMove(MoveDirection::Right, FaceDirection::Right);
-    }
-    else if (key == Keyboard::Key::Left) {
-        stateMachine_.OnStartMove(MoveDirection::Left, FaceDirection::Left);
-    }
-    else if (key == Keyboard::Key::Up) {
-        stateMachine_.OnStartMove(MoveDirection::Up, FaceDirection::Up);
-    }
-    else if (key == Keyboard::Key::Down) {
-        stateMachine_.OnStartMove(MoveDirection::Down, FaceDirection::Down);
-    }
+    stateMachine_.OnStartMove(moveDir, faceDir);
+}
+
+void BasicEntity::StopMove()
+{
+    stateMachine_.OnStopMove();
+}
+
+void BasicEntity::Attack()
+{
+    stateMachine_.OnAttack();
+}
+
+void BasicEntity::AttackWeapon()
+{
+    stateMachine_.OnAttackWeapon();
+}
+
+void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
+{
+    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
+}
+
+void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)
+{
+    messageBus_.RemoveSubscriber(Name(), messageTypes);
 }
 
 }  // namespace Entity

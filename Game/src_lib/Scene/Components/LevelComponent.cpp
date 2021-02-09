@@ -10,7 +10,7 @@
 
 #include "Constant/Screen.h"
 #include "Effect/BasicEffect.h"
-#include "Entity/Entities/BasicEntity.h"
+#include "Entity/Entities/PlayerEntity.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 #include "Scene/Transitions/BasicTransition.h"
@@ -28,7 +28,9 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
             {constant::Screen::width_f, constant::Screen::height_f})
 {
     RegisterAnimationInfo(textureManager);
-    entity_ = std::make_unique<Entity::BasicEntity>(messageBus, animationFactory_);
+    entity_ = std::make_unique<Entity::PlayerEntity>(messageBus, sf::Vector2u(0, 0), 64, FaceDirection::Down,
+                                                     MoveDirection::Down, animationFactory_, 120.0f);
+    entity_->OnCreate();
 
     auto textureTileSet = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
     if (textureTileSet != nullptr) {
@@ -36,7 +38,10 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
     }
 }
 
-LevelComponent::~LevelComponent() = default;
+LevelComponent::~LevelComponent()
+{
+    entity_->OnDestroy();
+}
 
 void LevelComponent::Draw()
 {
