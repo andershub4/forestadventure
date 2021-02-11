@@ -21,7 +21,7 @@ public:
 
     void Update(float deltaTime);
 
-    void ApplyTo(sf::RectangleShape* rectShape);
+    void ApplyTo(sf::RectangleShape* rectShape) const;
     void SetDirection(MoveDirection direction);
 
 private:

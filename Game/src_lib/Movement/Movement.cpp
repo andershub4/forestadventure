@@ -29,7 +29,7 @@ void Movement::Update(float deltaTime)
     offset_ = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
 }
 
-void Movement::ApplyTo(sf::RectangleShape* rectShape)
+void Movement::ApplyTo(sf::RectangleShape* rectShape) const
 {
     rectShape->move(offset_);
 }
