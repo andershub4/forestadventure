@@ -14,7 +14,7 @@
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 #include "Scene/Transitions/BasicTransition.h"
-#include "Sprite/SpriteSheet.h"
+#include "Resource/SpriteSheet.h"
 
 namespace FA {
 
@@ -28,6 +28,7 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
             {constant::Screen::width_f, constant::Screen::height_f})
 {
     RegisterAnimationInfo(textureManager);
+
     entity_ = std::make_unique<Entity::PlayerEntity>(messageBus, sf::Vector2u(0, 0), 64, FaceDirection::Down,
                                                      MoveDirection::Down, animationFactory_, 120.0f);
     entity_->OnCreate();

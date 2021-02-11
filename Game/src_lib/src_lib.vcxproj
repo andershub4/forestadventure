@@ -186,7 +186,7 @@
     <ClInclude Include="Misc\TextureManager.h" />
     <ClInclude Include="Scene\Components\BasicComponent.h" />
     <ClInclude Include="Scene\Components\HelperComponent.h" />
-    <ClInclude Include="Sprite\SpriteSheet.h" />
+    <ClInclude Include="Resource\SpriteSheet.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Tile\TileMap.h" />
     <ClInclude Include="Utils\Logger.h" />
@@ -228,7 +228,7 @@
     <ClCompile Include="Misc\TextureManager.cpp" />
     <ClCompile Include="Scene\Components\BasicComponent.cpp" />
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
-    <ClCompile Include="Sprite\SpriteSheet.cpp" />
+    <ClCompile Include="Resource\SpriteSheet.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />
