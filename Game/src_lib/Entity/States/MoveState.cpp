@@ -15,7 +15,7 @@ namespace Entity {
 
 MoveState::MoveState(StateMachine& stateMachine, const AnimationFactory& animationFactory, StateData& stateData)
     : BasicState(stateMachine, animationFactory, stateData)
-    , movement_(stateData_.rectShape_, stateData_.velocity_)
+    , movement_(stateData_.velocity_)
 {}
 
 MoveState::~MoveState() = default;
@@ -24,6 +24,7 @@ void MoveState::Update(float deltaTime)
 {
     if (animation_) animation_->Update(deltaTime);
     movement_.Update(deltaTime);
+    movement_.ApplyTo(stateData_.rectShape_);
 }
 
 void MoveState::Enter()

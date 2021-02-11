@@ -20,14 +20,18 @@ const std::unordered_map<FA::MoveDirection, sf::Vector2f> dirToVector = {{FA::Mo
 
 namespace FA {
 
-Movement::Movement(sf::RectangleShape *rectShape, float velocity)
-    : rectShape_(rectShape)
-    , velocity_(velocity)
+Movement::Movement(float velocity)
+    : velocity_(velocity)
 {}
 
 void Movement::Update(float deltaTime)
 {
-    rectShape_->move(movementVector_.x * deltaTime, movementVector_.y * deltaTime);
+    offset_ = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
+}
+
+void Movement::ApplyTo(sf::RectangleShape* rectShape)
+{
+    rectShape->move(offset_);
 }
 
 void Movement::SetDirection(MoveDirection direction)

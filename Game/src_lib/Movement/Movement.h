@@ -17,16 +17,17 @@ class Movement
 {
 public:
     Movement() = default;
-    Movement(sf::RectangleShape* rectShape, float velocity);
+    Movement(float velocity);
 
     void Update(float deltaTime);
 
+    void ApplyTo(sf::RectangleShape* rectShape);
     void SetDirection(MoveDirection direction);
 
 private:
     float velocity_{};
     sf::Vector2f movementVector_{};
-    sf::RectangleShape* rectShape_ = nullptr;
+    sf::Vector2f offset_{};
 };
 
 }  // namespace FA
