@@ -17,9 +17,10 @@ namespace FA {
 
 class MessageBus;
 class Message;
-class BasicSprite;
 
 namespace Entity {
+
+class BasicSprite;
 
 class BasicEntity
 {

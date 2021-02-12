@@ -20,6 +20,8 @@ const std::unordered_map<FA::MoveDirection, sf::Vector2f> dirToVector = {{FA::Mo
 
 namespace FA {
 
+namespace Entity {
+
 Movement::Movement(float velocity)
     : velocity_(velocity)
 {}
@@ -41,5 +43,7 @@ void Movement::SetDirection(MoveDirection direction)
         movementVector_ = it->second * velocity_;
     }
 }
+
+}  // namespace Entity
 
 }  // namespace FA

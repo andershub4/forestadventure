@@ -7,7 +7,7 @@
 #pragma once
 
 #include "BasicState.h"
-#include "Movement/Movement.h"
+#include "Entity/Components/Movement/Movement.h"
 
 namespace FA {
 

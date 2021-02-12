@@ -6,9 +6,9 @@
 
 #include "AttackState.h"
 
+#include "Entity/Components/Sprite/BasicSprite.h"
 #include "IdleState.h"
 #include "MoveState.h"
-#include "Sprite/BasicSprite.h"
 
 namespace FA {
 

@@ -13,6 +13,8 @@
 
 namespace FA {
 
+namespace Entity {
+
 class Movement
 {
 public:
@@ -29,5 +31,7 @@ private:
     sf::Vector2f movementVector_{};
     sf::Vector2f offset_{};
 };
+
+}  // namespace Entity
 
 }  // namespace FA

@@ -13,6 +13,8 @@
 
 namespace FA {
 
+namespace Entity {
+
 class AnimatedSprite : public BasicSprite
 {
 public:
@@ -34,5 +36,7 @@ private:
     AnimationFactory animationFactory_;
     std::unique_ptr<Animation> animation_{};
 };
+
+}  // namespace Entity
 
 }  // namespace FA

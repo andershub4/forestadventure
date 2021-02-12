@@ -45,9 +45,6 @@
     <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Movement\Movement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Message\BroadcastMessage\KeyPressedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -135,10 +132,13 @@
     <ClCompile Include="Resource\SpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite\BasicSprite.cpp">
+    <ClCompile Include="Entity\Components\Sprite\AnimatedSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite\AnimatedSprite.cpp">
+    <ClCompile Include="Entity\Components\Sprite\BasicSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Components\Movement\Movement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -186,9 +186,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Movement\Movement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game\Version.h">
@@ -293,10 +290,13 @@
     <ClInclude Include="Resource\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite\BasicSprite.h">
+    <ClInclude Include="Entity\Components\Sprite\AnimatedSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite\AnimatedSprite.h">
+    <ClInclude Include="Entity\Components\Sprite\BasicSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Components\Movement\Movement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

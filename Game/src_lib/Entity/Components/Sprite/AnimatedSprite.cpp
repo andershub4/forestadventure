@@ -8,10 +8,13 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "AnimatedSprite.h"
 #include "Animation/Animation.h"
-#include "Movement/Movement.h"
+#include "Entity/Components/Movement/Movement.h"
 
 namespace FA {
+
+namespace Entity {
 
 AnimatedSprite::AnimatedSprite(unsigned int size, const sf::Vector2u &position,
                                const AnimationFactory &animationFactory)
@@ -59,5 +62,7 @@ bool AnimatedSprite::AnimationIsCompleted() const
     if (animation_) return animation_->IsCompleted();
     return true;
 }
+
+}  // namespace Entity
 
 }  // namespace FA

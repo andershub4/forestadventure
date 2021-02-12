@@ -8,11 +8,11 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/Components/Sprite/BasicSprite.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/MessageBus.h"
-#include "Sprite/BasicSprite.h"
 
 namespace FA {
 

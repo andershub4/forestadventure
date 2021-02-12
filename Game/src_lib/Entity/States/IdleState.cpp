@@ -8,8 +8,8 @@
 
 #include "AttackState.h"
 #include "AttackWeaponState.h"
+#include "Entity/Components/Sprite/BasicSprite.h"
 #include "MoveState.h"
-#include "Sprite/BasicSprite.h"
 
 namespace FA {
 

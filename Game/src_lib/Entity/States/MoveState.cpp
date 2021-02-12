@@ -6,8 +6,8 @@
 
 #include "MoveState.h"
 
+#include "Entity/Components/Sprite/BasicSprite.h"
 #include "IdleState.h"
-#include "Sprite/BasicSprite.h"
 
 namespace FA {
 

@@ -174,7 +174,7 @@
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Version.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h" />
-    <ClInclude Include="Movement\Movement.h" />
+    <ClInclude Include="Entity\Components\Movement\Movement.h" />
     <ClInclude Include="Scene\Components\IntroComponent.h" />
     <ClInclude Include="Scene\Components\LevelComponent.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
@@ -187,8 +187,8 @@
     <ClInclude Include="Scene\Components\BasicComponent.h" />
     <ClInclude Include="Scene\Components\HelperComponent.h" />
     <ClInclude Include="Resource\SpriteSheet.h" />
-    <ClInclude Include="Sprite\AnimatedSprite.h" />
-    <ClInclude Include="Sprite\BasicSprite.h" />
+    <ClInclude Include="Entity\Components\Sprite\AnimatedSprite.h" />
+    <ClInclude Include="Entity\Components\Sprite\BasicSprite.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Tile\TileMap.h" />
     <ClInclude Include="Utils\Logger.h" />
@@ -219,7 +219,7 @@
     <ClCompile Include="Scene\Transitions\NullTransition.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp" />
-    <ClCompile Include="Movement\Movement.cpp" />
+    <ClCompile Include="Entity\Components\Movement\Movement.cpp" />
     <ClCompile Include="Scene\Components\IntroComponent.cpp" />
     <ClCompile Include="Scene\Components\LevelComponent.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />
@@ -231,8 +231,8 @@
     <ClCompile Include="Scene\Components\BasicComponent.cpp" />
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
     <ClCompile Include="Resource\SpriteSheet.cpp" />
-    <ClCompile Include="Sprite\AnimatedSprite.cpp" />
-    <ClCompile Include="Sprite\BasicSprite.cpp" />
+    <ClCompile Include="Entity\Components\Sprite\AnimatedSprite.cpp" />
+    <ClCompile Include="Entity\Components\Sprite\BasicSprite.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />

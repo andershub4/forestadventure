@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Entity {
+
 class Movement;
 
 class BasicSprite
@@ -32,5 +34,7 @@ public:
 private:
     unsigned int size_{};
 };
+
+}  // namespace Entity
 
 }  // namespace FA

@@ -14,12 +14,11 @@
 
 namespace FA {
 
-class BasicSprite;
-
 namespace Entity {
 
 class StateMachine;
 class BasicEntity;
+class BasicSprite;
 
 class BasicState
 {

@@ -10,12 +10,12 @@
 
 #include "Constant/Screen.h"
 #include "Effect/BasicEffect.h"
+#include "Entity/Components/Sprite/AnimatedSprite.h"
 #include "Entity/Entities/PlayerEntity.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 #include "Resource/SpriteSheet.h"
 #include "Scene/Transitions/BasicTransition.h"
-#include "Sprite/AnimatedSprite.h"
 
 namespace FA {
 
@@ -30,7 +30,7 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
 {
     RegisterAnimationInfo(textureManager);
 
-    auto sprite = std::make_unique<AnimatedSprite>(64, sf::Vector2u(0, 0), animationFactory_);
+    auto sprite = std::make_unique<Entity::AnimatedSprite>(64, sf::Vector2u(0, 0), animationFactory_);
 
     entity_ = std::make_unique<Entity::PlayerEntity>(messageBus, std::move(sprite), FaceDirection::Down, 120.0f);
     entity_->OnCreate();
