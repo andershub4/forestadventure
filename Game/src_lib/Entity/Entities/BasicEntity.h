@@ -8,8 +8,6 @@
 
 #include <vector>
 
-#include <SFML/Graphics/RectangleShape.hpp>
-
 #include "Entity/StateMachine.h"
 #include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
@@ -19,14 +17,14 @@ namespace FA {
 
 class MessageBus;
 class Message;
+class BasicSprite;
 
 namespace Entity {
 
 class BasicEntity
 {
 public:
-    BasicEntity(MessageBus& messageBus, const sf::Vector2u pos, unsigned int size, FaceDirection faceDir,
-                MoveDirection moveDir, const AnimationFactory& animationFactory, float speed);
+    BasicEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir, float speed);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
@@ -52,7 +50,7 @@ protected:
 
 private:
     MessageBus& messageBus_;
-    sf::RectangleShape rectShape_;
+    std::unique_ptr<BasicSprite> sprite_;
     StateMachine stateMachine_;
     bool enableInput_ = true;
 

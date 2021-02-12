@@ -12,19 +12,18 @@
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/MessageBus.h"
+#include "Sprite/BasicSprite.h"
 
 namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(MessageBus& messageBus, const sf::Vector2u pos, unsigned int size, FaceDirection faceDir,
-                         MoveDirection moveDir, const AnimationFactory& animationFactory, float speed)
+BasicEntity::BasicEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
+                         float speed)
     : messageBus_(messageBus)
-    , stateMachine_(&rectShape_, faceDir, moveDir, animationFactory, speed)
-{
-    rectShape_.setPosition(static_cast<sf::Vector2f>(pos));
-    rectShape_.setSize({static_cast<float>(size), static_cast<float>(size)});
-}
+    , sprite_(std::move(sprite))
+    , stateMachine_(faceDir, *sprite_, speed)
+{}
 
 BasicEntity::~BasicEntity() = default;
 
@@ -35,7 +34,7 @@ void BasicEntity::Update(float deltaTime)
 
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
-    renderTarget.draw(rectShape_);
+    sprite_->DrawTo(renderTarget);
 }
 
 void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
@@ -47,7 +46,7 @@ void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
 
 sf::Vector2f BasicEntity::GetPosition() const
 {
-    return rectShape_.getPosition();
+    return sprite_->GetPosition();
 }
 
 void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)

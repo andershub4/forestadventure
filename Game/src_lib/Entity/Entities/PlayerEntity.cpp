@@ -13,14 +13,15 @@
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/MessageBus.h"
+#include "Sprite/BasicSprite.h"
 
 namespace FA {
 
 namespace Entity {
 
-PlayerEntity::PlayerEntity(MessageBus& messageBus, const sf::Vector2u pos, unsigned int size, FaceDirection faceDir,
-                           MoveDirection moveDir, const AnimationFactory& animationFactory, float speed)
-    : BasicEntity(messageBus, pos, size, FaceDirection::Down, MoveDirection::Down, animationFactory, speed)
+PlayerEntity::PlayerEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
+                           float speed)
+    : BasicEntity(messageBus, std::move(sprite), FaceDirection::Down, speed)
 {}
 
 PlayerEntity::~PlayerEntity() = default;

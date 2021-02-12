@@ -13,8 +13,9 @@
 #include "Entity/Entities/PlayerEntity.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
-#include "Scene/Transitions/BasicTransition.h"
 #include "Resource/SpriteSheet.h"
+#include "Scene/Transitions/BasicTransition.h"
+#include "Sprite/AnimatedSprite.h"
 
 namespace FA {
 
@@ -29,8 +30,9 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
 {
     RegisterAnimationInfo(textureManager);
 
-    entity_ = std::make_unique<Entity::PlayerEntity>(messageBus, sf::Vector2u(0, 0), 64, FaceDirection::Down,
-                                                     MoveDirection::Down, animationFactory_, 120.0f);
+    auto sprite = std::make_unique<AnimatedSprite>(64, sf::Vector2u(0, 0), animationFactory_);
+
+    entity_ = std::make_unique<Entity::PlayerEntity>(messageBus, std::move(sprite), FaceDirection::Down, 120.0f);
     entity_->OnCreate();
 
     auto textureTileSet = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");

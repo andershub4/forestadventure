@@ -6,35 +6,32 @@
 
 #include "AttackWeaponState.h"
 
-#include "Animation/Animation.h"
 #include "IdleState.h"
 #include "MoveState.h"
+#include "Sprite/BasicSprite.h"
 
 namespace FA {
 
 namespace Entity {
 
-AttackWeaponState::AttackWeaponState(StateMachine& stateMachine, const AnimationFactory& animationFactory,
-                                     StateData& stateData)
-    : BasicState(stateMachine, animationFactory, stateData)
+AttackWeaponState::AttackWeaponState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData)
+    : BasicState(stateMachine, sprite, stateData)
 {}
 
 AttackWeaponState::~AttackWeaponState() = default;
 
 void AttackWeaponState::Update(float deltaTime)
 {
-    if (animation_) {
-        animation_->Update(deltaTime);
-        if (animation_->IsCompleted()) {
-            SwitchState<IdleState>();
-        }
+    sprite_.Update(deltaTime);
+    if (sprite_.AnimationIsCompleted()) {
+        SwitchState<IdleState>();
     }
 }
 
 void AttackWeaponState::Enter()
 {
-    animation_ = animationFactory_.Create(FrameType::AttackWeapon, stateData_.faceDir_, stateData_.rectShape_);
-    animation_->Start();
+    sprite_.SetAnimation(FrameType::AttackWeapon, stateData_.faceDir_);
+    sprite_.StartAnimation();
 }
 
 void AttackWeaponState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

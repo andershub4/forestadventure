@@ -15,8 +15,7 @@ namespace Entity {
 class StateMachine
 {
 public:
-    StateMachine(sf::RectangleShape* rectShape, FaceDirection faceDir, MoveDirection moveDir,
-                 const AnimationFactory& animationFactory, float velocity);
+    StateMachine(FaceDirection faceDir, BasicSprite& sprite, float velocity);
     ~StateMachine();
 
     void Update(float deltaTime);

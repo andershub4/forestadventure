@@ -13,9 +13,9 @@ namespace FA {
 
 namespace Entity {
 
-BasicState::BasicState(StateMachine& stateMachine, const AnimationFactory& animationFactory, StateData& stateData)
+BasicState::BasicState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData)
     : stateMachine_(stateMachine)
-    , animationFactory_(animationFactory)
+    , sprite_(sprite)
     , stateData_(stateData)
 {}
 

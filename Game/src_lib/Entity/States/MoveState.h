@@ -16,7 +16,7 @@ namespace Entity {
 class MoveState : public BasicState
 {
 public:
-    MoveState(StateMachine& stateMachine, const AnimationFactory& animationFactory, StateData& stateData);
+    MoveState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData);
     virtual ~MoveState();
 
     virtual void Update(float deltaTime) override;
@@ -27,7 +27,6 @@ public:
     virtual void OnStopMove() override;
 
 private:
-    std::unique_ptr<Animation> animation_ = nullptr;
     Movement movement_;
 };
 

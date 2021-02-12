@@ -15,7 +15,7 @@ namespace Entity {
 class IdleState : public BasicState
 {
 public:
-    IdleState(StateMachine& stateMachine, const AnimationFactory& animationFactory, StateData& stateData);
+    IdleState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData);
     virtual ~IdleState();
 
     virtual void Update(float deltaTime) override;
@@ -25,9 +25,6 @@ public:
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) override;
     virtual void OnAttack() override;
     virtual void OnAttackWeapon() override;
-
-private:
-    std::unique_ptr<Animation> animation_ = nullptr;
 };
 
 }  // namespace Entity

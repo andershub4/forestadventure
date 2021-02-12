@@ -15,7 +15,7 @@ namespace Entity {
 class AttackWeaponState : public BasicState
 {
 public:
-    AttackWeaponState(StateMachine& stateMachine, const AnimationFactory& animationFactory, StateData& stateData);
+    AttackWeaponState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData);
     virtual ~AttackWeaponState();
 
     virtual void Update(float deltaTime) override;
@@ -23,9 +23,6 @@ public:
     virtual void Enter() override;
 
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) override;
-
-private:
-    std::unique_ptr<Animation> animation_ = nullptr;
 };
 
 }  // namespace Entity

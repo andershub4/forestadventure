@@ -13,14 +13,12 @@ namespace FA {
 
 namespace Entity {
 
-StateMachine::StateMachine(sf::RectangleShape* rectShape, FaceDirection faceDir, MoveDirection moveDir,
-                           const AnimationFactory& animationFactory, float velocity)
+StateMachine::StateMachine(FaceDirection faceDir, BasicSprite& sprite, float velocity)
 {
     stateData_.faceDir_ = faceDir;
-    stateData_.moveDir_ = moveDir;
+    stateData_.moveDir_ = MoveDirection::None;
     stateData_.velocity_ = velocity;
-    stateData_.rectShape_ = rectShape;
-    currentState_ = std::make_unique<IdleState>(*this, animationFactory, stateData_);
+    currentState_ = std::make_unique<IdleState>(*this, sprite, stateData_);
     // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }

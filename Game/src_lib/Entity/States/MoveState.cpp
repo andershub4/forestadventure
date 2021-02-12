@@ -6,15 +6,15 @@
 
 #include "MoveState.h"
 
-#include "Animation/Animation.h"
 #include "IdleState.h"
+#include "Sprite/BasicSprite.h"
 
 namespace FA {
 
 namespace Entity {
 
-MoveState::MoveState(StateMachine& stateMachine, const AnimationFactory& animationFactory, StateData& stateData)
-    : BasicState(stateMachine, animationFactory, stateData)
+MoveState::MoveState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData)
+    : BasicState(stateMachine, sprite, stateData)
     , movement_(stateData_.velocity_)
 {}
 
@@ -22,16 +22,16 @@ MoveState::~MoveState() = default;
 
 void MoveState::Update(float deltaTime)
 {
-    if (animation_) animation_->Update(deltaTime);
+    sprite_.Update(deltaTime);
     movement_.Update(deltaTime);
-    movement_.ApplyTo(stateData_.rectShape_);
+    sprite_.Move(movement_);
 }
 
 void MoveState::Enter()
 {
     movement_.SetDirection(stateData_.moveDir_);
-    animation_ = animationFactory_.Create(FrameType::Move, stateData_.faceDir_, stateData_.rectShape_);
-    animation_->Start();
+    sprite_.SetAnimation(FrameType::Move, stateData_.faceDir_);
+    sprite_.StartAnimation();
 }
 
 void MoveState::Exit()

@@ -187,6 +187,8 @@
     <ClInclude Include="Scene\Components\BasicComponent.h" />
     <ClInclude Include="Scene\Components\HelperComponent.h" />
     <ClInclude Include="Resource\SpriteSheet.h" />
+    <ClInclude Include="Sprite\AnimatedSprite.h" />
+    <ClInclude Include="Sprite\BasicSprite.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Tile\TileMap.h" />
     <ClInclude Include="Utils\Logger.h" />
@@ -229,6 +231,8 @@
     <ClCompile Include="Scene\Components\BasicComponent.cpp" />
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
     <ClCompile Include="Resource\SpriteSheet.cpp" />
+    <ClCompile Include="Sprite\AnimatedSprite.cpp" />
+    <ClCompile Include="Sprite\BasicSprite.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />

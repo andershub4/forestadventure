@@ -15,8 +15,7 @@ namespace Entity {
 class PlayerEntity : public BasicEntity
 {
 public:
-    PlayerEntity(MessageBus& messageBus, const sf::Vector2u pos, unsigned int size, FaceDirection faceDir,
-                 MoveDirection moveDir, const AnimationFactory& animationFactory, float speed);
+    PlayerEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir, float speed);
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }

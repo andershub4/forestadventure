@@ -6,29 +6,30 @@
 
 #include "IdleState.h"
 
-#include "Animation/Animation.h"
 #include "AttackState.h"
 #include "AttackWeaponState.h"
 #include "MoveState.h"
+#include "Sprite/BasicSprite.h"
 
 namespace FA {
 
 namespace Entity {
 
-IdleState::IdleState(StateMachine& stateMachine, const AnimationFactory& animationFactory, StateData& stateData)
-    : BasicState(stateMachine, animationFactory, stateData)
+IdleState::IdleState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData)
+    : BasicState(stateMachine, sprite, stateData)
 {}
 
 IdleState::~IdleState() = default;
 
 void IdleState::Update(float deltaTime)
 {
-    if (animation_) animation_->Update(deltaTime);
+    sprite_.Update(deltaTime);
 }
 
 void IdleState::Enter()
 {
-    animation_ = animationFactory_.Create(FrameType::Idle, stateData_.faceDir_, stateData_.rectShape_);
+    sprite_.SetAnimation(FrameType::Idle, stateData_.faceDir_);
+    sprite_.StartAnimation();
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
