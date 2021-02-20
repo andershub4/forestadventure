@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "AnimatedSprite.h"
 #include "Animation/Animation.h"
 #include "Entity/Components/Movement/Movement.h"
 
