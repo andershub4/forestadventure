@@ -12,6 +12,7 @@
 #include "Constant/Screen.h"
 #include "Effect/BasicEffect.h"
 #include "Entity/Components/Sprite/AnimatedSprite.h"
+#include "Entity/Entities/MoleEntity.h"
 #include "Entity/Entities/PlayerEntity.h"
 #include "Enum/AnimationId.h"
 #include "Message/MessageBus.h"
@@ -32,11 +33,16 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
     animationManager_.RegisterFactories();
 
     auto animationFactory = animationManager_.GetFactory(AnimationId::Player);
+    auto moleAnimationFactory = animationManager_.GetFactory(AnimationId::Mole);
 
     auto sprite = std::make_unique<Entity::AnimatedSprite>(64, sf::Vector2u(0, 0), animationFactory);
+    auto moleSprite = std::make_unique<Entity::AnimatedSprite>(48, sf::Vector2u(8 * 32, 8 * 32), moleAnimationFactory);
 
     entity_ = std::make_unique<Entity::PlayerEntity>(messageBus, std::move(sprite), FaceDirection::Down, 120.0f);
     entity_->OnCreate();
+
+    moleEntity_ = std::make_unique<Entity::MoleEntity>(messageBus, std::move(moleSprite), FaceDirection::Down, 120.0f);
+    moleEntity_->OnCreate();
 
     auto textureTileSet = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
     if (textureTileSet != nullptr) {
@@ -47,18 +53,21 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
 LevelComponent::~LevelComponent()
 {
     entity_->OnDestroy();
+    moleEntity_->OnDestroy();
 }
 
 void LevelComponent::Draw()
 {
     tileMap_.DrawTo(renderTexture_);
     entity_->DrawTo(renderTexture_);
+    moleEntity_->DrawTo(renderTexture_);
     if (effect_) effect_->DrawTo(renderTexture_);
 }
 
 void LevelComponent::Update(float deltaTime)
 {
     entity_->Update(deltaTime);
+    moleEntity_->Update(deltaTime);
     if (effect_) effect_->Update(deltaTime);
 
     auto p = entity_->GetPosition();
@@ -70,6 +79,7 @@ void LevelComponent::Update(float deltaTime)
 void LevelComponent::EnableInput(bool enable)
 {
     entity_->EnableInput(enable);
+    moleEntity_->EnableInput(enable);
 }
 
 void LevelComponent::EnterTransition(const BasicTransition& transition)

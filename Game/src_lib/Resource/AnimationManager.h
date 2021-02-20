@@ -31,6 +31,7 @@ private:
 
 private:
     void RegisterPlayerFactory();
+    void RegisterMoleFactory();
 };
 
 }  // namespace FA

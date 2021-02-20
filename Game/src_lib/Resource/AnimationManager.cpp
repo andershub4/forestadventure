@@ -24,6 +24,7 @@ AnimationManager::~AnimationManager() = default;
 void AnimationManager::RegisterFactories()
 {
     RegisterPlayerFactory();
+    RegisterMoleFactory();
 }
 
 void AnimationManager::RegisterPlayerFactory()
@@ -132,6 +133,61 @@ void AnimationManager::RegisterPlayerFactory()
     map_[AnimationId::Player] = factory;
 }
 
+void AnimationManager::RegisterMoleFactory()
+{
+    AnimationFactory factory(0.1f);
+
+    auto textureWalkSide =
+        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/walk/mole-walk-side.png");
+    if (textureWalkSide != nullptr) {
+        SpriteSheet spriteSheet("moleWalkSide", textureWalkSide, {6, 1});
+        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
+        factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Left, f.texture_, f.frames_, f.defaultFrame_,
+                                      true);
+        factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
+    }
+    auto textureWalkFront =
+        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/walk/mole-walk-front.png");
+    if (textureWalkFront != nullptr) {
+        SpriteSheet spriteSheet("moleWalkFront", textureWalkFront, {6, 1});
+        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
+        factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
+    }
+    auto textureWalkBack =
+        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/walk/mole-back-walk.png");
+    if (textureWalkBack != nullptr) {
+        SpriteSheet spriteSheet("moleWalkBack", textureWalkBack, {6, 1});
+        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
+        factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
+    }
+
+    auto textureIdleSide =
+        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/idle/mole-idle-side.png");
+    if (textureIdleSide != nullptr) {
+        SpriteSheet spriteSheet("moleIdleSide", textureIdleSide, {1, 1});
+        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
+        factory.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Left, f.texture_, f.frames_, f.defaultFrame_,
+                                      true);
+        factory.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
+    }
+    auto textureIdleFront =
+        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/idle/mole-idle-front.png");
+    if (textureIdleFront != nullptr) {
+        SpriteSheet spriteSheet("moleIdleFront", textureIdleFront, {1, 1});
+        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
+        factory.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
+    }
+    auto textureIdleBack =
+        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/idle/mole-idle-back.png");
+    if (textureIdleBack != nullptr) {
+        SpriteSheet spriteSheet("moleIdleBack", textureIdleBack, {1, 1});
+        SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
+        factory.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
+    }
+
+    map_[AnimationId::Mole] = factory;
+}
+
 AnimationFactory AnimationManager::GetFactory(AnimationId id) const
 {
     auto it = map_.find(id);
@@ -139,7 +195,7 @@ AnimationFactory AnimationManager::GetFactory(AnimationId id) const
         return map_.at(id);
     }
     else {
-        LOG_ERROR("id: ", static_cast<unsigned int>(id),  " does not exist");
+        LOG_ERROR("id: ", static_cast<unsigned int>(id), " does not exist");
         return {};
     }
 }
