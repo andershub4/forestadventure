@@ -8,8 +8,8 @@
 
 #include <memory>
 
-#include "Animation/AnimationFactory.h"
 #include "BasicComponent.h"
+#include "Resource/AnimationManager.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
@@ -39,14 +39,13 @@ public:
     virtual void ExitTransition(const BasicTransition& transition) override;
 
 private:
-    AnimationFactory animationFactory_;
+    AnimationManager animationManager_;
     std::unique_ptr<Entity::BasicEntity> entity_;
     Tile::TileMap tileMap_;
     sf::View view_;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
 
 private:
-    void RegisterAnimationInfo(TextureManager& textureManager);
     sf::Vector2f CalcViewPosition(const sf::Vector2f& position) const;
 };
 
