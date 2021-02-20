@@ -9,14 +9,17 @@
 #include <vector>
 
 #include "Entity/StateMachine.h"
-#include "Enum/KeyboardKey.h"
-#include "Enum/MessageType.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
 class MessageBus;
 class Message;
+enum class MessageType;
+
+namespace Keyboard {
+enum class Key;
+}
 
 namespace Entity {
 

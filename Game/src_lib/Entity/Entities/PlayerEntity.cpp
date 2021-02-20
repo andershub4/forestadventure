@@ -10,6 +10,7 @@
 
 #include "Constant/Screen.h"
 #include "Entity/Components/Sprite/BasicSprite.h"
+#include "Enum/KeyboardKey.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"

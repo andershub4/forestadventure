@@ -8,6 +8,8 @@
 
 #include <unordered_map>
 
+#include "Enum/MoveDirection.h"
+
 namespace {
 
 const std::unordered_map<FA::MoveDirection, sf::Vector2f> dirToVector = {{FA::MoveDirection::None, {0.0, 0.0}},

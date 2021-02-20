@@ -9,6 +9,7 @@
 #include "AttackState.h"
 #include "AttackWeaponState.h"
 #include "Entity/Components/Sprite/BasicSprite.h"
+#include "Enum/FrameType.h"
 #include "MoveState.h"
 
 namespace FA {

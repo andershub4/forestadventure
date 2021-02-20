@@ -13,11 +13,10 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Enum/MessageType.h"
-
 namespace FA {
 
 class Message;
+enum class MessageType;
 
 class MessageBus
 {

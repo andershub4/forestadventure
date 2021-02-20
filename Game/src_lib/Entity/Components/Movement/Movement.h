@@ -9,9 +9,9 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "Enum/MoveDirection.h"
-
 namespace FA {
+
+enum class MoveDirection;
 
 namespace Entity {
 

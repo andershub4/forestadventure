@@ -9,12 +9,12 @@
 #include <unordered_map>
 
 #include "Animation/AnimationFactory.h"
-#include "Enum/AnimationId.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
 class TextureManager;
+enum class AnimationId;
 
 class AnimationManager
 {

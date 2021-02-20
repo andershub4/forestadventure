@@ -6,11 +6,12 @@
 
 #pragma once
 
-#include "Enum/FaceDirection.h"
-#include "Enum/FrameType.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
+
+enum class FrameType;
+enum class FaceDirection;
 
 namespace Entity {
 
