@@ -154,7 +154,7 @@ void AnimationManager::RegisterMoleFactory()
         factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
     auto textureWalkBack =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/walk/mole-back-walk.png");
+        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/walk/mole-walk-back.png");
     if (textureWalkBack != nullptr) {
         SpriteSheet spriteSheet("moleWalkBack", textureWalkBack, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
