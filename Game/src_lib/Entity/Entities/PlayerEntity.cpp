@@ -22,7 +22,7 @@ namespace Entity {
 
 PlayerEntity::PlayerEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
                            float speed)
-    : BasicEntity(messageBus, std::move(sprite), FaceDirection::Down, speed)
+    : BasicEntity(messageBus, std::move(sprite), faceDir, speed)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
