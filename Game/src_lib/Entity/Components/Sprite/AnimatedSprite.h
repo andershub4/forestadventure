@@ -31,7 +31,6 @@ public:
     virtual bool AnimationIsCompleted() const override;
 
 private:
-    unsigned int size_{};
     sf::RectangleShape rectShape_;
     AnimationFactory animationFactory_;
     std::unique_ptr<Animation> animation_{};
