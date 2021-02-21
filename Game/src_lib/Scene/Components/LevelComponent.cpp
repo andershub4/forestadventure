@@ -12,8 +12,10 @@
 #include "Constant/Screen.h"
 #include "Effect/BasicEffect.h"
 #include "Entity/Components/Sprite/AnimatedSprite.h"
+#include "Entity/Components/Sprite/StaticSprite.h"
 #include "Entity/Entities/MoleEntity.h"
 #include "Entity/Entities/PlayerEntity.h"
+#include "Entity/Entities/StaticEntity.h"
 #include "Enum/AnimationId.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
@@ -38,11 +40,18 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
     auto sprite = std::make_unique<Entity::AnimatedSprite>(64, sf::Vector2u(0, 0), animationFactory);
     auto moleSprite = std::make_unique<Entity::AnimatedSprite>(48, sf::Vector2u(8 * 32, 8 * 32), moleAnimationFactory);
 
+    auto textureStone = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
+    auto stoneSprite = std::make_unique<Entity::StaticSprite>(32, sf::Vector2u(8 * 64, 8 * 10), textureStone,
+                                                              sf::IntRect(272, 480, 16, 16));
+
     entity_ = std::make_unique<Entity::PlayerEntity>(messageBus, std::move(sprite), FaceDirection::Down, 120.0f);
     entity_->OnCreate();
 
     moleEntity_ = std::make_unique<Entity::MoleEntity>(messageBus, std::move(moleSprite), FaceDirection::Down, 120.0f);
     moleEntity_->OnCreate();
+
+    stoneEntity_ = std::make_unique<Entity::StaticEntity>(messageBus, std::move(stoneSprite));
+    stoneEntity_->OnCreate();
 
     auto textureTileSet = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
     if (textureTileSet != nullptr) {
@@ -61,6 +70,7 @@ void LevelComponent::Draw()
     tileMap_.DrawTo(renderTexture_);
     entity_->DrawTo(renderTexture_);
     moleEntity_->DrawTo(renderTexture_);
+    stoneEntity_->DrawTo(renderTexture_);
     if (effect_) effect_->DrawTo(renderTexture_);
 }
 
@@ -68,6 +78,7 @@ void LevelComponent::Update(float deltaTime)
 {
     entity_->Update(deltaTime);
     moleEntity_->Update(deltaTime);
+    stoneEntity_->Update(deltaTime);
     if (effect_) effect_->Update(deltaTime);
 
     auto p = entity_->GetPosition();
@@ -80,6 +91,7 @@ void LevelComponent::EnableInput(bool enable)
 {
     entity_->EnableInput(enable);
     moleEntity_->EnableInput(enable);
+    stoneEntity_->EnableInput(enable);
 }
 
 void LevelComponent::EnterTransition(const BasicTransition& transition)

@@ -42,6 +42,7 @@ private:
     AnimationManager animationManager_;
     std::unique_ptr<Entity::BasicEntity> entity_;
     std::unique_ptr<Entity::BasicEntity> moleEntity_;
+    std::unique_ptr<Entity::BasicEntity> stoneEntity_;
     Tile::TileMap tileMap_;
     sf::View view_;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
