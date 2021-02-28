@@ -10,6 +10,7 @@
 
 #include "BasicComponent.h"
 #include "Resource/AnimationManager.h"
+#include "Resource/TileSet.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
@@ -40,6 +41,7 @@ public:
 
 private:
     AnimationManager animationManager_;
+    TileSet tileSet_;
     std::unique_ptr<Entity::BasicEntity> entity_;
     std::unique_ptr<Entity::BasicEntity> moleEntity_;
     std::unique_ptr<Entity::BasicEntity> stoneEntity_;

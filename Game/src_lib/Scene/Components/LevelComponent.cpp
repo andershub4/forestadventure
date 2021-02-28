@@ -17,6 +17,7 @@
 #include "Entity/Entities/PlayerEntity.h"
 #include "Entity/Entities/StaticEntity.h"
 #include "Enum/AnimationId.h"
+#include "Enum/TileId.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 #include "Scene/Transitions/BasicTransition.h"
@@ -28,28 +29,27 @@ namespace Scene {
 LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureManager)
     : BasicComponent(messageBus)
     , animationManager_(textureManager)
+    , tileSet_(textureManager)
     , tileMap_()
     , view_({constant::Screen::centerX_f, constant::Screen::centerY_f},
             {constant::Screen::width_f, constant::Screen::height_f})
 {
     animationManager_.RegisterFactories();
+    tileSet_.Load();
 
     auto animationFactory = animationManager_.GetFactory(AnimationId::Player);
-    auto moleAnimationFactory = animationManager_.GetFactory(AnimationId::Mole);
-
     auto sprite = std::make_unique<Entity::AnimatedSprite>(64, sf::Vector2u(0, 0), animationFactory);
-    auto moleSprite = std::make_unique<Entity::AnimatedSprite>(48, sf::Vector2u(8 * 32, 8 * 32), moleAnimationFactory);
-
-    auto textureStone = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
-    auto stoneSprite = std::make_unique<Entity::StaticSprite>(32, sf::Vector2u(8 * 64, 8 * 10), textureStone,
-                                                              sf::IntRect(272, 480, 16, 16));
-
     entity_ = std::make_unique<Entity::PlayerEntity>(messageBus, std::move(sprite), FaceDirection::Down, 120.0f);
     entity_->OnCreate();
 
+    auto moleAnimationFactory = animationManager_.GetFactory(AnimationId::Mole);
+    auto moleSprite = std::make_unique<Entity::AnimatedSprite>(48, sf::Vector2u(8 * 32, 8 * 32), moleAnimationFactory);
     moleEntity_ = std::make_unique<Entity::MoleEntity>(messageBus, std::move(moleSprite), FaceDirection::Down, 120.0f);
     moleEntity_->OnCreate();
 
+    auto stoneTile = tileSet_.GetTile(TileId::Stone);
+    auto stoneSprite = std::make_unique<Entity::StaticSprite>(32, sf::Vector2u(8 * 64, 8 * 10), stoneTile.texture_,
+                                                              stoneTile.rect_);
     stoneEntity_ = std::make_unique<Entity::StaticEntity>(messageBus, std::move(stoneSprite));
     stoneEntity_->OnCreate();
 

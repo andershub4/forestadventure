@@ -164,8 +164,10 @@
     <ClInclude Include="Enum\MoveDirection.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />
+    <ClInclude Include="Enum\TileId.h" />
     <ClInclude Include="Misc\Random.h" />
     <ClInclude Include="Resource\AnimationManager.h" />
+    <ClInclude Include="Resource\TileSet.h" />
     <ClInclude Include="Scene\ComponentId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Scene\Manager.h" />
@@ -218,6 +220,7 @@
     <ClCompile Include="Entity\Entities\BasicEntity.cpp" />
     <ClCompile Include="Misc\Random.cpp" />
     <ClCompile Include="Resource\AnimationManager.cpp" />
+    <ClCompile Include="Resource\TileSet.cpp" />
     <ClCompile Include="Scene\Manager.cpp" />
     <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
     <ClCompile Include="Scene\Scenes\IntroScene.cpp" />
