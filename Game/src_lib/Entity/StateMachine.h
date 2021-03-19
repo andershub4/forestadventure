@@ -15,10 +15,11 @@ namespace Entity {
 class StateMachine
 {
 public:
-    StateMachine(FaceDirection faceDir, BasicSprite& sprite, float velocity);
+    StateMachine(BasicState::StateData& stateData);
     ~StateMachine();
 
     void Update(float deltaTime);
+    void DrawTo(sf::RenderTarget& renderTarget);
     void SetState(std::unique_ptr<BasicState> newState);
 
     void OnStartMove(MoveDirection moveDir, FaceDirection faceDir);
@@ -28,7 +29,6 @@ public:
 
 private:
     std::unique_ptr<BasicState> currentState_;
-    BasicState::StateData stateData_;
 };
 
 }  // namespace Entity

@@ -16,21 +16,26 @@ namespace FA {
 
 namespace Entity {
 
-IdleState::IdleState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData)
-    : BasicState(stateMachine, sprite, stateData)
+IdleState::IdleState(StateMachine& stateMachine, StateData& stateData)
+    : BasicState(stateMachine, stateData)
 {}
 
 IdleState::~IdleState() = default;
 
 void IdleState::Update(float deltaTime)
 {
-    sprite_.Update(deltaTime);
+    stateData_.sprite_->Update(deltaTime);
+}
+
+void IdleState::DrawTo(sf::RenderTarget& renderTarget)
+{
+    stateData_.sprite_->DrawTo(renderTarget);
 }
 
 void IdleState::Enter()
 {
-    sprite_.SetAnimation(FrameType::Idle, stateData_.faceDir_);
-    sprite_.StartAnimation();
+    stateData_.sprite_->SetAnimation(FrameType::Idle, stateData_.faceDir_);
+    stateData_.sprite_->StartAnimation();
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

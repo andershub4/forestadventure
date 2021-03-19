@@ -54,7 +54,7 @@ protected:
 
 private:
     MessageBus& messageBus_;
-    std::unique_ptr<BasicSprite> sprite_;
+    BasicState::StateData stateData_;
     StateMachine stateMachine_;
     bool enableInput_ = true;
 

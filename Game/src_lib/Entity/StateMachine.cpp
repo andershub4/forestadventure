@@ -6,6 +6,7 @@
 
 #include "StateMachine.h"
 
+#include "Entity/Components/Sprite/BasicSprite.h"
 #include "States/IdleState.h"
 #include "Utils/Logger.h"
 
@@ -13,12 +14,9 @@ namespace FA {
 
 namespace Entity {
 
-StateMachine::StateMachine(FaceDirection faceDir, BasicSprite& sprite, float velocity)
+StateMachine::StateMachine(BasicState::StateData& stateData)
 {
-    stateData_.faceDir_ = faceDir;
-    stateData_.moveDir_ = MoveDirection::None;
-    stateData_.velocity_ = velocity;
-    currentState_ = std::make_unique<IdleState>(*this, sprite, stateData_);
+    currentState_ = std::make_unique<IdleState>(*this, stateData);
     // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }
@@ -32,6 +30,11 @@ StateMachine::~StateMachine()
 void StateMachine::Update(float deltaTime)
 {
     currentState_->Update(deltaTime);
+}
+
+void StateMachine::DrawTo(sf::RenderTarget& renderTarget)
+{
+    currentState_->DrawTo(renderTarget);
 }
 
 void StateMachine::SetState(std::unique_ptr<BasicState> newState)

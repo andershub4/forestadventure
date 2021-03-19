@@ -15,24 +15,29 @@ namespace FA {
 
 namespace Entity {
 
-AttackState::AttackState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData)
-    : BasicState(stateMachine, sprite, stateData)
+AttackState::AttackState(StateMachine& stateMachine, StateData& stateData)
+    : BasicState(stateMachine, stateData)
 {}
 
 AttackState::~AttackState() = default;
 
 void AttackState::Update(float deltaTime)
 {
-    sprite_.Update(deltaTime);
-    if (sprite_.AnimationIsCompleted()) {
+    stateData_.sprite_->Update(deltaTime);
+    if (stateData_.sprite_->AnimationIsCompleted()) {
         SwitchState<IdleState>();
     }
 }
 
+void AttackState::DrawTo(sf::RenderTarget& renderTarget)
+{
+    stateData_.sprite_->DrawTo(renderTarget);
+}
+
 void AttackState::Enter()
 {
-    sprite_.SetAnimation(FrameType::Attack, stateData_.faceDir_);
-    sprite_.StartAnimation();
+    stateData_.sprite_->SetAnimation(FrameType::Attack, stateData_.faceDir_);
+    stateData_.sprite_->StartAnimation();
 }
 
 void AttackState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

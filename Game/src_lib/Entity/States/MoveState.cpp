@@ -14,8 +14,8 @@ namespace FA {
 
 namespace Entity {
 
-MoveState::MoveState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData)
-    : BasicState(stateMachine, sprite, stateData)
+MoveState::MoveState(StateMachine& stateMachine, StateData& stateData)
+    : BasicState(stateMachine, stateData)
     , movement_(stateData_.velocity_)
 {}
 
@@ -23,16 +23,21 @@ MoveState::~MoveState() = default;
 
 void MoveState::Update(float deltaTime)
 {
-    sprite_.Update(deltaTime);
+    stateData_.sprite_->Update(deltaTime);
     movement_.Update(deltaTime);
-    sprite_.Move(movement_);
+    stateData_.sprite_->Move(movement_);
+}
+
+void MoveState::DrawTo(sf::RenderTarget& renderTarget)
+{
+    stateData_.sprite_->DrawTo(renderTarget);
 }
 
 void MoveState::Enter()
 {
     movement_.SetDirection(stateData_.moveDir_);
-    sprite_.SetAnimation(FrameType::Move, stateData_.faceDir_);
-    sprite_.StartAnimation();
+    stateData_.sprite_->SetAnimation(FrameType::Move, stateData_.faceDir_);
+    stateData_.sprite_->StartAnimation();
 }
 
 void MoveState::Exit()

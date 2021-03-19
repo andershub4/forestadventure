@@ -11,6 +11,7 @@
 
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
+#include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
@@ -25,15 +26,22 @@ class BasicState
 public:
     struct StateData
     {
+        StateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite)
+            : faceDir_(faceDir)
+            , velocity_(velocity)
+            , sprite_(std::move(sprite))
+        {}
         MoveDirection moveDir_ = MoveDirection::None;
         FaceDirection faceDir_ = FaceDirection::Down;
         float velocity_ = 0.0;
+        std::unique_ptr<BasicSprite> sprite_ = nullptr;
     };
 
-    BasicState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData);
+    BasicState(StateMachine& stateMachine, StateData& stateData);
     virtual ~BasicState();
 
     virtual void Update(float deltaTime) = 0;
+    virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
     virtual std::string Name() const = 0;
     virtual void Enter() {}
     virtual void Exit() {}
@@ -50,12 +58,11 @@ public:
     {
         static_assert(std::is_base_of<BasicState, StateT>::value, "StateT must derive from BasicState");
 
-        SwitchState(std::make_unique<StateT>(stateMachine_, sprite_, stateData_, std::forward<Args>(args)...));
+        SwitchState(std::make_unique<StateT>(stateMachine_, stateData_, std::forward<Args>(args)...));
     }
 
 protected:
     StateData& stateData_;
-    BasicSprite& sprite_;
 
 private:
     StateMachine& stateMachine_;

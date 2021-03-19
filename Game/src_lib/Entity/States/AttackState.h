@@ -15,10 +15,11 @@ namespace Entity {
 class AttackState : public BasicState
 {
 public:
-    AttackState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData);
+    AttackState(StateMachine& stateMachine, StateData& stateData);
     virtual ~AttackState();
 
     virtual void Update(float deltaTime) override;
+    virtual void DrawTo(sf::RenderTarget& renderTarget) override;
     virtual std::string Name() const override { return "AttackState"; }
     virtual void Enter() override;
 

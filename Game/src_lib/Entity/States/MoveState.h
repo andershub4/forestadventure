@@ -16,10 +16,11 @@ namespace Entity {
 class MoveState : public BasicState
 {
 public:
-    MoveState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData);
+    MoveState(StateMachine& stateMachine, StateData& stateData);
     virtual ~MoveState();
 
     virtual void Update(float deltaTime) override;
+    virtual void DrawTo(sf::RenderTarget& renderTarget) override;
     virtual std::string Name() const override { return "MoveState"; }
     virtual void Enter() override;
     virtual void Exit() override;

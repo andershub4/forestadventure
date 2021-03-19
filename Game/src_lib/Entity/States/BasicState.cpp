@@ -7,15 +7,15 @@
 
 #include "BasicState.h"
 
+#include "Entity/Components/Sprite/BasicSprite.h"
 #include "Entity/StateMachine.h"
 
 namespace FA {
 
 namespace Entity {
 
-BasicState::BasicState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData)
+BasicState::BasicState(StateMachine& stateMachine, StateData& stateData)
     : stateMachine_(stateMachine)
-    , sprite_(sprite)
     , stateData_(stateData)
 {}
 

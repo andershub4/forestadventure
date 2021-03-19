@@ -15,10 +15,11 @@ namespace Entity {
 class IdleState : public BasicState
 {
 public:
-    IdleState(StateMachine& stateMachine, BasicSprite& sprite, StateData& stateData);
+    IdleState(StateMachine& stateMachine, StateData& stateData);
     virtual ~IdleState();
 
     virtual void Update(float deltaTime) override;
+    virtual void DrawTo(sf::RenderTarget& renderTarget) override;
     virtual std::string Name() const override { return "IdleState"; }
     virtual void Enter() override;
 

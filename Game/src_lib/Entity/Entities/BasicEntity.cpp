@@ -21,8 +21,8 @@ namespace Entity {
 BasicEntity::BasicEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
                          float speed)
     : messageBus_(messageBus)
-    , sprite_(std::move(sprite))
-    , stateMachine_(faceDir, *sprite_, speed)
+    , stateData_(faceDir, speed, std::move(sprite))
+    , stateMachine_(stateData_)
 {}
 
 BasicEntity::~BasicEntity() = default;
@@ -34,7 +34,7 @@ void BasicEntity::Update(float deltaTime)
 
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
-    sprite_->DrawTo(renderTarget);
+    stateMachine_.DrawTo(renderTarget);
 }
 
 void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
@@ -46,7 +46,7 @@ void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
 
 sf::Vector2f BasicEntity::GetPosition() const
 {
-    return sprite_->GetPosition();
+    return stateData_.sprite_->GetPosition();
 }
 
 void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
