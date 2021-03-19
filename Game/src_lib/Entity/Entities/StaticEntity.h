@@ -15,7 +15,7 @@ namespace Entity {
 class StaticEntity : public BasicEntity
 {
 public:
-    StaticEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, float speed);
+    StaticEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, float velocity);
     StaticEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite);
     virtual ~StaticEntity();
 

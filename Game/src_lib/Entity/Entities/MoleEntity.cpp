@@ -15,8 +15,8 @@ namespace FA {
 
 namespace Entity {
 
-MoleEntity::MoleEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir, float speed)
-    : BasicEntity(messageBus, std::move(sprite), faceDir, speed)
+MoleEntity::MoleEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir, float velocity)
+    : BasicEntity(messageBus, std::move(sprite), faceDir, velocity)
 {}
 
 MoleEntity::~MoleEntity() = default;

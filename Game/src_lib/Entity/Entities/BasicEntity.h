@@ -28,7 +28,7 @@ class BasicSprite;
 class BasicEntity
 {
 public:
-    BasicEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir, float speed);
+    BasicEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir, float velocity);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
