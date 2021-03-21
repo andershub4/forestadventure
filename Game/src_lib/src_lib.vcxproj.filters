@@ -317,7 +317,7 @@
     <ClInclude Include="Resource\AnimationManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enum\AnimationId.h">
+    <ClInclude Include="Enum\AnimationType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Entities\MoleEntity.h">

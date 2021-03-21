@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-#include "Enum/AnimationId.h"
+#include "Enum/AnimationType.h"
 #include "Misc/TextureManager.h"
 #include "SpriteSheet.h"
 #include "Utils/Logger.h"
@@ -130,7 +130,7 @@ void AnimationManager::RegisterPlayerFactory()
         factory.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
     }
 
-    map_[AnimationId::Player] = factory;
+    map_[AnimationType::Player] = factory;
 }
 
 void AnimationManager::RegisterMoleFactory()
@@ -185,17 +185,17 @@ void AnimationManager::RegisterMoleFactory()
         factory.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
     }
 
-    map_[AnimationId::Mole] = factory;
+    map_[AnimationType::Mole] = factory;
 }
 
-AnimationFactory AnimationManager::GetFactory(AnimationId id) const
+AnimationFactory AnimationManager::GetFactory(AnimationType type) const
 {
-    auto it = map_.find(id);
+    auto it = map_.find(type);
     if (it != map_.end()) {
-        return map_.at(id);
+        return map_.at(type);
     }
     else {
-        LOG_ERROR("id: ", static_cast<unsigned int>(id), " does not exist");
+        LOG_ERROR("type: ", static_cast<unsigned int>(type), " does not exist");
         return {};
     }
 }

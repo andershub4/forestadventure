@@ -159,7 +159,7 @@
     <ClInclude Include="Entity\States\IdleState.h" />
     <ClInclude Include="Entity\States\MoveState.h" />
     <ClInclude Include="Entity\Entities\BasicEntity.h" />
-    <ClInclude Include="Enum\AnimationId.h" />
+    <ClInclude Include="Enum\AnimationType.h" />
     <ClInclude Include="Enum\FaceDirection.h" />
     <ClInclude Include="Enum\FrameType.h" />
     <ClInclude Include="Enum\MoveDirection.h" />

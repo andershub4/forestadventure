@@ -8,6 +8,6 @@
 
 namespace FA {
 
-enum class AnimationId { Player, Mole };
+enum class AnimationType { Player, Mole };
 
 }  // namespace FA

@@ -16,7 +16,7 @@
 #include "Entity/Entities/MoleEntity.h"
 #include "Entity/Entities/PlayerEntity.h"
 #include "Entity/Entities/StaticEntity.h"
-#include "Enum/AnimationId.h"
+#include "Enum/AnimationType.h"
 #include "Enum/TileType.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
@@ -37,14 +37,14 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
     animationManager_.RegisterFactories();
     tileSet_.Load();
 
-    auto animationFactory = animationManager_.GetFactory(AnimationId::Player);
+    auto animationFactory = animationManager_.GetFactory(AnimationType::Player);
     auto sprite = std::make_unique<Entity::AnimatedSprite>(64, sf::Vector2u(0, 0), animationFactory);
     auto playerId = GenerateEntityId();
     entity_ =
         std::make_unique<Entity::PlayerEntity>(playerId, messageBus, std::move(sprite), FaceDirection::Down, 120.0f);
     entity_->OnCreate();
 
-    auto moleAnimationFactory = animationManager_.GetFactory(AnimationId::Mole);
+    auto moleAnimationFactory = animationManager_.GetFactory(AnimationType::Mole);
     auto moleSprite = std::make_unique<Entity::AnimatedSprite>(48, sf::Vector2u(8 * 32, 8 * 32), moleAnimationFactory);
     auto moleId = GenerateEntityId();
     moleEntity_ =

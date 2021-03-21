@@ -14,7 +14,7 @@
 namespace FA {
 
 class TextureManager;
-enum class AnimationId;
+enum class AnimationType;
 
 class AnimationManager
 {
@@ -23,11 +23,11 @@ public:
     ~AnimationManager();
 
     void RegisterFactories();
-    AnimationFactory GetFactory(AnimationId id) const;
+    AnimationFactory GetFactory(AnimationType type) const;
 
 private:
     TextureManager& textureManager_;
-    std::unordered_map<AnimationId, AnimationFactory> map_;
+    std::unordered_map<AnimationType, AnimationFactory> map_;
 
 private:
     void RegisterPlayerFactory();
