@@ -15,7 +15,8 @@ namespace Entity {
 class MoleEntity : public BasicEntity
 {
 public:
-    MoleEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir, float velocity);
+    MoleEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
+               float velocity);
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }

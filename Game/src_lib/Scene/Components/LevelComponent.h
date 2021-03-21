@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "BasicComponent.h"
+#include "Entity/Id.h"
 #include "Resource/AnimationManager.h"
 #include "Resource/TileSet.h"
 #include "Tile/TileMap.h"
@@ -48,9 +49,11 @@ private:
     Tile::TileMap tileMap_;
     sf::View view_;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
+    Entity::EntityId entityId_ = 0;
 
 private:
     sf::Vector2f CalcViewPosition(const sf::Vector2f& position) const;
+    Entity::EntityId GenerateEntityId();
 };
 
 }  // namespace Scene

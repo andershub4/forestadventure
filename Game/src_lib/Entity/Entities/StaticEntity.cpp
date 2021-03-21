@@ -15,12 +15,12 @@ namespace FA {
 
 namespace Entity {
 
-StaticEntity::StaticEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, float velocity)
-    : BasicEntity(messageBus, std::move(sprite), FaceDirection::Down, velocity)
+StaticEntity::StaticEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, float velocity)
+    : BasicEntity(id, messageBus, std::move(sprite), FaceDirection::Down, velocity)
 {}
 
-StaticEntity::StaticEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite)
-    : BasicEntity(messageBus, std::move(sprite), FaceDirection::Down, 0.0f)
+StaticEntity::StaticEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite)
+    : BasicEntity(id, messageBus, std::move(sprite), FaceDirection::Down, 0.0f)
 {}
 
 StaticEntity::~StaticEntity() = default;

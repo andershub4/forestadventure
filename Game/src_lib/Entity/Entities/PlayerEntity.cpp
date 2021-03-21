@@ -19,9 +19,9 @@ namespace FA {
 
 namespace Entity {
 
-PlayerEntity::PlayerEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
-                           float velocity)
-    : BasicEntity(messageBus, std::move(sprite), faceDir, velocity)
+PlayerEntity::PlayerEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite,
+                           FaceDirection faceDir, float velocity)
+    : BasicEntity(id, messageBus, std::move(sprite), faceDir, velocity)
 {}
 
 PlayerEntity::~PlayerEntity() = default;

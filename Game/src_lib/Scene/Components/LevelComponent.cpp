@@ -39,18 +39,23 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
 
     auto animationFactory = animationManager_.GetFactory(AnimationId::Player);
     auto sprite = std::make_unique<Entity::AnimatedSprite>(64, sf::Vector2u(0, 0), animationFactory);
-    entity_ = std::make_unique<Entity::PlayerEntity>(messageBus, std::move(sprite), FaceDirection::Down, 120.0f);
+    auto playerId = GenerateEntityId();
+    entity_ =
+        std::make_unique<Entity::PlayerEntity>(playerId, messageBus, std::move(sprite), FaceDirection::Down, 120.0f);
     entity_->OnCreate();
 
     auto moleAnimationFactory = animationManager_.GetFactory(AnimationId::Mole);
     auto moleSprite = std::make_unique<Entity::AnimatedSprite>(48, sf::Vector2u(8 * 32, 8 * 32), moleAnimationFactory);
-    moleEntity_ = std::make_unique<Entity::MoleEntity>(messageBus, std::move(moleSprite), FaceDirection::Down, 120.0f);
+    auto moleId = GenerateEntityId();
+    moleEntity_ =
+        std::make_unique<Entity::MoleEntity>(moleId, messageBus, std::move(moleSprite), FaceDirection::Down, 120.0f);
     moleEntity_->OnCreate();
 
     auto stoneTile = tileSet_.GetTile(TileId::Stone);
-    auto stoneSprite = std::make_unique<Entity::StaticSprite>(32, sf::Vector2u(8 * 64, 8 * 10), stoneTile.texture_,
-                                                              stoneTile.rect_);
-    stoneEntity_ = std::make_unique<Entity::StaticEntity>(messageBus, std::move(stoneSprite));
+    auto stoneSprite =
+        std::make_unique<Entity::StaticSprite>(32, sf::Vector2u(8 * 64, 8 * 10), stoneTile.texture_, stoneTile.rect_);
+    auto stoneId = GenerateEntityId();
+    stoneEntity_ = std::make_unique<Entity::StaticEntity>(stoneId, messageBus, std::move(stoneSprite));
     stoneEntity_->OnCreate();
 
     auto textureTileSet = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
@@ -128,6 +133,11 @@ sf::Vector2f LevelComponent::CalcViewPosition(const sf::Vector2f& position) cons
     }
 
     return viewPosition;
+}
+
+Entity::EntityId LevelComponent::GenerateEntityId()
+{
+    return entityId_++;
 }
 
 }  // namespace Scene

@@ -8,6 +8,7 @@
 
 #include <vector>
 
+#include "Entity/Id.h"
 #include "Entity/StateMachine.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -28,7 +29,8 @@ class BasicSprite;
 class BasicEntity
 {
 public:
-    BasicEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir, float velocity);
+    BasicEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
+                float velocity);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
@@ -53,6 +55,7 @@ protected:
     virtual void OnKeyPressed(Keyboard::Key key) {}
 
 private:
+    EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
     BasicState::StateData stateData_;
     StateMachine stateMachine_;

@@ -15,8 +15,8 @@ namespace Entity {
 class StaticEntity : public BasicEntity
 {
 public:
-    StaticEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, float velocity);
-    StaticEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite);
+    StaticEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, float velocity);
+    StaticEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite);
     virtual ~StaticEntity();
 
     virtual std::string Name() const override { return "StaticEntity"; }

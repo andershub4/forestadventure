@@ -15,7 +15,8 @@ namespace Entity {
 class PlayerEntity : public BasicEntity
 {
 public:
-    PlayerEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir, float velocity);
+    PlayerEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
+                 float velocity);
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }

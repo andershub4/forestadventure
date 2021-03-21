@@ -18,9 +18,10 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
-                         float velocity)
-    : messageBus_(messageBus)
+BasicEntity::BasicEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite,
+                         FaceDirection faceDir, float velocity)
+    : id_(id)
+    , messageBus_(messageBus)
     , stateData_(faceDir, velocity, std::move(sprite))
     , stateMachine_(stateData_)
 {}
