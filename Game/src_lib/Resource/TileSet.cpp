@@ -8,17 +8,17 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-#include "Enum/TileId.h"
+#include "Enum/TileType.h"
 #include "Misc/TextureManager.h"
 #include "Utils/Logger.h"
 
 namespace FA {
 
-const std::unordered_map<TileId, sf::IntRect> mapLookup = {{TileId::BasicGround, {208, 288, 16, 16}},
-                                                           {TileId::Ground1, {240, 400, 16, 16}},
-                                                           {TileId::GroundPlant, {240, 368, 16, 16}},
-                                                           {TileId::GreenPlant, {208, 400, 16, 16}},
-                                                           {TileId::Stone, {272, 480, 16, 16}}};
+const std::unordered_map<TileType, sf::IntRect> mapLookup = {{TileType::BasicGround, {208, 288, 16, 16}},
+                                                           {TileType::Ground1, {240, 400, 16, 16}},
+                                                           {TileType::GroundPlant, {240, 368, 16, 16}},
+                                                           {TileType::GreenPlant, {208, 400, 16, 16}},
+                                                           {TileType::Stone, {272, 480, 16, 16}}};
 
 TileSet::TileSet(TextureManager& textureManager)
     : textureManager_(textureManager)
@@ -32,16 +32,16 @@ void TileSet::Load()
     texture_ = textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
 }
 
-TileSet::Tile TileSet::GetTile(TileId id) const
+TileSet::Tile TileSet::GetTile(TileType type) const
 {
     if (texture_ == nullptr) return {};
 
-    auto it = mapLookup.find(id);
+    auto it = mapLookup.find(type);
     if (it != mapLookup.end()) {
-        return {texture_, mapLookup.at(id)};
+        return {texture_, mapLookup.at(type)};
     }
     else {
-        LOG_ERROR("id: ", static_cast<unsigned int>(id), " does not exist");
+        LOG_ERROR("type: ", static_cast<unsigned int>(type), " does not exist");
         return {};
     }
 }

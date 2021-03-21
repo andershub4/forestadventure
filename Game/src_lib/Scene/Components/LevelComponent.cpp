@@ -17,7 +17,7 @@
 #include "Entity/Entities/PlayerEntity.h"
 #include "Entity/Entities/StaticEntity.h"
 #include "Enum/AnimationId.h"
-#include "Enum/TileId.h"
+#include "Enum/TileType.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 #include "Scene/Transitions/BasicTransition.h"
@@ -51,7 +51,7 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
         std::make_unique<Entity::MoleEntity>(moleId, messageBus, std::move(moleSprite), FaceDirection::Down, 120.0f);
     moleEntity_->OnCreate();
 
-    auto stoneTile = tileSet_.GetTile(TileId::Stone);
+    auto stoneTile = tileSet_.GetTile(TileType::Stone);
     auto stoneSprite =
         std::make_unique<Entity::StaticSprite>(32, sf::Vector2u(8 * 64, 8 * 10), stoneTile.texture_, stoneTile.rect_);
     auto stoneId = GenerateEntityId();

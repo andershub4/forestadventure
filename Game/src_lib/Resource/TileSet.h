@@ -13,7 +13,7 @@
 namespace FA {
 
 class TextureManager;
-enum class TileId;
+enum class TileType;
 
 class TileSet
 {
@@ -28,7 +28,7 @@ public:
     ~TileSet();
 
     void Load();
-    Tile GetTile(TileId id) const;
+    Tile GetTile(TileType type) const;
 
 private:
     TextureManager& textureManager_;

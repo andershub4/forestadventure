@@ -7,6 +7,6 @@
 
 namespace FA {
 
-enum class TileId { None, BasicGround, Ground1, GroundPlant, GreenPlant, Stone };
+enum class TileType { None, BasicGround, Ground1, GroundPlant, GreenPlant, Stone };
 
 }  // namespace FA

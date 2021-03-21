@@ -332,7 +332,10 @@
     <ClInclude Include="Resource\TileSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enum\TileId.h">
+    <ClInclude Include="Enum\TileType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Id.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
