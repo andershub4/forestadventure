@@ -6,45 +6,43 @@
 
 #include "TileMap.h"
 
-#include <unordered_map>
-
 #include "Constant/Screen.h"
+#include "Enum/TileType.h"
 #include "Misc/Random.h"
+#include "Resource/TileSet.h"
 
 namespace FA {
 
 namespace Tile {
 
-const std::unordered_map<TileMap::Id, sf::IntRect> mapLookup = {{TileMap::Id::BasicGround, {208, 288, 16, 16}},
-                                                                {TileMap::Id::Ground1, {240, 400, 16, 16}},
-                                                                {TileMap::Id::GroundPlant, {240, 368, 16, 16}},
-                                                                {TileMap::Id::GreenPlant, {208, 400, 16, 16}}};
-
-TileMap::TileMap()
+TileMap::TileMap(const TileSet& tileSet)
+    : tileSet_(tileSet)
 {
     renderTexture_.create(nCols * tileSize * scale, nRows * tileSize * scale);
 }
 
 TileMap::~TileMap() = default;
 
-void TileMap::Load(const sf::Texture* texture)
+void TileMap::Load()
 {
     float x = 0;
     float y = 0;
-    sf::Sprite tile(*texture);
+    sf::Sprite tile;
 
     for (unsigned int row = 0; row < nRows; row++) {
         x = 0;
         for (unsigned int col = 0; col < nCols; col++) {
-            auto id = RandomizeId();
-            auto it = mapLookup.find(id);
+            auto type = RandomizeType();
+            auto tileInfo = tileSet_.GetTile(type);
 
-            if (it != mapLookup.end()) {
-                tile.setTextureRect(it->second);
+            if (tileInfo.texture_ != nullptr) {
+                tile.setTexture(*tileInfo.texture_);
+                tile.setTextureRect(tileInfo.rect_);
                 tile.setPosition(x, y);
                 tile.setScale(scale, scale);
                 renderTexture_.draw(tile);
             }
+
             x += (tileSize * scale);
         }
         y += (tileSize * scale);
@@ -64,24 +62,24 @@ sf::Vector2u TileMap::GetSize() const
     return renderTexture_.getSize();
 }
 
-TileMap::Id TileMap::RandomizeId() const
+TileType TileMap::RandomizeType() const
 {
     auto r = RandomizeRange(0, 100);
-    TileMap::Id id;
+    TileType t;
     if (r < 4) {
-        id = TileMap::Id::GreenPlant;
+        t = TileType::GreenPlant;
     }
     else if (r >= 4 && r < 15) {
-        id = TileMap::Id::Ground1;
+        t = TileType::Ground1;
     }
     else if (r >= 15 && r < 20) {
-        id = TileMap::Id::GroundPlant;
+        t = TileType::GroundPlant;
     }
     else {
-        id = TileMap::Id::BasicGround;
+        t = TileType::BasicGround;
     }
 
-    return id;
+    return t;
 }
 
 }  // namespace Tile

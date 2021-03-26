@@ -21,16 +21,11 @@ const std::unordered_map<TileType, sf::IntRect> mapLookup = {{TileType::BasicGro
                                                            {TileType::Stone, {272, 480, 16, 16}}};
 
 TileSet::TileSet(TextureManager& textureManager)
-    : textureManager_(textureManager)
-    , texture_(nullptr)
-{}
+{
+    texture_ = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
+}
 
 TileSet::~TileSet() = default;
-
-void TileSet::Load()
-{
-    texture_ = textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
-}
 
 TileSet::Tile TileSet::GetTile(TileType type) const
 {

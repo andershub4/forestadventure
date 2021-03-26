@@ -30,12 +30,11 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
     : BasicComponent(messageBus)
     , animationManager_(textureManager)
     , tileSet_(textureManager)
-    , tileMap_()
+    , tileMap_(tileSet_)
     , view_({constant::Screen::centerX_f, constant::Screen::centerY_f},
             {constant::Screen::width_f, constant::Screen::height_f})
 {
     animationManager_.RegisterFactories();
-    tileSet_.Load();
 
     auto animationFactory = animationManager_.GetFactory(AnimationType::Player);
     auto sprite = std::make_unique<Entity::AnimatedSprite>(64, sf::Vector2u(0, 0), animationFactory);
@@ -58,10 +57,7 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
     stoneEntity_ = std::make_unique<Entity::StaticEntity>(stoneId, messageBus, std::move(stoneSprite));
     stoneEntity_->OnCreate();
 
-    auto textureTileSet = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
-    if (textureTileSet != nullptr) {
-        tileMap_.Load(textureTileSet);
-    }
+    tileMap_.Load();
 }
 
 LevelComponent::~LevelComponent()

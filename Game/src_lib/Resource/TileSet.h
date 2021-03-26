@@ -27,12 +27,10 @@ public:
     TileSet(TextureManager& textureManager);
     ~TileSet();
 
-    void Load();
     Tile GetTile(TileType type) const;
 
 private:
-    TextureManager& textureManager_;
-    const sf::Texture* texture_;
+    const sf::Texture* texture_ = nullptr;
 };
 
 }  // namespace FA

@@ -13,16 +13,17 @@
 
 namespace FA {
 
+class TileSet;
+enum class TileType;
+
 namespace Tile {
 
 class TileMap
 {
 public:
-    enum class Id { BasicGround, Ground1, GroundPlant, GreenPlant };
-
-    TileMap();
+    TileMap(const TileSet &tileSet);
     ~TileMap();
-    void Load(const sf::Texture *texture);
+    void Load();
     void DrawTo(sf::RenderTarget &renderTarget);
     sf::Vector2u GetSize() const;
 
@@ -38,9 +39,10 @@ private:
 
     sf::Sprite tileMap_;
     sf::RenderTexture renderTexture_;
+    const TileSet &tileSet_;
 
 private:
-    Id RandomizeId() const;
+    TileType RandomizeType() const;
 };
 
 }  // namespace Tile
