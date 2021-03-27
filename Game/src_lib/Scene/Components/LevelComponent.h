@@ -9,17 +9,10 @@
 #include <memory>
 
 #include "BasicComponent.h"
-#include "Entity/Id.h"
 #include "Level/Camera.h"
-#include "Resource/AnimationManager.h"
-#include "Resource/TileSet.h"
-#include "Tile/TileMap.h"
+#include "Level/Level.h"
 
 namespace FA {
-
-namespace Entity {
-class BasicEntity;
-}
 
 class TextureManager;
 class BasicEffect;
@@ -40,18 +33,9 @@ public:
     virtual void ExitTransition(const BasicTransition& transition) override;
 
 private:
-    AnimationManager animationManager_;
-    TileSet tileSet_;
-    std::unique_ptr<Entity::BasicEntity> entity_;
-    std::unique_ptr<Entity::BasicEntity> moleEntity_;
-    std::unique_ptr<Entity::BasicEntity> stoneEntity_;
-    Tile::TileMap tileMap_;
+    Level level_;
     Camera camera_;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
-    Entity::EntityId entityId_ = 0;
-
-private:
-    Entity::EntityId GenerateEntityId();
 };
 
 }  // namespace Scene

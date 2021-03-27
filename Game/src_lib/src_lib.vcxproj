@@ -167,6 +167,7 @@
     <ClInclude Include="Enum\MessageType.h" />
     <ClInclude Include="Enum\TileType.h" />
     <ClInclude Include="Level\Camera.h" />
+    <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Misc\Random.h" />
     <ClInclude Include="Resource\AnimationManager.h" />
     <ClInclude Include="Resource\TileSet.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="Entity\States\MoveState.cpp" />
     <ClCompile Include="Entity\Entities\BasicEntity.cpp" />
     <ClCompile Include="Level\Camera.cpp" />
+    <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Misc\Random.cpp" />
     <ClCompile Include="Resource\AnimationManager.cpp" />
     <ClCompile Include="Resource\TileSet.cpp" />

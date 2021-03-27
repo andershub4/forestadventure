@@ -13,13 +13,14 @@
 #include "Constant/Screen.h"
 #include "Entity/Components/Sprite/BasicSprite.h"
 #include "Entity/Entities/BasicEntity.h"
+#include "Level.h"
 
 namespace FA {
 
-Camera::Camera(const sf::Vector2u& mapSize)
-    : mapSize_(mapSize)
-    , view_({constant::Screen::centerX_f, constant::Screen::centerY_f},
+Camera::Camera(const Level &level)
+    : view_({constant::Screen::centerX_f, constant::Screen::centerY_f},
             {constant::Screen::width_f, constant::Screen::height_f})
+    , level_(level)
 {}
 
 Camera::~Camera() = default;
@@ -56,15 +57,15 @@ sf::Vector2f Camera::CalcViewPosition(const sf::Vector2f& position) const
     if (position.x <= constant::Screen::centerX_f) {
         viewPosition.x = constant::Screen::centerX_f;
     }
-    else if (position.x >= (mapSize_.x - constant::Screen::centerX_f)) {
-        viewPosition.x = mapSize_.x - constant::Screen::centerX_f;
+    else if (position.x >= (level_.GetSize().x - constant::Screen::centerX_f)) {
+        viewPosition.x = level_.GetSize().x - constant::Screen::centerX_f;
     }
 
     if (position.y <= constant::Screen::centerY_f) {
         viewPosition.y = constant::Screen::centerY_f;
     }
-    else if (position.y >= (mapSize_.y - constant::Screen::centerY_f)) {
-        viewPosition.y = mapSize_.y - constant::Screen::centerY_f;
+    else if (position.y >= (level_.GetSize().y - constant::Screen::centerY_f)) {
+        viewPosition.y = level_.GetSize().y - constant::Screen::centerY_f;
     }
 
     return viewPosition;

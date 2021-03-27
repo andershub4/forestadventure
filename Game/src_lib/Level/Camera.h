@@ -12,6 +12,8 @@
 
 namespace FA {
 
+class Level;
+
 namespace Entity {
 class BasicEntity;
 }
@@ -19,7 +21,7 @@ class BasicEntity;
 class Camera
 {
 public:
-    Camera(const sf::Vector2u& mapSize);
+    Camera(const Level &level);
     ~Camera();
 
     void UpdatePosition(sf::RenderTarget& renderTarget);
@@ -28,9 +30,9 @@ public:
     sf::Vector2f GetViewSize() const;
 
 private:
-    sf::Vector2u mapSize_{};
     Entity::BasicEntity* entity_ = nullptr;
     sf::View view_;
+    const Level& level_;
 
 private:
     sf::Vector2f CalcViewPosition(const sf::Vector2f& position) const;
