@@ -31,6 +31,7 @@ Level::~Level()
 {
     entity_->OnDestroy();
     moleEntity_->OnDestroy();
+    stoneEntity_->OnDestroy();
 }
 
 void Level::Update(float deltaTime)
