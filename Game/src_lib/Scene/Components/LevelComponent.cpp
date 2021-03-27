@@ -9,7 +9,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Animation/AnimationFactory.h"
-#include "Constant/Screen.h"
 #include "Effect/BasicEffect.h"
 #include "Entity/Components/Sprite/AnimatedSprite.h"
 #include "Entity/Components/Sprite/StaticSprite.h"
@@ -31,8 +30,7 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
     , animationManager_(textureManager)
     , tileSet_(textureManager)
     , tileMap_(tileSet_)
-    , view_({constant::Screen::centerX_f, constant::Screen::centerY_f},
-            {constant::Screen::width_f, constant::Screen::height_f})
+    , camera_(tileMap_.GetSize())
 {
     animationManager_.RegisterFactories();
 
@@ -42,6 +40,8 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
     entity_ =
         std::make_unique<Entity::PlayerEntity>(playerId, messageBus, std::move(sprite), FaceDirection::Down, 120.0f);
     entity_->OnCreate();
+
+    camera_.Follow(entity_.get());
 
     auto moleAnimationFactory = animationManager_.GetFactory(AnimationType::Mole);
     auto moleSprite = std::make_unique<Entity::AnimatedSprite>(48, sf::Vector2u(8 * 32, 8 * 32), moleAnimationFactory);
@@ -81,11 +81,7 @@ void LevelComponent::Update(float deltaTime)
     moleEntity_->Update(deltaTime);
     stoneEntity_->Update(deltaTime);
     if (effect_) effect_->Update(deltaTime);
-
-    auto p = entity_->GetPosition();
-    auto viewPosition = CalcViewPosition(p);
-    view_.setCenter(viewPosition);
-    renderTexture_.setView(view_);
+    camera_.UpdatePosition(renderTexture_);
 }
 
 void LevelComponent::EnableInput(bool enable)
@@ -97,8 +93,8 @@ void LevelComponent::EnableInput(bool enable)
 
 void LevelComponent::EnterTransition(const BasicTransition& transition)
 {
-    auto size = view_.getSize();
-    auto position = view_.getCenter();
+    auto size = camera_.GetViewSize();
+    auto position = camera_.GetPosition();
     position.x = position.x - size.x / 2;
     position.y = position.y - size.y / 2;
 
@@ -108,27 +104,6 @@ void LevelComponent::EnterTransition(const BasicTransition& transition)
 void LevelComponent::ExitTransition(const BasicTransition& transition)
 {
     effect_.reset();
-}
-
-sf::Vector2f LevelComponent::CalcViewPosition(const sf::Vector2f& position) const
-{
-    auto viewPosition = sf::Vector2f(position.x, position.y);
-
-    if (position.x <= constant::Screen::centerX_f) {
-        viewPosition.x = constant::Screen::centerX_f;
-    }
-    else if (position.x >= (tileMap_.GetSize().x - constant::Screen::centerX_f)) {
-        viewPosition.x = tileMap_.GetSize().x - constant::Screen::centerX_f;
-    }
-
-    if (position.y <= constant::Screen::centerY_f) {
-        viewPosition.y = constant::Screen::centerY_f;
-    }
-    else if (position.y >= (tileMap_.GetSize().y - constant::Screen::centerY_f)) {
-        viewPosition.y = tileMap_.GetSize().y - constant::Screen::centerY_f;
-    }
-
-    return viewPosition;
 }
 
 Entity::EntityId LevelComponent::GenerateEntityId()
