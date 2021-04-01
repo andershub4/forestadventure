@@ -18,7 +18,7 @@ namespace Tile {
 TileMap::TileMap(const TileSet& tileSet)
     : tileSet_(tileSet)
 {
-    renderTexture_.create(nCols * tileSize * scale, nRows * tileSize * scale);
+    mapTexture_.create(nCols * tileSize * scale, nRows * tileSize * scale);
 }
 
 TileMap::~TileMap() = default;
@@ -40,7 +40,7 @@ void TileMap::Load()
                 tile.setTextureRect(tileInfo.rect_);
                 tile.setPosition(x, y);
                 tile.setScale(scale, scale);
-                renderTexture_.draw(tile);
+                mapTexture_.draw(tile);
             }
 
             x += (tileSize * scale);
@@ -48,8 +48,8 @@ void TileMap::Load()
         y += (tileSize * scale);
     }
 
-    renderTexture_.display();
-    tileMap_.setTexture(renderTexture_.getTexture());
+    mapTexture_.display();
+    tileMap_.setTexture(mapTexture_.getTexture());
 }
 
 void TileMap::DrawTo(sf::RenderTarget& renderTarget)
@@ -59,7 +59,7 @@ void TileMap::DrawTo(sf::RenderTarget& renderTarget)
 
 sf::Vector2u TileMap::GetSize() const
 {
-    return renderTexture_.getSize();
+    return mapTexture_.getSize();
 }
 
 TileType TileMap::RandomizeType() const

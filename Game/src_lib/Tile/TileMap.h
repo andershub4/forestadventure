@@ -38,7 +38,7 @@ private:
     static const unsigned int nRows{nTilesYPerScreen * nScreensY};
 
     sf::Sprite tileMap_;
-    sf::RenderTexture renderTexture_;
+    sf::RenderTexture mapTexture_;
     const TileSet &tileSet_;
 
 private:
