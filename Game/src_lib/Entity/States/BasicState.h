@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 
+#include "Entity/Components/Sprite/BasicSprite.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 #include "Fwd/SfmlFwd.h"
@@ -19,18 +20,12 @@ namespace Entity {
 
 class StateMachine;
 class BasicEntity;
-class BasicSprite;
 
 class BasicState
 {
 public:
     struct StateData
     {
-        StateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite)
-            : faceDir_(faceDir)
-            , velocity_(velocity)
-            , sprite_(std::move(sprite))
-        {}
         MoveDirection moveDir_ = MoveDirection::None;
         FaceDirection faceDir_ = FaceDirection::Down;
         float velocity_ = 0.0;
@@ -46,6 +41,7 @@ public:
     virtual void Enter() {}
     virtual void Exit() {}
 
+    virtual void OnInitStateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite) {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}

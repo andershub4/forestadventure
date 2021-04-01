@@ -17,6 +17,9 @@ namespace FA {
 class MessageBus;
 class Message;
 enum class MessageType;
+class AnimationManager;
+class Camera;
+class TileSet;
 
 namespace Keyboard {
 enum class Key;
@@ -25,16 +28,18 @@ enum class Key;
 namespace Entity {
 
 class BasicSprite;
+struct Configuration;
 
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
-                float velocity);
+    BasicEntity(EntityId id, MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnCreate() {}
+    virtual void OnCreate(AnimationManager& animationManager, TileSet& tileSet, Camera& camera,
+                          const Configuration& configuration)
+    {}
     virtual void OnDestroy() {}
 
     void Update(float deltaTime);
@@ -43,6 +48,7 @@ public:
     sf::Vector2f GetPosition() const;
 
 protected:
+    void InitStateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite);
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void StartMove(MoveDirection moveDir, FaceDirection faceDir);

@@ -8,25 +8,30 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/Sprite/BasicSprite.h"
+#include "Entity/Components/Sprite/StaticSprite.h"
+#include "Entity/Configuration.h"
 #include "Message/MessageBus.h"
+#include "Resource/TileSet.h"
 
 namespace FA {
 
 namespace Entity {
 
-StaticEntity::StaticEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, float velocity)
-    : BasicEntity(id, messageBus, std::move(sprite), FaceDirection::Down, velocity)
-{}
-
-StaticEntity::StaticEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite)
-    : BasicEntity(id, messageBus, std::move(sprite), FaceDirection::Down, 0.0f)
+StaticEntity::StaticEntity(EntityId id, MessageBus& messageBus)
+    : BasicEntity(id, messageBus)
 {}
 
 StaticEntity::~StaticEntity() = default;
 
-void StaticEntity::OnCreate()
-{}
+void StaticEntity::OnCreate(AnimationManager& animationManager, TileSet& tileSet, Camera& camera,
+                            const Configuration& configuration)
+{
+    auto stoneTile = tileSet.GetTile(configuration.tileType_);
+    auto sprite =
+        std::make_unique<Entity::StaticSprite>(32, configuration.position_, stoneTile.texture_, stoneTile.rect_);
+
+    InitStateData(configuration.faceDir_, configuration.velocity_, std::move(sprite));
+}
 
 void StaticEntity::OnDestroy()
 {}

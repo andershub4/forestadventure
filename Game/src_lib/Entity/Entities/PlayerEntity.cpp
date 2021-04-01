@@ -8,26 +8,34 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/Sprite/BasicSprite.h"
+#include "Entity/Components/Sprite/AnimatedSprite.h"
+#include "Entity/Configuration.h"
 #include "Enum/KeyboardKey.h"
+#include "Level/Camera.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/MessageBus.h"
+#include "Resource/AnimationManager.h"
 
 namespace FA {
 
 namespace Entity {
 
-PlayerEntity::PlayerEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite,
-                           FaceDirection faceDir, float velocity)
-    : BasicEntity(id, messageBus, std::move(sprite), faceDir, velocity)
+PlayerEntity::PlayerEntity(EntityId id, MessageBus& messageBus)
+    : BasicEntity(id, messageBus)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
 
-void PlayerEntity::OnCreate()
+void PlayerEntity::OnCreate(AnimationManager& animationManager, TileSet& tileSet, Camera& camera,
+                            const Configuration& configuration)
 {
+    camera.Follow(this);
+    auto animationFactory = animationManager.GetFactory(AnimationType::Player);
+    auto sprite = std::make_unique<Entity::AnimatedSprite>(64, sf::Vector2u(0, 0), animationFactory);
+
+    InitStateData(configuration.faceDir_, configuration.velocity_, std::move(sprite));
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 

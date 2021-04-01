@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/Sprite/BasicSprite.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -18,11 +17,9 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite,
-                         FaceDirection faceDir, float velocity)
+BasicEntity::BasicEntity(EntityId id, MessageBus& messageBus)
     : id_(id)
     , messageBus_(messageBus)
-    , stateData_(faceDir, velocity, std::move(sprite))
     , stateMachine_(stateData_)
 {}
 
@@ -67,6 +64,12 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
         auto key = m->GetKey();
         OnKeyPressed(key);
     }
+}
+
+void BasicEntity::InitStateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite)
+{
+    stateMachine_.OnInitStateData(faceDir, velocity,
+                                  std::move(sprite));  // do this from uninitialized state and switch to idlestate
 }
 
 void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)

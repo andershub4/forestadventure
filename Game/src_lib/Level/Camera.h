@@ -12,8 +12,6 @@
 
 namespace FA {
 
-class Level;
-
 namespace Entity {
 class BasicEntity;
 }
@@ -21,10 +19,10 @@ class BasicEntity;
 class Camera
 {
 public:
-    Camera(const Level &level);
+    Camera();
     ~Camera();
 
-    void UpdatePosition(sf::RenderTarget& renderTarget);
+    void UpdatePosition(sf::RenderTarget& renderTarget, const sf::Vector2u& mapSize);
     void Follow(Entity::BasicEntity* entity);
     sf::Vector2f GetPosition() const;
     sf::Vector2f GetViewSize() const;
@@ -32,10 +30,9 @@ public:
 private:
     Entity::BasicEntity* entity_ = nullptr;
     sf::View view_;
-    const Level& level_;
 
 private:
-    sf::Vector2f CalcViewPosition(const sf::Vector2f& position) const;
+    sf::Vector2f CalcViewPosition(const sf::Vector2f& position, const sf::Vector2u& mapSize) const;
 };
 
 }  // namespace FA

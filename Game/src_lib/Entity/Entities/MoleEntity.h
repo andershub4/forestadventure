@@ -15,12 +15,12 @@ namespace Entity {
 class MoleEntity : public BasicEntity
 {
 public:
-    MoleEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
-               float velocity);
+    MoleEntity(EntityId id, MessageBus& messageBus);
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
-    virtual void OnCreate() override;
+    virtual void OnCreate(AnimationManager& animationManager, TileSet& tileSet, Camera& camera,
+                          const Configuration& configuration) override;
     virtual void OnDestroy() override;
 };
 

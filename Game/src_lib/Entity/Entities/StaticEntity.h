@@ -15,12 +15,12 @@ namespace Entity {
 class StaticEntity : public BasicEntity
 {
 public:
-    StaticEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, float velocity);
-    StaticEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite);
+    StaticEntity(EntityId id, MessageBus& messageBus);
     virtual ~StaticEntity();
 
     virtual std::string Name() const override { return "StaticEntity"; }
-    virtual void OnCreate() override;
+    virtual void OnCreate(AnimationManager& animationManager, TileSet& tileSet, Camera& camera,
+                          const Configuration& configuration) override;
     virtual void OnDestroy() override;
 };
 

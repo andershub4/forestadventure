@@ -19,10 +19,9 @@ namespace Scene {
 
 LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureManager)
     : BasicComponent(messageBus)
-    , level_(textureManager)
-    , camera_(level_)
+    , level_(messageBus, textureManager)
 {
-    level_.Create(messageBus, camera_);
+    level_.Create(camera_);
 }
 
 LevelComponent::~LevelComponent() = default;
@@ -37,7 +36,7 @@ void LevelComponent::Update(float deltaTime)
 {
     level_.Update(deltaTime);
     if (effect_) effect_->Update(deltaTime);
-    camera_.UpdatePosition(renderTexture_);
+    camera_.UpdatePosition(renderTexture_, level_.GetSize());
 }
 
 void LevelComponent::EnableInput(bool enable)

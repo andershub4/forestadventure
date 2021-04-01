@@ -15,12 +15,12 @@ namespace Entity {
 class PlayerEntity : public BasicEntity
 {
 public:
-    PlayerEntity(EntityId id, MessageBus& messageBus, std::unique_ptr<BasicSprite> sprite, FaceDirection faceDir,
-                 float velocity);
+    PlayerEntity(EntityId id, MessageBus& messageBus);
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
-    virtual void OnCreate() override;
+    virtual void OnCreate(AnimationManager& animationManager, TileSet& tileSet, Camera& camera,
+                          const Configuration& configuration) override;
     virtual void OnDestroy() override;
 
 protected:

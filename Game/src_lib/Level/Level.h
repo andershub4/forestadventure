@@ -7,9 +7,9 @@
 #pragma once
 
 #include "Fwd/SfmlFwd.h"
-#include "Entity/Id.h"
 #include "Resource/AnimationManager.h"
 #include "Resource/TileSet.h"
+#include "System/EntitySystem.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
@@ -25,27 +25,21 @@ class Camera;
 class Level
 {
 public:
-    Level(TextureManager& textureManager);
+    Level(MessageBus& messageBus, TextureManager& textureManager);
     ~Level();
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
 
-    void Create(MessageBus &messageBus, Camera &camera);
+    void Create(Camera& camera);
     void EnableInput(bool enable);
     sf::Vector2u GetSize() const;
 
 private:
     AnimationManager animationManager_;
     TileSet tileSet_;
-    std::unique_ptr<Entity::BasicEntity> entity_;
-    std::unique_ptr<Entity::BasicEntity> moleEntity_;
-    std::unique_ptr<Entity::BasicEntity> stoneEntity_;
+    EntitySystem entitySystem_;
     Tile::TileMap tileMap_;
-    Entity::EntityId entityId_ = 0;
-
-private:
-    Entity::EntityId GenerateEntityId();
 };
 
 }  // namespace FA
