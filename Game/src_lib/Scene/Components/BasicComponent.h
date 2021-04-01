@@ -38,7 +38,7 @@ public:
 
 protected:
     sf::Sprite sprite_;
-    sf::RenderTexture layer_;
+    sf::RenderTexture layerTexture_;
 
 private:
     MessageBus& messageBus_;

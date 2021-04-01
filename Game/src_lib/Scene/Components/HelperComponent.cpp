@@ -54,10 +54,10 @@ HelperComponent::~HelperComponent() = default;
 
 void HelperComponent::Draw()
 {
-    layer_.draw(sceneText_);
-    layer_.draw(fpsText_);
-    layer_.draw(fpsNumberText_);
-    layer_.draw(dotShape_);
+    layerTexture_.draw(sceneText_);
+    layerTexture_.draw(fpsText_);
+    layerTexture_.draw(fpsNumberText_);
+    layerTexture_.draw(dotShape_);
 }
 
 void HelperComponent::Update(float deltaTime)
