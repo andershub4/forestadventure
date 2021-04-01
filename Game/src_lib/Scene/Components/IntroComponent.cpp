@@ -46,8 +46,8 @@ IntroComponent::~IntroComponent() = default;
 
 void IntroComponent::Draw()
 {
-    renderTexture_.draw(introText_);
-    renderTexture_.draw(pressText_);
+    layer_.draw(introText_);
+    layer_.draw(pressText_);
 }
 
 void IntroComponent::Update(float deltaTime)

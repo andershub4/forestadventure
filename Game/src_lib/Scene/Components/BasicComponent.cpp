@@ -15,20 +15,20 @@ namespace Scene {
 BasicComponent::BasicComponent(MessageBus& messageBus)
     : messageBus_(messageBus)
 {
-    renderTexture_.create(constant::Screen::width, constant::Screen::height);
-    sprite_.setTexture(renderTexture_.getTexture());
+    layer_.create(constant::Screen::width, constant::Screen::height);
+    sprite_.setTexture(layer_.getTexture());
 }
 
 BasicComponent::~BasicComponent() = default;
 
 void BasicComponent::Clear()
 {
-    renderTexture_.clear(sf::Color::Transparent);
+    layer_.clear(sf::Color::Transparent);
 }
 
 void BasicComponent::DrawTo(sf::RenderTarget& renderTarget)
 {
-    renderTexture_.display();
+    layer_.display();
     renderTarget.draw(sprite_);
 }
 

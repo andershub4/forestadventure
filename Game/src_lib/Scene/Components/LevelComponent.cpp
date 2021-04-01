@@ -28,15 +28,15 @@ LevelComponent::~LevelComponent() = default;
 
 void LevelComponent::Draw()
 {
-    level_.DrawTo(renderTexture_);
-    if (effect_) effect_->DrawTo(renderTexture_);
+    level_.DrawTo(layer_);
+    if (effect_) effect_->DrawTo(layer_);
 }
 
 void LevelComponent::Update(float deltaTime)
 {
     level_.Update(deltaTime);
     if (effect_) effect_->Update(deltaTime);
-    camera_.UpdatePosition(renderTexture_, level_.GetSize());
+    camera_.UpdatePosition(layer_, level_.GetSize());
 }
 
 void LevelComponent::EnableInput(bool enable)
