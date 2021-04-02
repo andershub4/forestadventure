@@ -43,6 +43,9 @@ private:
 
 private:
     TileType RandomizeType() const;
+    void ApplyTile(TileType type, float x, float y, sf::RenderTexture &mapTexture);
+    void DrawGround(sf::RenderTexture &mapTexture);
+    void DrawPlants(sf::RenderTexture &mapTexture);
 };
 
 }  // namespace Tile

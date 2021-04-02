@@ -25,29 +25,8 @@ TileMap::~TileMap() = default;
 
 void TileMap::Load()
 {
-    float x = 0;
-    float y = 0;
-    sf::Sprite tile;
-
-    for (unsigned int row = 0; row < nRows; row++) {
-        x = 0;
-        for (unsigned int col = 0; col < nCols; col++) {
-            auto type = RandomizeType();
-            auto tileInfo = tileSet_.GetTile(type);
-
-            if (tileInfo.texture_ != nullptr) {
-                tile.setTexture(*tileInfo.texture_);
-                tile.setTextureRect(tileInfo.rect_);
-                tile.setPosition(x, y);
-                tile.setScale(scale, scale);
-                mapTexture_.draw(tile);
-            }
-
-            x += (tileSize * scale);
-        }
-        y += (tileSize * scale);
-    }
-
+    DrawGround(mapTexture_);
+    DrawPlants(mapTexture_);
     mapTexture_.display();
     tileMap_.setTexture(mapTexture_.getTexture());
 }
@@ -62,10 +41,58 @@ sf::Vector2u TileMap::GetSize() const
     return mapTexture_.getSize();
 }
 
+void TileMap::ApplyTile(TileType type, float x, float y, sf::RenderTexture &mapTexture)
+{
+    if (type == TileType::None) return;
+
+    sf::Sprite tile;
+    auto tileInfo = tileSet_.GetTile(type);
+
+    if (tileInfo.texture_ != nullptr) {
+        tile.setTexture(*tileInfo.texture_);
+        tile.setTextureRect(tileInfo.rect_);
+        tile.setPosition(x, y);
+        tile.setScale(scale, scale);
+        mapTexture.draw(tile);
+    }
+}
+
+void TileMap::DrawGround(sf::RenderTexture& mapTexture)
+{
+    float x = 0;
+    float y = 0;
+
+    for (unsigned int row = 0; row < nRows; row++) {
+        x = 0;
+        for (unsigned int col = 0; col < nCols; col++) {
+            auto type = TileType::BasicGround;
+            ApplyTile(type, x, y, mapTexture_);
+            x += (tileSize * scale);
+        }
+        y += (tileSize * scale);
+    } 
+}
+
+void TileMap::DrawPlants(sf::RenderTexture& mapTexture)
+{
+    float x = 0;
+    float y = 0;
+
+    for (unsigned int row = 0; row < nRows; row++) {
+        x = 0;
+        for (unsigned int col = 0; col < nCols; col++) {
+            auto type = RandomizeType();
+            ApplyTile(type, x, y, mapTexture_);
+            x += (tileSize * scale);
+        }
+        y += (tileSize * scale);
+    }
+}
+
 TileType TileMap::RandomizeType() const
 {
     auto r = RandomizeRange(0, 100);
-    TileType t;
+    TileType t{};
     if (r < 4) {
         t = TileType::GreenPlant;
     }
@@ -74,9 +101,6 @@ TileType TileMap::RandomizeType() const
     }
     else if (r >= 15 && r < 20) {
         t = TileType::GroundPlant;
-    }
-    else {
-        t = TileType::BasicGround;
     }
 
     return t;
