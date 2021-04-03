@@ -20,7 +20,7 @@ class Movement;
 class BasicSprite
 {
 public:
-    BasicSprite(unsigned int size);
+    BasicSprite();
     virtual ~BasicSprite();
 
     virtual void Update(float deltaTime) = 0;
@@ -31,9 +31,6 @@ public:
     virtual void StartAnimation() {}
     virtual void SetAnimation(FrameType frameType, FaceDirection faceDir) {}
     virtual bool AnimationIsCompleted() const { return true; }
-
-private:
-    unsigned int size_{};
 };
 
 }  // namespace Entity

@@ -28,7 +28,7 @@ void MoleEntity::OnCreate(AnimationManager& animationManager, TileSet& tileSet, 
                           const Configuration& configuration)
 {
     auto animationFactory = animationManager.GetFactory(AnimationType::Mole);
-    auto sprite = std::make_unique<Entity::AnimatedSprite>(48, configuration.position_, animationFactory);
+    auto sprite = std::make_unique<Entity::AnimatedSprite>(configuration.position_, animationFactory);
 
     InitStateData(configuration.faceDir_, configuration.velocity_, std::move(sprite));
 }

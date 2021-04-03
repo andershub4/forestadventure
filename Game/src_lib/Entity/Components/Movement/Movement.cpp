@@ -33,9 +33,9 @@ void Movement::Update(float deltaTime)
     offset_ = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
 }
 
-void Movement::ApplyTo(sf::RectangleShape* rectShape) const
+void Movement::ApplyTo(sf::Sprite* sprite) const
 {
-    rectShape->move(offset_);
+    sprite->move(offset_);
 }
 
 void Movement::SetDirection(MoveDirection direction)

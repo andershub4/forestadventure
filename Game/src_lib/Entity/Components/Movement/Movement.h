@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 
 namespace FA {
@@ -23,7 +23,7 @@ public:
 
     void Update(float deltaTime);
 
-    void ApplyTo(sf::RectangleShape* rectShape) const;
+    void ApplyTo(sf::Sprite* sprite) const;
     void SetDirection(MoveDirection direction);
 
 private:

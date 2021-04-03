@@ -15,13 +15,11 @@ namespace FA {
 
 namespace Entity {
 
-AnimatedSprite::AnimatedSprite(unsigned int size, const sf::Vector2u &position,
-                               const AnimationFactory &animationFactory)
-    : BasicSprite(size)
-    , animationFactory_(animationFactory)
+AnimatedSprite::AnimatedSprite(const sf::Vector2u &position, const AnimationFactory &animationFactory)
+    : animationFactory_(animationFactory)
 {
-    rectShape_.setPosition(static_cast<sf::Vector2f>(position));
-    rectShape_.setSize({static_cast<float>(size), static_cast<float>(size)});
+    sprite_.setPosition(static_cast<sf::Vector2f>(position));
+    sprite_.setScale(2, 2);
 }
 
 AnimatedSprite::~AnimatedSprite() = default;
@@ -33,22 +31,22 @@ void AnimatedSprite::Update(float deltaTime)
 
 void AnimatedSprite::DrawTo(sf::RenderTarget &renderTarget)
 {
-    renderTarget.draw(rectShape_);
+    renderTarget.draw(sprite_);
 }
 
 sf::Vector2f AnimatedSprite::GetPosition() const
 {
-    return rectShape_.getPosition();
+    return sprite_.getPosition();
 }
 
 void AnimatedSprite::Move(const Movement &movement)
 {
-    movement.ApplyTo(&rectShape_);
+    movement.ApplyTo(&sprite_);
 }
 
 void AnimatedSprite::SetAnimation(FrameType frameType, FaceDirection faceDir)
 {
-    animation_ = animationFactory_.Create(frameType, faceDir, &rectShape_);
+    animation_ = animationFactory_.Create(frameType, faceDir, &sprite_);
 }
 
 void AnimatedSprite::StartAnimation()

@@ -27,8 +27,7 @@ void StaticEntity::OnCreate(AnimationManager& animationManager, TileSet& tileSet
                             const Configuration& configuration)
 {
     auto stoneTile = tileSet.GetTile(configuration.tileType_);
-    auto sprite =
-        std::make_unique<Entity::StaticSprite>(32, configuration.position_, stoneTile.texture_, stoneTile.rect_);
+    auto sprite = std::make_unique<Entity::StaticSprite>(configuration.position_, stoneTile.texture_, stoneTile.rect_);
 
     InitStateData(configuration.faceDir_, configuration.velocity_, std::move(sprite));
 }

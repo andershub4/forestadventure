@@ -10,9 +10,9 @@
 
 namespace FA {
 
-Animation::Animation(sf::RectangleShape* rectShape, const sf::Texture* texture, const std::vector<sf::IntRect>& frames,
+Animation::Animation(sf::Sprite* sprite, const sf::Texture* texture, const std::vector<sf::IntRect>& frames,
                      unsigned int defaultFrame, float switchTime)
-    : rectShape_(rectShape)
+    : sprite_(sprite)
     , texture_(texture)
     , frames_(frames)
     , switchTime_(switchTime)
@@ -21,8 +21,8 @@ Animation::Animation(sf::RectangleShape* rectShape, const sf::Texture* texture, 
     , iFrame_(defaultFrame)
 {
     nFrames_ = frames.size();
-    rectShape_->setTexture(texture_);
-    if (defaultFrame_ < nFrames_) rectShape_->setTextureRect(frames_.at(defaultFrame_));
+    sprite_->setTexture(*texture_);
+    if (defaultFrame_ < nFrames_) sprite_->setTextureRect(frames_.at(defaultFrame_));
 }
 
 void Animation::Update(float deltaTime)
@@ -36,7 +36,7 @@ void Animation::Update(float deltaTime)
             isCompleted_ = (iFrame_ == 0);
         }
 
-        rectShape_->setTextureRect(frames_[iFrame_]);
+        sprite_->setTextureRect(frames_[iFrame_]);
     }
 }
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "Animation/AnimationFactory.h"
 #include "BasicSprite.h"
@@ -18,7 +18,7 @@ namespace Entity {
 class AnimatedSprite : public BasicSprite
 {
 public:
-    AnimatedSprite(unsigned int size, const sf::Vector2u &position, const AnimationFactory &animationFactory);
+    AnimatedSprite(const sf::Vector2u &position, const AnimationFactory &animationFactory);
     virtual ~AnimatedSprite();
 
     virtual void Update(float deltaTime) override;
@@ -31,7 +31,7 @@ public:
     virtual bool AnimationIsCompleted() const override;
 
 private:
-    sf::RectangleShape rectShape_;
+    sf::Sprite sprite_;
     AnimationFactory animationFactory_;
     std::unique_ptr<Animation> animation_{};
 };

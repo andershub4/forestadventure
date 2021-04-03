@@ -10,8 +10,7 @@ namespace FA {
 
 namespace Entity {
 
-BasicSprite::BasicSprite(unsigned int size)
-    : size_(size)
+BasicSprite::BasicSprite()
 {}
 
 BasicSprite::~BasicSprite() = default;

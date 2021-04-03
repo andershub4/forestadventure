@@ -11,6 +11,7 @@
 #include <vector>
 
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
@@ -27,7 +28,7 @@ public:
     AnimationFactory(const AnimationFactory&) = default;
     AnimationFactory(float switchTime);
 
-    std::unique_ptr<Animation> Create(FrameType frameType, FaceDirection dir, sf::RectangleShape* rectShape) const;
+    std::unique_ptr<Animation> Create(FrameType frameType, FaceDirection dir, sf::Sprite* sprite) const;
     void RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
                                const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
 

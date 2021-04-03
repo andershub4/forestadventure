@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "BasicSprite.h"
 
@@ -17,7 +17,7 @@ namespace Entity {
 class StaticSprite : public BasicSprite
 {
 public:
-    StaticSprite(unsigned int size, const sf::Vector2u& position, const sf::Texture* texture, const sf::IntRect& rect);
+    StaticSprite(const sf::Vector2u& position, const sf::Texture* texture, const sf::IntRect& rect);
     virtual ~StaticSprite();
 
     virtual void Update(float deltaTime) override;
@@ -26,7 +26,7 @@ public:
     virtual void Move(const Movement& movement) override;
 
 private:
-    sf::RectangleShape rectShape_;
+    sf::Sprite sprite_;
 };
 
 }  // namespace Entity

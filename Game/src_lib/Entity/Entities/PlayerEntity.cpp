@@ -33,7 +33,7 @@ void PlayerEntity::OnCreate(AnimationManager& animationManager, TileSet& tileSet
 {
     camera.Follow(this);
     auto animationFactory = animationManager.GetFactory(AnimationType::Player);
-    auto sprite = std::make_unique<Entity::AnimatedSprite>(64, configuration.position_, animationFactory);
+    auto sprite = std::make_unique<Entity::AnimatedSprite>(configuration.position_, animationFactory);
 
     InitStateData(configuration.faceDir_, configuration.velocity_, std::move(sprite));
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});

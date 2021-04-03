@@ -9,6 +9,7 @@
 #include <vector>
 
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "Fwd/SfmlFwd.h"
 
@@ -18,7 +19,7 @@ class Animation
 {
 public:
     Animation() = default;
-    Animation(sf::RectangleShape* rectShape, const sf::Texture* texture, const std::vector<sf::IntRect>& frames,
+    Animation(sf::Sprite* sprite, const sf::Texture* texture, const std::vector<sf::IntRect>& frames,
               unsigned int defaultFrame, float switchTime);
 
     void Update(float deltaTime);  // delta time; time since previous time to current frame
@@ -27,7 +28,7 @@ public:
     bool IsCompleted() const;
 
 private:
-    sf::RectangleShape* rectShape_ = nullptr;
+    sf::Sprite* sprite_ = nullptr;
     const sf::Texture* texture_ = nullptr;
     bool isStopped_ = true;
     float time_;        // time since we last switched frame

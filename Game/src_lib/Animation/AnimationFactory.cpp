@@ -29,13 +29,12 @@ void AnimationFactory::RegisterAnimationInfo(FrameType frameType, FaceDirection 
     }
 }
 
-std::unique_ptr<Animation> AnimationFactory::Create(FrameType frameType, FaceDirection dir,
-                                                    sf::RectangleShape* rectShape) const
+std::unique_ptr<Animation> AnimationFactory::Create(FrameType frameType, FaceDirection dir, sf::Sprite* sprite) const
 {
     auto it = animationInfoMap_.find({frameType, dir});
     if (it != animationInfoMap_.end()) {
         auto info = animationInfoMap_.at({frameType, dir});
-        return std::make_unique<Animation>(rectShape, info.texture_, info.frames_, info.defaultFrame_, switchTime_);
+        return std::make_unique<Animation>(sprite, info.texture_, info.frames_, info.defaultFrame_, switchTime_);
     }
     else {
         LOG_ERROR("frameType: ", static_cast<unsigned int>(frameType), " dir: ", static_cast<unsigned int>(dir),
