@@ -40,14 +40,14 @@ void Level::Create(Camera &camera)
 {
     animationManager_.RegisterFactories();
 
-    std::vector<Entity::Configuration> configurations;
-    Entity::Configuration player = {EntityType::Player, {0, 0}, FaceDirection::Down, 120.0, TileType::None};
-    Entity::Configuration mole = {EntityType::Mole, {8 * 32, 8 * 32}, FaceDirection::Down, 120.0, TileType::None};
-    Entity::Configuration stone = {EntityType::Static, {8 * 64, 8 * 10}, FaceDirection::Down, 0.0, TileType::Stone};
-
-    configurations.push_back(player);
-    configurations.push_back(mole);
-    configurations.push_back(stone);
+    std::vector<Entity::Configuration> configurations = {
+        {EntityType::Player, {8 * 56 * 2, 8 * 56}, FaceDirection::Down, 120.0, TileType::None},
+        {EntityType::Mole, {8 * 32, 8 * 32}, FaceDirection::Right, 120.0, TileType::None},
+        {EntityType::Static, {8 * 64, 8 * 10}, FaceDirection::Down, 0.0, TileType::Stone},
+        {EntityType::Static, {8 * 68, 8 * 10}, FaceDirection::Down, 0.0, TileType::Stone},
+        {EntityType::Static, {8 * 64, 8 * 14}, FaceDirection::Down, 0.0, TileType::Stone},
+        {EntityType::Static, {8 * 68, 8 * 14}, FaceDirection::Down, 0.0, TileType::Stone}
+    };
 
     for (const auto &configuration : configurations) {
         entitySystem_.Create(animationManager_, tileSet_, camera, configuration);
