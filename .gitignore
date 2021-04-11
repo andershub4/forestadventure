@@ -15,8 +15,12 @@
 
 # Build results
 [Dd]ebug/
+[Dd]ebug-Dll/
+[Dd]ebug-Lib/
 [Dd]ebugPublic/
 [Rr]elease/
+[Rr]elease-Dll/
+[Rr]elease-Lib/
 [Rr]eleases/
 x64/
 x86/
@@ -26,6 +30,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+temp/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

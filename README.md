@@ -12,6 +12,8 @@ The development is currently made by using Visual Studio 2019 [Community](https:
 
 [SFML](http://www.sfml-dev.org/) : Cross-platform software development library
 
+[Tiny XML](http://www.grinninglizard.com/tinyxml2/index.html) : XML parsing
+
 ## License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

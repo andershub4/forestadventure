@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Marie\source\repos\forestadventure\Game\3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Marie\source\repos\forestadventure\Game\3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -260,6 +260,11 @@
     <ClCompile Include="Tile\TileMap.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />
     <ClCompile Include="Utils\Path.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\3rdparty\submodules\tinyxml2\tinyxml2\tinyxml2.vcxproj">
+      <Project>{d1c528b6-aa02-4d29-9d61-dc08e317a70d}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

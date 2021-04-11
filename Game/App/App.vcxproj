@@ -102,7 +102,9 @@ copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-audio-d-2.dll" "$(TargetDir)sfml-a
 copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-graphics-d-2.dll" "$(TargetDir)sfml-graphics-d-2.dll"
 copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-network-d-2.dll" "$(TargetDir)sfml-network-d-2.dll"
 copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-system-d-2.dll" "$(TargetDir)sfml-system-d-2.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-window-d-2.dll" "$(TargetDir)sfml-window-d-2.dll"</Command>
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-window-d-2.dll" "$(TargetDir)sfml-window-d-2.dll"
+copy /Y "$(SolutionDir)Debug-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,7 +131,8 @@ copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-audio-2.dll" "$(TargetDir)sfml-aud
 copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-graphics-2.dll" "$(TargetDir)sfml-graphics-2.dll"
 copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-network-2.dll" "$(TargetDir)sfml-network-2.dll"
 copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-system-2.dll" "$(TargetDir)sfml-system-2.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-window-2.dll" "$(TargetDir)sfml-window-2.dll"</Command>
+copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-window-2.dll" "$(TargetDir)sfml-window-2.dll"
+copy /Y "$(SolutionDir)Release-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
