@@ -22,6 +22,7 @@ Level::Level(MessageBus &messageBus, TextureManager &textureManager)
     , entitySystem_(messageBus)
     , tileMap_(tileSet_)
     , tmxParser_("assets/map/test.tmx")
+    , tsxParser_("assets/map/tileset.tsx")
 {}
 
 Level::~Level() = default;
@@ -55,6 +56,7 @@ void Level::Create(Camera &camera)
 
     tileMap_.Load();
     tmxParser_.Load();
+    tsxParser_.Load();
 }
 
 void Level::EnableInput(bool enable)

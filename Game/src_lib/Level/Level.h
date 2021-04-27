@@ -12,6 +12,7 @@
 #include "System/EntitySystem.h"
 #include "Tile/TileMap.h"
 #include "Tile/TmxParser.h"
+#include "Tile/TsxParser.h"
 
 namespace FA {
 
@@ -42,6 +43,7 @@ private:
     EntitySystem entitySystem_;
     Tile::TileMap tileMap_;
     Tile::TmxParser tmxParser_;
+    Tile::TsxParser tsxParser_;
 };
 
 }  // namespace FA
