@@ -21,6 +21,7 @@ Level::Level(MessageBus &messageBus, TextureManager &textureManager)
     , tileSet_(textureManager)
     , entitySystem_(messageBus)
     , tileMap_(tileSet_)
+    , tmxParser_("assets/map/test.tmx")
 {}
 
 Level::~Level() = default;
@@ -46,14 +47,14 @@ void Level::Create(Camera &camera)
         {EntityType::Static, {8 * 64, 8 * 10}, FaceDirection::Down, 0.0, TileType::Stone},
         {EntityType::Static, {8 * 68, 8 * 10}, FaceDirection::Down, 0.0, TileType::Stone},
         {EntityType::Static, {8 * 64, 8 * 14}, FaceDirection::Down, 0.0, TileType::Stone},
-        {EntityType::Static, {8 * 68, 8 * 14}, FaceDirection::Down, 0.0, TileType::Stone}
-    };
+        {EntityType::Static, {8 * 68, 8 * 14}, FaceDirection::Down, 0.0, TileType::Stone}};
 
     for (const auto &configuration : configurations) {
         entitySystem_.Create(animationManager_, tileSet_, camera, configuration);
     }
 
     tileMap_.Load();
+    tmxParser_.Load();
 }
 
 void Level::EnableInput(bool enable)

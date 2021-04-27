@@ -205,6 +205,7 @@
     <ClInclude Include="System\EntitySystem.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Tile\TileMap.h" />
+    <ClInclude Include="Tile\TmxParser.h" />
     <ClInclude Include="Utils\Logger.h" />
     <ClInclude Include="Utils\Path.h" />
   </ItemGroup>
@@ -258,6 +259,7 @@
     <ClCompile Include="System\EntitySystem.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />
+    <ClCompile Include="Tile\TmxParser.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />
     <ClCompile Include="Utils\Path.cpp" />
   </ItemGroup>

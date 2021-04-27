@@ -168,6 +168,9 @@
     <ClCompile Include="Entity\States\UninitializedState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tile\TmxParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -366,6 +369,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\States\UninitializedState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile\TmxParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

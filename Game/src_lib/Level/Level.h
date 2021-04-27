@@ -11,6 +11,7 @@
 #include "Resource/TileSet.h"
 #include "System/EntitySystem.h"
 #include "Tile/TileMap.h"
+#include "Tile/TmxParser.h"
 
 namespace FA {
 
@@ -40,6 +41,7 @@ private:
     TileSet tileSet_;
     EntitySystem entitySystem_;
     Tile::TileMap tileMap_;
+    Tile::TmxParser tmxParser_;
 };
 
 }  // namespace FA
