@@ -13,39 +13,35 @@
 
 namespace FA {
 
-class TileSet;
-enum class TileType;
-
 namespace Tile {
+
+struct TileMapData;
 
 class TileMap
 {
 public:
-    TileMap(const TileSet &tileSet);
+    TileMap(const TileMapData &tileMapData);
     ~TileMap();
     void Load();
     void DrawTo(sf::RenderTarget &renderTarget);
     sf::Vector2u GetSize() const;
 
 private:
-    static const unsigned int nTilesXPerScreen{40};
-    static const unsigned int nTilesYPerScreen{24};
-    static const unsigned int nScreensX{2};
-    static const unsigned int nScreensY{2};
+    struct TileInfo
+    {
+        const sf::Texture *texture_ = nullptr;
+        sf::IntRect uvRect_;
+    };
+
     static const unsigned int scale{2};
-    static const unsigned int tileSize{16};
-    static const unsigned int nCols{nTilesXPerScreen * nScreensX};
-    static const unsigned int nRows{nTilesYPerScreen * nScreensY};
 
     sf::Sprite tileMap_;
     sf::RenderTexture mapTexture_;
-    const TileSet &tileSet_;
+    const TileMapData &tileMapData_;
 
 private:
-    TileType RandomizeType() const;
-    void ApplyTile(TileType type, float x, float y, sf::RenderTexture &mapTexture);
-    void DrawGround(sf::RenderTexture &mapTexture);
-    void DrawPlants(sf::RenderTexture &mapTexture);
+    TileInfo GetTileInfo(int id);
+    void ApplyTile(const TileInfo &tileInfo, float x, float y, sf::RenderTexture &mapTexture);
 };
 
 }  // namespace Tile

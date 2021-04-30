@@ -29,8 +29,7 @@ public:
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
-    void Create(AnimationManager &animationManager, TileSet &tileSet, Camera &camera,
-                const Entity::Configuration &configuration);
+    void Create(AnimationManager &animationManager, Camera &camera, const Entity::Configuration &configuration);
     void EnableInput(bool enable);
 
 private:

@@ -8,11 +8,9 @@
 
 #include "Fwd/SfmlFwd.h"
 #include "Resource/AnimationManager.h"
-#include "Resource/TileSet.h"
 #include "System/EntitySystem.h"
 #include "Tile/TileMap.h"
-#include "Tile/TmxParser.h"
-#include "Tile/TsxParser.h"
+#include "Tile/TileMapReader.h"
 
 namespace FA {
 
@@ -39,11 +37,10 @@ public:
 
 private:
     AnimationManager animationManager_;
-    TileSet tileSet_;
     EntitySystem entitySystem_;
-    Tile::TileMap tileMap_;
-    Tile::TmxParser tmxParser_;
-    Tile::TsxParser tsxParser_;
+    Tile::TileMapReader tileMapReader_;
+    std::unique_ptr<Tile::TileMap> tileMap_ = nullptr;
+    TextureManager& textureManager_;  // for now, so TileMapReader can load.
 };
 
 }  // namespace FA

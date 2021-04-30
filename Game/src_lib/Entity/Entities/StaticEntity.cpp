@@ -11,7 +11,6 @@
 #include "Entity/Components/Sprite/StaticSprite.h"
 #include "Entity/Configuration.h"
 #include "Message/MessageBus.h"
-#include "Resource/TileSet.h"
 
 namespace FA {
 
@@ -22,18 +21,6 @@ StaticEntity::StaticEntity(EntityId id, MessageBus& messageBus)
 {}
 
 StaticEntity::~StaticEntity() = default;
-
-void StaticEntity::OnCreate(AnimationManager& animationManager, TileSet& tileSet, Camera& camera,
-                            const Configuration& configuration)
-{
-    auto stoneTile = tileSet.GetTile(configuration.tileType_);
-    auto sprite = std::make_unique<Entity::StaticSprite>(configuration.position_, stoneTile.texture_, stoneTile.rect_);
-
-    InitStateData(configuration.faceDir_, configuration.velocity_, std::move(sprite));
-}
-
-void StaticEntity::OnDestroy()
-{}
 
 }  // namespace Entity
 

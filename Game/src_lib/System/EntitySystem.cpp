@@ -7,7 +7,6 @@
 #include "Level/Camera.h"
 #include "Message/MessageBus.h"
 #include "Resource/AnimationManager.h"
-#include "Resource/TileSet.h"
 #include "Tile/TileMap.h"
 #include "Utils/Logger.h"
 
@@ -48,7 +47,7 @@ void EntitySystem::AddEntity(Entity::EntityId entityId, std::unique_ptr<Entity::
     }
 }
 
-void EntitySystem::Create(AnimationManager& animationManager, TileSet& tileSet, Camera& camera,
+void EntitySystem::Create(AnimationManager& animationManager, Camera& camera,
                           const Entity::Configuration& configuration)
 {
     auto type = configuration.entityType_;
@@ -57,19 +56,13 @@ void EntitySystem::Create(AnimationManager& animationManager, TileSet& tileSet, 
     if (type == EntityType::Player) {
         auto id = GenerateId();
         entity = std::make_unique<Entity::PlayerEntity>(id, messageBus_);
-        entity->OnCreate(animationManager, tileSet, camera, configuration);
+        entity->OnCreate(animationManager, camera, configuration);
         AddEntity(id, std::move(entity));
     }
     else if (type == EntityType::Mole) {
         auto id = GenerateId();
         entity = std::make_unique<Entity::MoleEntity>(id, messageBus_);
-        entity->OnCreate(animationManager, tileSet, camera, configuration);
-        AddEntity(id, std::move(entity));
-    }
-    else if (type == EntityType::Static) {
-        auto id = GenerateId();
-        entity = std::make_unique<Entity::StaticEntity>(id, messageBus_);
-        entity->OnCreate(animationManager, tileSet, camera, configuration);
+        entity->OnCreate(animationManager, camera, configuration);
         AddEntity(id, std::move(entity));
     }
 }

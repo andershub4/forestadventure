@@ -173,7 +173,6 @@
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Misc\Random.h" />
     <ClInclude Include="Resource\AnimationManager.h" />
-    <ClInclude Include="Resource\TileSet.h" />
     <ClInclude Include="Scene\ComponentId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Scene\Manager.h" />
@@ -204,7 +203,9 @@
     <ClInclude Include="Entity\Components\Sprite\BasicSprite.h" />
     <ClInclude Include="System\EntitySystem.h" />
     <ClInclude Include="System\InputSystem.h" />
+    <ClInclude Include="Tile\TileMapData.h" />
     <ClInclude Include="Tile\TileMap.h" />
+    <ClInclude Include="Tile\TileMapReader.h" />
     <ClInclude Include="Tile\TmxParser.h" />
     <ClInclude Include="Tile\TsxParser.h" />
     <ClInclude Include="Utils\Logger.h" />
@@ -232,7 +233,6 @@
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Misc\Random.cpp" />
     <ClCompile Include="Resource\AnimationManager.cpp" />
-    <ClCompile Include="Resource\TileSet.cpp" />
     <ClCompile Include="Scene\Manager.cpp" />
     <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
     <ClCompile Include="Scene\Scenes\IntroScene.cpp" />
@@ -260,6 +260,7 @@
     <ClCompile Include="System\EntitySystem.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />
+    <ClCompile Include="Tile\TileMapReader.cpp" />
     <ClCompile Include="Tile\TmxParser.cpp" />
     <ClCompile Include="Tile\TsxParser.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />

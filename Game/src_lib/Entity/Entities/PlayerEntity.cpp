@@ -28,8 +28,7 @@ PlayerEntity::PlayerEntity(EntityId id, MessageBus& messageBus)
 
 PlayerEntity::~PlayerEntity() = default;
 
-void PlayerEntity::OnCreate(AnimationManager& animationManager, TileSet& tileSet, Camera& camera,
-                            const Configuration& configuration)
+void PlayerEntity::OnCreate(AnimationManager& animationManager, Camera& camera, const Configuration& configuration)
 {
     camera.Follow(this);
     auto animationFactory = animationManager.GetFactory(AnimationType::Player);

@@ -18,11 +18,9 @@ namespace FA {
 
 Level::Level(MessageBus &messageBus, TextureManager &textureManager)
     : animationManager_(textureManager)
-    , tileSet_(textureManager)
     , entitySystem_(messageBus)
-    , tileMap_(tileSet_)
-    , tmxParser_("assets/map/test.tmx")
-    , tsxParser_("assets/map/tileset.tsx")
+    , tileMapReader_("assets/map/test.tmx")
+    , textureManager_(textureManager)
 {}
 
 Level::~Level() = default;
@@ -34,7 +32,7 @@ void Level::Update(float deltaTime)
 
 void Level::DrawTo(sf::RenderTarget &renderTarget)
 {
-    tileMap_.DrawTo(renderTarget);
+    tileMap_->DrawTo(renderTarget);
     entitySystem_.DrawTo(renderTarget);
 }
 
@@ -44,19 +42,16 @@ void Level::Create(Camera &camera)
 
     std::vector<Entity::Configuration> configurations = {
         {EntityType::Player, {8 * 56 * 2, 8 * 56}, FaceDirection::Down, 120.0, TileType::None},
-        {EntityType::Mole, {8 * 32, 8 * 32}, FaceDirection::Right, 120.0, TileType::None},
-        {EntityType::Static, {8 * 64, 8 * 10}, FaceDirection::Down, 0.0, TileType::Stone},
-        {EntityType::Static, {8 * 68, 8 * 10}, FaceDirection::Down, 0.0, TileType::Stone},
-        {EntityType::Static, {8 * 64, 8 * 14}, FaceDirection::Down, 0.0, TileType::Stone},
-        {EntityType::Static, {8 * 68, 8 * 14}, FaceDirection::Down, 0.0, TileType::Stone}};
+        {EntityType::Mole, {8 * 32, 8 * 32}, FaceDirection::Right, 120.0, TileType::None}};
 
     for (const auto &configuration : configurations) {
-        entitySystem_.Create(animationManager_, tileSet_, camera, configuration);
+        entitySystem_.Create(animationManager_, camera, configuration);
     }
 
-    tileMap_.Load();
-    tmxParser_.Load();
-    tsxParser_.Load();
+    tileMapReader_.Load(textureManager_);
+    auto tileMapData = tileMapReader_.GetTileMapData();
+    tileMap_ = std::make_unique<Tile::TileMap>(tileMapData);
+    tileMap_->Load();
 }
 
 void Level::EnableInput(bool enable)
@@ -66,7 +61,7 @@ void Level::EnableInput(bool enable)
 
 sf::Vector2u Level::GetSize() const
 {
-    return tileMap_.GetSize();
+    return tileMap_->GetSize();
 }
 
 }  // namespace FA

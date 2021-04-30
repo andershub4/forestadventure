@@ -153,9 +153,6 @@
     <ClCompile Include="Entity\Entities\StaticEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\TileSet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Level\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -172,6 +169,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Tile\TsxParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile\TileMapReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -347,9 +347,6 @@
     <ClInclude Include="Entity\Entities\StaticEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\TileSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Enum\TileType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -378,6 +375,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tile\TsxParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile\TileMapReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile\TileMapData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
