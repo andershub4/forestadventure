@@ -25,10 +25,14 @@ bool TsxParser::Load()
     tinyxml2::XMLDocument xmlDoc;
     xmlDoc.LoadFile(fileName_.c_str());
 
-    tinyxml2::XMLElement* tileSetElement = xmlDoc.FirstChildElement("tileset");
-    ParseTileSetElement(tileSetElement);
-
-    return true;
+    if (xmlDoc.Error()) {
+        return false;
+    }
+    else {
+        tinyxml2::XMLElement* tileSetElement = xmlDoc.FirstChildElement("tileset");
+        ParseTileSetElement(tileSetElement);
+        return true;
+    }
 }
 
 void TsxParser::ParseTileSetElement(tinyxml2::XMLElement* tileSetElement)

@@ -25,10 +25,14 @@ bool TmxParser::Load()
     tinyxml2::XMLDocument xmlDoc;
     xmlDoc.LoadFile(fileName_.c_str());
 
-    tinyxml2::XMLElement* map = xmlDoc.FirstChildElement("map");
-    ParseMapElement(map);
-
-    return true;
+    if (xmlDoc.Error()) {
+        return false;
+    }
+    else {
+        tinyxml2::XMLElement* map = xmlDoc.FirstChildElement("map");
+        ParseMapElement(map);
+        return true;
+    }
 }
 
 void TmxParser::ParseMapElement(tinyxml2::XMLElement* mapElement)

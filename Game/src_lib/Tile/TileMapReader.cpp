@@ -25,11 +25,15 @@ void TileMapReader::Load(TextureManager& textureManager)
 {
     LOG_INFO("Parse ", fileName_);
     TmxParser tmxParser(fileName_);
-    tmxParser.Load();
-
-    ReadMapProperties(tmxParser);
-    ReadTileSets(tmxParser, textureManager);
-    ReadLayers(tmxParser);
+    
+    if (tmxParser.Load()) {
+        ReadMapProperties(tmxParser);
+        ReadTileSets(tmxParser, textureManager);
+        ReadLayers(tmxParser);
+    }
+    else {
+        LOG_ERROR("Can not load: ", fileName_);
+    }
 }
 
 void TileMapReader::ReadMapProperties(const TmxParser& tmxParser)
