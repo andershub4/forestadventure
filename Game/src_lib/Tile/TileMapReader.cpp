@@ -10,6 +10,7 @@
 #include "TmxParser.h"
 #include "TsxParser.h"
 #include "Utils/Logger.h"
+#include "Utils/Path.h"
 
 namespace FA {
 
@@ -55,16 +56,18 @@ void TileMapReader::ReadTileSets(const TmxParser& tmxParser, TextureManager& tex
         }
 
         auto parsedSet = tmxParser.tileSets_[0];
-        TsxParser tsxParser("assets/map/tileset.tsx");
-        // TsxParser tsxParser(parsedSet.source_);
+        auto tmxDir = GetHead(fileName_);
+        auto tsxFilePath = GetFilePath(tmxDir, parsedSet.source_);
+        TsxParser tsxParser(tsxFilePath);
         if (tsxParser.Load()) {
             auto firstGid = parsedSet.firstGid_;
             TileMapData::TileSet set;
             set.tileWidth_ = tsxParser.tileSet_.tileWidth_;
             set.tileHeight_ = tsxParser.tileSet_.tileHeight_;
             set.columns_ = tsxParser.tileSet_.columns_;
-            set.texture_ = textureManager.GetTexture("assets/tiny-RPG-forest-files/PNG/environment/tileset.png");
-            // set.texture_ = textureManager.GetTexture(tsxParser.image_.source_);
+            auto tsxDir = GetHead(tsxFilePath);
+            auto textureFilePath = GetFilePath(tsxDir, tsxParser.image_.source_);
+            set.texture_ = textureManager.GetTexture(textureFilePath);
             tileMapData_.tileSets_[firstGid] = set;
         }
         else {
@@ -81,6 +84,22 @@ void TileMapReader::ReadLayers(const TmxParser& tmxParser)
         layer.tileIds_ = parsedLayer.tileIds_;
         tileMapData_.layers_.push_back(layer);
     }
+}
+
+std::string TileMapReader::GetFilePath(const std::string& baseDir, const std::string &source) const
+{
+    auto head = baseDir;
+    auto tail = source;
+
+    std::string moveBackMatch = "../";
+    auto index = tail.find(moveBackMatch);
+    while (index != std::string::npos) {
+        head = GetHead(head);
+        tail = tail.substr(index + moveBackMatch.size());
+        index = tail.find(moveBackMatch);
+    }
+
+    return head + '/' + tail;
 }
 
 }  // namespace Tile

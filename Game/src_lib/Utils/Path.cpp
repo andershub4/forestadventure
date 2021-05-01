@@ -10,10 +10,13 @@
 
 std::string GetHead(const std::string& filePath)
 {
-    std::size_t pos = filePath.find_last_of("\\/");
-    std::string path = filePath.substr(0, pos);
+    std::string result;
+    const size_t index = filePath.find_last_of("\\/");
+    if (index != std::string::npos) {
+        result = filePath.substr(0, index);
+    }
 
-    return path;
+    return result;
 }
 
 std::string GetExeFileName()
