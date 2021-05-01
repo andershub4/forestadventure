@@ -41,7 +41,7 @@ private:
 
 private:
     TileInfo GetTileInfo(int id);
-    void ApplyTile(const TileInfo &tileInfo, float x, float y, sf::RenderTexture &mapTexture);
+    void ApplyTile(const TileInfo &tileInfo, const sf::Vector2i &position, sf::RenderTexture &mapTexture);
 };
 
 }  // namespace Tile

@@ -25,8 +25,8 @@ public:
     struct Map
     {
         std::string renderOrder_{};
-        float width_{};
-        float height_{};
+        int width_{};
+        int height_{};
         int tileWidth_{};
         int tileHeight_{};
     };

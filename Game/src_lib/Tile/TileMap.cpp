@@ -34,7 +34,7 @@ void TileMap::Load()
             auto x = (inx % nCols) * tileWidth * scale;
             auto y = (inx / nCols) * tileHeight * scale;
             auto tileInfo = GetTileInfo(tileId);
-            ApplyTile(tileInfo, x, y, mapTexture_);
+            ApplyTile(tileInfo, sf::Vector2i(x, y), mapTexture_);
             inx++;
         }
     }
@@ -67,14 +67,14 @@ TileMap::TileInfo TileMap::GetTileInfo(int id)
     return {texture, uvRect};
 }
 
-void TileMap::ApplyTile(const TileMap::TileInfo& tileInfo, float x, float y, sf::RenderTexture& mapTexture)
+void TileMap::ApplyTile(const TileMap::TileInfo& tileInfo, const sf::Vector2i& position, sf::RenderTexture& mapTexture)
 {
     sf::Sprite tile;
 
     if (tileInfo.texture_ != nullptr) {
         tile.setTexture(*tileInfo.texture_);
         tile.setTextureRect(tileInfo.uvRect_);
-        tile.setPosition(x, y);
+        tile.setPosition(static_cast<sf::Vector2f>(position));
         tile.setScale(scale, scale);
         mapTexture.draw(tile);
     }
