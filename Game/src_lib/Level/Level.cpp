@@ -16,11 +16,10 @@
 
 namespace FA {
 
-Level::Level(MessageBus &messageBus, TextureManager &textureManager)
+Level::Level(MessageBus &messageBus, const Tile::TileMapData &tileMapData, TextureManager &textureManager)
     : animationManager_(textureManager)
     , entitySystem_(messageBus)
-    , tileMapReader_("assets/map/test.tmx")
-    , textureManager_(textureManager)
+    , tileMap_(tileMapData)
 {}
 
 Level::~Level() = default;
@@ -32,7 +31,7 @@ void Level::Update(float deltaTime)
 
 void Level::DrawTo(sf::RenderTarget &renderTarget)
 {
-    tileMap_->DrawTo(renderTarget);
+    tileMap_.DrawTo(renderTarget);
     entitySystem_.DrawTo(renderTarget);
 }
 
@@ -48,10 +47,7 @@ void Level::Create(Camera &camera)
         entitySystem_.Create(animationManager_, camera, configuration);
     }
 
-    tileMapReader_.Load(textureManager_);
-    auto tileMapData = tileMapReader_.GetTileMapData();
-    tileMap_ = std::make_unique<Tile::TileMap>(tileMapData);
-    tileMap_->Load();
+    tileMap_.Load();
 }
 
 void Level::EnableInput(bool enable)
@@ -61,7 +57,7 @@ void Level::EnableInput(bool enable)
 
 sf::Vector2u Level::GetSize() const
 {
-    return tileMap_->GetSize();
+    return tileMap_.GetSize();
 }
 
 }  // namespace FA

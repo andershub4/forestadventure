@@ -16,20 +16,21 @@ namespace FA {
 
 namespace Tile {
 
-TileMapReader::TileMapReader(const std::string& fileName)
+TileMapReader::TileMapReader(const std::string& fileName, TextureManager& textureManager)
     : fileName_(fileName)
+    , textureManager_(textureManager)
 {}
 
 TileMapReader::~TileMapReader() = default;
 
-void TileMapReader::Load(TextureManager& textureManager)
+void TileMapReader::Load()
 {
     LOG_INFO("Parse ", fileName_);
     TmxParser tmxParser(fileName_);
-    
+
     if (tmxParser.Load()) {
         ReadMapProperties(tmxParser);
-        ReadTileSets(tmxParser, textureManager);
+        ReadTileSets(tmxParser, textureManager_);
         ReadLayers(tmxParser);
     }
     else {
@@ -86,7 +87,7 @@ void TileMapReader::ReadLayers(const TmxParser& tmxParser)
     }
 }
 
-std::string TileMapReader::GetFilePath(const std::string& baseDir, const std::string &source) const
+std::string TileMapReader::GetFilePath(const std::string& baseDir, const std::string& source) const
 {
     auto head = baseDir;
     auto tail = source;

@@ -8,8 +8,6 @@
 
 #include <string>
 
-#include <SFML/Graphics/Rect.hpp>
-
 #include "Fwd/SfmlFwd.h"
 #include "TileMapData.h"
 
@@ -24,15 +22,16 @@ class TmxParser;
 class TileMapReader
 {
 public:
-    TileMapReader(const std::string& fileName);
+    TileMapReader(const std::string& fileName, TextureManager& textureManager);
     ~TileMapReader();
 
-    void Load(TextureManager& textureManager);
+    void Load();
     TileMapData GetTileMapData() const { return tileMapData_; }
 
 private:
     std::string fileName_{};
     TileMapData tileMapData_;
+    TextureManager& textureManager_;
 
 private:
     void ReadMapProperties(const TmxParser& tmxParser);
