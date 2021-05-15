@@ -81,7 +81,7 @@ void TileMapReader::ReadLayers(const TmxParser& tmxParser)
 {
     for (auto& parsedLayer : tmxParser.layers_) {
         TileMapData::Layer layer;
-        layer.id_ = parsedLayer.id_;
+        layer.name_ = parsedLayer.name_;
         layer.tileIds_ = parsedLayer.tileIds_;
         tileMapData_.layers_.push_back(layer);
     }

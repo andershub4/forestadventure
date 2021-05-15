@@ -25,7 +25,7 @@ void TileMap::Create()
 
     for (const auto& layer : tileMapData_.layers_) {
         int inx = 0;
-        auto layerId = layer.id_;
+        auto layerName = layer.name_;
         for (auto it = layer.tileIds_.begin(); layer.tileIds_.end() != it; ++it, ++inx) {
             auto tileId = *it;
             if (tileId == 0) continue;
@@ -39,15 +39,15 @@ void TileMap::Create()
                 tile.setTextureRect(tileInfo.uvRect_);
                 tile.setPosition(x, y);
                 tile.setScale(scale, scale);
-                layers_[layerId].push_back(tile);
+                layers_[layerName].push_back(tile);
             }
         }
     }
 }
 
-std::vector<sf::Sprite> TileMap::GetLayer(int layerId)
+std::vector<sf::Sprite> TileMap::GetLayer(const std::string& name)
 {
-    return layers_.at(layerId);
+    return layers_.at(name);
 }
 
 sf::Vector2u TileMap::GetSize() const

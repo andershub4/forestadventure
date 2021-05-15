@@ -39,7 +39,7 @@ struct TileMapData
 
     struct Layer
     {
-        int id_{};
+        std::string name_{};
         std::vector<int> tileIds_;
     };
 

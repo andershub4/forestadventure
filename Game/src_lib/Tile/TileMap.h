@@ -7,6 +7,7 @@
 #pragma once
 
 #include <map>
+#include <string>
 #include <vector>
 
 #include <SFML/Graphics/Sprite.hpp>
@@ -24,7 +25,7 @@ public:
     TileMap(const TileMapData &tileMapData);
     ~TileMap();
     void Create();
-    std::vector<sf::Sprite> GetLayer(int layerId);
+    std::vector<sf::Sprite> GetLayer(const std::string &name);
     sf::Vector2u GetSize() const;
 
 private:
@@ -37,7 +38,7 @@ private:
     static const unsigned int scale{2};
 
     TileMapData tileMapData_;
-    std::map<unsigned int, std::vector<sf::Sprite>> layers_;
+    std::map<std::string, std::vector<sf::Sprite>> layers_;
 
 private:
     TileInfo GetTileInfo(int id);

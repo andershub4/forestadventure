@@ -53,16 +53,16 @@ void Level::Create(Camera &camera)
     tileMap_.Create();
 
     backgroundTexture_.create(tileMap_.GetSize().x, tileMap_.GetSize().y);
-    for (const auto &tile : tileMap_.GetLayer(3)) {
+    for (const auto &tile : tileMap_.GetLayer("Ground Layer 1")) {
         backgroundTexture_.draw(tile);
     }
-    for (const auto &tile : tileMap_.GetLayer(4)) {
+    for (const auto &tile : tileMap_.GetLayer("Ground Layer 2")) {
         backgroundTexture_.draw(tile);
     }
     backgroundTexture_.display();
     backgroundSprite_.setTexture(backgroundTexture_.getTexture());
 
-    fringeLayer_ = tileMap_.GetLayer(5);
+    fringeLayer_ = tileMap_.GetLayer("Fringe Layer");
 }
 
 void Level::EnableInput(bool enable)
