@@ -6,6 +6,9 @@
 
 #pragma once
 
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+
 #include "Fwd/SfmlFwd.h"
 #include "Resource/AnimationManager.h"
 #include "System/EntitySystem.h"
@@ -35,6 +38,9 @@ public:
     sf::Vector2u GetSize() const;
 
 private:
+    sf::RenderTexture backgroundTexture_;
+    sf::Sprite backgroundSprite_;
+    std::vector<sf::Sprite> fringeLayer_;
     AnimationManager animationManager_;
     EntitySystem entitySystem_;
     Tile::TileMap tileMap_;

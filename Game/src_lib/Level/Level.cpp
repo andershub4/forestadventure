@@ -31,8 +31,11 @@ void Level::Update(float deltaTime)
 
 void Level::DrawTo(sf::RenderTarget &renderTarget)
 {
-    tileMap_.DrawTo(renderTarget);
+    renderTarget.draw(backgroundSprite_);
     entitySystem_.DrawTo(renderTarget);
+    for (const auto &tile : fringeLayer_) {
+        renderTarget.draw(tile);
+    }
 }
 
 void Level::Create(Camera &camera)
@@ -47,7 +50,19 @@ void Level::Create(Camera &camera)
         entitySystem_.Create(animationManager_, camera, configuration);
     }
 
-    tileMap_.Load();
+    tileMap_.Create();
+
+    backgroundTexture_.create(tileMap_.GetSize().x, tileMap_.GetSize().y);
+    for (const auto &tile : tileMap_.GetLayer(3)) {
+        backgroundTexture_.draw(tile);
+    }
+    for (const auto &tile : tileMap_.GetLayer(4)) {
+        backgroundTexture_.draw(tile);
+    }
+    backgroundTexture_.display();
+    backgroundSprite_.setTexture(backgroundTexture_.getTexture());
+
+    fringeLayer_ = tileMap_.GetLayer(5);
 }
 
 void Level::EnableInput(bool enable)

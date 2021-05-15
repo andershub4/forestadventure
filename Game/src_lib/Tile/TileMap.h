@@ -6,24 +6,25 @@
 
 #pragma once
 
-#include <SFML/Graphics/RenderTexture.hpp>
+#include <map>
+#include <vector>
+
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Fwd/SfmlFwd.h"
+#include "TileMapData.h"
 
 namespace FA {
 
 namespace Tile {
-
-struct TileMapData;
 
 class TileMap
 {
 public:
     TileMap(const TileMapData &tileMapData);
     ~TileMap();
-    void Load();
-    void DrawTo(sf::RenderTarget &renderTarget);
+    void Create();
+    std::vector<sf::Sprite> GetLayer(int layerId);
     sf::Vector2u GetSize() const;
 
 private:
@@ -35,13 +36,11 @@ private:
 
     static const unsigned int scale{2};
 
-    sf::Sprite tileMap_;
-    sf::RenderTexture mapTexture_;
-    const TileMapData &tileMapData_;
+    TileMapData tileMapData_;
+    std::map<unsigned int, std::vector<sf::Sprite>> layers_;
 
 private:
     TileInfo GetTileInfo(int id);
-    void ApplyTile(const TileInfo &tileInfo, const sf::Vector2i &position, sf::RenderTexture &mapTexture);
 };
 
 }  // namespace Tile
