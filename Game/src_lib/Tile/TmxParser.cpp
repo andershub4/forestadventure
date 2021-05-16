@@ -83,6 +83,7 @@ void TmxParser::ParseLayerElement(tinyxml2::XMLElement* layerElement, Layer& lay
     LOG_INFO("layer.height_: ", layer.height_);
 
     auto dataElement = layerElement->FirstChildElement("data");
+    layer.tileIds_.reserve(layer.width_ * layer.height_);
     ParseDataElement(dataElement, layer.tileIds_);
 }
 
@@ -97,7 +98,6 @@ void TmxParser::ParseDataElement(tinyxml2::XMLElement* dataElement, std::vector<
     }
 
     ids.push_back(std::stoi(text));
-
 }
 
 }  // namespace Tile
