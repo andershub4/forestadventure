@@ -45,7 +45,7 @@ void TileMap::Create()
     }
 }
 
-std::vector<sf::Sprite> TileMap::GetLayer(const std::string& name)
+const std::vector<sf::Sprite>& TileMap::GetLayer(const std::string& name)
 {
     return layers_.at(name);
 }

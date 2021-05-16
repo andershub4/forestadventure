@@ -25,7 +25,7 @@ public:
     TileMap(const TileMapData &tileMapData);
     ~TileMap();
     void Create();
-    std::vector<sf::Sprite> GetLayer(const std::string &name);
+    const std::vector<sf::Sprite>& GetLayer(const std::string &name);
     sf::Vector2u GetSize() const;
 
 private:
