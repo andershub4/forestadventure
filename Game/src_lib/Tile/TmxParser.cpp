@@ -95,6 +95,9 @@ void TmxParser::ParseDataElement(tinyxml2::XMLElement* dataElement, std::vector<
         ids.push_back(std::stoi(id));
         text.erase(0, pos + 1);
     }
+
+    ids.push_back(std::stoi(text));
+
 }
 
 }  // namespace Tile
