@@ -1,20 +1,10 @@
 #include "EntitySystem.h"
 
-#include "Entity/Configuration.h"
-#include "Entity/Entities/MoleEntity.h"
-#include "Entity/Entities/PlayerEntity.h"
-#include "Entity/Entities/StaticEntity.h"
-#include "Level/Camera.h"
-#include "Message/MessageBus.h"
-#include "Resource/AnimationManager.h"
-#include "Tile/TileMap.h"
 #include "Utils/Logger.h"
 
 namespace FA {
 
-EntitySystem::EntitySystem(MessageBus& messageBus)
-    : messageBus_(messageBus)
-{}
+EntitySystem::EntitySystem() = default;
 
 EntitySystem::~EntitySystem()
 {
@@ -47,36 +37,11 @@ void EntitySystem::AddEntity(Entity::EntityId entityId, std::unique_ptr<Entity::
     }
 }
 
-void EntitySystem::Create(AnimationManager& animationManager, Camera& camera,
-                          const Entity::Configuration& configuration)
-{
-    auto type = configuration.entityType_;
-    std::unique_ptr<Entity::BasicEntity> entity = nullptr;
-
-    if (type == EntityType::Player) {
-        auto id = GenerateId();
-        entity = std::make_unique<Entity::PlayerEntity>(id, messageBus_);
-        entity->OnCreate(animationManager, camera, configuration);
-        AddEntity(id, std::move(entity));
-    }
-    else if (type == EntityType::Mole) {
-        auto id = GenerateId();
-        entity = std::make_unique<Entity::MoleEntity>(id, messageBus_);
-        entity->OnCreate(animationManager, camera, configuration);
-        AddEntity(id, std::move(entity));
-    }
-}
-
 void EntitySystem::EnableInput(bool enable)
 {
     for (const auto& entry : entityMap_) {
         entry.second->EnableInput(enable);
     }
-}
-
-Entity::EntityId EntitySystem::GenerateId()
-{
-    return entityId_++;
 }
 
 }  // namespace FA

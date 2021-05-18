@@ -152,6 +152,7 @@
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
     <ClInclude Include="Entity\Entities\StaticEntity.h" />
+    <ClInclude Include="Entity\Factory.h" />
     <ClInclude Include="Entity\Id.h" />
     <ClInclude Include="Entity\StateMachine.h" />
     <ClInclude Include="Entity\States\AttackState.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="Entity\Entities\MoleEntity.cpp" />
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />
+    <ClCompile Include="Entity\Factory.cpp" />
     <ClCompile Include="Entity\StateMachine.cpp" />
     <ClCompile Include="Entity\States\BasicState.cpp" />
     <ClCompile Include="Entity\States\AttackState.cpp" />

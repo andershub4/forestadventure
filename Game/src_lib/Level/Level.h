@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "Entity/Factory.h"
 #include "Fwd/SfmlFwd.h"
 #include "Resource/AnimationManager.h"
 #include "System/EntitySystem.h"
@@ -27,13 +28,13 @@ class Camera;
 class Level
 {
 public:
-    Level(MessageBus& messageBus, const Tile::TileMapData& tileMapData, TextureManager& textureManager);
+    Level(const Tile::TileMapData& tileMapData, TextureManager& textureManager);
     ~Level();
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
 
-    void Create(Camera& camera);
+    void Create(Camera& camera, MessageBus& messageBus);
     void EnableInput(bool enable);
     sf::Vector2u GetSize() const;
 
@@ -44,6 +45,7 @@ private:
     AnimationManager animationManager_;
     EntitySystem entitySystem_;
     Tile::TileMap tileMap_;
+    Entity::Factory factory_;
 };
 
 }  // namespace FA

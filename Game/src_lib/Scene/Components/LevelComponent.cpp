@@ -24,8 +24,8 @@ LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureMa
 {
     tileMapReader_.Load();
     auto tileMapData = tileMapReader_.GetTileMapData();
-    level_ = std::make_unique<Level>(messageBus, tileMapData, textureManager);
-    level_->Create(camera_);
+    level_ = std::make_unique<Level>(tileMapData, textureManager);
+    level_->Create(camera_, messageBus);
 }
 
 LevelComponent::~LevelComponent() = default;

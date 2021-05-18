@@ -17,29 +17,19 @@ namespace FA {
 
 class MessageBus;
 
-namespace Entity {
-struct Configuration;
-}
-
 class EntitySystem
 {
 public:
-    EntitySystem(MessageBus &messageBus);
+    EntitySystem();
     ~EntitySystem();
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
-    void Create(AnimationManager &animationManager, Camera &camera, const Entity::Configuration &configuration);
     void EnableInput(bool enable);
-
-private:
-    MessageBus &messageBus_;
-    std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
-    Entity::EntityId entityId_ = 0;
-
-private:
-    Entity::EntityId GenerateId();
     void AddEntity(Entity::EntityId entityId, std::unique_ptr<Entity::BasicEntity> entity);
+
+private:
+    std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
 };
 
 }  // namespace FA

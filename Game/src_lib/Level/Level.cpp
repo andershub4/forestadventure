@@ -16,9 +16,8 @@
 
 namespace FA {
 
-Level::Level(MessageBus &messageBus, const Tile::TileMapData &tileMapData, TextureManager &textureManager)
+Level::Level(const Tile::TileMapData &tileMapData, TextureManager &textureManager)
     : animationManager_(textureManager)
-    , entitySystem_(messageBus)
     , tileMap_(tileMapData)
 {}
 
@@ -38,7 +37,7 @@ void Level::DrawTo(sf::RenderTarget &renderTarget)
     }
 }
 
-void Level::Create(Camera &camera)
+void Level::Create(Camera &camera, MessageBus &messageBus)
 {
     animationManager_.RegisterFactories();
 
@@ -46,8 +45,13 @@ void Level::Create(Camera &camera)
         {EntityType::Player, {8 * 56 * 2, 8 * 56}, FaceDirection::Down, 120.0, TileType::None},
         {EntityType::Mole, {8 * 32, 8 * 32}, FaceDirection::Right, 120.0, TileType::None}};
 
+    Entity::EntityId id = 0;
     for (const auto &configuration : configurations) {
-        entitySystem_.Create(animationManager_, camera, configuration);
+        auto type = configuration.entityType_;
+        auto entity = factory_.Create(type, id, messageBus);
+        entity->OnCreate(animationManager_, camera, configuration);
+        entitySystem_.AddEntity(id, std::move(entity));
+        id++;
     }
 
     tileMap_.Create();
