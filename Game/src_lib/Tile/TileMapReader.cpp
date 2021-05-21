@@ -32,6 +32,7 @@ void TileMapReader::Load()
         ReadMapProperties(tmxParser);
         ReadTileSets(tmxParser, textureManager_);
         ReadLayers(tmxParser);
+        ReadObjectGroups(tmxParser);
     }
     else {
         LOG_ERROR("Can not load: ", fileName_);
@@ -84,6 +85,26 @@ void TileMapReader::ReadLayers(const TmxParser& tmxParser)
         layer.name_ = parsedLayer.name_;
         layer.tileIds_ = parsedLayer.tileIds_;
         tileMapData_.layers_.push_back(layer);
+    }
+}
+
+void TileMapReader::ReadObjectGroups(const TmxParser& tmxParser)
+{
+    for (auto& parsedObjectGroup : tmxParser.objectGroups_) {
+        TileMapData::ObjectGroup group;
+        group.name_ = parsedObjectGroup.name_;
+        for (auto& parsedObject : parsedObjectGroup.objects_) {
+            TileMapData::Object object;
+            object.typeStr_ = parsedObject.type_;
+            object.position_ = sf::Vector2u(parsedObject.x_, parsedObject.y_);
+            for (auto& parsedProperty : parsedObject.properties_) {
+                auto key = parsedProperty.first;
+                auto value = parsedProperty.second;
+                object.properties_[key] = value;
+            }
+            group.objects_.push_back(object);
+        }
+        tileMapData_.objectGroups_.push_back(group);
     }
 }
 

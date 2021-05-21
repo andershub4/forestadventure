@@ -41,20 +41,20 @@ void Level::Create(Camera &camera, MessageBus &messageBus)
 {
     animationManager_.RegisterFactories();
 
-    std::vector<Entity::Configuration> configurations = {
-        {EntityType::Player, {8 * 56 * 2, 8 * 56}, FaceDirection::Down, 120.0, TileType::None},
-        {EntityType::Mole, {8 * 32, 8 * 32}, FaceDirection::Right, 120.0, TileType::None}};
+    tileMap_.Create();
 
     Entity::EntityId id = 0;
-    for (const auto &configuration : configurations) {
-        auto type = configuration.entityType_;
+    for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
+        auto type = objectData.type_;
         auto entity = factory_.Create(type, id, messageBus);
+        Entity::Configuration configuration;
+        configuration.position_ = objectData.position_;
+        configuration.faceDir_ = objectData.faceDir_;
+        configuration.velocity_ = 120.0;
         entity->OnCreate(animationManager_, camera, configuration);
         entitySystem_.AddEntity(id, std::move(entity));
         id++;
     }
-
-    tileMap_.Create();
 
     backgroundTexture_.create(tileMap_.GetSize().x, tileMap_.GetSize().y);
     for (const auto &tile : tileMap_.GetLayer("Ground Layer 1")) {

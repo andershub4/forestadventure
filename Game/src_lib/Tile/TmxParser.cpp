@@ -61,6 +61,14 @@ void TmxParser::ParseMapElement(tinyxml2::XMLElement* mapElement)
         layers_.push_back(layer);
         layerElement = layerElement->NextSiblingElement("layer");
     }
+
+    tinyxml2::XMLElement* objectGroupElement = mapElement->FirstChildElement("objectgroup");
+    while (objectGroupElement != nullptr) {
+        Group group;
+        ParseObjectGroupElement(objectGroupElement, group);
+        objectGroups_.push_back(group);
+        objectGroupElement = objectGroupElement->NextSiblingElement("objectGroup");
+    }
 }
 
 void TmxParser::ParseTileSetElement(tinyxml2::XMLElement* tileSetElement, TileSet& tileSet)
@@ -98,6 +106,51 @@ void TmxParser::ParseDataElement(tinyxml2::XMLElement* dataElement, std::vector<
     }
 
     ids.push_back(std::stoi(text));
+}
+
+void TmxParser::ParseObjectGroupElement(tinyxml2::XMLElement* objectGroupElement, Group& group)
+{
+    objectGroupElement->QueryAttribute("id", &group.id_);
+    group.name_ = objectGroupElement->Attribute("name");
+
+    tinyxml2::XMLElement* objectElement = objectGroupElement->FirstChildElement("object");
+    while (objectElement != nullptr) {
+        Object object;
+        ParseObjectElement(objectElement, object);
+        group.objects_.push_back(object);
+        objectElement = objectElement->NextSiblingElement("object");
+    }
+}
+
+void TmxParser::ParseObjectElement(tinyxml2::XMLElement* objectElement, Object& object)
+{
+    objectElement->QueryAttribute("id", &object.id_);
+    object.type_ = objectElement->Attribute("type");
+    objectElement->QueryAttribute("x", &object.x_);
+    objectElement->QueryAttribute("y", &object.y_);
+    LOG_INFO("object.id_: ", object.id_);
+    LOG_INFO("object.type_: ", object.type_);
+    LOG_INFO("object.x_: ", object.x_);
+    LOG_INFO("object.y_: ", object.y_);
+
+    tinyxml2::XMLElement* propertiesElement = objectElement->FirstChildElement("properties");
+    if (propertiesElement) {
+        tinyxml2::XMLElement* propertyElement = propertiesElement->FirstChildElement("property");
+        while (propertyElement != nullptr) {
+            Object::Property prop;
+            ParsePropertyElement(propertyElement, prop);
+            object.properties_.push_back(prop);
+            propertyElement = propertyElement->NextSiblingElement("property");
+        }
+    }
+}
+
+void TmxParser::ParsePropertyElement(tinyxml2::XMLElement* propertyElement, Object::Property& prop)
+{
+    auto name = propertyElement->Attribute("name");
+    auto value = propertyElement->Attribute("value");
+    prop = {name, value};
+    LOG_INFO("prop.name_: ", prop.first, " prop.value_: ", prop.second);
 }
 
 }  // namespace Tile

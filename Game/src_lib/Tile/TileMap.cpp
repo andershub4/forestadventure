@@ -43,11 +43,29 @@ void TileMap::Create()
             }
         }
     }
+
+    for (const auto& group : tileMapData_.objectGroups_) {
+        auto groupName = group.name_;
+        std::vector<TileMap::ObjectData> objectDatas;
+        for (const auto& object : group.objects_) {
+            TileMap::ObjectData objectData;
+            objectData.position_ = {object.position_.x * scale, object.position_.y * scale};
+            objectData.type_ = ObjTypeStrToEnum(object.typeStr_);
+            objectData.faceDir_ = FaceDirStrToEnum(object.properties_.at("FaceDirection"));
+            objectDatas.push_back(objectData);
+        }
+        objectGroups_[groupName] = objectDatas;
+    }
 }
 
 const std::vector<sf::Sprite>& TileMap::GetLayer(const std::string& name)
 {
     return layers_.at(name);
+}
+
+const std::vector<TileMap::ObjectData> TileMap::GetObjectGroup(const std::string& name)
+{
+    return objectGroups_.at(name);
 }
 
 sf::Vector2u TileMap::GetSize() const
@@ -73,6 +91,40 @@ TileMap::TileInfo TileMap::GetTileInfo(int id)
     sf::IntRect uvRect = {u, v, it->second.tileWidth_, it->second.tileHeight_};
 
     return {texture, uvRect};
+}
+
+EntityType TileMap::ObjTypeStrToEnum(const std::string& typeStr) const
+{
+    auto result = EntityType::Unknown;
+
+    if (typeStr == "Mole") {
+        result = EntityType::Mole;
+    }
+    else if (typeStr == "Player") {
+        result = EntityType::Player;
+    }
+
+    return result;
+}
+
+FaceDirection TileMap::FaceDirStrToEnum(const std::string& faceDirStr) const
+{
+    auto result = FaceDirection::Down;
+
+    if (faceDirStr == "Up") {
+        result = FaceDirection::Up;
+    }
+    else if (faceDirStr == "Down") {
+        result = FaceDirection::Down;
+    }
+    else if (faceDirStr == "Right") {
+        result = FaceDirection::Right;
+    }
+    else if (faceDirStr == "Left") {
+        result = FaceDirection::Left;
+    }
+
+    return result;
 }
 
 }  // namespace Tile

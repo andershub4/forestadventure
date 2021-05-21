@@ -9,6 +9,9 @@
 #include <map>
 #include <vector>
 
+#include <SFML/System/Vector2.hpp>
+
+#include "Enum/EntityType.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -44,6 +47,21 @@ struct TileMapData
     };
 
     std::vector<Layer> layers_;
+
+    struct Object
+    {
+        std::string typeStr_{};
+        sf::Vector2u position_{};
+        std::map<std::string, std::string> properties_;
+    };
+
+    struct ObjectGroup
+    {
+        std::string name_{};
+        std::vector<Object> objects_;
+    };
+
+    std::vector<ObjectGroup> objectGroups_;
 };
 
 }  // namespace Tile
