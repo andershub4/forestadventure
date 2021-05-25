@@ -24,8 +24,6 @@ struct TileMapData
         int tileHeight_{};
     };
 
-    MapProperties mapProperties_;
-
     struct TileSet
     {
         int tileWidth_{};
@@ -36,15 +34,11 @@ struct TileMapData
         int firstGid_{};
     };
 
-    std::vector<TileSet> tileSets_;
-
     struct Layer
     {
         std::string name_{};
         std::vector<int> tileIds_;
     };
-
-    std::vector<Layer> layers_;
 
     struct Object
     {
@@ -60,6 +54,9 @@ struct TileMapData
         std::vector<Object> objects_;
     };
 
+    MapProperties mapProperties_;
+    std::vector<TileSet> tileSets_;
+    std::vector<Layer> layers_;
     std::vector<ObjectGroup> objectGroups_;
 };
 
