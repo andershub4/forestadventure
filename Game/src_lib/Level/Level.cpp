@@ -18,7 +18,7 @@ namespace FA {
 
 Level::Level(const Tile::TileMapData &tileMapData, TextureManager &textureManager)
     : animationManager_(textureManager)
-    , tileMap_(tileMapData)
+    , tileMap_(tileMapData, textureManager)
 {}
 
 Level::~Level() = default;

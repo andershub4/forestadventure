@@ -6,20 +6,41 @@
 
 #include "TileMap.h"
 
+#include "Misc/TextureManager.h"
+
 namespace FA {
 
 namespace Tile {
 
-TileMap::TileMap(const TileMapData& tileMapData)
-    : tileMapData_(tileMapData)
+TileMap::TileMap(const TileMapData& tileMapData, TextureManager& textureManager)
+    : textureManager_(textureManager)
+    , tileMapData_(tileMapData)
 {}
 
 TileMap::~TileMap() = default;
 
 void TileMap::Create()
 {
+    CreateTileSets();
+    CreateLayers();
+    CreateObjectGroups();
+}
+
+void TileMap::CreateTileSets()
+{
+    for (const auto& tileSet : tileMapData_.tileSets_) {
+        TileMap::TileSet s;
+        s.firstGid_ = tileSet.firstGid_;
+        s.columns_ = tileSet.columns_;
+        s.tileSize_ = sf::Vector2u(tileSet.tileWidth_, tileSet.tileHeight_);
+        s.texture_ = textureManager_.GetTexture(tileSet.textureFilePath_);
+        tileSets_.push_back(s);
+    }
+}
+
+void TileMap::CreateLayers()
+{
     auto nCols = tileMapData_.mapProperties_.width_;
-    auto nRows = tileMapData_.mapProperties_.height_;
     auto tileWidth = tileMapData_.mapProperties_.tileWidth_;
     auto tileHeight = tileMapData_.mapProperties_.tileHeight_;
 
@@ -43,13 +64,16 @@ void TileMap::Create()
             }
         }
     }
+}
 
+void TileMap::CreateObjectGroups()
+{
     for (const auto& group : tileMapData_.objectGroups_) {
         auto groupName = group.name_;
         std::vector<TileMap::ObjectData> objectDatas;
         for (const auto& object : group.objects_) {
             TileMap::ObjectData objectData;
-            objectData.position_ = {object.position_.x * scale, object.position_.y * scale};
+            objectData.position_ = {object.x_ * scale, object.y_ * scale};
             objectData.type_ = ObjTypeStrToEnum(object.typeStr_);
             objectData.faceDir_ = FaceDirStrToEnum(object.properties_.at("FaceDirection"));
             objectDatas.push_back(objectData);
@@ -80,15 +104,15 @@ sf::Vector2u TileMap::GetSize() const
 
 TileMap::TileInfo TileMap::GetTileInfo(int id)
 {
-    auto it = tileMapData_.tileSets_.begin();
+    auto it = tileSets_.begin();
     id--;
 
-    auto texture = it->second.texture_;
-    auto column = id % it->second.columns_;
-    auto row = id / it->second.columns_;
-    auto u = column * it->second.tileWidth_;
-    auto v = row * it->second.tileHeight_;
-    sf::IntRect uvRect = {u, v, it->second.tileWidth_, it->second.tileHeight_};
+    auto texture = it->texture_;
+    auto column = id % it->columns_;
+    auto row = id / it->columns_;
+    auto u = column * it->tileSize_.x;
+    auto v = row * it->tileSize_.y;
+    sf::IntRect uvRect = sf::IntRect(u, v, it->tileSize_.x, it->tileSize_.y);
 
     return {texture, uvRect};
 }

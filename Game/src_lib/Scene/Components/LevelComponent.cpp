@@ -19,7 +19,7 @@ namespace Scene {
 
 LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureManager)
     : BasicComponent(messageBus)
-    , tileMapReader_("assets/map/test.tmx", textureManager)
+    , tileMapReader_("assets/map/test.tmx")
 
 {
     tileMapReader_.Load();

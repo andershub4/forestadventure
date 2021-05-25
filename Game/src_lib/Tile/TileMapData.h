@@ -7,12 +7,8 @@
 #pragma once
 
 #include <map>
+#include <string>
 #include <vector>
-
-#include <SFML/System/Vector2.hpp>
-
-#include "Enum/EntityType.h"
-#include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
@@ -35,10 +31,12 @@ struct TileMapData
         int tileWidth_{};
         int tileHeight_{};
         int columns_{};
-        const sf::Texture* texture_ = nullptr;
+        int tileCount_{};
+        std::string textureFilePath_;
+        int firstGid_{};
     };
 
-    std::map<int, TileSet> tileSets_;
+    std::vector<TileSet> tileSets_;
 
     struct Layer
     {
@@ -51,7 +49,8 @@ struct TileMapData
     struct Object
     {
         std::string typeStr_{};
-        sf::Vector2u position_{};
+        int x_{};
+        int y_{};
         std::map<std::string, std::string> properties_;
     };
 

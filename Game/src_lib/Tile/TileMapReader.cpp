@@ -16,9 +16,8 @@ namespace FA {
 
 namespace Tile {
 
-TileMapReader::TileMapReader(const std::string& fileName, TextureManager& textureManager)
+TileMapReader::TileMapReader(const std::string& fileName)
     : fileName_(fileName)
-    , textureManager_(textureManager)
 {}
 
 TileMapReader::~TileMapReader() = default;
@@ -30,7 +29,7 @@ void TileMapReader::Load()
 
     if (tmxParser.Load()) {
         ReadMapProperties(tmxParser);
-        ReadTileSets(tmxParser, textureManager_);
+        ReadTileSets(tmxParser);
         ReadLayers(tmxParser);
         ReadObjectGroups(tmxParser);
     }
@@ -47,7 +46,7 @@ void TileMapReader::ReadMapProperties(const TmxParser& tmxParser)
     tileMapData_.mapProperties_.tileHeight_ = tmxParser.map_.tileHeight_;
 }
 
-void TileMapReader::ReadTileSets(const TmxParser& tmxParser, TextureManager& textureManager)
+void TileMapReader::ReadTileSets(const TmxParser& tmxParser)
 {
     if (tmxParser.tileSets_.empty()) {
         LOG_ERROR("No tilesets found");
@@ -67,10 +66,11 @@ void TileMapReader::ReadTileSets(const TmxParser& tmxParser, TextureManager& tex
             set.tileWidth_ = tsxParser.tileSet_.tileWidth_;
             set.tileHeight_ = tsxParser.tileSet_.tileHeight_;
             set.columns_ = tsxParser.tileSet_.columns_;
+            set.tileCount_ = tsxParser.tileSet_.tileCount_;
             auto tsxDir = GetHead(tsxFilePath);
-            auto textureFilePath = GetFilePath(tsxDir, tsxParser.image_.source_);
-            set.texture_ = textureManager.GetTexture(textureFilePath);
-            tileMapData_.tileSets_[firstGid] = set;
+            set.textureFilePath_ = GetFilePath(tsxDir, tsxParser.image_.source_);
+            set.firstGid_ = firstGid;
+            tileMapData_.tileSets_.push_back(set);
         }
         else {
             LOG_ERROR("Can not load: ", parsedSet.source_);
@@ -96,7 +96,8 @@ void TileMapReader::ReadObjectGroups(const TmxParser& tmxParser)
         for (auto& parsedObject : parsedObjectGroup.objects_) {
             TileMapData::Object object;
             object.typeStr_ = parsedObject.type_;
-            object.position_ = sf::Vector2u(parsedObject.x_, parsedObject.y_);
+            object.x_ = parsedObject.x_;
+            object.y_ = parsedObject.y_;
             for (auto& parsedProperty : parsedObject.properties_) {
                 auto key = parsedProperty.first;
                 auto value = parsedProperty.second;

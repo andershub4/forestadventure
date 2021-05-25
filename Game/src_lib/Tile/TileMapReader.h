@@ -13,8 +13,6 @@
 
 namespace FA {
 
-class TextureManager;
-
 namespace Tile {
 
 class TmxParser;
@@ -22,7 +20,7 @@ class TmxParser;
 class TileMapReader
 {
 public:
-    TileMapReader(const std::string& fileName, TextureManager& textureManager);
+    TileMapReader(const std::string& fileName);
     ~TileMapReader();
 
     void Load();
@@ -31,11 +29,10 @@ public:
 private:
     std::string fileName_{};
     TileMapData tileMapData_;
-    TextureManager& textureManager_;
 
 private:
     void ReadMapProperties(const TmxParser& tmxParser);
-    void ReadTileSets(const TmxParser& tmxParser, TextureManager& textureManager);
+    void ReadTileSets(const TmxParser& tmxParser);
     void ReadLayers(const TmxParser& tmxParser);
     void ReadObjectGroups(const TmxParser& tmxParser);
     std::string GetFilePath(const std::string& baseDir, const std::string& source) const;

@@ -19,6 +19,8 @@
 
 namespace FA {
 
+class TextureManager;
+
 namespace Tile {
 
 class TileMap
@@ -32,7 +34,7 @@ public:
     };
 
 public:
-    TileMap(const TileMapData &tileMapData);
+    TileMap(const TileMapData &tileMapData, TextureManager &textureManager);
     ~TileMap();
     void Create();
     const std::vector<sf::Sprite> &GetLayer(const std::string &name);
@@ -40,6 +42,14 @@ public:
     sf::Vector2u GetSize() const;
 
 private:
+    struct TileSet
+    {
+        const sf::Texture *texture_ = nullptr;
+        sf::Vector2u tileSize_;
+        int columns_{};
+        int firstGid_{};
+    };
+
     struct TileInfo
     {
         const sf::Texture *texture_ = nullptr;
@@ -48,11 +58,16 @@ private:
 
     static const unsigned int scale{2};
 
+    TextureManager &textureManager_;
     TileMapData tileMapData_;
     std::map<std::string, std::vector<sf::Sprite>> layers_;
+    std::vector<TileSet> tileSets_;
     std::map<std::string, std::vector<ObjectData>> objectGroups_;
 
 private:
+    void CreateTileSets();
+    void CreateLayers();
+    void CreateObjectGroups();
     TileInfo GetTileInfo(int id);
     EntityType ObjTypeStrToEnum(const std::string &typeStr) const;
     FaceDirection FaceDirStrToEnum(const std::string &faceDirStr) const;
