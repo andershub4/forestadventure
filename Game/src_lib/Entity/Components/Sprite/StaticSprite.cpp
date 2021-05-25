@@ -14,10 +14,11 @@ namespace FA {
 
 namespace Entity {
 
-StaticSprite::StaticSprite(const sf::Vector2u &position, const sf::Texture *texture, const sf::IntRect &rect)
+StaticSprite::StaticSprite(const sf::Vector2u &position, unsigned int scale, const sf::Texture *texture,
+                           const sf::IntRect &rect)
 {
     sprite_.setPosition(static_cast<sf::Vector2f>(position));
-    sprite_.setScale(2, 2);
+    sprite_.setScale(static_cast<float>(scale), static_cast<float>(scale));
     sprite_.setTexture(*texture);
     sprite_.setTextureRect(rect);
 }

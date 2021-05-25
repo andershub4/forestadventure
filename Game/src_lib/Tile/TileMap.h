@@ -34,7 +34,7 @@ public:
     };
 
 public:
-    TileMap(const TileMapData &tileMapData, TextureManager &textureManager);
+    TileMap(const TileMapData &tileMapData, TextureManager &textureManager, unsigned int scale);
     ~TileMap();
     void Create();
     const std::vector<sf::Sprite> &GetLayer(const std::string &name);
@@ -56,13 +56,12 @@ private:
         sf::IntRect uvRect_;
     };
 
-    static const unsigned int scale{2};
-
     TextureManager &textureManager_;
     TileMapData tileMapData_;
     std::map<std::string, std::vector<sf::Sprite>> layers_;
     std::vector<TileSet> tileSets_;
     std::map<std::string, std::vector<ObjectData>> objectGroups_;
+    unsigned int scale_{};
 
 private:
     void CreateTileSets();

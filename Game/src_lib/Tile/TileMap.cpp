@@ -12,9 +12,10 @@ namespace FA {
 
 namespace Tile {
 
-TileMap::TileMap(const TileMapData& tileMapData, TextureManager& textureManager)
+TileMap::TileMap(const TileMapData& tileMapData, TextureManager& textureManager, unsigned int scale)
     : textureManager_(textureManager)
     , tileMapData_(tileMapData)
+    , scale_(scale)
 {}
 
 TileMap::~TileMap() = default;
@@ -50,8 +51,8 @@ void TileMap::CreateLayers()
         for (auto it = layer.tileIds_.begin(); layer.tileIds_.end() != it; ++it, ++inx) {
             auto tileId = *it;
             if (tileId == 0) continue;
-            float x = static_cast<float>((inx % nCols) * tileWidth * scale);
-            float y = static_cast<float>((inx / nCols) * tileHeight * scale);
+            float x = static_cast<float>((inx % nCols) * tileWidth * scale_);
+            float y = static_cast<float>((inx / nCols) * tileHeight * scale_);
             auto tileInfo = GetTileInfo(tileId);
 
             if (tileInfo.texture_ != nullptr) {
@@ -59,7 +60,7 @@ void TileMap::CreateLayers()
                 tile.setTexture(*tileInfo.texture_);
                 tile.setTextureRect(tileInfo.uvRect_);
                 tile.setPosition(x, y);
-                tile.setScale(scale, scale);
+                tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
                 layers_[layerName].push_back(tile);
             }
         }
@@ -73,7 +74,7 @@ void TileMap::CreateObjectGroups()
         std::vector<TileMap::ObjectData> objectDatas;
         for (const auto& object : group.objects_) {
             TileMap::ObjectData objectData;
-            objectData.position_ = {object.x_ * scale, object.y_ * scale};
+            objectData.position_ = {object.x_ * scale_, object.y_ * scale_};
             objectData.type_ = ObjTypeStrToEnum(object.typeStr_);
             objectData.faceDir_ = FaceDirStrToEnum(object.properties_.at("FaceDirection"));
             objectDatas.push_back(objectData);
@@ -99,7 +100,7 @@ sf::Vector2u TileMap::GetSize() const
     auto tileWidth = tileMapData_.mapProperties_.tileWidth_;
     auto tileHeight = tileMapData_.mapProperties_.tileHeight_;
 
-    return {nCols * tileWidth * scale, nRows * tileHeight * scale};
+    return {nCols * tileWidth * scale_, nRows * tileHeight * scale_};
 }
 
 TileMap::TileInfo TileMap::GetTileInfo(int id)

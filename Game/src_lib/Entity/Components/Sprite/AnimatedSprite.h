@@ -18,7 +18,7 @@ namespace Entity {
 class AnimatedSprite : public BasicSprite
 {
 public:
-    AnimatedSprite(const sf::Vector2u &position, const AnimationFactory &animationFactory);
+    AnimatedSprite(const sf::Vector2u &position, unsigned int scale, const AnimationFactory &animationFactory);
     virtual ~AnimatedSprite();
 
     virtual void Update(float deltaTime) override;

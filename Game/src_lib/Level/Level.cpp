@@ -18,7 +18,7 @@ namespace FA {
 
 Level::Level(const Tile::TileMapData &tileMapData, TextureManager &textureManager)
     : animationManager_(textureManager)
-    , tileMap_(tileMapData, textureManager)
+    , tileMap_(tileMapData, textureManager, scale_)
 {}
 
 Level::~Level() = default;
@@ -51,6 +51,7 @@ void Level::Create(Camera &camera, MessageBus &messageBus)
         configuration.position_ = objectData.position_;
         configuration.faceDir_ = objectData.faceDir_;
         configuration.velocity_ = 120.0;
+        configuration.scale_ = scale_;
         entity->OnCreate(animationManager_, camera, configuration);
         entitySystem_.AddEntity(id, std::move(entity));
         id++;

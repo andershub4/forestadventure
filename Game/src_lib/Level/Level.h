@@ -39,6 +39,8 @@ public:
     sf::Vector2u GetSize() const;
 
 private:
+    static const unsigned int scale_{2};
+
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;

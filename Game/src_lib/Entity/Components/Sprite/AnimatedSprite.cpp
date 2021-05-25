@@ -15,11 +15,12 @@ namespace FA {
 
 namespace Entity {
 
-AnimatedSprite::AnimatedSprite(const sf::Vector2u &position, const AnimationFactory &animationFactory)
+AnimatedSprite::AnimatedSprite(const sf::Vector2u &position, unsigned int scale,
+                               const AnimationFactory &animationFactory)
     : animationFactory_(animationFactory)
 {
     sprite_.setPosition(static_cast<sf::Vector2f>(position));
-    sprite_.setScale(2, 2);
+    sprite_.setScale(static_cast<float>(scale), static_cast<float>(scale));
 }
 
 AnimatedSprite::~AnimatedSprite() = default;

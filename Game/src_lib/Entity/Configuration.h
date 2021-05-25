@@ -24,6 +24,7 @@ struct Configuration
     FaceDirection faceDir_{};
     float velocity_{};
     TileType tileType_{};
+    unsigned int scale_{};
 };
 
 }  // namespace Entity

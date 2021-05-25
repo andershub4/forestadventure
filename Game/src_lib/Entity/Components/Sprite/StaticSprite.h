@@ -17,7 +17,7 @@ namespace Entity {
 class StaticSprite : public BasicSprite
 {
 public:
-    StaticSprite(const sf::Vector2u& position, const sf::Texture* texture, const sf::IntRect& rect);
+    StaticSprite(const sf::Vector2u& position, unsigned int scale, const sf::Texture* texture, const sf::IntRect& rect);
     virtual ~StaticSprite();
 
     virtual void Update(float deltaTime) override;

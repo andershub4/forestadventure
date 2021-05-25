@@ -27,7 +27,8 @@ MoleEntity::~MoleEntity() = default;
 void MoleEntity::OnCreate(AnimationManager& animationManager, Camera& camera, const Configuration& configuration)
 {
     auto animationFactory = animationManager.GetFactory(AnimationType::Mole);
-    auto sprite = std::make_unique<Entity::AnimatedSprite>(configuration.position_, animationFactory);
+    auto sprite =
+        std::make_unique<Entity::AnimatedSprite>(configuration.position_, configuration.scale_, animationFactory);
 
     InitStateData(configuration.faceDir_, configuration.velocity_, std::move(sprite));
 }
