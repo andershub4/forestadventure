@@ -48,6 +48,7 @@ void AnimatedSprite::Move(const Movement &movement)
 void AnimatedSprite::SetAnimation(FrameType frameType, FaceDirection faceDir)
 {
     animation_ = animationFactory_.Create(frameType, faceDir, &sprite_);
+    sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
 void AnimatedSprite::StartAnimation()

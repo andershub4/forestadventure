@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="4">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="7">
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer id="6" name="Ground Layer 1" width="100" height="100">
   <data encoding="csv">
@@ -210,20 +210,23 @@
 </data>
  </layer>
  <objectgroup id="9" name="Object Layer 1">
-  <object id="1" type="Mole" x="104" y="136">
-   <properties>
-    <property name="FaceDirection" value="Right"/>
-   </properties>
-  </object>
-  <object id="2" type="Mole" x="200" y="440">
-   <properties>
-    <property name="FaceDirection" value="Up"/>
-   </properties>
-  </object>
-  <object id="3" type="Player" x="360" y="297">
+  <object id="4" type="Player" x="360" y="296">
    <properties>
     <property name="FaceDirection" value="Down"/>
    </properties>
+   <point/>
+  </object>
+  <object id="5" type="Mole" x="176" y="140">
+   <properties>
+    <property name="FaceDirection" value="Down"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="6" type="Mole" x="144" y="220">
+   <properties>
+    <property name="FaceDirection" value="Right"/>
+   </properties>
+   <point/>
   </object>
  </objectgroup>
  <layer id="8" name="Fringe Layer" width="100" height="100">
