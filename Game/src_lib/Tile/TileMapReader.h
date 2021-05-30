@@ -8,7 +8,6 @@
 
 #include <string>
 
-#include "Fwd/SfmlFwd.h"
 #include "TileMapData.h"
 
 namespace FA {
