@@ -52,28 +52,24 @@ void TileMapReader::ReadTileSets(const TmxParser& tmxParser)
         LOG_ERROR("No tilesets found");
     }
     else {
-        if (tmxParser.tileSets_.size() > 1) {
-            LOG_ERROR("Only 1 tileset is currently supported, reading first one");
-        }
-
-        auto parsedSet = tmxParser.tileSets_[0];
         auto tmxDir = GetHead(fileName_);
-        auto tsxFilePath = GetFilePath(tmxDir, parsedSet.source_);
-        TsxParser tsxParser(tsxFilePath);
-        if (tsxParser.Load()) {
-            auto firstGid = parsedSet.firstGid_;
-            TileMapData::TileSet set;
-            set.tileWidth_ = tsxParser.tileSet_.tileWidth_;
-            set.tileHeight_ = tsxParser.tileSet_.tileHeight_;
-            set.columns_ = tsxParser.tileSet_.columns_;
-            set.tileCount_ = tsxParser.tileSet_.tileCount_;
-            auto tsxDir = GetHead(tsxFilePath);
-            set.textureFilePath_ = GetFilePath(tsxDir, tsxParser.image_.source_);
-            set.firstGid_ = firstGid;
-            tileMapData_.tileSets_.push_back(set);
-        }
-        else {
-            LOG_ERROR("Can not load: ", parsedSet.source_);
+        for (const auto& parsedSet : tmxParser.tileSets_) {
+            auto tsxFilePath = GetFilePath(tmxDir, parsedSet.source_);
+            TsxParser tsxParser(tsxFilePath);
+            if (tsxParser.Load()) {
+                TileMapData::TileSet set;
+                set.firstGid_ = parsedSet.firstGid_;
+                set.tileWidth_ = tsxParser.tileSet_.tileWidth_;
+                set.tileHeight_ = tsxParser.tileSet_.tileHeight_;
+                set.columns_ = tsxParser.tileSet_.columns_;
+                set.tileCount_ = tsxParser.tileSet_.tileCount_;
+                auto tsxDir = GetHead(tsxFilePath);
+                set.textureFilePath_ = GetFilePath(tsxDir, tsxParser.image_.source_);
+                tileMapData_.tileSets_.push_back(set);
+            }
+            else {
+                LOG_ERROR("Can not load: ", parsedSet.source_);
+            }
         }
     }
 }
