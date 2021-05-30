@@ -76,7 +76,7 @@ void TileMapReader::ReadTileSets(const TmxParser& tmxParser)
 
 void TileMapReader::ReadLayers(const TmxParser& tmxParser)
 {
-    for (auto& parsedLayer : tmxParser.layers_) {
+    for (const auto& parsedLayer : tmxParser.layers_) {
         TileMapData::Layer layer;
         layer.name_ = parsedLayer.name_;
         layer.tileIds_ = parsedLayer.tileIds_;
@@ -86,15 +86,15 @@ void TileMapReader::ReadLayers(const TmxParser& tmxParser)
 
 void TileMapReader::ReadObjectGroups(const TmxParser& tmxParser)
 {
-    for (auto& parsedObjectGroup : tmxParser.objectGroups_) {
+    for (const auto& parsedObjectGroup : tmxParser.objectGroups_) {
         TileMapData::ObjectGroup group;
         group.name_ = parsedObjectGroup.name_;
-        for (auto& parsedObject : parsedObjectGroup.objects_) {
+        for (const auto& parsedObject : parsedObjectGroup.objects_) {
             TileMapData::Object object;
             object.typeStr_ = parsedObject.type_;
             object.x_ = parsedObject.x_;
             object.y_ = parsedObject.y_;
-            for (auto& parsedProperty : parsedObject.properties_) {
+            for (const auto& parsedProperty : parsedObject.properties_) {
                 auto key = parsedProperty.first;
                 auto value = parsedProperty.second;
                 object.properties_[key] = value;
@@ -110,7 +110,7 @@ std::string TileMapReader::GetFilePath(const std::string& baseDir, const std::st
     auto head = baseDir;
     auto tail = source;
 
-    std::string moveBackMatch = "../";
+    const std::string moveBackMatch = "../";
     auto index = tail.find(moveBackMatch);
     while (index != std::string::npos) {
         head = GetHead(head);
