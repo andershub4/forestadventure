@@ -24,7 +24,7 @@
     <ClCompile Include="Animation\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\Path.cpp">
+    <ClCompile Include="Utils\Folder\Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utils\Logger.cpp">
@@ -191,7 +191,7 @@
     <ClInclude Include="Fwd\SfmlFwd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\Path.h">
+    <ClInclude Include="Utils\Folder\Path.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils\Logger.h">

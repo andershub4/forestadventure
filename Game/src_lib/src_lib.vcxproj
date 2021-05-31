@@ -210,7 +210,7 @@
     <ClInclude Include="Tile\TmxParser.h" />
     <ClInclude Include="Tile\TsxParser.h" />
     <ClInclude Include="Utils\Logger.h" />
-    <ClInclude Include="Utils\Path.h" />
+    <ClInclude Include="Utils\Folder\Path.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
@@ -266,7 +266,7 @@
     <ClCompile Include="Tile\TmxParser.cpp" />
     <ClCompile Include="Tile\TsxParser.cpp" />
     <ClCompile Include="Utils\Logger.cpp" />
-    <ClCompile Include="Utils\Path.cpp" />
+    <ClCompile Include="Utils\Folder\Path.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\3rdparty\submodules\tinyxml2\tinyxml2\tinyxml2.vcxproj">

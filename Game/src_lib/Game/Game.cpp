@@ -14,7 +14,7 @@
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "System/InputSystem.h"
 #include "Utils/Logger.h"
-#include "Utils/Path.h"
+#include "Utils/Folder/Path.h"
 #include "Version.h"
 
 namespace FA {
