@@ -9,7 +9,7 @@
 #include "Game/Game.h"
 #include "Game/Version.h"
 #include "SfmlLog.h"
-#include "Utils/Logger.h"
+#include "Util/Logger.h"
 
 int main()
 {

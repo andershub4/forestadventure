@@ -1,6 +1,6 @@
 #include "EntitySystem.h"
 
-#include "Utils/Logger.h"
+#include "Util/Logger.h"
 
 namespace FA {
 

@@ -17,7 +17,7 @@
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyReleasedMessage.h"
 #include "Message/MessageBus.h"
-#include "Utils/Logger.h"
+#include "Util/Logger.h"
 
 namespace {
 

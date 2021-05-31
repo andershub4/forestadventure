@@ -9,7 +9,7 @@
 #include "Message/Message.h"
 #include "Scenes/IntroScene.h"
 #include "Scenes/TransitionScene.h"
-#include "Utils/Logger.h"
+#include "Util/Logger.h"
 
 namespace FA {
 

@@ -13,8 +13,8 @@
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "System/InputSystem.h"
-#include "Utils/Logger.h"
-#include "Utils/Folder/Path.h"
+#include "Util/Logger.h"
+#include "Util/Folder/Path.h"
 #include "Version.h"
 
 namespace FA {

@@ -9,8 +9,8 @@
 #include "Misc/TextureManager.h"
 #include "TmxParser.h"
 #include "TsxParser.h"
-#include "Utils/Logger.h"
-#include "Utils/Folder/Path.h"
+#include "Util/Logger.h"
+#include "Util/Folder/Path.h"
 
 namespace FA {
 

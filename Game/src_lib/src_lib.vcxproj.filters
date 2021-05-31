@@ -24,10 +24,10 @@
     <ClCompile Include="Animation\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\Folder\Path.cpp">
+    <ClCompile Include="Util\Folder\Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\Logger.cpp">
+    <ClCompile Include="Util\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Message\MessageBus.cpp">
@@ -191,10 +191,10 @@
     <ClInclude Include="Fwd\SfmlFwd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\Folder\Path.h">
+    <ClInclude Include="Util\Folder\Path.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\Logger.h">
+    <ClInclude Include="Util\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="System\InputSystem.h">
