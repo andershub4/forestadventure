@@ -8,6 +8,14 @@
 
 #include <string>
 
+namespace FA {
+
+namespace Util {
+
 std::string GetHead(const std::string& filePath);
 std::string GetExeFileName();
 std::string GetExePath();
+
+}  // namespace Util
+
+}  // namespace FA

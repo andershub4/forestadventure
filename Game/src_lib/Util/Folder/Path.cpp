@@ -8,6 +8,10 @@
 
 #include <windows.h>
 
+namespace FA {
+
+namespace Util {
+
 std::string GetHead(const std::string& filePath)
 {
     std::string result;
@@ -34,3 +38,7 @@ std::string GetExePath()
 
     return exePath;
 }
+
+}  // namespace Util
+
+}  // namespace FA

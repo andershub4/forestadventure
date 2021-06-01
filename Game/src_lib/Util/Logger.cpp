@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Util {
+
 Logger& Logger::Instance()
 {
     static Logger logger(GetExePath() + "\\/log.txt");
@@ -90,5 +92,7 @@ std::string Logger::ToStr(const LogLevel& logLevel) const
 
     return str;
 }
+
+}  // namespace Util
 
 }  // namespace FA
