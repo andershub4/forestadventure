@@ -19,7 +19,7 @@ namespace Util {
 class Logger
 {
 public:
-    enum class LogLevel { ERROR, WARNING, INFO };
+    enum class LogLevel { Error, Warning, Info };
 
     static Logger& Instance();
 
@@ -88,9 +88,9 @@ void MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& func, T d
 
 }  // namespace FA
 
-#define LOG_INFO(...) FA::Util::MakeLogEntry(FA::Util::Logger::LogLevel::INFO, __FUNCTION__, __VA_ARGS__)
-#define LOG_WARN(...) FA::Util::MakeLogEntry(FA::Util::Logger::LogLevel::WARNING, __FUNCTION__, __VA_ARGS__)
-#define LOG_ERROR(...) FA::Util::MakeLogEntry(FA::Util::Logger::LogLevel::ERROR, __FUNCTION__, __VA_ARGS__)
+#define LOG_INFO(...) FA::Util::MakeLogEntry(FA::Util::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)
+#define LOG_WARN(...) FA::Util::MakeLogEntry(FA::Util::Logger::LogLevel::Warning, __FUNCTION__, __VA_ARGS__)
+#define LOG_ERROR(...) FA::Util::MakeLogEntry(FA::Util::Logger::LogLevel::Error, __FUNCTION__, __VA_ARGS__)
 
 #define LOG_INFO_ENTER_FUNC() LOG_INFO("ENTER")
 #define LOG_INFO_EXIT_FUNC() LOG_INFO("EXIT")

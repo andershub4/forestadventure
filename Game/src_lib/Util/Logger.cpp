@@ -79,13 +79,13 @@ std::string Logger::ToStr(const LogLevel& logLevel) const
     std::string str;
 
     switch (logLevel) {
-        case LogLevel::ERROR:
+        case LogLevel::Error:
             str = "ERROR";
             break;
-        case LogLevel::WARNING:
+        case LogLevel::Warning:
             str = "WARNING";
             break;
-        case LogLevel::INFO:
+        case LogLevel::Info:
             str = "INFO";
             break;
     }
