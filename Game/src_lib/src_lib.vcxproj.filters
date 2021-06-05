@@ -24,7 +24,7 @@
     <ClCompile Include="Animation\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Util\Folder\Path.cpp">
+    <ClCompile Include="Util\Path\PathManip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Util\Logger.cpp">
@@ -177,6 +177,18 @@
     <ClCompile Include="Entity\Factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Platform\Error.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\SpecialFolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Path.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\Path\PathUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -191,7 +203,7 @@
     <ClInclude Include="Fwd\SfmlFwd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Util\Folder\Path.h">
+    <ClInclude Include="Util\Path\PathManip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Util\Logger.h">
@@ -387,6 +399,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\SpecialFolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Path\PathUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Result.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

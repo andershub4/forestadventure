@@ -173,6 +173,9 @@
     <ClInclude Include="Level\Camera.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Misc\Random.h" />
+    <ClInclude Include="Platform\Path.h" />
+    <ClInclude Include="Platform\Result.h" />
+    <ClInclude Include="Platform\SpecialFolder.h" />
     <ClInclude Include="Resource\AnimationManager.h" />
     <ClInclude Include="Scene\ComponentId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
@@ -209,8 +212,10 @@
     <ClInclude Include="Tile\TileMapReader.h" />
     <ClInclude Include="Tile\TmxParser.h" />
     <ClInclude Include="Tile\TsxParser.h" />
+    <ClInclude Include="Platform\Error.h" />
+    <ClInclude Include="Util\Path\PathUtil.h" />
     <ClInclude Include="Util\Logger.h" />
-    <ClInclude Include="Util\Folder\Path.h" />
+    <ClInclude Include="Util\Path\PathManip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
@@ -234,6 +239,8 @@
     <ClCompile Include="Level\Camera.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Misc\Random.cpp" />
+    <ClCompile Include="Platform\Path.cpp" />
+    <ClCompile Include="Platform\SpecialFolder.cpp" />
     <ClCompile Include="Resource\AnimationManager.cpp" />
     <ClCompile Include="Scene\Manager.cpp" />
     <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
@@ -265,8 +272,10 @@
     <ClCompile Include="Tile\TileMapReader.cpp" />
     <ClCompile Include="Tile\TmxParser.cpp" />
     <ClCompile Include="Tile\TsxParser.cpp" />
+    <ClCompile Include="Platform\Error.cpp" />
+    <ClCompile Include="Util\Path\PathUtil.cpp" />
     <ClCompile Include="Util\Logger.cpp" />
-    <ClCompile Include="Util\Folder\Path.cpp" />
+    <ClCompile Include="Util\Path\PathManip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\3rdparty\submodules\tinyxml2\tinyxml2\tinyxml2.vcxproj">

@@ -14,7 +14,6 @@
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "System/InputSystem.h"
 #include "Util/Logger.h"
-#include "Util/Folder/Path.h"
 #include "Version.h"
 
 namespace FA {
@@ -65,7 +64,7 @@ void Game::OnMessage(std::shared_ptr<Message> message)
         sceneManager_.OnKeyPressed(message);
     }
     else if (message->GetMessageType() == MessageType::CloseWindow) {
-        sceneManager_.OnCloseWindow(message);  
+        sceneManager_.OnCloseWindow(message);
     }
     else {
         // cant happen

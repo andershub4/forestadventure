@@ -9,8 +9,8 @@
 #include <SFML/Config.hpp>
 #include <SFML/System/Err.hpp>
 
-#include "Util/Folder/Path.h"
 #include "Util/Logger.h"
+#include "Util/Path/PathUtil.h"
 
 namespace FA {
 

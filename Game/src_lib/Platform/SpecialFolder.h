@@ -8,14 +8,16 @@
 
 #include <string>
 
+#include "Result.h"
+
 namespace FA {
 
-namespace Util {
+namespace Platform {
 
-std::string GetHead(const std::string& filePath);
-std::string GetExeFileName();
-std::string GetExePath();
+enum class SpecialFolder { Personal, LocalAppData, CommonAppData };
 
-}  // namespace Util
+Result GetSpecialPath(SpecialFolder specialFolder, std::wstring& specialPath);
+
+}  // namespace Platform
 
 }  // namespace FA
