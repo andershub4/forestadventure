@@ -23,9 +23,12 @@ public:
 
     static Logger& Instance();
 
+    Logger() = default;
     ~Logger();
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
+
+    void OpenLog(const std::string& filePath);
 
     template <class T>
     void Log(const T& data)
@@ -57,7 +60,6 @@ private:
     std::ofstream::pos_type maxSize_ = 1048576;  // arbitrary number
 
 private:
-    Logger(const std::string& fileName);
     void OpeningLines();
     void ClosingLines();
     std::string ToStr(const LogLevel& logLevel) const;
@@ -87,6 +89,8 @@ void MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& func, T d
 }  // namespace Util
 
 }  // namespace FA
+
+#define OPEN_LOG(filePath) FA::Util::Logger::Instance().OpenLog((filePath));
 
 #define LOG_INFO(...) FA::Util::MakeLogEntry(FA::Util::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)
 #define LOG_WARN(...) FA::Util::MakeLogEntry(FA::Util::Logger::LogLevel::Warning, __FUNCTION__, __VA_ARGS__)

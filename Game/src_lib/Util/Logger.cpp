@@ -8,21 +8,27 @@
 
 #include <sstream>
 
-#include "Path/PathUtil.h"
-
 namespace FA {
 
 namespace Util {
 
 Logger& Logger::Instance()
 {
-    static Logger logger(GetExePath() + "\\/log.txt");
+    static Logger logger;
     return logger;
 }
 
-Logger::Logger(const std::string& fileName)
-    : fileName_(fileName)
+Logger::~Logger()
 {
+    if (logStream_.is_open()) {
+        ClosingLines();
+        logStream_.close();
+    }
+}
+
+void Logger::OpenLog(const std::string& fileName)
+{
+    fileName_ = fileName;
     logStream_.open(fileName);
 
     if (logStream_.is_open()) {
@@ -34,14 +40,6 @@ Logger::Logger(const std::string& fileName)
         std::cerr << "Could not open logfile for writing" << std::endl;
     }
 #endif
-}
-
-Logger::~Logger()
-{
-    if (logStream_.is_open()) {
-        ClosingLines();
-        logStream_.close();
-    }
 }
 
 void Logger::StartLine(const LogLevel& logLevel, const std::string& funcName)

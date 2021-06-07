@@ -10,9 +10,11 @@
 #include "Game/Version.h"
 #include "SfmlLog.h"
 #include "Util/Logger.h"
+#include "Util/Path/PathUtil.h"
 
 int main()
 {
+    OPEN_LOG(FA::Util::GetExePath() + "\\/log.txt");
     LOG_INFO_ENTER_FUNC();
     LOG_INFO(FA_APP_NAME, " version ", FA_APP_VERSION);
     LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
