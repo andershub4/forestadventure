@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-#include "Util/Logger.h"
+#include "Logger.h"
 
 namespace FA {
 

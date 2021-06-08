@@ -6,10 +6,10 @@
 
 #include "TileMapReader.h"
 
+#include "Logger.h"
 #include "Misc/TextureManager.h"
 #include "TmxParser.h"
 #include "TsxParser.h"
-#include "Util/Logger.h"
 #include "Util/Path/PathManip.h"
 
 namespace FA {

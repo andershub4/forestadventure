@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Marie\source\repos\forestadventure\Game\3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)logging;C:\Users\Marie\source\repos\forestadventure\Game\3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Marie\source\repos\forestadventure\Game\3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)logging;C:\Users\Marie\source\repos\forestadventure\Game\3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -214,7 +214,6 @@
     <ClInclude Include="Tile\TsxParser.h" />
     <ClInclude Include="Platform\Error.h" />
     <ClInclude Include="Util\Path\PathUtil.h" />
-    <ClInclude Include="Util\Logger.h" />
     <ClInclude Include="Util\Path\PathManip.h" />
   </ItemGroup>
   <ItemGroup>
@@ -274,12 +273,14 @@
     <ClCompile Include="Tile\TsxParser.cpp" />
     <ClCompile Include="Platform\Error.cpp" />
     <ClCompile Include="Util\Path\PathUtil.cpp" />
-    <ClCompile Include="Util\Logger.cpp" />
     <ClCompile Include="Util\Path\PathManip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\3rdparty\submodules\tinyxml2\tinyxml2\tinyxml2.vcxproj">
       <Project>{d1c528b6-aa02-4d29-9d61-dc08e317a70d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\logging\logging.vcxproj">
+      <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

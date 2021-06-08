@@ -9,8 +9,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Screen.h"
+#include "Logger.h"
 #include "Message/MessageBus.h"
-#include "Util/Logger.h"
 
 namespace FA {
 

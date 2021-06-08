@@ -8,7 +8,7 @@
 
 #include "tinyxml2/tinyxml2.h"
 
-#include "Util/Logger.h"
+#include "Logger.h"
 
 namespace FA {
 

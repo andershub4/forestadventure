@@ -6,8 +6,8 @@
 
 #include "StateMachine.h"
 
+#include "Logger.h"
 #include "States/UninitializedState.h"
-#include "Util/Logger.h"
 
 namespace FA {
 

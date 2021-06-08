@@ -9,9 +9,9 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include "Enum/AnimationType.h"
+#include "Logger.h"
 #include "Misc/TextureManager.h"
 #include "SpriteSheet.h"
-#include "Util/Logger.h"
 
 namespace FA {
 

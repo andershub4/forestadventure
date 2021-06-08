@@ -6,10 +6,10 @@
 
 #include "Manager.h"
 
+#include "Logger.h"
 #include "Message/Message.h"
 #include "Scenes/IntroScene.h"
 #include "Scenes/TransitionScene.h"
-#include "Util/Logger.h"
 
 namespace FA {
 

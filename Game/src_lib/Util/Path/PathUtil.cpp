@@ -6,9 +6,9 @@
 
 #include "PathUtil.h"
 
+#include "Logger.h"
 #include "Platform/Path.h"
 #include "Platform/SpecialFolder.h"
-#include "Util/Logger.h"
 #include "Util/Path/PathManip.h"
 
 namespace FA {
