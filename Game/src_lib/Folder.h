@@ -13,6 +13,7 @@ namespace FA {
 std::string GetHead(const std::string& filePath);
 
 std::string GetLocalAppDataPath();
+std::string GetProgramDataPath();
 std::string GetExePath();
 
 }  // namespace FA

@@ -14,7 +14,7 @@ namespace FA {
 
 namespace Platform {
 
-enum class SpecialFolder { Personal, LocalAppData, CommonAppData };
+enum class SpecialFolder { Documents, LocalAppData, ProgramData };
 
 Result GetSpecialPath(SpecialFolder specialFolder, std::wstring& specialPath);
 

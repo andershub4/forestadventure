@@ -51,6 +51,11 @@ std::string GetLocalAppDataPath()
     return GetSpecialPath(Platform::SpecialFolder::LocalAppData);
 }
 
+std::string GetProgramDataPath()
+{
+    return GetSpecialPath(Platform::SpecialFolder::ProgramData);
+}
+
 std::string GetExePath()
 {
     std::string exeFileName = Platform::GetExeFileName();

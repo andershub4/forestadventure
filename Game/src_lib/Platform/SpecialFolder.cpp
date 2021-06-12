@@ -18,11 +18,11 @@ namespace {
 GUID Win32FolderGUI(SpecialFolder specialFolder)
 {
     switch (specialFolder) {
-        case SpecialFolder::Personal:
+        case SpecialFolder::Documents:
             return FOLDERID_Documents;  // CSIDL_PERSONAL
         case SpecialFolder::LocalAppData:
             return FOLDERID_LocalAppData;  // CSIDL_LOCAL_APPDATA
-        case SpecialFolder::CommonAppData:
+        case SpecialFolder::ProgramData:
             return FOLDERID_ProgramData;  // CSIDL_COMMON_APPDATA
         default:
             return FOLDERID_Documents;  // CSIDL_PERSONAL
