@@ -7,10 +7,10 @@
 #include <SFML/Config.hpp>
 
 #include "Game/Game.h"
-#include "Game/Version.h"
 #include "Logger.h"
 #include "SfmlLog.h"
 #include "Util/Path/PathUtil.h"
+#include "Version.h"
 
 int main()
 {

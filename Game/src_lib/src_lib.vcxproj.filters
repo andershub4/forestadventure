@@ -230,7 +230,7 @@
     <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Version.h">
+    <ClInclude Include="Version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Message\BroadcastMessage\KeyPressedMessage.h">

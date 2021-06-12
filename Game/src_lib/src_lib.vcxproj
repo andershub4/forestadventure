@@ -188,7 +188,7 @@
     <ClInclude Include="Scene\Transitions\FadeTransition.h" />
     <ClInclude Include="Scene\Transitions\NullTransition.h" />
     <ClInclude Include="Game\Game.h" />
-    <ClInclude Include="Game\Version.h" />
+    <ClInclude Include="Version.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h" />
     <ClInclude Include="Entity\Components\Movement\Movement.h" />
     <ClInclude Include="Scene\Components\IntroComponent.h" />
