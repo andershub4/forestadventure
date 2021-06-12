@@ -6,11 +6,11 @@
 
 #include "TileMapReader.h"
 
+#include "Folder.h"
 #include "Logger.h"
 #include "Misc/TextureManager.h"
 #include "TmxParser.h"
 #include "TsxParser.h"
-#include "Util/Path/PathManip.h"
 
 namespace FA {
 
@@ -52,7 +52,7 @@ void TileMapReader::ReadTileSets(const TmxParser& tmxParser)
         LOG_ERROR("No tilesets found");
     }
     else {
-        auto tmxDir = Util::GetHead(fileName_);
+        auto tmxDir = GetHead(fileName_);
         for (const auto& parsedSet : tmxParser.tileSets_) {
             auto tsxFilePath = GetFilePath(tmxDir, parsedSet.source_);
             TsxParser tsxParser(tsxFilePath);
@@ -63,7 +63,7 @@ void TileMapReader::ReadTileSets(const TmxParser& tmxParser)
                 set.tileHeight_ = tsxParser.tileSet_.tileHeight_;
                 set.columns_ = tsxParser.tileSet_.columns_;
                 set.tileCount_ = tsxParser.tileSet_.tileCount_;
-                auto tsxDir = Util::GetHead(tsxFilePath);
+                auto tsxDir = GetHead(tsxFilePath);
                 set.textureFilePath_ = GetFilePath(tsxDir, tsxParser.image_.source_);
                 tileMapData_.tileSets_.push_back(set);
             }
@@ -113,7 +113,7 @@ std::string TileMapReader::GetFilePath(const std::string& baseDir, const std::st
     const std::string moveBackMatch = "../";
     auto index = tail.find(moveBackMatch);
     while (index != std::string::npos) {
-        head = Util::GetHead(head);
+        head = GetHead(head);
         tail = tail.substr(index + moveBackMatch.size());
         index = tail.find(moveBackMatch);
     }

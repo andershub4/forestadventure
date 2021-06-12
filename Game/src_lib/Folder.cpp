@@ -9,7 +9,6 @@
 #include "Logger.h"
 #include "Platform/Path.h"
 #include "Platform/SpecialFolder.h"
-#include "Util/Path/PathManip.h"
 
 namespace FA {
 
@@ -35,6 +34,18 @@ std::string GetSpecialPath(Platform::SpecialFolder specialFolder)
 
 }  // namespace
 
+std::string GetHead(const std::string& filePath)
+{
+    std::string result;
+    const size_t index = filePath.find_last_of("\\/");
+
+    if (index != std::string::npos) {
+        result = filePath.substr(0, index);
+    }
+
+    return result;
+}
+
 std::string GetLocalAppDataPath()
 {
     return GetSpecialPath(Platform::SpecialFolder::LocalAppData);
@@ -43,7 +54,7 @@ std::string GetLocalAppDataPath()
 std::string GetExePath()
 {
     std::string exeFileName = Platform::GetExeFileName();
-    std::string exePath = Util::GetHead(exeFileName);
+    std::string exePath = GetHead(exeFileName);
 
     return exePath;
 }

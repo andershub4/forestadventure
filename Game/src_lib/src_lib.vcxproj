@@ -215,7 +215,6 @@
     <ClInclude Include="Tile\TsxParser.h" />
     <ClInclude Include="Platform\Error.h" />
     <ClInclude Include="Folder.h" />
-    <ClInclude Include="Util\Path\PathManip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
@@ -275,7 +274,6 @@
     <ClCompile Include="Tile\TsxParser.cpp" />
     <ClCompile Include="Platform\Error.cpp" />
     <ClCompile Include="Folder.cpp" />
-    <ClCompile Include="Util\Path\PathManip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\3rdparty\submodules\tinyxml2\tinyxml2\tinyxml2.vcxproj">
