@@ -172,6 +172,7 @@
     <ClInclude Include="Enum\TileType.h" />
     <ClInclude Include="Level\Camera.h" />
     <ClInclude Include="Level\Level.h" />
+    <ClInclude Include="UI\Title.h" />
     <ClInclude Include="Util\Random.h" />
     <ClInclude Include="Platform\Path.h" />
     <ClInclude Include="Platform\Result.h" />
@@ -237,6 +238,7 @@
     <ClCompile Include="Entity\States\UninitializedState.cpp" />
     <ClCompile Include="Level\Camera.cpp" />
     <ClCompile Include="Level\Level.cpp" />
+    <ClCompile Include="UI\Title.cpp" />
     <ClCompile Include="Util\Random.cpp" />
     <ClCompile Include="Platform\Path.cpp" />
     <ClCompile Include="Platform\SpecialFolder.cpp" />

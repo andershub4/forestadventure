@@ -14,7 +14,7 @@
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "System/InputSystem.h"
-#include "Version.h"
+#include "UI/Title.h"
 
 namespace FA {
 
@@ -74,11 +74,11 @@ void Game::OnMessage(std::shared_ptr<Message> message)
 void Game::InitWindow()
 {
     LOG_INFO("Create main window");
+    const std::string title = UI::GetTitle();
 #ifdef _DEBUG
-    const std::string title = std::string(FA_APP_NAME) + " v" + FA_APP_VERSION;
     window_.create(sf::VideoMode(constant::Screen::width, constant::Screen::height), title);
 #else
-    window_.create(sf::VideoMode::getDesktopMode(), FA_APP_NAME, sf::Style::Fullscreen);
+    window_.create(sf::VideoMode::getDesktopMode(), title, sf::Style::Fullscreen);
     view_.reset(sf::FloatRect(0.0, 0.0, constant::Screen::width_f, constant::Screen::height_f));
     window_.setView(view_);
 #endif
