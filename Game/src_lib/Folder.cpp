@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "PathUtil.h"
+#include "Folder.h"
 
 #include "Logger.h"
 #include "Platform/Path.h"
@@ -12,8 +12,6 @@
 #include "Util/Path/PathManip.h"
 
 namespace FA {
-
-namespace Util {
 
 namespace {
 
@@ -45,11 +43,9 @@ std::string GetLocalAppDataPath()
 std::string GetExePath()
 {
     std::string exeFileName = Platform::GetExeFileName();
-    std::string exePath = GetHead(exeFileName);
+    std::string exePath = Util::GetHead(exeFileName);
 
     return exePath;
 }
-
-}  // namespace Util
 
 }  // namespace FA

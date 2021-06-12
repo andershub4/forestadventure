@@ -183,7 +183,7 @@
     <ClCompile Include="Platform\Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Util\Path\PathUtil.cpp">
+    <ClCompile Include="Folder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Title.cpp">
@@ -407,7 +407,7 @@
     <ClInclude Include="Platform\Path.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Util\Path\PathUtil.h">
+    <ClInclude Include="Folder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Platform\Result.h">

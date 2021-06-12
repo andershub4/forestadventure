@@ -9,15 +9,15 @@
 #include <SFML/Config.hpp>
 #include <SFML/System/Err.hpp>
 
+#include "Folder.h"
 #include "Logger.h"
-#include "Util/Path/PathUtil.h"
 
 namespace FA {
 
 void SfmlLog::Init()
 {
     const std::string sfmlLog = "sfml-log.txt";
-    sfmlLogStream_.open(Util::GetExePath() + "\\/" + sfmlLog);
+    sfmlLogStream_.open(GetExePath() + "\\/" + sfmlLog);
 
     if (sfmlLogStream_.is_open()) {
         LOG_INFO("Redirecting sfml log entries to ", sfmlLog);

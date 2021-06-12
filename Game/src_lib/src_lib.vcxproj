@@ -214,7 +214,7 @@
     <ClInclude Include="Tile\TmxParser.h" />
     <ClInclude Include="Tile\TsxParser.h" />
     <ClInclude Include="Platform\Error.h" />
-    <ClInclude Include="Util\Path\PathUtil.h" />
+    <ClInclude Include="Folder.h" />
     <ClInclude Include="Util\Path\PathManip.h" />
   </ItemGroup>
   <ItemGroup>
@@ -274,7 +274,7 @@
     <ClCompile Include="Tile\TmxParser.cpp" />
     <ClCompile Include="Tile\TsxParser.cpp" />
     <ClCompile Include="Platform\Error.cpp" />
-    <ClCompile Include="Util\Path\PathUtil.cpp" />
+    <ClCompile Include="Folder.cpp" />
     <ClCompile Include="Util\Path\PathManip.cpp" />
   </ItemGroup>
   <ItemGroup>

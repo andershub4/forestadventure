@@ -10,11 +10,7 @@
 
 namespace FA {
 
-namespace Util {
-
 std::string GetLocalAppDataPath();
 std::string GetExePath();
-
-}  // namespace Util
 
 }  // namespace FA
