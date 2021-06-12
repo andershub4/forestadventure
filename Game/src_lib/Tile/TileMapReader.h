@@ -19,19 +19,17 @@ class TmxParser;
 class TileMapReader
 {
 public:
-    TileMapReader(const std::string& fileName);
+    TileMapReader();
     ~TileMapReader();
 
-    void Load();
-    TileMapData GetTileMapData() const { return tileMapData_; }
+    TileMapData Parse(const std::string& fileName);
 
 private:
-    std::string fileName_{};
     TileMapData tileMapData_;
 
 private:
     void ReadMapProperties(const TmxParser& tmxParser);
-    void ReadTileSets(const TmxParser& tmxParser);
+    void ReadTileSets(const TmxParser& tmxParser, const std::string& tmxDir);
     void ReadLayers(const TmxParser& tmxParser);
     void ReadObjectGroups(const TmxParser& tmxParser);
     std::string GetFilePath(const std::string& baseDir, const std::string& source) const;

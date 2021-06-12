@@ -14,16 +14,14 @@ namespace FA {
 
 namespace Tile {
 
-TsxParser::TsxParser(const std::string& fileName)
-    : fileName_(fileName)
-{}
+TsxParser::TsxParser() = default;
 
 TsxParser::~TsxParser() = default;
 
-bool TsxParser::Load()
+bool TsxParser::Parse(const std::string& fileName)
 {
     tinyxml2::XMLDocument xmlDoc;
-    xmlDoc.LoadFile(fileName_.c_str());
+    xmlDoc.LoadFile(fileName.c_str());
 
     if (xmlDoc.Error()) {
         return false;

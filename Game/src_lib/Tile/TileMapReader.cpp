@@ -16,26 +16,27 @@ namespace FA {
 
 namespace Tile {
 
-TileMapReader::TileMapReader(const std::string& fileName)
-    : fileName_(fileName)
-{}
+TileMapReader::TileMapReader() = default;
 
 TileMapReader::~TileMapReader() = default;
 
-void TileMapReader::Load()
+TileMapData TileMapReader::Parse(const std::string& fileName)
 {
-    LOG_INFO("Parse ", fileName_);
-    TmxParser tmxParser(fileName_);
+    LOG_INFO("Parse ", fileName);
+    TmxParser tmxParser;
 
-    if (tmxParser.Load()) {
+    if (tmxParser.Parse(fileName)) {
         ReadMapProperties(tmxParser);
-        ReadTileSets(tmxParser);
+        auto tmxDir = GetHead(fileName);
+        ReadTileSets(tmxParser, tmxDir);
         ReadLayers(tmxParser);
         ReadObjectGroups(tmxParser);
     }
     else {
-        LOG_ERROR("Can not load: ", fileName_);
+        LOG_ERROR("Can not load: ", fileName);
     }
+
+    return tileMapData_;
 }
 
 void TileMapReader::ReadMapProperties(const TmxParser& tmxParser)
@@ -46,17 +47,16 @@ void TileMapReader::ReadMapProperties(const TmxParser& tmxParser)
     tileMapData_.mapProperties_.tileHeight_ = tmxParser.map_.tileHeight_;
 }
 
-void TileMapReader::ReadTileSets(const TmxParser& tmxParser)
+void TileMapReader::ReadTileSets(const TmxParser& tmxParser, const std::string& tmxDir)
 {
     if (tmxParser.tileSets_.empty()) {
         LOG_ERROR("No tilesets found");
     }
     else {
-        auto tmxDir = GetHead(fileName_);
         for (const auto& parsedSet : tmxParser.tileSets_) {
             auto tsxFilePath = GetFilePath(tmxDir, parsedSet.source_);
-            TsxParser tsxParser(tsxFilePath);
-            if (tsxParser.Load()) {
+            TsxParser tsxParser;
+            if (tsxParser.Parse(tsxFilePath)) {
                 TileMapData::TileSet set;
                 set.firstGid_ = parsedSet.firstGid_;
                 set.tileWidth_ = tsxParser.tileSet_.tileWidth_;

@@ -39,15 +39,12 @@ public:
     };
 
 public:
-    TsxParser(const std::string& fileName);
+    TsxParser();
     ~TsxParser();
-    bool Load();
+    bool Parse(const std::string& fileName);
 
     TileSet tileSet_;
     Image image_;
-
-private:
-    std::string fileName_;
 
 private:
     void ParseTileSetElement(tinyxml2::XMLElement* tileSetElement);

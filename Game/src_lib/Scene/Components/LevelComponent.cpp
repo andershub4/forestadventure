@@ -19,11 +19,8 @@ namespace Scene {
 
 LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureManager)
     : BasicComponent(messageBus)
-    , tileMapReader_("assets/map/test.tmx")
-
 {
-    tileMapReader_.Load();
-    auto tileMapData = tileMapReader_.GetTileMapData();
+    auto tileMapData = tileMapReader_.Parse("assets/map/test.tmx");
     level_ = std::make_unique<Level>(tileMapData, textureManager);
     level_->Create(camera_, messageBus);
 }

@@ -71,12 +71,9 @@ public:
     std::vector<Group> objectGroups_;
 
 public:
-    TmxParser(const std::string& fileName);
+    TmxParser();
     ~TmxParser();
-    bool Load();
-
-private:
-    std::string fileName_;
+    bool Parse(const std::string& fileName);
 
 private:
     void ParseMapElement(tinyxml2::XMLElement* mapElement);
