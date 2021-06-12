@@ -111,7 +111,7 @@
     <ClCompile Include="Tile\TileMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Misc\Random.cpp">
+    <ClCompile Include="Util\Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Effect\NullEffect.cpp">
@@ -314,7 +314,7 @@
     <ClInclude Include="Tile\TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Misc\Random.h">
+    <ClInclude Include="Util\Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Effect\NullEffect.h">
