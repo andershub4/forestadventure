@@ -9,6 +9,7 @@
 #include "Logger.h"
 #include "Platform/Path.h"
 #include "Platform/SpecialFolder.h"
+#include "Version.h"
 
 namespace FA {
 
@@ -32,20 +33,6 @@ std::string GetSpecialPath(Platform::SpecialFolder specialFolder)
     return specialPath;
 }
 
-}  // namespace
-
-std::string GetHead(const std::string& filePath)
-{
-    std::string result;
-    const size_t index = filePath.find_last_of("\\/");
-
-    if (index != std::string::npos) {
-        result = filePath.substr(0, index);
-    }
-
-    return result;
-}
-
 std::string GetLocalAppDataPath()
 {
     return GetSpecialPath(Platform::SpecialFolder::LocalAppData);
@@ -62,6 +49,48 @@ std::string GetExePath()
     std::string exePath = GetHead(exeFileName);
 
     return exePath;
+}
+
+std::string GetFAProgramDataPath()
+{
+    return GetProgramDataPath() + '/' + FA_APP_NAME + '/';
+}
+
+std::string GetFALocalAppDataPath()
+{
+    return GetLocalAppDataPath() + '/' + FA_APP_NAME + '/';
+}
+
+}  // namespace
+
+std::string GetHead(const std::string& filePath)
+{
+    std::string result;
+    const size_t index = filePath.find_last_of("\\/");
+
+    if (index != std::string::npos) {
+        result = filePath.substr(0, index);
+    }
+
+    return result;
+}
+
+std::string GetLogPath()
+{
+#ifdef INSTALL
+    return GetFALocalAppDataPath();
+#else
+    return GetExePath();
+#endif  // INSTALL
+}
+
+std::string GetAssetsPath()
+{
+#ifdef INSTALL
+    return GetFAProgramDataPath() + "assets/";
+#else
+    return "assets/";
+#endif  // INSTALL
 }
 
 }  // namespace FA

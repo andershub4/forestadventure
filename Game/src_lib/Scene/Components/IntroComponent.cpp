@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Screen.h"
+#include "Folder.h"
 #include "Logger.h"
 #include "Message/MessageBus.h"
 
@@ -19,7 +20,8 @@ namespace Scene {
 IntroComponent::IntroComponent(MessageBus& messageBus)
     : BasicComponent(messageBus)
 {
-    if (!font_.loadFromFile("assets/font/intuitive/intuitive.ttf")) {
+    std::string path = GetAssetsPath() + "font/intuitive/intuitive.ttf";
+    if (!font_.loadFromFile(path)) {
         LOG_ERROR("Could not load intuitive");
     }
 

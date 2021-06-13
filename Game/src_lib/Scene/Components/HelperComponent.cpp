@@ -11,6 +11,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Screen.h"
+#include "Folder.h"
 #include "Logger.h"
 #include "Message/MessageBus.h"
 
@@ -21,7 +22,8 @@ namespace Scene {
 HelperComponent::HelperComponent(MessageBus& messageBus, const std::string& sceneName)
     : BasicComponent(messageBus)
 {
-    if (!font_.loadFromFile("assets/font/cello-sans/hinted-CelloSans-Medium.ttf")) {
+    std::string path = GetAssetsPath() + "font/cello-sans/hinted-CelloSans-Medium.ttf";
+    if (!font_.loadFromFile(path)) {
         LOG_ERROR("Could not load hinted-CelloSans-Medium");
     }
 

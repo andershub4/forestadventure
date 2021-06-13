@@ -16,11 +16,11 @@ namespace FA {
 
 void SfmlLog::Init()
 {
-    const std::string sfmlLog = "sfml-log.txt";
-    sfmlLogStream_.open(GetExePath() + "\\/" + sfmlLog);
+    const std::string path = GetLogPath() + "\\/sfml-log.txt";
+    sfmlLogStream_.open(path);
 
     if (sfmlLogStream_.is_open()) {
-        LOG_INFO("Redirecting sfml log entries to ", sfmlLog);
+        LOG_INFO("Redirecting sfml log entries to ", path);
         sfmlLogStream_ << "SFML version " << SFML_VERSION_MAJOR << "." << SFML_VERSION_MINOR << std::endl;
         sf::err().rdbuf(sfmlLogStream_.rdbuf());
     }

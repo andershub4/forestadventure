@@ -9,6 +9,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include "Enum/AnimationType.h"
+#include "Folder.h"
 #include "Logger.h"
 #include "Misc/TextureManager.h"
 #include "SpriteSheet.h"
@@ -30,9 +31,9 @@ void AnimationManager::RegisterFactories()
 void AnimationManager::RegisterPlayerFactory()
 {
     AnimationFactory factory(0.1f);
+    std::string ssPath = GetSpriteSheetPath();
 
-    auto textureWalkSide =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-side.png");
+    auto textureWalkSide = textureManager_.GetTexture(ssPath + "hero/walk/hero-walk-side.png");
     if (textureWalkSide != nullptr) {
         SpriteSheet spriteSheet("heroWalkSide", textureWalkSide, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
@@ -40,23 +41,20 @@ void AnimationManager::RegisterPlayerFactory()
                                       true);
         factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureWalkFront =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-walk-front.png");
+    auto textureWalkFront = textureManager_.GetTexture(ssPath + "hero/walk/hero-walk-front.png");
     if (textureWalkFront != nullptr) {
         SpriteSheet spriteSheet("heroWalkFront", textureWalkFront, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
         factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureWalkBack =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/walk/hero-back-walk.png");
+    auto textureWalkBack = textureManager_.GetTexture(ssPath + "hero/walk/hero-back-walk.png");
     if (textureWalkBack != nullptr) {
         SpriteSheet spriteSheet("heroWalkBack", textureWalkBack, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
         factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
     }
 
-    auto textureAttackSide =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack/hero-attack-side.png");
+    auto textureAttackSide = textureManager_.GetTexture(ssPath + "hero/attack/hero-attack-side.png");
     if (textureAttackSide != nullptr) {
         SpriteSheet spriteSheet("heroAttackSide", textureAttackSide, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
@@ -64,23 +62,21 @@ void AnimationManager::RegisterPlayerFactory()
                                       true);
         factory.RegisterAnimationInfo(FrameType::Attack, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureAttackFront =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack/hero-attack-front.png");
+    auto textureAttackFront = textureManager_.GetTexture(ssPath + "hero/attack/hero-attack-front.png");
     if (textureAttackFront != nullptr) {
         SpriteSheet spriteSheet("heroAttackFront", textureAttackFront, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
         factory.RegisterAnimationInfo(FrameType::Attack, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureAttackBack =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack/hero-attack-back.png");
+    auto textureAttackBack = textureManager_.GetTexture(ssPath + "hero/attack/hero-attack-back.png");
     if (textureAttackBack != nullptr) {
         SpriteSheet spriteSheet("heroAttackBack", textureAttackBack, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
         factory.RegisterAnimationInfo(FrameType::Attack, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
     }
 
-    auto textureAttackSideWeapon = textureManager_.GetTexture(
-        "assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack-weapon/hero-attack-side-weapon.png");
+    auto textureAttackSideWeapon =
+        textureManager_.GetTexture(ssPath + "hero/attack-weapon/hero-attack-side-weapon.png");
     if (textureAttackSideWeapon != nullptr) {
         SpriteSheet spriteSheet("heroAttackWeaponSide", textureAttackSideWeapon, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
@@ -89,16 +85,16 @@ void AnimationManager::RegisterPlayerFactory()
         factory.RegisterAnimationInfo(FrameType::AttackWeapon, FaceDirection::Right, f.texture_, f.frames_,
                                       f.defaultFrame_);
     }
-    auto textureAttackFrontWeapon = textureManager_.GetTexture(
-        "assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack-weapon/hero-attack-front-weapon.png");
+    auto textureAttackFrontWeapon =
+        textureManager_.GetTexture(ssPath + "hero/attack-weapon/hero-attack-front-weapon.png");
     if (textureAttackFrontWeapon != nullptr) {
         SpriteSheet spriteSheet("heroAttackWeaponFront", textureAttackFrontWeapon, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
         factory.RegisterAnimationInfo(FrameType::AttackWeapon, FaceDirection::Down, f.texture_, f.frames_,
                                       f.defaultFrame_);
     }
-    auto textureAttackBackWeapon = textureManager_.GetTexture(
-        "assets/tiny-RPG-forest-files/PNG/spritesheets/hero/attack-weapon/hero-attack-back-weapon.png");
+    auto textureAttackBackWeapon =
+        textureManager_.GetTexture(ssPath + "hero/attack-weapon/hero-attack-back-weapon.png");
     if (textureAttackBackWeapon != nullptr) {
         SpriteSheet spriteSheet("heroAttackWeaponBack", textureAttackBackWeapon, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
@@ -106,8 +102,7 @@ void AnimationManager::RegisterPlayerFactory()
                                       f.defaultFrame_);
     }
 
-    auto textureIdleSide =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/idle/hero-idle-side.png");
+    auto textureIdleSide = textureManager_.GetTexture(ssPath + "hero/idle/hero-idle-side.png");
     if (textureIdleSide != nullptr) {
         SpriteSheet spriteSheet("heroIdleSide", textureIdleSide, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
@@ -115,15 +110,13 @@ void AnimationManager::RegisterPlayerFactory()
                                       true);
         factory.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureIdleFront =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/idle/hero-idle-front.png");
+    auto textureIdleFront = textureManager_.GetTexture(ssPath + "hero/idle/hero-idle-front.png");
     if (textureIdleFront != nullptr) {
         SpriteSheet spriteSheet("heroIdleFront", textureIdleFront, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
         factory.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureIdleBack =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/hero/idle/hero-idle-back.png");
+    auto textureIdleBack = textureManager_.GetTexture(ssPath + "hero/idle/hero-idle-back.png");
     if (textureIdleBack != nullptr) {
         SpriteSheet spriteSheet("heroIdleBack", textureIdleBack, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
@@ -136,9 +129,9 @@ void AnimationManager::RegisterPlayerFactory()
 void AnimationManager::RegisterMoleFactory()
 {
     AnimationFactory factory(0.1f);
+    std::string ssPath = GetSpriteSheetPath();
 
-    auto textureWalkSide =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/walk/mole-walk-side.png");
+    auto textureWalkSide = textureManager_.GetTexture(ssPath + "mole/walk/mole-walk-side.png");
     if (textureWalkSide != nullptr) {
         SpriteSheet spriteSheet("moleWalkSide", textureWalkSide, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
@@ -146,23 +139,20 @@ void AnimationManager::RegisterMoleFactory()
                                       true);
         factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureWalkFront =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/walk/mole-walk-front.png");
+    auto textureWalkFront = textureManager_.GetTexture(ssPath + "mole/walk/mole-walk-front.png");
     if (textureWalkFront != nullptr) {
         SpriteSheet spriteSheet("moleWalkFront", textureWalkFront, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
         factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureWalkBack =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/walk/mole-walk-back.png");
+    auto textureWalkBack = textureManager_.GetTexture(ssPath + "mole/walk/mole-walk-back.png");
     if (textureWalkBack != nullptr) {
         SpriteSheet spriteSheet("moleWalkBack", textureWalkBack, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
         factory.RegisterAnimationInfo(FrameType::Move, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
     }
 
-    auto textureIdleSide =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/idle/mole-idle-side.png");
+    auto textureIdleSide = textureManager_.GetTexture(ssPath + "mole/idle/mole-idle-side.png");
     if (textureIdleSide != nullptr) {
         SpriteSheet spriteSheet("moleIdleSide", textureIdleSide, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
@@ -170,15 +160,13 @@ void AnimationManager::RegisterMoleFactory()
                                       true);
         factory.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureIdleFront =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/idle/mole-idle-front.png");
+    auto textureIdleFront = textureManager_.GetTexture(ssPath + "mole/idle/mole-idle-front.png");
     if (textureIdleFront != nullptr) {
         SpriteSheet spriteSheet("moleIdleFront", textureIdleFront, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
         factory.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureIdleBack =
-        textureManager_.GetTexture("assets/tiny-RPG-forest-files/PNG/spritesheets/mole/idle/mole-idle-back.png");
+    auto textureIdleBack = textureManager_.GetTexture(ssPath + "mole/idle/mole-idle-back.png");
     if (textureIdleBack != nullptr) {
         SpriteSheet spriteSheet("moleIdleBack", textureIdleBack, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
@@ -186,6 +174,11 @@ void AnimationManager::RegisterMoleFactory()
     }
 
     map_[AnimationType::Mole] = factory;
+}
+
+std::string AnimationManager::GetSpriteSheetPath() const
+{
+    return GetAssetsPath() + "tiny-RPG-forest-files/PNG/spritesheets/";
 }
 
 AnimationFactory AnimationManager::GetFactory(AnimationType type) const

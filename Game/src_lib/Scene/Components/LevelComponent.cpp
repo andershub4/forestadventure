@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Effect/BasicEffect.h"
+#include "Folder.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
 #include "Scene/Transitions/BasicTransition.h"
@@ -20,7 +21,8 @@ namespace Scene {
 LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureManager)
     : BasicComponent(messageBus)
 {
-    auto tileMapData = tileMapReader_.Parse("assets/map/test.tmx");
+    auto path = GetAssetsPath() + "map/test.tmx";
+    auto tileMapData = tileMapReader_.Parse(path);
     level_ = std::make_unique<Level>(tileMapData, textureManager);
     level_->Create(camera_, messageBus);
 }

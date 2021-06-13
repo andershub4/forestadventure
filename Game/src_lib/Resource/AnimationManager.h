@@ -32,6 +32,7 @@ private:
 private:
     void RegisterPlayerFactory();
     void RegisterMoleFactory();
+    std::string GetSpriteSheetPath() const;
 };
 
 }  // namespace FA
