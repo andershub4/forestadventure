@@ -31,6 +31,8 @@ Global
 		Release|x86 = Release|x86
 		Release-Dll|x64 = Release-Dll|x64
 		Release-Dll|x86 = Release-Dll|x86
+		Release-Install|x64 = Release-Install|x64
+		Release-Install|x86 = Release-Install|x86
 		Release-Lib|x64 = Release-Lib|x64
 		Release-Lib|x86 = Release-Lib|x86
 	EndGlobalSection
@@ -55,6 +57,10 @@ Global
 		{7202064E-BC20-477C-9D41-C76527C4756B}.Release-Dll|x64.Build.0 = Release|x64
 		{7202064E-BC20-477C-9D41-C76527C4756B}.Release-Dll|x86.ActiveCfg = Release|Win32
 		{7202064E-BC20-477C-9D41-C76527C4756B}.Release-Dll|x86.Build.0 = Release|Win32
+		{7202064E-BC20-477C-9D41-C76527C4756B}.Release-Install|x64.ActiveCfg = Release|x64
+		{7202064E-BC20-477C-9D41-C76527C4756B}.Release-Install|x64.Build.0 = Release|x64
+		{7202064E-BC20-477C-9D41-C76527C4756B}.Release-Install|x86.ActiveCfg = Release|Win32
+		{7202064E-BC20-477C-9D41-C76527C4756B}.Release-Install|x86.Build.0 = Release|Win32
 		{7202064E-BC20-477C-9D41-C76527C4756B}.Release-Lib|x64.ActiveCfg = Release|x64
 		{7202064E-BC20-477C-9D41-C76527C4756B}.Release-Lib|x64.Build.0 = Release|x64
 		{7202064E-BC20-477C-9D41-C76527C4756B}.Release-Lib|x86.ActiveCfg = Release|Win32
@@ -79,6 +85,10 @@ Global
 		{CA08C938-2967-40A8-9834-359D5B8009E7}.Release-Dll|x64.Build.0 = Release|x64
 		{CA08C938-2967-40A8-9834-359D5B8009E7}.Release-Dll|x86.ActiveCfg = Release|Win32
 		{CA08C938-2967-40A8-9834-359D5B8009E7}.Release-Dll|x86.Build.0 = Release|Win32
+		{CA08C938-2967-40A8-9834-359D5B8009E7}.Release-Install|x64.ActiveCfg = Release|x64
+		{CA08C938-2967-40A8-9834-359D5B8009E7}.Release-Install|x64.Build.0 = Release|x64
+		{CA08C938-2967-40A8-9834-359D5B8009E7}.Release-Install|x86.ActiveCfg = Release-Install|Win32
+		{CA08C938-2967-40A8-9834-359D5B8009E7}.Release-Install|x86.Build.0 = Release-Install|Win32
 		{CA08C938-2967-40A8-9834-359D5B8009E7}.Release-Lib|x64.ActiveCfg = Release|x64
 		{CA08C938-2967-40A8-9834-359D5B8009E7}.Release-Lib|x64.Build.0 = Release|x64
 		{CA08C938-2967-40A8-9834-359D5B8009E7}.Release-Lib|x86.ActiveCfg = Release|Win32
@@ -103,6 +113,10 @@ Global
 		{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}.Release-Dll|x64.Build.0 = Release|x64
 		{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}.Release-Dll|x86.ActiveCfg = Release|Win32
 		{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}.Release-Dll|x86.Build.0 = Release|Win32
+		{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}.Release-Install|x64.ActiveCfg = Release|x64
+		{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}.Release-Install|x64.Build.0 = Release|x64
+		{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}.Release-Install|x86.ActiveCfg = Release|Win32
+		{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}.Release-Install|x86.Build.0 = Release|Win32
 		{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}.Release-Lib|x64.ActiveCfg = Release|x64
 		{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}.Release-Lib|x64.Build.0 = Release|x64
 		{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}.Release-Lib|x86.ActiveCfg = Release|Win32
@@ -127,6 +141,10 @@ Global
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Dll|x64.Build.0 = Release-Dll|x64
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Dll|x86.ActiveCfg = Release-Dll|Win32
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Dll|x86.Build.0 = Release-Dll|Win32
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Install|x64.ActiveCfg = Release-Dll|x64
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Install|x64.Build.0 = Release-Dll|x64
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Install|x86.ActiveCfg = Release-Dll|Win32
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Install|x86.Build.0 = Release-Dll|Win32
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Lib|x64.ActiveCfg = Release-Lib|x64
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Lib|x64.Build.0 = Release-Lib|x64
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Lib|x86.ActiveCfg = Release-Lib|Win32
@@ -151,6 +169,10 @@ Global
 		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Dll|x64.Build.0 = Release|x64
 		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Dll|x86.ActiveCfg = Release|Win32
 		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Dll|x86.Build.0 = Release|Win32
+		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Install|x64.ActiveCfg = Release|x64
+		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Install|x64.Build.0 = Release|x64
+		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Install|x86.ActiveCfg = Release|Win32
+		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Install|x86.Build.0 = Release|Win32
 		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Lib|x64.ActiveCfg = Release|x64
 		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Lib|x64.Build.0 = Release|x64
 		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Lib|x86.ActiveCfg = Release|Win32

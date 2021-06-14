@@ -78,7 +78,7 @@ std::string GetHead(const std::string& filePath)
 std::string GetLogPath()
 {
 #ifdef INSTALL
-    return GetFALocalAppDataPath();
+    return GetFALocalAppDataPath() + "logs/";
 #else
     return GetExePath();
 #endif  // INSTALL
