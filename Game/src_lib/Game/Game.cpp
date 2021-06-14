@@ -6,9 +6,6 @@
 
 #include "Game.h"
 
-#include <fstream>
-#include <memory>
-
 #include "Constant/Screen.h"
 #include "Logger.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
