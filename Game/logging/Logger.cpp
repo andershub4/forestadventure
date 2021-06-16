@@ -8,9 +8,7 @@
 
 #include <sstream>
 
-namespace FA {
-
-namespace Util {
+namespace LogLib {
 
 Logger& Logger::Instance()
 {
@@ -91,6 +89,4 @@ std::string Logger::ToStr(const LogLevel& logLevel) const
     return str;
 }
 
-}  // namespace Util
-
-}  // namespace FA
+}  // namespace LogLib
