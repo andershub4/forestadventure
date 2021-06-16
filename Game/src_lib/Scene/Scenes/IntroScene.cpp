@@ -12,6 +12,7 @@
 #include "PlayScene.h"
 #include "Scene/Components/HelperComponent.h"
 #include "Scene/Components/IntroComponent.h"
+#include "Scene/Components/PreAlphaComponent.h"
 
 namespace FA {
 
@@ -31,6 +32,7 @@ void IntroScene::Enter()
 #ifdef _DEBUG
     components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, Name());
 #endif
+    components_[ComponentId::PreAlpha] = std::make_unique<PreAlphaComponent>(messageBus_);
 }
 
 void IntroScene::DrawTo(sf::RenderTarget& renderTarget)

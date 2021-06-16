@@ -12,6 +12,7 @@
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Scene/Components/HelperComponent.h"
 #include "Scene/Components/LevelComponent.h"
+#include "Scene/Components/PreAlphaComponent.h"
 #include "Scene/Transitions/FadeTransition.h"
 
 namespace FA {
@@ -32,6 +33,7 @@ void PlayScene::Enter()
 #ifdef _DEBUG
     components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, Name());
 #endif
+    components_[ComponentId::PreAlpha] = std::make_unique<PreAlphaComponent>(messageBus_);
 }
 
 void PlayScene::DrawTo(sf::RenderTarget& renderTarget)
