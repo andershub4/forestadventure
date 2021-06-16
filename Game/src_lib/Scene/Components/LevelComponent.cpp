@@ -49,12 +49,7 @@ void LevelComponent::EnableInput(bool enable)
 
 void LevelComponent::EnterTransition(const BasicTransition& transition)
 {
-    auto size = camera_.GetViewSize();
-    auto position = camera_.GetPosition();
-    position.x = position.x - size.x / 2;
-    position.y = position.y - size.y / 2;
-
-    effect_ = transition.CreateEffect(position, size);
+    effect_ = transition.CreateEffect(camera_.GetPosition(), camera_.GetViewSize());
 }
 
 void LevelComponent::ExitTransition(const BasicTransition& transition)

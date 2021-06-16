@@ -39,7 +39,7 @@ void Camera::Follow(Entity::BasicEntity* entity)
 
 sf::Vector2f Camera::GetPosition() const
 {
-    return view_.getCenter();
+    return {view_.getCenter().x - view_.getSize().x / 2, view_.getCenter().y - view_.getSize().y / 2};
 }
 
 sf::Vector2f Camera::GetViewSize() const
