@@ -37,7 +37,6 @@ Source: "..\Release\FA Pre-alpha.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Release\openal32.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Release\sfml-audio-2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Release\sfml-graphics-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Release\sfml-log.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Release\sfml-network-2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Release\sfml-system-2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Release\sfml-window-2.dll"; DestDir: "{app}"; Flags: ignoreversion
