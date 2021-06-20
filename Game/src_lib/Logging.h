@@ -6,12 +6,6 @@
 
 #pragma once
 
-#include <fstream>
-#ifdef _DEBUG
-#include <iostream>
-#endif
-#include <string>
-
 #include "Logger.h"
 
 namespace FA {
