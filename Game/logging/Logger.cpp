@@ -44,14 +44,14 @@ void Logger::StartLine(const LogLevel& logLevel, const std::string& funcName)
 {
     std::stringstream ss;
     ss << "[" << ToStr(logLevel) << " | " << funcName << "]: ";
-    Log(ss.str());
+    LogData(ss.str());
 }
 
 void Logger::EndLine()
 {
     std::stringstream ss;
     ss << std::endl;
-    Log(ss.str());
+    LogData(ss.str());
 }
 
 void Logger::OpeningLines()
@@ -59,7 +59,7 @@ void Logger::OpeningLines()
     std::stringstream ss;
     ss << "Logfile opened - " << fileName_ << std::endl;
     ss << std::endl << std::endl;
-    Log(ss.str());
+    LogData(ss.str());
 }
 
 void Logger::ClosingLines()
@@ -67,7 +67,7 @@ void Logger::ClosingLines()
     std::stringstream ss;
     ss << std::endl << std::endl;
     ss << "Logfile closing - " << fileName_ << std::endl;
-    Log(ss.str());
+    LogData(ss.str());
 }
 
 std::string Logger::ToStr(const LogLevel& logLevel) const
