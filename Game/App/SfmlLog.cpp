@@ -10,7 +10,7 @@
 #include <SFML/System/Err.hpp>
 
 #include "Folder.h"
-#include "Logger.h"
+#include "Logging.h"
 
 namespace FA {
 

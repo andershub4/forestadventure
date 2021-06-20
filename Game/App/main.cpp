@@ -8,7 +8,7 @@
 
 #include "Folder.h"
 #include "Game/Game.h"
-#include "Logger.h"
+#include "Logging.h"
 #include "SfmlLog.h"
 #include "Version.h"
 

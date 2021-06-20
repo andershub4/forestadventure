@@ -6,7 +6,7 @@
 
 #include "Manager.h"
 
-#include "Logger.h"
+#include "Logging.h"
 #include "Message/Message.h"
 #include "Scenes/IntroScene.h"
 #include "Scenes/TransitionScene.h"

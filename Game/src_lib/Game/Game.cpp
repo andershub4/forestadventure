@@ -7,7 +7,7 @@
 #include "Game.h"
 
 #include "Constant/Screen.h"
-#include "Logger.h"
+#include "Logging.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "System/InputSystem.h"

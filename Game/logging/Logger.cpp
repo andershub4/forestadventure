@@ -10,12 +10,6 @@
 
 namespace LogLib {
 
-Logger& Logger::Instance()
-{
-    static Logger logger;
-    return logger;
-}
-
 Logger::~Logger()
 {
     if (logStream_.is_open()) {

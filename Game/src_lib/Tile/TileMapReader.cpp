@@ -7,7 +7,7 @@
 #include "TileMapReader.h"
 
 #include "Folder.h"
-#include "Logger.h"
+#include "Logging.h"
 #include "Misc/TextureManager.h"
 #include "TmxParser.h"
 #include "TsxParser.h"

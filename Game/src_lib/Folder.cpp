@@ -6,7 +6,7 @@
 
 #include "Folder.h"
 
-#include "Logger.h"
+#include "Logging.h"
 #include "Platform/Path.h"
 #include "Platform/SpecialFolder.h"
 #include "Version.h"

@@ -239,6 +239,7 @@
     <ClInclude Include="Enum\TileType.h" />
     <ClInclude Include="Level\Camera.h" />
     <ClInclude Include="Level\Level.h" />
+    <ClInclude Include="Logging.h" />
     <ClInclude Include="Scene\Components\PreAlphaComponent.h" />
     <ClInclude Include="UI\Title.h" />
     <ClInclude Include="Util\Random.h" />
@@ -305,6 +306,7 @@
     <ClCompile Include="Entity\States\UninitializedState.cpp" />
     <ClCompile Include="Level\Camera.cpp" />
     <ClCompile Include="Level\Level.cpp" />
+    <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Scene\Components\PreAlphaComponent.cpp" />
     <ClCompile Include="UI\Title.cpp" />
     <ClCompile Include="Util\Random.cpp" />

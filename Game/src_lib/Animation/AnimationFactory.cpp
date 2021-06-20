@@ -7,7 +7,7 @@
 #include "AnimationFactory.h"
 
 #include "Animation.h"
-#include "Logger.h"
+#include "Logging.h"
 
 namespace FA {
 

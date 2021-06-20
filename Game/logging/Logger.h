@@ -19,8 +19,6 @@ class Logger
 public:
     enum class LogLevel { Error, Warning, Info };
 
-    static Logger& Instance();
-
     Logger() = default;
     ~Logger();
     Logger(const Logger&) = delete;
@@ -84,12 +82,3 @@ private:
 };
 
 }  // namespace LogLib
-
-#define OPEN_LOG(filePath) LogLib::Logger::Instance().OpenLog((filePath));
-
-#define LOG_INFO(...) LogLib::Logger::Instance().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)
-#define LOG_WARN(...) LogLib::Logger::Instance().MakeLogEntry(LogLib::Logger::LogLevel::Warning, __FUNCTION__, __VA_ARGS__)
-#define LOG_ERROR(...) LogLib::Logger::Instance().MakeLogEntry(LogLib::Logger::LogLevel::Error, __FUNCTION__, __VA_ARGS__)
-
-#define LOG_INFO_ENTER_FUNC() LOG_INFO("ENTER")
-#define LOG_INFO_EXIT_FUNC() LOG_INFO("EXIT")

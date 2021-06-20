@@ -10,7 +10,7 @@
 
 #include "Constant/Screen.h"
 #include "Folder.h"
-#include "Logger.h"
+#include "Logging.h"
 #include "Message/MessageBus.h"
 
 namespace FA {

@@ -8,7 +8,7 @@
 
 #include "Entities/MoleEntity.h"
 #include "Entities/PlayerEntity.h"
-#include "Logger.h"
+#include "Logging.h"
 
 namespace FA {
 

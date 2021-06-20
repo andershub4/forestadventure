@@ -10,7 +10,7 @@
 
 #include "Enum/AnimationType.h"
 #include "Folder.h"
-#include "Logger.h"
+#include "Logging.h"
 #include "Misc/TextureManager.h"
 #include "SpriteSheet.h"
 
