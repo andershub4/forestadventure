@@ -12,10 +12,7 @@ namespace LogLib {
 
 Logger::~Logger()
 {
-    if (logStream_.is_open()) {
-        ClosingLines();
-        logStream_.close();
-    }
+    CloseLog();
 }
 
 void Logger::OpenLog(const std::string& fileName)
@@ -32,6 +29,14 @@ void Logger::OpenLog(const std::string& fileName)
         std::cerr << "Could not open logfile for writing" << std::endl;
     }
 #endif
+}
+
+void Logger::CloseLog()
+{
+    if (logStream_.is_open()) {
+        ClosingLines();
+        logStream_.close();
+    }
 }
 
 void Logger::StartLine(const LogLevel& logLevel, const std::string& funcName)

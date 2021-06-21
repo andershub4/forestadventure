@@ -25,6 +25,7 @@ public:
     Logger& operator=(const Logger&) = delete;
 
     void OpenLog(const std::string& filePath);
+    void CloseLog();
 
     template <class T, class... Rest>
     void MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& func, T data, Rest... rest)
