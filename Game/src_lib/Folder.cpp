@@ -53,12 +53,18 @@ std::string GetExePath()
 
 std::string GetFAProgramDataPath()
 {
-    return GetProgramDataPath() + '/' + FA_APP_NAME + '/';
+    std::string p;
+    if (!GetProgramDataPath().empty()) p = GetProgramDataPath() + '/' + FA_APP_NAME + '/';
+
+    return p;
 }
 
 std::string GetFALocalAppDataPath()
 {
-    return GetLocalAppDataPath() + '/' + FA_APP_NAME + '/';
+    std::string p;
+    if (!GetLocalAppDataPath().empty()) p = GetLocalAppDataPath() + '/' + FA_APP_NAME + '/';
+
+    return p;
 }
 
 }  // namespace
@@ -77,20 +83,24 @@ std::string GetHead(const std::string& filePath)
 
 std::string GetLogPath()
 {
+    std::string p;
 #ifdef INSTALL
-    return GetFALocalAppDataPath() + "logs/";
+    if (!GetFALocalAppDataPath().empty()) p = GetFALocalAppDataPath() + "logs/";
 #else
-    return GetExePath();
+    p = GetExePath();
 #endif  // INSTALL
+    return p;
 }
 
 std::string GetAssetsPath()
 {
+    std::string p;
 #ifdef INSTALL
-    return GetFAProgramDataPath() + "assets/";
+    if (!GetFAProgramDataPath().empty()) p = GetFAProgramDataPath() + "assets/";
 #else
-    return "assets/";
+    p = "assets/";
 #endif  // INSTALL
+    return p;
 }
 
 }  // namespace FA
