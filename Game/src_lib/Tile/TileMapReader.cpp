@@ -33,7 +33,7 @@ TileMapData TileMapReader::Parse(const std::string& fileName)
         ReadObjectGroups(tmxParser);
     }
     else {
-        LOG_ERROR("Can not load: ", fileName);
+        LOG_ERROR("Could not load ", fileName);
     }
 
     return tileMapData_;
