@@ -12,6 +12,7 @@
 
 #include "Camera.h"
 #include "Entity/Configuration.h"
+#include "Logging.h"
 #include "Misc/TextureManager.h"
 
 namespace FA {
@@ -39,10 +40,14 @@ void Level::DrawTo(sf::RenderTarget &renderTarget)
 
 void Level::Create(Camera &camera, MessageBus &messageBus)
 {
+    LOG_INFO_ENTER_FUNC();
+    LOG_INFO("Register animation factories");
     animationManager_.RegisterFactories();
 
+    LOG_INFO("Create tile map");
     tileMap_.Create();
 
+    LOG_INFO("Create entities");
     Entity::EntityId id = 0;
     for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
         auto type = objectData.type_;
@@ -57,6 +62,7 @@ void Level::Create(Camera &camera, MessageBus &messageBus)
         id++;
     }
 
+    LOG_INFO("Create background texture");
     backgroundTexture_.create(tileMap_.GetSize().x, tileMap_.GetSize().y);
     for (const auto &tile : tileMap_.GetLayer("Ground Layer 1")) {
         backgroundTexture_.draw(tile);
@@ -68,6 +74,7 @@ void Level::Create(Camera &camera, MessageBus &messageBus)
     backgroundSprite_.setTexture(backgroundTexture_.getTexture());
 
     fringeLayer_ = tileMap_.GetLayer("Fringe Layer");
+    LOG_INFO_EXIT_FUNC();
 }
 
 void Level::EnableInput(bool enable)
