@@ -178,7 +178,7 @@ void AnimationManager::RegisterMoleFactory()
 
 std::string AnimationManager::GetSpriteSheetPath() const
 {
-    return GetAssetsPath() + "tiny-RPG-forest-files/PNG/spritesheets/";
+    return GetAssetsPath() + "/tiny-RPG-forest-files/PNG/spritesheets/";
 }
 
 AnimationFactory AnimationManager::GetFactory(AnimationType type) const

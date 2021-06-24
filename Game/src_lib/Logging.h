@@ -14,7 +14,7 @@ LogLib::Logger& MainLog();
 
 }  // namespace FA
 
-#define OPEN_LOG(filePath) FA::MainLog().OpenLog((filePath));
+#define OPEN_LOG(folder, fileName) FA::MainLog().OpenLog((folder), (fileName));
 
 #define LOG_INFO(...) FA::MainLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)
 #define LOG_WARN(...) FA::MainLog().MakeLogEntry(LogLib::Logger::LogLevel::Warning, __FUNCTION__, __VA_ARGS__)

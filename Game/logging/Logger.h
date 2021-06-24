@@ -24,7 +24,7 @@ public:
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
 
-    void OpenLog(const std::string& filePath);
+    void OpenLog(const std::string& folder, const std::string& fileName);
     void CloseLog();
 
     template <class T, class... Rest>
@@ -36,7 +36,7 @@ public:
 
 private:
     std::ofstream logStream_;
-    std::string fileName_;
+    std::string filePath_;
     std::ofstream::pos_type currSize_;
     std::ofstream::pos_type maxSize_ = 1048576;  // arbitrary number
 
@@ -48,10 +48,10 @@ private:
             currSize_ = (logStream_ << data << std::flush).tellp();
             if (currSize_ > maxSize_) {
                 logStream_ << std::endl << std::endl;
-                logStream_ << "Logfile closing - file too large - " << fileName_ << std::endl;
+                logStream_ << "Logfile closing - file too large - " << filePath_ << std::endl;
 #ifdef _DEBUG
                 std::cout << std::endl << std::endl;
-                std::cout << "Logfile closing - file too large - " << fileName_ << std::endl;
+                std::cout << "Logfile closing - file too large - " << filePath_ << std::endl;
 #endif
                 logStream_.close();
             }
@@ -80,6 +80,7 @@ private:
     void OpeningLines();
     void ClosingLines();
     std::string ToStr(const LogLevel& logLevel) const;
+    bool FolderExists(const std::string& folder) const;
 };
 
 }  // namespace LogLib

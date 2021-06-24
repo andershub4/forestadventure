@@ -21,7 +21,7 @@ namespace Scene {
 LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureManager)
     : BasicComponent(messageBus)
 {
-    auto path = GetAssetsPath() + "map/test.tmx";
+    auto path = GetAssetsPath() + "/map/test.tmx";
     auto tileMapData = tileMapReader_.Parse(path);
     level_ = std::make_unique<Level>(tileMapData, textureManager);
     level_->Create(camera_, messageBus);

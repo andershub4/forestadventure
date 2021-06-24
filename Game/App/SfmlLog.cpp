@@ -16,7 +16,7 @@ namespace FA {
 
 void SfmlLog::Init()
 {
-    const std::string path = GetLogPath() + "\\/sfml-log.txt";
+    const std::string path = GetLogPath() + '/' + "sfml-log.txt";
     sfmlLogStream_.open(path);
 
     if (sfmlLogStream_.is_open()) {

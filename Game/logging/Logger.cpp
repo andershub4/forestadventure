@@ -6,6 +6,7 @@
 
 #include "Logger.h"
 
+#include <sys/stat.h>
 #include <sstream>
 
 namespace LogLib {
@@ -15,10 +16,12 @@ Logger::~Logger()
     CloseLog();
 }
 
-void Logger::OpenLog(const std::string& fileName)
+void Logger::OpenLog(const std::string& folder, const std::string& fileName)
 {
-    fileName_ = fileName;
-    logStream_.open(fileName);
+    if (!FolderExists(folder)) return;
+
+    filePath_ = folder + '/' + fileName;
+    logStream_.open(filePath_);
 
     if (logStream_.is_open()) {
         OpeningLines();
@@ -56,7 +59,7 @@ void Logger::EndLine()
 void Logger::OpeningLines()
 {
     std::stringstream ss;
-    ss << "Logfile opened - " << fileName_ << std::endl;
+    ss << "Logfile opened - " << filePath_ << std::endl;
     ss << std::endl << std::endl;
     LogData(ss.str());
 }
@@ -65,7 +68,7 @@ void Logger::ClosingLines()
 {
     std::stringstream ss;
     ss << std::endl << std::endl;
-    ss << "Logfile closing - " << fileName_ << std::endl;
+    ss << "Logfile closing - " << filePath_ << std::endl;
     LogData(ss.str());
 }
 
@@ -86,6 +89,14 @@ std::string Logger::ToStr(const LogLevel& logLevel) const
     }
 
     return str;
+}
+
+bool Logger::FolderExists(const std::string& folder) const
+{
+    struct stat info;
+    if (stat(folder.c_str(), &info) != 0) return false;
+
+    return info.st_mode & S_IFDIR ? true : false;
 }
 
 }  // namespace LogLib

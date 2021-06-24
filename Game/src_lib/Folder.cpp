@@ -54,7 +54,7 @@ std::string GetExePath()
 std::string GetFAProgramDataPath()
 {
     std::string p;
-    if (!GetProgramDataPath().empty()) p = GetProgramDataPath() + '/' + FA_APP_NAME + '/';
+    if (!GetProgramDataPath().empty()) p = GetProgramDataPath() + '/' + FA_APP_NAME;
 
     return p;
 }
@@ -62,7 +62,7 @@ std::string GetFAProgramDataPath()
 std::string GetFALocalAppDataPath()
 {
     std::string p;
-    if (!GetLocalAppDataPath().empty()) p = GetLocalAppDataPath() + '/' + FA_APP_NAME + '/';
+    if (!GetLocalAppDataPath().empty()) p = GetLocalAppDataPath() + '/' + FA_APP_NAME;
 
     return p;
 }
@@ -85,7 +85,7 @@ std::string GetLogPath()
 {
     std::string p;
 #ifdef INSTALL
-    if (!GetFALocalAppDataPath().empty()) p = GetFALocalAppDataPath() + "logs/";
+    if (!GetFALocalAppDataPath().empty()) p = GetFALocalAppDataPath() + "/logs";
 #else
     p = GetExePath();
 #endif  // INSTALL
@@ -96,9 +96,9 @@ std::string GetAssetsPath()
 {
     std::string p;
 #ifdef INSTALL
-    if (!GetFAProgramDataPath().empty()) p = GetFAProgramDataPath() + "assets/";
+    if (!GetFAProgramDataPath().empty()) p = GetFAProgramDataPath() + "/assets";
 #else
-    p = "assets/";
+    p = "assets";
 #endif  // INSTALL
     return p;
 }

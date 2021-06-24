@@ -20,7 +20,7 @@ namespace Scene {
 PreAlphaComponent::PreAlphaComponent(MessageBus& messageBus)
     : BasicComponent(messageBus)
 {
-    std::string path = GetAssetsPath() + "font/intuitive/intuitive.ttf";
+    std::string path = GetAssetsPath() + "/font/intuitive/intuitive.ttf";
     if (!font_.loadFromFile(path)) {
         LOG_ERROR("Could not load intuitive");
     }

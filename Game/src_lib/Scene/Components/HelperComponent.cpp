@@ -22,7 +22,7 @@ namespace Scene {
 HelperComponent::HelperComponent(MessageBus& messageBus, const std::string& sceneName)
     : BasicComponent(messageBus)
 {
-    std::string path = GetAssetsPath() + "font/cello-sans/hinted-CelloSans-Medium.ttf";
+    std::string path = GetAssetsPath() + "/font/cello-sans/hinted-CelloSans-Medium.ttf";
     if (!font_.loadFromFile(path)) {
         LOG_ERROR("Could not load hinted-CelloSans-Medium");
     }
