@@ -24,7 +24,7 @@ HelperComponent::HelperComponent(MessageBus& messageBus, const std::string& scen
 {
     std::string path = GetAssetsPath() + "/font/cello-sans/hinted-CelloSans-Medium.ttf";
     if (!font_.loadFromFile(path)) {
-        LOG_ERROR("Could not load hinted-CelloSans-Medium");
+        LOG_ERROR("Could not load ", path);
     }
 
     sceneText_.setFont(font_);

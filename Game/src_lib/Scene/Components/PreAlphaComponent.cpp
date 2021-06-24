@@ -22,7 +22,7 @@ PreAlphaComponent::PreAlphaComponent(MessageBus& messageBus)
 {
     std::string path = GetAssetsPath() + "/font/intuitive/intuitive.ttf";
     if (!font_.loadFromFile(path)) {
-        LOG_ERROR("Could not load intuitive");
+        LOG_ERROR("Could not load ", path);
     }
 
     versionText_.setFont(font_);
