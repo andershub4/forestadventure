@@ -11,9 +11,11 @@
 namespace FA {
 
 LogLib::Logger& MainLog();
+LogLib::Logger& TmxLog();
 
 }  // namespace FA
 
+/* MAIN LOG MACROS */
 #define OPEN_LOG(folder, fileName) FA::MainLog().OpenLog((folder), (fileName));
 
 #define LOG_INFO(...) FA::MainLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)
@@ -22,3 +24,8 @@ LogLib::Logger& MainLog();
 
 #define LOG_INFO_ENTER_FUNC() LOG_INFO("ENTER")
 #define LOG_INFO_EXIT_FUNC() LOG_INFO("EXIT")
+
+/* TMX LOG MACROS */
+#define OPEN_TMXLOG(folder, fileName) FA::TmxLog().OpenLog((folder), (fileName));
+
+#define LOG_TMXINFO(...) FA::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)

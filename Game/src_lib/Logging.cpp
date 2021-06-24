@@ -14,4 +14,10 @@ LogLib::Logger& MainLog()
     return mainLog;
 }
 
+LogLib::Logger& TmxLog()
+{
+    static LogLib::Logger tmxLog;
+    return tmxLog;
+}
+
 }  // namespace FA

@@ -22,7 +22,7 @@ TileMapReader::~TileMapReader() = default;
 
 TileMapData TileMapReader::Parse(const std::string& fileName)
 {
-    LOG_INFO("Parse ", fileName);
+    LOG_TMXINFO("Start parse fileName ", fileName);
     TmxParser tmxParser;
 
     if (tmxParser.Parse(fileName)) {
@@ -35,6 +35,8 @@ TileMapData TileMapReader::Parse(const std::string& fileName)
     else {
         LOG_ERROR("Could not load ", fileName);
     }
+
+    LOG_TMXINFO("End parse fileName ", fileName);
 
     return tileMapData_;
 }

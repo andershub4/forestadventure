@@ -40,9 +40,9 @@ void TmxParser::ParseMapElement(tinyxml2::XMLElement* mapElement)
     mapElement->QueryAttribute("height", &map_.height_);
     mapElement->QueryAttribute("tilewidth", &map_.tileWidth_);
     mapElement->QueryAttribute("tileheight", &map_.tileHeight_);
-    LOG_INFO("renderOrder: ", map_.renderOrder_);
-    LOG_INFO("width: ", map_.width_, " height: ", map_.height_);
-    LOG_INFO("tileWidth: ", map_.tileWidth_, " tileHeight: ", map_.tileHeight_);
+    LOG_TMXINFO("renderOrder: ", map_.renderOrder_);
+    LOG_TMXINFO("width: ", map_.width_, " height: ", map_.height_);
+    LOG_TMXINFO("tileWidth: ", map_.tileWidth_, " tileHeight: ", map_.tileHeight_);
 
     tinyxml2::XMLElement* tileSetElement = mapElement->FirstChildElement("tileset");
     while (tileSetElement != nullptr) {
@@ -73,8 +73,8 @@ void TmxParser::ParseTileSetElement(tinyxml2::XMLElement* tileSetElement, TileSe
 {
     tileSetElement->QueryAttribute("firstgid", &tileSet.firstGid_);
     tileSet.source_ = tileSetElement->Attribute("source");
-    LOG_INFO("firstGid: ", tileSet.firstGid_);
-    LOG_INFO("source: ", tileSet.source_);
+    LOG_TMXINFO("firstGid: ", tileSet.firstGid_);
+    LOG_TMXINFO("source: ", tileSet.source_);
 }
 
 void TmxParser::ParseLayerElement(tinyxml2::XMLElement* layerElement, Layer& layer)
@@ -83,10 +83,10 @@ void TmxParser::ParseLayerElement(tinyxml2::XMLElement* layerElement, Layer& lay
     layer.name_ = layerElement->Attribute("name");
     layerElement->QueryAttribute("width", &layer.width_);
     layerElement->QueryAttribute("height", &layer.height_);
-    LOG_INFO("layer.id_: ", layer.id_);
-    LOG_INFO("layer.name_: ", layer.name_);
-    LOG_INFO("layer.width_: ", layer.width_);
-    LOG_INFO("layer.height_: ", layer.height_);
+    LOG_TMXINFO("layer.id_: ", layer.id_);
+    LOG_TMXINFO("layer.name_: ", layer.name_);
+    LOG_TMXINFO("layer.width_: ", layer.width_);
+    LOG_TMXINFO("layer.height_: ", layer.height_);
 
     auto dataElement = layerElement->FirstChildElement("data");
     layer.tileIds_.reserve(layer.width_ * layer.height_);
@@ -126,10 +126,10 @@ void TmxParser::ParseObjectElement(tinyxml2::XMLElement* objectElement, Object& 
     object.type_ = objectElement->Attribute("type");
     objectElement->QueryAttribute("x", &object.x_);
     objectElement->QueryAttribute("y", &object.y_);
-    LOG_INFO("object.id_: ", object.id_);
-    LOG_INFO("object.type_: ", object.type_);
-    LOG_INFO("object.x_: ", object.x_);
-    LOG_INFO("object.y_: ", object.y_);
+    LOG_TMXINFO("object.id_: ", object.id_);
+    LOG_TMXINFO("object.type_: ", object.type_);
+    LOG_TMXINFO("object.x_: ", object.x_);
+    LOG_TMXINFO("object.y_: ", object.y_);
 
     tinyxml2::XMLElement* propertiesElement = objectElement->FirstChildElement("properties");
     if (propertiesElement) {
@@ -148,7 +148,7 @@ void TmxParser::ParsePropertyElement(tinyxml2::XMLElement* propertyElement, Obje
     auto name = propertyElement->Attribute("name");
     auto value = propertyElement->Attribute("value");
     prop = {name, value};
-    LOG_INFO("prop.name_: ", prop.first, " prop.value_: ", prop.second);
+    LOG_TMXINFO("prop.name_: ", prop.first, " prop.value_: ", prop.second);
 }
 
 }  // namespace Tile

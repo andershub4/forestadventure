@@ -40,9 +40,9 @@ void TsxParser::ParseTileSetElement(tinyxml2::XMLElement* tileSetElement)
     tileSetElement->QueryAttribute("tileheight", &tileSet_.tileHeight_);
     tileSetElement->QueryAttribute("tilecount", &tileSet_.tileCount_);
     tileSetElement->QueryAttribute("columns", &tileSet_.columns_);
-    LOG_INFO("name: ", tileSet_.name_);
-    LOG_INFO("tileWidth: ", tileSet_.tileWidth_, " tileHeight: ", tileSet_.tileHeight_);
-    LOG_INFO("tileCount: ", tileSet_.tileCount_, " columns: ", tileSet_.columns_);
+    LOG_TMXINFO("name: ", tileSet_.name_);
+    LOG_TMXINFO("tileWidth: ", tileSet_.tileWidth_, " tileHeight: ", tileSet_.tileHeight_);
+    LOG_TMXINFO("tileCount: ", tileSet_.tileCount_, " columns: ", tileSet_.columns_);
 
     tinyxml2::XMLElement* imageElement = tileSetElement->FirstChildElement("image");
     ParseImageElement(imageElement, image_);
@@ -53,8 +53,8 @@ void TsxParser::ParseImageElement(tinyxml2::XMLElement* imageElement, Image& ima
     image.source_ = imageElement->Attribute("source");
     imageElement->QueryAttribute("width", &image.width_);
     imageElement->QueryAttribute("height", &image.height_);
-    LOG_INFO("source: ", image.source_);
-    LOG_INFO("width: ", image.width_, " height: ", image.height_);
+    LOG_TMXINFO("source: ", image.source_);
+    LOG_TMXINFO("width: ", image.width_, " height: ", image.height_);
 }
 
 }  // namespace Tile
