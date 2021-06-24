@@ -16,10 +16,11 @@ Logger::~Logger()
     CloseLog();
 }
 
-void Logger::OpenLog(const std::string& folder, const std::string& fileName)
+void Logger::OpenLog(const std::string& folder, const std::string& fileName, bool toConsole)
 {
     if (!FolderExists(folder)) return;
 
+    toConsole_ = toConsole;
     filePath_ = folder + '/' + fileName;
     logStream_.open(filePath_);
 

@@ -16,7 +16,7 @@ LogLib::Logger& TmxLog();
 }  // namespace FA
 
 /* MAIN LOG MACROS */
-#define OPEN_LOG(folder, fileName) FA::MainLog().OpenLog((folder), (fileName));
+#define OPEN_LOG(folder, fileName) FA::MainLog().OpenLog((folder), (fileName), true);
 
 #define LOG_INFO(...) FA::MainLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)
 #define LOG_WARN(...) FA::MainLog().MakeLogEntry(LogLib::Logger::LogLevel::Warning, __FUNCTION__, __VA_ARGS__)
@@ -26,6 +26,6 @@ LogLib::Logger& TmxLog();
 #define LOG_INFO_EXIT_FUNC() LOG_INFO("EXIT")
 
 /* TMX LOG MACROS */
-#define OPEN_TMXLOG(folder, fileName) FA::TmxLog().OpenLog((folder), (fileName));
+#define OPEN_TMXLOG(folder, fileName) FA::TmxLog().OpenLog((folder), (fileName), false);
 
 #define LOG_TMXINFO(...) FA::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)

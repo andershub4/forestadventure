@@ -24,7 +24,7 @@ public:
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
 
-    void OpenLog(const std::string& folder, const std::string& fileName);
+    void OpenLog(const std::string& folder, const std::string& fileName, bool toConsole);
     void CloseLog();
 
     template <class T, class... Rest>
@@ -39,6 +39,7 @@ private:
     std::string filePath_;
     std::ofstream::pos_type currSize_;
     std::ofstream::pos_type maxSize_ = 1048576;  // arbitrary number
+    bool toConsole_{false};
 
 private:
     template <class T>
@@ -57,7 +58,7 @@ private:
             }
         }
 #ifdef _DEBUG
-        std::cout << data;
+        if (toConsole_) std::cout << data;
 #endif
     }
 
