@@ -80,6 +80,7 @@ private:
     void EndLine();
     void OpeningLines();
     void ClosingLines();
+    std::string TimeStr();
     std::string ToStr(const LogLevel& logLevel) const;
     bool FolderExists(const std::string& folder) const;
 };

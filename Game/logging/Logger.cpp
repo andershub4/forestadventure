@@ -8,6 +8,7 @@
 
 #include <sys/stat.h>
 #include <sstream>
+#include <chrono>
 
 namespace LogLib {
 
@@ -60,7 +61,8 @@ void Logger::EndLine()
 void Logger::OpeningLines()
 {
     std::stringstream ss;
-    ss << "Logfile opened - " << filePath_ << std::endl;
+    ss << "Log file open - " << TimeStr();
+    ss << "Log file path - " << filePath_ << std::endl;
     ss << std::endl << std::endl;
     LogData(ss.str());
 }
@@ -69,8 +71,20 @@ void Logger::ClosingLines()
 {
     std::stringstream ss;
     ss << std::endl << std::endl;
-    ss << "Logfile closing - " << filePath_ << std::endl;
+    ss << "Log file close - " << TimeStr();
     LogData(ss.str());
+}
+
+std::string Logger::TimeStr()
+{
+    std::string str;
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_t = std::chrono::system_clock::to_time_t(now);
+    char timeStr[50] = {};
+    auto e = ctime_s(timeStr, 50, &now_t);
+    if (!e) str = timeStr;
+    
+    return str;
 }
 
 std::string Logger::ToStr(const LogLevel& logLevel) const
