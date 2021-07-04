@@ -9,7 +9,6 @@
 #include <vector>
 
 #include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/Sprite.hpp>
 
 #include "Fwd/SfmlFwd.h"
 
@@ -31,12 +30,12 @@ private:
     sf::Sprite* sprite_ = nullptr;
     const sf::Texture* texture_ = nullptr;
     bool isStopped_ = true;
-    float time_;        // time since we last switched frame
-    float switchTime_;  // time before to switch to next frame
-    unsigned int iFrame_;
+    float time_{};        // time since we last switched frame
+    float switchTime_{};  // time before to switch to next frame
+    unsigned int iFrame_{};
     std::vector<sf::IntRect> frames_;
-    unsigned int nFrames_;
-    unsigned int defaultFrame_;
+    unsigned int nFrames_{};
+    unsigned int defaultFrame_{};
     bool isCompleted_ = false;
 };
 

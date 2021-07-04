@@ -209,12 +209,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
-    <ClInclude Include="Animation\AnimationFactory.h" />
+    <ClInclude Include="Animation\AnimationDB.h" />
     <ClInclude Include="Constant\Screen.h" />
     <ClInclude Include="Effect\BasicEffect.h" />
     <ClInclude Include="Effect\FadeEffect.h" />
     <ClInclude Include="Effect\NullEffect.h" />
-    <ClInclude Include="Entity\Components\Sprite\StaticSprite.h" />
+    <ClInclude Include="Entity\Components\Transform\Transform.h" />
     <ClInclude Include="Entity\Configuration.h" />
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
@@ -236,7 +236,6 @@
     <ClInclude Include="Enum\MoveDirection.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />
-    <ClInclude Include="Enum\TileType.h" />
     <ClInclude Include="Level\Camera.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Logging.h" />
@@ -273,8 +272,7 @@
     <ClInclude Include="Scene\Components\BasicComponent.h" />
     <ClInclude Include="Scene\Components\HelperComponent.h" />
     <ClInclude Include="Resource\SpriteSheet.h" />
-    <ClInclude Include="Entity\Components\Sprite\AnimatedSprite.h" />
-    <ClInclude Include="Entity\Components\Sprite\BasicSprite.h" />
+    <ClInclude Include="Entity\Components\Sprite\Sprite.h" />
     <ClInclude Include="System\EntitySystem.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Tile\TileMapData.h" />
@@ -287,11 +285,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
-    <ClCompile Include="Animation\AnimationFactory.cpp" />
+    <ClCompile Include="Animation\AnimationDB.cpp" />
     <ClCompile Include="Effect\BasicEffect.cpp" />
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />
-    <ClCompile Include="Entity\Components\Sprite\StaticSprite.cpp" />
+    <ClCompile Include="Entity\Components\Transform\Transform.cpp" />
     <ClCompile Include="Entity\Entities\MoleEntity.cpp" />
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />
@@ -335,8 +333,7 @@
     <ClCompile Include="Scene\Components\BasicComponent.cpp" />
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
     <ClCompile Include="Resource\SpriteSheet.cpp" />
-    <ClCompile Include="Entity\Components\Sprite\AnimatedSprite.cpp" />
-    <ClCompile Include="Entity\Components\Sprite\BasicSprite.cpp" />
+    <ClCompile Include="Entity\Components\Sprite\Sprite.cpp" />
     <ClCompile Include="System\EntitySystem.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />

@@ -8,8 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/Sprite/AnimatedSprite.h"
-#include "Entity/Components/Sprite/BasicSprite.h"
+#include "Entity/Components/Sprite/Sprite.h"
 #include "Entity/Configuration.h"
 #include "Message/MessageBus.h"
 #include "Resource/AnimationManager.h"
@@ -26,11 +25,9 @@ MoleEntity::~MoleEntity() = default;
 
 void MoleEntity::OnCreate(AnimationManager& animationManager, Camera& camera, const Configuration& configuration)
 {
-    auto animationFactory = animationManager.GetFactory(AnimationType::Mole);
-    auto sprite =
-        std::make_unique<Entity::AnimatedSprite>(configuration.position_, configuration.scale_, animationFactory);
+    auto db = animationManager.GetDB(AnimationType::Mole);
 
-    InitStateData(configuration.faceDir_, configuration.velocity_, std::move(sprite));
+    InitStateData(configuration.faceDir_, configuration.velocity_, configuration.position_, configuration.scale_, db);
 }
 
 void MoleEntity::OnDestroy()

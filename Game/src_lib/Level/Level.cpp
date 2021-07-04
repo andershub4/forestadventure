@@ -27,6 +27,7 @@ Level::~Level() = default;
 void Level::Update(float deltaTime)
 {
     entitySystem_.Update(deltaTime);
+    entitySystem_.LateUpdate();
 }
 
 void Level::DrawTo(sf::RenderTarget &renderTarget)
@@ -41,8 +42,8 @@ void Level::DrawTo(sf::RenderTarget &renderTarget)
 void Level::Create(Camera &camera, MessageBus &messageBus)
 {
     LOG_INFO_ENTER_FUNC();
-    LOG_INFO("Register animation factories");
-    animationManager_.RegisterFactories();
+    LOG_INFO("Register animation DBs");
+    animationManager_.RegisterDBs();
 
     LOG_INFO("Create tile map");
     tileMap_.Create();
@@ -53,10 +54,10 @@ void Level::Create(Camera &camera, MessageBus &messageBus)
         auto type = objectData.type_;
         auto entity = factory_.Create(type, id, messageBus);
         Entity::Configuration configuration;
-        configuration.position_ = objectData.position_;
+        configuration.position_ = static_cast<sf::Vector2f>(objectData.position_);
         configuration.faceDir_ = objectData.faceDir_;
         configuration.velocity_ = 120.0;
-        configuration.scale_ = scale_;
+        configuration.scale_ = static_cast<float>(scale_);
         entity->OnCreate(animationManager_, camera, configuration);
         entitySystem_.AddEntity(id, std::move(entity));
         id++;

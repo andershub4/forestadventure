@@ -27,6 +27,13 @@ void EntitySystem::Update(float deltaTime)
     }
 }
 
+void EntitySystem::LateUpdate()
+{
+    for (const auto& entry : entityMap_) {
+        entry.second->LateUpdate();
+    }
+}
+
 void EntitySystem::AddEntity(Entity::EntityId entityId, std::unique_ptr<Entity::BasicEntity> entity)
 {
     if (entityMap_.find(entityId) == entityMap_.end()) {

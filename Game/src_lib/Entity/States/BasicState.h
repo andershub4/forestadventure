@@ -9,7 +9,8 @@
 #include <memory>
 #include <string>
 
-#include "Entity/Components/Sprite/BasicSprite.h"
+#include "Entity/Components/Sprite/Sprite.h"
+#include "Entity/Components/Transform/Transform.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 #include "Fwd/SfmlFwd.h"
@@ -29,7 +30,8 @@ public:
         MoveDirection moveDir_ = MoveDirection::None;
         FaceDirection faceDir_ = FaceDirection::Down;
         float velocity_ = 0.0;
-        std::unique_ptr<BasicSprite> sprite_ = nullptr;
+        Transform transform_;
+        Sprite sprite_;
     };
 
     BasicState(StateMachine& stateMachine, StateData& stateData);
@@ -41,7 +43,10 @@ public:
     virtual void Enter() {}
     virtual void Exit() {}
 
-    virtual void OnInitStateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite) {}
+    virtual void LateUpdate() {}
+    virtual void OnInitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position, float scale,
+                                 const AnimationDB& animationDB)
+    {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}

@@ -30,6 +30,11 @@ void BasicEntity::Update(float deltaTime)
     stateMachine_.Update(deltaTime);
 }
 
+void BasicEntity::LateUpdate()
+{
+    stateMachine_.LateUpdate();
+}
+
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
     stateMachine_.DrawTo(renderTarget);
@@ -44,7 +49,7 @@ void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
 
 sf::Vector2f BasicEntity::GetPosition() const
 {
-    return stateData_.sprite_->GetPosition();
+    return stateData_.transform_.GetPosition();
 }
 
 void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
@@ -66,10 +71,10 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void BasicEntity::InitStateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite)
+void BasicEntity::InitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position, float scale,
+                                const AnimationDB& animationDB)
 {
-    stateMachine_.OnInitStateData(faceDir, velocity,
-                                  std::move(sprite));  // do this from uninitialized state and switch to idlestate
+    stateMachine_.OnInitStateData(faceDir, velocity, position, scale, animationDB);
 }
 
 void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)

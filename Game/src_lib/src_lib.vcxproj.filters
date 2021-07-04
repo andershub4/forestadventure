@@ -45,7 +45,7 @@
     <ClCompile Include="Message\BroadcastMessage\KeyReleasedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Animation\AnimationFactory.cpp">
+    <ClCompile Include="Animation\AnimationDB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\StateMachine.cpp">
@@ -126,10 +126,7 @@
     <ClCompile Include="Resource\SpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\Sprite\AnimatedSprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\Components\Sprite\BasicSprite.cpp">
+    <ClCompile Include="Entity\Components\Sprite\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Components\Movement\Movement.cpp">
@@ -139,9 +136,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Entities\MoleEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\Components\Sprite\StaticSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Entities\StaticEntity.cpp">
@@ -190,6 +184,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Logging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Components\Transform\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -251,7 +248,7 @@
     <ClInclude Include="Enum\FrameType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Animation\AnimationFactory.h">
+    <ClInclude Include="Animation\AnimationDB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\StateMachine.h">
@@ -335,10 +332,7 @@
     <ClInclude Include="Resource\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\Sprite\AnimatedSprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\Components\Sprite\BasicSprite.h">
+    <ClInclude Include="Entity\Components\Sprite\Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Components\Movement\Movement.h">
@@ -353,13 +347,7 @@
     <ClInclude Include="Entity\Entities\MoleEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\Sprite\StaticSprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Entities\StaticEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum\TileType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Id.h">
@@ -420,6 +408,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Components\Transform\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,12 +19,14 @@ UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& st
 
 UninitializedState::~UninitializedState() = default;
 
-void UninitializedState::OnInitStateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite)
+void UninitializedState::OnInitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position,
+                                         float scale, const AnimationDB& animationDB)
 {
     stateData_.faceDir_ = faceDir;
     stateData_.velocity_ = velocity;
     stateData_.moveDir_ = MoveDirection::None;
-    stateData_.sprite_ = std::move(sprite);
+    stateData_.transform_ = Transform(position, scale);
+    stateData_.sprite_ = Sprite(stateData_.transform_, animationDB);
 
     SwitchState<IdleState>();
 }

@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 
 namespace FA {
@@ -14,6 +13,8 @@ namespace FA {
 enum class MoveDirection;
 
 namespace Entity {
+
+class Transform;
 
 class Movement
 {
@@ -23,7 +24,7 @@ public:
 
     void Update(float deltaTime);
 
-    void ApplyTo(sf::Sprite* sprite) const;
+    void ApplyTo(Transform &transform) const;
     void SetDirection(MoveDirection direction);
 
 private:

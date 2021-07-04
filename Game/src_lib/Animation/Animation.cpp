@@ -6,7 +6,7 @@
 
 #include "Animation.h"
 
-#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 namespace FA {
 

@@ -8,6 +8,7 @@
 
 #include <unordered_map>
 
+#include "Entity/Components/Transform/Transform.h"
 #include "Enum/MoveDirection.h"
 
 namespace {
@@ -33,9 +34,9 @@ void Movement::Update(float deltaTime)
     offset_ = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
 }
 
-void Movement::ApplyTo(sf::Sprite* sprite) const
+void Movement::ApplyTo(Transform &transform) const
 {
-    sprite->move(offset_);
+    transform.Move(offset_);
 }
 
 void Movement::SetDirection(MoveDirection direction)

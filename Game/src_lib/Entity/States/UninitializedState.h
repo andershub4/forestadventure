@@ -22,7 +22,8 @@ public:
     virtual void DrawTo(sf::RenderTarget& renderTarget) override {}
     virtual std::string Name() const override { return "UninitializedState"; }
 
-    virtual void OnInitStateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite) override;
+    virtual void OnInitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position, float scale,
+                                 const AnimationDB& animationDB) override;
 };
 
 }  // namespace Entity

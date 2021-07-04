@@ -7,7 +7,6 @@
 
 #include "BasicState.h"
 
-#include "Entity/Components/Sprite/BasicSprite.h"
 #include "Entity/StateMachine.h"
 
 namespace FA {

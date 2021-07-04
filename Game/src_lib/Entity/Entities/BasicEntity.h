@@ -26,7 +26,6 @@ enum class Key;
 
 namespace Entity {
 
-class BasicSprite;
 struct Configuration;
 
 class BasicEntity
@@ -40,12 +39,14 @@ public:
     virtual void OnDestroy() {}
 
     void Update(float deltaTime);
+    void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);
     void EnableInput(bool enable) { enableInput_ = enable; }
     sf::Vector2f GetPosition() const;
 
 protected:
-    void InitStateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite);
+    void InitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position, float scale,
+                       const AnimationDB& animationDB);
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void StartMove(MoveDirection moveDir, FaceDirection faceDir);

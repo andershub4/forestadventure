@@ -31,6 +31,11 @@ void StateMachine::Update(float deltaTime)
     currentState_->Update(deltaTime);
 }
 
+void StateMachine::LateUpdate()
+{
+    currentState_->LateUpdate();
+}
+
 void StateMachine::DrawTo(sf::RenderTarget& renderTarget)
 {
     currentState_->DrawTo(renderTarget);
@@ -45,9 +50,10 @@ void StateMachine::SetState(std::unique_ptr<BasicState> newState)
     currentState_->Enter();
 }
 
-void StateMachine::OnInitStateData(FaceDirection faceDir, float velocity, std::unique_ptr<BasicSprite> sprite)
+void StateMachine::OnInitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position, float scale,
+                                   const AnimationDB& animationDB)
 {
-    currentState_->OnInitStateData(faceDir, velocity, std::move(sprite));
+    currentState_->OnInitStateData(faceDir, velocity, position, scale, animationDB);
 }
 
 void StateMachine::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

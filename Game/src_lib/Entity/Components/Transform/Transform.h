@@ -8,20 +8,22 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "Enum/AnimationType.h"
-#include "Enum/EntityType.h"
-#include "Enum/FaceDirection.h"
-
 namespace FA {
 
 namespace Entity {
 
-struct Configuration
+class Transform
 {
-    EntityType entityType_{};
+public:
+    Transform() = default;
+    Transform(const sf::Vector2f &position, float scale);
+
+    void Move(const sf::Vector2f &offset);
+    sf::Vector2f GetPosition() const { return position_; }
+    float GetScale() const { return scale_; }
+
+private:
     sf::Vector2f position_{};
-    FaceDirection faceDir_{};
-    float velocity_{};
     float scale_{};
 };
 

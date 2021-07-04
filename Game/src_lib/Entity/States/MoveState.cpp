@@ -6,7 +6,7 @@
 
 #include "MoveState.h"
 
-#include "Entity/Components/Sprite/BasicSprite.h"
+#include "Entity/Components/Sprite/Sprite.h"
 #include "Enum/FrameType.h"
 #include "IdleState.h"
 
@@ -23,21 +23,26 @@ MoveState::~MoveState() = default;
 
 void MoveState::Update(float deltaTime)
 {
-    stateData_.sprite_->Update(deltaTime);
+    stateData_.sprite_.Update(deltaTime);
     movement_.Update(deltaTime);
-    stateData_.sprite_->Move(movement_);
+    movement_.ApplyTo(stateData_.transform_);
+}
+
+void MoveState::LateUpdate()
+{
+    stateData_.sprite_.Apply(stateData_.transform_);
 }
 
 void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateData_.sprite_->DrawTo(renderTarget);
+    stateData_.sprite_.DrawTo(renderTarget);
 }
 
 void MoveState::Enter()
 {
     movement_.SetDirection(stateData_.moveDir_);
-    stateData_.sprite_->SetAnimation(FrameType::Move, stateData_.faceDir_);
-    stateData_.sprite_->StartAnimation();
+    stateData_.sprite_.SetAnimation(FrameType::Move, stateData_.faceDir_);
+    stateData_.sprite_.StartAnimation();
 }
 
 void MoveState::Exit()

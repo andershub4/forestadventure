@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/Sprite/AnimatedSprite.h"
+#include "Entity/Components/Sprite/Sprite.h"
 #include "Entity/Configuration.h"
 #include "Enum/KeyboardKey.h"
 #include "Level/Camera.h"
@@ -31,11 +31,9 @@ PlayerEntity::~PlayerEntity() = default;
 void PlayerEntity::OnCreate(AnimationManager& animationManager, Camera& camera, const Configuration& configuration)
 {
     camera.Follow(this);
-    auto animationFactory = animationManager.GetFactory(AnimationType::Player);
-    auto sprite =
-        std::make_unique<Entity::AnimatedSprite>(configuration.position_, configuration.scale_, animationFactory);
+    auto db = animationManager.GetDB(AnimationType::Player);
 
-    InitStateData(configuration.faceDir_, configuration.velocity_, std::move(sprite));
+    InitStateData(configuration.faceDir_, configuration.velocity_, configuration.position_, configuration.scale_, db);
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 

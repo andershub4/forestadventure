@@ -4,16 +4,21 @@
  *	See file LICENSE for full license details.
  */
 
-#include "BasicSprite.h"
+#include "Transform.h"
 
 namespace FA {
 
 namespace Entity {
 
-BasicSprite::BasicSprite()
+Transform::Transform(const sf::Vector2f &position, float scale)
+    : position_(position)
+    , scale_(scale)
 {}
 
-BasicSprite::~BasicSprite() = default;
+void Transform::Move(const sf::Vector2f &offset)
+{
+    position_ = {position_.x + offset.x, position_.y + offset.y};
+}
 
 }  // namespace Entity
 

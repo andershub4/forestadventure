@@ -19,5 +19,6 @@ class Texture;
 class RenderWindow;
 class RenderTarget;
 class Event;
+class Sprite;
 
 }  // namespace sf

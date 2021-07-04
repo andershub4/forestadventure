@@ -4,20 +4,19 @@
  *	See file LICENSE for full license details.
  */
 
-#include "AnimationFactory.h"
+#include "AnimationDB.h"
 
 #include "Animation.h"
 #include "Logging.h"
 
 namespace FA {
 
-AnimationFactory::AnimationFactory(float switchTime)
+AnimationDB::AnimationDB(float switchTime)
     : switchTime_(switchTime)
 {}
 
-void AnimationFactory::RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
-                                             const std::vector<sf::IntRect>& frames, unsigned int defaultFrame,
-                                             bool mirrorX)
+void AnimationDB::RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
+                                        const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX)
 {
     auto it = animationInfoMap_.find({frameType, dir});
     if (it != animationInfoMap_.end()) {
@@ -29,21 +28,21 @@ void AnimationFactory::RegisterAnimationInfo(FrameType frameType, FaceDirection 
     }
 }
 
-std::unique_ptr<Animation> AnimationFactory::Create(FrameType frameType, FaceDirection dir, sf::Sprite* sprite) const
+Animation AnimationDB::Get(FrameType frameType, FaceDirection dir, sf::Sprite* sprite) const
 {
     auto it = animationInfoMap_.find({frameType, dir});
     if (it != animationInfoMap_.end()) {
         auto info = animationInfoMap_.at({frameType, dir});
-        return std::make_unique<Animation>(sprite, info.texture_, info.frames_, info.defaultFrame_, switchTime_);
+        return Animation(sprite, info.texture_, info.frames_, info.defaultFrame_, switchTime_);
     }
     else {
         LOG_ERROR("frameType: ", static_cast<unsigned int>(frameType), " dir: ", static_cast<unsigned int>(dir),
                   " does not exist");
-        return nullptr;
+        return Animation();
     }
 }
 
-std::vector<sf::IntRect> AnimationFactory::MirrorX(const std::vector<sf::IntRect>& frames) const
+std::vector<sf::IntRect> AnimationDB::MirrorX(const std::vector<sf::IntRect>& frames) const
 {
     std::vector<sf::IntRect> mirrorFrames;
     for (const auto& frame : frames) {

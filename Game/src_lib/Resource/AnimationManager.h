@@ -8,7 +8,7 @@
 
 #include <unordered_map>
 
-#include "Animation/AnimationFactory.h"
+#include "Animation/AnimationDB.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -22,16 +22,16 @@ public:
     AnimationManager(TextureManager& textureManager);
     ~AnimationManager();
 
-    void RegisterFactories();
-    AnimationFactory GetFactory(AnimationType type) const;
+    void RegisterDBs();
+    AnimationDB GetDB(AnimationType type) const;
 
 private:
     TextureManager& textureManager_;
-    std::unordered_map<AnimationType, AnimationFactory> map_;
+    std::unordered_map<AnimationType, AnimationDB> map_;
 
 private:
-    void RegisterPlayerFactory();
-    void RegisterMoleFactory();
+    void RegisterPlayerDB();
+    void RegisterMoleDB();
     std::string GetSpriteSheetPath() const;
 };
 

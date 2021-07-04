@@ -24,6 +24,7 @@ public:
     ~EntitySystem();
 
     void Update(float deltaTime);
+    void LateUpdate();
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
     void AddEntity(Entity::EntityId entityId, std::unique_ptr<Entity::BasicEntity> entity);

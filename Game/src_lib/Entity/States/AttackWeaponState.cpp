@@ -6,7 +6,7 @@
 
 #include "AttackWeaponState.h"
 
-#include "Entity/Components/Sprite/BasicSprite.h"
+#include "Entity/Components/Sprite/Sprite.h"
 #include "Enum/FrameType.h"
 #include "IdleState.h"
 #include "MoveState.h"
@@ -23,21 +23,21 @@ AttackWeaponState::~AttackWeaponState() = default;
 
 void AttackWeaponState::Update(float deltaTime)
 {
-    stateData_.sprite_->Update(deltaTime);
-    if (stateData_.sprite_->AnimationIsCompleted()) {
+    stateData_.sprite_.Update(deltaTime);
+    if (stateData_.sprite_.AnimationIsCompleted()) {
         SwitchState<IdleState>();
     }
 }
 
 void AttackWeaponState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateData_.sprite_->DrawTo(renderTarget);
+    stateData_.sprite_.DrawTo(renderTarget);
 }
 
 void AttackWeaponState::Enter()
 {
-    stateData_.sprite_->SetAnimation(FrameType::AttackWeapon, stateData_.faceDir_);
-    stateData_.sprite_->StartAnimation();
+    stateData_.sprite_.SetAnimation(FrameType::AttackWeapon, stateData_.faceDir_);
+    stateData_.sprite_.StartAnimation();
 }
 
 void AttackWeaponState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
