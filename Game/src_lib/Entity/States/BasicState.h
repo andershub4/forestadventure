@@ -20,7 +20,6 @@ namespace FA {
 namespace Entity {
 
 class StateMachine;
-class BasicEntity;
 struct Configuration;
 
 class BasicState
