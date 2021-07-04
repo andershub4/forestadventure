@@ -50,10 +50,9 @@ void StateMachine::SetState(std::unique_ptr<BasicState> newState)
     currentState_->Enter();
 }
 
-void StateMachine::OnInitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position, float scale,
-                                   const AnimationDB& animationDB)
+void StateMachine::OnInitStateData(const Configuration& configuration, const AnimationDB& animationDB)
 {
-    currentState_->OnInitStateData(faceDir, velocity, position, scale, animationDB);
+    currentState_->OnInitStateData(configuration, animationDB);
 }
 
 void StateMachine::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

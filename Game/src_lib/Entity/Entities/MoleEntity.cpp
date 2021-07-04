@@ -27,7 +27,7 @@ void MoleEntity::OnCreate(AnimationManager& animationManager, Camera& camera, co
 {
     auto db = animationManager.GetDB(AnimationType::Mole);
 
-    InitStateData(configuration.faceDir_, configuration.velocity_, configuration.position_, configuration.scale_, db);
+    InitStateData(configuration, db);
 }
 
 void MoleEntity::OnDestroy()

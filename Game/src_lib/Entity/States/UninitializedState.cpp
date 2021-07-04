@@ -6,6 +6,7 @@
 
 #include "UninitializedState.h"
 
+#include "Entity/Configuration.h"
 #include "Enum/FrameType.h"
 #include "IdleState.h"
 
@@ -19,13 +20,12 @@ UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& st
 
 UninitializedState::~UninitializedState() = default;
 
-void UninitializedState::OnInitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position,
-                                         float scale, const AnimationDB& animationDB)
+void UninitializedState::OnInitStateData(const Configuration& configuration, const AnimationDB& animationDB)
 {
-    stateData_.faceDir_ = faceDir;
-    stateData_.velocity_ = velocity;
+    stateData_.faceDir_ = configuration.faceDir_;
+    stateData_.velocity_ = configuration.velocity_;
     stateData_.moveDir_ = MoveDirection::None;
-    stateData_.transform_ = Transform(position, scale);
+    stateData_.transform_ = Transform(configuration.position_, configuration.scale_);
     stateData_.sprite_ = Sprite(stateData_.transform_, animationDB);
 
     SwitchState<IdleState>();

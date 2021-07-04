@@ -26,8 +26,6 @@ enum class Key;
 
 namespace Entity {
 
-struct Configuration;
-
 class BasicEntity
 {
 public:
@@ -45,8 +43,7 @@ public:
     sf::Vector2f GetPosition() const;
 
 protected:
-    void InitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position, float scale,
-                       const AnimationDB& animationDB);
+    void InitStateData(const Configuration& configuration, const AnimationDB& animationDB);
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void StartMove(MoveDirection moveDir, FaceDirection faceDir);

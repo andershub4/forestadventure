@@ -21,6 +21,7 @@ namespace Entity {
 
 class StateMachine;
 class BasicEntity;
+struct Configuration;
 
 class BasicState
 {
@@ -44,9 +45,7 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position, float scale,
-                                 const AnimationDB& animationDB)
-    {}
+    virtual void OnInitStateData(const Configuration& configuration, const AnimationDB& animationDB) {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}

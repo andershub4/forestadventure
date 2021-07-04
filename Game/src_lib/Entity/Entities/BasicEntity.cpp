@@ -71,10 +71,9 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void BasicEntity::InitStateData(FaceDirection faceDir, float velocity, const sf::Vector2f& position, float scale,
-                                const AnimationDB& animationDB)
+void BasicEntity::InitStateData(const Configuration& configuration, const AnimationDB& animationDB)
 {
-    stateMachine_.OnInitStateData(faceDir, velocity, position, scale, animationDB);
+    stateMachine_.OnInitStateData(configuration, animationDB);
 }
 
 void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)

@@ -33,7 +33,7 @@ void PlayerEntity::OnCreate(AnimationManager& animationManager, Camera& camera, 
     camera.Follow(this);
     auto db = animationManager.GetDB(AnimationType::Player);
 
-    InitStateData(configuration.faceDir_, configuration.velocity_, configuration.position_, configuration.scale_, db);
+    InitStateData(configuration, db);
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
