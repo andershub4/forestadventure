@@ -15,8 +15,6 @@
 
 namespace FA {
 
-class MessageBus;
-
 class EntitySystem
 {
 public:
