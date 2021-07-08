@@ -147,7 +147,7 @@
     <ClCompile Include="Level\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="System\EntitySystem.cpp">
+    <ClCompile Include="Entity\EntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\States\UninitializedState.cpp">
@@ -359,7 +359,7 @@
     <ClInclude Include="Level\Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="System\EntitySystem.h">
+    <ClInclude Include="Entity\EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Configuration.h">

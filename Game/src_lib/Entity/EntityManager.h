@@ -15,11 +15,13 @@
 
 namespace FA {
 
-class EntitySystem
+namespace Entity {
+
+class EntityManager
 {
 public:
-    EntitySystem();
-    ~EntitySystem();
+    EntityManager();
+    ~EntityManager();
 
     void Update(float deltaTime);
     void LateUpdate();
@@ -30,5 +32,7 @@ public:
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
 };
+
+}  // namespace Entity
 
 }  // namespace FA

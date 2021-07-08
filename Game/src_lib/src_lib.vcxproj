@@ -273,7 +273,7 @@
     <ClInclude Include="Scene\Components\HelperComponent.h" />
     <ClInclude Include="Resource\SpriteSheet.h" />
     <ClInclude Include="Entity\Components\Sprite\Sprite.h" />
-    <ClInclude Include="System\EntitySystem.h" />
+    <ClInclude Include="Entity\EntityManager.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Tile\TileMapData.h" />
     <ClInclude Include="Tile\TileMap.h" />
@@ -334,7 +334,7 @@
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
     <ClCompile Include="Resource\SpriteSheet.cpp" />
     <ClCompile Include="Entity\Components\Sprite\Sprite.cpp" />
-    <ClCompile Include="System\EntitySystem.cpp" />
+    <ClCompile Include="Entity\EntityManager.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />
     <ClCompile Include="Tile\TileMapReader.cpp" />

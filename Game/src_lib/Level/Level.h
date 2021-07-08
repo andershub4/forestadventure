@@ -9,10 +9,10 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "Entity/EntityManager.h"
 #include "Entity/Factory.h"
 #include "Fwd/SfmlFwd.h"
 #include "Resource/AnimationManager.h"
-#include "System/EntitySystem.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
@@ -45,7 +45,7 @@ private:
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
     AnimationManager animationManager_;
-    EntitySystem entitySystem_;
+    Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
     Entity::Factory factory_;
 };

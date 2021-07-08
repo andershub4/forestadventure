@@ -26,14 +26,14 @@ Level::~Level() = default;
 
 void Level::Update(float deltaTime)
 {
-    entitySystem_.Update(deltaTime);
-    entitySystem_.LateUpdate();
+    entityManager_.Update(deltaTime);
+    entityManager_.LateUpdate();
 }
 
 void Level::DrawTo(sf::RenderTarget &renderTarget)
 {
     renderTarget.draw(backgroundSprite_);
-    entitySystem_.DrawTo(renderTarget);
+    entityManager_.DrawTo(renderTarget);
     for (const auto &tile : fringeLayer_) {
         renderTarget.draw(tile);
     }
@@ -59,7 +59,7 @@ void Level::Create(Camera &camera, MessageBus &messageBus)
         configuration.velocity_ = 120.0;
         configuration.scale_ = static_cast<float>(scale_);
         entity->OnCreate(animationManager_, camera, configuration);
-        entitySystem_.AddEntity(id, std::move(entity));
+        entityManager_.AddEntity(id, std::move(entity));
         id++;
     }
 
@@ -80,7 +80,7 @@ void Level::Create(Camera &camera, MessageBus &messageBus)
 
 void Level::EnableInput(bool enable)
 {
-    entitySystem_.EnableInput(enable);
+    entityManager_.EnableInput(enable);
 }
 
 sf::Vector2u Level::GetSize() const
