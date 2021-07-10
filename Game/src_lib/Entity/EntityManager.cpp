@@ -36,13 +36,14 @@ void EntityManager::LateUpdate()
     }
 }
 
-void EntityManager::AddEntity(Entity::EntityId entityId, std::unique_ptr<Entity::BasicEntity> entity)
+void EntityManager::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)
 {
-    if (entityMap_.find(entityId) == entityMap_.end()) {
-        entityMap_[entityId] = std::move(entity);
+    auto id = entity->GetId();
+    if (entityMap_.find(id) == entityMap_.end()) {
+        entityMap_[id] = std::move(entity);
     }
     else {
-        LOG_ERROR("entityId: ", entityId, " already exist");
+        LOG_ERROR("id: ", id, " already exist");
     }
 }
 

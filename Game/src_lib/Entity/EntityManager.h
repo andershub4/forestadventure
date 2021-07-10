@@ -27,7 +27,7 @@ public:
     void LateUpdate();
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    void AddEntity(Entity::EntityId entityId, std::unique_ptr<Entity::BasicEntity> entity);
+    void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);
 
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;

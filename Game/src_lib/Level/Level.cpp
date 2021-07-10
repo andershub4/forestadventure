@@ -49,18 +49,16 @@ void Level::Create(Camera &camera, MessageBus &messageBus)
     tileMap_.Create();
 
     LOG_INFO("Create entities");
-    Entity::EntityId id = 0;
     for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
         auto type = objectData.type_;
-        auto entity = factory_.Create(type, id, messageBus);
+        auto entity = factory_.Create(type, messageBus);
         Entity::Configuration configuration;
         configuration.position_ = static_cast<sf::Vector2f>(objectData.position_);
         configuration.faceDir_ = objectData.faceDir_;
         configuration.velocity_ = 120.0;
         configuration.scale_ = static_cast<float>(scale_);
         entity->OnCreate(animationManager_, camera, configuration);
-        entityManager_.AddEntity(id, std::move(entity));
-        id++;
+        entityManager_.AddEntity(std::move(entity));
     }
 
     LOG_INFO("Create background texture");

@@ -25,7 +25,10 @@ public:
     Factory();
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, EntityId id, MessageBus& messageBus) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, MessageBus& messageBus) const;
+
+private:
+    mutable Entity::EntityId id_{0};
 };
 
 }  // namespace Entity
