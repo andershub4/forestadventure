@@ -22,17 +22,15 @@ std::unique_ptr<BasicEntity> Factory::Create(EntityType type, MessageBus& messag
 {
     switch (type) {
         case EntityType::Mole:
-            return std::make_unique<MoleEntity>(id_, messageBus);
+            return std::make_unique<MoleEntity>(id_++, messageBus);
             break;
         case EntityType::Player:
-            return std::make_unique<PlayerEntity>(id_, messageBus);
+            return std::make_unique<PlayerEntity>(id_++, messageBus);
         default:
             auto t = static_cast<int>(type);
             LOG_ERROR("Could not create entity of type: ", t);
             return nullptr;
     }
-
-    id_++;
 }
 
 }  // namespace Entity
