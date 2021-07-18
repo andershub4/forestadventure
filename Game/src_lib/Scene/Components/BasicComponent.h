@@ -19,11 +19,12 @@ class BasicEffect;
 namespace Scene {
 
 class BasicTransition;
+struct Layer;
 
 class BasicComponent
 {
 public:
-    BasicComponent(MessageBus& messageBus);
+    BasicComponent(MessageBus& messageBus, const Layer& layer);
     virtual ~BasicComponent();
 
     virtual ComponentId GetId() const = 0;
@@ -37,10 +38,10 @@ public:
     void DrawTo(sf::RenderTarget& renderTarget);
 
 protected:
-    sf::Sprite sprite_;
     sf::RenderTexture layerTexture_;
 
 private:
+    sf::Sprite sprite_;
     MessageBus& messageBus_;
 };
 

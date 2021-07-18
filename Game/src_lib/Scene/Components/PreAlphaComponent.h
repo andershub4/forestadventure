@@ -18,7 +18,7 @@ namespace Scene {
 class PreAlphaComponent : public BasicComponent
 {
 public:
-    PreAlphaComponent(MessageBus& messageBus);
+    PreAlphaComponent(MessageBus& messageBus, const Layer& layer);
     virtual ~PreAlphaComponent();
 
     virtual ComponentId GetId() const override { return ComponentId::Intro; }

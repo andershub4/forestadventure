@@ -240,6 +240,7 @@
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="Scene\Components\PreAlphaComponent.h" />
+    <ClInclude Include="Scene\Layer.h" />
     <ClInclude Include="UI\Title.h" />
     <ClInclude Include="Util\Random.h" />
     <ClInclude Include="Platform\Path.h" />

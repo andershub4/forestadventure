@@ -6,17 +6,18 @@
 
 #include "BasicComponent.h"
 
-#include "Constant/Screen.h"
+#include "Scene/Layer.h"
 
 namespace FA {
 
 namespace Scene {
 
-BasicComponent::BasicComponent(MessageBus& messageBus)
+BasicComponent::BasicComponent(MessageBus& messageBus, const Layer& layer)
     : messageBus_(messageBus)
 {
-    layerTexture_.create(constant::Screen::width, constant::Screen::height);
+    layerTexture_.create(layer.width_, layer.height_);
     sprite_.setTexture(layerTexture_.getTexture());
+    sprite_.setPosition(layer.x_, layer.y_);
 }
 
 BasicComponent::~BasicComponent() = default;

@@ -8,11 +8,13 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Constant/Screen.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "PlayScene.h"
 #include "Scene/Components/HelperComponent.h"
 #include "Scene/Components/IntroComponent.h"
 #include "Scene/Components/PreAlphaComponent.h"
+#include "Scene/Layer.h"
 
 namespace FA {
 
@@ -27,12 +29,13 @@ IntroScene::~IntroScene() = default;
 
 void IntroScene::Enter()
 {
+    Layer layer{0.0f, 0.0f, constant::Screen::width, constant::Screen::height};
     components_.clear();
-    components_[ComponentId::Intro] = std::make_unique<IntroComponent>(messageBus_);
+    components_[ComponentId::Intro] = std::make_unique<IntroComponent>(messageBus_, layer);
 #ifdef _DEBUG
-    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, Name());
+    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, layer, Name());
 #endif
-    components_[ComponentId::PreAlpha] = std::make_unique<PreAlphaComponent>(messageBus_);
+    components_[ComponentId::PreAlpha] = std::make_unique<PreAlphaComponent>(messageBus_, layer);
 }
 
 void IntroScene::DrawTo(sf::RenderTarget& renderTarget)

@@ -6,7 +6,9 @@
 
 #include "TransitionScene.h"
 
+#include "Constant/Screen.h"
 #include "Scene/Components/HelperComponent.h"
+#include "Scene/Layer.h"
 #include "Scene/Transitions/BasicTransition.h"
 
 namespace FA {
@@ -24,8 +26,9 @@ TransitionScene::~TransitionScene() = default;
 
 void TransitionScene::Enter()
 {
+    Layer layer{0.0f, 0.0f, constant::Screen::width, constant::Screen::height};
 #ifdef _DEBUG
-    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, Name());
+    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, layer, Name());
 #endif
     for (const auto& entry : components_) {
         auto& component = entry.second;

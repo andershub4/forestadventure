@@ -10,15 +10,16 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
-#include "Constant/Screen.h"
 #include "Entity/Entities/BasicEntity.h"
 
 namespace FA {
 
-Camera::Camera()
-    : view_({constant::Screen::centerX_f, constant::Screen::centerY_f},
-            {constant::Screen::width_f, constant::Screen::height_f})
-{}
+Camera::Camera(const sf::Vector2u& size)
+{
+    auto size_f = static_cast<sf::Vector2f>(size);
+    view_.setSize(size_f);
+    centerPos_ = size_f / 2.0f;
+}
 
 Camera::~Camera() = default;
 
@@ -37,32 +38,22 @@ void Camera::Follow(Entity::BasicEntity* entity)
     entity_ = entity;
 }
 
-sf::Vector2f Camera::GetPosition() const
-{
-    return {view_.getCenter().x - view_.getSize().x / 2, view_.getCenter().y - view_.getSize().y / 2};
-}
-
-sf::Vector2f Camera::GetViewSize() const
-{
-    return view_.getSize();
-}
-
 sf::Vector2f Camera::CalcViewPosition(const sf::Vector2f& position, const sf::Vector2u& mapSize) const
 {
     auto viewPosition = sf::Vector2f(position.x, position.y);
 
-    if (position.x <= constant::Screen::centerX_f) {
-        viewPosition.x = constant::Screen::centerX_f;
+    if (position.x <= centerPos_.x) {
+        viewPosition.x = centerPos_.x;
     }
-    else if (position.x >= (mapSize.x - constant::Screen::centerX_f)) {
-        viewPosition.x = mapSize.x - constant::Screen::centerX_f;
+    else if (position.x >= (mapSize.x - centerPos_.x)) {
+        viewPosition.x = mapSize.x - centerPos_.x;
     }
 
-    if (position.y <= constant::Screen::centerY_f) {
-        viewPosition.y = constant::Screen::centerY_f;
+    if (position.y <= centerPos_.y) {
+        viewPosition.y = centerPos_.y;
     }
-    else if (position.y >= (mapSize.y - constant::Screen::centerY_f)) {
-        viewPosition.y = mapSize.y - constant::Screen::centerY_f;
+    else if (position.y >= (mapSize.y - centerPos_.y)) {
+        viewPosition.y = mapSize.y - centerPos_.y;
     }
 
     return viewPosition;

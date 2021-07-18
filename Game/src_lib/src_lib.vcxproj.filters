@@ -413,5 +413,8 @@
     <ClInclude Include="Entity\Components\Transform\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\Layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,17 +8,17 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Constant/Screen.h"
 #include "Folder.h"
 #include "Logging.h"
 #include "Message/MessageBus.h"
+#include "Scene/Layer.h"
 
 namespace FA {
 
 namespace Scene {
 
-PreAlphaComponent::PreAlphaComponent(MessageBus& messageBus)
-    : BasicComponent(messageBus)
+PreAlphaComponent::PreAlphaComponent(MessageBus& messageBus, const Layer& layer)
+    : BasicComponent(messageBus, layer)
 {
     std::string path = GetAssetsPath() + "/font/intuitive/intuitive.ttf";
     if (!font_.loadFromFile(path)) {
@@ -31,8 +31,8 @@ PreAlphaComponent::PreAlphaComponent(MessageBus& messageBus)
     versionText_.setFillColor(sf::Color::White);
     auto bounds1 = versionText_.getGlobalBounds();
     auto w1 = bounds1.width;
-    sf::Vector2f introTextPos(constant::Screen::width_f / 2 - w1 / 2, 0.0f);
-    versionText_.setPosition(introTextPos);
+    sf::Vector2f versionTextPos(layerTexture_.getSize().x / 2.0f - w1 / 2.0f, 0.0f);
+    versionText_.setPosition(versionTextPos);
 }
 
 PreAlphaComponent::~PreAlphaComponent() = default;

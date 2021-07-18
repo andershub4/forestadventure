@@ -19,7 +19,7 @@ namespace Scene {
 class HelperComponent : public BasicComponent
 {
 public:
-    HelperComponent(MessageBus& messageBus, const std::string& sceneName);
+    HelperComponent(MessageBus& messageBus, const Layer& layer, const std::string& sceneName);
     virtual ~HelperComponent();
 
     virtual ComponentId GetId() const override { return ComponentId::Helper; }

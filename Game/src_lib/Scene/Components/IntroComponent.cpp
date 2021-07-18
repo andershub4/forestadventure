@@ -8,17 +8,17 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Constant/Screen.h"
 #include "Folder.h"
 #include "Logging.h"
 #include "Message/MessageBus.h"
+#include "Scene/Layer.h"
 
 namespace FA {
 
 namespace Scene {
 
-IntroComponent::IntroComponent(MessageBus& messageBus)
-    : BasicComponent(messageBus)
+IntroComponent::IntroComponent(MessageBus& messageBus, const Layer& layer)
+    : BasicComponent(messageBus, layer)
 {
     std::string path = GetAssetsPath() + "/font/intuitive/intuitive.ttf";
     if (!font_.loadFromFile(path)) {
@@ -31,7 +31,7 @@ IntroComponent::IntroComponent(MessageBus& messageBus)
     introText_.setFillColor(sf::Color::White);
     auto bounds1 = introText_.getGlobalBounds();
     auto w1 = bounds1.width;
-    sf::Vector2f introTextPos(constant::Screen::width_f / 2 - w1 / 2, 300.0f);
+    sf::Vector2f introTextPos(layerTexture_.getSize().x / 2.0f - w1 / 2, 300.0f);
     introText_.setPosition(introTextPos);
 
     pressText_.setFont(font_);
@@ -40,7 +40,7 @@ IntroComponent::IntroComponent(MessageBus& messageBus)
     pressText_.setFillColor(sf::Color::White);
     auto bounds2 = pressText_.getGlobalBounds();
     auto w2 = bounds2.width;
-    sf::Vector2f pressTextPos(constant::Screen::width_f / 2 - w2 / 2, 400.0f);
+    sf::Vector2f pressTextPos(layerTexture_.getSize().x / 2.0f - w2 / 2, 400.0f);
     pressText_.setPosition(pressTextPos);
 }
 

@@ -13,14 +13,16 @@
 #include "Logging.h"
 #include "Message/MessageBus.h"
 #include "Misc/TextureManager.h"
+#include "Scene/Layer.h"
 #include "Scene/Transitions/BasicTransition.h"
 
 namespace FA {
 
 namespace Scene {
 
-LevelComponent::LevelComponent(MessageBus& messageBus, TextureManager& textureManager)
-    : BasicComponent(messageBus)
+LevelComponent::LevelComponent(MessageBus& messageBus, const Layer& layer, TextureManager& textureManager)
+    : BasicComponent(messageBus, layer)
+    , camera_(layerTexture_.getSize())
 {
     LOG_INFO_ENTER_FUNC();
     auto path = GetAssetsPath() + "/map/test.tmx";
@@ -52,7 +54,9 @@ void LevelComponent::EnableInput(bool enable)
 
 void LevelComponent::EnterTransition(const BasicTransition& transition)
 {
-    effect_ = transition.CreateEffect(camera_.GetPosition(), camera_.GetViewSize());
+    sf::Vector2f layerPos = layerTexture_.mapPixelToCoords({0, 0});
+    sf::Vector2f layerSize = static_cast<sf::Vector2f>(layerTexture_.getSize());
+    effect_ = transition.CreateEffect(layerPos, layerSize);
 }
 
 void LevelComponent::ExitTransition(const BasicTransition& transition)

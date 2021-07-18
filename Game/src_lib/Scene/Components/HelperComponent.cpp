@@ -10,17 +10,17 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Constant/Screen.h"
 #include "Folder.h"
 #include "Logging.h"
 #include "Message/MessageBus.h"
+#include "Scene/Layer.h"
 
 namespace FA {
 
 namespace Scene {
 
-HelperComponent::HelperComponent(MessageBus& messageBus, const std::string& sceneName)
-    : BasicComponent(messageBus)
+HelperComponent::HelperComponent(MessageBus& messageBus, const Layer& layer, const std::string& sceneName)
+    : BasicComponent(messageBus, layer)
 {
     std::string path = GetAssetsPath() + "/font/cello-sans/hinted-CelloSans-Medium.ttf";
     if (!font_.loadFromFile(path)) {
@@ -49,7 +49,7 @@ HelperComponent::HelperComponent(MessageBus& messageBus, const std::string& scen
     fpsNumberText_.setPosition(fpsNumberTextPos);
 
     dotShape_.setSize(sf::Vector2f(1.0, 1.0));
-    dotShape_.setPosition(constant::Screen::centerX_f, constant::Screen::centerY_f);
+    dotShape_.setPosition(layerTexture_.getSize().x / 2.0f, layerTexture_.getSize().y / 2.0f);
 }
 
 HelperComponent::~HelperComponent() = default;
