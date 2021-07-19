@@ -9,9 +9,7 @@
 #include <memory>
 
 #include "BasicComponent.h"
-#include "Level/Camera.h"
 #include "Level/Level.h"
-#include "Tile/TileMapReader.h"
 
 namespace FA {
 
@@ -32,12 +30,11 @@ public:
     virtual void EnableInput(bool enable) override;
     virtual void EnterTransition(const BasicTransition& transition) override;
     virtual void ExitTransition(const BasicTransition& transition) override;
+    virtual void OnCreate() override;
 
 private:
-    std::unique_ptr<Level> level_ = nullptr;
-    Camera camera_;
+    Level level_;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
-    Tile::TileMapReader tileMapReader_;
 };
 
 }  // namespace Scene

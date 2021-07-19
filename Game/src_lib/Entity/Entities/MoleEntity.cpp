@@ -23,15 +23,12 @@ MoleEntity::MoleEntity(EntityId id, MessageBus& messageBus)
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::OnCreate(AnimationManager& animationManager, Camera& camera, const Configuration& configuration)
+void MoleEntity::OnCreate(AnimationManager& animationManager, const Configuration& configuration)
 {
     auto db = animationManager.GetDB(AnimationType::Mole);
 
     InitStateData(configuration, db);
 }
-
-void MoleEntity::OnDestroy()
-{}
 
 }  // namespace Entity
 

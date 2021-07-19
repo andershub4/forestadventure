@@ -19,6 +19,11 @@ namespace Scene {
 
 IntroComponent::IntroComponent(MessageBus& messageBus, const Layer& layer)
     : BasicComponent(messageBus, layer)
+{}
+
+IntroComponent::~IntroComponent() = default;
+
+void IntroComponent::OnCreate()
 {
     std::string path = GetAssetsPath() + "/font/intuitive/intuitive.ttf";
     if (!font_.loadFromFile(path)) {
@@ -43,8 +48,6 @@ IntroComponent::IntroComponent(MessageBus& messageBus, const Layer& layer)
     sf::Vector2f pressTextPos(layerTexture_.getSize().x / 2.0f - w2 / 2, 400.0f);
     pressText_.setPosition(pressTextPos);
 }
-
-IntroComponent::~IntroComponent() = default;
 
 void IntroComponent::Draw()
 {

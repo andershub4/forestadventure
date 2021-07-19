@@ -34,9 +34,9 @@ public:
     };
 
 public:
-    TileMap(const TileMapData &tileMapData, TextureManager &textureManager, unsigned int scale);
+    TileMap(TextureManager &textureManager, unsigned int scale);
     ~TileMap();
-    void Create();
+    void Create(const TileMapData &tileMapData);
     const std::vector<sf::Sprite> &GetLayer(const std::string &name);
     const std::vector<ObjectData> GetObjectGroup(const std::string &name);
     sf::Vector2u GetSize() const;

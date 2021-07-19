@@ -29,6 +29,7 @@ void TransitionScene::Enter()
     Layer layer{0.0f, 0.0f, constant::Screen::width, constant::Screen::height};
 #ifdef _DEBUG
     components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, layer, Name());
+    components_[ComponentId::Helper]->OnCreate();
 #endif
     for (const auto& entry : components_) {
         auto& component = entry.second;

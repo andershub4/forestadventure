@@ -11,7 +11,6 @@
 #include "Entity/Components/Sprite/Sprite.h"
 #include "Entity/Configuration.h"
 #include "Enum/KeyboardKey.h"
-#include "Level/Camera.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -28,9 +27,8 @@ PlayerEntity::PlayerEntity(EntityId id, MessageBus& messageBus)
 
 PlayerEntity::~PlayerEntity() = default;
 
-void PlayerEntity::OnCreate(AnimationManager& animationManager, Camera& camera, const Configuration& configuration)
+void PlayerEntity::OnCreate(AnimationManager& animationManager, const Configuration& configuration)
 {
-    camera.Follow(this);
     auto db = animationManager.GetDB(AnimationType::Player);
 
     InitStateData(configuration, db);

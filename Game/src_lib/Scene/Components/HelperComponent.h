@@ -26,6 +26,7 @@ public:
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void EnableInput(bool enable) override {}
+    virtual void OnCreate() override;
 
 private:
     sf::RectangleShape dotShape_;
@@ -33,6 +34,7 @@ private:
     sf::Text sceneText_;
     sf::Text fpsText_;
     sf::Text fpsNumberText_;
+    std::string sceneName_;
 };
 
 }  // namespace Scene

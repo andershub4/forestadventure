@@ -22,34 +22,32 @@ namespace Scene {
 
 LevelComponent::LevelComponent(MessageBus& messageBus, const Layer& layer, TextureManager& textureManager)
     : BasicComponent(messageBus, layer)
-    , camera_(layerTexture_.getSize())
-{
-    LOG_INFO_ENTER_FUNC();
-    auto path = GetAssetsPath() + "/map/test.tmx";
-    auto tileMapData = tileMapReader_.Parse(path);
-    level_ = std::make_unique<Level>(tileMapData, textureManager);
-    level_->Create(camera_, messageBus);
-    LOG_INFO_EXIT_FUNC();
-}
+    , level_(messageBus, layerTexture_, textureManager)
+{}
 
 LevelComponent::~LevelComponent() = default;
 
+void LevelComponent::OnCreate()
+{
+    auto path = GetAssetsPath() + "/map/test.tmx";
+    level_.Load(path);
+}
+
 void LevelComponent::Draw()
 {
-    level_->DrawTo(layerTexture_);
+    level_.Draw();
     if (effect_) effect_->DrawTo(layerTexture_);
 }
 
 void LevelComponent::Update(float deltaTime)
 {
-    level_->Update(deltaTime);
+    level_.Update(deltaTime);
     if (effect_) effect_->Update(deltaTime);
-    camera_.UpdatePosition(layerTexture_, level_->GetSize());
 }
 
 void LevelComponent::EnableInput(bool enable)
 {
-    level_->EnableInput(enable);
+    level_.EnableInput(enable);
 }
 
 void LevelComponent::EnterTransition(const BasicTransition& transition)

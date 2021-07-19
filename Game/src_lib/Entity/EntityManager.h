@@ -10,6 +10,7 @@
 #include <unordered_map>
 
 #include "Entity/Entities/BasicEntity.h"
+#include "Entity/Factory.h"
 #include "Entity/Id.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -20,17 +21,23 @@ namespace Entity {
 class EntityManager
 {
 public:
-    EntityManager();
+    EntityManager(MessageBus &messageBus, AnimationManager &animationManager);
     ~EntityManager();
 
     void Update(float deltaTime);
     void LateUpdate();
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);
+    BasicEntity *Create(const Configuration &configuration);
 
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
+    MessageBus &messageBus_;
+    AnimationManager &animationManager_;
+    Factory factory_;
+
+private:
+    void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);
 };
 
 }  // namespace Entity

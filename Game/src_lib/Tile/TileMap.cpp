@@ -12,16 +12,16 @@ namespace FA {
 
 namespace Tile {
 
-TileMap::TileMap(const TileMapData& tileMapData, TextureManager& textureManager, unsigned int scale)
+TileMap::TileMap(TextureManager& textureManager, unsigned int scale)
     : textureManager_(textureManager)
-    , tileMapData_(tileMapData)
     , scale_(scale)
 {}
 
 TileMap::~TileMap() = default;
 
-void TileMap::Create()
+void TileMap::Create(const TileMapData& tileMapData)
 {
+    tileMapData_ = tileMapData;
     CreateTileSets();
     CreateLayers();
     CreateObjectGroups();

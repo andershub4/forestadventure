@@ -19,6 +19,11 @@ namespace Scene {
 
 PreAlphaComponent::PreAlphaComponent(MessageBus& messageBus, const Layer& layer)
     : BasicComponent(messageBus, layer)
+{}
+
+PreAlphaComponent::~PreAlphaComponent() = default;
+
+void PreAlphaComponent::OnCreate()
 {
     std::string path = GetAssetsPath() + "/font/intuitive/intuitive.ttf";
     if (!font_.loadFromFile(path)) {
@@ -34,8 +39,6 @@ PreAlphaComponent::PreAlphaComponent(MessageBus& messageBus, const Layer& layer)
     sf::Vector2f versionTextPos(layerTexture_.getSize().x / 2.0f - w1 / 2.0f, 0.0f);
     versionText_.setPosition(versionTextPos);
 }
-
-PreAlphaComponent::~PreAlphaComponent() = default;
 
 void PreAlphaComponent::Draw()
 {

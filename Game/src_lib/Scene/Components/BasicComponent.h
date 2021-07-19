@@ -33,6 +33,7 @@ public:
     virtual void EnableInput(bool enable) = 0;
     virtual void EnterTransition(const BasicTransition& transition) {}
     virtual void ExitTransition(const BasicTransition& transition) {}
+    virtual void OnCreate() {}
 
     void Clear();
     void DrawTo(sf::RenderTarget& renderTarget);

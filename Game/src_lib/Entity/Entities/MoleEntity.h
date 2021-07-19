@@ -19,9 +19,7 @@ public:
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
-    virtual void OnCreate(AnimationManager& animationManager, Camera& camera,
-                          const Configuration& configuration) override;
-    virtual void OnDestroy() override;
+    virtual void OnCreate(AnimationManager& animationManager, const Configuration& configuration) override;
 };
 
 }  // namespace Entity

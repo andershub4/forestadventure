@@ -10,55 +10,46 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Camera.h"
 #include "Entity/Configuration.h"
 #include "Logging.h"
 #include "Misc/TextureManager.h"
+#include "Tile/TileMapReader.h"
 
 namespace FA {
 
-Level::Level(const Tile::TileMapData &tileMapData, TextureManager &textureManager)
+Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, TextureManager &textureManager)
     : animationManager_(textureManager)
-    , tileMap_(tileMapData, textureManager, scale_)
+    , tileMap_(textureManager, scale_)
+    , renderTarget_(renderTarget)
+    , camera_(renderTarget_.getSize())
+    , entityManager_(messageBus, animationManager_)
 {}
 
 Level::~Level() = default;
 
-void Level::Update(float deltaTime)
-{
-    entityManager_.Update(deltaTime);
-    entityManager_.LateUpdate();
-}
-
-void Level::DrawTo(sf::RenderTarget &renderTarget)
-{
-    renderTarget.draw(backgroundSprite_);
-    entityManager_.DrawTo(renderTarget);
-    for (const auto &tile : fringeLayer_) {
-        renderTarget.draw(tile);
-    }
-}
-
-void Level::Create(Camera &camera, MessageBus &messageBus)
+void Level::Load(const std::string &mapPath)
 {
     LOG_INFO_ENTER_FUNC();
     LOG_INFO("Register animation DBs");
     animationManager_.RegisterDBs();
 
     LOG_INFO("Create tile map");
-    tileMap_.Create();
+    Tile::TileMapReader tileMapReader;
+    auto tileMapData = tileMapReader.Parse(mapPath);
+    tileMap_.Create(tileMapData);
 
     LOG_INFO("Create entities");
     for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
-        auto type = objectData.type_;
-        auto entity = factory_.Create(type, messageBus);
         Entity::Configuration configuration;
+        configuration.entityType_ = objectData.type_;
         configuration.position_ = static_cast<sf::Vector2f>(objectData.position_);
         configuration.faceDir_ = objectData.faceDir_;
         configuration.velocity_ = 120.0;
         configuration.scale_ = static_cast<float>(scale_);
-        entity->OnCreate(animationManager_, camera, configuration);
-        entityManager_.AddEntity(std::move(entity));
+        auto entity = entityManager_.Create(configuration);
+        if (configuration.entityType_ == EntityType::Player) {
+            camera_.Follow(entity);
+        }
     }
 
     LOG_INFO("Create background texture");
@@ -76,14 +67,25 @@ void Level::Create(Camera &camera, MessageBus &messageBus)
     LOG_INFO_EXIT_FUNC();
 }
 
+void Level::Update(float deltaTime)
+{
+    entityManager_.Update(deltaTime);
+    entityManager_.LateUpdate();
+    camera_.UpdatePosition(renderTarget_, tileMap_.GetSize());
+}
+
+void Level::Draw()
+{
+    renderTarget_.draw(backgroundSprite_);
+    entityManager_.DrawTo(renderTarget_);
+    for (const auto &tile : fringeLayer_) {
+        renderTarget_.draw(tile);
+    }
+}
+
 void Level::EnableInput(bool enable)
 {
     entityManager_.EnableInput(enable);
-}
-
-sf::Vector2u Level::GetSize() const
-{
-    return tileMap_.GetSize();
 }
 
 }  // namespace FA

@@ -21,6 +21,12 @@ namespace Scene {
 
 HelperComponent::HelperComponent(MessageBus& messageBus, const Layer& layer, const std::string& sceneName)
     : BasicComponent(messageBus, layer)
+    , sceneName_(sceneName)
+{}
+
+HelperComponent::~HelperComponent() = default;
+
+void HelperComponent::OnCreate()
 {
     std::string path = GetAssetsPath() + "/font/cello-sans/hinted-CelloSans-Medium.ttf";
     if (!font_.loadFromFile(path)) {
@@ -28,7 +34,7 @@ HelperComponent::HelperComponent(MessageBus& messageBus, const Layer& layer, con
     }
 
     sceneText_.setFont(font_);
-    sceneText_.setString(sceneName);
+    sceneText_.setString(sceneName_);
     sceneText_.setCharacterSize(24);
     sceneText_.setFillColor(sf::Color::White);
     sf::Vector2f sceneTextPos(0.0f, 0.0f);
@@ -51,8 +57,6 @@ HelperComponent::HelperComponent(MessageBus& messageBus, const Layer& layer, con
     dotShape_.setSize(sf::Vector2f(1.0, 1.0));
     dotShape_.setPosition(layerTexture_.getSize().x / 2.0f, layerTexture_.getSize().y / 2.0f);
 }
-
-HelperComponent::~HelperComponent() = default;
 
 void HelperComponent::Draw()
 {

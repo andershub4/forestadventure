@@ -18,7 +18,6 @@ class MessageBus;
 class Message;
 enum class MessageType;
 class AnimationManager;
-class Camera;
 
 namespace Keyboard {
 enum class Key;
@@ -33,7 +32,7 @@ public:
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnCreate(AnimationManager& animationManager, Camera& camera, const Configuration& configuration) {}
+    virtual void OnCreate(AnimationManager& animationManager, const Configuration& configuration) {}
     virtual void OnDestroy() {}
 
     void Update(float deltaTime);

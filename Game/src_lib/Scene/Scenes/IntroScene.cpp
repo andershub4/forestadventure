@@ -36,6 +36,11 @@ void IntroScene::Enter()
     components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, layer, Name());
 #endif
     components_[ComponentId::PreAlpha] = std::make_unique<PreAlphaComponent>(messageBus_, layer);
+
+    for (const auto& entry : components_) {
+        auto& component = entry.second;
+        component->OnCreate();
+    }
 }
 
 void IntroScene::DrawTo(sf::RenderTarget& renderTarget)

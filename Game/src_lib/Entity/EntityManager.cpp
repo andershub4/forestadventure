@@ -1,12 +1,16 @@
 #include "EntityManager.h"
 
+#include "Configuration.h"
 #include "Logging.h"
 
 namespace FA {
 
 namespace Entity {
 
-EntityManager::EntityManager() = default;
+EntityManager::EntityManager(MessageBus& messageBus, AnimationManager& animationManager)
+    : messageBus_(messageBus)
+    , animationManager_(animationManager)
+{}
 
 EntityManager::~EntityManager()
 {
@@ -34,6 +38,16 @@ void EntityManager::LateUpdate()
     for (const auto& entry : entityMap_) {
         entry.second->LateUpdate();
     }
+}
+
+BasicEntity* EntityManager::Create(const Configuration& configuration)
+{
+    auto entity = factory_.Create(configuration.entityType_, messageBus_);
+    auto id = entity->GetId();
+    entity->OnCreate(animationManager_, configuration);
+    AddEntity(std::move(entity));
+
+    return entityMap_.at(id).get();
 }
 
 void EntityManager::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)

@@ -19,10 +19,6 @@ public:
     virtual ~StaticEntity();
 
     virtual std::string Name() const override { return "StaticEntity"; }
-    virtual void OnCreate(AnimationManager& animationManager, Camera& camera,
-                          const Configuration& configuration) override
-    {}
-    virtual void OnDestroy() override {}
 };
 
 }  // namespace Entity
