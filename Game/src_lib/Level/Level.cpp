@@ -11,6 +11,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/Configuration.h"
+#include "Entity/EntityTextures.h"
+#include "Folder.h"
 #include "Logging.h"
 #include "Misc/TextureManager.h"
 #include "Tile/TileMapReader.h"
@@ -18,7 +20,8 @@
 namespace FA {
 
 Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, TextureManager &textureManager)
-    : animationManager_(textureManager)
+    : textureManager_(textureManager)
+    , animationManager_(textureManager)
     , tileMap_(textureManager, scale_)
     , renderTarget_(renderTarget)
     , camera_(renderTarget_.getSize())
@@ -30,6 +33,13 @@ Level::~Level() = default;
 void Level::Load(const std::string &mapPath)
 {
     LOG_INFO_ENTER_FUNC();
+
+    auto ssPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/spritesheets/";
+    for (auto &v : Entity::textures) {
+        auto p = ssPath + v.path_;
+        textureManager_.Add(v.name_, p);
+    }
+
     LOG_INFO("Register animation DBs");
     animationManager_.RegisterDBs();
 

@@ -219,6 +219,7 @@
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
     <ClInclude Include="Entity\Entities\StaticEntity.h" />
+    <ClInclude Include="Entity\EntityTextures.h" />
     <ClInclude Include="Entity\Factory.h" />
     <ClInclude Include="Entity\Id.h" />
     <ClInclude Include="Entity\StateMachine.h" />
@@ -236,6 +237,7 @@
     <ClInclude Include="Enum\MoveDirection.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />
+    <ClInclude Include="Entity\TextureId.h" />
     <ClInclude Include="Level\Camera.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Logging.h" />
@@ -246,7 +248,7 @@
     <ClInclude Include="Platform\Path.h" />
     <ClInclude Include="Platform\Result.h" />
     <ClInclude Include="Platform\SpecialFolder.h" />
-    <ClInclude Include="Resource\AnimationManager.h" />
+    <ClInclude Include="Entity\AnimationManager.h" />
     <ClInclude Include="Scene\ComponentId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Scene\Manager.h" />
@@ -311,7 +313,7 @@
     <ClCompile Include="Util\Random.cpp" />
     <ClCompile Include="Platform\Path.cpp" />
     <ClCompile Include="Platform\SpecialFolder.cpp" />
-    <ClCompile Include="Resource\AnimationManager.cpp" />
+    <ClCompile Include="Entity\AnimationManager.cpp" />
     <ClCompile Include="Scene\Manager.cpp" />
     <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
     <ClCompile Include="Scene\Scenes\IntroScene.cpp" />

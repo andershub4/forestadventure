@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/AnimationManager.h"
 #include "Entity/Components/Sprite/Sprite.h"
 #include "Entity/Configuration.h"
 #include "Enum/KeyboardKey.h"
@@ -15,7 +16,6 @@
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/MessageBus.h"
-#include "Resource/AnimationManager.h"
 
 namespace FA {
 

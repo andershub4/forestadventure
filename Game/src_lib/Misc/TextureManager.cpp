@@ -16,22 +16,27 @@ TextureManager::TextureManager() = default;
 
 TextureManager::~TextureManager() = default;
 
-const sf::Texture* TextureManager::GetTexture(const std::string& file)
+void TextureManager::Add(const std::string &name, const std::string &path)
 {
-    auto it = textures_.find(file);
-
-    if (it != textures_.end()) return it->second.get();  // if it exist, return texture
-
     auto texture = std::make_unique<sf::Texture>();
 
-    if (texture->loadFromFile(file)) {
-        textures_.emplace(file, std::move(texture));
-        return textures_.at(file).get();
+    if (texture->loadFromFile(path)) {
+        textures_.emplace(name, std::move(texture));
     }
     else {
-        LOG_ERROR("Could not load ", file);
-        return nullptr;
+        LOG_ERROR("Could not load ", path);
     }
+}
+
+const sf::Texture *TextureManager::Get(const std::string &name) const
+{
+    auto it = textures_.find(name);
+
+    if (it != textures_.end()) return it->second.get();
+
+    LOG_ERROR("Could not get ", name);
+
+    return nullptr;
 }
 
 }  // namespace FA

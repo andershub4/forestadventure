@@ -132,7 +132,7 @@
     <ClCompile Include="Entity\Components\Movement\Movement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\AnimationManager.cpp">
+    <ClCompile Include="Entity\AnimationManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Entities\MoleEntity.cpp">
@@ -338,7 +338,7 @@
     <ClInclude Include="Entity\Components\Movement\Movement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\AnimationManager.h">
+    <ClInclude Include="Entity\AnimationManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\AnimationType.h">
@@ -414,6 +414,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\TextureId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\EntityTextures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

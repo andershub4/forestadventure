@@ -8,10 +8,10 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/AnimationManager.h"
 #include "Entity/Components/Sprite/Sprite.h"
 #include "Entity/Configuration.h"
 #include "Message/MessageBus.h"
-#include "Resource/AnimationManager.h"
 
 namespace FA {
 

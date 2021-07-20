@@ -16,6 +16,8 @@ namespace FA {
 class TextureManager;
 enum class AnimationType;
 
+namespace Entity {
+
 class AnimationManager
 {
 public:
@@ -32,7 +34,8 @@ private:
 private:
     void RegisterPlayerDB();
     void RegisterMoleDB();
-    std::string GetSpriteSheetPath() const;
 };
+
+}  // namespace Entity
 
 }  // namespace FA

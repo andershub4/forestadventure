@@ -12,9 +12,12 @@
 #include "Folder.h"
 #include "Logging.h"
 #include "Misc/TextureManager.h"
-#include "SpriteSheet.h"
+#include "Resource/SpriteSheet.h"
+#include "TextureId.h"
 
 namespace FA {
+
+namespace Entity {
 
 AnimationManager::AnimationManager(TextureManager& textureManager)
     : textureManager_(textureManager)
@@ -31,86 +34,82 @@ void AnimationManager::RegisterDBs()
 void AnimationManager::RegisterPlayerDB()
 {
     AnimationDB db(0.1f);
-    std::string ssPath = GetSpriteSheetPath();
 
-    auto textureWalkSide = textureManager_.GetTexture(ssPath + "hero/walk/hero-walk-side.png");
+    auto textureWalkSide = textureManager_.Get(TextureId::HeroWalkSide);
     if (textureWalkSide != nullptr) {
         SpriteSheet spriteSheet("heroWalkSide", textureWalkSide, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
         db.RegisterAnimationInfo(FrameType::Move, FaceDirection::Left, f.texture_, f.frames_, f.defaultFrame_, true);
         db.RegisterAnimationInfo(FrameType::Move, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureWalkFront = textureManager_.GetTexture(ssPath + "hero/walk/hero-walk-front.png");
+    auto textureWalkFront = textureManager_.Get(TextureId::HeroWalkFront);
     if (textureWalkFront != nullptr) {
         SpriteSheet spriteSheet("heroWalkFront", textureWalkFront, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
         db.RegisterAnimationInfo(FrameType::Move, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureWalkBack = textureManager_.GetTexture(ssPath + "hero/walk/hero-back-walk.png");
+    auto textureWalkBack = textureManager_.Get(TextureId::HeroWalkBack);
     if (textureWalkBack != nullptr) {
         SpriteSheet spriteSheet("heroWalkBack", textureWalkBack, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
         db.RegisterAnimationInfo(FrameType::Move, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
     }
 
-    auto textureAttackSide = textureManager_.GetTexture(ssPath + "hero/attack/hero-attack-side.png");
+    auto textureAttackSide = textureManager_.Get(TextureId::HeroAttackSide);
     if (textureAttackSide != nullptr) {
         SpriteSheet spriteSheet("heroAttackSide", textureAttackSide, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
         db.RegisterAnimationInfo(FrameType::Attack, FaceDirection::Left, f.texture_, f.frames_, f.defaultFrame_, true);
         db.RegisterAnimationInfo(FrameType::Attack, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureAttackFront = textureManager_.GetTexture(ssPath + "hero/attack/hero-attack-front.png");
+    auto textureAttackFront = textureManager_.Get(TextureId::HeroAttackFront);
     if (textureAttackFront != nullptr) {
         SpriteSheet spriteSheet("heroAttackFront", textureAttackFront, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
         db.RegisterAnimationInfo(FrameType::Attack, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureAttackBack = textureManager_.GetTexture(ssPath + "hero/attack/hero-attack-back.png");
+    auto textureAttackBack = textureManager_.Get(TextureId::HeroAttackBack);
     if (textureAttackBack != nullptr) {
         SpriteSheet spriteSheet("heroAttackBack", textureAttackBack, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
         db.RegisterAnimationInfo(FrameType::Attack, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
     }
 
-    auto textureAttackSideWeapon =
-        textureManager_.GetTexture(ssPath + "hero/attack-weapon/hero-attack-side-weapon.png");
-    if (textureAttackSideWeapon != nullptr) {
-        SpriteSheet spriteSheet("heroAttackWeaponSide", textureAttackSideWeapon, {3, 1});
+    auto textureAttackWeaponSide = textureManager_.Get(TextureId::HeroAttackWeaponSide);
+    if (textureAttackWeaponSide != nullptr) {
+        SpriteSheet spriteSheet("heroAttackWeaponSide", textureAttackWeaponSide, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
         db.RegisterAnimationInfo(FrameType::AttackWeapon, FaceDirection::Left, f.texture_, f.frames_, f.defaultFrame_,
                                  true);
         db.RegisterAnimationInfo(FrameType::AttackWeapon, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureAttackFrontWeapon =
-        textureManager_.GetTexture(ssPath + "hero/attack-weapon/hero-attack-front-weapon.png");
-    if (textureAttackFrontWeapon != nullptr) {
-        SpriteSheet spriteSheet("heroAttackWeaponFront", textureAttackFrontWeapon, {3, 1});
+    auto textureAttackWeaponFront = textureManager_.Get(TextureId::HeroAttackWeaponFront);
+    if (textureAttackWeaponFront != nullptr) {
+        SpriteSheet spriteSheet("heroAttackWeaponFront", textureAttackWeaponFront, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
         db.RegisterAnimationInfo(FrameType::AttackWeapon, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureAttackBackWeapon =
-        textureManager_.GetTexture(ssPath + "hero/attack-weapon/hero-attack-back-weapon.png");
-    if (textureAttackBackWeapon != nullptr) {
-        SpriteSheet spriteSheet("heroAttackWeaponBack", textureAttackBackWeapon, {3, 1});
+    auto textureAttackWeaponBack = textureManager_.Get(TextureId::HeroAttackWeaponBack);
+    if (textureAttackWeaponBack != nullptr) {
+        SpriteSheet spriteSheet("heroAttackWeaponBack", textureAttackWeaponBack, {3, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 3, 0);
         db.RegisterAnimationInfo(FrameType::AttackWeapon, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
     }
 
-    auto textureIdleSide = textureManager_.GetTexture(ssPath + "hero/idle/hero-idle-side.png");
+    auto textureIdleSide = textureManager_.Get(TextureId::HeroIdleSide);
     if (textureIdleSide != nullptr) {
         SpriteSheet spriteSheet("heroIdleSide", textureIdleSide, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
         db.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Left, f.texture_, f.frames_, f.defaultFrame_, true);
         db.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureIdleFront = textureManager_.GetTexture(ssPath + "hero/idle/hero-idle-front.png");
+    auto textureIdleFront = textureManager_.Get(TextureId::HeroIdleFront);
     if (textureIdleFront != nullptr) {
         SpriteSheet spriteSheet("heroIdleFront", textureIdleFront, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
         db.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureIdleBack = textureManager_.GetTexture(ssPath + "hero/idle/hero-idle-back.png");
+    auto textureIdleBack = textureManager_.Get(TextureId::HeroIdleBack);
     if (textureIdleBack != nullptr) {
         SpriteSheet spriteSheet("heroIdleBack", textureIdleBack, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
@@ -123,42 +122,41 @@ void AnimationManager::RegisterPlayerDB()
 void AnimationManager::RegisterMoleDB()
 {
     AnimationDB db(0.1f);
-    std::string ssPath = GetSpriteSheetPath();
 
-    auto textureWalkSide = textureManager_.GetTexture(ssPath + "mole/walk/mole-walk-side.png");
+    auto textureWalkSide = textureManager_.Get(TextureId::MoleWalkSide);
     if (textureWalkSide != nullptr) {
         SpriteSheet spriteSheet("moleWalkSide", textureWalkSide, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
         db.RegisterAnimationInfo(FrameType::Move, FaceDirection::Left, f.texture_, f.frames_, f.defaultFrame_, true);
         db.RegisterAnimationInfo(FrameType::Move, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureWalkFront = textureManager_.GetTexture(ssPath + "mole/walk/mole-walk-front.png");
+    auto textureWalkFront = textureManager_.Get(TextureId::MoleWalkFront);
     if (textureWalkFront != nullptr) {
         SpriteSheet spriteSheet("moleWalkFront", textureWalkFront, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
         db.RegisterAnimationInfo(FrameType::Move, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureWalkBack = textureManager_.GetTexture(ssPath + "mole/walk/mole-walk-back.png");
+    auto textureWalkBack = textureManager_.Get(TextureId::MoleWalkBack);
     if (textureWalkBack != nullptr) {
         SpriteSheet spriteSheet("moleWalkBack", textureWalkBack, {6, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 6, 0);
         db.RegisterAnimationInfo(FrameType::Move, FaceDirection::Up, f.texture_, f.frames_, f.defaultFrame_);
     }
 
-    auto textureIdleSide = textureManager_.GetTexture(ssPath + "mole/idle/mole-idle-side.png");
+    auto textureIdleSide = textureManager_.Get(TextureId::MoleIdleSide);
     if (textureIdleSide != nullptr) {
         SpriteSheet spriteSheet("moleIdleSide", textureIdleSide, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
         db.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Left, f.texture_, f.frames_, f.defaultFrame_, true);
         db.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Right, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureIdleFront = textureManager_.GetTexture(ssPath + "mole/idle/mole-idle-front.png");
+    auto textureIdleFront = textureManager_.Get(TextureId::MoleIdleFront);
     if (textureIdleFront != nullptr) {
         SpriteSheet spriteSheet("moleIdleFront", textureIdleFront, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
         db.RegisterAnimationInfo(FrameType::Idle, FaceDirection::Down, f.texture_, f.frames_, f.defaultFrame_);
     }
-    auto textureIdleBack = textureManager_.GetTexture(ssPath + "mole/idle/mole-idle-back.png");
+    auto textureIdleBack = textureManager_.Get(TextureId::MoleIdleBack);
     if (textureIdleBack != nullptr) {
         SpriteSheet spriteSheet("moleIdleBack", textureIdleBack, {1, 1});
         SpriteSheet::FrameData f = spriteSheet.Scan({0, 0}, 1, 0);
@@ -166,11 +164,6 @@ void AnimationManager::RegisterMoleDB()
     }
 
     map_[AnimationType::Mole] = db;
-}
-
-std::string AnimationManager::GetSpriteSheetPath() const
-{
-    return GetAssetsPath() + "/tiny-RPG-forest-files/PNG/spritesheets/";
 }
 
 AnimationDB AnimationManager::GetDB(AnimationType type) const
@@ -184,5 +177,7 @@ AnimationDB AnimationManager::GetDB(AnimationType type) const
         return {};
     }
 }
+
+}  // namespace Entity
 
 }  // namespace FA

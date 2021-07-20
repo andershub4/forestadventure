@@ -6,6 +6,7 @@
 
 #include "TileMap.h"
 
+#include "Folder.h"
 #include "Misc/TextureManager.h"
 
 namespace FA {
@@ -34,7 +35,10 @@ void TileMap::CreateTileSets()
         s.firstGid_ = tileSet.firstGid_;
         s.columns_ = tileSet.columns_;
         s.tileSize_ = sf::Vector2u(tileSet.tileWidth_, tileSet.tileHeight_);
-        s.texture_ = textureManager_.GetTexture(tileSet.textureFilePath_);
+        auto p = tileSet.textureFilePath_;
+        auto name = GetHead(p);
+        textureManager_.Add(name, p);
+        s.texture_ = textureManager_.Get(name);
         tileSets_.push_back(s);
     }
 }

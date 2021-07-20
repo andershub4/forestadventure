@@ -19,7 +19,8 @@ public:
     TextureManager();
     ~TextureManager();
 
-    const sf::Texture* GetTexture(const std::string& file);
+    void Add(const std::string& name, const std::string& path);
+    const sf::Texture* Get(const std::string& name) const;
 
 private:
     std::unordered_map<std::string, std::unique_ptr<sf::Texture>> textures_;

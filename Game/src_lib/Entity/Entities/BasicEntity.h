@@ -17,13 +17,14 @@ namespace FA {
 class MessageBus;
 class Message;
 enum class MessageType;
-class AnimationManager;
 
 namespace Keyboard {
 enum class Key;
 }
 
 namespace Entity {
+
+class AnimationManager;
 
 class BasicEntity
 {

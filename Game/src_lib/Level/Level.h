@@ -10,9 +10,9 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Camera.h"
+#include "Entity/AnimationManager.h"
 #include "Entity/EntityManager.h"
 #include "Fwd/SfmlFwd.h"
-#include "Resource/AnimationManager.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
@@ -40,10 +40,11 @@ private:
     static const unsigned int scale_{2};
 
     sf::RenderTarget& renderTarget_;
+    TextureManager& textureManager_;
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
-    AnimationManager animationManager_;
+    Entity::AnimationManager animationManager_;
     Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
     Camera camera_;
