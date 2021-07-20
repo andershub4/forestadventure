@@ -22,7 +22,7 @@ namespace Scene {
 
 LevelComponent::LevelComponent(MessageBus& messageBus, const Layer& layer, TextureManager& textureManager)
     : BasicComponent(messageBus, layer)
-    , level_(messageBus, layerTexture_, textureManager)
+    , level_(messageBus, textureManager, layerTexture_)
 {}
 
 LevelComponent::~LevelComponent() = default;

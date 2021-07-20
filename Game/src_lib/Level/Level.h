@@ -27,7 +27,7 @@ class MessageBus;
 class Level
 {
 public:
-    Level(MessageBus& messageBus, sf::RenderTarget& renderTarget, TextureManager& textureManager);
+    Level(MessageBus& messageBus, TextureManager& textureManager, sf::RenderTarget& renderTarget);
     ~Level();
 
     void Update(float deltaTime);

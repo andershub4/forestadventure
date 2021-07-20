@@ -20,7 +20,7 @@
 
 namespace FA {
 
-Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, TextureManager &textureManager)
+Level::Level(MessageBus &messageBus, TextureManager &textureManager, sf::RenderTarget &renderTarget)
     : textureManager_(textureManager)
     , tileMap_(textureManager, scale_)
     , renderTarget_(renderTarget)
