@@ -33,8 +33,9 @@ void Level::Load(const std::string &mapPath)
 {
     LOG_INFO_ENTER_FUNC();
 
+    LOG_INFO("Load entity textures");
     auto ssPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/spritesheets/";
-    for (auto &v : Entity::textures) {
+    for (const auto &v : Entity::textures) {
         auto p = ssPath + v.path_;
         textureManager_.Add(v.name_, p);
     }
