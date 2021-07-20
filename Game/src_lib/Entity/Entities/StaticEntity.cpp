@@ -11,13 +11,14 @@
 #include "Entity/Components/Sprite/Sprite.h"
 #include "Entity/Configuration.h"
 #include "Message/MessageBus.h"
+#include "Resource/TextureManager.h"
 
 namespace FA {
 
 namespace Entity {
 
-StaticEntity::StaticEntity(EntityId id, MessageBus& messageBus)
-    : BasicEntity(id, messageBus)
+StaticEntity::StaticEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager)
+    : BasicEntity(id, messageBus, textureManager)
 {}
 
 StaticEntity::~StaticEntity() = default;

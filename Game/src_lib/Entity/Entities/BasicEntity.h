@@ -15,6 +15,7 @@
 namespace FA {
 
 class MessageBus;
+class TextureManager;
 class Message;
 enum class MessageType;
 
@@ -24,16 +25,14 @@ enum class Key;
 
 namespace Entity {
 
-class AnimationManager;
-
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, MessageBus& messageBus);
+    BasicEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnCreate(AnimationManager& animationManager, const Configuration& configuration) {}
+    virtual void OnCreate(const Configuration& configuration) {}
     virtual void OnDestroy() {}
 
     void Update(float deltaTime);
@@ -51,6 +50,7 @@ protected:
     void StopMove();
     void Attack();
     void AttackWeapon();
+    const sf::Texture* GetTexture(const std::string& name) const;
 
     virtual void OnIsKeyPressed(Keyboard::Key key) {}
     virtual void OnIsKeyReleased(Keyboard::Key key) {}
@@ -59,6 +59,7 @@ protected:
 private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
+    const TextureManager& textureManager_;
     BasicState::StateData stateData_;
     StateMachine stateMachine_;
     bool enableInput_ = true;

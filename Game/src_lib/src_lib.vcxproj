@@ -248,7 +248,6 @@
     <ClInclude Include="Platform\Path.h" />
     <ClInclude Include="Platform\Result.h" />
     <ClInclude Include="Platform\SpecialFolder.h" />
-    <ClInclude Include="Entity\AnimationManager.h" />
     <ClInclude Include="Scene\ComponentId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Scene\Manager.h" />
@@ -313,7 +312,6 @@
     <ClCompile Include="Util\Random.cpp" />
     <ClCompile Include="Platform\Path.cpp" />
     <ClCompile Include="Platform\SpecialFolder.cpp" />
-    <ClCompile Include="Entity\AnimationManager.cpp" />
     <ClCompile Include="Scene\Manager.cpp" />
     <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
     <ClCompile Include="Scene\Scenes\IntroScene.cpp" />

@@ -7,9 +7,9 @@ namespace FA {
 
 namespace Entity {
 
-EntityManager::EntityManager(MessageBus& messageBus, AnimationManager& animationManager)
+EntityManager::EntityManager(MessageBus& messageBus, const TextureManager& textureManager)
     : messageBus_(messageBus)
-    , animationManager_(animationManager)
+    , textureManager_(textureManager)
 {}
 
 EntityManager::~EntityManager()
@@ -42,9 +42,9 @@ void EntityManager::LateUpdate()
 
 BasicEntity* EntityManager::Create(const Configuration& configuration)
 {
-    auto entity = factory_.Create(configuration.entityType_, messageBus_);
+    auto entity = factory_.Create(configuration.entityType_, messageBus_, textureManager_);
     auto id = entity->GetId();
-    entity->OnCreate(animationManager_, configuration);
+    entity->OnCreate(configuration);
     AddEntity(std::move(entity));
 
     return entityMap_.at(id).get();

@@ -21,11 +21,10 @@ namespace FA {
 
 Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, TextureManager &textureManager)
     : textureManager_(textureManager)
-    , animationManager_(textureManager)
     , tileMap_(textureManager, scale_)
     , renderTarget_(renderTarget)
     , camera_(renderTarget_.getSize())
-    , entityManager_(messageBus, animationManager_)
+    , entityManager_(messageBus, textureManager_)
 {}
 
 Level::~Level() = default;
@@ -39,9 +38,6 @@ void Level::Load(const std::string &mapPath)
         auto p = ssPath + v.path_;
         textureManager_.Add(v.name_, p);
     }
-
-    LOG_INFO("Register animation DBs");
-    animationManager_.RegisterDBs();
 
     LOG_INFO("Create tile map");
     Tile::TileMapReader tileMapReader;

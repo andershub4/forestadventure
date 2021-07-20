@@ -14,6 +14,7 @@
 namespace FA {
 
 class MessageBus;
+class TextureManager;
 
 namespace Entity {
 
@@ -25,7 +26,8 @@ public:
     Factory();
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, MessageBus& messageBus) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, MessageBus& messageBus,
+                                        const TextureManager& textureManager) const;
 
 private:
     mutable Entity::EntityId id_{0};

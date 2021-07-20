@@ -12,14 +12,16 @@
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/MessageBus.h"
+#include "Resource/TextureManager.h"
 
 namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, MessageBus& messageBus)
+BasicEntity::BasicEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager)
     : id_(id)
     , messageBus_(messageBus)
+    , textureManager_(textureManager)
     , stateMachine_(stateData_)
 {}
 
@@ -104,6 +106,11 @@ void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
 void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)
 {
     messageBus_.RemoveSubscriber(Name(), messageTypes);
+}
+
+const sf::Texture* BasicEntity::GetTexture(const std::string& name) const
+{
+    return textureManager_.Get(name);
 }
 
 }  // namespace Entity

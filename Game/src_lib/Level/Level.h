@@ -10,7 +10,6 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Camera.h"
-#include "Entity/AnimationManager.h"
 #include "Entity/EntityManager.h"
 #include "Fwd/SfmlFwd.h"
 #include "Tile/TileMap.h"
@@ -44,7 +43,6 @@ private:
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
-    Entity::AnimationManager animationManager_;
     Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
     Camera camera_;

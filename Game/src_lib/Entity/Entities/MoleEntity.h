@@ -15,11 +15,11 @@ namespace Entity {
 class MoleEntity : public BasicEntity
 {
 public:
-    MoleEntity(EntityId id, MessageBus& messageBus);
+    MoleEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager);
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
-    virtual void OnCreate(AnimationManager& animationManager, const Configuration& configuration) override;
+    virtual void OnCreate(const Configuration& configuration) override;
 };
 
 }  // namespace Entity

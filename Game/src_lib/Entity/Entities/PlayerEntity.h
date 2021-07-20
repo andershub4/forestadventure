@@ -15,11 +15,11 @@ namespace Entity {
 class PlayerEntity : public BasicEntity
 {
 public:
-    PlayerEntity(EntityId id, MessageBus& messageBus);
+    PlayerEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager);
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
-    virtual void OnCreate(AnimationManager& animationManager, const Configuration& configuration) override;
+    virtual void OnCreate(const Configuration& configuration) override;
     virtual void OnDestroy() override;
 
 protected:

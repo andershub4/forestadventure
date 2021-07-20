@@ -21,7 +21,7 @@ namespace Entity {
 class EntityManager
 {
 public:
-    EntityManager(MessageBus &messageBus, AnimationManager &animationManager);
+    EntityManager(MessageBus &messageBus, const TextureManager &textureManager);
     ~EntityManager();
 
     void Update(float deltaTime);
@@ -33,7 +33,7 @@ public:
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
     MessageBus &messageBus_;
-    AnimationManager &animationManager_;
+    const TextureManager &textureManager_;
     Factory factory_;
 
 private:
