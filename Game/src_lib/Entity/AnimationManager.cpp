@@ -11,8 +11,8 @@
 #include "Enum/AnimationType.h"
 #include "Folder.h"
 #include "Logging.h"
-#include "Misc/TextureManager.h"
 #include "Resource/SpriteSheet.h"
+#include "Resource/TextureManager.h"
 #include "TextureId.h"
 
 namespace FA {

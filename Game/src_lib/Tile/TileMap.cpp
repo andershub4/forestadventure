@@ -7,7 +7,7 @@
 #include "TileMap.h"
 
 #include "Folder.h"
-#include "Misc/TextureManager.h"
+#include "Resource/TextureManager.h"
 
 namespace FA {
 

@@ -8,7 +8,7 @@
 
 #include "Folder.h"
 #include "Logging.h"
-#include "Misc/TextureManager.h"
+#include "Resource/TextureManager.h"
 #include "TmxParser.h"
 #include "TsxParser.h"
 

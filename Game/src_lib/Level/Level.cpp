@@ -14,7 +14,7 @@
 #include "Entity/EntityTextures.h"
 #include "Folder.h"
 #include "Logging.h"
-#include "Misc/TextureManager.h"
+#include "Resource/TextureManager.h"
 #include "Tile/TileMapReader.h"
 
 namespace FA {

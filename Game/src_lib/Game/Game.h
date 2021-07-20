@@ -11,7 +11,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Message/MessageBus.h"
-#include "Misc/TextureManager.h"
+#include "Resource/TextureManager.h"
 #include "Scene/Manager.h"
 
 namespace FA {

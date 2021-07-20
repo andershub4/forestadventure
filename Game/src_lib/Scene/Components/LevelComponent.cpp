@@ -12,7 +12,7 @@
 #include "Folder.h"
 #include "Logging.h"
 #include "Message/MessageBus.h"
-#include "Misc/TextureManager.h"
+#include "Resource/TextureManager.h"
 #include "Scene/Layer.h"
 #include "Scene/Transitions/BasicTransition.h"
 
