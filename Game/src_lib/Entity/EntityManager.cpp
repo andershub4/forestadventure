@@ -1,15 +1,16 @@
 #include "EntityManager.h"
 
 #include "Configuration.h"
+#include "Entity/Entities/BasicEntity.h"
+#include "Factory.h"
 #include "Logging.h"
 
 namespace FA {
 
 namespace Entity {
 
-EntityManager::EntityManager(MessageBus& messageBus, const TextureManager& textureManager)
-    : messageBus_(messageBus)
-    , textureManager_(textureManager)
+EntityManager::EntityManager(const Factory& factory)
+    : factory_(factory)
 {}
 
 EntityManager::~EntityManager()
@@ -42,7 +43,7 @@ void EntityManager::LateUpdate()
 
 BasicEntity* EntityManager::Create(const Configuration& configuration)
 {
-    auto entity = factory_.Create(configuration.entityType_, messageBus_, textureManager_);
+    auto entity = factory_.Create(configuration.entityType_);
     auto id = entity->GetId();
     entity->OnCreate(configuration);
     AddEntity(std::move(entity));

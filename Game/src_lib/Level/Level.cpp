@@ -11,6 +11,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/Configuration.h"
+#include "Entity/Entities/BasicEntity.h"
 #include "Entity/EntityTextures.h"
 #include "Folder.h"
 #include "Logging.h"
@@ -24,7 +25,8 @@ Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, TextureMana
     , tileMap_(textureManager, scale_)
     , renderTarget_(renderTarget)
     , camera_(renderTarget_.getSize())
-    , entityManager_(messageBus, textureManager_)
+    , factory_(messageBus, textureManager_)
+    , entityManager_(factory_)
 {}
 
 Level::~Level() = default;

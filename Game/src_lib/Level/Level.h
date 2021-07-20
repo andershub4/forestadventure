@@ -11,6 +11,7 @@
 
 #include "Camera.h"
 #include "Entity/EntityManager.h"
+#include "Entity/Factory.h"
 #include "Fwd/SfmlFwd.h"
 #include "Tile/TileMap.h"
 
@@ -43,6 +44,7 @@ private:
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
+    Entity::Factory factory_;
     Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
     Camera camera_;

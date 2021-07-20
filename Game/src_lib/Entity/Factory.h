@@ -23,14 +23,15 @@ class BasicEntity;
 class Factory
 {
 public:
-    Factory();
+    Factory(MessageBus& messageBus, const TextureManager& textureManager);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, MessageBus& messageBus,
-                                        const TextureManager& textureManager) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type) const;
 
 private:
     mutable Entity::EntityId id_{0};
+    MessageBus& messageBus_;
+    const TextureManager& textureManager_;
 };
 
 }  // namespace Entity

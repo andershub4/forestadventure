@@ -9,8 +9,6 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Entity/Entities/BasicEntity.h"
-#include "Entity/Factory.h"
 #include "Entity/Id.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -18,10 +16,14 @@ namespace FA {
 
 namespace Entity {
 
+class BasicEntity;
+class Factory;
+struct Configuration;
+
 class EntityManager
 {
 public:
-    EntityManager(MessageBus &messageBus, const TextureManager &textureManager);
+    EntityManager(const Factory &factory);
     ~EntityManager();
 
     void Update(float deltaTime);
@@ -32,9 +34,7 @@ public:
 
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
-    MessageBus &messageBus_;
-    const TextureManager &textureManager_;
-    Factory factory_;
+    const Factory &factory_;
 
 private:
     void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);
