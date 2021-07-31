@@ -17,6 +17,16 @@ SpriteSheet::SpriteSheet(const std::string& name, const sf::Texture* texture, co
     , frameCount_(frameCount)
 {}
 
+SpriteSheet::FrameData SpriteSheet::MirrorX(const SpriteSheet::FrameData& frameData)
+{
+    std::vector<sf::IntRect> mirrorFrames;
+    for (const auto& frame : frameData.frames_) {
+        mirrorFrames.emplace_back(frame.left + frame.width, frame.top, -frame.width, frame.height);
+    }
+
+    return {frameData.texture_, frameData.defaultFrame_, mirrorFrames};
+}
+
 SpriteSheet::FrameData SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nFrames,
                                          unsigned int defaultFrame) const
 {

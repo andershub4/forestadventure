@@ -28,7 +28,7 @@ public:
 
     Animation Get(FrameType frameType, FaceDirection dir, sf::Sprite* sprite) const;
     void RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
-                               const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX = false);
+                               const std::vector<sf::IntRect>& frames, unsigned int defaultFrame);
 
 private:
     struct AnimationInfo
@@ -43,9 +43,6 @@ private:
     float switchTime_ = 0;
     FrameType currentFrameType_ = FrameType::Undefined;
     FaceDirection currentDir_ = FaceDirection::Down;
-
-private:
-    std::vector<sf::IntRect> MirrorX(const std::vector<sf::IntRect>& frames) const;
 };
 
 }  // namespace FA

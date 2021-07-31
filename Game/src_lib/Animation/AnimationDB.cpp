@@ -16,7 +16,7 @@ AnimationDB::AnimationDB(float switchTime)
 {}
 
 void AnimationDB::RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
-                                        const std::vector<sf::IntRect>& frames, unsigned int defaultFrame, bool mirrorX)
+                                        const std::vector<sf::IntRect>& frames, unsigned int defaultFrame)
 {
     auto it = animationInfoMap_.find({frameType, dir});
     if (it != animationInfoMap_.end()) {
@@ -24,7 +24,7 @@ void AnimationDB::RegisterAnimationInfo(FrameType frameType, FaceDirection dir, 
                  " is already registered");
     }
     else {
-        animationInfoMap_[{frameType, dir}] = {texture, mirrorX ? MirrorX(frames) : frames, defaultFrame, switchTime_};
+        animationInfoMap_[{frameType, dir}] = {texture, frames, defaultFrame, switchTime_};
     }
 }
 
@@ -40,16 +40,6 @@ Animation AnimationDB::Get(FrameType frameType, FaceDirection dir, sf::Sprite* s
                   " does not exist");
         return Animation();
     }
-}
-
-std::vector<sf::IntRect> AnimationDB::MirrorX(const std::vector<sf::IntRect>& frames) const
-{
-    std::vector<sf::IntRect> mirrorFrames;
-    for (const auto& frame : frames) {
-        mirrorFrames.emplace_back(frame.left + frame.width, frame.top, -frame.width, frame.height);
-    }
-
-    return mirrorFrames;
 }
 
 }  // namespace FA

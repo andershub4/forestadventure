@@ -28,6 +28,8 @@ public:
 
     SpriteSheet(const std::string& name, const sf::Texture* texture, const sf::Vector2u& frameCount);
 
+    static FrameData MirrorX(const FrameData& frameData);
+
     FrameData Scan(const sf::Vector2u& uvCoord, unsigned int nFrames, unsigned int defaultFrame) const;
 
 private:
