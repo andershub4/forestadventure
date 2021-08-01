@@ -12,11 +12,11 @@ namespace FA {
 
 namespace Entity {
 
-class Transform
+class TransformComponent
 {
 public:
-    Transform() = default;
-    Transform(const sf::Vector2f &position, float scale);
+    TransformComponent() = default;
+    TransformComponent(const sf::Vector2f &position, float scale);
 
     void Move(const sf::Vector2f &offset);
     sf::Vector2f GetPosition() const { return position_; }

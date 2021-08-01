@@ -4,11 +4,11 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Movement.h"
+#include "MovementComponent.h"
 
 #include <unordered_map>
 
-#include "Entity/Components/Transform/Transform.h"
+#include "Entity/Components/Transform/TransformComponent.h"
 #include "Enum/MoveDirection.h"
 
 namespace {
@@ -25,21 +25,21 @@ namespace FA {
 
 namespace Entity {
 
-Movement::Movement(float velocity)
+MovementComponent::MovementComponent(float velocity)
     : velocity_(velocity)
 {}
 
-void Movement::Update(float deltaTime)
+void MovementComponent::Update(float deltaTime)
 {
     offset_ = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
 }
 
-void Movement::ApplyTo(Transform &transform) const
+void MovementComponent::ApplyTo(TransformComponent &transform) const
 {
     transform.Move(offset_);
 }
 
-void Movement::SetDirection(MoveDirection direction)
+void MovementComponent::SetDirection(MoveDirection direction)
 {
     auto it = dirToVector.find(direction);
     if (it != dirToVector.end()) {

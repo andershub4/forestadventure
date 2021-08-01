@@ -4,18 +4,18 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Transform.h"
+#include "TransformComponent.h"
 
 namespace FA {
 
 namespace Entity {
 
-Transform::Transform(const sf::Vector2f &position, float scale)
+TransformComponent::TransformComponent(const sf::Vector2f &position, float scale)
     : position_(position)
     , scale_(scale)
 {}
 
-void Transform::Move(const sf::Vector2f &offset)
+void TransformComponent::Move(const sf::Vector2f &offset)
 {
     position_ = {position_.x + offset.x, position_.y + offset.y};
 }

@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/Sprite/Sprite.h"
+#include "Entity/Components/Sprite/SpriteComponent.h"
 #include "Entity/Configuration.h"
 #include "Message/MessageBus.h"
 #include "Resource/TextureManager.h"

@@ -15,18 +15,18 @@ namespace FA {
 
 namespace Entity {
 
-class Transform;
+class TransformComponent;
 
-class Sprite
+class SpriteComponent
 {
 public:
-    Sprite() = default;
-    Sprite(const Transform &transform, const AnimationDB &animationDB);
-    virtual ~Sprite();
+    SpriteComponent() = default;
+    SpriteComponent(const TransformComponent &transform, const AnimationDB &animationDB);
+    virtual ~SpriteComponent();
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget);
-    void Apply(const Transform &transform);
+    void Apply(const TransformComponent &transform);
     void StartAnimation();
     void SetAnimation(FrameType frameType, FaceDirection faceDir);
     bool AnimationIsCompleted() const;

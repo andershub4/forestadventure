@@ -4,52 +4,52 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Sprite.h"
+#include "SpriteComponent.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/Transform/Transform.h"
+#include "Entity/Components/Transform/TransformComponent.h"
 
 namespace FA {
 
 namespace Entity {
 
-Sprite::Sprite(const Transform &transform, const AnimationDB &animationDB)
+SpriteComponent::SpriteComponent(const TransformComponent &transform, const AnimationDB &animationDB)
     : animationDB_(animationDB)
 {
     Apply(transform);
 }
 
-Sprite::~Sprite() = default;
+SpriteComponent::~SpriteComponent() = default;
 
-void Sprite::Update(float deltaTime)
+void SpriteComponent::Update(float deltaTime)
 {
     animation_.Update(deltaTime);
 }
 
-void Sprite::DrawTo(sf::RenderTarget &renderTarget)
+void SpriteComponent::DrawTo(sf::RenderTarget &renderTarget)
 {
     renderTarget.draw(sprite_);
 }
 
-void Sprite::Apply(const Transform &transform)
+void SpriteComponent::Apply(const TransformComponent &transform)
 {
     sprite_.setPosition(transform.GetPosition());
     sprite_.setScale(transform.GetScale(), transform.GetScale());
 }
 
-void Sprite::SetAnimation(FrameType frameType, FaceDirection faceDir)
+void SpriteComponent::SetAnimation(FrameType frameType, FaceDirection faceDir)
 {
     animation_ = animationDB_.Get(frameType, faceDir, &sprite_);
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
-void Sprite::StartAnimation()
+void SpriteComponent::StartAnimation()
 {
     animation_.Start();
 }
 
-bool Sprite::AnimationIsCompleted() const
+bool SpriteComponent::AnimationIsCompleted() const
 {
     return animation_.IsCompleted();
 }

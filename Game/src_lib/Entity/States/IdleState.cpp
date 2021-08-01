@@ -8,7 +8,7 @@
 
 #include "AttackState.h"
 #include "AttackWeaponState.h"
-#include "Entity/Components/Sprite/Sprite.h"
+#include "Entity/Components/Sprite/SpriteComponent.h"
 #include "Enum/FrameType.h"
 #include "MoveState.h"
 

@@ -126,10 +126,10 @@
     <ClCompile Include="Resource\SpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\Sprite\Sprite.cpp">
+    <ClCompile Include="Entity\Components\Sprite\SpriteComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\Movement\Movement.cpp">
+    <ClCompile Include="Entity\Components\Movement\MovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Entities\MoleEntity.cpp">
@@ -183,7 +183,7 @@
     <ClCompile Include="Logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\Transform\Transform.cpp">
+    <ClCompile Include="Entity\Components\Transform\TransformComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -329,10 +329,10 @@
     <ClInclude Include="Resource\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\Sprite\Sprite.h">
+    <ClInclude Include="Entity\Components\Sprite\SpriteComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\Movement\Movement.h">
+    <ClInclude Include="Entity\Components\Movement\MovementComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\AnimationType.h">
@@ -404,7 +404,7 @@
     <ClInclude Include="Logging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\Transform\Transform.h">
+    <ClInclude Include="Entity\Components\Transform\TransformComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Layer.h">

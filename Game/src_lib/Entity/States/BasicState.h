@@ -9,8 +9,8 @@
 #include <memory>
 #include <string>
 
-#include "Entity/Components/Sprite/Sprite.h"
-#include "Entity/Components/Transform/Transform.h"
+#include "Entity/Components/Sprite/SpriteComponent.h"
+#include "Entity/Components/Transform/TransformComponent.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 #include "Fwd/SfmlFwd.h"
@@ -30,8 +30,8 @@ public:
         MoveDirection moveDir_ = MoveDirection::None;
         FaceDirection faceDir_ = FaceDirection::Down;
         float velocity_ = 0.0;
-        Transform transform_;
-        Sprite sprite_;
+        TransformComponent transform_;
+        SpriteComponent sprite_;
     };
 
     BasicState(StateMachine& stateMachine, StateData& stateData);

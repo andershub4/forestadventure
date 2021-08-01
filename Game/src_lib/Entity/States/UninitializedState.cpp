@@ -25,8 +25,8 @@ void UninitializedState::OnInitStateData(const Configuration& configuration, con
     stateData_.faceDir_ = configuration.faceDir_;
     stateData_.velocity_ = configuration.velocity_;
     stateData_.moveDir_ = MoveDirection::None;
-    stateData_.transform_ = Transform(configuration.position_, configuration.scale_);
-    stateData_.sprite_ = Sprite(stateData_.transform_, animationDB);
+    stateData_.transform_ = TransformComponent(configuration.position_, configuration.scale_);
+    stateData_.sprite_ = SpriteComponent(stateData_.transform_, animationDB);
 
     SwitchState<IdleState>();
 }

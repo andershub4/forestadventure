@@ -14,17 +14,17 @@ enum class MoveDirection;
 
 namespace Entity {
 
-class Transform;
+class TransformComponent;
 
-class Movement
+class MovementComponent
 {
 public:
-    Movement() = default;
-    Movement(float velocity);
+    MovementComponent() = default;
+    MovementComponent(float velocity);
 
     void Update(float deltaTime);
 
-    void ApplyTo(Transform &transform) const;
+    void ApplyTo(TransformComponent &transform) const;
     void SetDirection(MoveDirection direction);
 
 private:
