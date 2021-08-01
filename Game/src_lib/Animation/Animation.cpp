@@ -10,10 +10,9 @@
 
 namespace FA {
 
-Animation::Animation(sf::Sprite* sprite, const sf::Texture* texture, const std::vector<sf::IntRect>& frames,
-                     unsigned int defaultFrame, float switchTime)
-    : sprite_(sprite)
-    , texture_(texture)
+Animation::Animation(const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame,
+                     float switchTime)
+    : texture_(texture)
     , frames_(frames)
     , switchTime_(switchTime)
     , time_(0.0)
@@ -21,8 +20,12 @@ Animation::Animation(sf::Sprite* sprite, const sf::Texture* texture, const std::
     , iFrame_(defaultFrame)
 {
     nFrames_ = frames.size();
-    sprite_->setTexture(*texture_);
-    if (defaultFrame_ < nFrames_) sprite_->setTextureRect(frames_.at(defaultFrame_));
+}
+
+void Animation::ApplyTo(sf::Sprite& sprite)
+{
+    sprite.setTexture(*texture_);
+    sprite.setTextureRect(frames_[iFrame_]);
 }
 
 void Animation::Update(float deltaTime)
@@ -35,8 +38,6 @@ void Animation::Update(float deltaTime)
             ++iFrame_ %= nFrames_;
             isCompleted_ = (iFrame_ == 0);
         }
-
-        sprite_->setTextureRect(frames_[iFrame_]);
     }
 }
 

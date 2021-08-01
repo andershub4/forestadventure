@@ -23,7 +23,7 @@ public:
     void DrawTo(sf::RenderTarget& renderTarget);
     void SetState(std::unique_ptr<BasicState> newState);
 
-    void OnInitStateData(const Configuration& configuration, const AnimationDB& animationDB);
+    void OnInitStateData(const Configuration& configuration, const Animator& animator);
     void OnStartMove(MoveDirection moveDir, FaceDirection faceDir);
     void OnStopMove();
     void OnAttack();

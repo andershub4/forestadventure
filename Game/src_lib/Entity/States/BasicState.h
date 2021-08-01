@@ -44,7 +44,7 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInitStateData(const Configuration& configuration, const AnimationDB& animationDB) {}
+    virtual void OnInitStateData(const Configuration& configuration, const Animator& animator) {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}

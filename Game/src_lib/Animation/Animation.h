@@ -18,16 +18,16 @@ class Animation
 {
 public:
     Animation() = default;
-    Animation(sf::Sprite* sprite, const sf::Texture* texture, const std::vector<sf::IntRect>& frames,
-              unsigned int defaultFrame, float switchTime);
+    Animation(const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame,
+              float switchTime);
 
     void Update(float deltaTime);  // delta time; time since previous time to current frame
+    void ApplyTo(sf::Sprite& sprite);
     void Start();
     void Stop();
     bool IsCompleted() const;
 
 private:
-    sf::Sprite* sprite_ = nullptr;
     const sf::Texture* texture_ = nullptr;
     bool isStopped_ = true;
     float time_{};        // time since we last switched frame

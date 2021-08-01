@@ -4,19 +4,13 @@
  *	See file LICENSE for full license details.
  */
 
-#include "AnimationDB.h"
+#include "Animator.h"
 
-#include "Animation.h"
 #include "Logging.h"
 
 namespace FA {
 
-AnimationDB::AnimationDB(float switchTime)
-    : switchTime_(switchTime)
-{}
-
-void AnimationDB::RegisterAnimationInfo(FrameType frameType, FaceDirection dir, const sf::Texture* texture,
-                                        const std::vector<sf::IntRect>& frames, unsigned int defaultFrame)
+void Animator::AddAnimation(FrameType frameType, FaceDirection dir, const Animation &animation)
 {
     auto it = animationInfoMap_.find({frameType, dir});
     if (it != animationInfoMap_.end()) {
@@ -24,16 +18,15 @@ void AnimationDB::RegisterAnimationInfo(FrameType frameType, FaceDirection dir, 
                  " is already registered");
     }
     else {
-        animationInfoMap_[{frameType, dir}] = {texture, frames, defaultFrame, switchTime_};
+        animationInfoMap_[{frameType, dir}] = animation;
     }
 }
 
-Animation AnimationDB::Get(FrameType frameType, FaceDirection dir, sf::Sprite* sprite) const
+Animation Animator::Get(FrameType frameType, FaceDirection dir) const
 {
     auto it = animationInfoMap_.find({frameType, dir});
     if (it != animationInfoMap_.end()) {
-        auto info = animationInfoMap_.at({frameType, dir});
-        return Animation(sprite, info.texture_, info.frames_, info.defaultFrame_, switchTime_);
+        return animationInfoMap_.at({frameType, dir});
     }
     else {
         LOG_ERROR("frameType: ", static_cast<unsigned int>(frameType), " dir: ", static_cast<unsigned int>(dir),

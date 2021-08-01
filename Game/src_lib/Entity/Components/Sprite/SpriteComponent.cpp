@@ -14,8 +14,8 @@ namespace FA {
 
 namespace Entity {
 
-SpriteComponent::SpriteComponent(const TransformComponent &transform, const AnimationDB &animationDB)
-    : animationDB_(animationDB)
+SpriteComponent::SpriteComponent(const TransformComponent &transform, const Animator &animator)
+    : animator_(animator)
 {
     Apply(transform);
 }
@@ -25,6 +25,7 @@ SpriteComponent::~SpriteComponent() = default;
 void SpriteComponent::Update(float deltaTime)
 {
     animation_.Update(deltaTime);
+    animation_.ApplyTo(sprite_);
 }
 
 void SpriteComponent::DrawTo(sf::RenderTarget &renderTarget)
@@ -40,7 +41,8 @@ void SpriteComponent::Apply(const TransformComponent &transform)
 
 void SpriteComponent::SetAnimation(FrameType frameType, FaceDirection faceDir)
 {
-    animation_ = animationDB_.Get(frameType, faceDir, &sprite_);
+    animation_ = animator_.Get(frameType, faceDir);
+    animation_.ApplyTo(sprite_);
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 

@@ -45,7 +45,7 @@
     <ClCompile Include="Message\BroadcastMessage\KeyReleasedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Animation\AnimationDB.cpp">
+    <ClCompile Include="Animation\Animator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\StateMachine.cpp">
@@ -245,7 +245,7 @@
     <ClInclude Include="Enum\FrameType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Animation\AnimationDB.h">
+    <ClInclude Include="Animation\Animator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\StateMachine.h">

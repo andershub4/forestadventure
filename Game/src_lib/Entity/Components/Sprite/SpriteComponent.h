@@ -9,7 +9,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Animation/Animation.h"
-#include "Animation/AnimationDB.h"
+#include "Animation/Animator.h"
 
 namespace FA {
 
@@ -21,7 +21,7 @@ class SpriteComponent
 {
 public:
     SpriteComponent() = default;
-    SpriteComponent(const TransformComponent &transform, const AnimationDB &animationDB);
+    SpriteComponent(const TransformComponent &transform, const Animator &animator);
     virtual ~SpriteComponent();
 
     void Update(float deltaTime);
@@ -33,7 +33,7 @@ public:
 
 private:
     sf::Sprite sprite_;
-    AnimationDB animationDB_;
+    Animator animator_;
     Animation animation_;
 };
 
