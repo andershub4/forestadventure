@@ -22,7 +22,7 @@ void Animator::AddAnimation(FrameType frameType, FaceDirection dir, const Animat
     }
 }
 
-Animation Animator::Get(FrameType frameType, FaceDirection dir) const
+Animation Animator::GetAnimation(FrameType frameType, FaceDirection dir) const
 {
     auto it = animationInfoMap_.find({frameType, dir});
     if (it != animationInfoMap_.end()) {

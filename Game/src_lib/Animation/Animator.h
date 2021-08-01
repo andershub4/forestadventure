@@ -17,7 +17,7 @@ namespace FA {
 class Animator
 {
 public:
-    Animation Get(FrameType frameType, FaceDirection dir) const;
+    Animation GetAnimation(FrameType frameType, FaceDirection dir) const;
     void AddAnimation(FrameType frameType, FaceDirection dir, const Animation& animation);
 
 private:

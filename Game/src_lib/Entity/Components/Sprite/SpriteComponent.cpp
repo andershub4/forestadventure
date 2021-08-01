@@ -41,7 +41,7 @@ void SpriteComponent::Apply(const TransformComponent &transform)
 
 void SpriteComponent::SetAnimation(FrameType frameType, FaceDirection faceDir)
 {
-    animation_ = animator_.Get(frameType, faceDir);
+    animation_ = animator_.GetAnimation(frameType, faceDir);
     animation_.ApplyTo(sprite_);
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
