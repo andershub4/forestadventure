@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/Components/Animation/AnimationComponent.h"
 #include "Entity/Components/Sprite/SpriteComponent.h"
 #include "Entity/Configuration.h"
 #include "Entity/TextureId.h"
@@ -26,7 +27,7 @@ MoleEntity::~MoleEntity() = default;
 
 void MoleEntity::OnCreate(const Configuration& configuration)
 {
-    Animator animator;
+    AnimationComponent animation;
     float t = 0.1f;
 
     auto textureWalkSide = GetTexture(TextureId::MoleWalkSide);
@@ -36,22 +37,22 @@ void MoleEntity::OnCreate(const Configuration& configuration)
         auto mf = SpriteSheet::MirrorX(f);
         auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
         auto ma = Animation(mf.texture_, mf.frames_, mf.defaultFrame_, t);
-        animator.AddAnimation(FrameType::Move, FaceDirection::Left, ma);
-        animator.AddAnimation(FrameType::Move, FaceDirection::Right, a);
+        animation.AddAnimation(FrameType::Move, FaceDirection::Left, ma);
+        animation.AddAnimation(FrameType::Move, FaceDirection::Right, a);
     }
     auto textureWalkFront = GetTexture(TextureId::MoleWalkFront);
     if (textureWalkFront != nullptr) {
         SpriteSheet spriteSheet("moleWalkFront", textureWalkFront, {6, 1});
         auto f = spriteSheet.Scan({0, 0}, 6, 0);
         auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animator.AddAnimation(FrameType::Move, FaceDirection::Down, a);
+        animation.AddAnimation(FrameType::Move, FaceDirection::Down, a);
     }
     auto textureWalkBack = GetTexture(TextureId::MoleWalkBack);
     if (textureWalkBack != nullptr) {
         SpriteSheet spriteSheet("moleWalkBack", textureWalkBack, {6, 1});
         auto f = spriteSheet.Scan({0, 0}, 6, 0);
         auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animator.AddAnimation(FrameType::Move, FaceDirection::Up, a);
+        animation.AddAnimation(FrameType::Move, FaceDirection::Up, a);
     }
 
     auto textureIdleSide = GetTexture(TextureId::MoleIdleSide);
@@ -61,25 +62,25 @@ void MoleEntity::OnCreate(const Configuration& configuration)
         auto mf = SpriteSheet::MirrorX(f);
         auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
         auto ma = Animation(mf.texture_, mf.frames_, mf.defaultFrame_, t);
-        animator.AddAnimation(FrameType::Idle, FaceDirection::Left, ma);
-        animator.AddAnimation(FrameType::Idle, FaceDirection::Right, a);
+        animation.AddAnimation(FrameType::Idle, FaceDirection::Left, ma);
+        animation.AddAnimation(FrameType::Idle, FaceDirection::Right, a);
     }
     auto textureIdleFront = GetTexture(TextureId::MoleIdleFront);
     if (textureIdleFront != nullptr) {
         SpriteSheet spriteSheet("moleIdleFront", textureIdleFront, {1, 1});
         auto f = spriteSheet.Scan({0, 0}, 1, 0);
         auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animator.AddAnimation(FrameType::Idle, FaceDirection::Down, a);
+        animation.AddAnimation(FrameType::Idle, FaceDirection::Down, a);
     }
     auto textureIdleBack = GetTexture(TextureId::MoleIdleBack);
     if (textureIdleBack != nullptr) {
         SpriteSheet spriteSheet("moleIdleBack", textureIdleBack, {1, 1});
         auto f = spriteSheet.Scan({0, 0}, 1, 0);
         auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animator.AddAnimation(FrameType::Idle, FaceDirection::Up, a);
+        animation.AddAnimation(FrameType::Idle, FaceDirection::Up, a);
     }
 
-    InitStateData(configuration, animator);
+    InitStateData(configuration, animation);
 }
 
 }  // namespace Entity

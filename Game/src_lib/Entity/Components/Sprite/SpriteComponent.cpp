@@ -14,8 +14,8 @@ namespace FA {
 
 namespace Entity {
 
-SpriteComponent::SpriteComponent(const TransformComponent &transform, const Animator &animator)
-    : animator_(animator)
+SpriteComponent::SpriteComponent(const TransformComponent &transform, const AnimationComponent &animation)
+    : animation_(animation)
 {
     Apply(transform);
 }
@@ -39,16 +39,11 @@ void SpriteComponent::Apply(const TransformComponent &transform)
     sprite_.setScale(transform.GetScale(), transform.GetScale());
 }
 
-void SpriteComponent::SetAnimation(FrameType frameType, FaceDirection faceDir)
+void SpriteComponent::Set(FrameType frameType, FaceDirection faceDir)
 {
-    animation_ = animator_.GetAnimation(frameType, faceDir);
+    animation_.SetAnimation(frameType, faceDir);
     animation_.ApplyTo(sprite_);
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
-}
-
-void SpriteComponent::StartAnimation()
-{
-    animation_.Start();
 }
 
 bool SpriteComponent::AnimationIsCompleted() const

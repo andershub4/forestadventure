@@ -8,8 +8,7 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Animation/Animation.h"
-#include "Animation/Animator.h"
+#include "Entity/Components/Animation/AnimationComponent.h"
 
 namespace FA {
 
@@ -21,20 +20,18 @@ class SpriteComponent
 {
 public:
     SpriteComponent() = default;
-    SpriteComponent(const TransformComponent &transform, const Animator &animator);
+    SpriteComponent(const TransformComponent &transform, const AnimationComponent &animation);
     virtual ~SpriteComponent();
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget);
     void Apply(const TransformComponent &transform);
-    void StartAnimation();
-    void SetAnimation(FrameType frameType, FaceDirection faceDir);
+    void Set(FrameType frameType, FaceDirection faceDir);
     bool AnimationIsCompleted() const;
 
 private:
     sf::Sprite sprite_;
-    Animator animator_;
-    Animation animation_;
+    AnimationComponent animation_;
 };
 
 }  // namespace Entity

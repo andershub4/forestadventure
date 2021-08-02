@@ -36,8 +36,7 @@ void AttackState::DrawTo(sf::RenderTarget& renderTarget)
 
 void AttackState::Enter()
 {
-    stateData_.sprite_.SetAnimation(FrameType::Attack, stateData_.faceDir_);
-    stateData_.sprite_.StartAnimation();
+    stateData_.sprite_.Set(FrameType::Attack, stateData_.faceDir_);
 }
 
 void AttackState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

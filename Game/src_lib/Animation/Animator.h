@@ -7,22 +7,20 @@
 #pragma once
 
 #include <map>
+#include <string>
 
 #include "Animation.h"
-#include "Enum/FaceDirection.h"
-#include "Enum/FrameType.h"
 
 namespace FA {
 
 class Animator
 {
 public:
-    Animation GetAnimation(FrameType frameType, FaceDirection dir) const;
-    void AddAnimation(FrameType frameType, FaceDirection dir, const Animation& animation);
+    Animation GetAnimation(const std::string &key) const;
+    void AddAnimation(const std::string &key, const Animation &animation);
 
 private:
-    using Key = std::pair<FrameType, FaceDirection>;
-    std::map<Key, Animation> animationInfoMap_;
+    std::map<std::string, Animation> map_;
 };
 
 }  // namespace FA

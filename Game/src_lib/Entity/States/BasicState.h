@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 
+#include "Entity/Components/Animation/AnimationComponent.h"
 #include "Entity/Components/Sprite/SpriteComponent.h"
 #include "Entity/Components/Transform/TransformComponent.h"
 #include "Enum/FaceDirection.h"
@@ -44,7 +45,7 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInitStateData(const Configuration& configuration, const Animator& animator) {}
+    virtual void OnInitStateData(const Configuration& configuration, const AnimationComponent& animation) {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}

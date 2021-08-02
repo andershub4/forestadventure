@@ -34,8 +34,7 @@ void IdleState::DrawTo(sf::RenderTarget& renderTarget)
 
 void IdleState::Enter()
 {
-    stateData_.sprite_.SetAnimation(FrameType::Idle, stateData_.faceDir_);
-    stateData_.sprite_.StartAnimation();
+    stateData_.sprite_.Set(FrameType::Idle, stateData_.faceDir_);
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

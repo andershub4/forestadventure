@@ -41,8 +41,7 @@ void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 void MoveState::Enter()
 {
     movement_.SetDirection(stateData_.moveDir_);
-    stateData_.sprite_.SetAnimation(FrameType::Move, stateData_.faceDir_);
-    stateData_.sprite_.StartAnimation();
+    stateData_.sprite_.Set(FrameType::Move, stateData_.faceDir_);
 }
 
 void MoveState::Exit()
