@@ -23,8 +23,7 @@ UninitializedState::~UninitializedState() = default;
 void UninitializedState::OnInitStateData(const Configuration& configuration, const AnimationComponent& animation)
 {
     stateData_.faceDir_ = configuration.faceDir_;
-    stateData_.velocity_ = configuration.velocity_;
-    stateData_.moveDir_ = MoveDirection::None;
+    stateData_.movement_ = MovementComponent(configuration.velocity_);
     stateData_.transform_ = TransformComponent(configuration.position_, configuration.scale_);
     stateData_.sprite_ = SpriteComponent(stateData_.transform_, animation);
 

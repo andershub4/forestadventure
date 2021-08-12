@@ -39,7 +39,7 @@ void IdleState::Enter()
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    stateData_.moveDir_ = moveDir;
+    stateData_.movement_.SetDirection(moveDir);
     stateData_.faceDir_ = faceDir;
     SwitchState<MoveState>();
 }

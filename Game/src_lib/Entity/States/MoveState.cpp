@@ -16,7 +16,6 @@ namespace Entity {
 
 MoveState::MoveState(StateMachine& stateMachine, StateData& stateData)
     : BasicState(stateMachine, stateData)
-    , movement_(stateData_.velocity_)
 {}
 
 MoveState::~MoveState() = default;
@@ -24,8 +23,8 @@ MoveState::~MoveState() = default;
 void MoveState::Update(float deltaTime)
 {
     stateData_.sprite_.Update(deltaTime);
-    movement_.Update(deltaTime);
-    movement_.ApplyTo(stateData_.transform_);
+    stateData_.movement_.Update(deltaTime);
+    stateData_.movement_.ApplyTo(stateData_.transform_);
 }
 
 void MoveState::LateUpdate()
@@ -40,13 +39,12 @@ void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 
 void MoveState::Enter()
 {
-    movement_.SetDirection(stateData_.moveDir_);
     stateData_.sprite_.Set(FrameType::Move, stateData_.faceDir_);
 }
 
 void MoveState::Exit()
 {
-    movement_.SetDirection(MoveDirection::None);
+    stateData_.movement_.SetDirection(MoveDirection::None);
 }
 
 void MoveState::OnStopMove()

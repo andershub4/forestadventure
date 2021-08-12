@@ -7,7 +7,6 @@
 #pragma once
 
 #include "BasicState.h"
-#include "Entity/Components/Movement/MovementComponent.h"
 
 namespace FA {
 
@@ -27,9 +26,6 @@ public:
     virtual void Exit() override;
 
     virtual void OnStopMove() override;
-
-private:
-    MovementComponent movement_;
 };
 
 }  // namespace Entity

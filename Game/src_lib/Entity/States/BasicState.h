@@ -12,6 +12,7 @@
 #include "Entity/Components/Animation/AnimationComponent.h"
 #include "Entity/Components/Sprite/SpriteComponent.h"
 #include "Entity/Components/Transform/TransformComponent.h"
+#include "Entity/Components/Movement/MovementComponent.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 #include "Fwd/SfmlFwd.h"
@@ -28,9 +29,8 @@ class BasicState
 public:
     struct StateData
     {
-        MoveDirection moveDir_ = MoveDirection::None;
         FaceDirection faceDir_ = FaceDirection::Down;
-        float velocity_ = 0.0;
+        MovementComponent movement_;
         TransformComponent transform_;
         SpriteComponent sprite_;
     };
