@@ -10,7 +10,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Configuration.h"
+#include "Entity/ConfigurationData.h"
 #include "Entity/Entities/BasicEntity.h"
 #include "Entity/EntityTextures.h"
 #include "Folder.h"
