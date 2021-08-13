@@ -16,7 +16,7 @@ namespace FA {
 
 namespace Entity {
 
-struct Configuration
+struct ConfigurationData
 {
     EntityType entityType_{};
     sf::Vector2f position_{};

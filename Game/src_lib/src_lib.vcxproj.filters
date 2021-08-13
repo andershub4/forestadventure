@@ -359,7 +359,7 @@
     <ClInclude Include="Entity\EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Configuration.h">
+    <ClInclude Include="Entity\ConfigurationData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\EntityType.h">

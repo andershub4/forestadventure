@@ -18,7 +18,7 @@ namespace Entity {
 
 class BasicEntity;
 class Factory;
-struct Configuration;
+struct ConfigurationData;
 
 class EntityManager
 {
@@ -30,7 +30,7 @@ public:
     void LateUpdate();
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    BasicEntity *Create(const Configuration &configuration);
+    BasicEntity *Create(const ConfigurationData &configurationData);
 
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;

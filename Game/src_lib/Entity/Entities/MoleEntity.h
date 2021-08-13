@@ -19,7 +19,7 @@ public:
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
-    virtual void OnCreate(const Configuration& configuration) override;
+    virtual void OnCreate(const ConfigurationData& configurationData) override;
 };
 
 }  // namespace Entity

@@ -73,9 +73,9 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void BasicEntity::InitStateData(const Configuration& configuration, const AnimationComponent& animation)
+void BasicEntity::InitStateData(const ConfigurationData& configurationData, const AnimationComponent& animation)
 {
-    stateMachine_.OnInitStateData(configuration, animation);
+    stateMachine_.OnInitStateData(configurationData, animation);
 }
 
 void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)

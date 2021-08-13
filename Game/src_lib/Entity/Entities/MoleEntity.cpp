@@ -10,7 +10,7 @@
 
 #include "Entity/Components/Animation/AnimationComponent.h"
 #include "Entity/Components/Sprite/SpriteComponent.h"
-#include "Entity/Configuration.h"
+#include "Entity/ConfigurationData.h"
 #include "Entity/TextureId.h"
 #include "Message/MessageBus.h"
 #include "Resource/SpriteSheet.h"
@@ -25,7 +25,7 @@ MoleEntity::MoleEntity(EntityId id, MessageBus& messageBus, const TextureManager
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::OnCreate(const Configuration& configuration)
+void MoleEntity::OnCreate(const ConfigurationData& configurationData)
 {
     AnimationComponent animation;
     float t = 0.1f;
@@ -80,7 +80,7 @@ void MoleEntity::OnCreate(const Configuration& configuration)
         animation.AddAnimation(FrameType::Idle, FaceDirection::Up, a);
     }
 
-    InitStateData(configuration, animation);
+    InitStateData(configurationData, animation);
 }
 
 }  // namespace Entity

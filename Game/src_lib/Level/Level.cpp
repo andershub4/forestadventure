@@ -49,14 +49,14 @@ void Level::Load(const std::string &mapPath)
 
     LOG_INFO("Create entities");
     for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
-        Entity::Configuration configuration;
-        configuration.entityType_ = objectData.type_;
-        configuration.position_ = static_cast<sf::Vector2f>(objectData.position_);
-        configuration.faceDir_ = objectData.faceDir_;
-        configuration.velocity_ = 120.0;
-        configuration.scale_ = static_cast<float>(scale_);
-        auto entity = entityManager_.Create(configuration);
-        if (configuration.entityType_ == EntityType::Player) {
+        Entity::ConfigurationData configurationData;
+        configurationData.entityType_ = objectData.type_;
+        configurationData.position_ = static_cast<sf::Vector2f>(objectData.position_);
+        configurationData.faceDir_ = objectData.faceDir_;
+        configurationData.velocity_ = 120.0;
+        configurationData.scale_ = static_cast<float>(scale_);
+        auto entity = entityManager_.Create(configurationData);
+        if (configurationData.entityType_ == EntityType::Player) {
             camera_.Follow(entity);
         }
     }

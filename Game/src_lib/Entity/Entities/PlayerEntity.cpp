@@ -10,7 +10,7 @@
 
 #include "Entity/Components/Animation/AnimationComponent.h"
 #include "Entity/Components/Sprite/SpriteComponent.h"
-#include "Entity/Configuration.h"
+#include "Entity/ConfigurationData.h"
 #include "Entity/TextureId.h"
 #include "Enum/KeyboardKey.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -29,7 +29,7 @@ PlayerEntity::PlayerEntity(EntityId id, MessageBus& messageBus, const TextureMan
 
 PlayerEntity::~PlayerEntity() = default;
 
-void PlayerEntity::OnCreate(const Configuration& configuration)
+void PlayerEntity::OnCreate(const ConfigurationData& configurationData)
 {
     AnimationComponent animation;
     float t = 0.1f;
@@ -134,7 +134,7 @@ void PlayerEntity::OnCreate(const Configuration& configuration)
         animation.AddAnimation(FrameType::Idle, FaceDirection::Up, a);
     }
 
-    InitStateData(configuration, animation);
+    InitStateData(configurationData, animation);
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 

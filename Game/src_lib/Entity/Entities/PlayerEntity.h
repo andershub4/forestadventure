@@ -19,7 +19,7 @@ public:
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
-    virtual void OnCreate(const Configuration& configuration) override;
+    virtual void OnCreate(const ConfigurationData& configurationData) override;
     virtual void OnDestroy() override;
 
 protected:

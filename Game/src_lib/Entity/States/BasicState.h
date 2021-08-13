@@ -22,7 +22,7 @@ namespace FA {
 namespace Entity {
 
 class StateMachine;
-struct Configuration;
+struct ConfigurationData;
 
 class BasicState
 {
@@ -45,7 +45,7 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInitStateData(const Configuration& configuration, const AnimationComponent& animation) {}
+    virtual void OnInitStateData(const ConfigurationData& configurationData, const AnimationComponent& animation) {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}

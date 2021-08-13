@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 
-#include "Configuration.h"
+#include "ConfigurationData.h"
 #include "Entity/Entities/BasicEntity.h"
 #include "Factory.h"
 #include "Logging.h"
@@ -41,11 +41,11 @@ void EntityManager::LateUpdate()
     }
 }
 
-BasicEntity* EntityManager::Create(const Configuration& configuration)
+BasicEntity* EntityManager::Create(const ConfigurationData& configurationData)
 {
-    auto entity = factory_.Create(configuration.entityType_);
+    auto entity = factory_.Create(configurationData.entityType_);
     auto id = entity->GetId();
-    entity->OnCreate(configuration);
+    entity->OnCreate(configurationData);
     AddEntity(std::move(entity));
 
     return entityMap_.at(id).get();

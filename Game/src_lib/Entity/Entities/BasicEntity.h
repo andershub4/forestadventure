@@ -32,7 +32,7 @@ public:
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnCreate(const Configuration& configuration) {}
+    virtual void OnCreate(const ConfigurationData& configurationData) {}
     virtual void OnDestroy() {}
 
     void Update(float deltaTime);
@@ -43,7 +43,7 @@ public:
     EntityId GetId() const { return id_; }
 
 protected:
-    void InitStateData(const Configuration& configuration, const AnimationComponent& animation);
+    void InitStateData(const ConfigurationData& configurationData, const AnimationComponent& animation);
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void StartMove(MoveDirection moveDir, FaceDirection faceDir);
