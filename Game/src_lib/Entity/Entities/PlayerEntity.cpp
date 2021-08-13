@@ -8,8 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/Animation/AnimationComponent.h"
-#include "Entity/Components/Sprite/SpriteComponent.h"
+#include "Entity/ConfigurationBuilder.h"
 #include "Entity/ConfigurationData.h"
 #include "Entity/TextureId.h"
 #include "Enum/KeyboardKey.h"
@@ -134,7 +133,12 @@ void PlayerEntity::OnCreate(const ConfigurationData& configurationData)
         animation.AddAnimation(FrameType::Idle, FaceDirection::Up, a);
     }
 
-    InitStateData(configurationData, animation);
+    ConfigurationBuilder builder(configurationData.position_, configurationData.scale_, configurationData.faceDir_);
+    builder.AddMovement(configurationData.velocity_);
+    builder.AddSprite(animation);
+    auto c = builder.Build();
+
+    InitStateData(c);
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 

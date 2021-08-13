@@ -216,6 +216,8 @@
     <ClInclude Include="Effect\NullEffect.h" />
     <ClInclude Include="Entity\Components\Animation\AnimationComponent.h" />
     <ClInclude Include="Entity\Components\Transform\TransformComponent.h" />
+    <ClInclude Include="Entity\Configuration.h" />
+    <ClInclude Include="Entity\ConfigurationBuilder.h" />
     <ClInclude Include="Entity\ConfigurationData.h" />
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
@@ -294,6 +296,7 @@
     <ClCompile Include="Effect\NullEffect.cpp" />
     <ClCompile Include="Entity\Components\Animation\AnimationComponent.cpp" />
     <ClCompile Include="Entity\Components\Transform\TransformComponent.cpp" />
+    <ClCompile Include="Entity\ConfigurationBuilder.cpp" />
     <ClCompile Include="Entity\Entities\MoleEntity.cpp" />
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />

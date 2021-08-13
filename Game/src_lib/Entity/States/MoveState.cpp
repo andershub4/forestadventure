@@ -22,29 +22,29 @@ MoveState::~MoveState() = default;
 
 void MoveState::Update(float deltaTime)
 {
-    stateData_.sprite_.Update(deltaTime);
-    stateData_.movement_.Update(deltaTime);
-    stateData_.movement_.ApplyTo(stateData_.transform_);
+    stateData_.configuration_.sprite_.Update(deltaTime);
+    stateData_.configuration_.movement_.Update(deltaTime);
+    stateData_.configuration_.movement_.ApplyTo(stateData_.configuration_.transform_);
 }
 
 void MoveState::LateUpdate()
 {
-    stateData_.sprite_.Apply(stateData_.transform_);
+    stateData_.configuration_.sprite_.Apply(stateData_.configuration_.transform_);
 }
 
 void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateData_.sprite_.DrawTo(renderTarget);
+    stateData_.configuration_.sprite_.DrawTo(renderTarget);
 }
 
 void MoveState::Enter()
 {
-    stateData_.sprite_.Set(FrameType::Move, stateData_.faceDir_);
+    stateData_.configuration_.sprite_.Set(FrameType::Move, stateData_.configuration_.faceDir_);
 }
 
 void MoveState::Exit()
 {
-    stateData_.movement_.SetDirection(MoveDirection::None);
+    stateData_.configuration_.movement_.SetDirection(MoveDirection::None);
 }
 
 void MoveState::OnStopMove()

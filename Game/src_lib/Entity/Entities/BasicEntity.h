@@ -43,7 +43,7 @@ public:
     EntityId GetId() const { return id_; }
 
 protected:
-    void InitStateData(const ConfigurationData& configurationData, const AnimationComponent& animation);
+    void InitStateData(const Configuration& configuration);
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void StartMove(MoveDirection moveDir, FaceDirection faceDir);

@@ -51,7 +51,7 @@ void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
 
 sf::Vector2f BasicEntity::GetPosition() const
 {
-    return stateData_.transform_.GetPosition();
+    return stateData_.configuration_.transform_.GetPosition();
 }
 
 void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
@@ -73,9 +73,9 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void BasicEntity::InitStateData(const ConfigurationData& configurationData, const AnimationComponent& animation)
+void BasicEntity::InitStateData(const Configuration& configuration)
 {
-    stateMachine_.OnInitStateData(configurationData, animation);
+    stateMachine_.OnInitStateData(configuration);
 }
 
 void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)

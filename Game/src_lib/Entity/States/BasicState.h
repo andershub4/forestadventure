@@ -9,10 +9,7 @@
 #include <memory>
 #include <string>
 
-#include "Entity/Components/Animation/AnimationComponent.h"
-#include "Entity/Components/Sprite/SpriteComponent.h"
-#include "Entity/Components/Transform/TransformComponent.h"
-#include "Entity/Components/Movement/MovementComponent.h"
+#include "Entity/Configuration.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 #include "Fwd/SfmlFwd.h"
@@ -29,10 +26,7 @@ class BasicState
 public:
     struct StateData
     {
-        FaceDirection faceDir_ = FaceDirection::Down;
-        MovementComponent movement_;
-        TransformComponent transform_;
-        SpriteComponent sprite_;
+        Configuration configuration_;
     };
 
     BasicState(StateMachine& stateMachine, StateData& stateData);
@@ -45,7 +39,7 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInitStateData(const ConfigurationData& configurationData, const AnimationComponent& animation) {}
+    virtual void OnInitStateData(const Configuration& configuration) {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}

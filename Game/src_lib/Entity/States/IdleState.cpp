@@ -24,23 +24,23 @@ IdleState::~IdleState() = default;
 
 void IdleState::Update(float deltaTime)
 {
-    stateData_.sprite_.Update(deltaTime);
+    stateData_.configuration_.sprite_.Update(deltaTime);
 }
 
 void IdleState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateData_.sprite_.DrawTo(renderTarget);
+    stateData_.configuration_.sprite_.DrawTo(renderTarget);
 }
 
 void IdleState::Enter()
 {
-    stateData_.sprite_.Set(FrameType::Idle, stateData_.faceDir_);
+    stateData_.configuration_.sprite_.Set(FrameType::Idle, stateData_.configuration_.faceDir_);
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    stateData_.movement_.SetDirection(moveDir);
-    stateData_.faceDir_ = faceDir;
+    stateData_.configuration_.movement_.SetDirection(moveDir);
+    stateData_.configuration_.faceDir_ = faceDir;
     SwitchState<MoveState>();
 }
 

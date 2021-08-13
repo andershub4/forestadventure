@@ -6,8 +6,6 @@
 
 #include "UninitializedState.h"
 
-#include "Entity/ConfigurationData.h"
-#include "Enum/FrameType.h"
 #include "IdleState.h"
 
 namespace FA {
@@ -20,12 +18,9 @@ UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& st
 
 UninitializedState::~UninitializedState() = default;
 
-void UninitializedState::OnInitStateData(const ConfigurationData& configurationData, const AnimationComponent& animation)
+void UninitializedState::OnInitStateData(const Configuration& configuration)
 {
-    stateData_.faceDir_ = configurationData.faceDir_;
-    stateData_.movement_ = MovementComponent(configurationData.velocity_);
-    stateData_.transform_ = TransformComponent(configurationData.position_, configurationData.scale_);
-    stateData_.sprite_ = SpriteComponent(stateData_.transform_, animation);
+    stateData_.configuration_ = configuration;
 
     SwitchState<IdleState>();
 }
