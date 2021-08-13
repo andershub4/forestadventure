@@ -26,6 +26,9 @@ protected:
     virtual void OnIsKeyPressed(Keyboard::Key key) override;
     virtual void OnIsKeyReleased(Keyboard::Key key) override;
     virtual void OnKeyPressed(Keyboard::Key key) override;
+
+private:
+    AnimationComponent CreateAnimation() const;
 };
 
 }  // namespace Entity

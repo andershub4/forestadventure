@@ -18,6 +18,22 @@
 #include "Message/MessageBus.h"
 #include "Resource/SpriteSheet.h"
 
+namespace {
+
+FA::SpriteSheet::FrameData CreateFrameData(const sf::Texture* t, const sf::Vector2u& sheetSize,
+                                           const sf::Vector2u start, unsigned int n, unsigned int defaultIndex)
+{
+    if (t != nullptr) {
+        FA::SpriteSheet spriteSheet("", t, sheetSize);
+        auto f = spriteSheet.Scan(start, n, defaultIndex);
+        return f;
+    }
+
+    return FA::SpriteSheet::FrameData();
+}
+
+}  // namespace
+
 namespace FA {
 
 namespace Entity {
@@ -30,112 +46,9 @@ PlayerEntity::~PlayerEntity() = default;
 
 void PlayerEntity::OnCreate(const ConfigurationData& configurationData)
 {
-    AnimationComponent animation;
-    float t = 0.1f;
-
-    auto textureWalkSide = GetTexture(TextureId::HeroWalkSide);
-    if (textureWalkSide != nullptr) {
-        SpriteSheet spriteSheet("heroWalkSide", textureWalkSide, {6, 1});
-        auto f = spriteSheet.Scan({0, 0}, 6, 0);
-        auto mf = SpriteSheet::MirrorX(f);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        auto ma = Animation(mf.texture_, mf.frames_, mf.defaultFrame_, t);
-        animation.AddAnimation(FrameType::Move, FaceDirection::Left, ma);
-        animation.AddAnimation(FrameType::Move, FaceDirection::Right, a);
-    }
-    auto textureWalkFront = GetTexture(TextureId::HeroWalkFront);
-    if (textureWalkFront != nullptr) {
-        SpriteSheet spriteSheet("heroWalkFront", textureWalkFront, {6, 1});
-        auto f = spriteSheet.Scan({0, 0}, 6, 0);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animation.AddAnimation(FrameType::Move, FaceDirection::Down, a);
-    }
-    auto textureWalkBack = GetTexture(TextureId::HeroWalkBack);
-    if (textureWalkBack != nullptr) {
-        SpriteSheet spriteSheet("heroWalkBack", textureWalkBack, {6, 1});
-        auto f = spriteSheet.Scan({0, 0}, 6, 0);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animation.AddAnimation(FrameType::Move, FaceDirection::Up, a);
-    }
-
-    auto textureAttackSide = GetTexture(TextureId::HeroAttackSide);
-    if (textureAttackSide != nullptr) {
-        SpriteSheet spriteSheet("heroAttackSide", textureAttackSide, {3, 1});
-        auto f = spriteSheet.Scan({0, 0}, 3, 0);
-        auto mf = SpriteSheet::MirrorX(f);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        auto ma = Animation(mf.texture_, mf.frames_, mf.defaultFrame_, t);
-        animation.AddAnimation(FrameType::Attack, FaceDirection::Left, ma);
-        animation.AddAnimation(FrameType::Attack, FaceDirection::Right, a);
-    }
-    auto textureAttackFront = GetTexture(TextureId::HeroAttackFront);
-    if (textureAttackFront != nullptr) {
-        SpriteSheet spriteSheet("heroAttackFront", textureAttackFront, {3, 1});
-        auto f = spriteSheet.Scan({0, 0}, 3, 0);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animation.AddAnimation(FrameType::Attack, FaceDirection::Down, a);
-    }
-    auto textureAttackBack = GetTexture(TextureId::HeroAttackBack);
-    if (textureAttackBack != nullptr) {
-        SpriteSheet spriteSheet("heroAttackBack", textureAttackBack, {3, 1});
-        auto f = spriteSheet.Scan({0, 0}, 3, 0);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animation.AddAnimation(FrameType::Attack, FaceDirection::Up, a);
-    }
-
-    auto textureAttackWeaponSide = GetTexture(TextureId::HeroAttackWeaponSide);
-    if (textureAttackWeaponSide != nullptr) {
-        SpriteSheet spriteSheet("heroAttackWeaponSide", textureAttackWeaponSide, {3, 1});
-        auto f = spriteSheet.Scan({0, 0}, 3, 0);
-        auto mf = SpriteSheet::MirrorX(f);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        auto ma = Animation(mf.texture_, mf.frames_, mf.defaultFrame_, t);
-        animation.AddAnimation(FrameType::AttackWeapon, FaceDirection::Left, ma);
-        animation.AddAnimation(FrameType::AttackWeapon, FaceDirection::Right, a);
-    }
-    auto textureAttackWeaponFront = GetTexture(TextureId::HeroAttackWeaponFront);
-    if (textureAttackWeaponFront != nullptr) {
-        SpriteSheet spriteSheet("heroAttackWeaponFront", textureAttackWeaponFront, {3, 1});
-        auto f = spriteSheet.Scan({0, 0}, 3, 0);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animation.AddAnimation(FrameType::AttackWeapon, FaceDirection::Down, a);
-    }
-    auto textureAttackWeaponBack = GetTexture(TextureId::HeroAttackWeaponBack);
-    if (textureAttackWeaponBack != nullptr) {
-        SpriteSheet spriteSheet("heroAttackWeaponBack", textureAttackWeaponBack, {3, 1});
-        auto f = spriteSheet.Scan({0, 0}, 3, 0);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animation.AddAnimation(FrameType::AttackWeapon, FaceDirection::Up, a);
-    }
-
-    auto textureIdleSide = GetTexture(TextureId::HeroIdleSide);
-    if (textureIdleSide != nullptr) {
-        SpriteSheet spriteSheet("heroIdleSide", textureIdleSide, {1, 1});
-        auto f = spriteSheet.Scan({0, 0}, 1, 0);
-        auto mf = SpriteSheet::MirrorX(f);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        auto ma = Animation(mf.texture_, mf.frames_, mf.defaultFrame_, t);
-        animation.AddAnimation(FrameType::Idle, FaceDirection::Left, ma);
-        animation.AddAnimation(FrameType::Idle, FaceDirection::Right, a);
-    }
-    auto textureIdleFront = GetTexture(TextureId::HeroIdleFront);
-    if (textureIdleFront != nullptr) {
-        SpriteSheet spriteSheet("heroIdleFront", textureIdleFront, {1, 1});
-        auto f = spriteSheet.Scan({0, 0}, 1, 0);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animation.AddAnimation(FrameType::Idle, FaceDirection::Down, a);
-    }
-    auto textureIdleBack = GetTexture(TextureId::HeroIdleBack);
-    if (textureIdleBack != nullptr) {
-        SpriteSheet spriteSheet("heroIdleBack", textureIdleBack, {1, 1});
-        auto f = spriteSheet.Scan({0, 0}, 1, 0);
-        auto a = Animation(f.texture_, f.frames_, f.defaultFrame_, t);
-        animation.AddAnimation(FrameType::Idle, FaceDirection::Up, a);
-    }
-
     ConfigurationBuilder builder(configurationData.position_, configurationData.scale_, configurationData.faceDir_);
     builder.AddMovement(configurationData.velocity_);
-    builder.AddSprite(animation);
+    builder.AddSprite(CreateAnimation());
     auto c = builder.Build();
 
     InitStateData(c);
@@ -176,6 +89,91 @@ void PlayerEntity::OnKeyPressed(Keyboard::Key key)
     else if (key == Keyboard::Key::Space) {
         AttackWeapon();
     }
+}
+
+AnimationComponent PlayerEntity::CreateAnimation() const
+{
+    AnimationComponent animation;
+    float t = 0.1f;
+
+    /* Move animations */
+    auto wside = CreateFrameData(GetTexture(TextureId::HeroWalkSide), {6, 1}, {0, 0}, 6, 0);
+    if (wside.isValid_) {
+        animation.AddAnimation(FrameType::Move, FaceDirection::Left,
+                               Animation(wside.texture_, SpriteSheet::MirrorX(wside.frames_), wside.defaultFrame_, t));
+        animation.AddAnimation(FrameType::Move, FaceDirection::Right,
+                               Animation(wside.texture_, wside.frames_, wside.defaultFrame_, t));
+    }
+    auto wfront = CreateFrameData(GetTexture(TextureId::HeroWalkFront), {6, 1}, {0, 0}, 6, 0);
+    if (wfront.isValid_) {
+        animation.AddAnimation(FrameType::Move, FaceDirection::Down,
+                               Animation(wfront.texture_, wfront.frames_, wfront.defaultFrame_, t));
+    }
+    auto wback = CreateFrameData(GetTexture(TextureId::HeroWalkBack), {6, 1}, {0, 0}, 6, 0);
+    if (wback.isValid_) {
+        animation.AddAnimation(FrameType::Move, FaceDirection::Up,
+                               Animation(wback.texture_, wback.frames_, wback.defaultFrame_, t));
+    }
+
+    /* Attack animations */
+    auto aside = CreateFrameData(GetTexture(TextureId::HeroAttackSide), {3, 1}, {0, 0}, 3, 0);
+    if (aside.isValid_) {
+        animation.AddAnimation(FrameType::Attack, FaceDirection::Left,
+                               Animation(aside.texture_, SpriteSheet::MirrorX(aside.frames_), aside.defaultFrame_, t));
+        animation.AddAnimation(FrameType::Attack, FaceDirection::Right,
+                               Animation(aside.texture_, aside.frames_, aside.defaultFrame_, t));
+    }
+    auto afront = CreateFrameData(GetTexture(TextureId::HeroAttackFront), {3, 1}, {0, 0}, 3, 0);
+    if (afront.isValid_) {
+        animation.AddAnimation(FrameType::Attack, FaceDirection::Down,
+                               Animation(afront.texture_, afront.frames_, afront.defaultFrame_, t));
+    }
+    auto aback = CreateFrameData(GetTexture(TextureId::HeroAttackBack), {3, 1}, {0, 0}, 3, 0);
+    if (aback.isValid_) {
+        animation.AddAnimation(FrameType::Attack, FaceDirection::Up,
+                               Animation(aback.texture_, aback.frames_, aback.defaultFrame_, t));
+    }
+
+    /* Attack weapon animations */
+    auto awside = CreateFrameData(GetTexture(TextureId::HeroAttackWeaponSide), {3, 1}, {0, 0}, 3, 0);
+    if (awside.isValid_) {
+        animation.AddAnimation(
+            FrameType::AttackWeapon, FaceDirection::Left,
+            Animation(awside.texture_, SpriteSheet::MirrorX(awside.frames_), awside.defaultFrame_, t));
+        animation.AddAnimation(FrameType::AttackWeapon, FaceDirection::Right,
+                               Animation(awside.texture_, awside.frames_, awside.defaultFrame_, t));
+    }
+    auto awfront = CreateFrameData(GetTexture(TextureId::HeroAttackWeaponFront), {3, 1}, {0, 0}, 3, 0);
+    if (awfront.isValid_) {
+        animation.AddAnimation(FrameType::AttackWeapon, FaceDirection::Down,
+                               Animation(awfront.texture_, awfront.frames_, awfront.defaultFrame_, t));
+    }
+    auto awback = CreateFrameData(GetTexture(TextureId::HeroAttackWeaponBack), {3, 1}, {0, 0}, 3, 0);
+    if (awback.isValid_) {
+        animation.AddAnimation(FrameType::AttackWeapon, FaceDirection::Up,
+                               Animation(awback.texture_, awback.frames_, awback.defaultFrame_, t));
+    }
+
+    /* Idle animations */
+    auto iside = CreateFrameData(GetTexture(TextureId::HeroIdleSide), {1, 1}, {0, 0}, 1, 0);
+    if (iside.isValid_) {
+        animation.AddAnimation(FrameType::Idle, FaceDirection::Left,
+                               Animation(iside.texture_, SpriteSheet::MirrorX(iside.frames_), iside.defaultFrame_, t));
+        animation.AddAnimation(FrameType::Idle, FaceDirection::Right,
+                               Animation(iside.texture_, iside.frames_, iside.defaultFrame_, t));
+    }
+    auto ifront = CreateFrameData(GetTexture(TextureId::HeroIdleFront), {1, 1}, {0, 0}, 1, 0);
+    if (ifront.isValid_) {
+        animation.AddAnimation(FrameType::Idle, FaceDirection::Down,
+                               Animation(ifront.texture_, ifront.frames_, ifront.defaultFrame_, t));
+    }
+    auto iback = CreateFrameData(GetTexture(TextureId::HeroIdleBack), {1, 1}, {0, 0}, 1, 0);
+    if (iback.isValid_) {
+        animation.AddAnimation(FrameType::Idle, FaceDirection::Up,
+                               Animation(iback.texture_, iback.frames_, iback.defaultFrame_, t));
+    }
+
+    return animation;
 }
 
 }  // namespace Entity

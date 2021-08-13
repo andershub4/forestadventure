@@ -24,11 +24,12 @@ public:
         const sf::Texture* texture_ = nullptr;
         unsigned int defaultFrame_ = 0;
         std::vector<sf::IntRect> frames_;
+        bool isValid_ = false;
     };
 
     SpriteSheet(const std::string& name, const sf::Texture* texture, const sf::Vector2u& frameCount);
 
-    static FrameData MirrorX(const FrameData& frameData);
+    static std::vector<sf::IntRect> MirrorX(const std::vector<sf::IntRect>& frames);
 
     FrameData Scan(const sf::Vector2u& uvCoord, unsigned int nFrames, unsigned int defaultFrame) const;
 
