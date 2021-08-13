@@ -22,7 +22,7 @@ FA::SpriteSheet::FrameData CreateFrameData(const sf::Texture* t, const sf::Vecto
                                            const sf::Vector2u start, unsigned int n, unsigned int defaultIndex)
 {
     if (t != nullptr) {
-        FA::SpriteSheet spriteSheet("", t, sheetSize);
+        FA::SpriteSheet spriteSheet(t, sheetSize);
         auto f = spriteSheet.Scan(start, n, defaultIndex);
         return f;
     }

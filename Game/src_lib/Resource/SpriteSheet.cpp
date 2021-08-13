@@ -12,7 +12,7 @@
 
 namespace FA {
 
-SpriteSheet::SpriteSheet(const std::string& name, const sf::Texture* texture, const sf::Vector2u& frameCount)
+SpriteSheet::SpriteSheet(const sf::Texture* texture, const sf::Vector2u& frameCount)
     : texture_(texture)
     , frameCount_(frameCount)
 {}

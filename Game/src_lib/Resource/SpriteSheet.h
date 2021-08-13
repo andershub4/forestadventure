@@ -27,7 +27,7 @@ public:
         bool isValid_ = false;
     };
 
-    SpriteSheet(const std::string& name, const sf::Texture* texture, const sf::Vector2u& frameCount);
+    SpriteSheet(const sf::Texture* texture, const sf::Vector2u& frameCount);
 
     static std::vector<sf::IntRect> MirrorX(const std::vector<sf::IntRect>& frames);
 
