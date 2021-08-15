@@ -19,18 +19,17 @@ class TransformComponent;
 class SpriteComponent
 {
 public:
-    SpriteComponent() = default;
     SpriteComponent(const TransformComponent &transform, const AnimationComponent &animation);
     virtual ~SpriteComponent();
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget);
-    void Apply(const TransformComponent &transform);
     void Set(FrameType frameType, FaceDirection faceDir);
     bool AnimationIsCompleted() const;
 
 private:
     sf::Sprite sprite_;
+    const TransformComponent &transform_;
     AnimationComponent animation_;
 };
 

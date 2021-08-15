@@ -18,9 +18,9 @@ UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& st
 
 UninitializedState::~UninitializedState() = default;
 
-void UninitializedState::OnInitStateData(const Configuration& configuration)
+void UninitializedState::OnInitStateData(std::unique_ptr<Configuration> configuration)
 {
-    stateData_.configuration_ = configuration;
+    stateData_.configuration_ = std::move(configuration);
 
     SwitchState<IdleState>();
 }

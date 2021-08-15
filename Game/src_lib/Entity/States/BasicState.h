@@ -26,7 +26,7 @@ class BasicState
 public:
     struct StateData
     {
-        Configuration configuration_;
+        std::unique_ptr<Configuration> configuration_ = nullptr;
     };
 
     BasicState(StateMachine& stateMachine, StateData& stateData);
@@ -39,7 +39,7 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInitStateData(const Configuration& configuration) {}
+    virtual void OnInitStateData(std::unique_ptr<Configuration> configuration) {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}

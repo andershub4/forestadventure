@@ -6,7 +6,8 @@
 
 #pragma once
 
-#include "Components/Animation/AnimationComponent.h"
+#include <memory>
+
 #include "Components/Movement/MovementComponent.h"
 #include "Components/Sprite/SpriteComponent.h"
 #include "Components/Transform/TransformComponent.h"
@@ -18,10 +19,10 @@ namespace Entity {
 
 struct Configuration
 {
-    FaceDirection faceDir_;
-    TransformComponent transform_;
-    MovementComponent movement_;
-    SpriteComponent sprite_;
+    FaceDirection faceDir_ = FaceDirection::Down;
+    std::unique_ptr<TransformComponent> transform_ = nullptr;
+    std::unique_ptr<MovementComponent> movement_ = nullptr;
+    std::unique_ptr<SpriteComponent> sprite_ = nullptr;
 };
 
 }  // namespace Entity

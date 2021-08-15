@@ -19,18 +19,17 @@ class TransformComponent;
 class MovementComponent
 {
 public:
-    MovementComponent() = default;
-    MovementComponent(float velocity);
+    MovementComponent(TransformComponent &transform, float velocity);
 
     void Update(float deltaTime);
 
-    void ApplyTo(TransformComponent &transform) const;
     void SetDirection(MoveDirection direction);
 
 private:
     float velocity_{};
     sf::Vector2f movementVector_{};
     sf::Vector2f offset_{};
+    TransformComponent &transform_;
 };
 
 }  // namespace Entity

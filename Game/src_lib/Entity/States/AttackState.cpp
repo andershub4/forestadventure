@@ -23,26 +23,26 @@ AttackState::~AttackState() = default;
 
 void AttackState::Update(float deltaTime)
 {
-    stateData_.configuration_.sprite_.Update(deltaTime);
-    if (stateData_.configuration_.sprite_.AnimationIsCompleted()) {
+    stateData_.configuration_->sprite_->Update(deltaTime);
+    if (stateData_.configuration_->sprite_->AnimationIsCompleted()) {
         SwitchState<IdleState>();
     }
 }
 
 void AttackState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateData_.configuration_.sprite_.DrawTo(renderTarget);
+    stateData_.configuration_->sprite_->DrawTo(renderTarget);
 }
 
 void AttackState::Enter()
 {
-    stateData_.configuration_.sprite_.Set(FrameType::Attack, stateData_.configuration_.faceDir_);
+    stateData_.configuration_->sprite_->Set(FrameType::Attack, stateData_.configuration_->faceDir_);
 }
 
 void AttackState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    stateData_.configuration_.movement_.SetDirection(moveDir);
-    stateData_.configuration_.faceDir_ = faceDir;
+    stateData_.configuration_->movement_->SetDirection(moveDir);
+    stateData_.configuration_->faceDir_ = faceDir;
     SwitchState<MoveState>();
 }
 

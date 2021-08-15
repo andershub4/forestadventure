@@ -15,9 +15,11 @@ namespace FA {
 namespace Entity {
 
 SpriteComponent::SpriteComponent(const TransformComponent &transform, const AnimationComponent &animation)
-    : animation_(animation)
+    : transform_(transform)
+    , animation_(animation)
 {
-    Apply(transform);
+    sprite_.setPosition(transform_.GetPosition());
+    sprite_.setScale(transform_.GetScale(), transform_.GetScale());
 }
 
 SpriteComponent::~SpriteComponent() = default;
@@ -26,17 +28,13 @@ void SpriteComponent::Update(float deltaTime)
 {
     animation_.Update(deltaTime);
     animation_.ApplyTo(sprite_);
+    sprite_.setPosition(transform_.GetPosition());
+    sprite_.setScale(transform_.GetScale(), transform_.GetScale());
 }
 
 void SpriteComponent::DrawTo(sf::RenderTarget &renderTarget)
 {
     renderTarget.draw(sprite_);
-}
-
-void SpriteComponent::Apply(const TransformComponent &transform)
-{
-    sprite_.setPosition(transform.GetPosition());
-    sprite_.setScale(transform.GetScale(), transform.GetScale());
 }
 
 void SpriteComponent::Set(FrameType frameType, FaceDirection faceDir)

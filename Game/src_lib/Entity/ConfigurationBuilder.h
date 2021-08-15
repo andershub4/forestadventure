@@ -23,13 +23,10 @@ public:
     void AddSprite(const AnimationComponent &animation);
     void AddMovement(float velocity);
 
-    Configuration Build();
+    std::unique_ptr<Configuration> Build();
 
 private:
-    FaceDirection faceDir_;
-    TransformComponent transform_;
-    MovementComponent movement_;
-    SpriteComponent sprite_;
+    std::unique_ptr<Configuration> configuration_;
 };
 
 }  // namespace Entity

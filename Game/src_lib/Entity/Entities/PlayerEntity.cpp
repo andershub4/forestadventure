@@ -51,7 +51,7 @@ void PlayerEntity::OnCreate(const ConfigurationData& configurationData)
     builder.AddSprite(CreateAnimation());
     auto c = builder.Build();
 
-    InitStateData(c);
+    InitStateData(std::move(c));
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 

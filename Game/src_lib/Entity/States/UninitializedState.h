@@ -22,7 +22,7 @@ public:
     virtual void DrawTo(sf::RenderTarget& renderTarget) override {}
     virtual std::string Name() const override { return "UninitializedState"; }
 
-    virtual void OnInitStateData(const Configuration& configuration) override;
+    virtual void OnInitStateData(std::unique_ptr<Configuration> configuration) override;
 };
 
 }  // namespace Entity

@@ -50,9 +50,9 @@ void StateMachine::SetState(std::unique_ptr<BasicState> newState)
     currentState_->Enter();
 }
 
-void StateMachine::OnInitStateData(const Configuration& configuration)
+void StateMachine::OnInitStateData(std::unique_ptr<Configuration> configuration)
 {
-    currentState_->OnInitStateData(configuration);
+    currentState_->OnInitStateData(std::move(configuration));
 }
 
 void StateMachine::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

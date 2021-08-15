@@ -25,18 +25,15 @@ namespace FA {
 
 namespace Entity {
 
-MovementComponent::MovementComponent(float velocity)
+MovementComponent::MovementComponent(TransformComponent &transform, float velocity)
     : velocity_(velocity)
+    , transform_(transform)
 {}
 
 void MovementComponent::Update(float deltaTime)
 {
     offset_ = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
-}
-
-void MovementComponent::ApplyTo(TransformComponent &transform) const
-{
-    transform.Move(offset_);
+    transform_.Move(offset_);
 }
 
 void MovementComponent::SetDirection(MoveDirection direction)

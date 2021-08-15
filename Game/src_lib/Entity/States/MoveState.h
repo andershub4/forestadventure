@@ -19,7 +19,6 @@ public:
     virtual ~MoveState();
 
     virtual void Update(float deltaTime) override;
-    virtual void LateUpdate() override;
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
     virtual std::string Name() const override { return "MoveState"; }
     virtual void Enter() override;

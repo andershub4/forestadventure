@@ -49,7 +49,7 @@ void MoleEntity::OnCreate(const ConfigurationData& configurationData)
     builder.AddSprite(CreateAnimation());
     auto c = builder.Build();
 
-    InitStateData(c);
+    InitStateData(std::move(c));
 }
 
 AnimationComponent MoleEntity::CreateAnimation() const
