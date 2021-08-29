@@ -7,22 +7,48 @@
 #pragma once
 
 #include <memory>
+#include <typeindex>
+#include <unordered_map>
 
-#include "Components/Movement/MovementComponent.h"
-#include "Components/Sprite/SpriteComponent.h"
-#include "Components/Transform/TransformComponent.h"
 #include "Enum/FaceDirection.h"
+#include "Logging.h"
 
 namespace FA {
 
 namespace Entity {
 
-struct Configuration
+class BasicComponent;
+
+class Configuration
 {
+public:
+    template <class T, typename... Args>
+    std::shared_ptr<T> AddComponent(Args&&... args)
+    {
+        static_assert(std::is_base_of<BasicComponent, T>::value, "T must derive from BasicComponent");
+        auto it = components_.find(typeid(T));
+
+        if (it != components_.end()) {
+            LOG_WARN(typeid(T).name(), " is already registered");
+            return std::dynamic_pointer_cast<T>(components_[typeid(T)]);
+        }
+        else {
+            auto c = std::make_shared<T>(std::forward<Args>(args)...);
+            components_[typeid(T)] = c;
+            return c;
+        }
+    }
+
+    template <class T>
+    std::shared_ptr<T> GetComponent()
+    {
+        return std::dynamic_pointer_cast<T>(components_[typeid(T)]);
+    }
+
     FaceDirection faceDir_ = FaceDirection::Down;
-    std::unique_ptr<TransformComponent> transform_ = nullptr;
-    std::unique_ptr<MovementComponent> movement_ = nullptr;
-    std::unique_ptr<SpriteComponent> sprite_ = nullptr;
+
+private:
+    std::unordered_map<std::type_index, std::shared_ptr<BasicComponent>> components_;
 };
 
 }  // namespace Entity

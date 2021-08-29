@@ -8,6 +8,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "BasicComponent.h"
+
 namespace FA {
 
 enum class MoveDirection;
@@ -16,12 +18,12 @@ namespace Entity {
 
 class TransformComponent;
 
-class MovementComponent
+class MovementComponent : public BasicComponent
 {
 public:
     MovementComponent(TransformComponent &transform, float velocity);
 
-    void Update(float deltaTime);
+    virtual void Update(float deltaTime) override;
 
     void SetDirection(MoveDirection direction);
 

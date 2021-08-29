@@ -14,6 +14,8 @@ namespace FA {
 
 namespace Entity {
 
+class AnimationComponent;
+
 class ConfigurationBuilder
 {
 public:

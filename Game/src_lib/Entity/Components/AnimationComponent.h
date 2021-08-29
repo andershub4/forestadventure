@@ -9,6 +9,7 @@
 #include <string>
 
 #include "Animation/Animator.h"
+#include "BasicComponent.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 
@@ -16,10 +17,11 @@ namespace FA {
 
 namespace Entity {
 
-class AnimationComponent
+class AnimationComponent : public BasicComponent
 {
 public:
-    void Update(float deltaTime);
+    virtual void Update(float deltaTime) override;
+
     void AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation);
     void ApplyTo(sf::Sprite &sprite);
     void SetAnimation(FrameType frameType, FaceDirection faceDir);

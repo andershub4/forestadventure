@@ -8,7 +8,8 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Entity/Components/Animation/AnimationComponent.h"
+#include "AnimationComponent.h"
+#include "BasicComponent.h"
 
 namespace FA {
 
@@ -16,13 +17,14 @@ namespace Entity {
 
 class TransformComponent;
 
-class SpriteComponent
+class SpriteComponent : public BasicComponent
 {
 public:
     SpriteComponent(const TransformComponent &transform, const AnimationComponent &animation);
     virtual ~SpriteComponent();
 
-    void Update(float deltaTime);
+    virtual void Update(float deltaTime) override;
+
     void DrawTo(sf::RenderTarget &renderTarget);
     void Set(FrameType frameType, FaceDirection faceDir);
     bool AnimationIsCompleted() const;

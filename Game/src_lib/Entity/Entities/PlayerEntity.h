@@ -12,6 +12,8 @@ namespace FA {
 
 namespace Entity {
 
+class AnimationComponent;
+
 class PlayerEntity : public BasicEntity
 {
 public:

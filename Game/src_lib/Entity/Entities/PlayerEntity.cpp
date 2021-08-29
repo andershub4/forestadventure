@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/Components/AnimationComponent.h"
 #include "Entity/ConfigurationBuilder.h"
 #include "Entity/ConfigurationData.h"
 #include "Entity/TextureId.h"

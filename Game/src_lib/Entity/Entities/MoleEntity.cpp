@@ -8,8 +8,8 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/Animation/AnimationComponent.h"
-#include "Entity/Components/Sprite/SpriteComponent.h"
+#include "Entity/Components/AnimationComponent.h"
+#include "Entity/Components/SpriteComponent.h"
 #include "Entity/ConfigurationBuilder.h"
 #include "Entity/ConfigurationData.h"
 #include "Entity/TextureId.h"

@@ -126,10 +126,10 @@
     <ClCompile Include="Resource\SpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\Sprite\SpriteComponent.cpp">
+    <ClCompile Include="Entity\Components\SpriteComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\Movement\MovementComponent.cpp">
+    <ClCompile Include="Entity\Components\MovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Entities\MoleEntity.cpp">
@@ -183,10 +183,10 @@
     <ClCompile Include="Logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\Transform\TransformComponent.cpp">
+    <ClCompile Include="Entity\Components\TransformComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\Animation\AnimationComponent.cpp">
+    <ClCompile Include="Entity\Components\AnimationComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\ConfigurationBuilder.cpp">
@@ -335,10 +335,10 @@
     <ClInclude Include="Resource\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\Sprite\SpriteComponent.h">
+    <ClInclude Include="Entity\Components\SpriteComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\Movement\MovementComponent.h">
+    <ClInclude Include="Entity\Components\MovementComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\AnimationType.h">
@@ -410,7 +410,7 @@
     <ClInclude Include="Logging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\Transform\TransformComponent.h">
+    <ClInclude Include="Entity\Components\TransformComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Layer.h">
@@ -422,13 +422,16 @@
     <ClInclude Include="Entity\EntityTextures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\Animation\AnimationComponent.h">
+    <ClInclude Include="Entity\Components\AnimationComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Configuration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\ConfigurationBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Components\BasicComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

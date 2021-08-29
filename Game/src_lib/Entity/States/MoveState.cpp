@@ -6,7 +6,8 @@
 
 #include "MoveState.h"
 
-#include "Entity/Components/Sprite/SpriteComponent.h"
+#include "Entity/Components/MovementComponent.h"
+#include "Entity/Components/SpriteComponent.h"
 #include "Enum/FrameType.h"
 #include "IdleState.h"
 
@@ -22,23 +23,24 @@ MoveState::~MoveState() = default;
 
 void MoveState::Update(float deltaTime)
 {
-    stateData_.configuration_->sprite_->Update(deltaTime);
-    stateData_.configuration_->movement_->Update(deltaTime);
+    stateData_.configuration_->GetComponent<SpriteComponent>()->Update(deltaTime);
+    stateData_.configuration_->GetComponent<MovementComponent>()->Update(deltaTime);
 }
 
 void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateData_.configuration_->sprite_->DrawTo(renderTarget);
+    stateData_.configuration_->GetComponent<SpriteComponent>()->DrawTo(renderTarget);
 }
 
 void MoveState::Enter()
 {
-    stateData_.configuration_->sprite_->Set(FrameType::Move, stateData_.configuration_->faceDir_);
+    stateData_.configuration_->GetComponent<SpriteComponent>()->Set(FrameType::Move,
+                                                                    stateData_.configuration_->faceDir_);
 }
 
 void MoveState::Exit()
 {
-    stateData_.configuration_->movement_->SetDirection(MoveDirection::None);
+    stateData_.configuration_->GetComponent<MovementComponent>()->SetDirection(MoveDirection::None);
 }
 
 void MoveState::OnStopMove()

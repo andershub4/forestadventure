@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/Components/TransformComponent.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -51,7 +52,7 @@ void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
 
 sf::Vector2f BasicEntity::GetPosition() const
 {
-    return stateData_.configuration_->transform_->GetPosition();
+    return stateData_.configuration_->GetComponent<TransformComponent>()->GetPosition();
 }
 
 void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)

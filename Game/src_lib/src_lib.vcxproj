@@ -214,8 +214,9 @@
     <ClInclude Include="Effect\BasicEffect.h" />
     <ClInclude Include="Effect\FadeEffect.h" />
     <ClInclude Include="Effect\NullEffect.h" />
-    <ClInclude Include="Entity\Components\Animation\AnimationComponent.h" />
-    <ClInclude Include="Entity\Components\Transform\TransformComponent.h" />
+    <ClInclude Include="Entity\Components\AnimationComponent.h" />
+    <ClInclude Include="Entity\Components\BasicComponent.h" />
+    <ClInclude Include="Entity\Components\TransformComponent.h" />
     <ClInclude Include="Entity\Configuration.h" />
     <ClInclude Include="Entity\ConfigurationBuilder.h" />
     <ClInclude Include="Entity\ConfigurationData.h" />
@@ -264,7 +265,7 @@
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Version.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h" />
-    <ClInclude Include="Entity\Components\Movement\MovementComponent.h" />
+    <ClInclude Include="Entity\Components\MovementComponent.h" />
     <ClInclude Include="Scene\Components\IntroComponent.h" />
     <ClInclude Include="Scene\Components\LevelComponent.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
@@ -277,7 +278,7 @@
     <ClInclude Include="Scene\Components\BasicComponent.h" />
     <ClInclude Include="Scene\Components\HelperComponent.h" />
     <ClInclude Include="Resource\SpriteSheet.h" />
-    <ClInclude Include="Entity\Components\Sprite\SpriteComponent.h" />
+    <ClInclude Include="Entity\Components\SpriteComponent.h" />
     <ClInclude Include="Entity\EntityManager.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Tile\TileMapData.h" />
@@ -294,8 +295,8 @@
     <ClCompile Include="Effect\BasicEffect.cpp" />
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />
-    <ClCompile Include="Entity\Components\Animation\AnimationComponent.cpp" />
-    <ClCompile Include="Entity\Components\Transform\TransformComponent.cpp" />
+    <ClCompile Include="Entity\Components\AnimationComponent.cpp" />
+    <ClCompile Include="Entity\Components\TransformComponent.cpp" />
     <ClCompile Include="Entity\ConfigurationBuilder.cpp" />
     <ClCompile Include="Entity\Entities\MoleEntity.cpp" />
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
@@ -327,7 +328,7 @@
     <ClCompile Include="Scene\Transitions\NullTransition.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp" />
-    <ClCompile Include="Entity\Components\Movement\MovementComponent.cpp" />
+    <ClCompile Include="Entity\Components\MovementComponent.cpp" />
     <ClCompile Include="Scene\Components\IntroComponent.cpp" />
     <ClCompile Include="Scene\Components\LevelComponent.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />
@@ -339,7 +340,7 @@
     <ClCompile Include="Scene\Components\BasicComponent.cpp" />
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
     <ClCompile Include="Resource\SpriteSheet.cpp" />
-    <ClCompile Include="Entity\Components\Sprite\SpriteComponent.cpp" />
+    <ClCompile Include="Entity\Components\SpriteComponent.cpp" />
     <ClCompile Include="Entity\EntityManager.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />

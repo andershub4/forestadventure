@@ -8,8 +8,8 @@
 
 #include <unordered_map>
 
-#include "Entity/Components/Transform/TransformComponent.h"
 #include "Enum/MoveDirection.h"
+#include "TransformComponent.h"
 
 namespace {
 

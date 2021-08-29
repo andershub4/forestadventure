@@ -6,6 +6,10 @@
 
 #include "ConfigurationBuilder.h"
 
+#include "Components/MovementComponent.h"
+#include "Components/SpriteComponent.h"
+#include "Components/TransformComponent.h"
+
 namespace FA {
 
 namespace Entity {
@@ -14,19 +18,21 @@ ConfigurationBuilder::ConfigurationBuilder(const sf::Vector2f &position, float s
 {
     configuration_ = std::make_unique<Configuration>();
     configuration_->faceDir_ = faceDir;
-    configuration_->transform_ = std::make_unique<TransformComponent>(position, scale);
+    configuration_->AddComponent<TransformComponent>(position, scale);
 }
 
 ConfigurationBuilder::~ConfigurationBuilder() = default;
 
 void ConfigurationBuilder::AddSprite(const AnimationComponent &animation)
 {
-    configuration_->sprite_ = std::make_unique<SpriteComponent>(*configuration_->transform_, animation);
+    auto t = configuration_->GetComponent<TransformComponent>();
+    configuration_->AddComponent<SpriteComponent>(*t, animation);
 }
 
 void ConfigurationBuilder::AddMovement(float velocity)
 {
-    configuration_->movement_ = std::make_unique<MovementComponent>(*configuration_->transform_, velocity);
+    auto t = configuration_->GetComponent<TransformComponent>();
+    configuration_->AddComponent<MovementComponent>(*t, velocity);
 }
 
 std::unique_ptr<Configuration> ConfigurationBuilder::Build()

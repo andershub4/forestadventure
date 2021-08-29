@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/Transform/TransformComponent.h"
+#include "TransformComponent.h"
 
 namespace FA {
 

@@ -8,7 +8,8 @@
 
 #include "AttackState.h"
 #include "AttackWeaponState.h"
-#include "Entity/Components/Sprite/SpriteComponent.h"
+#include "Entity/Components/MovementComponent.h"
+#include "Entity/Components/SpriteComponent.h"
 #include "Enum/FrameType.h"
 #include "MoveState.h"
 
@@ -24,22 +25,23 @@ IdleState::~IdleState() = default;
 
 void IdleState::Update(float deltaTime)
 {
-    stateData_.configuration_->sprite_->Update(deltaTime);
+    stateData_.configuration_->GetComponent<SpriteComponent>()->Update(deltaTime);
 }
 
 void IdleState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateData_.configuration_->sprite_->DrawTo(renderTarget);
+    stateData_.configuration_->GetComponent<SpriteComponent>()->DrawTo(renderTarget);
 }
 
 void IdleState::Enter()
 {
-    stateData_.configuration_->sprite_->Set(FrameType::Idle, stateData_.configuration_->faceDir_);
+    stateData_.configuration_->GetComponent<SpriteComponent>()->Set(FrameType::Idle,
+                                                                    stateData_.configuration_->faceDir_);
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    stateData_.configuration_->movement_->SetDirection(moveDir);
+    stateData_.configuration_->GetComponent<MovementComponent>()->SetDirection(moveDir);
     stateData_.configuration_->faceDir_ = faceDir;
     SwitchState<MoveState>();
 }

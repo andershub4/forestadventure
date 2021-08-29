@@ -8,15 +8,19 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "BasicComponent.h"
+
 namespace FA {
 
 namespace Entity {
 
-class TransformComponent
+class TransformComponent : public BasicComponent
 {
 public:
     TransformComponent() = default;
     TransformComponent(const sf::Vector2f &position, float scale);
+
+    virtual void Update(float deltaTime) override{};
 
     void Move(const sf::Vector2f &offset);
     sf::Vector2f GetPosition() const { return position_; }
