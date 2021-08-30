@@ -16,35 +16,35 @@ namespace FA {
 
 namespace Entity {
 
-AttackWeaponState::AttackWeaponState(StateMachine& stateMachine, StateData& stateData)
-    : BasicState(stateMachine, stateData)
+AttackWeaponState::AttackWeaponState(StateMachine& stateMachine, StateData& stateData,
+                                     ComponentHandler& componentHandler)
+    : BasicState(stateMachine, stateData, componentHandler)
 {}
 
 AttackWeaponState::~AttackWeaponState() = default;
 
 void AttackWeaponState::Update(float deltaTime)
 {
-    stateData_.configuration_->GetComponent<SpriteComponent>()->Update(deltaTime);
-    if (stateData_.configuration_->GetComponent<SpriteComponent>()->AnimationIsCompleted()) {
+    GetComponent<SpriteComponent>()->Update(deltaTime);
+    if (GetComponent<SpriteComponent>()->AnimationIsCompleted()) {
         SwitchState<IdleState>();
     }
 }
 
 void AttackWeaponState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateData_.configuration_->GetComponent<SpriteComponent>()->DrawTo(renderTarget);
+    GetComponent<SpriteComponent>()->DrawTo(renderTarget);
 }
 
 void AttackWeaponState::Enter()
 {
-    stateData_.configuration_->GetComponent<SpriteComponent>()->Set(FrameType::AttackWeapon,
-                                                                    stateData_.configuration_->faceDir_);
+    GetComponent<SpriteComponent>()->Set(FrameType::AttackWeapon, GetFaceDir());
 }
 
 void AttackWeaponState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    stateData_.configuration_->GetComponent<MovementComponent>()->SetDirection(moveDir);
-    stateData_.configuration_->faceDir_ = faceDir;
+    GetComponent<MovementComponent>()->SetDirection(moveDir);
+    SetFaceDir(faceDir);
     SwitchState<MoveState>();
 }
 

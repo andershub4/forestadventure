@@ -17,11 +17,12 @@ class AnimationComponent;
 class PlayerEntity : public BasicEntity
 {
 public:
-    PlayerEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager);
+    PlayerEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
+                 const TextureManager& textureManager);
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
-    virtual void OnCreate(const ConfigurationData& configurationData) override;
+    virtual void OnCreate() override;
     virtual void OnDestroy() override;
 
 protected:

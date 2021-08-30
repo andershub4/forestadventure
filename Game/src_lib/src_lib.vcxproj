@@ -214,12 +214,12 @@
     <ClInclude Include="Effect\BasicEffect.h" />
     <ClInclude Include="Effect\FadeEffect.h" />
     <ClInclude Include="Effect\NullEffect.h" />
+    <ClInclude Include="Entity\ComponentHandler.h" />
     <ClInclude Include="Entity\Components\AnimationComponent.h" />
     <ClInclude Include="Entity\Components\BasicComponent.h" />
     <ClInclude Include="Entity\Components\TransformComponent.h" />
-    <ClInclude Include="Entity\Configuration.h" />
-    <ClInclude Include="Entity\ConfigurationBuilder.h" />
-    <ClInclude Include="Entity\ConfigurationData.h" />
+    <ClInclude Include="Entity\ComponentStore.h" />
+    <ClInclude Include="Entity\ComponentData.h" />
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
     <ClInclude Include="Entity\Entities\StaticEntity.h" />
@@ -295,9 +295,9 @@
     <ClCompile Include="Effect\BasicEffect.cpp" />
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />
+    <ClCompile Include="Entity\ComponentHandler.cpp" />
     <ClCompile Include="Entity\Components\AnimationComponent.cpp" />
     <ClCompile Include="Entity\Components\TransformComponent.cpp" />
-    <ClCompile Include="Entity\ConfigurationBuilder.cpp" />
     <ClCompile Include="Entity\Entities\MoleEntity.cpp" />
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />

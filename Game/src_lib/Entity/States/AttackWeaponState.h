@@ -15,7 +15,7 @@ namespace Entity {
 class AttackWeaponState : public BasicState
 {
 public:
-    AttackWeaponState(StateMachine& stateMachine, StateData& stateData);
+    AttackWeaponState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler);
     virtual ~AttackWeaponState();
 
     virtual void Update(float deltaTime) override;

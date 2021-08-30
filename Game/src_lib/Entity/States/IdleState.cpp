@@ -17,32 +17,31 @@ namespace FA {
 
 namespace Entity {
 
-IdleState::IdleState(StateMachine& stateMachine, StateData& stateData)
-    : BasicState(stateMachine, stateData)
+IdleState::IdleState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler)
+    : BasicState(stateMachine, stateData, componentHandler)
 {}
 
 IdleState::~IdleState() = default;
 
 void IdleState::Update(float deltaTime)
 {
-    stateData_.configuration_->GetComponent<SpriteComponent>()->Update(deltaTime);
+    GetComponent<SpriteComponent>()->Update(deltaTime);
 }
 
 void IdleState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateData_.configuration_->GetComponent<SpriteComponent>()->DrawTo(renderTarget);
+    GetComponent<SpriteComponent>()->DrawTo(renderTarget);
 }
 
 void IdleState::Enter()
 {
-    stateData_.configuration_->GetComponent<SpriteComponent>()->Set(FrameType::Idle,
-                                                                    stateData_.configuration_->faceDir_);
+    GetComponent<SpriteComponent>()->Set(FrameType::Idle, GetFaceDir());
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    stateData_.configuration_->GetComponent<MovementComponent>()->SetDirection(moveDir);
-    stateData_.configuration_->faceDir_ = faceDir;
+    GetComponent<MovementComponent>()->SetDirection(moveDir);
+    SetFaceDir(faceDir);
     SwitchState<MoveState>();
 }
 

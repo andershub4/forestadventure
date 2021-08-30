@@ -19,11 +19,12 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager)
+BasicEntity::BasicEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
+                         const TextureManager& textureManager)
     : id_(id)
     , messageBus_(messageBus)
     , textureManager_(textureManager)
-    , stateMachine_(stateData_)
+    , stateMachine_(stateData_, componentHandler)
 {}
 
 BasicEntity::~BasicEntity() = default;
@@ -52,7 +53,7 @@ void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
 
 sf::Vector2f BasicEntity::GetPosition() const
 {
-    return stateData_.configuration_->GetComponent<TransformComponent>()->GetPosition();
+    return stateMachine_.GetComponent<TransformComponent>()->GetPosition();
 }
 
 void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
@@ -74,9 +75,9 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void BasicEntity::InitStateData(std::unique_ptr<Configuration> configuration)
+void BasicEntity::InitStateData()
 {
-    stateMachine_.OnInitStateData(std::move(configuration));
+    stateMachine_.OnInitStateData();
 }
 
 void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)

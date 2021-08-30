@@ -15,8 +15,9 @@ namespace FA {
 
 namespace Entity {
 
-StaticEntity::StaticEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager)
-    : BasicEntity(id, messageBus, textureManager)
+StaticEntity::StaticEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
+                           const TextureManager& textureManager)
+    : BasicEntity(id, componentHandler, messageBus, textureManager)
 {}
 
 StaticEntity::~StaticEntity() = default;

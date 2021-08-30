@@ -9,7 +9,7 @@
 #include <memory>
 #include <string>
 
-#include "Entity/Configuration.h"
+#include "Entity/ComponentHandler.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 #include "Fwd/SfmlFwd.h"
@@ -19,17 +19,15 @@ namespace FA {
 namespace Entity {
 
 class StateMachine;
-struct ConfigurationData;
 
 class BasicState
 {
 public:
     struct StateData
     {
-        std::unique_ptr<Configuration> configuration_ = nullptr;
     };
 
-    BasicState(StateMachine& stateMachine, StateData& stateData);
+    BasicState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler);
     virtual ~BasicState();
 
     virtual void Update(float deltaTime) = 0;
@@ -39,7 +37,7 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInitStateData(std::unique_ptr<Configuration> configuration) {}
+    virtual void OnInitStateData() {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}
@@ -52,13 +50,36 @@ public:
     {
         static_assert(std::is_base_of<BasicState, StateT>::value, "StateT must derive from BasicState");
 
-        SwitchState(std::make_unique<StateT>(stateMachine_, stateData_, std::forward<Args>(args)...));
+        SwitchState(
+            std::make_unique<StateT>(stateMachine_, stateData_, componentHandler_, std::forward<Args>(args)...));
     }
+
+    template <class T>
+    std::shared_ptr<T> GetComponent() const
+    {
+        return componentHandler_.GetComponent<T>();
+    }
+
+    template <class T>
+    std::shared_ptr<T> GetComponent()
+    {
+        return componentHandler_.GetComponent<T>();
+    }
+
+    template <class T, typename... Args>
+    std::shared_ptr<T> AddComponent(Args&&... args)
+    {
+        return componentHandler_.AddComponent(std::forward<Args>(args)...);
+    }
+
+    FaceDirection GetFaceDir() const { return componentHandler_.faceDir_; }
+    void SetFaceDir(FaceDirection dir) { componentHandler_.faceDir_ = dir; }
 
 protected:
     StateData& stateData_;
 
 private:
+    ComponentHandler& componentHandler_;
     StateMachine& stateMachine_;
 };
 

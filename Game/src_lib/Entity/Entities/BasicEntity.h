@@ -18,6 +18,7 @@ class MessageBus;
 class TextureManager;
 class Message;
 enum class MessageType;
+class ComponentHandler;
 
 namespace Keyboard {
 enum class Key;
@@ -28,11 +29,12 @@ namespace Entity {
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager);
+    BasicEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
+                const TextureManager& textureManager);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnCreate(const ConfigurationData& configurationData) {}
+    virtual void OnCreate() {}
     virtual void OnDestroy() {}
 
     void Update(float deltaTime);
@@ -43,7 +45,7 @@ public:
     EntityId GetId() const { return id_; }
 
 protected:
-    void InitStateData(std::unique_ptr<Configuration> configuration);
+    void InitStateData();
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void StartMove(MoveDirection moveDir, FaceDirection faceDir);
@@ -51,6 +53,12 @@ protected:
     void Attack();
     void AttackWeapon();
     const sf::Texture* GetTexture(const std::string& name) const;
+
+    template <class T, typename... Args>
+    std::shared_ptr<T> AddComponent(Args&&... args)
+    {
+        return stateMachine_.AddComponent<T, Args...>(std::forward<Args>(args)...);
+    }
 
     virtual void OnIsKeyPressed(Keyboard::Key key) {}
     virtual void OnIsKeyReleased(Keyboard::Key key) {}

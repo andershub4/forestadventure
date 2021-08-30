@@ -189,7 +189,7 @@
     <ClCompile Include="Entity\Components\AnimationComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\ConfigurationBuilder.cpp">
+    <ClCompile Include="Entity\ComponentHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -362,7 +362,7 @@
     <ClInclude Include="Entity\EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ConfigurationData.h">
+    <ClInclude Include="Entity\ComponentData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\EntityType.h">
@@ -425,13 +425,13 @@
     <ClInclude Include="Entity\Components\AnimationComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Configuration.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\ConfigurationBuilder.h">
+    <ClInclude Include="Entity\ComponentStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Components\BasicComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\ComponentHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

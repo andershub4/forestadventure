@@ -10,7 +10,6 @@
 #include <typeindex>
 #include <unordered_map>
 
-#include "Enum/FaceDirection.h"
 #include "Logging.h"
 
 namespace FA {
@@ -19,7 +18,7 @@ namespace Entity {
 
 class BasicComponent;
 
-class Configuration
+class ComponentStore
 {
 public:
     template <class T, typename... Args>
@@ -40,12 +39,16 @@ public:
     }
 
     template <class T>
+    std::shared_ptr<T> GetComponent() const
+    {
+        return std::dynamic_pointer_cast<T>(components_.at(typeid(T)));
+    }
+
+    template <class T>
     std::shared_ptr<T> GetComponent()
     {
         return std::dynamic_pointer_cast<T>(components_[typeid(T)]);
     }
-
-    FaceDirection faceDir_ = FaceDirection::Down;
 
 private:
     std::unordered_map<std::type_index, std::shared_ptr<BasicComponent>> components_;

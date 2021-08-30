@@ -10,8 +10,6 @@
 
 #include "Entity/Components/AnimationComponent.h"
 #include "Entity/Components/SpriteComponent.h"
-#include "Entity/ConfigurationBuilder.h"
-#include "Entity/ConfigurationData.h"
 #include "Entity/TextureId.h"
 #include "Message/MessageBus.h"
 #include "Resource/SpriteSheet.h"
@@ -36,20 +34,20 @@ namespace FA {
 
 namespace Entity {
 
-MoleEntity::MoleEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager)
-    : BasicEntity(id, messageBus, textureManager)
+MoleEntity::MoleEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
+                       const TextureManager& textureManager)
+    : BasicEntity(id, componentHandler, messageBus, textureManager)
 {}
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::OnCreate(const ConfigurationData& configurationData)
+void MoleEntity::OnCreate()
 {
-    ConfigurationBuilder builder(configurationData.position_, configurationData.scale_, configurationData.faceDir_);
-    builder.AddMovement(configurationData.velocity_);
-    builder.AddSprite(CreateAnimation());
-    auto c = builder.Build();
+    AddComponent<MovementComponent>();
+    auto a = CreateAnimation();
+    AddComponent<SpriteComponent, const AnimationComponent&>(a);
 
-    InitStateData(std::move(c));
+    InitStateData();
 }
 
 AnimationComponent MoleEntity::CreateAnimation() const

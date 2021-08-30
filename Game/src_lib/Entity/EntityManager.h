@@ -10,6 +10,7 @@
 #include <unordered_map>
 
 #include "Entity/Id.h"
+#include "Enum/EntityType.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -18,7 +19,7 @@ namespace Entity {
 
 class BasicEntity;
 class Factory;
-struct ConfigurationData;
+class ComponentHandler;
 
 class EntityManager
 {
@@ -30,7 +31,7 @@ public:
     void LateUpdate();
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    BasicEntity *Create(const ConfigurationData &configurationData);
+    BasicEntity *Create(EntityType type, const ComponentHandler &componentHandler);
 
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;

@@ -8,17 +8,14 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "Enum/AnimationType.h"
-#include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 
 namespace FA {
 
 namespace Entity {
 
-struct ConfigurationData
+struct ComponentData
 {
-    EntityType entityType_{};
     sf::Vector2f position_{};
     FaceDirection faceDir_{};
     float velocity_{};

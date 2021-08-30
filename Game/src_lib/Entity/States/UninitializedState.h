@@ -15,14 +15,14 @@ namespace Entity {
 class UninitializedState : public BasicState
 {
 public:
-    UninitializedState(StateMachine& stateMachine, StateData& stateData);
+    UninitializedState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler);
     virtual ~UninitializedState();
 
     virtual void Update(float deltaTime) override {}
     virtual void DrawTo(sf::RenderTarget& renderTarget) override {}
     virtual std::string Name() const override { return "UninitializedState"; }
 
-    virtual void OnInitStateData(std::unique_ptr<Configuration> configuration) override;
+    virtual void OnInitStateData() override;
 };
 
 }  // namespace Entity

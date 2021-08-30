@@ -19,6 +19,7 @@ class TextureManager;
 namespace Entity {
 
 class BasicEntity;
+class ComponentHandler;
 
 class Factory
 {
@@ -26,7 +27,7 @@ public:
     Factory(MessageBus& messageBus, const TextureManager& textureManager);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, const ComponentHandler& componentHandler) const;
 
 private:
     mutable Entity::EntityId id_{0};

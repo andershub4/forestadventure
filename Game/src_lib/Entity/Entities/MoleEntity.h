@@ -17,11 +17,12 @@ class AnimationComponent;
 class MoleEntity : public BasicEntity
 {
 public:
-    MoleEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager);
+    MoleEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
+               const TextureManager& textureManager);
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
-    virtual void OnCreate(const ConfigurationData& configurationData) override;
+    virtual void OnCreate() override;
 
 private:
     AnimationComponent CreateAnimation() const;

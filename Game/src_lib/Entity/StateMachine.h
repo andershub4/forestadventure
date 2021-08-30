@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "ComponentHandler.h"
 #include "States/BasicState.h"
 
 namespace FA {
@@ -15,7 +16,7 @@ namespace Entity {
 class StateMachine
 {
 public:
-    StateMachine(BasicState::StateData& stateData);
+    StateMachine(BasicState::StateData& stateData, const ComponentHandler& componentHandler);
     ~StateMachine();
 
     void Update(float deltaTime);
@@ -23,7 +24,19 @@ public:
     void DrawTo(sf::RenderTarget& renderTarget);
     void SetState(std::unique_ptr<BasicState> newState);
 
-    void OnInitStateData(std::unique_ptr<Configuration> configuration);
+    template <class T>
+    std::shared_ptr<T> GetComponent() const
+    {
+        return componentHandler_.GetComponent<T>();
+    }
+
+    template <class T, typename... Args>
+    std::shared_ptr<T> AddComponent(Args&&... args)
+    {
+        return componentHandler_.AddComponent<T, Args...>(std::forward<Args>(args)...);
+    }
+
+    void OnInitStateData();
     void OnStartMove(MoveDirection moveDir, FaceDirection faceDir);
     void OnStopMove();
     void OnAttack();
@@ -31,6 +44,7 @@ public:
 
 private:
     std::unique_ptr<BasicState> currentState_;
+    ComponentHandler componentHandler_;
 };
 
 }  // namespace Entity

@@ -15,32 +15,31 @@ namespace FA {
 
 namespace Entity {
 
-MoveState::MoveState(StateMachine& stateMachine, StateData& stateData)
-    : BasicState(stateMachine, stateData)
+MoveState::MoveState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler)
+    : BasicState(stateMachine, stateData, componentHandler)
 {}
 
 MoveState::~MoveState() = default;
 
 void MoveState::Update(float deltaTime)
 {
-    stateData_.configuration_->GetComponent<SpriteComponent>()->Update(deltaTime);
-    stateData_.configuration_->GetComponent<MovementComponent>()->Update(deltaTime);
+    GetComponent<SpriteComponent>()->Update(deltaTime);
+    GetComponent<MovementComponent>()->Update(deltaTime);
 }
 
 void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateData_.configuration_->GetComponent<SpriteComponent>()->DrawTo(renderTarget);
+    GetComponent<SpriteComponent>()->DrawTo(renderTarget);
 }
 
 void MoveState::Enter()
 {
-    stateData_.configuration_->GetComponent<SpriteComponent>()->Set(FrameType::Move,
-                                                                    stateData_.configuration_->faceDir_);
+    GetComponent<SpriteComponent>()->Set(FrameType::Move, GetFaceDir());
 }
 
 void MoveState::Exit()
 {
-    stateData_.configuration_->GetComponent<MovementComponent>()->SetDirection(MoveDirection::None);
+    GetComponent<MovementComponent>()->SetDirection(MoveDirection::None);
 }
 
 void MoveState::OnStopMove()

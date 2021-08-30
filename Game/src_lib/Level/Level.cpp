@@ -10,7 +10,8 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/ConfigurationData.h"
+#include "Entity/ComponentData.h"
+#include "Entity/ComponentHandler.h"
 #include "Entity/Entities/BasicEntity.h"
 #include "Entity/EntityTextures.h"
 #include "Folder.h"
@@ -49,14 +50,13 @@ void Level::Load(const std::string &mapPath)
 
     LOG_INFO("Create entities");
     for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
-        Entity::ConfigurationData configurationData;
-        configurationData.entityType_ = objectData.type_;
-        configurationData.position_ = static_cast<sf::Vector2f>(objectData.position_);
-        configurationData.faceDir_ = objectData.faceDir_;
-        configurationData.velocity_ = 120.0;
-        configurationData.scale_ = static_cast<float>(scale_);
-        auto entity = entityManager_.Create(configurationData);
-        if (configurationData.entityType_ == EntityType::Player) {
+        Entity::ComponentData componentData;
+        componentData.position_ = static_cast<sf::Vector2f>(objectData.position_);
+        componentData.faceDir_ = objectData.faceDir_;
+        componentData.velocity_ = 120.0;
+        componentData.scale_ = static_cast<float>(scale_);
+        auto entity = entityManager_.Create(objectData.type_, Entity::ComponentHandler(componentData));
+        if (objectData.type_ == EntityType::Player) {
             camera_.Follow(entity);
         }
     }

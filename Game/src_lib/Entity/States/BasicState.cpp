@@ -13,9 +13,10 @@ namespace FA {
 
 namespace Entity {
 
-BasicState::BasicState(StateMachine& stateMachine, StateData& stateData)
+BasicState::BasicState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler)
     : stateMachine_(stateMachine)
     , stateData_(stateData)
+    , componentHandler_(componentHandler)
 {}
 
 BasicState::~BasicState() = default;

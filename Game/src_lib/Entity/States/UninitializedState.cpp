@@ -12,16 +12,15 @@ namespace FA {
 
 namespace Entity {
 
-UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& stateData)
-    : BasicState(stateMachine, stateData)
+UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& stateData,
+                                       ComponentHandler& componentHandler)
+    : BasicState(stateMachine, stateData, componentHandler)
 {}
 
 UninitializedState::~UninitializedState() = default;
 
-void UninitializedState::OnInitStateData(std::unique_ptr<Configuration> configuration)
+void UninitializedState::OnInitStateData()
 {
-    stateData_.configuration_ = std::move(configuration);
-
     SwitchState<IdleState>();
 }
 

@@ -13,9 +13,10 @@ namespace FA {
 
 namespace Entity {
 
-StateMachine::StateMachine(BasicState::StateData& stateData)
+StateMachine::StateMachine(BasicState::StateData& stateData, const ComponentHandler& componentHandler)
+    : componentHandler_(componentHandler)
 {
-    currentState_ = std::make_unique<UninitializedState>(*this, stateData);
+    currentState_ = std::make_unique<UninitializedState>(*this, stateData, componentHandler_);
     // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }
@@ -50,9 +51,9 @@ void StateMachine::SetState(std::unique_ptr<BasicState> newState)
     currentState_->Enter();
 }
 
-void StateMachine::OnInitStateData(std::unique_ptr<Configuration> configuration)
+void StateMachine::OnInitStateData()
 {
-    currentState_->OnInitStateData(std::move(configuration));
+    currentState_->OnInitStateData();
 }
 
 void StateMachine::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

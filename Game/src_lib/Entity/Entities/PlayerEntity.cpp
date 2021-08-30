@@ -9,8 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/Components/AnimationComponent.h"
-#include "Entity/ConfigurationBuilder.h"
-#include "Entity/ConfigurationData.h"
+#include "Entity/Components/SpriteComponent.h"
 #include "Entity/TextureId.h"
 #include "Enum/KeyboardKey.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -39,20 +38,20 @@ namespace FA {
 
 namespace Entity {
 
-PlayerEntity::PlayerEntity(EntityId id, MessageBus& messageBus, const TextureManager& textureManager)
-    : BasicEntity(id, messageBus, textureManager)
+PlayerEntity::PlayerEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
+                           const TextureManager& textureManager)
+    : BasicEntity(id, componentHandler, messageBus, textureManager)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
 
-void PlayerEntity::OnCreate(const ConfigurationData& configurationData)
+void PlayerEntity::OnCreate()
 {
-    ConfigurationBuilder builder(configurationData.position_, configurationData.scale_, configurationData.faceDir_);
-    builder.AddMovement(configurationData.velocity_);
-    builder.AddSprite(CreateAnimation());
-    auto c = builder.Build();
+    AddComponent<MovementComponent>();
+    auto a = CreateAnimation();
+    AddComponent<SpriteComponent, const AnimationComponent&>(a);
 
-    InitStateData(std::move(c));
+    InitStateData();
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
