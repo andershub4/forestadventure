@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/Components/AnimationComponent.h"
+#include "Entity/Components/FaceDirectionComponent.h"
 #include "Entity/Components/SpriteComponent.h"
 #include "Entity/TextureId.h"
 #include "Enum/KeyboardKey.h"
@@ -47,6 +48,7 @@ PlayerEntity::~PlayerEntity() = default;
 
 void PlayerEntity::OnCreate()
 {
+    AddComponent<FaceDirectionComponent>();
     AddComponent<MovementComponent>();
     auto a = CreateAnimation();
     AddComponent<SpriteComponent, const AnimationComponent&>(a);

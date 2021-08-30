@@ -6,6 +6,7 @@
 
 #include "AttackWeaponState.h"
 
+#include "Entity/Components/FaceDirectionComponent.h"
 #include "Entity/Components/MovementComponent.h"
 #include "Entity/Components/SpriteComponent.h"
 #include "Enum/FrameType.h"
@@ -38,13 +39,13 @@ void AttackWeaponState::DrawTo(sf::RenderTarget& renderTarget)
 
 void AttackWeaponState::Enter()
 {
-    GetComponent<SpriteComponent>()->Set(FrameType::AttackWeapon, GetFaceDir());
+    GetComponent<SpriteComponent>()->Set(FrameType::AttackWeapon);
 }
 
 void AttackWeaponState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
     GetComponent<MovementComponent>()->SetDirection(moveDir);
-    SetFaceDir(faceDir);
+    GetComponent<FaceDirectionComponent>()->SetDirection(faceDir);
     SwitchState<MoveState>();
 }
 

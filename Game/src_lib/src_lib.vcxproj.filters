@@ -192,6 +192,9 @@
     <ClCompile Include="Entity\ComponentHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\Components\FaceDirectionComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -432,6 +435,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\ComponentHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Components\FaceDirectionComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

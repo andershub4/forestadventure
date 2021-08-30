@@ -8,6 +8,7 @@
 
 #include "AttackState.h"
 #include "AttackWeaponState.h"
+#include "Entity/Components/FaceDirectionComponent.h"
 #include "Entity/Components/MovementComponent.h"
 #include "Entity/Components/SpriteComponent.h"
 #include "Enum/FrameType.h"
@@ -35,13 +36,13 @@ void IdleState::DrawTo(sf::RenderTarget& renderTarget)
 
 void IdleState::Enter()
 {
-    GetComponent<SpriteComponent>()->Set(FrameType::Idle, GetFaceDir());
+    GetComponent<SpriteComponent>()->Set(FrameType::Idle);
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
     GetComponent<MovementComponent>()->SetDirection(moveDir);
-    SetFaceDir(faceDir);
+    GetComponent<FaceDirectionComponent>()->SetDirection(faceDir);
     SwitchState<MoveState>();
 }
 

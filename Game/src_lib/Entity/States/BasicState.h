@@ -72,9 +72,6 @@ public:
         return componentHandler_.AddComponent(std::forward<Args>(args)...);
     }
 
-    FaceDirection GetFaceDir() const { return componentHandler_.faceDir_; }
-    void SetFaceDir(FaceDirection dir) { componentHandler_.faceDir_ = dir; }
-
 protected:
     StateData& stateData_;
 

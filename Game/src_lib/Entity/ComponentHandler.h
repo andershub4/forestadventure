@@ -16,12 +16,10 @@ namespace Entity {
 class AnimationComponent;
 class MovementComponent;
 class SpriteComponent;
+class FaceDirectionComponent;
 
 class ComponentHandler
 {
-public:
-    FaceDirection faceDir_ = FaceDirection::Down;
-
 public:
     ComponentHandler(const ComponentData &data);
     ~ComponentHandler();

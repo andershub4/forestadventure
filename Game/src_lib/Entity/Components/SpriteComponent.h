@@ -16,22 +16,25 @@ namespace FA {
 namespace Entity {
 
 class TransformComponent;
+class FaceDirectionComponent;
 
 class SpriteComponent : public BasicComponent
 {
 public:
-    SpriteComponent(const TransformComponent &transform, const AnimationComponent &animation);
+    SpriteComponent(const TransformComponent &transform, const FaceDirectionComponent &faceDirection,
+                    const AnimationComponent &animation);
     virtual ~SpriteComponent();
 
     virtual void Update(float deltaTime) override;
 
     void DrawTo(sf::RenderTarget &renderTarget);
-    void Set(FrameType frameType, FaceDirection faceDir);
+    void Set(FrameType frameType);
     bool AnimationIsCompleted() const;
 
 private:
     sf::Sprite sprite_;
     const TransformComponent &transform_;
+    const FaceDirectionComponent &faceDirection_;
     AnimationComponent animation_;
 };
 

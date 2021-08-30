@@ -34,7 +34,7 @@ void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 
 void MoveState::Enter()
 {
-    GetComponent<SpriteComponent>()->Set(FrameType::Move, GetFaceDir());
+    GetComponent<SpriteComponent>()->Set(FrameType::Move);
 }
 
 void MoveState::Exit()

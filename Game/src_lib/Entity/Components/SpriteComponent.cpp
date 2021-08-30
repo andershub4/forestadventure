@@ -8,14 +8,17 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "FaceDirectionComponent.h"
 #include "TransformComponent.h"
 
 namespace FA {
 
 namespace Entity {
 
-SpriteComponent::SpriteComponent(const TransformComponent &transform, const AnimationComponent &animation)
+SpriteComponent::SpriteComponent(const TransformComponent &transform, const FaceDirectionComponent &faceDirection,
+                                 const AnimationComponent &animation)
     : transform_(transform)
+    , faceDirection_(faceDirection)
     , animation_(animation)
 {
     sprite_.setPosition(transform_.GetPosition());
@@ -37,9 +40,9 @@ void SpriteComponent::DrawTo(sf::RenderTarget &renderTarget)
     renderTarget.draw(sprite_);
 }
 
-void SpriteComponent::Set(FrameType frameType, FaceDirection faceDir)
+void SpriteComponent::Set(FrameType frameType)
 {
-    animation_.SetAnimation(frameType, faceDir);
+    animation_.SetAnimation(frameType, faceDirection_.GetDirection());
     animation_.ApplyTo(sprite_);
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }

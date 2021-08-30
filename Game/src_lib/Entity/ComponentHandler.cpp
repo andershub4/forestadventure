@@ -6,6 +6,7 @@
 
 #include "ComponentHandler.h"
 
+#include "Components/FaceDirectionComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/SpriteComponent.h"
 #include "Components/TransformComponent.h"
@@ -16,7 +17,6 @@ namespace Entity {
 
 ComponentHandler::ComponentHandler(const ComponentData& data)
     : data_(data)
-    , faceDir_(data.faceDir_)
 {
     auto position = data.position_;
     auto scale = data.scale_;
@@ -38,7 +38,8 @@ std::shared_ptr<SpriteComponent> ComponentHandler::AddComponent<SpriteComponent,
     const AnimationComponent& animation)
 {
     auto t = compStore_.GetComponent<TransformComponent>();
-    return compStore_.AddComponent<SpriteComponent>(*t, animation);
+    auto d = compStore_.GetComponent<FaceDirectionComponent>();
+    return compStore_.AddComponent<SpriteComponent>(*t, *d, animation);
 }
 
 }  // namespace Entity
