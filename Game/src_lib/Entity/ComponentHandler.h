@@ -6,17 +6,25 @@
 
 #pragma once
 
+#include <memory>
+#include <vector>
+
 #include "ComponentData.h"
 #include "ComponentStore.h"
+#include "Enum/FrameType.h"
 
 namespace FA {
 
 namespace Entity {
 
+class AnimationDb;
+
 class AnimationComponent;
 class MovementComponent;
 class SpriteComponent;
 class FaceDirectionComponent;
+class AttackComponent;
+class AttackWeaponComponent;
 
 class ComponentHandler
 {
@@ -46,12 +54,20 @@ public:
     std::shared_ptr<MovementComponent> AddComponent<MovementComponent>();
 
     template <>
-    std::shared_ptr<SpriteComponent> AddComponent<SpriteComponent, const AnimationComponent &>(
-        const AnimationComponent &animation);
+    std::shared_ptr<AttackComponent> AddComponent<AttackComponent>();
+
+    template <>
+    std::shared_ptr<AttackWeaponComponent> AddComponent<AttackWeaponComponent>();
+
+    template <>
+    std::shared_ptr<SpriteComponent> AddComponent<SpriteComponent>();
+
+    void InitComponents(const AnimationDb &animationDb);
 
 private:
     ComponentStore compStore_;
     ComponentData data_;
+    std::vector<FrameType> frameTypes_;
 };
 
 }  // namespace Entity

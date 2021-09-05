@@ -15,7 +15,6 @@
 namespace FA {
 
 class MessageBus;
-class TextureManager;
 class Message;
 enum class MessageType;
 class ComponentHandler;
@@ -29,13 +28,13 @@ namespace Entity {
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
-                const TextureManager& textureManager);
+    BasicEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
     virtual void OnCreate() {}
     virtual void OnDestroy() {}
+    virtual void OnInit(const AnimationDb& animationDb) {}
 
     void Update(float deltaTime);
     void LateUpdate();
@@ -45,14 +44,13 @@ public:
     EntityId GetId() const { return id_; }
 
 protected:
-    void InitStateData();
+    void InitStateData(const AnimationDb& animationDb);
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void StartMove(MoveDirection moveDir, FaceDirection faceDir);
     void StopMove();
     void Attack();
     void AttackWeapon();
-    const sf::Texture* GetTexture(const std::string& name) const;
 
     template <class T, typename... Args>
     std::shared_ptr<T> AddComponent(Args&&... args)
@@ -67,7 +65,6 @@ protected:
 private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
-    const TextureManager& textureManager_;
     BasicState::StateData stateData_;
     StateMachine stateMachine_;
     bool enableInput_ = true;

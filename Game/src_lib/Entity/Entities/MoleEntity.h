@@ -12,20 +12,15 @@ namespace FA {
 
 namespace Entity {
 
-class AnimationComponent;
-
 class MoleEntity : public BasicEntity
 {
 public:
-    MoleEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
-               const TextureManager& textureManager);
+    MoleEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus);
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
     virtual void OnCreate() override;
-
-private:
-    AnimationComponent CreateAnimation() const;
+    virtual void OnInit(const AnimationDb& animationDb) override;
 };
 
 }  // namespace Entity

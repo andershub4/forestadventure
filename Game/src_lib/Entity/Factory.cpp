@@ -14,9 +14,8 @@ namespace FA {
 
 namespace Entity {
 
-Factory::Factory(MessageBus& messageBus, const TextureManager& textureManager)
+Factory::Factory(MessageBus& messageBus)
     : messageBus_(messageBus)
-    , textureManager_(textureManager)
 {}
 
 Factory::~Factory() = default;
@@ -25,10 +24,10 @@ std::unique_ptr<BasicEntity> Factory::Create(EntityType type, const ComponentHan
 {
     switch (type) {
         case EntityType::Mole:
-            return std::make_unique<MoleEntity>(id_++, componentHandler, messageBus_, textureManager_);
+            return std::make_unique<MoleEntity>(id_++, componentHandler, messageBus_);
             break;
         case EntityType::Player:
-            return std::make_unique<PlayerEntity>(id_++, componentHandler, messageBus_, textureManager_);
+            return std::make_unique<PlayerEntity>(id_++, componentHandler, messageBus_);
         default:
             auto t = static_cast<int>(type);
             LOG_ERROR("Could not create entity of type: ", t);

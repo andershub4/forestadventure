@@ -19,6 +19,7 @@ namespace FA {
 namespace Entity {
 
 class StateMachine;
+class AnimationDb;
 
 class BasicState
 {
@@ -37,7 +38,7 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInitStateData() {}
+    virtual void OnInitStateData(const AnimationDb& animationDb) {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}
@@ -71,6 +72,8 @@ public:
     {
         return componentHandler_.AddComponent(std::forward<Args>(args)...);
     }
+
+    void InitComponents(const AnimationDb& animationDb);
 
 protected:
     StateData& stateData_;

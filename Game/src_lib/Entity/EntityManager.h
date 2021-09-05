@@ -20,6 +20,7 @@ namespace Entity {
 class BasicEntity;
 class Factory;
 class ComponentHandler;
+class AnimationDb;
 
 class EntityManager
 {
@@ -32,6 +33,7 @@ public:
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
     BasicEntity *Create(EntityType type, const ComponentHandler &componentHandler);
+    void Init(const AnimationDb &animationDb);
 
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;

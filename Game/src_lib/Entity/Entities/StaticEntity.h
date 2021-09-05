@@ -15,8 +15,7 @@ namespace Entity {
 class StaticEntity : public BasicEntity
 {
 public:
-    StaticEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
-                 const TextureManager& textureManager);
+    StaticEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus);
     virtual ~StaticEntity();
 
     virtual std::string Name() const override { return "StaticEntity"; }

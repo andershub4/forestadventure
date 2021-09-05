@@ -22,7 +22,7 @@ public:
     virtual void DrawTo(sf::RenderTarget& renderTarget) override {}
     virtual std::string Name() const override { return "UninitializedState"; }
 
-    virtual void OnInitStateData() override;
+    virtual void OnInitStateData(const AnimationDb& animationDb) override;
 };
 
 }  // namespace Entity

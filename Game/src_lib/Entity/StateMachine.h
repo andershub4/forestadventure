@@ -36,7 +36,7 @@ public:
         return componentHandler_.AddComponent<T, Args...>(std::forward<Args>(args)...);
     }
 
-    void OnInitStateData();
+    void OnInitStateData(const AnimationDb& animationDb);
     void OnStartMove(MoveDirection moveDir, FaceDirection faceDir);
     void OnStopMove();
     void OnAttack();

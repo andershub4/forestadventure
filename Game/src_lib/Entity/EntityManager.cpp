@@ -50,6 +50,13 @@ BasicEntity* EntityManager::Create(EntityType type, const ComponentHandler& comp
     return entityMap_.at(id).get();
 }
 
+void EntityManager::Init(const AnimationDb& animationDb)
+{
+    for (const auto& entry : entityMap_) {
+        entry.second->OnInit(animationDb);
+    }
+}
+
 void EntityManager::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)
 {
     auto id = entity->GetId();

@@ -9,15 +9,13 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Message/MessageBus.h"
-#include "Resource/TextureManager.h"
 
 namespace FA {
 
 namespace Entity {
 
-StaticEntity::StaticEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
-                           const TextureManager& textureManager)
-    : BasicEntity(id, componentHandler, messageBus, textureManager)
+StaticEntity::StaticEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus)
+    : BasicEntity(id, componentHandler, messageBus)
 {}
 
 StaticEntity::~StaticEntity() = default;

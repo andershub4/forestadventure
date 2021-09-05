@@ -21,21 +21,21 @@ class FaceDirectionComponent;
 class SpriteComponent : public BasicComponent
 {
 public:
-    SpriteComponent(const TransformComponent &transform, const FaceDirectionComponent &faceDirection,
-                    const AnimationComponent &animation);
+    SpriteComponent(const TransformComponent &transform, const FaceDirectionComponent &faceDirection);
     virtual ~SpriteComponent();
 
     virtual void Update(float deltaTime) override;
 
     void DrawTo(sf::RenderTarget &renderTarget);
     void Set(FrameType frameType);
+    void AddAnimation(std::shared_ptr<AnimationComponent> animation) { animation_ = animation; }
     bool AnimationIsCompleted() const;
 
 private:
     sf::Sprite sprite_;
     const TransformComponent &transform_;
     const FaceDirectionComponent &faceDirection_;
-    AnimationComponent animation_;
+    std::shared_ptr<AnimationComponent> animation_;
 };
 
 }  // namespace Entity

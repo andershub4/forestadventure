@@ -11,33 +11,14 @@
 #include "Entity/Components/AnimationComponent.h"
 #include "Entity/Components/FaceDirectionComponent.h"
 #include "Entity/Components/SpriteComponent.h"
-#include "Entity/TextureId.h"
 #include "Message/MessageBus.h"
-#include "Resource/SpriteSheet.h"
-
-namespace {
-
-FA::SpriteSheet::FrameData CreateFrameData(const sf::Texture* t, const sf::Vector2u& sheetSize,
-                                           const sf::Vector2u start, unsigned int n, unsigned int defaultIndex)
-{
-    if (t != nullptr) {
-        FA::SpriteSheet spriteSheet(t, sheetSize);
-        auto f = spriteSheet.Scan(start, n, defaultIndex);
-        return f;
-    }
-
-    return FA::SpriteSheet::FrameData();
-}
-
-}  // namespace
 
 namespace FA {
 
 namespace Entity {
 
-MoleEntity::MoleEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
-                       const TextureManager& textureManager)
-    : BasicEntity(id, componentHandler, messageBus, textureManager)
+MoleEntity::MoleEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus)
+    : BasicEntity(id, componentHandler, messageBus)
 {}
 
 MoleEntity::~MoleEntity() = default;
@@ -46,56 +27,14 @@ void MoleEntity::OnCreate()
 {
     AddComponent<FaceDirectionComponent>();
     AddComponent<MovementComponent>();
-    auto a = CreateAnimation();
-    AddComponent<SpriteComponent, const AnimationComponent&>(a);
-
-    InitStateData();
+    auto a = AddComponent<AnimationComponent>();
+    auto s = AddComponent<SpriteComponent>();
+    s->AddAnimation(a);
 }
 
-AnimationComponent MoleEntity::CreateAnimation() const
+void MoleEntity::OnInit(const AnimationDb& animationDb)
 {
-    AnimationComponent animation;
-    float t = 0.1f;
-
-    /* Move animations */
-    auto wside = CreateFrameData(GetTexture(TextureId::MoleWalkSide), {6, 1}, {0, 0}, 6, 0);
-    if (wside.isValid_) {
-        animation.AddAnimation(FrameType::Move, FaceDirection::Left,
-                               Animation(wside.texture_, SpriteSheet::MirrorX(wside.frames_), wside.defaultFrame_, t));
-        animation.AddAnimation(FrameType::Move, FaceDirection::Right,
-                               Animation(wside.texture_, wside.frames_, wside.defaultFrame_, t));
-    }
-    auto wfront = CreateFrameData(GetTexture(TextureId::MoleWalkFront), {6, 1}, {0, 0}, 6, 0);
-    if (wfront.isValid_) {
-        animation.AddAnimation(FrameType::Move, FaceDirection::Down,
-                               Animation(wfront.texture_, wfront.frames_, wfront.defaultFrame_, t));
-    }
-    auto wback = CreateFrameData(GetTexture(TextureId::MoleWalkBack), {6, 1}, {0, 0}, 6, 0);
-    if (wback.isValid_) {
-        animation.AddAnimation(FrameType::Move, FaceDirection::Up,
-                               Animation(wback.texture_, wback.frames_, wback.defaultFrame_, t));
-    }
-
-    /* Idle animations */
-    auto iside = CreateFrameData(GetTexture(TextureId::MoleIdleSide), {1, 1}, {0, 0}, 1, 0);
-    if (wside.isValid_) {
-        animation.AddAnimation(FrameType::Idle, FaceDirection::Left,
-                               Animation(iside.texture_, SpriteSheet::MirrorX(iside.frames_), iside.defaultFrame_, t));
-        animation.AddAnimation(FrameType::Idle, FaceDirection::Right,
-                               Animation(iside.texture_, iside.frames_, iside.defaultFrame_, t));
-    }
-    auto ifront = CreateFrameData(GetTexture(TextureId::MoleIdleFront), {1, 1}, {0, 0}, 1, 0);
-    if (ifront.isValid_) {
-        animation.AddAnimation(FrameType::Idle, FaceDirection::Down,
-                               Animation(ifront.texture_, ifront.frames_, ifront.defaultFrame_, t));
-    }
-    auto iback = CreateFrameData(GetTexture(TextureId::MoleIdleBack), {1, 1}, {0, 0}, 1, 0);
-    if (iback.isValid_) {
-        animation.AddAnimation(FrameType::Idle, FaceDirection::Up,
-                               Animation(iback.texture_, iback.frames_, iback.defaultFrame_, t));
-    }
-
-    return animation;
+    InitStateData(animationDb);
 }
 
 }  // namespace Entity

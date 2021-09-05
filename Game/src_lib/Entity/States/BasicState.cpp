@@ -26,6 +26,11 @@ void BasicState::SwitchState(std::unique_ptr<BasicState> newState)
     stateMachine_.SetState(std::move(newState));
 }
 
+void BasicState::InitComponents(const AnimationDb& animationDb)
+{
+    componentHandler_.InitComponents(animationDb);
+}
+
 }  // namespace Entity
 
 }  // namespace FA

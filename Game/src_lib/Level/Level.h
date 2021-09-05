@@ -10,6 +10,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Camera.h"
+#include "Entity/AnimationDb.h"
 #include "Entity/EntityManager.h"
 #include "Entity/Factory.h"
 #include "Fwd/SfmlFwd.h"
@@ -48,6 +49,7 @@ private:
     Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
     Camera camera_;
+    Entity::AnimationDb animationDb_;
 };
 
 }  // namespace FA

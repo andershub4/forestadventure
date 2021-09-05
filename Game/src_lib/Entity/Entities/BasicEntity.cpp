@@ -13,17 +13,14 @@
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/MessageBus.h"
-#include "Resource/TextureManager.h"
 
 namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus,
-                         const TextureManager& textureManager)
+BasicEntity::BasicEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus)
     : id_(id)
     , messageBus_(messageBus)
-    , textureManager_(textureManager)
     , stateMachine_(stateData_, componentHandler)
 {}
 
@@ -75,9 +72,9 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void BasicEntity::InitStateData()
+void BasicEntity::InitStateData(const AnimationDb& animationDb)
 {
-    stateMachine_.OnInitStateData();
+    stateMachine_.OnInitStateData(animationDb);
 }
 
 void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)
@@ -108,11 +105,6 @@ void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
 void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)
 {
     messageBus_.RemoveSubscriber(Name(), messageTypes);
-}
-
-const sf::Texture* BasicEntity::GetTexture(const std::string& name) const
-{
-    return textureManager_.Get(name);
 }
 
 }  // namespace Entity

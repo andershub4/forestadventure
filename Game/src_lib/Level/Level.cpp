@@ -26,8 +26,9 @@ Level::Level(MessageBus &messageBus, TextureManager &textureManager, sf::RenderT
     , tileMap_(textureManager, scale_)
     , renderTarget_(renderTarget)
     , camera_(renderTarget_.getSize())
-    , factory_(messageBus, textureManager_)
+    , factory_(messageBus)
     , entityManager_(factory_)
+    , animationDb_(textureManager_)
 {}
 
 Level::~Level() = default;
@@ -43,6 +44,8 @@ void Level::Load(const std::string &mapPath)
         textureManager_.Add(v.name_, p);
     }
 
+    animationDb_.Init();
+
     LOG_INFO("Create tile map");
     Tile::TileMapReader tileMapReader;
     auto tileMapData = tileMapReader.Parse(mapPath);
@@ -51,6 +54,7 @@ void Level::Load(const std::string &mapPath)
     LOG_INFO("Create entities");
     for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
         Entity::ComponentData componentData;
+        componentData.entityType_ = objectData.type_;
         componentData.position_ = static_cast<sf::Vector2f>(objectData.position_);
         componentData.faceDir_ = objectData.faceDir_;
         componentData.velocity_ = 120.0;
@@ -60,6 +64,8 @@ void Level::Load(const std::string &mapPath)
             camera_.Follow(entity);
         }
     }
+
+    entityManager_.Init(animationDb_);
 
     LOG_INFO("Create background texture");
     backgroundTexture_.create(tileMap_.GetSize().x, tileMap_.GetSize().y);

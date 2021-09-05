@@ -216,6 +216,8 @@
     <ClInclude Include="Effect\NullEffect.h" />
     <ClInclude Include="Entity\ComponentHandler.h" />
     <ClInclude Include="Entity\Components\AnimationComponent.h" />
+    <ClInclude Include="Entity\Components\AttackComponent.h" />
+    <ClInclude Include="Entity\Components\AttackWeaponComponent.h" />
     <ClInclude Include="Entity\Components\BasicComponent.h" />
     <ClInclude Include="Entity\Components\FaceDirectionComponent.h" />
     <ClInclude Include="Entity\Components\TransformComponent.h" />
@@ -246,6 +248,7 @@
     <ClInclude Include="Level\Camera.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Logging.h" />
+    <ClInclude Include="Entity\AnimationDb.h" />
     <ClInclude Include="Scene\Components\PreAlphaComponent.h" />
     <ClInclude Include="Scene\Layer.h" />
     <ClInclude Include="UI\Title.h" />
@@ -315,6 +318,7 @@
     <ClCompile Include="Level\Camera.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Logging.cpp" />
+    <ClCompile Include="Entity\AnimationDb.cpp" />
     <ClCompile Include="Scene\Components\PreAlphaComponent.cpp" />
     <ClCompile Include="UI\Title.cpp" />
     <ClCompile Include="Util\Random.cpp" />

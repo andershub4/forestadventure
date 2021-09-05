@@ -51,9 +51,9 @@ void StateMachine::SetState(std::unique_ptr<BasicState> newState)
     currentState_->Enter();
 }
 
-void StateMachine::OnInitStateData()
+void StateMachine::OnInitStateData(const AnimationDb& animationDb)
 {
-    currentState_->OnInitStateData();
+    currentState_->OnInitStateData(animationDb);
 }
 
 void StateMachine::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

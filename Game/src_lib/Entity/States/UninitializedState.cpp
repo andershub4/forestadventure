@@ -19,8 +19,10 @@ UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& st
 
 UninitializedState::~UninitializedState() = default;
 
-void UninitializedState::OnInitStateData()
+void UninitializedState::OnInitStateData(const AnimationDb& animationDb)
 {
+    InitComponents(animationDb);
+
     SwitchState<IdleState>();
 }
 
