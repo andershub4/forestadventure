@@ -10,12 +10,15 @@
 
 namespace FA {
 
-enum class FaceDirection { Up, Right, Down, Left };
+enum class FaceDirection { Undefined, Up, Right, Down, Left };
 
 inline std::ostream& operator<<(std::ostream& os, const FaceDirection& e)
 {
     std::string str;
     switch (e) {
+        case FaceDirection::Undefined:
+            str = "Undefined";
+            break;
         case FaceDirection::Up:
             str = "Up";
             break;
