@@ -64,11 +64,10 @@ std::shared_ptr<SpriteComponent> ComponentHandler::AddComponent<SpriteComponent>
 
 void ComponentHandler::InitComponents(const AnimationDb& animationDb)
 {
-    std::vector<FaceDirection> faceDirections = {FaceDirection::Down, FaceDirection::Left, FaceDirection::Right,
-                                                 FaceDirection::Up};
+    auto dirs = compStore_.GetComponent<FaceDirectionComponent>()->GetAvailableDirections();
 
     for (auto f : frameTypes_) {
-        for (auto face : faceDirections) {
+        for (auto face : dirs) {
             auto animation = animationDb.GetAnimation(data_.entityType_, f, face);
             compStore_.GetComponent<AnimationComponent>()->AddAnimation(f, face, animation);
         }

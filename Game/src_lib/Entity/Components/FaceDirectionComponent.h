@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include <SFML/System/Vector2.hpp>
 
 #include "BasicComponent.h"
@@ -18,13 +20,17 @@ namespace Entity {
 class FaceDirectionComponent : public BasicComponent
 {
 public:
+    FaceDirectionComponent(const std::vector<FaceDirection> &directions);
+
     virtual void Update(float deltaTime) override {}
 
     void SetDirection(FaceDirection direction);
     FaceDirection GetDirection() const;
+    std::vector<FaceDirection> GetAvailableDirections() const;
 
 private:
     FaceDirection direction_ = FaceDirection::Down;
+    std::vector<FaceDirection> availableDirections_;
 };
 
 }  // namespace Entity

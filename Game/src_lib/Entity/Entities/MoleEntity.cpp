@@ -25,7 +25,9 @@ MoleEntity::~MoleEntity() = default;
 
 void MoleEntity::OnCreate()
 {
-    AddComponent<FaceDirectionComponent>();
+    std::vector<FaceDirection> dirs = {FaceDirection::Down, FaceDirection::Left, FaceDirection::Right,
+                                       FaceDirection::Up};
+    AddComponent<FaceDirectionComponent>(dirs);
     AddComponent<MovementComponent>();
     auto a = AddComponent<AnimationComponent>();
     auto s = AddComponent<SpriteComponent>();

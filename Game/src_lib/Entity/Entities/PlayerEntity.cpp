@@ -31,7 +31,9 @@ PlayerEntity::~PlayerEntity() = default;
 
 void PlayerEntity::OnCreate()
 {
-    AddComponent<FaceDirectionComponent>();
+    std::vector<FaceDirection> dirs = {FaceDirection::Down, FaceDirection::Left, FaceDirection::Right,
+                                       FaceDirection::Up};
+    AddComponent<FaceDirectionComponent>(dirs);
     AddComponent<MovementComponent>();
     AddComponent<AttackComponent>();
     AddComponent<AttackWeaponComponent>();

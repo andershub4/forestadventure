@@ -10,6 +10,10 @@ namespace FA {
 
 namespace Entity {
 
+FaceDirectionComponent::FaceDirectionComponent(const std::vector<FaceDirection>& directions)
+    : availableDirections_(directions)
+{}
+
 void FaceDirectionComponent::SetDirection(FaceDirection direction)
 {
     direction_ = direction;
@@ -18,6 +22,11 @@ void FaceDirectionComponent::SetDirection(FaceDirection direction)
 FaceDirection FaceDirectionComponent::GetDirection() const
 {
     return direction_;
+}
+
+std::vector<FaceDirection> FaceDirectionComponent::GetAvailableDirections() const
+{
+    return availableDirections_;
 }
 
 }  // namespace Entity
