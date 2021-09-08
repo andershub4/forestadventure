@@ -4,23 +4,18 @@
  *	See file LICENSE for full license details.
  */
 
-#pragma once
+#include "AttackComponent.h"
 
-#include "BasicComponent.h"
+#include "Entity/States/AttackState.h"
 
 namespace FA {
 
 namespace Entity {
 
-class BasicState;
-
-class AttackWeaponComponent : public BasicComponent
+void AttackComponent::Execute(BasicState &oldState)
 {
-public:
-    virtual void Update(float deltaTime) override {}
-
-    void Execute(BasicState &oldState);
-};
+    oldState.SwitchState<AttackState>();
+}
 
 }  // namespace Entity
 

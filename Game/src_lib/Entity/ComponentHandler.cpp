@@ -10,6 +10,7 @@
 #include "Components/AttackComponent.h"
 #include "Components/AttackWeaponComponent.h"
 #include "Components/FaceDirectionComponent.h"
+#include "Components/IdleComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/SpriteComponent.h"
 #include "Components/TransformComponent.h"
@@ -26,6 +27,7 @@ ComponentHandler::ComponentHandler(const ComponentData& data)
     auto position = data.position_;
     auto scale = data.scale_;
     compStore_.AddComponent<TransformComponent>(position, scale);
+    compStore_.AddComponent<IdleComponent>();
     frameTypes_.push_back(FrameType::Idle);
 }
 

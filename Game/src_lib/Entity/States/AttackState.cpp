@@ -7,11 +7,10 @@
 #include "AttackState.h"
 
 #include "Entity/Components/FaceDirectionComponent.h"
+#include "Entity/Components/IdleComponent.h"
 #include "Entity/Components/MovementComponent.h"
 #include "Entity/Components/SpriteComponent.h"
 #include "Enum/FrameType.h"
-#include "IdleState.h"
-#include "MoveState.h"
 
 namespace FA {
 
@@ -28,7 +27,7 @@ void AttackState::Update(float deltaTime)
     GetComponent<SpriteComponent>()->Update(deltaTime);
 
     if (GetComponent<SpriteComponent>()->AnimationIsCompleted()) {
-        SwitchState<IdleState>();
+        GetComponent<IdleComponent>()->Execute(*this);
     }
 }
 
@@ -46,7 +45,7 @@ void AttackState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
     GetComponent<MovementComponent>()->SetDirection(moveDir);
     GetComponent<FaceDirectionComponent>()->SetDirection(faceDir);
-    SwitchState<MoveState>();
+    GetComponent<MovementComponent>()->Execute(*this);
 }
 
 }  // namespace Entity

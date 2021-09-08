@@ -6,7 +6,7 @@
 
 #include "UninitializedState.h"
 
-#include "IdleState.h"
+#include "Entity/Components/IdleComponent.h"
 
 namespace FA {
 
@@ -23,7 +23,7 @@ void UninitializedState::OnInitStateData(const AnimationDb& animationDb)
 {
     InitComponents(animationDb);
 
-    SwitchState<IdleState>();
+    GetComponent<IdleComponent>()->Execute(*this);
 }
 
 }  // namespace Entity

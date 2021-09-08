@@ -8,6 +8,7 @@
 
 #include <unordered_map>
 
+#include "Entity/States/MoveState.h"
 #include "Enum/MoveDirection.h"
 #include "TransformComponent.h"
 
@@ -42,6 +43,11 @@ void MovementComponent::SetDirection(MoveDirection direction)
     if (it != dirToVector.end()) {
         movementVector_ = it->second * velocity_;
     }
+}
+
+void MovementComponent::Execute(BasicState &oldState)
+{
+    oldState.SwitchState<MoveState>();
 }
 
 }  // namespace Entity

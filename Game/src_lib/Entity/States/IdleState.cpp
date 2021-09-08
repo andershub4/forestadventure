@@ -6,13 +6,12 @@
 
 #include "IdleState.h"
 
-#include "AttackState.h"
-#include "AttackWeaponState.h"
+#include "Entity/Components/AttackComponent.h"
+#include "Entity/Components/AttackWeaponComponent.h"
 #include "Entity/Components/FaceDirectionComponent.h"
 #include "Entity/Components/MovementComponent.h"
 #include "Entity/Components/SpriteComponent.h"
 #include "Enum/FrameType.h"
-#include "MoveState.h"
 
 namespace FA {
 
@@ -43,17 +42,17 @@ void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
     GetComponent<MovementComponent>()->SetDirection(moveDir);
     GetComponent<FaceDirectionComponent>()->SetDirection(faceDir);
-    SwitchState<MoveState>();
+    GetComponent<MovementComponent>()->Execute(*this);
 }
 
 void IdleState::OnAttack()
 {
-    SwitchState<AttackState>();
+    GetComponent<AttackComponent>()->Execute(*this);
 }
 
 void IdleState::OnAttackWeapon()
 {
-    SwitchState<AttackWeaponState>();
+    GetComponent<AttackWeaponComponent>()->Execute(*this);
 }
 
 }  // namespace Entity

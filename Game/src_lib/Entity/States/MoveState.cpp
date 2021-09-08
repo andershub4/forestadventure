@@ -6,10 +6,10 @@
 
 #include "MoveState.h"
 
+#include "Entity/Components/IdleComponent.h"
 #include "Entity/Components/MovementComponent.h"
 #include "Entity/Components/SpriteComponent.h"
 #include "Enum/FrameType.h"
-#include "IdleState.h"
 
 namespace FA {
 
@@ -44,7 +44,7 @@ void MoveState::Exit()
 
 void MoveState::OnStopMove()
 {
-    SwitchState<IdleState>();
+    GetComponent<IdleComponent>()->Execute(*this);
 }
 
 }  // namespace Entity

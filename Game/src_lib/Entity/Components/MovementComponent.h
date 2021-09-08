@@ -16,6 +16,7 @@ enum class MoveDirection;
 
 namespace Entity {
 
+class BasicState;
 class TransformComponent;
 
 class MovementComponent : public BasicComponent
@@ -26,6 +27,7 @@ public:
     virtual void Update(float deltaTime) override;
 
     void SetDirection(MoveDirection direction);
+    void Execute(BasicState &oldState);
 
 private:
     float velocity_{};

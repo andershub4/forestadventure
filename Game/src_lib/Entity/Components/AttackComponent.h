@@ -12,10 +12,14 @@ namespace FA {
 
 namespace Entity {
 
+class BasicState;
+
 class AttackComponent : public BasicComponent
 {
 public:
     virtual void Update(float deltaTime) override {}
+
+    void Execute(BasicState &oldState);
 };
 
 }  // namespace Entity

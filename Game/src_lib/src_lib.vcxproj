@@ -220,6 +220,7 @@
     <ClInclude Include="Entity\Components\AttackWeaponComponent.h" />
     <ClInclude Include="Entity\Components\BasicComponent.h" />
     <ClInclude Include="Entity\Components\FaceDirectionComponent.h" />
+    <ClInclude Include="Entity\Components\IdleComponent.h" />
     <ClInclude Include="Entity\Components\TransformComponent.h" />
     <ClInclude Include="Entity\ComponentStore.h" />
     <ClInclude Include="Entity\ComponentData.h" />
@@ -301,7 +302,10 @@
     <ClCompile Include="Effect\NullEffect.cpp" />
     <ClCompile Include="Entity\ComponentHandler.cpp" />
     <ClCompile Include="Entity\Components\AnimationComponent.cpp" />
+    <ClCompile Include="Entity\Components\AttackComponent.cpp" />
+    <ClCompile Include="Entity\Components\AttackWeaponComponent.cpp" />
     <ClCompile Include="Entity\Components\FaceDirectionComponent.cpp" />
+    <ClCompile Include="Entity\Components\IdleComponent.cpp" />
     <ClCompile Include="Entity\Components\TransformComponent.cpp" />
     <ClCompile Include="Entity\Entities\MoleEntity.cpp" />
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
