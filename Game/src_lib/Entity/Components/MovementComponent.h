@@ -32,7 +32,6 @@ public:
 private:
     float velocity_{};
     sf::Vector2f movementVector_{};
-    sf::Vector2f offset_{};
     TransformComponent &transform_;
 };
 

@@ -33,8 +33,8 @@ MovementComponent::MovementComponent(TransformComponent &transform, float veloci
 
 void MovementComponent::Update(float deltaTime)
 {
-    offset_ = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
-    transform_.Move(offset_);
+    sf::Vector2f offset = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
+    transform_.Move(offset);
 }
 
 void MovementComponent::SetDirection(MoveDirection direction)
