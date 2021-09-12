@@ -10,11 +10,10 @@
 
 #include <SFML/Graphics/RenderTexture.hpp>
 
-#include "Entity/Entities/BasicEntity.h"
-
 namespace FA {
 
-Camera::Camera(const sf::Vector2u& size)
+Camera::Camera(const sf::Vector2f& position, const sf::Vector2u& size)
+    : position_(position)
 {
     auto size_f = static_cast<sf::Vector2f>(size);
     view_.setSize(size_f);
@@ -25,17 +24,9 @@ Camera::~Camera() = default;
 
 void Camera::UpdatePosition(sf::RenderTarget& renderTarget, const sf::Vector2u& mapSize)
 {
-    if (entity_) {
-        auto p = entity_->GetPosition();
-        auto viewPosition = CalcViewPosition(p, mapSize);
-        view_.setCenter(viewPosition);
-        renderTarget.setView(view_);
-    }
-}
-
-void Camera::Follow(Entity::BasicEntity* entity)
-{
-    entity_ = entity;
+    auto viewPosition = CalcViewPosition(position_, mapSize);
+    view_.setCenter(viewPosition);
+    renderTarget.setView(view_);
 }
 
 sf::Vector2f Camera::CalcViewPosition(const sf::Vector2f& position, const sf::Vector2u& mapSize) const

@@ -23,7 +23,7 @@ public:
     virtual void Update(float deltaTime) override{};
 
     void Move(const sf::Vector2f &offset);
-    sf::Vector2f GetPosition() const { return position_; }
+    const sf::Vector2f& GetPosition() const { return position_; }
     float GetScale() const { return scale_; }
 
 private:

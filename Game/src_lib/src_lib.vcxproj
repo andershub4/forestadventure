@@ -219,6 +219,7 @@
     <ClInclude Include="Entity\Components\AttackComponent.h" />
     <ClInclude Include="Entity\Components\AttackWeaponComponent.h" />
     <ClInclude Include="Entity\Components\BasicComponent.h" />
+    <ClInclude Include="Entity\Components\CameraComponent.h" />
     <ClInclude Include="Entity\Components\FaceDirectionComponent.h" />
     <ClInclude Include="Entity\Components\IdleComponent.h" />
     <ClInclude Include="Entity\Components\TransformComponent.h" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Enum\MessageType.h" />
     <ClInclude Include="Entity\TextureId.h" />
     <ClInclude Include="Level\Camera.h" />
+    <ClInclude Include="Level\CameraManager.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="Entity\AnimationDb.h" />
@@ -320,6 +322,7 @@
     <ClCompile Include="Entity\Entities\BasicEntity.cpp" />
     <ClCompile Include="Entity\States\UninitializedState.cpp" />
     <ClCompile Include="Level\Camera.cpp" />
+    <ClCompile Include="Level\CameraManager.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Entity\AnimationDb.cpp" />

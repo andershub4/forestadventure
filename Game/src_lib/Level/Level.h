@@ -9,7 +9,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Camera.h"
+#include "CameraManager.h"
 #include "Entity/AnimationDb.h"
 #include "Entity/EntityManager.h"
 #include "Entity/Factory.h"
@@ -17,10 +17,6 @@
 #include "Tile/TileMap.h"
 
 namespace FA {
-
-namespace Entity {
-class BasicEntity;
-}
 
 class TextureManager;
 class MessageBus;
@@ -48,7 +44,7 @@ private:
     Entity::Factory factory_;
     Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
-    Camera camera_;
+    CameraManager cameraManager_;
     Entity::AnimationDb animationDb_;
 };
 

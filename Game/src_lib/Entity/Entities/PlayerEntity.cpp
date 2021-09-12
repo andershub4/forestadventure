@@ -13,6 +13,7 @@
 #include "Entity/Components/AttackWeaponComponent.h"
 #include "Entity/Components/FaceDirectionComponent.h"
 #include "Entity/Components/SpriteComponent.h"
+#include "Entity/Components/CameraComponent.h"
 #include "Enum/KeyboardKey.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
@@ -37,6 +38,7 @@ void PlayerEntity::OnCreate()
     AddComponent<MovementComponent>();
     AddComponent<AttackComponent>();
     AddComponent<AttackWeaponComponent>();
+    AddComponent<CameraComponent>();
     auto a = AddComponent<AnimationComponent>();
     auto s = AddComponent<SpriteComponent>();
     s->AddAnimation(a);

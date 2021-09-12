@@ -40,7 +40,6 @@ public:
     void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);
     void EnableInput(bool enable) { enableInput_ = enable; }
-    sf::Vector2f GetPosition() const;
     EntityId GetId() const { return id_; }
 
 protected:

@@ -48,11 +48,6 @@ void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
     }
 }
 
-sf::Vector2f BasicEntity::GetPosition() const
-{
-    return stateMachine_.GetComponent<TransformComponent>()->GetPosition();
-}
-
 void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
 {
     if (msg->GetMessageType() == MessageType::IsKeyPressed) {

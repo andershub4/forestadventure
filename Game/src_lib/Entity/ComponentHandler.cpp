@@ -14,6 +14,9 @@
 #include "Components/MovementComponent.h"
 #include "Components/SpriteComponent.h"
 #include "Components/TransformComponent.h"
+#include "Components/CameraComponent.h"
+
+#include "Level/CameraManager.h"
 
 #include "AnimationDb.h"
 
@@ -21,8 +24,9 @@ namespace FA {
 
 namespace Entity {
 
-ComponentHandler::ComponentHandler(const ComponentData& data)
+ComponentHandler::ComponentHandler(const ComponentData& data, CameraManager &cameraManager)
     : data_(data)
+    , cameraManager_(cameraManager)
 {
     auto position = data.position_;
     auto scale = data.scale_;
@@ -62,6 +66,14 @@ std::shared_ptr<SpriteComponent> ComponentHandler::AddComponent<SpriteComponent>
     auto t = compStore_.GetComponent<TransformComponent>();
     auto d = compStore_.GetComponent<FaceDirectionComponent>();
     return compStore_.AddComponent<SpriteComponent>(*t, *d);
+}
+
+template <>
+std::shared_ptr<CameraComponent> ComponentHandler::AddComponent<CameraComponent>()
+{
+    auto t = compStore_.GetComponent<TransformComponent>();
+    cameraManager_.Track(t->GetPosition());
+    return compStore_.AddComponent<CameraComponent>();
 }
 
 void ComponentHandler::InitComponents(const AnimationDb& animationDb)

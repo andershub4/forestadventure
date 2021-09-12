@@ -207,6 +207,9 @@
     <ClCompile Include="Entity\Components\AttackWeaponComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Level\CameraManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -462,6 +465,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Components\IdleComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Components\CameraComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\CameraManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -46,14 +46,11 @@ void EntityManager::LateUpdate()
     }
 }
 
-BasicEntity* EntityManager::Create(EntityType type, const ComponentHandler& componentHandler)
+void EntityManager::Create(EntityType type, const ComponentHandler& componentHandler)
 {
     auto entity = factory_.Create(type, componentHandler);
-    auto id = entity->GetId();
     entity->OnCreate();
     AddEntity(std::move(entity));
-
-    return entityMap_.at(id).get();
 }
 
 void EntityManager::Init(const AnimationDb& animationDb)

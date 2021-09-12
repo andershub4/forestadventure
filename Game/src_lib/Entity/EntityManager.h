@@ -32,7 +32,7 @@ public:
     void LateUpdate();
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    BasicEntity *Create(EntityType type, const ComponentHandler &componentHandler);
+    void Create(EntityType type, const ComponentHandler &componentHandler);
     void Init(const AnimationDb &animationDb);
 
 private:

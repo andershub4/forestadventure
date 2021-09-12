@@ -15,6 +15,8 @@
 
 namespace FA {
 
+class CameraManager;
+
 namespace Entity {
 
 class AnimationDb;
@@ -25,11 +27,12 @@ class SpriteComponent;
 class FaceDirectionComponent;
 class AttackComponent;
 class AttackWeaponComponent;
+class CameraComponent;
 
 class ComponentHandler
 {
 public:
-    ComponentHandler(const ComponentData &data);
+    ComponentHandler(const ComponentData &data, CameraManager &cameraManager);
     ~ComponentHandler();
 
     template <class T>
@@ -62,12 +65,16 @@ public:
     template <>
     std::shared_ptr<SpriteComponent> AddComponent<SpriteComponent>();
 
+    template <>
+    std::shared_ptr<CameraComponent> AddComponent<CameraComponent>();
+        
     void InitComponents(const AnimationDb &animationDb);
 
 private:
     ComponentStore compStore_;
     ComponentData data_;
     std::vector<FrameType> frameTypes_;
+    CameraManager& cameraManager_;
 };
 
 }  // namespace Entity

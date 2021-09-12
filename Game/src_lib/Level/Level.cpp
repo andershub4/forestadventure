@@ -12,7 +12,6 @@
 
 #include "Entity/ComponentData.h"
 #include "Entity/ComponentHandler.h"
-#include "Entity/Entities/BasicEntity.h"
 #include "Entity/EntityTextures.h"
 #include "Folder.h"
 #include "Logging.h"
@@ -25,7 +24,7 @@ Level::Level(MessageBus &messageBus, TextureManager &textureManager, sf::RenderT
     : textureManager_(textureManager)
     , tileMap_(textureManager, scale_)
     , renderTarget_(renderTarget)
-    , camera_(renderTarget_.getSize())
+    , cameraManager_(renderTarget)
     , factory_(messageBus)
     , entityManager_(factory_)
     , animationDb_(textureManager_)
@@ -59,10 +58,7 @@ void Level::Load(const std::string &mapPath)
         componentData.faceDir_ = objectData.faceDir_;
         componentData.velocity_ = 120.0;
         componentData.scale_ = static_cast<float>(scale_);
-        auto entity = entityManager_.Create(objectData.type_, Entity::ComponentHandler(componentData));
-        if (objectData.type_ == EntityType::Player) {
-            camera_.Follow(entity);
-        }
+        entityManager_.Create(objectData.type_, Entity::ComponentHandler(componentData, cameraManager_));
     }
 
     entityManager_.Init(animationDb_);
@@ -86,7 +82,7 @@ void Level::Update(float deltaTime)
 {
     entityManager_.Update(deltaTime);
     entityManager_.LateUpdate();
-    camera_.UpdatePosition(renderTarget_, tileMap_.GetSize());
+    cameraManager_.Update(tileMap_.GetSize());
 }
 
 void Level::Draw()
