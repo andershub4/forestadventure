@@ -8,6 +8,8 @@
 
 #include "Camera.h"
 
+#include <algorithm>
+
 #include <SFML/Graphics/RenderTexture.hpp>
 
 namespace FA {
@@ -19,6 +21,8 @@ Camera::Camera(const sf::Vector2f& position, const sf::Vector2u& renderTargetSiz
     auto size_f = static_cast<sf::Vector2f>(renderTargetSize);
     view_.setSize(size_f);
     centerPos_ = size_f / 2.0f;
+    minViewPosition_ = {centerPos_.x, centerPos_.y};
+    maxViewPosition_ = {mapSize_.x - centerPos_.x, mapSize_.y - centerPos_.y};
 }
 
 Camera::~Camera() = default;
@@ -32,23 +36,16 @@ void Camera::UpdatePosition(sf::RenderTarget& renderTarget)
 
 sf::Vector2f Camera::CalcViewPosition(const sf::Vector2f& position) const
 {
-    auto viewPosition = sf::Vector2f(position.x, position.y);
-
-    if (position.x <= centerPos_.x) {
-        viewPosition.x = centerPos_.x;
-    }
-    else if (position.x >= (mapSize_.x - centerPos_.x)) {
-        viewPosition.x = mapSize_.x - centerPos_.x;
-    }
-
-    if (position.y <= centerPos_.y) {
-        viewPosition.y = centerPos_.y;
-    }
-    else if (position.y >= (mapSize_.y - centerPos_.y)) {
-        viewPosition.y = mapSize_.y - centerPos_.y;
-    }
+    sf::Vector2f viewPosition;
+    viewPosition.x = Clamp(position.x, minViewPosition_.x, maxViewPosition_.x);
+    viewPosition.y = Clamp(position.y, minViewPosition_.y, maxViewPosition_.y);
 
     return viewPosition;
+}
+
+float Camera::Clamp(float value, float lower, float upper) const
+{
+    return std::max(lower, std::min(value, upper));
 }
 
 }  // namespace FA

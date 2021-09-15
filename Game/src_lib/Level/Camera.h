@@ -25,9 +25,12 @@ private:
     sf::View view_;
     sf::Vector2f centerPos_;
     const sf::Vector2f& position_;
+    sf::Vector2f minViewPosition_{};
+    sf::Vector2f maxViewPosition_{};
 
 private:
     sf::Vector2f CalcViewPosition(const sf::Vector2f& position) const;
+    float Clamp(float value, float lower, float upper) const;
 };
 
 }  // namespace FA
