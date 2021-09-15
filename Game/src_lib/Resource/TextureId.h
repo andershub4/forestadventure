@@ -10,8 +10,6 @@
 
 namespace FA {
 
-namespace Entity {
-
 namespace TextureId {
 
 const std::string HeroWalkSide = "HeroWalkSide";
@@ -34,7 +32,5 @@ const std::string MoleIdleFront = "MoleIdleFront";
 const std::string MoleIdleBack = "MoleIdleBack";
 
 }  // namespace TextureId
-
-}  // namespace Entity
 
 }  // namespace FA

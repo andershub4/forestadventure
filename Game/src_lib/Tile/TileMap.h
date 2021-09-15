@@ -40,6 +40,7 @@ public:
     const std::vector<sf::Sprite> &GetLayer(const std::string &name);
     const std::vector<ObjectData> GetObjectGroup(const std::string &name);
     sf::Vector2u GetSize() const;
+    unsigned int GetScale() const { return scale_; }
 
 private:
     struct TileSet

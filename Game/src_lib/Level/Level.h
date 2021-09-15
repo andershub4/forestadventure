@@ -10,34 +10,31 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "CameraManager.h"
-#include "Entity/AnimationDb.h"
 #include "Entity/EntityManager.h"
 #include "Entity/Factory.h"
 #include "Fwd/SfmlFwd.h"
+#include "Resource/AnimationDb.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
 
-class TextureManager;
 class MessageBus;
 
 class Level
 {
 public:
-    Level(MessageBus& messageBus, TextureManager& textureManager, sf::RenderTarget& renderTarget);
+    Level(MessageBus& messageBus, sf::RenderTarget& renderTarget, const Tile::TileMap& tileMap,
+          const AnimationDb& animationDb);
     ~Level();
 
     void Update(float deltaTime);
     void Draw();
 
-    void Load(const std::string& mapPath);
+    void Create();
     void EnableInput(bool enable);
 
 private:
-    static const unsigned int scale_{2};
-
     sf::RenderTarget& renderTarget_;
-    TextureManager& textureManager_;
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
@@ -45,7 +42,7 @@ private:
     Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
     CameraManager cameraManager_;
-    Entity::AnimationDb animationDb_;
+    AnimationDb animationDb_;
 };
 
 }  // namespace FA

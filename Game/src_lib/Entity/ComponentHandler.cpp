@@ -9,22 +9,20 @@
 #include "Components/AnimationComponent.h"
 #include "Components/AttackComponent.h"
 #include "Components/AttackWeaponComponent.h"
+#include "Components/CameraComponent.h"
 #include "Components/FaceDirectionComponent.h"
 #include "Components/IdleComponent.h"
 #include "Components/MovementComponent.h"
 #include "Components/SpriteComponent.h"
 #include "Components/TransformComponent.h"
-#include "Components/CameraComponent.h"
-
 #include "Level/CameraManager.h"
-
-#include "AnimationDb.h"
+#include "Resource/AnimationDb.h"
 
 namespace FA {
 
 namespace Entity {
 
-ComponentHandler::ComponentHandler(const ComponentData& data, CameraManager &cameraManager)
+ComponentHandler::ComponentHandler(const ComponentData& data, CameraManager& cameraManager)
     : data_(data)
     , cameraManager_(cameraManager)
 {

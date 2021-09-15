@@ -7,6 +7,7 @@
 #include "TileMap.h"
 
 #include "Folder.h"
+#include "Logging.h"
 #include "Resource/TextureManager.h"
 
 namespace FA {
@@ -22,6 +23,7 @@ TileMap::~TileMap() = default;
 
 void TileMap::Create(const TileMapData& tileMapData)
 {
+    LOG_INFO("Create tile map");
     tileMapData_ = tileMapData;
     CreateTileSets();
     CreateLayers();

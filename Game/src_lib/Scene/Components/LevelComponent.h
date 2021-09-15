@@ -9,12 +9,15 @@
 #include <memory>
 
 #include "BasicComponent.h"
-#include "Level/Level.h"
+
+#include "Resource/AnimationDb.h"
+#include "Tile/TileMap.h"
 
 namespace FA {
 
 class TextureManager;
 class BasicEffect;
+class Level;
 
 namespace Scene {
 
@@ -33,8 +36,13 @@ public:
     virtual void OnCreate() override;
 
 private:
-    Level level_;
+    static const unsigned int scale_{2};
+
+    std::unique_ptr<Level> level_ = nullptr;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
+    MessageBus& messageBus_;
+    Tile::TileMap tileMap_;
+    AnimationDb animationDb_;
 };
 
 }  // namespace Scene

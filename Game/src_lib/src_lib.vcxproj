@@ -228,7 +228,7 @@
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
     <ClInclude Include="Entity\Entities\StaticEntity.h" />
-    <ClInclude Include="Entity\EntityTextures.h" />
+    <ClInclude Include="Resource\EntityTextures.h" />
     <ClInclude Include="Entity\Factory.h" />
     <ClInclude Include="Entity\Id.h" />
     <ClInclude Include="Entity\StateMachine.h" />
@@ -246,12 +246,12 @@
     <ClInclude Include="Enum\MoveDirection.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />
-    <ClInclude Include="Entity\TextureId.h" />
+    <ClInclude Include="Resource\TextureId.h" />
     <ClInclude Include="Level\Camera.h" />
     <ClInclude Include="Level\CameraManager.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Logging.h" />
-    <ClInclude Include="Entity\AnimationDb.h" />
+    <ClInclude Include="Resource\AnimationDb.h" />
     <ClInclude Include="Scene\Components\PreAlphaComponent.h" />
     <ClInclude Include="Scene\Layer.h" />
     <ClInclude Include="UI\Title.h" />
@@ -325,7 +325,7 @@
     <ClCompile Include="Level\CameraManager.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Logging.cpp" />
-    <ClCompile Include="Entity\AnimationDb.cpp" />
+    <ClCompile Include="Resource\AnimationDb.cpp" />
     <ClCompile Include="Scene\Components\PreAlphaComponent.cpp" />
     <ClCompile Include="UI\Title.cpp" />
     <ClCompile Include="Util\Random.cpp" />

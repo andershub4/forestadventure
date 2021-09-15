@@ -12,43 +12,25 @@
 
 #include "Entity/ComponentData.h"
 #include "Entity/ComponentHandler.h"
-#include "Entity/EntityTextures.h"
-#include "Folder.h"
 #include "Logging.h"
-#include "Resource/TextureManager.h"
-#include "Tile/TileMapReader.h"
 
 namespace FA {
 
-Level::Level(MessageBus &messageBus, TextureManager &textureManager, sf::RenderTarget &renderTarget)
-    : textureManager_(textureManager)
-    , tileMap_(textureManager, scale_)
+Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, const Tile::TileMap &tileMap,
+             const AnimationDb &animationDb)
+    : tileMap_(tileMap)
     , renderTarget_(renderTarget)
-    , cameraManager_(renderTarget)
+    , cameraManager_(renderTarget, tileMap.GetSize())
     , factory_(messageBus)
     , entityManager_(factory_)
-    , animationDb_(textureManager_)
+    , animationDb_(animationDb)
 {}
 
 Level::~Level() = default;
 
-void Level::Load(const std::string &mapPath)
+void Level::Create()
 {
     LOG_INFO_ENTER_FUNC();
-
-    LOG_INFO("Load entity textures");
-    auto ssPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/spritesheets/";
-    for (const auto &v : Entity::textures) {
-        auto p = ssPath + v.path_;
-        textureManager_.Add(v.name_, p);
-    }
-
-    animationDb_.Init();
-
-    LOG_INFO("Create tile map");
-    Tile::TileMapReader tileMapReader;
-    auto tileMapData = tileMapReader.Parse(mapPath);
-    tileMap_.Create(tileMapData);
 
     LOG_INFO("Create entities");
     for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
@@ -57,7 +39,7 @@ void Level::Load(const std::string &mapPath)
         componentData.position_ = static_cast<sf::Vector2f>(objectData.position_);
         componentData.faceDir_ = objectData.faceDir_;
         componentData.velocity_ = 120.0;
-        componentData.scale_ = static_cast<float>(scale_);
+        componentData.scale_ = static_cast<float>(tileMap_.GetScale());
         entityManager_.Create(objectData.type_, Entity::ComponentHandler(componentData, cameraManager_));
     }
 
@@ -82,7 +64,7 @@ void Level::Update(float deltaTime)
 {
     entityManager_.Update(deltaTime);
     entityManager_.LateUpdate();
-    cameraManager_.Update(tileMap_.GetSize());
+    cameraManager_.Update();
 }
 
 void Level::Draw()

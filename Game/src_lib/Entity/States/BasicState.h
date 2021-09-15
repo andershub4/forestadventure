@@ -16,10 +16,11 @@
 
 namespace FA {
 
+class AnimationDb;
+
 namespace Entity {
 
 class StateMachine;
-class AnimationDb;
 
 class BasicState
 {

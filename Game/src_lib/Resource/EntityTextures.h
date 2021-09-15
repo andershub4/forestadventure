@@ -13,8 +13,6 @@
 
 namespace FA {
 
-namespace Entity {
-
 struct TextureData
 {
     std::string name_;
@@ -40,7 +38,5 @@ const std::vector<TextureData> textures = {
     {TextureId::MoleIdleSide, "mole/idle/mole-idle-side.png"},
     {TextureId::MoleIdleFront, "mole/idle/mole-idle-front.png"},
     {TextureId::MoleIdleBack, "mole/idle/mole-idle-back.png"}};
-
-}  // namespace Entity
 
 }  // namespace FA

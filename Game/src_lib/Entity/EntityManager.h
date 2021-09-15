@@ -15,12 +15,13 @@
 
 namespace FA {
 
+class AnimationDb;
+
 namespace Entity {
 
 class BasicEntity;
 class Factory;
 class ComponentHandler;
-class AnimationDb;
 
 class EntityManager
 {

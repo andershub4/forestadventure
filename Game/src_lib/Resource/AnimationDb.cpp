@@ -6,10 +6,12 @@
 
 #include "AnimationDb.h"
 
-#include "Entity/TextureId.h"
+#include "EntityTextures.h"
+#include "Folder.h"
 #include "Logging.h"
 #include "Resource/SpriteSheet.h"
 #include "Resource/TextureManager.h"
+#include "TextureId.h"
 
 namespace {
 
@@ -29,14 +31,13 @@ FA::SpriteSheet::FrameData CreateFrameData(const sf::Texture* t, const sf::Vecto
 
 namespace FA {
 
-namespace Entity {
-
-AnimationDb::AnimationDb(const TextureManager& textureManager)
+AnimationDb::AnimationDb(TextureManager& textureManager)
     : textureManager_(textureManager)
 {}
 
-void AnimationDb::Init()
+void AnimationDb::Load()
 {
+    LoadTextures();
     InitPlayer();
     InitMole();
 }
@@ -44,6 +45,16 @@ void AnimationDb::Init()
 Animation AnimationDb::GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
 {
     return map_.at({entityType, frameType, faceDir});
+}
+
+void AnimationDb::LoadTextures()
+{
+    LOG_INFO("Load entity textures");
+    auto ssPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/spritesheets/";
+    for (const auto& v : textures) {
+        auto p = ssPath + v.path_;
+        textureManager_.Add(v.name_, p);
+    }
 }
 
 void AnimationDb::InitPlayer()
@@ -213,7 +224,5 @@ const sf::Texture* AnimationDb::GetTexture(const std::string& name) const
 {
     return textureManager_.Get(name);
 }
-
-}  // namespace Entity
 
 }  // namespace FA

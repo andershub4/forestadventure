@@ -16,10 +16,9 @@
 namespace FA {
 
 class CameraManager;
+class AnimationDb;
 
 namespace Entity {
-
-class AnimationDb;
 
 class AnimationComponent;
 class MovementComponent;
@@ -67,14 +66,14 @@ public:
 
     template <>
     std::shared_ptr<CameraComponent> AddComponent<CameraComponent>();
-        
+
     void InitComponents(const AnimationDb &animationDb);
 
 private:
     ComponentStore compStore_;
     ComponentData data_;
     std::vector<FrameType> frameTypes_;
-    CameraManager& cameraManager_;
+    CameraManager &cameraManager_;
 };
 
 }  // namespace Entity

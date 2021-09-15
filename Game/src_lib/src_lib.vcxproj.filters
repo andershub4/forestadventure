@@ -195,7 +195,7 @@
     <ClCompile Include="Entity\Components\FaceDirectionComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\AnimationDb.cpp">
+    <ClCompile Include="Resource\AnimationDb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Components\IdleComponent.cpp">
@@ -434,10 +434,10 @@
     <ClInclude Include="Scene\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\TextureId.h">
+    <ClInclude Include="Resource\TextureId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\EntityTextures.h">
+    <ClInclude Include="Resource\EntityTextures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Components\AnimationComponent.h">
@@ -455,7 +455,7 @@
     <ClInclude Include="Entity\Components\FaceDirectionComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\AnimationDb.h">
+    <ClInclude Include="Resource\AnimationDb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Components\AttackComponent.h">

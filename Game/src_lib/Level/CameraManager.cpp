@@ -14,8 +14,9 @@
 
 namespace FA {
 
-CameraManager::CameraManager(sf::RenderTarget &renderTarget)
+CameraManager::CameraManager(sf::RenderTarget& renderTarget, const sf::Vector2u& mapSize)
     : renderTarget_(renderTarget)
+    , mapSize_(mapSize)
 {}
 
 CameraManager::~CameraManager() = default;
@@ -26,9 +27,9 @@ void CameraManager::Track(const sf::Vector2f& position)
     camera_ = std::make_unique<Camera>(position, size);
 }
 
-void CameraManager::Update(const sf::Vector2u& mapSize)
+void CameraManager::Update()
 {
-    if (camera_) camera_->UpdatePosition(renderTarget_, mapSize);
+    if (camera_) camera_->UpdatePosition(renderTarget_, mapSize_);
 }
 
 }  // namespace FA
