@@ -15,18 +15,19 @@ namespace FA {
 class Camera
 {
 public:
-    Camera(const sf::Vector2f& position, const sf::Vector2u& size);
+    Camera(const sf::Vector2f& position, const sf::Vector2u& renderTargetSize, const sf::Vector2u& mapSize);
     ~Camera();
 
-    void UpdatePosition(sf::RenderTarget& renderTarget, const sf::Vector2u& mapSize);
+    void UpdatePosition(sf::RenderTarget& renderTarget);
 
 private:
+    sf::Vector2u mapSize_{};
     sf::View view_;
     sf::Vector2f centerPos_;
     const sf::Vector2f& position_;
 
 private:
-    sf::Vector2f CalcViewPosition(const sf::Vector2f& position, const sf::Vector2u& mapSize) const;
+    sf::Vector2f CalcViewPosition(const sf::Vector2f& position) const;
 };
 
 }  // namespace FA

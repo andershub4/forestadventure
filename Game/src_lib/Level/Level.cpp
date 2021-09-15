@@ -20,7 +20,7 @@ Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, const Tile:
              const AnimationDb &animationDb)
     : tileMap_(tileMap)
     , renderTarget_(renderTarget)
-    , cameraManager_(renderTarget, tileMap.GetSize())
+    , cameraManager_(renderTarget.getSize(), tileMap.GetSize())
     , factory_(messageBus)
     , entityManager_(factory_)
     , animationDb_(animationDb)
@@ -64,7 +64,7 @@ void Level::Update(float deltaTime)
 {
     entityManager_.Update(deltaTime);
     entityManager_.LateUpdate();
-    cameraManager_.Update();
+    cameraManager_.Update(renderTarget_);
 }
 
 void Level::Draw()

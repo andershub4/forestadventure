@@ -19,14 +19,14 @@ class Camera;
 class CameraManager
 {
 public:
-    CameraManager(sf::RenderTarget& renderTarget, const sf::Vector2u& mapSize);
+    CameraManager(const sf::Vector2u &renderTargetSize, const sf::Vector2u& mapSize);
     ~CameraManager();
 
     void Track(const sf::Vector2f& position);
-    void Update();
+    void Update(sf::RenderTarget& renderTarget);
 
 private:
-    sf::RenderTarget& renderTarget_;
+    sf::Vector2u renderTargetSize_{};
     sf::Vector2u mapSize_{};
     std::unique_ptr<Camera> camera_ = nullptr;
 };
