@@ -21,9 +21,9 @@ CameraManager::CameraManager(const sf::Vector2u& renderTargetSize, const sf::Vec
 
 CameraManager::~CameraManager() = default;
 
-void CameraManager::Track(const sf::Vector2f& position)
+void CameraManager::Track(const sf::Vector2f& trackingPoint)
 {
-    camera_ = std::make_unique<Camera>(position, renderTargetSize_, mapSize_);
+    camera_ = std::make_unique<Camera>(trackingPoint, renderTargetSize_, mapSize_);
 }
 
 void CameraManager::Update(sf::RenderTarget& renderTarget)

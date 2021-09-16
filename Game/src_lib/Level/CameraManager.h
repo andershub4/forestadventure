@@ -22,7 +22,7 @@ public:
     CameraManager(const sf::Vector2u &renderTargetSize, const sf::Vector2u& mapSize);
     ~CameraManager();
 
-    void Track(const sf::Vector2f& position);
+    void Track(const sf::Vector2f& trackingPoint);
     void Update(sf::RenderTarget& renderTarget);
 
 private:
