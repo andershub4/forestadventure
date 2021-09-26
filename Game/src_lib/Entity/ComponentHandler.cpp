@@ -13,7 +13,6 @@
 #include "Components/FaceDirectionComponent.h"
 #include "Components/IdleComponent.h"
 #include "Components/MovementComponent.h"
-#include "Components/SpriteComponent.h"
 #include "Components/TransformComponent.h"
 #include "Level/CameraManager.h"
 #include "Resource/AnimationDb.h"
@@ -26,10 +25,10 @@ ComponentHandler::ComponentHandler(const ComponentData& data, CameraManager& cam
     : data_(data)
     , cameraManager_(cameraManager)
 {
-    auto position = data.position_;
-    auto scale = data.scale_;
-    compStore_.AddComponent<TransformComponent>(position, scale);
-    compStore_.AddComponent<IdleComponent>();
+    auto t = compStore_.AddComponent<TransformComponent>(this);
+    t->SetPosition(data.position_);
+    t->SetScale(data.scale_);
+    compStore_.AddComponent<IdleComponent>(this);
     frameTypes_.push_back(FrameType::Idle);
 }
 
@@ -39,31 +38,23 @@ template <>
 std::shared_ptr<MovementComponent> ComponentHandler::AddComponent<MovementComponent>()
 {
     frameTypes_.push_back(FrameType::Move);
-    auto t = compStore_.GetComponent<TransformComponent>();
-    auto velocity = data_.velocity_;
-    return compStore_.AddComponent<MovementComponent>(*t, velocity);
+    auto m = compStore_.AddComponent<MovementComponent>(this);
+    m->SetVelocity(data_.velocity_);
+    return m;
 }
 
 template <>
 std::shared_ptr<AttackComponent> ComponentHandler::AddComponent<AttackComponent>()
 {
     frameTypes_.push_back(FrameType::Attack);
-    return compStore_.AddComponent<AttackComponent>();
+    return compStore_.AddComponent<AttackComponent>(this);
 }
 
 template <>
 std::shared_ptr<AttackWeaponComponent> ComponentHandler::AddComponent<AttackWeaponComponent>()
 {
     frameTypes_.push_back(FrameType::AttackWeapon);
-    return compStore_.AddComponent<AttackWeaponComponent>();
-}
-
-template <>
-std::shared_ptr<SpriteComponent> ComponentHandler::AddComponent<SpriteComponent>()
-{
-    auto t = compStore_.GetComponent<TransformComponent>();
-    auto d = compStore_.GetComponent<FaceDirectionComponent>();
-    return compStore_.AddComponent<SpriteComponent>(*t, *d);
+    return compStore_.AddComponent<AttackWeaponComponent>(this);
 }
 
 template <>
@@ -71,7 +62,7 @@ std::shared_ptr<CameraComponent> ComponentHandler::AddComponent<CameraComponent>
 {
     auto t = compStore_.GetComponent<TransformComponent>();
     cameraManager_.Track(t->GetPosition());
-    return compStore_.AddComponent<CameraComponent>();
+    return compStore_.AddComponent<CameraComponent>(this);
 }
 
 void ComponentHandler::InitComponents(const AnimationDb& animationDb)

@@ -17,6 +17,8 @@ class BasicState;
 class AttackWeaponComponent : public BasicComponent
 {
 public:
+    AttackWeaponComponent(ComponentHandler *owner);
+
     virtual void Update(float deltaTime) override {}
 
     void Execute(BasicState &oldState);

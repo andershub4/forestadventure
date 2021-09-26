@@ -21,9 +21,10 @@ class FaceDirectionComponent;
 class SpriteComponent : public BasicComponent
 {
 public:
-    SpriteComponent(const TransformComponent &transform, const FaceDirectionComponent &faceDirection);
+    SpriteComponent(ComponentHandler *owner);
     virtual ~SpriteComponent();
 
+    virtual void Awake() override;
     virtual void Update(float deltaTime) override;
 
     void DrawTo(sf::RenderTarget &renderTarget);
@@ -33,8 +34,8 @@ public:
 
 private:
     sf::Sprite sprite_;
-    const TransformComponent &transform_;
-    const FaceDirectionComponent &faceDirection_;
+    std::shared_ptr<TransformComponent> transform_ = nullptr;
+    std::shared_ptr<FaceDirectionComponent> faceDirection_ = nullptr;
     std::shared_ptr<AnimationComponent> animation_;
 };
 

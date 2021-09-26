@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include <SFML/System/Vector2.hpp>
 
 #include "BasicComponent.h"
@@ -22,17 +24,19 @@ class TransformComponent;
 class MovementComponent : public BasicComponent
 {
 public:
-    MovementComponent(TransformComponent &transform, float velocity);
+    MovementComponent(ComponentHandler *owner);
 
+    virtual void Awake() override;
     virtual void Update(float deltaTime) override;
 
+    void SetVelocity(float velocity) { velocity_ = velocity; }
     void SetDirection(MoveDirection direction);
     void Execute(BasicState &oldState);
 
 private:
     float velocity_{};
     sf::Vector2f movementVector_{};
-    TransformComponent &transform_;
+    std::shared_ptr<TransformComponent> transform_ = nullptr;
 };
 
 }  // namespace Entity

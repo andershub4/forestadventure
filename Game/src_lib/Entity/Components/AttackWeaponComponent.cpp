@@ -12,6 +12,10 @@ namespace FA {
 
 namespace Entity {
 
+AttackWeaponComponent::AttackWeaponComponent(ComponentHandler *owner)
+    : BasicComponent(owner)
+{}
+
 void AttackWeaponComponent::Execute(BasicState &oldState)
 {
     oldState.SwitchState<AttackWeaponState>();

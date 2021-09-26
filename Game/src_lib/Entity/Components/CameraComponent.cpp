@@ -4,22 +4,15 @@
  *	See file LICENSE for full license details.
  */
 
-#include "IdleComponent.h"
-
-#include "Entity/States/IdleState.h"
+#include "CameraComponent.h"
 
 namespace FA {
 
 namespace Entity {
 
-IdleComponent::IdleComponent(ComponentHandler *owner)
+CameraComponent::CameraComponent(ComponentHandler *owner)
     : BasicComponent(owner)
 {}
-
-void IdleComponent::Execute(BasicState &oldState)
-{
-    oldState.SwitchState<IdleState>();
-}
 
 }  // namespace Entity
 

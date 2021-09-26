@@ -53,6 +53,13 @@ void EntityManager::Create(EntityType type, const ComponentHandler& componentHan
     AddEntity(std::move(entity));
 }
 
+void EntityManager::Awake()
+{
+    for (const auto& entry : entityMap_) {
+        entry.second->Awake();
+    }
+}
+
 void EntityManager::Init(const AnimationDb& animationDb)
 {
     for (const auto& entry : entityMap_) {

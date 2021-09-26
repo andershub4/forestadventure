@@ -16,13 +16,14 @@ namespace FA {
 
 namespace Entity {
 
+class ComponentHandler;
 class BasicComponent;
 
 class ComponentStore
 {
 public:
-    template <class T, typename... Args>
-    std::shared_ptr<T> AddComponent(Args&&... args)
+    template <class T>
+    std::shared_ptr<T> AddComponent(ComponentHandler *owner)
     {
         static_assert(std::is_base_of<BasicComponent, T>::value, "T must derive from BasicComponent");
         auto it = components_.find(typeid(T));
@@ -32,7 +33,7 @@ public:
             return std::dynamic_pointer_cast<T>(components_[typeid(T)]);
         }
         else {
-            auto c = std::make_shared<T>(std::forward<Args>(args)...);
+            auto c = std::make_shared<T>(owner);
             components_[typeid(T)] = c;
             return c;
         }
@@ -43,6 +44,8 @@ public:
     {
         return std::dynamic_pointer_cast<T>(components_.at(typeid(T)));
     }
+
+    void Awake();
 
 private:
     std::unordered_map<std::type_index, std::shared_ptr<BasicComponent>> components_;

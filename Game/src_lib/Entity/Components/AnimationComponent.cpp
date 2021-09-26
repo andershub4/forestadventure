@@ -12,6 +12,10 @@ namespace FA {
 
 namespace Entity {
 
+AnimationComponent::AnimationComponent(ComponentHandler *owner)
+    : BasicComponent(owner)
+{}
+
 void AnimationComponent::Update(float deltaTime)
 {
     currentAnimation_.Update(deltaTime);

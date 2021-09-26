@@ -10,9 +10,8 @@ namespace FA {
 
 namespace Entity {
 
-TransformComponent::TransformComponent(const sf::Vector2f &position, float scale)
-    : position_(position)
-    , scale_(scale)
+TransformComponent::TransformComponent(ComponentHandler *owner)
+    : BasicComponent(owner)
 {}
 
 void TransformComponent::Move(const sf::Vector2f &offset)

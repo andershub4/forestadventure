@@ -37,6 +37,7 @@ public:
     virtual void OnInit(const AnimationDb& animationDb) {}
 
     void Update(float deltaTime);
+    void Awake();
     void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);
     void EnableInput(bool enable) { enableInput_ = enable; }
@@ -51,10 +52,10 @@ protected:
     void Attack();
     void AttackWeapon();
 
-    template <class T, typename... Args>
-    std::shared_ptr<T> AddComponent(Args&&... args)
+    template <class T>
+    std::shared_ptr<T> AddComponent()
     {
-        return stateMachine_.AddComponent<T, Args...>(std::forward<Args>(args)...);
+        return stateMachine_.AddComponent<T>();
     }
 
     virtual void OnIsKeyPressed(Keyboard::Key key) {}

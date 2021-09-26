@@ -20,6 +20,7 @@ public:
     ~StateMachine();
 
     void Update(float deltaTime);
+    void Awake();
     void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);
     void SetState(std::unique_ptr<BasicState> newState);
@@ -30,10 +31,10 @@ public:
         return componentHandler_.GetComponent<T>();
     }
 
-    template <class T, typename... Args>
-    std::shared_ptr<T> AddComponent(Args&&... args)
+    template <class T>
+    std::shared_ptr<T> AddComponent()
     {
-        return componentHandler_.AddComponent<T, Args...>(std::forward<Args>(args)...);
+        return componentHandler_.AddComponent<T>();
     }
 
     void OnInitStateData(const AnimationDb& animationDb);

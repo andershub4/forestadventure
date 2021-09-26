@@ -34,6 +34,7 @@ public:
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
     void Create(EntityType type, const ComponentHandler &componentHandler);
+    void Awake();
     void Init(const AnimationDb &animationDb);
 
 private:

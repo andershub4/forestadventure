@@ -4,21 +4,19 @@
  *	See file LICENSE for full license details.
  */
 
-#include "IdleComponent.h"
+#include "ComponentStore.h"
 
-#include "Entity/States/IdleState.h"
+#include "Entity/Components/BasicComponent.h"
 
 namespace FA {
 
 namespace Entity {
 
-IdleComponent::IdleComponent(ComponentHandler *owner)
-    : BasicComponent(owner)
-{}
-
-void IdleComponent::Execute(BasicState &oldState)
+void ComponentStore::Awake()
 {
-    oldState.SwitchState<IdleState>();
+    for (const auto &c : components_) {
+        c.second->Awake();
+    }
 }
 
 }  // namespace Entity

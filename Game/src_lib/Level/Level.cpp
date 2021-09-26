@@ -43,6 +43,7 @@ void Level::Create()
         entityManager_.Create(objectData.type_, Entity::ComponentHandler(componentData, cameraManager_));
     }
 
+    entityManager_.Awake();
     entityManager_.Init(animationDb_);
 
     LOG_INFO("Create background texture");

@@ -31,6 +31,11 @@ void BasicEntity::Update(float deltaTime)
     stateMachine_.Update(deltaTime);
 }
 
+void BasicEntity::Awake()
+{
+    stateMachine_.Awake();
+}
+
 void BasicEntity::LateUpdate()
 {
     stateMachine_.LateUpdate();

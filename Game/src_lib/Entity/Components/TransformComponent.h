@@ -17,13 +17,14 @@ namespace Entity {
 class TransformComponent : public BasicComponent
 {
 public:
-    TransformComponent() = default;
-    TransformComponent(const sf::Vector2f &position, float scale);
+    TransformComponent(ComponentHandler *owner);
 
     virtual void Update(float deltaTime) override{};
 
     void Move(const sf::Vector2f &offset);
+    void SetPosition(const sf::Vector2f &position) { position_ = position; }
     const sf::Vector2f& GetPosition() const { return position_; }
+    void SetScale(float scale) { scale_ = scale; }
     float GetScale() const { return scale_; }
 
 private:

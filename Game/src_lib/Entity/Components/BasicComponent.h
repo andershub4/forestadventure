@@ -12,12 +12,22 @@ namespace FA {
 
 namespace Entity {
 
+class ComponentHandler;
+
 class BasicComponent
 {
 public:
-    virtual ~BasicComponent() = default;
+    BasicComponent(ComponentHandler *owner);
+    virtual ~BasicComponent();
 
+    virtual void Awake() {}
     virtual void Update(float deltaTime) = 0;
+
+protected:
+    ComponentHandler* Owner() const { return owner_; }
+
+private:
+    ComponentHandler* owner_ = nullptr;
 };
 
 }  // namespace Entity

@@ -15,6 +15,8 @@ namespace Entity {
 class CameraComponent : public BasicComponent
 {
 public:
+    CameraComponent(ComponentHandler *owner);
+
     virtual void Update(float deltaTime) override {}
 };
 

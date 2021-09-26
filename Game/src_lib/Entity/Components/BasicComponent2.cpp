@@ -4,27 +4,17 @@
  *	See file LICENSE for full license details.
  */
 
-#pragma once
-
-#include <SFML/System/Vector2.hpp>
-
 #include "BasicComponent.h"
 
 namespace FA {
 
 namespace Entity {
 
-class BasicState;
+BasicComponent::BasicComponent(ComponentHandler *owner)
+    : owner_(owner)
+{}
 
-class IdleComponent : public BasicComponent
-{
-public:
-    IdleComponent(ComponentHandler *owner);
-
-    virtual void Update(float deltaTime) override {}
-
-    void Execute(BasicState &oldState);
-};
+BasicComponent::~BasicComponent() = default;
 
 }  // namespace Entity
 

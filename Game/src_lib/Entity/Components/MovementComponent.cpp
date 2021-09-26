@@ -26,15 +26,19 @@ namespace FA {
 
 namespace Entity {
 
-MovementComponent::MovementComponent(TransformComponent &transform, float velocity)
-    : velocity_(velocity)
-    , transform_(transform)
+MovementComponent::MovementComponent(ComponentHandler *owner)
+    : BasicComponent(owner)
 {}
+
+void MovementComponent::Awake()
+{
+    transform_ = Owner()->GetComponent<TransformComponent>();
+}
 
 void MovementComponent::Update(float deltaTime)
 {
     sf::Vector2f offset = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
-    transform_.Move(offset);
+    transform_->Move(offset);
 }
 
 void MovementComponent::SetDirection(MoveDirection direction)

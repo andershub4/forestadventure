@@ -20,12 +20,13 @@ namespace Entity {
 class FaceDirectionComponent : public BasicComponent
 {
 public:
-    FaceDirectionComponent(const std::vector<FaceDirection> &directions);
+    FaceDirectionComponent(ComponentHandler *owner);
 
     virtual void Update(float deltaTime) override {}
 
     void SetDirection(FaceDirection direction);
     FaceDirection GetDirection() const;
+    void SetAvailableDirections(const std::vector<FaceDirection> &directions);
     std::vector<FaceDirection> GetAvailableDirections() const;
 
 private:

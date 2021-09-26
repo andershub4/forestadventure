@@ -20,6 +20,8 @@ namespace Entity {
 class AnimationComponent : public BasicComponent
 {
 public:
+    AnimationComponent(ComponentHandler *owner);
+
     virtual void Update(float deltaTime) override;
 
     void AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation);

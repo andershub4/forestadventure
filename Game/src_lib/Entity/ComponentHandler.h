@@ -20,10 +20,7 @@ class AnimationDb;
 
 namespace Entity {
 
-class AnimationComponent;
 class MovementComponent;
-class SpriteComponent;
-class FaceDirectionComponent;
 class AttackComponent;
 class AttackWeaponComponent;
 class CameraComponent;
@@ -40,10 +37,10 @@ public:
         return compStore_.GetComponent<T>();
     }
 
-    template <class T, typename... Args>
-    std::shared_ptr<T> AddComponent(Args &&...args)
+    template <class T>
+    std::shared_ptr<T> AddComponent()
     {
-        return compStore_.AddComponent<T, Args...>(std::forward<Args>(args)...);
+        return compStore_.AddComponent<T>(this);
     }
 
     template <>
@@ -56,11 +53,9 @@ public:
     std::shared_ptr<AttackWeaponComponent> AddComponent<AttackWeaponComponent>();
 
     template <>
-    std::shared_ptr<SpriteComponent> AddComponent<SpriteComponent>();
-
-    template <>
     std::shared_ptr<CameraComponent> AddComponent<CameraComponent>();
 
+    void Awake() { compStore_.Awake(); }
     void InitComponents(const AnimationDb &animationDb);
 
 private:

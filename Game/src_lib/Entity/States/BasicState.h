@@ -38,6 +38,7 @@ public:
     virtual void Enter() {}
     virtual void Exit() {}
 
+    virtual void Awake();
     virtual void LateUpdate() {}
     virtual void OnInitStateData(const AnimationDb& animationDb) {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
@@ -62,10 +63,10 @@ public:
         return componentHandler_.GetComponent<T>();
     }
 
-    template <class T, typename... Args>
-    std::shared_ptr<T> AddComponent(Args&&... args)
+    template <class T>
+    std::shared_ptr<T> AddComponent()
     {
-        return componentHandler_.AddComponent(std::forward<Args>(args)...);
+        return componentHandler_.AddComponent<T>();
     }
 
     void InitComponents(const AnimationDb& animationDb);

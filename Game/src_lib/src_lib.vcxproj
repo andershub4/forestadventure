@@ -303,9 +303,12 @@
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />
     <ClCompile Include="Entity\ComponentHandler.cpp" />
+    <ClCompile Include="Entity\ComponentStore.cpp" />
     <ClCompile Include="Entity\Components\AnimationComponent.cpp" />
     <ClCompile Include="Entity\Components\AttackComponent.cpp" />
     <ClCompile Include="Entity\Components\AttackWeaponComponent.cpp" />
+    <ClCompile Include="Entity\Components\BasicComponent2.cpp" />
+    <ClCompile Include="Entity\Components\CameraComponent.cpp" />
     <ClCompile Include="Entity\Components\FaceDirectionComponent.cpp" />
     <ClCompile Include="Entity\Components\IdleComponent.cpp" />
     <ClCompile Include="Entity\Components\TransformComponent.cpp" />
