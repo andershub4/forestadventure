@@ -62,12 +62,6 @@ public:
         return componentHandler_.GetComponent<T>();
     }
 
-    template <class T>
-    std::shared_ptr<T> GetComponent()
-    {
-        return componentHandler_.GetComponent<T>();
-    }
-
     template <class T, typename... Args>
     std::shared_ptr<T> AddComponent(Args&&... args)
     {

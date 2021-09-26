@@ -44,12 +44,6 @@ public:
         return std::dynamic_pointer_cast<T>(components_.at(typeid(T)));
     }
 
-    template <class T>
-    std::shared_ptr<T> GetComponent()
-    {
-        return std::dynamic_pointer_cast<T>(components_[typeid(T)]);
-    }
-
 private:
     std::unordered_map<std::type_index, std::shared_ptr<BasicComponent>> components_;
 };
