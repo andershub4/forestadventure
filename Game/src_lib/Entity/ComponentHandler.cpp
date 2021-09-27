@@ -60,7 +60,7 @@ std::shared_ptr<AttackWeaponComponent> ComponentHandler::AddComponent<AttackWeap
 template <>
 std::shared_ptr<CameraComponent> ComponentHandler::AddComponent<CameraComponent>()
 {
-    auto t = compStore_.GetComponent<TransformComponent>();
+    auto t = GetComponent<TransformComponent>();
     cameraManager_.Track(t->GetPosition());
     return compStore_.AddComponent<CameraComponent>(this);
 }

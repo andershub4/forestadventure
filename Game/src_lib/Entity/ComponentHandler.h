@@ -12,6 +12,7 @@
 #include "ComponentData.h"
 #include "ComponentStore.h"
 #include "Enum/FrameType.h"
+#include "Logging.h"
 
 namespace FA {
 
@@ -32,15 +33,27 @@ public:
     ~ComponentHandler();
 
     template <class T>
-    std::shared_ptr<T> GetComponent() const
-    {
-        return compStore_.GetComponent<T>();
-    }
-
-    template <class T>
     std::shared_ptr<T> AddComponent()
     {
         return compStore_.AddComponent<T>(this);
+    }
+
+    template <class T>
+    std::shared_ptr<T> GetComponent()  // const
+    {
+        if (compStore_.HasComponent<T>()) {
+            return compStore_.GetComponent<T>();
+        }
+        else {
+            LOG_ERROR(typeid(T).name(), " is not in compStore");
+            return AddComponent<T>();
+        }
+    }
+
+    template <class T>
+    bool HasComponent() const
+    {
+        return compStore_.HasComponent<T>();
     }
 
     template <>

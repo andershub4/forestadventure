@@ -45,6 +45,13 @@ public:
         return std::dynamic_pointer_cast<T>(components_.at(typeid(T)));
     }
 
+    template <class T>
+    bool HasComponent() const
+    {
+        auto it = components_.find(typeid(T));
+        return it != components_.end();
+    }
+
     void Awake();
 
 private:
