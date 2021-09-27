@@ -39,7 +39,7 @@ public:
     }
 
     template <class T>
-    std::shared_ptr<T> GetComponent()  // const
+    std::shared_ptr<T> GetComponent()
     {
         if (compStore_.HasComponent<T>()) {
             return compStore_.GetComponent<T>();
