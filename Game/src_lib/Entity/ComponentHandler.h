@@ -50,12 +50,6 @@ public:
         }
     }
 
-    template <class T>
-    bool HasComponent() const
-    {
-        return compStore_.HasComponent<T>();
-    }
-
     template <>
     std::shared_ptr<MovementComponent> AddComponent<MovementComponent>();
 
@@ -68,7 +62,7 @@ public:
     template <>
     std::shared_ptr<CameraComponent> AddComponent<CameraComponent>();
 
-    void Awake() { compStore_.Awake(); }
+    void Awake();
     void InitComponents(const AnimationDb &animationDb);
 
 private:

@@ -65,6 +65,11 @@ std::shared_ptr<CameraComponent> ComponentHandler::AddComponent<CameraComponent>
     return compStore_.AddComponent<CameraComponent>(this);
 }
 
+void ComponentHandler::Awake()
+{
+    compStore_.Awake();
+}
+
 void ComponentHandler::InitComponents(const AnimationDb& animationDb)
 {
     auto dirs = compStore_.GetComponent<FaceDirectionComponent>()->GetAvailableDirections();
