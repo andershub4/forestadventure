@@ -6,46 +6,45 @@
 
 #include "AttackWeaponState.h"
 
-#include "Entity/Components/FaceDirectionComponent.h"
-#include "Entity/Components/IdleComponent.h"
-#include "Entity/Components/MovementComponent.h"
-#include "Entity/Components/SpriteComponent.h"
+#include "Entity/Attributes/FaceDirectionAttribute.h"
+#include "Entity/Attributes/SpriteAttribute.h"
+#include "Entity/Behaviors/IdleBehavior.h"
+#include "Entity/Behaviors/MovementBehavior.h"
 #include "Enum/FrameType.h"
 
 namespace FA {
 
 namespace Entity {
 
-AttackWeaponState::AttackWeaponState(StateMachine& stateMachine, StateData& stateData,
-                                     ComponentHandler& componentHandler)
-    : BasicState(stateMachine, stateData, componentHandler)
+AttackWeaponState::AttackWeaponState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler)
+    : BasicState(stateMachine, stateData, propertyHandler)
 {}
 
 AttackWeaponState::~AttackWeaponState() = default;
 
 void AttackWeaponState::Update(float deltaTime)
 {
-    GetComponent<SpriteComponent>()->Update(deltaTime);
-    if (GetComponent<SpriteComponent>()->AnimationIsCompleted()) {
-        GetComponent<IdleComponent>()->Execute(*this);
+    GetAttribute<SpriteAttribute>()->Update(deltaTime);
+    if (GetAttribute<SpriteAttribute>()->AnimationIsCompleted()) {
+        GetBehavior<IdleBehavior>()->Execute(*this);
     }
 }
 
 void AttackWeaponState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    GetComponent<SpriteComponent>()->DrawTo(renderTarget);
+    GetAttribute<SpriteAttribute>()->DrawTo(renderTarget);
 }
 
 void AttackWeaponState::Enter()
 {
-    GetComponent<SpriteComponent>()->Set(FrameType::AttackWeapon);
+    GetAttribute<SpriteAttribute>()->Set(FrameType::AttackWeapon);
 }
 
 void AttackWeaponState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    GetComponent<MovementComponent>()->SetDirection(moveDir);
-    GetComponent<FaceDirectionComponent>()->SetDirection(faceDir);
-    GetComponent<MovementComponent>()->Execute(*this);
+    GetBehavior<MovementBehavior>()->SetDirection(moveDir);
+    GetAttribute<FaceDirectionAttribute>()->SetDirection(faceDir);
+    GetBehavior<MovementBehavior>()->Execute(*this);
 }
 
 }  // namespace Entity

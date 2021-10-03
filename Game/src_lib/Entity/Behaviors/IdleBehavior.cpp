@@ -4,21 +4,21 @@
  *	See file LICENSE for full license details.
  */
 
-#include "AttackComponent.h"
+#include "IdleBehavior.h"
 
-#include "Entity/States/AttackState.h"
+#include "Entity/States/IdleState.h"
 
 namespace FA {
 
 namespace Entity {
 
-AttackComponent::AttackComponent(ComponentHandler *owner)
-    : BasicComponent(owner)
+IdleBehavior::IdleBehavior(PropertyHandler *owner)
+    : BasicBehavior(owner)
 {}
 
-void AttackComponent::Execute(BasicState &oldState)
+void IdleBehavior::Execute(BasicState &oldState)
 {
-    oldState.SwitchState<AttackState>();
+    oldState.SwitchState<IdleState>();
 }
 
 }  // namespace Entity

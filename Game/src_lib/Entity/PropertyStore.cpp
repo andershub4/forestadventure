@@ -4,17 +4,20 @@
  *	See file LICENSE for full license details.
  */
 
-#include "BasicComponent.h"
+#include "PropertyStore.h"
+
+#include "BasicProperty.h"
 
 namespace FA {
 
 namespace Entity {
 
-BasicComponent::BasicComponent(ComponentHandler *owner)
-    : owner_(owner)
-{}
-
-BasicComponent::~BasicComponent() = default;
+void PropertyStore::Awake()
+{
+    for (const auto &c : properties_) {
+        c.second->Awake();
+    }
+}
 
 }  // namespace Entity
 

@@ -6,28 +6,26 @@
 
 #pragma once
 
-#include <SFML/System/Vector2.hpp>
-
 namespace FA {
 
 namespace Entity {
 
-class ComponentHandler;
+class PropertyHandler;
 
-class BasicComponent
+class BasicProperty
 {
 public:
-    BasicComponent(ComponentHandler *owner);
-    virtual ~BasicComponent();
+    BasicProperty(PropertyHandler* owner);
+    virtual ~BasicProperty();
 
-    virtual void Awake() {}
+    virtual void Awake() = 0;
     virtual void Update(float deltaTime) = 0;
 
 protected:
-    ComponentHandler* Owner() const { return owner_; }
+    PropertyHandler* Owner() const { return owner_; }
 
 private:
-    ComponentHandler* owner_ = nullptr;
+    PropertyHandler* owner_ = nullptr;
 };
 
 }  // namespace Entity

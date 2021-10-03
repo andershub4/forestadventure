@@ -6,16 +6,16 @@
 
 #pragma once
 
-#include "BasicComponent.h"
+#include "BasicAttribute.h"
 
 namespace FA {
 
 namespace Entity {
 
-class CameraComponent : public BasicComponent
+class CameraAttribute : public BasicAttribute
 {
 public:
-    CameraComponent(ComponentHandler *owner);
+    CameraAttribute(PropertyHandler *owner);
 
     virtual void Update(float deltaTime) override {}
 };

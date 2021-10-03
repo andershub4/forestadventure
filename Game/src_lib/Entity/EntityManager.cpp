@@ -46,9 +46,9 @@ void EntityManager::LateUpdate()
     }
 }
 
-void EntityManager::Create(EntityType type, const ComponentHandler& componentHandler)
+void EntityManager::Create(EntityType type, const PropertyHandler& propertyHandler)
 {
-    auto entity = factory_.Create(type, componentHandler);
+    auto entity = factory_.Create(type, propertyHandler);
     entity->OnCreate();
     AddEntity(std::move(entity));
 }

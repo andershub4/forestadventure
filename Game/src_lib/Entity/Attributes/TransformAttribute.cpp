@@ -4,21 +4,19 @@
  *	See file LICENSE for full license details.
  */
 
-#include "IdleComponent.h"
-
-#include "Entity/States/IdleState.h"
+#include "TransformAttribute.h"
 
 namespace FA {
 
 namespace Entity {
 
-IdleComponent::IdleComponent(ComponentHandler *owner)
-    : BasicComponent(owner)
+TransformAttribute::TransformAttribute(PropertyHandler *owner)
+    : BasicAttribute(owner)
 {}
 
-void IdleComponent::Execute(BasicState &oldState)
+void TransformAttribute::Move(const sf::Vector2f &offset)
 {
-    oldState.SwitchState<IdleState>();
+    position_ = {position_.x + offset.x, position_.y + offset.y};
 }
 
 }  // namespace Entity

@@ -6,22 +6,22 @@
 
 #pragma once
 
-#include <SFML/System/Vector2.hpp>
-
-#include "Enum/EntityType.h"
-#include "Enum/FaceDirection.h"
+#include "BasicBehavior.h"
 
 namespace FA {
 
 namespace Entity {
 
-struct ComponentData
+class BasicState;
+
+class AttackBehavior : public BasicBehavior
 {
-    EntityType entityType_{};
-    sf::Vector2f position_{};
-    FaceDirection faceDir_{};
-    float velocity_{};
-    float scale_{};
+public:
+    AttackBehavior(PropertyHandler *owner);
+
+    virtual void Update(float deltaTime) override {}
+
+    void Execute(BasicState &oldState);
 };
 
 }  // namespace Entity

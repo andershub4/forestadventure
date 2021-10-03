@@ -4,13 +4,13 @@
  *	See file LICENSE for full license details.
  */
 
-#include "MovementComponent.h"
+#include "MovementBehavior.h"
 
 #include <unordered_map>
 
+#include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/States/MoveState.h"
 #include "Enum/MoveDirection.h"
-#include "TransformComponent.h"
 
 namespace {
 
@@ -26,22 +26,22 @@ namespace FA {
 
 namespace Entity {
 
-MovementComponent::MovementComponent(ComponentHandler *owner)
-    : BasicComponent(owner)
+MovementBehavior::MovementBehavior(PropertyHandler *owner)
+    : BasicBehavior(owner)
 {}
 
-void MovementComponent::Awake()
+void MovementBehavior::Awake()
 {
-    transform_ = Owner()->GetComponent<TransformComponent>();
+    transform_ = Owner()->GetAttribute<TransformAttribute>();
 }
 
-void MovementComponent::Update(float deltaTime)
+void MovementBehavior::Update(float deltaTime)
 {
     sf::Vector2f offset = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
     transform_->Move(offset);
 }
 
-void MovementComponent::SetDirection(MoveDirection direction)
+void MovementBehavior::SetDirection(MoveDirection direction)
 {
     auto it = dirToVector.find(direction);
     if (it != dirToVector.end()) {
@@ -49,7 +49,7 @@ void MovementComponent::SetDirection(MoveDirection direction)
     }
 }
 
-void MovementComponent::Execute(BasicState &oldState)
+void MovementBehavior::Execute(BasicState &oldState)
 {
     oldState.SwitchState<MoveState>();
 }

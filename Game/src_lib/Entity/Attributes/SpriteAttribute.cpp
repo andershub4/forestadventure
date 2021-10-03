@@ -4,55 +4,55 @@
  *	See file LICENSE for full license details.
  */
 
-#include "SpriteComponent.h"
+#include "SpriteAttribute.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "FaceDirectionComponent.h"
-#include "TransformComponent.h"
-#include "Entity/ComponentHandler.h"
+#include "Entity/PropertyHandler.h"
+#include "FaceDirectionAttribute.h"
+#include "TransformAttribute.h"
 
 namespace FA {
 
 namespace Entity {
 
-SpriteComponent::SpriteComponent(ComponentHandler *owner)
-    : BasicComponent(owner)
+SpriteAttribute::SpriteAttribute(PropertyHandler *owner)
+    : BasicAttribute(owner)
 {}
 
-SpriteComponent::~SpriteComponent() = default;
+SpriteAttribute::~SpriteAttribute() = default;
 
-void SpriteComponent::Awake()
+void SpriteAttribute::Awake()
 {
-    transform_ = Owner()->GetComponent<TransformComponent>();
-    faceDirection_ = Owner()->GetComponent<FaceDirectionComponent>();
+    transform_ = Owner()->GetAttribute<TransformAttribute>();
+    faceDirection_ = Owner()->GetAttribute<FaceDirectionAttribute>();
 
     sprite_.setPosition(transform_->GetPosition());
     sprite_.setScale(transform_->GetScale(), transform_->GetScale());
 }
 
-void SpriteComponent::Update(float deltaTime)
+void SpriteAttribute::Update(float deltaTime)
 {
     animation_->Update(deltaTime);
     animation_->ApplyTo(sprite_);
-    
-   sprite_.setPosition(transform_->GetPosition());
-   sprite_.setScale(transform_->GetScale(), transform_->GetScale());
+
+    sprite_.setPosition(transform_->GetPosition());
+    sprite_.setScale(transform_->GetScale(), transform_->GetScale());
 }
 
-void SpriteComponent::DrawTo(sf::RenderTarget &renderTarget)
+void SpriteAttribute::DrawTo(sf::RenderTarget &renderTarget)
 {
     renderTarget.draw(sprite_);
 }
 
-void SpriteComponent::Set(FrameType frameType)
+void SpriteAttribute::Set(FrameType frameType)
 {
     animation_->SetAnimation(frameType, faceDirection_->GetDirection());
     animation_->ApplyTo(sprite_);
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
-bool SpriteComponent::AnimationIsCompleted() const
+bool SpriteAttribute::AnimationIsCompleted() const
 {
     return animation_->IsCompleted();
 }

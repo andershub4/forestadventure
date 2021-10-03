@@ -18,7 +18,7 @@ class MessageBus;
 namespace Entity {
 
 class BasicEntity;
-class ComponentHandler;
+class PropertyHandler;
 
 class Factory
 {
@@ -26,7 +26,7 @@ public:
     Factory(MessageBus& messageBus);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, const ComponentHandler& componentHandler) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, const PropertyHandler& propertyHandler) const;
 
 private:
     mutable Entity::EntityId id_{0};

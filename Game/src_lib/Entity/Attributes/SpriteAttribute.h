@@ -8,35 +8,35 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "AnimationComponent.h"
-#include "BasicComponent.h"
+#include "AnimationAttribute.h"
+#include "BasicAttribute.h"
 
 namespace FA {
 
 namespace Entity {
 
-class TransformComponent;
-class FaceDirectionComponent;
+class TransformAttribute;
+class FaceDirectionAttribute;
 
-class SpriteComponent : public BasicComponent
+class SpriteAttribute : public BasicAttribute
 {
 public:
-    SpriteComponent(ComponentHandler *owner);
-    virtual ~SpriteComponent();
+    SpriteAttribute(PropertyHandler *owner);
+    virtual ~SpriteAttribute();
 
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;
 
     void DrawTo(sf::RenderTarget &renderTarget);
     void Set(FrameType frameType);
-    void AddAnimation(std::shared_ptr<AnimationComponent> animation) { animation_ = animation; }
+    void AddAnimation(std::shared_ptr<AnimationAttribute> animation) { animation_ = animation; }
     bool AnimationIsCompleted() const;
 
 private:
     sf::Sprite sprite_;
-    std::shared_ptr<TransformComponent> transform_ = nullptr;
-    std::shared_ptr<FaceDirectionComponent> faceDirection_ = nullptr;
-    std::shared_ptr<AnimationComponent> animation_;
+    std::shared_ptr<TransformAttribute> transform_ = nullptr;
+    std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
+    std::shared_ptr<AnimationAttribute> animation_;
 };
 
 }  // namespace Entity

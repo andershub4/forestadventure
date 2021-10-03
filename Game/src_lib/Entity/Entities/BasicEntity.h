@@ -17,7 +17,7 @@ namespace FA {
 class MessageBus;
 class Message;
 enum class MessageType;
-class ComponentHandler;
+class PropertyHandler;
 
 namespace Keyboard {
 enum class Key;
@@ -28,7 +28,7 @@ namespace Entity {
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus);
+    BasicEntity(EntityId id, const PropertyHandler& propertyHandler, MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
@@ -53,9 +53,15 @@ protected:
     void AttackWeapon();
 
     template <class T>
-    std::shared_ptr<T> AddComponent()
+    std::shared_ptr<T> AddAttribute()
     {
-        return stateMachine_.AddComponent<T>();
+        return stateMachine_.AddAttribute<T>();
+    }
+
+    template <class T>
+    std::shared_ptr<T> AddBehavior()
+    {
+        return stateMachine_.AddBehavior<T>();
     }
 
     virtual void OnIsKeyPressed(Keyboard::Key key) {}

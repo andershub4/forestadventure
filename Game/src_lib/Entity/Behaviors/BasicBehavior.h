@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include "BasicEntity.h"
+#include "Entity/BasicProperty.h"
 
 namespace FA {
 
 namespace Entity {
 
-class StaticEntity : public BasicEntity
+class BasicBehavior : public BasicProperty
 {
 public:
-    StaticEntity(EntityId id, const PropertyHandler& propertyHandler, MessageBus& messageBus);
-    virtual ~StaticEntity();
+    BasicBehavior(PropertyHandler* owner);
+    virtual ~BasicBehavior();
 
-    virtual std::string Name() const override { return "StaticEntity"; }
+    virtual void Awake() {}
 };
 
 }  // namespace Entity

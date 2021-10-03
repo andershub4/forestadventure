@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "ComponentHandler.h"
+#include "PropertyHandler.h"
 #include "States/BasicState.h"
 
 namespace FA {
@@ -16,7 +16,7 @@ namespace Entity {
 class StateMachine
 {
 public:
-    StateMachine(BasicState::StateData& stateData, const ComponentHandler& componentHandler);
+    StateMachine(BasicState::StateData& stateData, const PropertyHandler& propertyHandler);
     ~StateMachine();
 
     void Update(float deltaTime);
@@ -26,15 +26,27 @@ public:
     void SetState(std::unique_ptr<BasicState> newState);
 
     template <class T>
-    std::shared_ptr<T> GetComponent() const
+    std::shared_ptr<T> GetAttribute() const
     {
-        return componentHandler_.GetComponent<T>();
+        return propertyHandler_.GetAttribute<T>();
     }
 
     template <class T>
-    std::shared_ptr<T> AddComponent()
+    std::shared_ptr<T> GetBehavior() const
     {
-        return componentHandler_.AddComponent<T>();
+        return propertyHandler_.GetBehavior<T>();
+    }
+
+    template <class T>
+    std::shared_ptr<T> AddAttribute()
+    {
+        return propertyHandler_.AddAttribute<T>();
+    }
+
+    template <class T>
+    std::shared_ptr<T> AddBehavior()
+    {
+        return propertyHandler_.AddBehavior<T>();
     }
 
     void OnInitStateData(const AnimationDb& animationDb);
@@ -45,7 +57,7 @@ public:
 
 private:
     std::unique_ptr<BasicState> currentState_;
-    ComponentHandler componentHandler_;
+    PropertyHandler propertyHandler_;
 };
 
 }  // namespace Entity

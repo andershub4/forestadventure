@@ -4,20 +4,17 @@
  *	See file LICENSE for full license details.
  */
 
-#include "TransformComponent.h"
+#include "BasicBehavior.h"
 
 namespace FA {
 
 namespace Entity {
 
-TransformComponent::TransformComponent(ComponentHandler *owner)
-    : BasicComponent(owner)
+BasicBehavior::BasicBehavior(PropertyHandler *owner)
+    : BasicProperty(owner)
 {}
 
-void TransformComponent::Move(const sf::Vector2f &offset)
-{
-    position_ = {position_.x + offset.x, position_.y + offset.y};
-}
+BasicBehavior::~BasicBehavior() = default;
 
 }  // namespace Entity
 

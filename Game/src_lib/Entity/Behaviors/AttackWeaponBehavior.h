@@ -6,9 +6,7 @@
 
 #pragma once
 
-#include <SFML/System/Vector2.hpp>
-
-#include "BasicComponent.h"
+#include "BasicBehavior.h"
 
 namespace FA {
 
@@ -16,10 +14,10 @@ namespace Entity {
 
 class BasicState;
 
-class IdleComponent : public BasicComponent
+class AttackWeaponBehavior : public BasicBehavior
 {
 public:
-    IdleComponent(ComponentHandler *owner);
+    AttackWeaponBehavior(PropertyHandler *owner);
 
     virtual void Update(float deltaTime) override {}
 

@@ -15,7 +15,7 @@ namespace Entity {
 class IdleState : public BasicState
 {
 public:
-    IdleState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler);
+    IdleState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler);
     virtual ~IdleState();
 
     virtual void Update(float deltaTime) override;

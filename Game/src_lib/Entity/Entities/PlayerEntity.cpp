@@ -8,12 +8,12 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/AnimationComponent.h"
-#include "Entity/Components/AttackComponent.h"
-#include "Entity/Components/AttackWeaponComponent.h"
-#include "Entity/Components/FaceDirectionComponent.h"
-#include "Entity/Components/SpriteComponent.h"
-#include "Entity/Components/CameraComponent.h"
+#include "Entity/Attributes/AnimationAttribute.h"
+#include "Entity/Attributes/CameraAttribute.h"
+#include "Entity/Attributes/FaceDirectionAttribute.h"
+#include "Entity/Attributes/SpriteAttribute.h"
+#include "Entity/Behaviors/AttackBehavior.h"
+#include "Entity/Behaviors/AttackWeaponBehavior.h"
 #include "Enum/KeyboardKey.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
@@ -24,8 +24,8 @@ namespace FA {
 
 namespace Entity {
 
-PlayerEntity::PlayerEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus)
-    : BasicEntity(id, componentHandler, messageBus)
+PlayerEntity::PlayerEntity(EntityId id, const PropertyHandler& propertyHandler, MessageBus& messageBus)
+    : BasicEntity(id, propertyHandler, messageBus)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
@@ -34,14 +34,14 @@ void PlayerEntity::OnCreate()
 {
     std::vector<FaceDirection> dirs = {FaceDirection::Down, FaceDirection::Left, FaceDirection::Right,
                                        FaceDirection::Up};
-    auto f = AddComponent<FaceDirectionComponent>();
+    auto f = AddAttribute<FaceDirectionAttribute>();
     f->SetAvailableDirections(dirs);
-    AddComponent<MovementComponent>();
-    AddComponent<AttackComponent>();
-    AddComponent<AttackWeaponComponent>();
-    AddComponent<CameraComponent>();
-    auto a = AddComponent<AnimationComponent>();
-    auto s = AddComponent<SpriteComponent>();
+    AddBehavior<MovementBehavior>();
+    AddBehavior<AttackBehavior>();
+    AddBehavior<AttackWeaponBehavior>();
+    AddAttribute<CameraAttribute>();
+    auto a = AddAttribute<AnimationAttribute>();
+    auto s = AddAttribute<SpriteAttribute>();
     s->AddAnimation(a);
 
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});

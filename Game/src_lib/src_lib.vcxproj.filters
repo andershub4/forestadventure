@@ -126,10 +126,10 @@
     <ClCompile Include="Resource\SpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\SpriteComponent.cpp">
+    <ClCompile Include="Entity\Attributes\SpriteAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\MovementComponent.cpp">
+    <ClCompile Include="Entity\Behaviors\MovementBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Entities\MoleEntity.cpp">
@@ -183,40 +183,46 @@
     <ClCompile Include="Logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\TransformComponent.cpp">
+    <ClCompile Include="Entity\Attributes\TransformAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\AnimationComponent.cpp">
+    <ClCompile Include="Entity\Attributes\AnimationAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\ComponentHandler.cpp">
+    <ClCompile Include="Entity\PropertyHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\FaceDirectionComponent.cpp">
+    <ClCompile Include="Entity\Attributes\FaceDirectionAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Resource\AnimationDb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\IdleComponent.cpp">
+    <ClCompile Include="Entity\Behaviors\IdleBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\AttackComponent.cpp">
+    <ClCompile Include="Entity\Behaviors\AttackBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\AttackWeaponComponent.cpp">
+    <ClCompile Include="Entity\Behaviors\AttackWeaponBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Level\CameraManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\BasicComponent2.cpp">
+    <ClCompile Include="Entity\Behaviors\BasicBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Components\CameraComponent.cpp">
+    <ClCompile Include="Entity\Attributes\CameraAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\ComponentStore.cpp">
+    <ClCompile Include="Entity\PropertyStore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Attributes\BasicAttribute.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\BasicProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -362,10 +368,10 @@
     <ClInclude Include="Resource\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\SpriteComponent.h">
+    <ClInclude Include="Entity\Attributes\SpriteAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\MovementComponent.h">
+    <ClInclude Include="Entity\Behaviors\MovementBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\AnimationType.h">
@@ -389,7 +395,7 @@
     <ClInclude Include="Entity\EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ComponentData.h">
+    <ClInclude Include="Entity\PropertyData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\EntityType.h">
@@ -437,7 +443,7 @@
     <ClInclude Include="Logging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\TransformComponent.h">
+    <ClInclude Include="Entity\Attributes\TransformAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Layer.h">
@@ -449,37 +455,43 @@
     <ClInclude Include="Resource\EntityTextures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\AnimationComponent.h">
+    <ClInclude Include="Entity\Attributes\AnimationAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ComponentStore.h">
+    <ClInclude Include="Entity\PropertyStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\BasicComponent.h">
+    <ClInclude Include="Entity\Behaviors\BasicBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ComponentHandler.h">
+    <ClInclude Include="Entity\PropertyHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\FaceDirectionComponent.h">
+    <ClInclude Include="Entity\Attributes\FaceDirectionAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\AnimationDb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\AttackComponent.h">
+    <ClInclude Include="Entity\Behaviors\AttackBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\AttackWeaponComponent.h">
+    <ClInclude Include="Entity\Behaviors\AttackWeaponBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\IdleComponent.h">
+    <ClInclude Include="Entity\Behaviors\IdleBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Components\CameraComponent.h">
+    <ClInclude Include="Entity\Attributes\CameraAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Level\CameraManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Attributes\BasicAttribute.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\BasicProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

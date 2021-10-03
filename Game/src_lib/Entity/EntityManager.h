@@ -21,7 +21,7 @@ namespace Entity {
 
 class BasicEntity;
 class Factory;
-class ComponentHandler;
+class PropertyHandler;
 
 class EntityManager
 {
@@ -33,7 +33,7 @@ public:
     void LateUpdate();
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    void Create(EntityType type, const ComponentHandler &componentHandler);
+    void Create(EntityType type, const PropertyHandler &propertyHandler);
     void Awake();
     void Init(const AnimationDb &animationDb);
 

@@ -6,45 +6,45 @@
 
 #include "MoveState.h"
 
-#include "Entity/Components/IdleComponent.h"
-#include "Entity/Components/MovementComponent.h"
-#include "Entity/Components/SpriteComponent.h"
+#include "Entity/Attributes/SpriteAttribute.h"
+#include "Entity/Behaviors/IdleBehavior.h"
+#include "Entity/Behaviors/MovementBehavior.h"
 #include "Enum/FrameType.h"
 
 namespace FA {
 
 namespace Entity {
 
-MoveState::MoveState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler)
-    : BasicState(stateMachine, stateData, componentHandler)
+MoveState::MoveState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler)
+    : BasicState(stateMachine, stateData, propertyHandler)
 {}
 
 MoveState::~MoveState() = default;
 
 void MoveState::Update(float deltaTime)
 {
-    GetComponent<SpriteComponent>()->Update(deltaTime);
-    GetComponent<MovementComponent>()->Update(deltaTime);
+    GetAttribute<SpriteAttribute>()->Update(deltaTime);
+    GetBehavior<MovementBehavior>()->Update(deltaTime);
 }
 
 void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    GetComponent<SpriteComponent>()->DrawTo(renderTarget);
+    GetAttribute<SpriteAttribute>()->DrawTo(renderTarget);
 }
 
 void MoveState::Enter()
 {
-    GetComponent<SpriteComponent>()->Set(FrameType::Move);
+    GetAttribute<SpriteAttribute>()->Set(FrameType::Move);
 }
 
 void MoveState::Exit()
 {
-    GetComponent<MovementComponent>()->SetDirection(MoveDirection::None);
+    GetBehavior<MovementBehavior>()->SetDirection(MoveDirection::None);
 }
 
 void MoveState::OnStopMove()
 {
-    GetComponent<IdleComponent>()->Execute(*this);
+    GetBehavior<IdleBehavior>()->Execute(*this);
 }
 
 }  // namespace Entity

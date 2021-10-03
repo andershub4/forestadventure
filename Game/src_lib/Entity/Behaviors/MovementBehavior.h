@@ -10,7 +10,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "BasicComponent.h"
+#include "BasicBehavior.h"
 
 namespace FA {
 
@@ -19,12 +19,12 @@ enum class MoveDirection;
 namespace Entity {
 
 class BasicState;
-class TransformComponent;
+class TransformAttribute;
 
-class MovementComponent : public BasicComponent
+class MovementBehavior : public BasicBehavior
 {
 public:
-    MovementComponent(ComponentHandler *owner);
+    MovementBehavior(PropertyHandler *owner);
 
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;
@@ -36,7 +36,7 @@ public:
 private:
     float velocity_{};
     sf::Vector2f movementVector_{};
-    std::shared_ptr<TransformComponent> transform_ = nullptr;
+    std::shared_ptr<TransformAttribute> transform_ = nullptr;
 };
 
 }  // namespace Entity

@@ -10,17 +10,17 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "BasicComponent.h"
+#include "BasicAttribute.h"
 #include "Enum/FaceDirection.h"
 
 namespace FA {
 
 namespace Entity {
 
-class FaceDirectionComponent : public BasicComponent
+class FaceDirectionAttribute : public BasicAttribute
 {
 public:
-    FaceDirectionComponent(ComponentHandler *owner);
+    FaceDirectionAttribute(PropertyHandler *owner);
 
     virtual void Update(float deltaTime) override {}
 

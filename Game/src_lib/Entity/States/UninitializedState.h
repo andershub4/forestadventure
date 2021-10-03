@@ -15,7 +15,7 @@ namespace Entity {
 class UninitializedState : public BasicState
 {
 public:
-    UninitializedState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler);
+    UninitializedState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler);
     virtual ~UninitializedState();
 
     virtual void Update(float deltaTime) override {}

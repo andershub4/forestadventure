@@ -6,24 +6,24 @@
 
 #include "UninitializedState.h"
 
-#include "Entity/Components/IdleComponent.h"
+#include "Entity/Behaviors/IdleBehavior.h"
 
 namespace FA {
 
 namespace Entity {
 
 UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& stateData,
-                                       ComponentHandler& componentHandler)
-    : BasicState(stateMachine, stateData, componentHandler)
+                                       PropertyHandler& propertyHandler)
+    : BasicState(stateMachine, stateData, propertyHandler)
 {}
 
 UninitializedState::~UninitializedState() = default;
 
 void UninitializedState::OnInitStateData(const AnimationDb& animationDb)
 {
-    InitComponents(animationDb);
+    InitProperties(animationDb);
 
-    GetComponent<IdleComponent>()->Execute(*this);
+    GetBehavior<IdleBehavior>()->Execute(*this);
 }
 
 }  // namespace Entity

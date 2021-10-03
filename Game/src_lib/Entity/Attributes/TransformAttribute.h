@@ -8,22 +8,22 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "BasicComponent.h"
+#include "BasicAttribute.h"
 
 namespace FA {
 
 namespace Entity {
 
-class TransformComponent : public BasicComponent
+class TransformAttribute : public BasicAttribute
 {
 public:
-    TransformComponent(ComponentHandler *owner);
+    TransformAttribute(PropertyHandler *owner);
 
     virtual void Update(float deltaTime) override{};
 
     void Move(const sf::Vector2f &offset);
     void SetPosition(const sf::Vector2f &position) { position_ = position; }
-    const sf::Vector2f& GetPosition() const { return position_; }
+    const sf::Vector2f &GetPosition() const { return position_; }
     void SetScale(float scale) { scale_ = scale; }
     float GetScale() const { return scale_; }
 

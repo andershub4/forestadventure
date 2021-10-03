@@ -4,15 +4,22 @@
  *	See file LICENSE for full license details.
  */
 
-#include "CameraComponent.h"
+#pragma once
+
+#include "Entity/BasicProperty.h"
 
 namespace FA {
 
 namespace Entity {
 
-CameraComponent::CameraComponent(ComponentHandler *owner)
-    : BasicComponent(owner)
-{}
+class BasicAttribute : public BasicProperty
+{
+public:
+    BasicAttribute(PropertyHandler* owner);
+    virtual ~BasicAttribute();
+
+    virtual void Awake() {}
+};
 
 }  // namespace Entity
 

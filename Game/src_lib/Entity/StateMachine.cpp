@@ -13,10 +13,10 @@ namespace FA {
 
 namespace Entity {
 
-StateMachine::StateMachine(BasicState::StateData& stateData, const ComponentHandler& componentHandler)
-    : componentHandler_(componentHandler)
+StateMachine::StateMachine(BasicState::StateData& stateData, const PropertyHandler& propertyHandler)
+    : propertyHandler_(propertyHandler)
 {
-    currentState_ = std::make_unique<UninitializedState>(*this, stateData, componentHandler_);
+    currentState_ = std::make_unique<UninitializedState>(*this, stateData, propertyHandler_);
     // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }

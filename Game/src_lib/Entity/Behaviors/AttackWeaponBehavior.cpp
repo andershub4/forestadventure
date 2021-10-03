@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "AttackWeaponComponent.h"
+#include "AttackWeaponBehavior.h"
 
 #include "Entity/States/AttackWeaponState.h"
 
@@ -12,11 +12,11 @@ namespace FA {
 
 namespace Entity {
 
-AttackWeaponComponent::AttackWeaponComponent(ComponentHandler *owner)
-    : BasicComponent(owner)
+AttackWeaponBehavior::AttackWeaponBehavior(PropertyHandler *owner)
+    : BasicBehavior(owner)
 {}
 
-void AttackWeaponComponent::Execute(BasicState &oldState)
+void AttackWeaponBehavior::Execute(BasicState &oldState)
 {
     oldState.SwitchState<AttackWeaponState>();
 }

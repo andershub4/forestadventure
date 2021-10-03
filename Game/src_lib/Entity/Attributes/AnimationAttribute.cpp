@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "AnimationComponent.h"
+#include "AnimationAttribute.h"
 
 #include <sstream>
 
@@ -12,39 +12,39 @@ namespace FA {
 
 namespace Entity {
 
-AnimationComponent::AnimationComponent(ComponentHandler *owner)
-    : BasicComponent(owner)
+AnimationAttribute::AnimationAttribute(PropertyHandler *owner)
+    : BasicAttribute(owner)
 {}
 
-void AnimationComponent::Update(float deltaTime)
+void AnimationAttribute::Update(float deltaTime)
 {
     currentAnimation_.Update(deltaTime);
 }
 
-void AnimationComponent::AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation)
+void AnimationAttribute::AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation)
 {
     auto k = KeyStr(frameType, faceDir);
     animator_.AddAnimation(k, animation);
 }
 
-void AnimationComponent::ApplyTo(sf::Sprite &sprite)
+void AnimationAttribute::ApplyTo(sf::Sprite &sprite)
 {
     currentAnimation_.ApplyTo(sprite);
 }
 
-void AnimationComponent::SetAnimation(FrameType frameType, FaceDirection faceDir)
+void AnimationAttribute::SetAnimation(FrameType frameType, FaceDirection faceDir)
 {
     auto k = KeyStr(frameType, faceDir);
     currentAnimation_ = animator_.GetAnimation(k);
     currentAnimation_.Start();
 }
 
-bool AnimationComponent::IsCompleted() const
+bool AnimationAttribute::IsCompleted() const
 {
     return currentAnimation_.IsCompleted();
 }
 
-std::string AnimationComponent::KeyStr(FrameType frameType, FaceDirection faceDir) const
+std::string AnimationAttribute::KeyStr(FrameType frameType, FaceDirection faceDir) const
 {
     std::stringstream ss;
     ss << frameType << "_" << faceDir;

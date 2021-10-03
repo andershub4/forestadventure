@@ -4,19 +4,21 @@
  *	See file LICENSE for full license details.
  */
 
-#include "ComponentStore.h"
+#include "AttackBehavior.h"
 
-#include "Entity/Components/BasicComponent.h"
+#include "Entity/States/AttackState.h"
 
 namespace FA {
 
 namespace Entity {
 
-void ComponentStore::Awake()
+AttackBehavior::AttackBehavior(PropertyHandler *owner)
+    : BasicBehavior(owner)
+{}
+
+void AttackBehavior::Execute(BasicState &oldState)
 {
-    for (const auto &c : components_) {
-        c.second->Awake();
-    }
+    oldState.SwitchState<AttackState>();
 }
 
 }  // namespace Entity

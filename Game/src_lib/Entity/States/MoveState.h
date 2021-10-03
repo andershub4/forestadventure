@@ -15,7 +15,7 @@ namespace Entity {
 class MoveState : public BasicState
 {
 public:
-    MoveState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler);
+    MoveState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler);
     virtual ~MoveState();
 
     virtual void Update(float deltaTime) override;

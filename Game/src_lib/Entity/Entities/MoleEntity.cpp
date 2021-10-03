@@ -8,17 +8,17 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/AnimationComponent.h"
-#include "Entity/Components/FaceDirectionComponent.h"
-#include "Entity/Components/SpriteComponent.h"
+#include "Entity/Attributes/AnimationAttribute.h"
+#include "Entity/Attributes/FaceDirectionAttribute.h"
+#include "Entity/Attributes/SpriteAttribute.h"
 #include "Message/MessageBus.h"
 
 namespace FA {
 
 namespace Entity {
 
-MoleEntity::MoleEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus)
-    : BasicEntity(id, componentHandler, messageBus)
+MoleEntity::MoleEntity(EntityId id, const PropertyHandler& propertyHandler, MessageBus& messageBus)
+    : BasicEntity(id, propertyHandler, messageBus)
 {}
 
 MoleEntity::~MoleEntity() = default;
@@ -27,11 +27,11 @@ void MoleEntity::OnCreate()
 {
     std::vector<FaceDirection> dirs = {FaceDirection::Down, FaceDirection::Left, FaceDirection::Right,
                                        FaceDirection::Up};
-    auto f = AddComponent<FaceDirectionComponent>();
+    auto f = AddAttribute<FaceDirectionAttribute>();
     f->SetAvailableDirections(dirs);
-    AddComponent<MovementComponent>();
-    auto a = AddComponent<AnimationComponent>();
-    auto s = AddComponent<SpriteComponent>();
+    AddBehavior<MovementBehavior>();
+    auto a = AddAttribute<AnimationAttribute>();
+    auto s = AddAttribute<SpriteAttribute>();
     s->AddAnimation(a);
 }
 

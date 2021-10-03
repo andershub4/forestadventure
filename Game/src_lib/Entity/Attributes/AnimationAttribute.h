@@ -9,7 +9,7 @@
 #include <string>
 
 #include "Animation/Animator.h"
-#include "BasicComponent.h"
+#include "BasicAttribute.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 
@@ -17,10 +17,10 @@ namespace FA {
 
 namespace Entity {
 
-class AnimationComponent : public BasicComponent
+class AnimationAttribute : public BasicAttribute
 {
 public:
-    AnimationComponent(ComponentHandler *owner);
+    AnimationAttribute(PropertyHandler *owner);
 
     virtual void Update(float deltaTime) override;
 

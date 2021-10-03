@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Components/TransformComponent.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -18,10 +17,10 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, const ComponentHandler& componentHandler, MessageBus& messageBus)
+BasicEntity::BasicEntity(EntityId id, const PropertyHandler& propertyHandler, MessageBus& messageBus)
     : id_(id)
     , messageBus_(messageBus)
-    , stateMachine_(stateData_, componentHandler)
+    , stateMachine_(stateData_, propertyHandler)
 {}
 
 BasicEntity::~BasicEntity() = default;

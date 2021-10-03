@@ -6,53 +6,53 @@
 
 #include "IdleState.h"
 
-#include "Entity/Components/AttackComponent.h"
-#include "Entity/Components/AttackWeaponComponent.h"
-#include "Entity/Components/FaceDirectionComponent.h"
-#include "Entity/Components/MovementComponent.h"
-#include "Entity/Components/SpriteComponent.h"
+#include "Entity/Attributes/FaceDirectionAttribute.h"
+#include "Entity/Attributes/SpriteAttribute.h"
+#include "Entity/Behaviors/AttackBehavior.h"
+#include "Entity/Behaviors/AttackWeaponBehavior.h"
+#include "Entity/Behaviors/MovementBehavior.h"
 #include "Enum/FrameType.h"
 
 namespace FA {
 
 namespace Entity {
 
-IdleState::IdleState(StateMachine& stateMachine, StateData& stateData, ComponentHandler& componentHandler)
-    : BasicState(stateMachine, stateData, componentHandler)
+IdleState::IdleState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler)
+    : BasicState(stateMachine, stateData, propertyHandler)
 {}
 
 IdleState::~IdleState() = default;
 
 void IdleState::Update(float deltaTime)
 {
-    GetComponent<SpriteComponent>()->Update(deltaTime);
+    GetAttribute<SpriteAttribute>()->Update(deltaTime);
 }
 
 void IdleState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    GetComponent<SpriteComponent>()->DrawTo(renderTarget);
+    GetAttribute<SpriteAttribute>()->DrawTo(renderTarget);
 }
 
 void IdleState::Enter()
 {
-    GetComponent<SpriteComponent>()->Set(FrameType::Idle);
+    GetAttribute<SpriteAttribute>()->Set(FrameType::Idle);
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    GetComponent<MovementComponent>()->SetDirection(moveDir);
-    GetComponent<FaceDirectionComponent>()->SetDirection(faceDir);
-    GetComponent<MovementComponent>()->Execute(*this);
+    GetBehavior<MovementBehavior>()->SetDirection(moveDir);
+    GetAttribute<FaceDirectionAttribute>()->SetDirection(faceDir);
+    GetBehavior<MovementBehavior>()->Execute(*this);
 }
 
 void IdleState::OnAttack()
 {
-    GetComponent<AttackComponent>()->Execute(*this);
+    GetBehavior<AttackBehavior>()->Execute(*this);
 }
 
 void IdleState::OnAttackWeapon()
 {
-    GetComponent<AttackWeaponComponent>()->Execute(*this);
+    GetBehavior<AttackWeaponBehavior>()->Execute(*this);
 }
 
 }  // namespace Entity
