@@ -21,13 +21,10 @@ namespace FA {
 
 namespace Entity {
 
-PropertyHandler::PropertyHandler(const PropertyData& data, CameraManager& cameraManager)
-    : data_(data)
-    , cameraManager_(cameraManager)
+PropertyHandler::PropertyHandler(EntityType entityType, CameraManager& cameraManager)
+    : cameraManager_(cameraManager)
+    , entityType_(entityType)
 {
-    auto t = attributeStore_.AddProperty<TransformAttribute>(this);
-    t->SetPosition(data.position_);
-    t->SetScale(data.scale_);
     behaviorStore_.AddProperty<IdleBehavior>(this);
     frameTypes_.push_back(FrameType::Idle);
 }
@@ -38,9 +35,7 @@ template <>
 std::shared_ptr<MovementBehavior> PropertyHandler::AddBehavior<MovementBehavior>()
 {
     frameTypes_.push_back(FrameType::Move);
-    auto m = behaviorStore_.AddProperty<MovementBehavior>(this);
-    m->SetVelocity(data_.velocity_);
-    return m;
+    return behaviorStore_.AddProperty<MovementBehavior>(this);
 }
 
 template <>
@@ -77,7 +72,7 @@ void PropertyHandler::InitProperties(const AnimationDb& animationDb)
 
     for (auto f : frameTypes_) {
         for (auto face : dirs) {
-            auto animation = animationDb.GetAnimation(data_.entityType_, f, face);
+            auto animation = animationDb.GetAnimation(entityType_, f, face);
             attributeStore_.GetProperty<AnimationAttribute>()->AddAnimation(f, face, animation);
         }
     }

@@ -9,6 +9,7 @@
 #include <unordered_map>
 
 #include "Entity/Attributes/TransformAttribute.h"
+#include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/States/MoveState.h"
 #include "Enum/MoveDirection.h"
 
@@ -33,6 +34,7 @@ MovementBehavior::MovementBehavior(PropertyHandler *owner)
 void MovementBehavior::Awake()
 {
     transform_ = Owner()->GetAttribute<TransformAttribute>();
+    velocity_ = Owner()->GetAttribute<VelocityAttribute>();
 }
 
 void MovementBehavior::Update(float deltaTime)
@@ -45,7 +47,7 @@ void MovementBehavior::SetDirection(MoveDirection direction)
 {
     auto it = dirToVector.find(direction);
     if (it != dirToVector.end()) {
-        movementVector_ = it->second * velocity_;
+        movementVector_ = it->second * velocity_->GetVelocity();
     }
 }
 

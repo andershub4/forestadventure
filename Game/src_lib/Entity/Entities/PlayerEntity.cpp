@@ -12,8 +12,11 @@
 #include "Entity/Attributes/CameraAttribute.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/SpriteAttribute.h"
+#include "Entity/Attributes/TransformAttribute.h"
+#include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Behaviors/AttackBehavior.h"
 #include "Entity/Behaviors/AttackWeaponBehavior.h"
+#include "Entity/PropertyData.h"
 #include "Enum/KeyboardKey.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
@@ -30,12 +33,17 @@ PlayerEntity::PlayerEntity(EntityId id, const PropertyHandler& propertyHandler, 
 
 PlayerEntity::~PlayerEntity() = default;
 
-void PlayerEntity::OnCreate()
+void PlayerEntity::OnCreate(const PropertyData& data)
 {
+    auto t = AddAttribute<TransformAttribute>();
+    t->SetPosition(data.position_);
+    t->SetScale(data.scale_);
     std::vector<FaceDirection> dirs = {FaceDirection::Down, FaceDirection::Left, FaceDirection::Right,
                                        FaceDirection::Up};
     auto f = AddAttribute<FaceDirectionAttribute>();
     f->SetAvailableDirections(dirs);
+    auto v = AddAttribute<VelocityAttribute>();
+    v->SetVelocity(data.velocity_);
     AddBehavior<MovementBehavior>();
     AddBehavior<AttackBehavior>();
     AddBehavior<AttackWeaponBehavior>();

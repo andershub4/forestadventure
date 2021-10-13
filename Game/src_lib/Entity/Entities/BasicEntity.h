@@ -17,13 +17,15 @@ namespace FA {
 class MessageBus;
 class Message;
 enum class MessageType;
-class PropertyHandler;
 
 namespace Keyboard {
 enum class Key;
 }
 
 namespace Entity {
+
+class PropertyHandler;
+struct PropertyData;
 
 class BasicEntity
 {
@@ -32,7 +34,7 @@ public:
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnCreate() {}
+    virtual void OnCreate(const PropertyData& data) {}
     virtual void OnDestroy() {}
     virtual void OnInit(const AnimationDb& animationDb) {}
 

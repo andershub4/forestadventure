@@ -11,6 +11,9 @@
 #include "Entity/Attributes/AnimationAttribute.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/SpriteAttribute.h"
+#include "Entity/Attributes/TransformAttribute.h"
+#include "Entity/Attributes/VelocityAttribute.h"
+#include "Entity/PropertyData.h"
 #include "Message/MessageBus.h"
 
 namespace FA {
@@ -23,12 +26,17 @@ MoleEntity::MoleEntity(EntityId id, const PropertyHandler& propertyHandler, Mess
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::OnCreate()
+void MoleEntity::OnCreate(const PropertyData& data)
 {
+    auto t = AddAttribute<TransformAttribute>();
+    t->SetPosition(data.position_);
+    t->SetScale(data.scale_);
     std::vector<FaceDirection> dirs = {FaceDirection::Down, FaceDirection::Left, FaceDirection::Right,
                                        FaceDirection::Up};
     auto f = AddAttribute<FaceDirectionAttribute>();
     f->SetAvailableDirections(dirs);
+    auto v = AddAttribute<VelocityAttribute>();
+    v->SetVelocity(data.velocity_);
     AddBehavior<MovementBehavior>();
     auto a = AddAttribute<AnimationAttribute>();
     auto s = AddAttribute<SpriteAttribute>();

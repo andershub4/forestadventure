@@ -6,20 +6,28 @@
 
 #pragma once
 
+#include <vector>
+
 #include <SFML/System/Vector2.hpp>
 
-#include "Enum/FaceDirection.h"
+#include "BasicAttribute.h"
 
 namespace FA {
 
 namespace Entity {
 
-struct PropertyData
+class VelocityAttribute : public BasicAttribute
 {
-    sf::Vector2f position_{};
-    FaceDirection faceDir_{};
+public:
+    VelocityAttribute(PropertyHandler *owner);
+
+    virtual void Update(float deltaTime) override {}
+
+    void SetVelocity(float velocity);
+    float GetVelocity() const;
+
+private:
     float velocity_{};
-    float scale_{};
 };
 
 }  // namespace Entity

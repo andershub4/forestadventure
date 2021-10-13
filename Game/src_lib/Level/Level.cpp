@@ -35,12 +35,11 @@ void Level::Create()
     LOG_INFO("Create entities");
     for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
         Entity::PropertyData data;
-        data.entityType_ = objectData.type_;
         data.position_ = static_cast<sf::Vector2f>(objectData.position_);
         data.faceDir_ = objectData.faceDir_;
         data.velocity_ = 120.0;
         data.scale_ = static_cast<float>(tileMap_.GetScale());
-        entityManager_.Create(objectData.type_, Entity::PropertyHandler(data, cameraManager_));
+        entityManager_.Create(objectData.type_, data, Entity::PropertyHandler(objectData.type_, cameraManager_));
     }
 
     entityManager_.Awake();

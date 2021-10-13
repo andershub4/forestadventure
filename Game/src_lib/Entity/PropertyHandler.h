@@ -9,9 +9,9 @@
 #include <memory>
 #include <vector>
 
+#include "Enum/EntityType.h"
 #include "Enum/FrameType.h"
 #include "Logging.h"
-#include "PropertyData.h"
 #include "PropertyStore.h"
 
 namespace FA {
@@ -29,7 +29,7 @@ class CameraAttribute;
 class PropertyHandler
 {
 public:
-    PropertyHandler(const PropertyData &data, CameraManager &cameraManager);
+    PropertyHandler(EntityType entityType, CameraManager &cameraManager);
     ~PropertyHandler();
 
     template <class T>
@@ -86,9 +86,9 @@ public:
 private:
     PropertyStore attributeStore_;
     PropertyStore behaviorStore_;
-    PropertyData data_;
     std::vector<FrameType> frameTypes_;
     CameraManager &cameraManager_;
+    EntityType entityType_;
 };
 
 }  // namespace Entity

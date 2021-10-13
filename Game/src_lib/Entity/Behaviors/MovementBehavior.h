@@ -20,6 +20,7 @@ namespace Entity {
 
 class BasicState;
 class TransformAttribute;
+class VelocityAttribute;
 
 class MovementBehavior : public BasicBehavior
 {
@@ -29,14 +30,13 @@ public:
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;
 
-    void SetVelocity(float velocity) { velocity_ = velocity; }
     void SetDirection(MoveDirection direction);
     void Execute(BasicState &oldState);
 
 private:
-    float velocity_{};
     sf::Vector2f movementVector_{};
     std::shared_ptr<TransformAttribute> transform_ = nullptr;
+    std::shared_ptr<VelocityAttribute> velocity_ = nullptr;
 };
 
 }  // namespace Entity
