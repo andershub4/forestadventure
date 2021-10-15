@@ -8,6 +8,8 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/Behaviors/IdleBehavior.h"
+#include "Entity/Behaviors/UninitializedBehavior.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -17,13 +19,25 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, const PropertyHandler& propertyHandler, MessageBus& messageBus)
+BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& cameraManager, MessageBus& messageBus)
     : id_(id)
     , messageBus_(messageBus)
-    , stateMachine_(stateData_, propertyHandler)
-{}
+    , propertyHandler_(entityType, cameraManager)
+    , stateMachine_(stateData_, propertyHandler_)
+{
+    auto u = propertyHandler_.AddBehavior<UninitializedBehavior>();
+    u->SetOnCreateCB([this](PropertyHandler& propertyHandler, const PropertyData& propertyData) {
+        OnCreate(propertyHandler, propertyData);
+    });
+    propertyHandler_.AddBehavior<IdleBehavior>();
+}
 
 BasicEntity::~BasicEntity() = default;
+
+void BasicEntity::Create(const PropertyData& data)
+{
+    stateMachine_.Create(data);
+}
 
 void BasicEntity::Update(float deltaTime)
 {

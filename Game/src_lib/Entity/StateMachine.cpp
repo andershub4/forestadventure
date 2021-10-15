@@ -13,10 +13,9 @@ namespace FA {
 
 namespace Entity {
 
-StateMachine::StateMachine(BasicState::StateData& stateData, const PropertyHandler& propertyHandler)
-    : propertyHandler_(propertyHandler)
+StateMachine::StateMachine(BasicState::StateData& stateData, PropertyHandler& propertyHandler)
 {
-    currentState_ = std::make_unique<UninitializedState>(*this, stateData, propertyHandler_);
+    currentState_ = std::make_unique<UninitializedState>(*this, stateData, propertyHandler);
     // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }
@@ -25,6 +24,11 @@ StateMachine::~StateMachine()
 {
     // LOG_INFO("Exit ", currentState_->Name());
     currentState_->Exit();
+}
+
+void StateMachine::Create(const PropertyData& data)
+{
+    currentState_->Create(data);
 }
 
 void StateMachine::Update(float deltaTime)

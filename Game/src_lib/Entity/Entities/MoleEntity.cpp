@@ -20,26 +20,26 @@ namespace FA {
 
 namespace Entity {
 
-MoleEntity::MoleEntity(EntityId id, const PropertyHandler& propertyHandler, MessageBus& messageBus)
-    : BasicEntity(id, propertyHandler, messageBus)
+MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, MessageBus& messageBus)
+    : BasicEntity(id, EntityType::Mole, cameraManager, messageBus)
 {}
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::OnCreate(const PropertyData& data)
+void MoleEntity::OnCreate(PropertyHandler& handler, const PropertyData& data)
 {
-    auto t = AddAttribute<TransformAttribute>();
+    auto t = handler.AddAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
     std::vector<FaceDirection> dirs = {FaceDirection::Down, FaceDirection::Left, FaceDirection::Right,
                                        FaceDirection::Up};
-    auto f = AddAttribute<FaceDirectionAttribute>();
+    auto f = handler.AddAttribute<FaceDirectionAttribute>();
     f->SetAvailableDirections(dirs);
-    auto v = AddAttribute<VelocityAttribute>();
+    auto v = handler.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
-    AddBehavior<MovementBehavior>();
-    auto a = AddAttribute<AnimationAttribute>();
-    auto s = AddAttribute<SpriteAttribute>();
+    handler.AddBehavior<MovementBehavior>();
+    auto a = handler.AddAttribute<AnimationAttribute>();
+    auto s = handler.AddAttribute<SpriteAttribute>();
     s->AddAnimation(a);
 }
 

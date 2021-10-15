@@ -20,14 +20,14 @@ Factory::Factory(MessageBus& messageBus)
 
 Factory::~Factory() = default;
 
-std::unique_ptr<BasicEntity> Factory::Create(EntityType type, const PropertyHandler& propertyHandler) const
+std::unique_ptr<BasicEntity> Factory::Create(EntityType type, CameraManager& cameraManager) const
 {
     switch (type) {
         case EntityType::Mole:
-            return std::make_unique<MoleEntity>(id_++, propertyHandler, messageBus_);
+            return std::make_unique<MoleEntity>(id_++, cameraManager, messageBus_);
             break;
         case EntityType::Player:
-            return std::make_unique<PlayerEntity>(id_++, propertyHandler, messageBus_);
+            return std::make_unique<PlayerEntity>(id_++, cameraManager, messageBus_);
         default:
             auto t = static_cast<int>(type);
             LOG_ERROR("Could not create entity of type: ", t);

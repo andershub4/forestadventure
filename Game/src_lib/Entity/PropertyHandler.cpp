@@ -12,7 +12,6 @@
 #include "Attributes/AnimationAttribute.h"
 #include "Behaviors/AttackBehavior.h"
 #include "Behaviors/AttackWeaponBehavior.h"
-#include "Behaviors/IdleBehavior.h"
 #include "Behaviors/MovementBehavior.h"
 #include "Level/CameraManager.h"
 #include "Resource/AnimationDb.h"
@@ -25,7 +24,6 @@ PropertyHandler::PropertyHandler(EntityType entityType, CameraManager& cameraMan
     : cameraManager_(cameraManager)
     , entityType_(entityType)
 {
-    behaviorStore_.AddProperty<IdleBehavior>(this);
     frameTypes_.push_back(FrameType::Idle);
 }
 

@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "Entity/Id.h"
+#include "Entity/PropertyHandler.h"
 #include "Entity/StateMachine.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -17,6 +18,7 @@ namespace FA {
 class MessageBus;
 class Message;
 enum class MessageType;
+class CameraManager;
 
 namespace Keyboard {
 enum class Key;
@@ -24,20 +26,20 @@ enum class Key;
 
 namespace Entity {
 
-class PropertyHandler;
 struct PropertyData;
 
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, const PropertyHandler& propertyHandler, MessageBus& messageBus);
+    BasicEntity(EntityId id, EntityType entityType, CameraManager& cameraManager, MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnCreate(const PropertyData& data) {}
+    virtual void OnCreate(PropertyHandler& handler, const PropertyData& data) {}
     virtual void OnDestroy() {}
     virtual void OnInit(const AnimationDb& animationDb) {}
 
+    void Create(const PropertyData& data);
     void Update(float deltaTime);
     void Awake();
     void LateUpdate();
@@ -54,18 +56,6 @@ protected:
     void Attack();
     void AttackWeapon();
 
-    template <class T>
-    std::shared_ptr<T> AddAttribute()
-    {
-        return stateMachine_.AddAttribute<T>();
-    }
-
-    template <class T>
-    std::shared_ptr<T> AddBehavior()
-    {
-        return stateMachine_.AddBehavior<T>();
-    }
-
     virtual void OnIsKeyPressed(Keyboard::Key key) {}
     virtual void OnIsKeyReleased(Keyboard::Key key) {}
     virtual void OnKeyPressed(Keyboard::Key key) {}
@@ -74,6 +64,7 @@ private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
     BasicState::StateData stateData_;
+    PropertyHandler propertyHandler_;
     StateMachine stateMachine_;
     bool enableInput_ = true;
 

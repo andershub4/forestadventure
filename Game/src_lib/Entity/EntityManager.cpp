@@ -46,10 +46,10 @@ void EntityManager::LateUpdate()
     }
 }
 
-void EntityManager::Create(EntityType type, const PropertyData& data, const PropertyHandler& propertyHandler)
+void EntityManager::Create(EntityType type, const PropertyData& data, CameraManager& cameraManager)
 {
-    auto entity = factory_.Create(type, propertyHandler);
-    entity->OnCreate(data);
+    auto entity = factory_.Create(type, cameraManager);
+    entity->Create(data);
     AddEntity(std::move(entity));
 }
 

@@ -7,6 +7,7 @@
 #include "UninitializedState.h"
 
 #include "Entity/Behaviors/IdleBehavior.h"
+#include "Entity/Behaviors/UninitializedBehavior.h"
 
 namespace FA {
 
@@ -18,6 +19,11 @@ UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& st
 {}
 
 UninitializedState::~UninitializedState() = default;
+
+void UninitializedState::Create(const PropertyData& data)
+{
+    GetBehavior<UninitializedBehavior>()->Create(data);
+}
 
 void UninitializedState::OnInitStateData(const AnimationDb& animationDb)
 {

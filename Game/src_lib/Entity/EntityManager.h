@@ -16,12 +16,12 @@
 namespace FA {
 
 class AnimationDb;
+class CameraManager;
 
 namespace Entity {
 
 class BasicEntity;
 class Factory;
-class PropertyHandler;
 struct PropertyData;
 
 class EntityManager
@@ -34,7 +34,7 @@ public:
     void LateUpdate();
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    void Create(EntityType type, const PropertyData &data, const PropertyHandler &propertyHandler);
+    void Create(EntityType type, const PropertyData &data, CameraManager &cameraManager);
     void Awake();
     void Init(const AnimationDb &animationDb);
 

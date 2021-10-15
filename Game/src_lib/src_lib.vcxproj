@@ -217,6 +217,7 @@
     <ClInclude Include="Entity\Attributes\BasicAttribute.h" />
     <ClInclude Include="Entity\Attributes\VelocityAttribute.h" />
     <ClInclude Include="Entity\BasicProperty.h" />
+    <ClInclude Include="Entity\Behaviors\UninitializedBehavior.h" />
     <ClInclude Include="Entity\PropertyHandler.h" />
     <ClInclude Include="Entity\Attributes\AnimationAttribute.h" />
     <ClInclude Include="Entity\Behaviors\AttackBehavior.h" />
@@ -308,6 +309,7 @@
     <ClCompile Include="Entity\Attributes\BasicAttribute.cpp" />
     <ClCompile Include="Entity\Attributes\VelocityAttribute.cpp" />
     <ClCompile Include="Entity\BasicProperty.cpp" />
+    <ClCompile Include="Entity\Behaviors\UninitializedBehavior.cpp" />
     <ClCompile Include="Entity\PropertyHandler.cpp" />
     <ClCompile Include="Entity\PropertyStore.cpp" />
     <ClCompile Include="Entity\Attributes\AnimationAttribute.cpp" />

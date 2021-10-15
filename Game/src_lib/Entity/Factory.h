@@ -14,11 +14,11 @@
 namespace FA {
 
 class MessageBus;
+class CameraManager;
 
 namespace Entity {
 
 class BasicEntity;
-class PropertyHandler;
 
 class Factory
 {
@@ -26,7 +26,7 @@ public:
     Factory(MessageBus& messageBus);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, const PropertyHandler& propertyHandler) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager) const;
 
 private:
     mutable Entity::EntityId id_{0};

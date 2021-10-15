@@ -21,6 +21,7 @@ class AnimationDb;
 namespace Entity {
 
 class StateMachine;
+struct PropertyData;
 
 class BasicState
 {
@@ -32,6 +33,7 @@ public:
     BasicState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler);
     virtual ~BasicState();
 
+    virtual void Create(const PropertyData& data) {}
     virtual void Update(float deltaTime) = 0;
     virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
     virtual std::string Name() const = 0;
