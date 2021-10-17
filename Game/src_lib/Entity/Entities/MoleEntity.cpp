@@ -26,20 +26,20 @@ MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, MessageBus& me
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::OnCreate(EntityService& handler, const PropertyData& data)
+void MoleEntity::OnCreate(EntityService& entityService, const PropertyData& data)
 {
-    auto t = handler.AddAttribute<TransformAttribute>();
+    auto t = entityService.AddAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
     std::vector<FaceDirection> dirs = {FaceDirection::Down, FaceDirection::Left, FaceDirection::Right,
                                        FaceDirection::Up};
-    auto f = handler.AddAttribute<FaceDirectionAttribute>();
+    auto f = entityService.AddAttribute<FaceDirectionAttribute>();
     f->SetAvailableDirections(dirs);
-    auto v = handler.AddAttribute<VelocityAttribute>();
+    auto v = entityService.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
-    handler.AddBehavior<MovementBehavior>();
-    auto a = handler.AddAttribute<AnimationAttribute>();
-    auto s = handler.AddAttribute<ShapeAttribute>();
+    entityService.AddBehavior<MovementBehavior>();
+    auto a = entityService.AddAttribute<AnimationAttribute>();
+    auto s = entityService.AddAttribute<ShapeAttribute>();
     s->AddAnimation(a);
 }
 

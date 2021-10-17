@@ -33,23 +33,23 @@ PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, MessageBus
 
 PlayerEntity::~PlayerEntity() = default;
 
-void PlayerEntity::OnCreate(EntityService& handler, const PropertyData& data)
+void PlayerEntity::OnCreate(EntityService& entityService, const PropertyData& data)
 {
-    auto t = handler.AddAttribute<TransformAttribute>();
+    auto t = entityService.AddAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
     std::vector<FaceDirection> dirs = {FaceDirection::Down, FaceDirection::Left, FaceDirection::Right,
                                        FaceDirection::Up};
-    auto f = handler.AddAttribute<FaceDirectionAttribute>();
+    auto f = entityService.AddAttribute<FaceDirectionAttribute>();
     f->SetAvailableDirections(dirs);
-    auto v = handler.AddAttribute<VelocityAttribute>();
+    auto v = entityService.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
-    handler.AddBehavior<MovementBehavior>();
-    handler.AddBehavior<AttackBehavior>();
-    handler.AddBehavior<AttackWeaponBehavior>();
-    handler.AddAttribute<CameraAttribute>();
-    auto a = handler.AddAttribute<AnimationAttribute>();
-    auto s = handler.AddAttribute<ShapeAttribute>();
+    entityService.AddBehavior<MovementBehavior>();
+    entityService.AddBehavior<AttackBehavior>();
+    entityService.AddBehavior<AttackWeaponBehavior>();
+    entityService.AddAttribute<CameraAttribute>();
+    auto a = entityService.AddAttribute<AnimationAttribute>();
+    auto s = entityService.AddAttribute<ShapeAttribute>();
     s->AddAnimation(a);
 
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});

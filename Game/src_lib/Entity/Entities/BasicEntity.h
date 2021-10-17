@@ -35,7 +35,7 @@ public:
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnCreate(EntityService& handler, const PropertyData& data) {}
+    virtual void OnCreate(EntityService& entityService, const PropertyData& data) {}
     virtual void OnDestroy() {}
     virtual void OnInit(const AnimationDb& animationDb) {}
 
