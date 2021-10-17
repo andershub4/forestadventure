@@ -13,6 +13,7 @@
 #include "Behaviors/AttackBehavior.h"
 #include "Behaviors/AttackWeaponBehavior.h"
 #include "Behaviors/MovementBehavior.h"
+#include "Behaviors/IdleBehavior.h"
 #include "Level/CameraManager.h"
 #include "Resource/AnimationDb.h"
 
@@ -23,11 +24,16 @@ namespace Entity {
 PropertyHandler::PropertyHandler(EntityType entityType, CameraManager& cameraManager)
     : cameraManager_(cameraManager)
     , entityType_(entityType)
-{
-    frameTypes_.push_back(FrameType::Idle);
-}
+{}
 
 PropertyHandler::~PropertyHandler() = default;
+
+template <>
+std::shared_ptr<IdleBehavior> PropertyHandler::AddBehavior<IdleBehavior>()
+{
+    frameTypes_.push_back(FrameType::Idle);
+    return behaviorStore_.AddProperty<IdleBehavior>(this);
+}
 
 template <>
 std::shared_ptr<MovementBehavior> PropertyHandler::AddBehavior<MovementBehavior>()

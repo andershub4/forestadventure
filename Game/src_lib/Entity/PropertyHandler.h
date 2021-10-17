@@ -21,6 +21,7 @@ class AnimationDb;
 
 namespace Entity {
 
+class IdleBehavior;
 class MovementBehavior;
 class AttackBehavior;
 class AttackWeaponBehavior;
@@ -67,6 +68,9 @@ public:
             return AddBehavior<T>();
         }
     }
+
+    template <>
+    std::shared_ptr<IdleBehavior> AddBehavior<IdleBehavior>();
 
     template <>
     std::shared_ptr<MovementBehavior> AddBehavior<MovementBehavior>();
