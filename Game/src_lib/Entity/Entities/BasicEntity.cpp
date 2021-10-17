@@ -23,7 +23,7 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     : id_(id)
     , messageBus_(messageBus)
     , entityService_(entityType, cameraManager)
-    , stateMachine_(stateData_, entityService_)
+    , stateMachine_(entityService_)
 {
     auto u = entityService_.AddBehavior<UninitializedBehavior>();
     u->SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {

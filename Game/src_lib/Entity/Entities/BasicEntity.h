@@ -8,8 +8,8 @@
 
 #include <vector>
 
-#include "Entity/Id.h"
 #include "Entity/EntityService.h"
+#include "Entity/Id.h"
 #include "Entity/StateMachine.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -63,7 +63,6 @@ protected:
 private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
-    BasicState::StateData stateData_;
     EntityService entityService_;
     StateMachine stateMachine_;
     bool enableInput_ = true;

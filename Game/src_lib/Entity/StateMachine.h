@@ -15,7 +15,7 @@ namespace Entity {
 class StateMachine
 {
 public:
-    StateMachine(BasicState::StateData& stateData, EntityService& entityService);
+    StateMachine(EntityService& entityService);
     ~StateMachine();
 
     void Create(const PropertyData& data);
@@ -33,6 +33,7 @@ public:
 
 private:
     std::unique_ptr<BasicState> currentState_;
+    BasicState::StateData stateData_;
 };
 
 }  // namespace Entity
