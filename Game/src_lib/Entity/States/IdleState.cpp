@@ -7,7 +7,7 @@
 #include "IdleState.h"
 
 #include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Attributes/SpriteAttribute.h"
+#include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Behaviors/AttackBehavior.h"
 #include "Entity/Behaviors/AttackWeaponBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
@@ -25,17 +25,17 @@ IdleState::~IdleState() = default;
 
 void IdleState::Update(float deltaTime)
 {
-    GetAttribute<SpriteAttribute>()->Update(deltaTime);
+    GetAttribute<ShapeAttribute>()->Update(deltaTime);
 }
 
 void IdleState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    GetAttribute<SpriteAttribute>()->DrawTo(renderTarget);
+    GetAttribute<ShapeAttribute>()->DrawTo(renderTarget);
 }
 
 void IdleState::Enter()
 {
-    GetAttribute<SpriteAttribute>()->Set(FrameType::Idle);
+    GetAttribute<ShapeAttribute>()->Set(FrameType::Idle);
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

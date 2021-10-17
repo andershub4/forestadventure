@@ -289,7 +289,7 @@
     <ClInclude Include="Scene\Components\BasicComponent.h" />
     <ClInclude Include="Scene\Components\HelperComponent.h" />
     <ClInclude Include="Resource\SpriteSheet.h" />
-    <ClInclude Include="Entity\Attributes\SpriteAttribute.h" />
+    <ClInclude Include="Entity\Attributes\ShapeAttribute.h" />
     <ClInclude Include="Entity\EntityManager.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Tile\TileMapData.h" />
@@ -364,7 +364,7 @@
     <ClCompile Include="Scene\Components\BasicComponent.cpp" />
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
     <ClCompile Include="Resource\SpriteSheet.cpp" />
-    <ClCompile Include="Entity\Attributes\SpriteAttribute.cpp" />
+    <ClCompile Include="Entity\Attributes\ShapeAttribute.cpp" />
     <ClCompile Include="Entity\EntityManager.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />

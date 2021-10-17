@@ -18,11 +18,11 @@ namespace Entity {
 class TransformAttribute;
 class FaceDirectionAttribute;
 
-class SpriteAttribute : public BasicAttribute
+class ShapeAttribute : public BasicAttribute
 {
 public:
-    SpriteAttribute(PropertyHandler *owner);
-    virtual ~SpriteAttribute();
+    ShapeAttribute(PropertyHandler *owner);
+    virtual ~ShapeAttribute();
 
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;

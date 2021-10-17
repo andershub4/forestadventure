@@ -11,7 +11,7 @@
 #include "Entity/Attributes/AnimationAttribute.h"
 #include "Entity/Attributes/CameraAttribute.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Attributes/SpriteAttribute.h"
+#include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Behaviors/AttackBehavior.h"
@@ -49,7 +49,7 @@ void PlayerEntity::OnCreate(PropertyHandler& handler, const PropertyData& data)
     handler.AddBehavior<AttackWeaponBehavior>();
     handler.AddAttribute<CameraAttribute>();
     auto a = handler.AddAttribute<AnimationAttribute>();
-    auto s = handler.AddAttribute<SpriteAttribute>();
+    auto s = handler.AddAttribute<ShapeAttribute>();
     s->AddAnimation(a);
 
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});

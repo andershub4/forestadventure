@@ -126,7 +126,7 @@
     <ClCompile Include="Resource\SpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Attributes\SpriteAttribute.cpp">
+    <ClCompile Include="Entity\Attributes\ShapeAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Behaviors\MovementBehavior.cpp">
@@ -374,7 +374,7 @@
     <ClInclude Include="Resource\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Attributes\SpriteAttribute.h">
+    <ClInclude Include="Entity\Attributes\ShapeAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Behaviors\MovementBehavior.h">

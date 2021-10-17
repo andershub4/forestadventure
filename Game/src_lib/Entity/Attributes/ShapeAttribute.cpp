@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "SpriteAttribute.h"
+#include "ShapeAttribute.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -16,13 +16,13 @@ namespace FA {
 
 namespace Entity {
 
-SpriteAttribute::SpriteAttribute(PropertyHandler *owner)
+ShapeAttribute::ShapeAttribute(PropertyHandler *owner)
     : BasicAttribute(owner)
 {}
 
-SpriteAttribute::~SpriteAttribute() = default;
+ShapeAttribute::~ShapeAttribute() = default;
 
-void SpriteAttribute::Awake()
+void ShapeAttribute::Awake()
 {
     transform_ = Owner()->GetAttribute<TransformAttribute>();
     faceDirection_ = Owner()->GetAttribute<FaceDirectionAttribute>();
@@ -31,7 +31,7 @@ void SpriteAttribute::Awake()
     sprite_.setScale(transform_->GetScale(), transform_->GetScale());
 }
 
-void SpriteAttribute::Update(float deltaTime)
+void ShapeAttribute::Update(float deltaTime)
 {
     animation_->Update(deltaTime);
     animation_->ApplyTo(sprite_);
@@ -40,19 +40,19 @@ void SpriteAttribute::Update(float deltaTime)
     sprite_.setScale(transform_->GetScale(), transform_->GetScale());
 }
 
-void SpriteAttribute::DrawTo(sf::RenderTarget &renderTarget)
+void ShapeAttribute::DrawTo(sf::RenderTarget &renderTarget)
 {
     renderTarget.draw(sprite_);
 }
 
-void SpriteAttribute::Set(FrameType frameType)
+void ShapeAttribute::Set(FrameType frameType)
 {
     animation_->SetAnimation(frameType, faceDirection_->GetDirection());
     animation_->ApplyTo(sprite_);
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
-bool SpriteAttribute::AnimationIsCompleted() const
+bool ShapeAttribute::AnimationIsCompleted() const
 {
     return animation_->IsCompleted();
 }

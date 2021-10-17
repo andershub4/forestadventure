@@ -6,7 +6,7 @@
 
 #include "MoveState.h"
 
-#include "Entity/Attributes/SpriteAttribute.h"
+#include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Behaviors/IdleBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
 #include "Enum/FrameType.h"
@@ -23,18 +23,18 @@ MoveState::~MoveState() = default;
 
 void MoveState::Update(float deltaTime)
 {
-    GetAttribute<SpriteAttribute>()->Update(deltaTime);
+    GetAttribute<ShapeAttribute>()->Update(deltaTime);
     GetBehavior<MovementBehavior>()->Update(deltaTime);
 }
 
 void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    GetAttribute<SpriteAttribute>()->DrawTo(renderTarget);
+    GetAttribute<ShapeAttribute>()->DrawTo(renderTarget);
 }
 
 void MoveState::Enter()
 {
-    GetAttribute<SpriteAttribute>()->Set(FrameType::Move);
+    GetAttribute<ShapeAttribute>()->Set(FrameType::Move);
 }
 
 void MoveState::Exit()

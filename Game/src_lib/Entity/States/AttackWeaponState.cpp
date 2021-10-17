@@ -7,7 +7,7 @@
 #include "AttackWeaponState.h"
 
 #include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Attributes/SpriteAttribute.h"
+#include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Behaviors/IdleBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
 #include "Enum/FrameType.h"
@@ -24,20 +24,20 @@ AttackWeaponState::~AttackWeaponState() = default;
 
 void AttackWeaponState::Update(float deltaTime)
 {
-    GetAttribute<SpriteAttribute>()->Update(deltaTime);
-    if (GetAttribute<SpriteAttribute>()->AnimationIsCompleted()) {
+    GetAttribute<ShapeAttribute>()->Update(deltaTime);
+    if (GetAttribute<ShapeAttribute>()->AnimationIsCompleted()) {
         GetBehavior<IdleBehavior>()->Execute(*this);
     }
 }
 
 void AttackWeaponState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    GetAttribute<SpriteAttribute>()->DrawTo(renderTarget);
+    GetAttribute<ShapeAttribute>()->DrawTo(renderTarget);
 }
 
 void AttackWeaponState::Enter()
 {
-    GetAttribute<SpriteAttribute>()->Set(FrameType::AttackWeapon);
+    GetAttribute<ShapeAttribute>()->Set(FrameType::AttackWeapon);
 }
 
 void AttackWeaponState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
