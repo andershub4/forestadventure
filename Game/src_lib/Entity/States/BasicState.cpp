@@ -26,11 +26,6 @@ void BasicState::SwitchState(std::unique_ptr<BasicState> newState)
     stateMachine_.SetState(std::move(newState));
 }
 
-void BasicState::Awake()
-{
-    entityService_.Awake();
-}
-
 void BasicState::InitProperties(const AnimationDb& animationDb)
 {
     entityService_.InitProperties(animationDb);

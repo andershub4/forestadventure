@@ -28,6 +28,7 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     auto u = entityService_.AddBehavior<UninitializedBehavior>();
     u->SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {
         OnCreate(entityService, propertyData);
+        entityService.Awake();
     });
     entityService_.AddBehavior<IdleBehavior>();
 }
@@ -42,11 +43,6 @@ void BasicEntity::Create(const PropertyData& data)
 void BasicEntity::Update(float deltaTime)
 {
     stateMachine_.Update(deltaTime);
-}
-
-void BasicEntity::Awake()
-{
-    stateMachine_.Awake();
 }
 
 void BasicEntity::LateUpdate()

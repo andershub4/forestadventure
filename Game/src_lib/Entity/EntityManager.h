@@ -35,7 +35,6 @@ public:
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
     void Create(EntityType type, const PropertyData &data, CameraManager &cameraManager);
-    void Awake();
     void Init(const AnimationDb &animationDb);
 
 private:

@@ -20,7 +20,6 @@ public:
 
     void Create(const PropertyData& data);
     void Update(float deltaTime);
-    void Awake();
     void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);
     void SetState(std::unique_ptr<BasicState> newState);

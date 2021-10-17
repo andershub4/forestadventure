@@ -40,7 +40,6 @@ public:
     virtual void Enter() {}
     virtual void Exit() {}
 
-    virtual void Awake();
     virtual void LateUpdate() {}
     virtual void OnInitStateData(const AnimationDb& animationDb) {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}

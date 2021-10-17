@@ -41,7 +41,6 @@ public:
 
     void Create(const PropertyData& data);
     void Update(float deltaTime);
-    void Awake();
     void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);
     void EnableInput(bool enable) { enableInput_ = enable; }

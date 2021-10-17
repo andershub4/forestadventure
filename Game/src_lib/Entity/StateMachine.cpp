@@ -36,11 +36,6 @@ void StateMachine::Update(float deltaTime)
     currentState_->Update(deltaTime);
 }
 
-void StateMachine::Awake()
-{
-    currentState_->Awake();
-}
-
 void StateMachine::LateUpdate()
 {
     currentState_->LateUpdate();
