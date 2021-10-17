@@ -19,7 +19,7 @@ public:
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
-    virtual void OnCreate(EntityService& handler, const PropertyData& data) override;
+    virtual void OnAddProperties(EntityService& handler, const PropertyData& data) override;
     virtual void OnInit(const AnimationDb& animationDb) override;
 };
 

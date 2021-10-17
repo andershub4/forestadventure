@@ -26,7 +26,7 @@ MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, MessageBus& me
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::OnCreate(EntityService& entityService, const PropertyData& data)
+void MoleEntity::OnAddProperties(EntityService& entityService, const PropertyData& data)
 {
     auto t = entityService.AddAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
