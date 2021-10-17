@@ -13,10 +13,10 @@ namespace FA {
 
 namespace Entity {
 
-BasicState::BasicState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler)
+BasicState::BasicState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService)
     : stateMachine_(stateMachine)
     , stateData_(stateData)
-    , propertyHandler_(propertyHandler)
+    , entityService_(entityService)
 {}
 
 BasicState::~BasicState() = default;
@@ -28,12 +28,12 @@ void BasicState::SwitchState(std::unique_ptr<BasicState> newState)
 
 void BasicState::Awake()
 {
-    propertyHandler_.Awake();
+    entityService_.Awake();
 }
 
 void BasicState::InitProperties(const AnimationDb& animationDb)
 {
-    propertyHandler_.InitProperties(animationDb);
+    entityService_.InitProperties(animationDb);
 }
 
 }  // namespace Entity

@@ -19,7 +19,7 @@ namespace Entity {
 class VelocityAttribute : public BasicAttribute
 {
 public:
-    VelocityAttribute(PropertyHandler *owner);
+    VelocityAttribute(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
 

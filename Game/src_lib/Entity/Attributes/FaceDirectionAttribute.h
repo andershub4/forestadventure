@@ -20,7 +20,7 @@ namespace Entity {
 class FaceDirectionAttribute : public BasicAttribute
 {
 public:
-    FaceDirectionAttribute(PropertyHandler *owner);
+    FaceDirectionAttribute(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
 

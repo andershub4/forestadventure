@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/PropertyHandler.h"
+#include "Entity/EntityService.h"
 #include "FaceDirectionAttribute.h"
 #include "TransformAttribute.h"
 
@@ -16,7 +16,7 @@ namespace FA {
 
 namespace Entity {
 
-ShapeAttribute::ShapeAttribute(PropertyHandler *owner)
+ShapeAttribute::ShapeAttribute(EntityService *owner)
     : BasicAttribute(owner)
 {}
 

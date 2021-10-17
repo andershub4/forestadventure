@@ -10,7 +10,7 @@ namespace FA {
 
 namespace Entity {
 
-TransformAttribute::TransformAttribute(PropertyHandler *owner)
+TransformAttribute::TransformAttribute(EntityService *owner)
     : BasicAttribute(owner)
 {}
 

@@ -15,7 +15,7 @@ namespace Entity {
 class UninitializedState : public BasicState
 {
 public:
-    UninitializedState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler);
+    UninitializedState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService_);
     virtual ~UninitializedState();
 
     virtual void Create(const PropertyData& data);

@@ -21,7 +21,7 @@ class FaceDirectionAttribute;
 class ShapeAttribute : public BasicAttribute
 {
 public:
-    ShapeAttribute(PropertyHandler *owner);
+    ShapeAttribute(EntityService *owner);
     virtual ~ShapeAttribute();
 
     virtual void Awake() override;

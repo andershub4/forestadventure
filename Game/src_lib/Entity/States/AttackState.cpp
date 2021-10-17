@@ -16,8 +16,8 @@ namespace FA {
 
 namespace Entity {
 
-AttackState::AttackState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler)
-    : BasicState(stateMachine, stateData, propertyHandler)
+AttackState::AttackState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService)
+    : BasicState(stateMachine, stateData, entityService)
 {}
 
 AttackState::~AttackState() = default;

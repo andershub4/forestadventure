@@ -10,7 +10,7 @@ namespace FA {
 
 namespace Entity {
 
-VelocityAttribute::VelocityAttribute(PropertyHandler *owner)
+VelocityAttribute::VelocityAttribute(EntityService *owner)
     : BasicAttribute(owner)
 {}
 

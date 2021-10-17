@@ -20,7 +20,7 @@ namespace Entity {
 class AnimationAttribute : public BasicAttribute
 {
 public:
-    AnimationAttribute(PropertyHandler *owner);
+    AnimationAttribute(EntityService *owner);
 
     virtual void Update(float deltaTime) override;
 

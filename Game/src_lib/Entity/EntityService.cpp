@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "PropertyHandler.h"
+#include "EntityService.h"
 
 #include "Attributes//CameraAttribute.h"
 #include "Attributes//FaceDirectionAttribute.h"
@@ -21,56 +21,56 @@ namespace FA {
 
 namespace Entity {
 
-PropertyHandler::PropertyHandler(EntityType entityType, CameraManager& cameraManager)
+EntityService::EntityService(EntityType entityType, CameraManager& cameraManager)
     : cameraManager_(cameraManager)
     , entityType_(entityType)
 {}
 
-PropertyHandler::~PropertyHandler() = default;
+EntityService::~EntityService() = default;
 
 template <>
-std::shared_ptr<IdleBehavior> PropertyHandler::AddBehavior<IdleBehavior>()
+std::shared_ptr<IdleBehavior> EntityService::AddBehavior<IdleBehavior>()
 {
     frameTypes_.push_back(FrameType::Idle);
     return behaviorStore_.AddProperty<IdleBehavior>(this);
 }
 
 template <>
-std::shared_ptr<MovementBehavior> PropertyHandler::AddBehavior<MovementBehavior>()
+std::shared_ptr<MovementBehavior> EntityService::AddBehavior<MovementBehavior>()
 {
     frameTypes_.push_back(FrameType::Move);
     return behaviorStore_.AddProperty<MovementBehavior>(this);
 }
 
 template <>
-std::shared_ptr<AttackBehavior> PropertyHandler::AddBehavior<AttackBehavior>()
+std::shared_ptr<AttackBehavior> EntityService::AddBehavior<AttackBehavior>()
 {
     frameTypes_.push_back(FrameType::Attack);
     return behaviorStore_.AddProperty<AttackBehavior>(this);
 }
 
 template <>
-std::shared_ptr<AttackWeaponBehavior> PropertyHandler::AddBehavior<AttackWeaponBehavior>()
+std::shared_ptr<AttackWeaponBehavior> EntityService::AddBehavior<AttackWeaponBehavior>()
 {
     frameTypes_.push_back(FrameType::AttackWeapon);
     return behaviorStore_.AddProperty<AttackWeaponBehavior>(this);
 }
 
 template <>
-std::shared_ptr<CameraAttribute> PropertyHandler::AddAttribute<CameraAttribute>()
+std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
 {
     auto t = GetAttribute<TransformAttribute>();
     cameraManager_.Track(t->GetPosition());
     return attributeStore_.AddProperty<CameraAttribute>(this);
 }
 
-void PropertyHandler::Awake()
+void EntityService::Awake()
 {
     attributeStore_.Awake();
     behaviorStore_.Awake();
 }
 
-void PropertyHandler::InitProperties(const AnimationDb& animationDb)
+void EntityService::InitProperties(const AnimationDb& animationDb)
 {
     auto dirs = attributeStore_.GetProperty<FaceDirectionAttribute>()->GetAvailableDirections();
 

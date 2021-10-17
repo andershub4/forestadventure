@@ -13,9 +13,9 @@ namespace FA {
 
 namespace Entity {
 
-StateMachine::StateMachine(BasicState::StateData& stateData, PropertyHandler& propertyHandler)
+StateMachine::StateMachine(BasicState::StateData& stateData, EntityService& entityService)
 {
-    currentState_ = std::make_unique<UninitializedState>(*this, stateData, propertyHandler);
+    currentState_ = std::make_unique<UninitializedState>(*this, stateData, entityService);
     // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }

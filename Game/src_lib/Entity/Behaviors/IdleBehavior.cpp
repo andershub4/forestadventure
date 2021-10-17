@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Entity {
 
-IdleBehavior::IdleBehavior(PropertyHandler *owner)
+IdleBehavior::IdleBehavior(EntityService *owner)
     : BasicBehavior(owner)
 {}
 

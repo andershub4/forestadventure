@@ -15,7 +15,7 @@ namespace FA {
 
 namespace Entity {
 
-MoveState::MoveState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler)
+MoveState::MoveState(StateMachine& stateMachine, StateData& stateData, EntityService& propertyHandler)
     : BasicState(stateMachine, stateData, propertyHandler)
 {}
 

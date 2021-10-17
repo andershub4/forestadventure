@@ -10,7 +10,7 @@ namespace FA {
 
 namespace Entity {
 
-FaceDirectionAttribute::FaceDirectionAttribute(PropertyHandler *owner)
+FaceDirectionAttribute::FaceDirectionAttribute(EntityService *owner)
     : BasicAttribute(owner)
 {}
 

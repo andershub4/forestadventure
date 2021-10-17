@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Entity {
 
-AttackWeaponBehavior::AttackWeaponBehavior(PropertyHandler *owner)
+AttackWeaponBehavior::AttackWeaponBehavior(EntityService *owner)
     : BasicBehavior(owner)
 {}
 

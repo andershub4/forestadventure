@@ -33,7 +33,7 @@ PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, MessageBus
 
 PlayerEntity::~PlayerEntity() = default;
 
-void PlayerEntity::OnCreate(PropertyHandler& handler, const PropertyData& data)
+void PlayerEntity::OnCreate(EntityService& handler, const PropertyData& data)
 {
     auto t = handler.AddAttribute<TransformAttribute>();
     t->SetPosition(data.position_);

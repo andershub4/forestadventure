@@ -27,11 +27,11 @@ class AttackBehavior;
 class AttackWeaponBehavior;
 class CameraAttribute;
 
-class PropertyHandler
+class EntityService
 {
 public:
-    PropertyHandler(EntityType entityType, CameraManager &cameraManager);
-    ~PropertyHandler();
+    EntityService(EntityType entityType, CameraManager &cameraManager);
+    ~EntityService();
 
     template <class T>
     std::shared_ptr<T> AddAttribute()

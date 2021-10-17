@@ -22,17 +22,17 @@ struct PropertyData;
 class UninitializedBehavior : public BasicBehavior
 {
 public:
-    UninitializedBehavior(PropertyHandler *owner);
+    UninitializedBehavior(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
 
     void Execute(BasicState &oldState);
 
-    void SetOnCreateCB(std::function<void(PropertyHandler &, const PropertyData &)> onCreate) { onCreate_ = onCreate; }
+    void SetOnCreateCB(std::function<void(EntityService &, const PropertyData &)> onCreate) { onCreate_ = onCreate; }
     void Create(const PropertyData &data);
 
 private:
-    std::function<void(PropertyHandler &, const PropertyData &)> onCreate_{};
+    std::function<void(EntityService &, const PropertyData &)> onCreate_{};
 };
 
 }  // namespace Entity

@@ -9,7 +9,7 @@
 #include <memory>
 #include <string>
 
-#include "Entity/PropertyHandler.h"
+#include "Entity/EntityService.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 #include "Fwd/SfmlFwd.h"
@@ -30,7 +30,7 @@ public:
     {
     };
 
-    BasicState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler);
+    BasicState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService);
     virtual ~BasicState();
 
     virtual void Create(const PropertyData& data) {}
@@ -55,31 +55,31 @@ public:
     {
         static_assert(std::is_base_of<BasicState, StateT>::value, "StateT must derive from BasicState");
 
-        SwitchState(std::make_unique<StateT>(stateMachine_, stateData_, propertyHandler_, std::forward<Args>(args)...));
+        SwitchState(std::make_unique<StateT>(stateMachine_, stateData_, entityService_, std::forward<Args>(args)...));
     }
 
     template <class T>
     std::shared_ptr<T> GetAttribute() const
     {
-        return propertyHandler_.GetAttribute<T>();
+        return entityService_.GetAttribute<T>();
     }
 
     template <class T>
     std::shared_ptr<T> GetBehavior() const
     {
-        return propertyHandler_.GetBehavior<T>();
+        return entityService_.GetBehavior<T>();
     }
 
     template <class T>
     std::shared_ptr<T> AddAttribute()
     {
-        return propertyHandler_.AddAttribute<T>();
+        return entityService_.AddAttribute<T>();
     }
 
     template <class T>
     std::shared_ptr<T> AddBehavior()
     {
-        return propertyHandler_.AddBehavior<T>();
+        return entityService_.AddBehavior<T>();
     }
 
     void InitProperties(const AnimationDb& animationDb);
@@ -88,7 +88,7 @@ protected:
     StateData& stateData_;
 
 private:
-    PropertyHandler& propertyHandler_;
+    EntityService& entityService_;
     StateMachine& stateMachine_;
 };
 

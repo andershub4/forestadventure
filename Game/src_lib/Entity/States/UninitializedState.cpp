@@ -13,9 +13,8 @@ namespace FA {
 
 namespace Entity {
 
-UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& stateData,
-                                       PropertyHandler& propertyHandler)
-    : BasicState(stateMachine, stateData, propertyHandler)
+UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService)
+    : BasicState(stateMachine, stateData, entityService)
 {}
 
 UninitializedState::~UninitializedState() = default;

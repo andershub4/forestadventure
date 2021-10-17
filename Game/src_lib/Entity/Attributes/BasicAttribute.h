@@ -15,7 +15,7 @@ namespace Entity {
 class BasicAttribute : public BasicProperty
 {
 public:
-    BasicAttribute(PropertyHandler* owner);
+    BasicAttribute(EntityService* owner);
     virtual ~BasicAttribute();
 
     virtual void Awake() {}

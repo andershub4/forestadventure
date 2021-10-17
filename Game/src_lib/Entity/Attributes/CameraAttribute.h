@@ -15,7 +15,7 @@ namespace Entity {
 class CameraAttribute : public BasicAttribute
 {
 public:
-    CameraAttribute(PropertyHandler *owner);
+    CameraAttribute(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
 };

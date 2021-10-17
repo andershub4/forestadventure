@@ -22,14 +22,14 @@ namespace Entity {
 BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& cameraManager, MessageBus& messageBus)
     : id_(id)
     , messageBus_(messageBus)
-    , propertyHandler_(entityType, cameraManager)
-    , stateMachine_(stateData_, propertyHandler_)
+    , entityService_(entityType, cameraManager)
+    , stateMachine_(stateData_, entityService_)
 {
-    auto u = propertyHandler_.AddBehavior<UninitializedBehavior>();
-    u->SetOnCreateCB([this](PropertyHandler& propertyHandler, const PropertyData& propertyData) {
-        OnCreate(propertyHandler, propertyData);
+    auto u = entityService_.AddBehavior<UninitializedBehavior>();
+    u->SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {
+        OnCreate(entityService, propertyData);
     });
-    propertyHandler_.AddBehavior<IdleBehavior>();
+    entityService_.AddBehavior<IdleBehavior>();
 }
 
 BasicEntity::~BasicEntity() = default;

@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Entity {
 
-UninitializedBehavior::UninitializedBehavior(PropertyHandler *owner)
+UninitializedBehavior::UninitializedBehavior(EntityService *owner)
     : BasicBehavior(owner)
 {}
 

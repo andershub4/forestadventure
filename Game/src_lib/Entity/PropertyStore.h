@@ -16,14 +16,14 @@ namespace FA {
 
 namespace Entity {
 
-class PropertyHandler;
+class EntityService;
 class BasicProperty;
 
 class PropertyStore
 {
 public:
     template <class T>
-    std::shared_ptr<T> AddProperty(PropertyHandler *owner)
+    std::shared_ptr<T> AddProperty(EntityService *owner)
     {
         static_assert(std::is_base_of<BasicProperty, T>::value, "T must derive from BasicProperty");
         auto it = properties_.find(typeid(T));

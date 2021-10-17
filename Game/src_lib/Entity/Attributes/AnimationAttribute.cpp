@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Entity {
 
-AnimationAttribute::AnimationAttribute(PropertyHandler *owner)
+AnimationAttribute::AnimationAttribute(EntityService *owner)
     : BasicAttribute(owner)
 {}
 

@@ -17,7 +17,7 @@ class BasicState;
 class AttackWeaponBehavior : public BasicBehavior
 {
 public:
-    AttackWeaponBehavior(PropertyHandler *owner);
+    AttackWeaponBehavior(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
 

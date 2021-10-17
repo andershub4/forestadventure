@@ -15,7 +15,7 @@ namespace Entity {
 class BasicBehavior : public BasicProperty
 {
 public:
-    BasicBehavior(PropertyHandler* owner);
+    BasicBehavior(EntityService* owner);
     virtual ~BasicBehavior();
 
     virtual void Awake() {}

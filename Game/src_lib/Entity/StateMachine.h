@@ -15,7 +15,7 @@ namespace Entity {
 class StateMachine
 {
 public:
-    StateMachine(BasicState::StateData& stateData, PropertyHandler& propertyHandler);
+    StateMachine(BasicState::StateData& stateData, EntityService& entityService);
     ~StateMachine();
 
     void Create(const PropertyData& data);

@@ -25,7 +25,7 @@ class VelocityAttribute;
 class MovementBehavior : public BasicBehavior
 {
 public:
-    MovementBehavior(PropertyHandler *owner);
+    MovementBehavior(EntityService *owner);
 
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;

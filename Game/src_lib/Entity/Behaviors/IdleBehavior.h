@@ -19,7 +19,7 @@ class BasicState;
 class IdleBehavior : public BasicBehavior
 {
 public:
-    IdleBehavior(PropertyHandler *owner);
+    IdleBehavior(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
 

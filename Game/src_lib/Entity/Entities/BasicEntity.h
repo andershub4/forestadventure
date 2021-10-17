@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "Entity/Id.h"
-#include "Entity/PropertyHandler.h"
+#include "Entity/EntityService.h"
 #include "Entity/StateMachine.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -35,7 +35,7 @@ public:
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnCreate(PropertyHandler& handler, const PropertyData& data) {}
+    virtual void OnCreate(EntityService& handler, const PropertyData& data) {}
     virtual void OnDestroy() {}
     virtual void OnInit(const AnimationDb& animationDb) {}
 
@@ -64,7 +64,7 @@ private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
     BasicState::StateData stateData_;
-    PropertyHandler propertyHandler_;
+    EntityService entityService_;
     StateMachine stateMachine_;
     bool enableInput_ = true;
 

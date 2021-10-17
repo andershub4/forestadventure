@@ -10,12 +10,12 @@ namespace FA {
 
 namespace Entity {
 
-class PropertyHandler;
+class EntityService;
 
 class BasicProperty
 {
 public:
-    BasicProperty(PropertyHandler* owner);
+    BasicProperty(EntityService* owner);
     virtual ~BasicProperty();
 
     BasicProperty(const BasicProperty&) = delete;
@@ -27,10 +27,10 @@ public:
     virtual void Update(float deltaTime) = 0;
 
 protected:
-    PropertyHandler* Owner() const { return owner_; }
+    EntityService* Owner() const { return owner_; }
 
 private:
-    PropertyHandler* owner_ = nullptr;
+    EntityService* owner_ = nullptr;
 };
 
 }  // namespace Entity

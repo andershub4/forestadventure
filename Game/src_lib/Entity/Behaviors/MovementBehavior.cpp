@@ -27,7 +27,7 @@ namespace FA {
 
 namespace Entity {
 
-MovementBehavior::MovementBehavior(PropertyHandler *owner)
+MovementBehavior::MovementBehavior(EntityService *owner)
     : BasicBehavior(owner)
 {}
 

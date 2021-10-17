@@ -189,7 +189,7 @@
     <ClCompile Include="Entity\Attributes\AnimationAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\PropertyHandler.cpp">
+    <ClCompile Include="Entity\EntityService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Attributes\FaceDirectionAttribute.cpp">
@@ -470,7 +470,7 @@
     <ClInclude Include="Entity\Behaviors\BasicBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\PropertyHandler.h">
+    <ClInclude Include="Entity\EntityService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Attributes\FaceDirectionAttribute.h">

@@ -17,7 +17,7 @@ namespace Entity {
 class TransformAttribute : public BasicAttribute
 {
 public:
-    TransformAttribute(PropertyHandler *owner);
+    TransformAttribute(EntityService *owner);
 
     virtual void Update(float deltaTime) override{};
 

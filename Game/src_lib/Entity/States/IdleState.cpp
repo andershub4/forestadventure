@@ -17,8 +17,8 @@ namespace FA {
 
 namespace Entity {
 
-IdleState::IdleState(StateMachine& stateMachine, StateData& stateData, PropertyHandler& propertyHandler)
-    : BasicState(stateMachine, stateData, propertyHandler)
+IdleState::IdleState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService)
+    : BasicState(stateMachine, stateData, entityService)
 {}
 
 IdleState::~IdleState() = default;

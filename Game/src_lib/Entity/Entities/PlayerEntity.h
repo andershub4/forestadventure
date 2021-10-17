@@ -19,7 +19,7 @@ public:
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
-    virtual void OnCreate(PropertyHandler& handler, const PropertyData& data) override;
+    virtual void OnCreate(EntityService& handler, const PropertyData& data) override;
     virtual void OnDestroy() override;
     virtual void OnInit(const AnimationDb& animationDb) override;
 

@@ -10,7 +10,7 @@ namespace FA {
 
 namespace Entity {
 
-BasicAttribute::BasicAttribute(PropertyHandler *owner)
+BasicAttribute::BasicAttribute(EntityService *owner)
     : BasicProperty(owner)
 {}
 

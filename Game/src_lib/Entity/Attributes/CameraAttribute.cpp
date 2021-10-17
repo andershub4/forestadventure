@@ -10,7 +10,7 @@ namespace FA {
 
 namespace Entity {
 
-CameraAttribute::CameraAttribute(PropertyHandler *owner)
+CameraAttribute::CameraAttribute(EntityService *owner)
     : BasicAttribute(owner)
 {}
 
