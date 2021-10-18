@@ -23,6 +23,7 @@ public:
     AnimationAttribute(EntityService *owner);
 
     virtual void Update(float deltaTime) override;
+    virtual void Init() override;
 
     void AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation);
     void ApplyTo(sf::Sprite &sprite);

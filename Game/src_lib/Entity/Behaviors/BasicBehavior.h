@@ -23,6 +23,7 @@ public:
     virtual FrameType GetFrameType() const = 0;
 
     virtual void Awake() {}
+    virtual void Init() {}
 };
 
 }  // namespace Entity

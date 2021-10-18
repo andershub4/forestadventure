@@ -19,6 +19,7 @@ public:
     virtual ~BasicAttribute();
 
     virtual void Awake() {}
+    virtual void Init() {}
 };
 
 }  // namespace Entity

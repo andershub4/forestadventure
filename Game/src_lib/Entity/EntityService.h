@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "Enum/EntityType.h"
+#include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 #include "Logging.h"
 #include "PropertyStore.h"
@@ -18,6 +19,7 @@ namespace FA {
 
 class CameraManager;
 class AnimationDb;
+class Animation;
 
 namespace Entity {
 
@@ -72,6 +74,8 @@ public:
 
     void Awake();
     void InitProperties();
+    Animation GetAnimation(FrameType frameType, FaceDirection faceDir) const;
+    std::vector<FrameType> GetFrameTypes() const { return frameTypes_; }
 
 private:
     PropertyStore attributeStore_;

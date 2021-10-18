@@ -19,6 +19,13 @@ void PropertyStore::Awake()
     }
 }
 
+void PropertyStore::Init()
+{
+    for (const auto &c : properties_) {
+        c.second->Init();
+    }
+}
+
 }  // namespace Entity
 
 }  // namespace FA

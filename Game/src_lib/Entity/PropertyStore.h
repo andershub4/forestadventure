@@ -53,6 +53,7 @@ public:
     }
 
     void Awake();
+    void Init();
 
 private:
     std::unordered_map<std::type_index, std::shared_ptr<BasicProperty>> properties_;

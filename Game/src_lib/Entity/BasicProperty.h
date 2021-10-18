@@ -24,6 +24,7 @@ public:
     BasicProperty& operator=(BasicProperty&&) = delete;
 
     virtual void Awake() = 0;
+    virtual void Init() = 0;
     virtual void Update(float deltaTime) = 0;
 
 protected:

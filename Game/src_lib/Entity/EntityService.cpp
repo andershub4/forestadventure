@@ -41,15 +41,13 @@ void EntityService::Awake()
 
 void EntityService::InitProperties()
 {
-    auto dirs = attributeStore_.GetProperty<FaceDirectionAttribute>()->GetAvailableDirections();
+    attributeStore_.Init();
+    behaviorStore_.Init();
+}
 
-    for (auto f : frameTypes_) {
-        if (f == FrameType::Undefined) continue;
-        for (auto face : dirs) {
-            auto animation = animationDb_.GetAnimation(entityType_, f, face);
-            attributeStore_.GetProperty<AnimationAttribute>()->AddAnimation(f, face, animation);
-        }
-    }
+Animation EntityService::GetAnimation(FrameType frameType, FaceDirection faceDir) const
+{
+    return animationDb_.GetAnimation(entityType_, frameType, faceDir);
 }
 
 }  // namespace Entity

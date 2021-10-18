@@ -8,6 +8,9 @@
 
 #include <sstream>
 
+#include "Entity/Attributes/FaceDirectionAttribute.h"
+#include "Entity/EntityService.h"
+
 namespace FA {
 
 namespace Entity {
@@ -19,6 +22,19 @@ AnimationAttribute::AnimationAttribute(EntityService *owner)
 void AnimationAttribute::Update(float deltaTime)
 {
     currentAnimation_.Update(deltaTime);
+}
+
+void AnimationAttribute::Init()
+{
+    auto dirs = Owner()->GetAttribute<FaceDirectionAttribute>()->GetAvailableDirections();
+
+    for (auto frameType : Owner()->GetFrameTypes()) {
+        if (frameType == FrameType::Undefined) continue;
+        for (auto faceDir : dirs) {
+            auto animation = Owner()->GetAnimation(frameType, faceDir);
+            AddAnimation(frameType, faceDir, animation);
+        }
+    }
 }
 
 void AnimationAttribute::AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation)
