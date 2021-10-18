@@ -26,7 +26,7 @@ class CameraAttribute;
 class EntityService
 {
 public:
-    EntityService(EntityType entityType, CameraManager &cameraManager);
+    EntityService(EntityType entityType, CameraManager &cameraManager, const AnimationDb &animationDb);
     ~EntityService();
 
     template <class T>
@@ -71,7 +71,7 @@ public:
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
 
     void Awake();
-    void InitProperties(const AnimationDb &animationDb);
+    void InitProperties();
 
 private:
     PropertyStore attributeStore_;
@@ -79,6 +79,7 @@ private:
     std::vector<FrameType> frameTypes_;
     CameraManager &cameraManager_;
     EntityType entityType_;
+    const AnimationDb &animationDb_;
 };
 
 }  // namespace Entity

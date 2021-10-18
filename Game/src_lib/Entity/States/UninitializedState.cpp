@@ -24,9 +24,9 @@ void UninitializedState::Create(const PropertyData& data)
     GetBehavior<UninitializedBehavior>()->Create(data);
 }
 
-void UninitializedState::OnInitStateData(const AnimationDb& animationDb)
+void UninitializedState::OnInitStateData()
 {
-    InitProperties(animationDb);
+    InitProperties();
 
     GetBehavior<IdleBehavior>()->Execute(*this);
 }

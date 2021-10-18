@@ -15,13 +15,13 @@ namespace Entity {
 class PlayerEntity : public BasicEntity
 {
 public:
-    PlayerEntity(EntityId id, CameraManager& cameraManager, MessageBus& messageBus);
+    PlayerEntity(EntityId id, CameraManager& cameraManager, const AnimationDb& animationDb, MessageBus& messageBus);
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
     virtual void OnAddProperties(EntityService& handler, const PropertyData& data) override;
     virtual void OnDestroy() override;
-    virtual void OnInit(const AnimationDb& animationDb) override;
+    virtual void OnInit() override;
 
 protected:
     virtual void OnIsKeyPressed(Keyboard::Key key) override;

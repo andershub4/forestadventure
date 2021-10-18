@@ -21,8 +21,9 @@ namespace FA {
 
 namespace Entity {
 
-MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, MessageBus& messageBus)
-    : BasicEntity(id, EntityType::Mole, cameraManager, messageBus)
+MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, const AnimationDb& animationDb,
+                       MessageBus& messageBus)
+    : BasicEntity(id, EntityType::Mole, cameraManager, animationDb, messageBus)
 {}
 
 MoleEntity::~MoleEntity() = default;
@@ -44,9 +45,9 @@ void MoleEntity::OnAddProperties(EntityService& entityService, const PropertyDat
     s->AddAnimation(a);
 }
 
-void MoleEntity::OnInit(const AnimationDb& animationDb)
+void MoleEntity::OnInit()
 {
-    InitStateData(animationDb);
+    InitStateData();
 }
 
 }  // namespace Entity

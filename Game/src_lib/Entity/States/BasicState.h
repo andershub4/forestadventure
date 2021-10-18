@@ -41,7 +41,7 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInitStateData(const AnimationDb& animationDb) {}
+    virtual void OnInitStateData() {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}
@@ -81,7 +81,7 @@ public:
         return entityService_.AddBehavior<T>();
     }
 
-    void InitProperties(const AnimationDb& animationDb);
+    void InitProperties();
 
 protected:
     StateData& stateData_;

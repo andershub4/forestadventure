@@ -28,8 +28,9 @@ namespace FA {
 
 namespace Entity {
 
-PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, MessageBus& messageBus)
-    : BasicEntity(id, EntityType::Player, cameraManager, messageBus)
+PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, const AnimationDb& animationDb,
+                           MessageBus& messageBus)
+    : BasicEntity(id, EntityType::Player, cameraManager, animationDb, messageBus)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
@@ -56,9 +57,9 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
-void PlayerEntity::OnInit(const AnimationDb& animationDb)
+void PlayerEntity::OnInit()
 {
-    InitStateData(animationDb);
+    InitStateData();
 }
 
 void PlayerEntity::OnDestroy()

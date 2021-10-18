@@ -17,9 +17,10 @@ namespace FA {
 
 namespace Entity {
 
-EntityService::EntityService(EntityType entityType, CameraManager& cameraManager)
+EntityService::EntityService(EntityType entityType, CameraManager& cameraManager, const AnimationDb& animationDb)
     : cameraManager_(cameraManager)
     , entityType_(entityType)
+    , animationDb_(animationDb)
 {}
 
 EntityService::~EntityService() = default;
@@ -38,14 +39,14 @@ void EntityService::Awake()
     behaviorStore_.Awake();
 }
 
-void EntityService::InitProperties(const AnimationDb& animationDb)
+void EntityService::InitProperties()
 {
     auto dirs = attributeStore_.GetProperty<FaceDirectionAttribute>()->GetAvailableDirections();
 
     for (auto f : frameTypes_) {
         if (f == FrameType::Undefined) continue;
         for (auto face : dirs) {
-            auto animation = animationDb.GetAnimation(entityType_, f, face);
+            auto animation = animationDb_.GetAnimation(entityType_, f, face);
             attributeStore_.GetProperty<AnimationAttribute>()->AddAnimation(f, face, animation);
         }
     }

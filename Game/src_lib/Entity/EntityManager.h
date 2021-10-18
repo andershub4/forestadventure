@@ -34,8 +34,9 @@ public:
     void LateUpdate();
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    void Create(EntityType type, const PropertyData &data, CameraManager &cameraManager);
-    void Init(const AnimationDb &animationDb);
+    void Create(EntityType type, const PropertyData &data, CameraManager &cameraManager,
+                const AnimationDb &animationDb);
+    void Init();
 
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;

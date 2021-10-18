@@ -46,17 +46,18 @@ void EntityManager::LateUpdate()
     }
 }
 
-void EntityManager::Create(EntityType type, const PropertyData& data, CameraManager& cameraManager)
+void EntityManager::Create(EntityType type, const PropertyData& data, CameraManager& cameraManager,
+                           const AnimationDb& animationDb)
 {
-    auto entity = factory_.Create(type, cameraManager);
+    auto entity = factory_.Create(type, cameraManager, animationDb);
     entity->Create(data);
     AddEntity(std::move(entity));
 }
 
-void EntityManager::Init(const AnimationDb& animationDb)
+void EntityManager::Init()
 {
     for (const auto& entry : entityMap_) {
-        entry.second->OnInit(animationDb);
+        entry.second->OnInit();
     }
 }
 

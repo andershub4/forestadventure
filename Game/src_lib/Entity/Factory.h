@@ -15,6 +15,7 @@ namespace FA {
 
 class MessageBus;
 class CameraManager;
+class AnimationDb;
 
 namespace Entity {
 
@@ -26,7 +27,8 @@ public:
     Factory(MessageBus& messageBus);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager,
+                                        const AnimationDb& animationDb) const;
 
 private:
     mutable Entity::EntityId id_{0};

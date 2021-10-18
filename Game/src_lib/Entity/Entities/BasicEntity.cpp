@@ -19,10 +19,11 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& cameraManager, MessageBus& messageBus)
+BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& cameraManager,
+                         const AnimationDb& animationDb, MessageBus& messageBus)
     : id_(id)
     , messageBus_(messageBus)
-    , entityService_(entityType, cameraManager)
+    , entityService_(entityType, cameraManager, animationDb)
     , stateMachine_(entityService_)
 {
     auto u = entityService_.AddBehavior<UninitializedBehavior>();
@@ -81,9 +82,9 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void BasicEntity::InitStateData(const AnimationDb& animationDb)
+void BasicEntity::InitStateData()
 {
-    stateMachine_.OnInitStateData(animationDb);
+    stateMachine_.OnInitStateData();
 }
 
 void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)

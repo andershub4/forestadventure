@@ -14,8 +14,9 @@ namespace FA {
 
 namespace Entity {
 
-StaticEntity::StaticEntity(EntityId id, CameraManager& cameraManager, MessageBus& messageBus)
-    : BasicEntity(id, EntityType::Static, cameraManager, messageBus)
+StaticEntity::StaticEntity(EntityId id, CameraManager& cameraManager, const AnimationDb& animationDb,
+                           MessageBus& messageBus)
+    : BasicEntity(id, EntityType::Static, cameraManager, animationDb, messageBus)
 {}
 
 StaticEntity::~StaticEntity() = default;

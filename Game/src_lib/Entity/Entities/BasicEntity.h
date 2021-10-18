@@ -31,13 +31,14 @@ struct PropertyData;
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, EntityType entityType, CameraManager& cameraManager, MessageBus& messageBus);
+    BasicEntity(EntityId id, EntityType entityType, CameraManager& cameraManager, const AnimationDb& animationDb,
+                MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
     virtual void OnAddProperties(EntityService& entityService, const PropertyData& data) {}
     virtual void OnDestroy() {}
-    virtual void OnInit(const AnimationDb& animationDb) {}
+    virtual void OnInit() {}
 
     void Create(const PropertyData& data);
     void Update(float deltaTime);
@@ -47,7 +48,7 @@ public:
     EntityId GetId() const { return id_; }
 
 protected:
-    void InitStateData(const AnimationDb& animationDb);
+    void InitStateData();
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void StartMove(MoveDirection moveDir, FaceDirection faceDir);
