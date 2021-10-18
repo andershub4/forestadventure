@@ -21,10 +21,6 @@ class AnimationDb;
 
 namespace Entity {
 
-class IdleBehavior;
-class MovementBehavior;
-class AttackBehavior;
-class AttackWeaponBehavior;
 class CameraAttribute;
 
 class EntityService
@@ -42,7 +38,9 @@ public:
     template <class T>
     std::shared_ptr<T> AddBehavior()
     {
-        return behaviorStore_.AddProperty<T>(this);
+        auto b = behaviorStore_.AddProperty<T>(this);
+        frameTypes_.push_back(b->GetFrameType());
+        return b;
     }
 
     template <class T>
@@ -68,18 +66,6 @@ public:
             return AddBehavior<T>();
         }
     }
-
-    template <>
-    std::shared_ptr<IdleBehavior> AddBehavior<IdleBehavior>();
-
-    template <>
-    std::shared_ptr<MovementBehavior> AddBehavior<MovementBehavior>();
-
-    template <>
-    std::shared_ptr<AttackBehavior> AddBehavior<AttackBehavior>();
-
-    template <>
-    std::shared_ptr<AttackWeaponBehavior> AddBehavior<AttackWeaponBehavior>();
 
     template <>
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();

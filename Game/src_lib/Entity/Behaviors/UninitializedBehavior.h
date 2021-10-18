@@ -25,6 +25,7 @@ public:
     UninitializedBehavior(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
+    virtual FrameType GetFrameType() const override { return FrameType::Undefined; }
 
     void Execute(BasicState &oldState);
 

@@ -29,6 +29,7 @@ public:
 
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;
+    virtual FrameType GetFrameType() const override { return FrameType::Move; }
 
     void SetDirection(MoveDirection direction);
     void Execute(BasicState &oldState);

@@ -13,6 +13,7 @@
 #include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
+#include "Entity/Behaviors/MovementBehavior.h"
 #include "Entity/PropertyData.h"
 #include "Message/MessageBus.h"
 

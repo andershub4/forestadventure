@@ -22,6 +22,7 @@ public:
     IdleBehavior(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
+    virtual FrameType GetFrameType() const override { return FrameType::Idle; }
 
     void Execute(BasicState &oldState);
 };

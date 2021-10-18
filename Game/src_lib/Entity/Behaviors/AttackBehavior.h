@@ -20,6 +20,7 @@ public:
     AttackBehavior(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
+    virtual FrameType GetFrameType() const override { return FrameType::Attack; }
 
     void Execute(BasicState &oldState);
 };

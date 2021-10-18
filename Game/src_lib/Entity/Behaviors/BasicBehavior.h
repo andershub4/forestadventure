@@ -8,6 +8,8 @@
 
 #include "Entity/BasicProperty.h"
 
+#include "Enum/FrameType.h"
+
 namespace FA {
 
 namespace Entity {
@@ -17,6 +19,8 @@ class BasicBehavior : public BasicProperty
 public:
     BasicBehavior(EntityService* owner);
     virtual ~BasicBehavior();
+
+    virtual FrameType GetFrameType() const = 0;
 
     virtual void Awake() {}
 };

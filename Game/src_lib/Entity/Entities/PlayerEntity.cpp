@@ -16,6 +16,7 @@
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Behaviors/AttackBehavior.h"
 #include "Entity/Behaviors/AttackWeaponBehavior.h"
+#include "Entity/Behaviors/MovementBehavior.h"
 #include "Entity/PropertyData.h"
 #include "Enum/KeyboardKey.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
