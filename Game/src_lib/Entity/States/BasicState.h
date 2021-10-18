@@ -41,7 +41,7 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInitStateData() {}
+    virtual void OnInit() {}
     virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
     virtual void OnStopMove() {}
     virtual void OnAttack() {}

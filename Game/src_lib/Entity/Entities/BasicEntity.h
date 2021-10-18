@@ -37,9 +37,9 @@ public:
 
     virtual std::string Name() const = 0;
     virtual void OnDestroy() {}
-    virtual void OnInit() {}
 
     void Create(const PropertyData& data);
+    void Init();
     void Update(float deltaTime);
     void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);
@@ -47,7 +47,6 @@ public:
     EntityId GetId() const { return id_; }
 
 protected:
-    void InitStateData();
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void StartMove(MoveDirection moveDir, FaceDirection faceDir);

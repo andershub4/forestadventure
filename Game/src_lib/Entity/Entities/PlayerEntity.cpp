@@ -57,11 +57,6 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
-void PlayerEntity::OnInit()
-{
-    InitStateData();
-}
-
 void PlayerEntity::OnDestroy()
 {
     Unsubscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});

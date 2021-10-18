@@ -82,9 +82,9 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void BasicEntity::InitStateData()
+void BasicEntity::Init()
 {
-    stateMachine_.OnInitStateData();
+    stateMachine_.OnInit();
 }
 
 void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)

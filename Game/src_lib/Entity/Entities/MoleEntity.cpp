@@ -45,11 +45,6 @@ void MoleEntity::OnAddProperties(EntityService& entityService, const PropertyDat
     s->AddAnimation(a);
 }
 
-void MoleEntity::OnInit()
-{
-    InitStateData();
-}
-
 }  // namespace Entity
 
 }  // namespace FA

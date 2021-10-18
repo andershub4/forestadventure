@@ -21,7 +21,6 @@ public:
     virtual std::string Name() const override { return "PlayerEntity"; }
     virtual void OnAddProperties(EntityService& handler, const PropertyData& data) override;
     virtual void OnDestroy() override;
-    virtual void OnInit() override;
 
 protected:
     virtual void OnIsKeyPressed(Keyboard::Key key) override;

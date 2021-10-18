@@ -24,7 +24,7 @@ public:
     void DrawTo(sf::RenderTarget& renderTarget);
     void SetState(std::unique_ptr<BasicState> newState);
 
-    void OnInitStateData();
+    void OnInit();
     void OnStartMove(MoveDirection moveDir, FaceDirection faceDir);
     void OnStopMove();
     void OnAttack();

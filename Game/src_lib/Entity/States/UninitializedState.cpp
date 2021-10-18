@@ -24,7 +24,7 @@ void UninitializedState::Create(const PropertyData& data)
     GetBehavior<UninitializedBehavior>()->Create(data);
 }
 
-void UninitializedState::OnInitStateData()
+void UninitializedState::OnInit()
 {
     InitProperties();
 

@@ -57,7 +57,7 @@ void EntityManager::Create(EntityType type, const PropertyData& data, CameraMana
 void EntityManager::Init()
 {
     for (const auto& entry : entityMap_) {
-        entry.second->OnInit();
+        entry.second->Init();
     }
 }
 

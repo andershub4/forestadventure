@@ -20,7 +20,6 @@ public:
 
     virtual std::string Name() const override { return "MoleEntity"; }
     virtual void OnAddProperties(EntityService& handler, const PropertyData& data) override;
-    virtual void OnInit() override;
 };
 
 }  // namespace Entity
