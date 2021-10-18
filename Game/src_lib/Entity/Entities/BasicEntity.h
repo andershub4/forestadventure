@@ -36,7 +36,6 @@ public:
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnAddProperties(EntityService& entityService, const PropertyData& data) {}
     virtual void OnDestroy() {}
     virtual void OnInit() {}
 
@@ -68,6 +67,8 @@ private:
     bool enableInput_ = true;
 
 private:
+    virtual void OnAddProperties(EntityService& entityService, const PropertyData& data) {}
+
     void OnMessage(std::shared_ptr<Message> msg);
     void HandleMessage(std::shared_ptr<Message> msg);
 };
