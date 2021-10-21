@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "AnimationShape.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/EntityService.h"
@@ -54,9 +55,9 @@ void Shape::Set(FrameType frameType)
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
-void Shape::Init()
+void Shape::AddAnimation()
 {
-    //    animation_->Init();
+    animation_ = std::make_shared<AnimationShape>(entityService_);
 }
 
 bool Shape::AnimationIsCompleted() const

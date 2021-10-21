@@ -56,7 +56,7 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
 
 void PlayerEntity::OnAddShape(Shape& shape)
 {
-    shape.AddAnimation<AnimationShape>();
+    shape.AddAnimation();
 }
 
 void PlayerEntity::OnDestroy()

@@ -6,9 +6,11 @@
 
 #pragma once
 
+#include <memory>
+
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "AnimationShape.h"
+#include "Enum/FrameType.h"
 
 namespace FA {
 
@@ -17,6 +19,7 @@ namespace Entity {
 class TransformAttribute;
 class FaceDirectionAttribute;
 class EntityService;
+class AnimationShape;
 
 class Shape
 {
@@ -29,12 +32,7 @@ public:
 
     void DrawTo(sf::RenderTarget &renderTarget);
     void Set(FrameType frameType);
-    template <class T>
-    void AddAnimation()
-    {
-        animation_ = std::make_shared<T>(entityService_);
-    }
-    void Init();
+    void AddAnimation();
     bool AnimationIsCompleted() const;
 
 private:
