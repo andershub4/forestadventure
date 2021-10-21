@@ -9,7 +9,6 @@
 #include <string>
 
 #include "Animation/Animator.h"
-#include "BasicAttribute.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 
@@ -17,13 +16,15 @@ namespace FA {
 
 namespace Entity {
 
-class AnimationAttribute : public BasicAttribute
+class EntityService;
+
+class AnimationShape
 {
 public:
-    AnimationAttribute(EntityService *owner);
+    AnimationShape(EntityService *owner);
 
-    virtual void Update(float deltaTime) override;
-    virtual void Init() override;
+    void Update(float deltaTime);
+    void Init();
 
     void AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation);
     void ApplyTo(sf::Sprite &sprite);
@@ -33,6 +34,7 @@ public:
 private:
     Animator animator_;
     Animation currentAnimation_;
+    EntityService *entityService_ = nullptr;
 
 private:
     std::string KeyStr(FrameType frameType, FaceDirection faceDir) const;

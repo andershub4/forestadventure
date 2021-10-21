@@ -8,8 +8,7 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "AnimationAttribute.h"
-#include "BasicAttribute.h"
+#include "AnimationShape.h"
 
 namespace FA {
 
@@ -17,26 +16,33 @@ namespace Entity {
 
 class TransformAttribute;
 class FaceDirectionAttribute;
+class EntityService;
 
-class ShapeAttribute : public BasicAttribute
+class Shape
 {
 public:
-    ShapeAttribute(EntityService *owner);
-    virtual ~ShapeAttribute();
+    Shape(EntityService *owner);
+    virtual ~Shape();
 
-    virtual void Awake() override;
-    virtual void Update(float deltaTime) override;
+    void Awake();
+    void Update(float deltaTime);
 
     void DrawTo(sf::RenderTarget &renderTarget);
     void Set(FrameType frameType);
-    void AddAnimation(std::shared_ptr<AnimationAttribute> animation) { animation_ = animation; }
+    template <class T>
+    void AddAnimation()
+    {
+        animation_ = std::make_shared<T>(entityService_);
+    }
+    void Init();
     bool AnimationIsCompleted() const;
 
 private:
+    EntityService *entityService_ = nullptr;
     sf::Sprite sprite_;
     std::shared_ptr<TransformAttribute> transform_ = nullptr;
     std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
-    std::shared_ptr<AnimationAttribute> animation_;
+    std::shared_ptr<AnimationShape> animation_ = nullptr;
 };
 
 }  // namespace Entity

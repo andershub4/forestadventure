@@ -4,34 +4,36 @@
  *	See file LICENSE for full license details.
  */
 
-#include "ShapeAttribute.h"
+#include "Shape.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/Attributes/FaceDirectionAttribute.h"
+#include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/EntityService.h"
-#include "FaceDirectionAttribute.h"
-#include "TransformAttribute.h"
 
 namespace FA {
 
 namespace Entity {
 
-ShapeAttribute::ShapeAttribute(EntityService *owner)
-    : BasicAttribute(owner)
+Shape::Shape(EntityService *owner)
+    : entityService_(owner)
 {}
 
-ShapeAttribute::~ShapeAttribute() = default;
+Shape::~Shape() = default;
 
-void ShapeAttribute::Awake()
+void Shape::Awake()
 {
-    transform_ = Owner()->GetAttribute<TransformAttribute>();
-    faceDirection_ = Owner()->GetAttribute<FaceDirectionAttribute>();
+    transform_ = entityService_->GetAttribute<TransformAttribute>();
+    faceDirection_ = entityService_->GetAttribute<FaceDirectionAttribute>();
 
     sprite_.setPosition(transform_->GetPosition());
     sprite_.setScale(transform_->GetScale(), transform_->GetScale());
+
+    animation_->Init();
 }
 
-void ShapeAttribute::Update(float deltaTime)
+void Shape::Update(float deltaTime)
 {
     animation_->Update(deltaTime);
     animation_->ApplyTo(sprite_);
@@ -40,19 +42,24 @@ void ShapeAttribute::Update(float deltaTime)
     sprite_.setScale(transform_->GetScale(), transform_->GetScale());
 }
 
-void ShapeAttribute::DrawTo(sf::RenderTarget &renderTarget)
+void Shape::DrawTo(sf::RenderTarget &renderTarget)
 {
     renderTarget.draw(sprite_);
 }
 
-void ShapeAttribute::Set(FrameType frameType)
+void Shape::Set(FrameType frameType)
 {
     animation_->SetAnimation(frameType, faceDirection_->GetDirection());
     animation_->ApplyTo(sprite_);
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
-bool ShapeAttribute::AnimationIsCompleted() const
+void Shape::Init()
+{
+    //    animation_->Init();
+}
+
+bool Shape::AnimationIsCompleted() const
 {
     return animation_->IsCompleted();
 }

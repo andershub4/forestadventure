@@ -7,9 +7,9 @@
 #include "AttackWeaponState.h"
 
 #include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Behaviors/IdleBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
+#include "Entity/Shape.h"
 #include "Enum/FrameType.h"
 
 namespace FA {
@@ -24,20 +24,20 @@ AttackWeaponState::~AttackWeaponState() = default;
 
 void AttackWeaponState::Update(float deltaTime)
 {
-    GetAttribute<ShapeAttribute>()->Update(deltaTime);
-    if (GetAttribute<ShapeAttribute>()->AnimationIsCompleted()) {
+    GetShape()->Update(deltaTime);
+    if (GetShape()->AnimationIsCompleted()) {
         GetBehavior<IdleBehavior>()->Execute(*this);
     }
 }
 
 void AttackWeaponState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    GetAttribute<ShapeAttribute>()->DrawTo(renderTarget);
+    GetShape()->DrawTo(renderTarget);
 }
 
 void AttackWeaponState::Enter()
 {
-    GetAttribute<ShapeAttribute>()->Set(FrameType::AttackWeapon);
+    GetShape()->Set(FrameType::AttackWeapon);
 }
 
 void AttackWeaponState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

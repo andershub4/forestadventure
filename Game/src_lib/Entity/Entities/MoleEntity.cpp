@@ -8,13 +8,13 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Attributes/AnimationAttribute.h"
+#include "Entity/AnimationShape.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Behaviors/MovementBehavior.h"
 #include "Entity/PropertyData.h"
+#include "Entity/Shape.h"
 #include "Message/MessageBus.h"
 
 namespace FA {
@@ -40,9 +40,11 @@ void MoleEntity::OnAddProperties(EntityService& entityService, const PropertyDat
     auto v = entityService.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
     entityService.AddBehavior<MovementBehavior>();
-    auto a = entityService.AddAttribute<AnimationAttribute>();
-    auto s = entityService.AddAttribute<ShapeAttribute>();
-    s->AddAnimation(a);
+}
+
+void MoleEntity::OnAddShape(Shape& shape)
+{
+    shape.AddAnimation<AnimationShape>();
 }
 
 }  // namespace Entity

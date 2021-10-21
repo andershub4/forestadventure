@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "AnimationAttribute.h"
+#include "AnimationShape.h"
 
 #include <sstream>
 
@@ -15,52 +15,52 @@ namespace FA {
 
 namespace Entity {
 
-AnimationAttribute::AnimationAttribute(EntityService *owner)
-    : BasicAttribute(owner)
+AnimationShape::AnimationShape(EntityService *owner)
+    : entityService_(owner)
 {}
 
-void AnimationAttribute::Update(float deltaTime)
+void AnimationShape::Update(float deltaTime)
 {
     currentAnimation_.Update(deltaTime);
 }
 
-void AnimationAttribute::Init()
+void AnimationShape::Init()
 {
-    auto dirs = Owner()->GetAttribute<FaceDirectionAttribute>()->GetAvailableDirections();
+    auto dirs = entityService_->GetAttribute<FaceDirectionAttribute>()->GetAvailableDirections();
 
-    for (auto frameType : Owner()->GetFrameTypes()) {
+    for (auto frameType : entityService_->GetFrameTypes()) {
         if (frameType == FrameType::Undefined) continue;
         for (auto faceDir : dirs) {
-            auto animation = Owner()->GetAnimation(frameType, faceDir);
+            auto animation = entityService_->GetAnimation(frameType, faceDir);
             AddAnimation(frameType, faceDir, animation);
         }
     }
 }
 
-void AnimationAttribute::AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation)
+void AnimationShape::AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation)
 {
     auto k = KeyStr(frameType, faceDir);
     animator_.AddAnimation(k, animation);
 }
 
-void AnimationAttribute::ApplyTo(sf::Sprite &sprite)
+void AnimationShape::ApplyTo(sf::Sprite &sprite)
 {
     currentAnimation_.ApplyTo(sprite);
 }
 
-void AnimationAttribute::SetAnimation(FrameType frameType, FaceDirection faceDir)
+void AnimationShape::SetAnimation(FrameType frameType, FaceDirection faceDir)
 {
     auto k = KeyStr(frameType, faceDir);
     currentAnimation_ = animator_.GetAnimation(k);
     currentAnimation_.Start();
 }
 
-bool AnimationAttribute::IsCompleted() const
+bool AnimationShape::IsCompleted() const
 {
     return currentAnimation_.IsCompleted();
 }
 
-std::string AnimationAttribute::KeyStr(FrameType frameType, FaceDirection faceDir) const
+std::string AnimationShape::KeyStr(FrameType frameType, FaceDirection faceDir) const
 {
     std::stringstream ss;
     ss << frameType << "_" << faceDir;

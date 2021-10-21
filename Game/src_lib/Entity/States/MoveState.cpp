@@ -6,9 +6,9 @@
 
 #include "MoveState.h"
 
-#include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Behaviors/IdleBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
+#include "Entity/Shape.h"
 #include "Enum/FrameType.h"
 
 namespace FA {
@@ -23,18 +23,18 @@ MoveState::~MoveState() = default;
 
 void MoveState::Update(float deltaTime)
 {
-    GetAttribute<ShapeAttribute>()->Update(deltaTime);
+    GetShape()->Update(deltaTime);
     GetBehavior<MovementBehavior>()->Update(deltaTime);
 }
 
 void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    GetAttribute<ShapeAttribute>()->DrawTo(renderTarget);
+    GetShape()->DrawTo(renderTarget);
 }
 
 void MoveState::Enter()
 {
-    GetAttribute<ShapeAttribute>()->Set(FrameType::Move);
+    GetShape()->Set(FrameType::Move);
 }
 
 void MoveState::Exit()

@@ -10,6 +10,7 @@
 
 #include "Entity/Behaviors/IdleBehavior.h"
 #include "Entity/Behaviors/UninitializedBehavior.h"
+#include "Entity/Shape.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -30,7 +31,10 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     u->SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {
         OnAddProperties(entityService, propertyData);
         entityService.Awake();
+        OnAddShape(*entityService.GetShape());
+        entityService.GetShape()->Awake();
     });
+
     entityService_.AddBehavior<IdleBehavior>();
 }
 

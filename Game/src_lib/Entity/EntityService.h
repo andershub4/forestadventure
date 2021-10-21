@@ -24,6 +24,7 @@ class Animation;
 namespace Entity {
 
 class CameraAttribute;
+class Shape;
 
 class EntityService
 {
@@ -76,6 +77,7 @@ public:
     void InitProperties();
     Animation GetAnimation(FrameType frameType, FaceDirection faceDir) const;
     std::vector<FrameType> GetFrameTypes() const { return frameTypes_; }
+    std::shared_ptr<Shape> GetShape() const { return shape_; }
 
 private:
     PropertyStore attributeStore_;
@@ -84,6 +86,7 @@ private:
     CameraManager &cameraManager_;
     EntityType entityType_;
     const AnimationDb &animationDb_;
+    std::shared_ptr<Shape> shape_ = nullptr;
 };
 
 }  // namespace Entity

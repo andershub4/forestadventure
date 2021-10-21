@@ -7,9 +7,9 @@
 #include "AttackState.h"
 
 #include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Behaviors/IdleBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
+#include "Entity/Shape.h"
 #include "Enum/FrameType.h"
 
 namespace FA {
@@ -24,21 +24,21 @@ AttackState::~AttackState() = default;
 
 void AttackState::Update(float deltaTime)
 {
-    GetAttribute<ShapeAttribute>()->Update(deltaTime);
+    GetShape()->Update(deltaTime);
 
-    if (GetAttribute<ShapeAttribute>()->AnimationIsCompleted()) {
+    if (GetShape()->AnimationIsCompleted()) {
         GetBehavior<IdleBehavior>()->Execute(*this);
     }
 }
 
 void AttackState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    GetAttribute<ShapeAttribute>()->DrawTo(renderTarget);
+    GetShape()->DrawTo(renderTarget);
 }
 
 void AttackState::Enter()
 {
-    GetAttribute<ShapeAttribute>()->Set(FrameType::Attack);
+    GetShape()->Set(FrameType::Attack);
 }
 
 void AttackState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

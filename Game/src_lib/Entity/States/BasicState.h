@@ -81,6 +81,8 @@ public:
         return entityService_.AddBehavior<T>();
     }
 
+    std::shared_ptr<Shape> GetShape() const { return entityService_.GetShape(); }
+
     void InitProperties();
 
 protected:

@@ -7,10 +7,10 @@
 #include "IdleState.h"
 
 #include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Behaviors/AttackBehavior.h"
 #include "Entity/Behaviors/AttackWeaponBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
+#include "Entity/Shape.h"
 #include "Enum/FrameType.h"
 
 namespace FA {
@@ -25,17 +25,17 @@ IdleState::~IdleState() = default;
 
 void IdleState::Update(float deltaTime)
 {
-    GetAttribute<ShapeAttribute>()->Update(deltaTime);
+    GetShape()->Update(deltaTime);
 }
 
 void IdleState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    GetAttribute<ShapeAttribute>()->DrawTo(renderTarget);
+    GetShape()->DrawTo(renderTarget);
 }
 
 void IdleState::Enter()
 {
-    GetAttribute<ShapeAttribute>()->Set(FrameType::Idle);
+    GetShape()->Set(FrameType::Idle);
 }
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)

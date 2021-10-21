@@ -8,16 +8,16 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Attributes/AnimationAttribute.h"
+#include "Entity/AnimationShape.h"
 #include "Entity/Attributes/CameraAttribute.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Attributes/ShapeAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Behaviors/AttackBehavior.h"
 #include "Entity/Behaviors/AttackWeaponBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
 #include "Entity/PropertyData.h"
+#include "Entity/Shape.h"
 #include "Enum/KeyboardKey.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
@@ -50,11 +50,13 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
     entityService.AddBehavior<AttackBehavior>();
     entityService.AddBehavior<AttackWeaponBehavior>();
     entityService.AddAttribute<CameraAttribute>();
-    auto a = entityService.AddAttribute<AnimationAttribute>();
-    auto s = entityService.AddAttribute<ShapeAttribute>();
-    s->AddAnimation(a);
 
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
+}
+
+void PlayerEntity::OnAddShape(Shape& shape)
+{
+    shape.AddAnimation<AnimationShape>();
 }
 
 void PlayerEntity::OnDestroy()
