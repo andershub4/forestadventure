@@ -219,7 +219,7 @@
     <ClInclude Include="Entity\BasicProperty.h" />
     <ClInclude Include="Entity\Behaviors\UninitializedBehavior.h" />
     <ClInclude Include="Entity\EntityService.h" />
-    <ClInclude Include="Entity\AnimationShape.h" />
+    <ClInclude Include="Entity\Shapes\AnimationShape.h" />
     <ClInclude Include="Entity\Behaviors\AttackBehavior.h" />
     <ClInclude Include="Entity\Behaviors\AttackWeaponBehavior.h" />
     <ClInclude Include="Entity\Behaviors\BasicBehavior.h" />
@@ -289,7 +289,7 @@
     <ClInclude Include="Scene\Components\BasicComponent.h" />
     <ClInclude Include="Scene\Components\HelperComponent.h" />
     <ClInclude Include="Resource\SpriteSheet.h" />
-    <ClInclude Include="Entity\Shape.h" />
+    <ClInclude Include="Entity\Shapes\Shape.h" />
     <ClInclude Include="Entity\EntityManager.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Tile\TileMapData.h" />
@@ -312,7 +312,7 @@
     <ClCompile Include="Entity\Behaviors\UninitializedBehavior.cpp" />
     <ClCompile Include="Entity\EntityService.cpp" />
     <ClCompile Include="Entity\PropertyStore.cpp" />
-    <ClCompile Include="Entity\AnimationShape.cpp" />
+    <ClCompile Include="Entity\Shapes\AnimationShape.cpp" />
     <ClCompile Include="Entity\Behaviors\AttackBehavior.cpp" />
     <ClCompile Include="Entity\Behaviors\AttackWeaponBehavior.cpp" />
     <ClCompile Include="Entity\Behaviors\BasicBehavior.cpp" />
@@ -364,7 +364,7 @@
     <ClCompile Include="Scene\Components\BasicComponent.cpp" />
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
     <ClCompile Include="Resource\SpriteSheet.cpp" />
-    <ClCompile Include="Entity\Shape.cpp" />
+    <ClCompile Include="Entity\Shapes\Shape.cpp" />
     <ClCompile Include="Entity\EntityManager.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />

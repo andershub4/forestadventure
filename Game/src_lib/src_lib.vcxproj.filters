@@ -126,7 +126,7 @@
     <ClCompile Include="Resource\SpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Shape.cpp">
+    <ClCompile Include="Entity\Shapes\Shape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Behaviors\MovementBehavior.cpp">
@@ -186,7 +186,7 @@
     <ClCompile Include="Entity\Attributes\TransformAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\AnimationShape.cpp">
+    <ClCompile Include="Entity\Shapes\AnimationShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\EntityService.cpp">
@@ -374,7 +374,7 @@
     <ClInclude Include="Resource\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Shape.h">
+    <ClInclude Include="Entity\Shapes\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Behaviors\MovementBehavior.h">
@@ -461,7 +461,7 @@
     <ClInclude Include="Resource\EntityTextures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\AnimationShape.h">
+    <ClInclude Include="Entity\Shapes\AnimationShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\PropertyStore.h">

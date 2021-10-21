@@ -11,7 +11,7 @@
 #include "Attributes//TransformAttribute.h"
 #include "Level/CameraManager.h"
 #include "Resource/AnimationDb.h"
-#include "Shape.h"
+#include "Shapes/Shape.h"
 
 namespace FA {
 

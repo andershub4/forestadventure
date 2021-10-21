@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/AnimationShape.h"
 #include "Entity/Attributes/CameraAttribute.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
@@ -17,7 +16,8 @@
 #include "Entity/Behaviors/AttackWeaponBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
 #include "Entity/PropertyData.h"
-#include "Entity/Shape.h"
+#include "Entity/Shapes/AnimationShape.h"
+#include "Entity/Shapes/Shape.h"
 #include "Enum/KeyboardKey.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"

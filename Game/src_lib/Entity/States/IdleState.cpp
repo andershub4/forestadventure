@@ -10,7 +10,7 @@
 #include "Entity/Behaviors/AttackBehavior.h"
 #include "Entity/Behaviors/AttackWeaponBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
-#include "Entity/Shape.h"
+#include "Entity/Shapes/Shape.h"
 #include "Enum/FrameType.h"
 
 namespace FA {

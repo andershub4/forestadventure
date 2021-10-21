@@ -10,7 +10,7 @@
 
 #include "Entity/Behaviors/IdleBehavior.h"
 #include "Entity/Behaviors/UninitializedBehavior.h"
-#include "Entity/Shape.h"
+#include "Entity/Shapes/Shape.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
