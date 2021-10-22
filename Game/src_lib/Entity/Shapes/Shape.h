@@ -7,6 +7,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include <SFML/Graphics/Sprite.hpp>
 
@@ -40,7 +41,7 @@ private:
     sf::Sprite sprite_;
     std::shared_ptr<TransformAttribute> transform_ = nullptr;
     std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
-    std::shared_ptr<AnimationShape> animation_ = nullptr;
+    std::vector<std::shared_ptr<AnimationShape>> animationShapes_;
 };
 
 }  // namespace Entity

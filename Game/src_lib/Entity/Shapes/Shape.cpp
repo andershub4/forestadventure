@@ -34,8 +34,10 @@ void Shape::Awake()
 
 void Shape::Update(float deltaTime)
 {
-    animation_->Update(deltaTime);
-    animation_->ApplyTo(sprite_);
+    for (auto &animation : animationShapes_) {
+        animation->Update(deltaTime);
+        animation->ApplyTo(sprite_);
+    }
 
     sprite_.setPosition(transform_->GetPosition());
     sprite_.setScale(transform_->GetScale(), transform_->GetScale());
@@ -48,19 +50,27 @@ void Shape::DrawTo(sf::RenderTarget &renderTarget)
 
 void Shape::Set(FrameType frameType)
 {
-    animation_->SetAnimation(frameType, faceDirection_->GetDirection());
-    animation_->ApplyTo(sprite_);
+    for (auto &animation : animationShapes_) {
+        animation->SetAnimation(frameType, faceDirection_->GetDirection());
+        animation->ApplyTo(sprite_);
+    }
+
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
 void Shape::AddAnimationShape(std::shared_ptr<AnimationShape> animation)
 {
-    animation_ = animation;
+    animationShapes_.push_back(animation);
 }
 
 bool Shape::AnimationIsCompleted() const
 {
-    return animation_->IsCompleted();
+    bool result = true;
+    for (auto &animation : animationShapes_) {
+        result &= animation->IsCompleted();
+    }
+
+    return result;
 }
 
 }  // namespace Entity
