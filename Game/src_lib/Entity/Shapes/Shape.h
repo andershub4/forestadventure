@@ -21,6 +21,7 @@ class TransformAttribute;
 class FaceDirectionAttribute;
 class EntityService;
 class AnimationShape;
+class BasicShape;
 
 class Shape
 {
@@ -34,6 +35,7 @@ public:
     void DrawTo(sf::RenderTarget &renderTarget);
     void Set(FrameType frameType);
     void AddAnimationShape(std::shared_ptr<AnimationShape> animation);
+    void AddBasicShape(std::shared_ptr<BasicShape> basicShape);
     bool AnimationIsCompleted() const;
 
 private:
@@ -41,6 +43,7 @@ private:
     std::shared_ptr<TransformAttribute> transform_ = nullptr;
     std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
     std::vector<std::shared_ptr<AnimationShape>> animationShapes_;
+    std::vector<std::shared_ptr<BasicShape>> basicShapes_;
 };
 
 }  // namespace Entity

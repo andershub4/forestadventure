@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "AnimationShape.h"
+#include "BasicShape.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/EntityService.h"
@@ -31,6 +32,9 @@ void Shape::Awake()
     for (auto &animation : animationShapes_) {
         animation->SetTransform(transform_->GetPosition(), transform_->GetScale());
     }
+    for (auto &b : basicShapes_) {
+        b->SetTransform(transform_->GetPosition(), transform_->GetScale());
+    }
 }
 
 void Shape::Update(float deltaTime)
@@ -39,12 +43,18 @@ void Shape::Update(float deltaTime)
         animation->Update(deltaTime);
         animation->SetTransform(transform_->GetPosition(), transform_->GetScale());
     }
+    for (auto &b : basicShapes_) {
+        b->SetTransform(transform_->GetPosition(), transform_->GetScale());
+    }
 }
 
 void Shape::DrawTo(sf::RenderTarget &renderTarget)
 {
     for (auto &animation : animationShapes_) {
         animation->DrawTo(renderTarget);
+    }
+    for (auto &b : basicShapes_) {
+        b->DrawTo(renderTarget);
     }
 }
 
@@ -58,6 +68,11 @@ void Shape::Set(FrameType frameType)
 void Shape::AddAnimationShape(std::shared_ptr<AnimationShape> animation)
 {
     animationShapes_.push_back(animation);
+}
+
+void Shape::AddBasicShape(std::shared_ptr<BasicShape> basicShape)
+{
+    basicShapes_.push_back(basicShape);
 }
 
 bool Shape::AnimationIsCompleted() const

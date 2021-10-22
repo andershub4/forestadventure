@@ -19,6 +19,7 @@
 #include "Entity/Behaviors/MovementBehavior.h"
 #include "Entity/PropertyData.h"
 #include "Entity/Shapes/AnimationShape.h"
+#include "Entity/Shapes/RectangleShape.h"
 #include "Entity/Shapes/Shape.h"
 #include "Enum/KeyboardKey.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -76,6 +77,11 @@ void PlayerEntity::OnAddShape(EntityService& entityService, Shape& shape)
     }
 
     shape.AddAnimationShape(a);
+
+    auto r = std::make_shared<RectangleShape>();
+    r->SetSize({1.0, 1.0});
+
+    shape.AddBasicShape(r);
 }
 
 void PlayerEntity::OnDestroy()

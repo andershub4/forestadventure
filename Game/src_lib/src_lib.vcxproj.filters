@@ -231,6 +231,9 @@
     <ClCompile Include="Entity\Behaviors\UninitializedBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\Shapes\RectangleShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -504,6 +507,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Behaviors\UninitializedBehavior.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Shapes\RectangleShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Shapes\BasicShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
