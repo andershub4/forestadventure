@@ -9,7 +9,7 @@
 #include <memory>
 #include <vector>
 
-#include <SFML/Graphics/Sprite.hpp>
+#include "Fwd/SfmlFwd.h"
 
 #include "Enum/FrameType.h"
 
@@ -38,7 +38,6 @@ public:
 
 private:
     EntityService *entityService_ = nullptr;
-    sf::Sprite sprite_;
     std::shared_ptr<TransformAttribute> transform_ = nullptr;
     std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
     std::vector<std::shared_ptr<AnimationShape>> animationShapes_;

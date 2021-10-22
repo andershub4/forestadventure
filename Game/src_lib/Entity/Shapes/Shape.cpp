@@ -28,34 +28,31 @@ void Shape::Awake()
     transform_ = entityService_->GetAttribute<TransformAttribute>();
     faceDirection_ = entityService_->GetAttribute<FaceDirectionAttribute>();
 
-    sprite_.setPosition(transform_->GetPosition());
-    sprite_.setScale(transform_->GetScale(), transform_->GetScale());
+    for (auto &animation : animationShapes_) {
+        animation->SetTransform(transform_->GetPosition(), transform_->GetScale());
+    }
 }
 
 void Shape::Update(float deltaTime)
 {
     for (auto &animation : animationShapes_) {
         animation->Update(deltaTime);
-        animation->ApplyTo(sprite_);
+        animation->SetTransform(transform_->GetPosition(), transform_->GetScale());
     }
-
-    sprite_.setPosition(transform_->GetPosition());
-    sprite_.setScale(transform_->GetScale(), transform_->GetScale());
 }
 
 void Shape::DrawTo(sf::RenderTarget &renderTarget)
 {
-    renderTarget.draw(sprite_);
+    for (auto &animation : animationShapes_) {
+        animation->DrawTo(renderTarget);
+    }
 }
 
 void Shape::Set(FrameType frameType)
 {
     for (auto &animation : animationShapes_) {
         animation->SetAnimation(frameType, faceDirection_->GetDirection());
-        animation->ApplyTo(sprite_);
     }
-
-    sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
 void Shape::AddAnimationShape(std::shared_ptr<AnimationShape> animation)

@@ -9,6 +9,8 @@
 #include <functional>
 #include <string>
 
+#include <SFML/Graphics/Sprite.hpp>
+
 #include "Animation/Animator.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
@@ -23,14 +25,16 @@ public:
     AnimationShape(std::function<std::string(FrameType, FaceDirection)> lookupKeyFunc);
 
     void Update(float deltaTime);
+    void DrawTo(sf::RenderTarget &renderTarget);
 
     void AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation);
-    void ApplyTo(sf::Sprite &sprite);
     void SetAnimation(FrameType frameType, FaceDirection faceDir);
+    void SetTransform(const sf::Vector2f &position, float scale);
     bool IsCompleted() const;
 
 private:
     Animator animator_;
+    sf::Sprite sprite_;
     Animation currentAnimation_;
     std::function<std::string(FrameType, FaceDirection)> lookupKeyFunc_;
 };
