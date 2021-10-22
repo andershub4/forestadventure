@@ -63,7 +63,7 @@ void MoleEntity::OnAddShape(EntityService& entityService, Shape& shape)
         }
     }
 
-    shape.AddAnimation(a);
+    shape.AddAnimationShape(a);
 }
 
 }  // namespace Entity

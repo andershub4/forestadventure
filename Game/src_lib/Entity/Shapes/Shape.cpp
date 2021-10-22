@@ -53,7 +53,7 @@ void Shape::Set(FrameType frameType)
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
-void Shape::AddAnimation(std::shared_ptr<AnimationShape> animation)
+void Shape::AddAnimationShape(std::shared_ptr<AnimationShape> animation)
 {
     animation_ = animation;
 }

@@ -32,7 +32,7 @@ public:
 
     void DrawTo(sf::RenderTarget &renderTarget);
     void Set(FrameType frameType);
-    void AddAnimation(std::shared_ptr<AnimationShape> animation);
+    void AddAnimationShape(std::shared_ptr<AnimationShape> animation);
     bool AnimationIsCompleted() const;
 
 private:

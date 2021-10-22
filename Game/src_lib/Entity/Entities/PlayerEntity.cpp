@@ -75,7 +75,7 @@ void PlayerEntity::OnAddShape(EntityService& entityService, Shape& shape)
         }
     }
 
-    shape.AddAnimation(a);
+    shape.AddAnimationShape(a);
 }
 
 void PlayerEntity::OnDestroy()
