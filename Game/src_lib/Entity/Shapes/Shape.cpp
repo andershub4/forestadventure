@@ -63,7 +63,7 @@ void Shape::AddAnimationShape(std::shared_ptr<AnimationShape> animation)
 bool Shape::AnimationIsCompleted() const
 {
     bool result = true;
-    for (auto &animation : animationShapes_) {
+    for (const auto &animation : animationShapes_) {
         result &= animation->IsCompleted();
     }
 
