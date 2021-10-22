@@ -30,8 +30,6 @@ void Shape::Awake()
 
     sprite_.setPosition(transform_->GetPosition());
     sprite_.setScale(transform_->GetScale(), transform_->GetScale());
-
-    animation_->Init();
 }
 
 void Shape::Update(float deltaTime)
@@ -55,9 +53,9 @@ void Shape::Set(FrameType frameType)
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
-void Shape::AddAnimation()
+void Shape::AddAnimation(std::shared_ptr<AnimationShape> animation)
 {
-    animation_ = std::make_shared<AnimationShape>(entityService_);
+    animation_ = animation;
 }
 
 bool Shape::AnimationIsCompleted() const

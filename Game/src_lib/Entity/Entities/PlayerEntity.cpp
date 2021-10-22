@@ -6,6 +6,8 @@
 
 #include "PlayerEntity.h"
 
+#include <sstream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/Attributes/CameraAttribute.h"
@@ -54,9 +56,26 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
-void PlayerEntity::OnAddShape(Shape& shape)
+void PlayerEntity::OnAddShape(EntityService& entityService, Shape& shape)
 {
-    shape.AddAnimation();
+    auto lookupKeyFunc = [](FrameType frameType, FaceDirection faceDir) {
+        std::stringstream ss;
+        ss << frameType << "_" << faceDir;
+        return ss.str();
+    };
+
+    auto a = std::make_shared<AnimationShape>(lookupKeyFunc);
+    auto dirs = entityService.GetAttribute<FaceDirectionAttribute>()->GetAvailableDirections();
+
+    for (auto frameType : entityService.GetFrameTypes()) {
+        if (frameType == FrameType::Undefined) continue;
+        for (auto faceDir : dirs) {
+            auto animation = entityService.GetAnimation(frameType, faceDir);
+            a->AddAnimation(frameType, faceDir, animation);
+        }
+    }
+
+    shape.AddAnimation(a);
 }
 
 void PlayerEntity::OnDestroy()

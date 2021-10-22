@@ -31,7 +31,7 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     u->SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {
         OnAddProperties(entityService, propertyData);
         entityService.Awake();
-        OnAddShape(*entityService.GetShape());
+        OnAddShape(entityService, *entityService.GetShape());
         entityService.GetShape()->Awake();
     });
 

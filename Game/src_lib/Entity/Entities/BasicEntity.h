@@ -67,7 +67,7 @@ private:
 
 private:
     virtual void OnAddProperties(EntityService& entityService, const PropertyData& data) {}
-    virtual void OnAddShape(Shape& shape) {}
+    virtual void OnAddShape(EntityService& entityService, Shape& shape) {}
 
     void OnMessage(std::shared_ptr<Message> msg);
     void HandleMessage(std::shared_ptr<Message> msg);

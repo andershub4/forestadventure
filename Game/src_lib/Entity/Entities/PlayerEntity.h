@@ -20,7 +20,7 @@ public:
 
     virtual std::string Name() const override { return "PlayerEntity"; }
     virtual void OnAddProperties(EntityService& handler, const PropertyData& data) override;
-    virtual void OnAddShape(Shape& shape) override;
+    virtual void OnAddShape(EntityService& entityService, Shape& shape) override;
     virtual void OnDestroy() override;
 
 protected:

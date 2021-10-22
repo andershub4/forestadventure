@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <functional>
 #include <string>
 
 #include "Animation/Animator.h"
@@ -16,15 +17,12 @@ namespace FA {
 
 namespace Entity {
 
-class EntityService;
-
 class AnimationShape
 {
 public:
-    AnimationShape(EntityService *owner);
+    AnimationShape(std::function<std::string(FrameType, FaceDirection)> lookupKeyFunc);
 
     void Update(float deltaTime);
-    void Init();
 
     void AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation);
     void ApplyTo(sf::Sprite &sprite);
@@ -34,10 +32,7 @@ public:
 private:
     Animator animator_;
     Animation currentAnimation_;
-    EntityService *entityService_ = nullptr;
-
-private:
-    std::string KeyStr(FrameType frameType, FaceDirection faceDir) const;
+    std::function<std::string(FrameType, FaceDirection)> lookupKeyFunc_;
 };
 
 }  // namespace Entity

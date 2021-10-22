@@ -6,17 +6,12 @@
 
 #include "AnimationShape.h"
 
-#include <sstream>
-
-#include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/EntityService.h"
-
 namespace FA {
 
 namespace Entity {
 
-AnimationShape::AnimationShape(EntityService *owner)
-    : entityService_(owner)
+AnimationShape::AnimationShape(std::function<std::string(FrameType, FaceDirection)> lookupKeyFunc)
+    : lookupKeyFunc_(lookupKeyFunc)
 {}
 
 void AnimationShape::Update(float deltaTime)
@@ -24,22 +19,9 @@ void AnimationShape::Update(float deltaTime)
     currentAnimation_.Update(deltaTime);
 }
 
-void AnimationShape::Init()
-{
-    auto dirs = entityService_->GetAttribute<FaceDirectionAttribute>()->GetAvailableDirections();
-
-    for (auto frameType : entityService_->GetFrameTypes()) {
-        if (frameType == FrameType::Undefined) continue;
-        for (auto faceDir : dirs) {
-            auto animation = entityService_->GetAnimation(frameType, faceDir);
-            AddAnimation(frameType, faceDir, animation);
-        }
-    }
-}
-
 void AnimationShape::AddAnimation(FrameType frameType, FaceDirection faceDir, const Animation &animation)
 {
-    auto k = KeyStr(frameType, faceDir);
+    auto k = lookupKeyFunc_(frameType, faceDir);
     animator_.AddAnimation(k, animation);
 }
 
@@ -50,7 +32,7 @@ void AnimationShape::ApplyTo(sf::Sprite &sprite)
 
 void AnimationShape::SetAnimation(FrameType frameType, FaceDirection faceDir)
 {
-    auto k = KeyStr(frameType, faceDir);
+    auto k = lookupKeyFunc_(frameType, faceDir);
     currentAnimation_ = animator_.GetAnimation(k);
     currentAnimation_.Start();
 }
@@ -58,14 +40,6 @@ void AnimationShape::SetAnimation(FrameType frameType, FaceDirection faceDir)
 bool AnimationShape::IsCompleted() const
 {
     return currentAnimation_.IsCompleted();
-}
-
-std::string AnimationShape::KeyStr(FrameType frameType, FaceDirection faceDir) const
-{
-    std::stringstream ss;
-    ss << frameType << "_" << faceDir;
-
-    return ss.str();
 }
 
 }  // namespace Entity
