@@ -16,6 +16,7 @@
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Behaviors/AttackBehavior.h"
 #include "Entity/Behaviors/AttackWeaponBehavior.h"
+#include "Entity/Behaviors/IdleBehavior.h"
 #include "Entity/Behaviors/MovementBehavior.h"
 #include "Entity/PropertyData.h"
 #include "Entity/Shapes/AnimationShape.h"
@@ -49,6 +50,7 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
     f->SetAvailableDirections(dirs);
     auto v = entityService.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
+    entityService.AddBehavior<IdleBehavior>();
     entityService.AddBehavior<MovementBehavior>();
     entityService.AddBehavior<AttackBehavior>();
     entityService.AddBehavior<AttackWeaponBehavior>();

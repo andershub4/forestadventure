@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Behaviors/IdleBehavior.h"
 #include "Entity/Behaviors/UninitializedBehavior.h"
 #include "Entity/Shapes/Shape.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -34,8 +33,6 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
         OnAddShape(entityService, *entityService.GetShape());
         entityService.GetShape()->Awake();
     });
-
-    entityService_.AddBehavior<IdleBehavior>();
 }
 
 BasicEntity::~BasicEntity() = default;
