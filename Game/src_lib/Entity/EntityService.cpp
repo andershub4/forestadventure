@@ -37,13 +37,13 @@ std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
 void EntityService::Awake()
 {
     attributeStore_.Awake();
-    behaviorStore_.Awake();
+    modeStore_.Awake();
 }
 
 void EntityService::InitProperties()
 {
     attributeStore_.Init();
-    behaviorStore_.Init();
+    modeStore_.Init();
 }
 
 Animation EntityService::GetAnimation(FrameType frameType, FaceDirection faceDir) const

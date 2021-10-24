@@ -7,9 +7,9 @@
 #include "IdleState.h"
 
 #include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Behaviors/AttackBehavior.h"
-#include "Entity/Behaviors/AttackWeaponBehavior.h"
-#include "Entity/Behaviors/MovementBehavior.h"
+#include "Entity/Modes/AttackMode.h"
+#include "Entity/Modes/AttackWeaponMode.h"
+#include "Entity/Modes/MovementMode.h"
 #include "Entity/Shapes/Shape.h"
 #include "Enum/FrameType.h"
 
@@ -40,19 +40,19 @@ void IdleState::Enter()
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    GetBehavior<MovementBehavior>()->SetDirection(moveDir);
+    GetMode<MovementMode>()->SetDirection(moveDir);
     GetAttribute<FaceDirectionAttribute>()->SetDirection(faceDir);
-    GetBehavior<MovementBehavior>()->Execute(*this);
+    GetMode<MovementMode>()->Execute(*this);
 }
 
 void IdleState::OnAttack()
 {
-    GetBehavior<AttackBehavior>()->Execute(*this);
+    GetMode<AttackMode>()->Execute(*this);
 }
 
 void IdleState::OnAttackWeapon()
 {
-    GetBehavior<AttackWeaponBehavior>()->Execute(*this);
+    GetMode<AttackWeaponMode>()->Execute(*this);
 }
 
 }  // namespace Entity

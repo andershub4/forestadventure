@@ -129,7 +129,7 @@
     <ClCompile Include="Entity\Shapes\Shape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Behaviors\MovementBehavior.cpp">
+    <ClCompile Include="Entity\Modes\MovementMode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Entities\MoleEntity.cpp">
@@ -198,19 +198,19 @@
     <ClCompile Include="Resource\AnimationDb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Behaviors\IdleBehavior.cpp">
+    <ClCompile Include="Entity\Modes\IdleMode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Behaviors\AttackBehavior.cpp">
+    <ClCompile Include="Entity\Modes\AttackMode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Behaviors\AttackWeaponBehavior.cpp">
+    <ClCompile Include="Entity\Modes\AttackWeaponMode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Level\CameraManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Behaviors\BasicBehavior.cpp">
+    <ClCompile Include="Entity\Modes\BasicMode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Attributes\CameraAttribute.cpp">
@@ -228,7 +228,7 @@
     <ClCompile Include="Entity\Attributes\VelocityAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Behaviors\UninitializedBehavior.cpp">
+    <ClCompile Include="Entity\Modes\UninitializedMode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Shapes\RectangleShape.cpp">
@@ -380,7 +380,7 @@
     <ClInclude Include="Entity\Shapes\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Behaviors\MovementBehavior.h">
+    <ClInclude Include="Entity\Modes\MovementMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\AnimationType.h">
@@ -470,7 +470,7 @@
     <ClInclude Include="Entity\PropertyStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Behaviors\BasicBehavior.h">
+    <ClInclude Include="Entity\Modes\BasicMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\EntityService.h">
@@ -482,13 +482,13 @@
     <ClInclude Include="Resource\AnimationDb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Behaviors\AttackBehavior.h">
+    <ClInclude Include="Entity\Modes\AttackMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Behaviors\AttackWeaponBehavior.h">
+    <ClInclude Include="Entity\Modes\AttackWeaponMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Behaviors\IdleBehavior.h">
+    <ClInclude Include="Entity\Modes\IdleMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Attributes\CameraAttribute.h">
@@ -506,7 +506,7 @@
     <ClInclude Include="Entity\Attributes\VelocityAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Behaviors\UninitializedBehavior.h">
+    <ClInclude Include="Entity\Modes\UninitializedMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Shapes\RectangleShape.h">

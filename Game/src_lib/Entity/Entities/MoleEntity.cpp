@@ -13,8 +13,8 @@
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
-#include "Entity/Behaviors/IdleBehavior.h"
-#include "Entity/Behaviors/MovementBehavior.h"
+#include "Entity/Modes/IdleMode.h"
+#include "Entity/Modes/MovementMode.h"
 #include "Entity/PropertyData.h"
 #include "Entity/Shapes/AnimationShape.h"
 #include "Entity/Shapes/Shape.h"
@@ -42,8 +42,8 @@ void MoleEntity::OnAddProperties(EntityService& entityService, const PropertyDat
     f->SetAvailableDirections(dirs);
     auto v = entityService.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
-    entityService.AddBehavior<IdleBehavior>();
-    entityService.AddBehavior<MovementBehavior>();
+    entityService.AddMode<IdleMode>();
+    entityService.AddMode<MovementMode>();
 }
 
 void MoleEntity::OnAddShape(EntityService& entityService, Shape& shape)

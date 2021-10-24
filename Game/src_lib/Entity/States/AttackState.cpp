@@ -7,8 +7,8 @@
 #include "AttackState.h"
 
 #include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Behaviors/IdleBehavior.h"
-#include "Entity/Behaviors/MovementBehavior.h"
+#include "Entity/Modes/IdleMode.h"
+#include "Entity/Modes/MovementMode.h"
 #include "Entity/Shapes/Shape.h"
 #include "Enum/FrameType.h"
 
@@ -27,7 +27,7 @@ void AttackState::Update(float deltaTime)
     GetShape()->Update(deltaTime);
 
     if (GetShape()->AnimationIsCompleted()) {
-        GetBehavior<IdleBehavior>()->Execute(*this);
+        GetMode<IdleMode>()->Execute(*this);
     }
 }
 
@@ -43,9 +43,9 @@ void AttackState::Enter()
 
 void AttackState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    GetBehavior<MovementBehavior>()->SetDirection(moveDir);
+    GetMode<MovementMode>()->SetDirection(moveDir);
     GetAttribute<FaceDirectionAttribute>()->SetDirection(faceDir);
-    GetBehavior<MovementBehavior>()->Execute(*this);
+    GetMode<MovementMode>()->Execute(*this);
 }
 
 }  // namespace Entity

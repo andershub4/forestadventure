@@ -39,9 +39,9 @@ public:
     }
 
     template <class T>
-    std::shared_ptr<T> AddBehavior()
+    std::shared_ptr<T> AddMode()
     {
-        auto b = behaviorStore_.AddProperty<T>(this);
+        auto b = modeStore_.AddProperty<T>(this);
         frameTypes_.push_back(b->GetFrameType());
         return b;
     }
@@ -59,14 +59,14 @@ public:
     }
 
     template <class T>
-    std::shared_ptr<T> GetBehavior()
+    std::shared_ptr<T> GetMode()
     {
-        if (behaviorStore_.HasProperty<T>()) {
-            return behaviorStore_.GetProperty<T>();
+        if (modeStore_.HasProperty<T>()) {
+            return modeStore_.GetProperty<T>();
         }
         else {
-            LOG_ERROR(typeid(T).name(), " is not in behaviorStore");
-            return AddBehavior<T>();
+            LOG_ERROR(typeid(T).name(), " is not in modeStore");
+            return AddMode<T>();
         }
     }
 
@@ -81,7 +81,7 @@ public:
 
 private:
     PropertyStore attributeStore_;
-    PropertyStore behaviorStore_;
+    PropertyStore modeStore_;
     std::vector<FrameType> frameTypes_;
     CameraManager &cameraManager_;
     EntityType entityType_;

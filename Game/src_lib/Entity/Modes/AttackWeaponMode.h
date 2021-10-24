@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "BasicBehavior.h"
+#include "BasicMode.h"
 
 namespace FA {
 
@@ -14,13 +14,13 @@ namespace Entity {
 
 class BasicState;
 
-class AttackBehavior : public BasicBehavior
+class AttackWeaponMode : public BasicMode
 {
 public:
-    AttackBehavior(EntityService *owner);
+    AttackWeaponMode(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
-    virtual FrameType GetFrameType() const override { return FrameType::Attack; }
+    virtual FrameType GetFrameType() const override { return FrameType::AttackWeapon; }
 
     void Execute(BasicState &oldState);
 };

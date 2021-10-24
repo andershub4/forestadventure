@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "UninitializedBehavior.h"
+#include "UninitializedMode.h"
 
 #include "Entity/States/IdleState.h"
 
@@ -12,16 +12,16 @@ namespace FA {
 
 namespace Entity {
 
-UninitializedBehavior::UninitializedBehavior(EntityService *owner)
-    : BasicBehavior(owner)
+UninitializedMode::UninitializedMode(EntityService *owner)
+    : BasicMode(owner)
 {}
 
-void UninitializedBehavior::Execute(BasicState &oldState)
+void UninitializedMode::Execute(BasicState &oldState)
 {
     oldState.SwitchState<IdleState>();
 }
 
-void UninitializedBehavior::Create(const PropertyData &data)
+void UninitializedMode::Create(const PropertyData &data)
 {
     onCreate_(*Owner(), data);
 }

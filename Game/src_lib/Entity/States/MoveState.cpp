@@ -6,8 +6,8 @@
 
 #include "MoveState.h"
 
-#include "Entity/Behaviors/IdleBehavior.h"
-#include "Entity/Behaviors/MovementBehavior.h"
+#include "Entity/Modes/IdleMode.h"
+#include "Entity/Modes/MovementMode.h"
 #include "Entity/Shapes/Shape.h"
 #include "Enum/FrameType.h"
 
@@ -24,7 +24,7 @@ MoveState::~MoveState() = default;
 void MoveState::Update(float deltaTime)
 {
     GetShape()->Update(deltaTime);
-    GetBehavior<MovementBehavior>()->Update(deltaTime);
+    GetMode<MovementMode>()->Update(deltaTime);
 }
 
 void MoveState::DrawTo(sf::RenderTarget& renderTarget)
@@ -39,12 +39,12 @@ void MoveState::Enter()
 
 void MoveState::Exit()
 {
-    GetBehavior<MovementBehavior>()->SetDirection(MoveDirection::None);
+    GetMode<MovementMode>()->SetDirection(MoveDirection::None);
 }
 
 void MoveState::OnStopMove()
 {
-    GetBehavior<IdleBehavior>()->Execute(*this);
+    GetMode<IdleMode>()->Execute(*this);
 }
 
 }  // namespace Entity

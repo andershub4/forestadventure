@@ -64,9 +64,9 @@ public:
     }
 
     template <class T>
-    std::shared_ptr<T> GetBehavior() const
+    std::shared_ptr<T> GetMode() const
     {
-        return entityService_.GetBehavior<T>();
+        return entityService_.GetMode<T>();
     }
 
     template <class T>
@@ -76,9 +76,9 @@ public:
     }
 
     template <class T>
-    std::shared_ptr<T> AddBehavior()
+    std::shared_ptr<T> AddMode()
     {
-        return entityService_.AddBehavior<T>();
+        return entityService_.AddMode<T>();
     }
 
     std::shared_ptr<Shape> GetShape() const { return entityService_.GetShape(); }

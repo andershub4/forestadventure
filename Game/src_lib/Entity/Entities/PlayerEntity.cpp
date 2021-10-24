@@ -14,10 +14,10 @@
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
-#include "Entity/Behaviors/AttackBehavior.h"
-#include "Entity/Behaviors/AttackWeaponBehavior.h"
-#include "Entity/Behaviors/IdleBehavior.h"
-#include "Entity/Behaviors/MovementBehavior.h"
+#include "Entity/Modes/AttackMode.h"
+#include "Entity/Modes/AttackWeaponMode.h"
+#include "Entity/Modes/IdleMode.h"
+#include "Entity/Modes/MovementMode.h"
 #include "Entity/PropertyData.h"
 #include "Entity/Shapes/AnimationShape.h"
 #include "Entity/Shapes/RectangleShape.h"
@@ -50,10 +50,10 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
     f->SetAvailableDirections(dirs);
     auto v = entityService.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
-    entityService.AddBehavior<IdleBehavior>();
-    entityService.AddBehavior<MovementBehavior>();
-    entityService.AddBehavior<AttackBehavior>();
-    entityService.AddBehavior<AttackWeaponBehavior>();
+    entityService.AddMode<IdleMode>();
+    entityService.AddMode<MovementMode>();
+    entityService.AddMode<AttackMode>();
+    entityService.AddMode<AttackWeaponMode>();
     entityService.AddAttribute<CameraAttribute>();
 
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});

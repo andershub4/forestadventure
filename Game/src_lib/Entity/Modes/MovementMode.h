@@ -10,7 +10,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "BasicBehavior.h"
+#include "BasicMode.h"
 
 namespace FA {
 
@@ -22,10 +22,10 @@ class BasicState;
 class TransformAttribute;
 class VelocityAttribute;
 
-class MovementBehavior : public BasicBehavior
+class MovementMode : public BasicMode
 {
 public:
-    MovementBehavior(EntityService *owner);
+    MovementMode(EntityService *owner);
 
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;

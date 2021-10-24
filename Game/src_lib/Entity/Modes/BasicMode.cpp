@@ -4,17 +4,17 @@
  *	See file LICENSE for full license details.
  */
 
-#include "BasicBehavior.h"
+#include "BasicMode.h"
 
 namespace FA {
 
 namespace Entity {
 
-BasicBehavior::BasicBehavior(EntityService *owner)
+BasicMode::BasicMode(EntityService *owner)
     : BasicProperty(owner)
 {}
 
-BasicBehavior::~BasicBehavior() = default;
+BasicMode::~BasicMode() = default;
 
 }  // namespace Entity
 

@@ -10,7 +10,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "BasicBehavior.h"
+#include "BasicMode.h"
 
 namespace FA {
 
@@ -19,10 +19,10 @@ namespace Entity {
 class BasicState;
 struct PropertyData;
 
-class UninitializedBehavior : public BasicBehavior
+class UninitializedMode : public BasicMode
 {
 public:
-    UninitializedBehavior(EntityService *owner);
+    UninitializedMode(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
     virtual FrameType GetFrameType() const override { return FrameType::Undefined; }

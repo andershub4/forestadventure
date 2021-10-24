@@ -6,7 +6,9 @@
 
 #pragma once
 
-#include "BasicBehavior.h"
+#include <SFML/System/Vector2.hpp>
+
+#include "BasicMode.h"
 
 namespace FA {
 
@@ -14,13 +16,13 @@ namespace Entity {
 
 class BasicState;
 
-class AttackWeaponBehavior : public BasicBehavior
+class IdleMode : public BasicMode
 {
 public:
-    AttackWeaponBehavior(EntityService *owner);
+    IdleMode(EntityService *owner);
 
     virtual void Update(float deltaTime) override {}
-    virtual FrameType GetFrameType() const override { return FrameType::AttackWeapon; }
+    virtual FrameType GetFrameType() const override { return FrameType::Idle; }
 
     void Execute(BasicState &oldState);
 };

@@ -6,8 +6,8 @@
 
 #include "UninitializedState.h"
 
-#include "Entity/Behaviors/IdleBehavior.h"
-#include "Entity/Behaviors/UninitializedBehavior.h"
+#include "Entity/Modes/IdleMode.h"
+#include "Entity/Modes/UninitializedMode.h"
 
 namespace FA {
 
@@ -21,14 +21,14 @@ UninitializedState::~UninitializedState() = default;
 
 void UninitializedState::Create(const PropertyData& data)
 {
-    GetBehavior<UninitializedBehavior>()->Create(data);
+    GetMode<UninitializedMode>()->Create(data);
 }
 
 void UninitializedState::OnInit()
 {
     InitProperties();
 
-    GetBehavior<IdleBehavior>()->Execute(*this);
+    GetMode<IdleMode>()->Execute(*this);
 }
 
 }  // namespace Entity

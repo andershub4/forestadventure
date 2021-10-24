@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "AttackWeaponBehavior.h"
+#include "AttackWeaponMode.h"
 
 #include "Entity/States/AttackWeaponState.h"
 
@@ -12,11 +12,11 @@ namespace FA {
 
 namespace Entity {
 
-AttackWeaponBehavior::AttackWeaponBehavior(EntityService *owner)
-    : BasicBehavior(owner)
+AttackWeaponMode::AttackWeaponMode(EntityService *owner)
+    : BasicMode(owner)
 {}
 
-void AttackWeaponBehavior::Execute(BasicState &oldState)
+void AttackWeaponMode::Execute(BasicState &oldState)
 {
     oldState.SwitchState<AttackWeaponState>();
 }

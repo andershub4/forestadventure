@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Behaviors/UninitializedBehavior.h"
+#include "Entity/Modes/UninitializedMode.h"
 #include "Entity/Shapes/Shape.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
@@ -26,7 +26,7 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     , entityService_(entityType, cameraManager, animationDb)
     , stateMachine_(entityService_)
 {
-    auto u = entityService_.AddBehavior<UninitializedBehavior>();
+    auto u = entityService_.AddMode<UninitializedMode>();
     u->SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {
         OnAddProperties(entityService, propertyData);
         entityService.Awake();

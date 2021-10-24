@@ -14,11 +14,11 @@ namespace FA {
 
 namespace Entity {
 
-class BasicBehavior : public BasicProperty
+class BasicMode : public BasicProperty
 {
 public:
-    BasicBehavior(EntityService* owner);
-    virtual ~BasicBehavior();
+    BasicMode(EntityService* owner);
+    virtual ~BasicMode();
 
     virtual FrameType GetFrameType() const = 0;
 
