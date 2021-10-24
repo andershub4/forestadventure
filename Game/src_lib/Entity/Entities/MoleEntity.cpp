@@ -42,6 +42,10 @@ void MoleEntity::OnAddProperties(EntityService& entityService, const PropertyDat
     f->SetAvailableDirections(dirs);
     auto v = entityService.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
+}
+
+void MoleEntity::OnAddModes(EntityService& entityService)
+{
     entityService.AddMode<IdleMode>();
     entityService.AddMode<MovementMode>();
 }

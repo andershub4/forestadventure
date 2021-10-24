@@ -50,13 +50,17 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
     f->SetAvailableDirections(dirs);
     auto v = entityService.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
+    entityService.AddAttribute<CameraAttribute>();
+
+    Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
+}
+
+void PlayerEntity::OnAddModes(EntityService& entityService)
+{
     entityService.AddMode<IdleMode>();
     entityService.AddMode<MovementMode>();
     entityService.AddMode<AttackMode>();
     entityService.AddMode<AttackWeaponMode>();
-    entityService.AddAttribute<CameraAttribute>();
-
-    Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
 void PlayerEntity::OnAddShape(EntityService& entityService, Shape& shape)
