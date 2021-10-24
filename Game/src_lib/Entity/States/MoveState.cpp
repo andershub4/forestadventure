@@ -7,7 +7,7 @@
 #include "MoveState.h"
 
 #include "Entity/Modes/IdleMode.h"
-#include "Entity/Modes/MovementMode.h"
+#include "Entity/Modes/MoveMode.h"
 #include "Entity/Shapes/Shape.h"
 #include "Enum/FrameType.h"
 
@@ -24,7 +24,7 @@ MoveState::~MoveState() = default;
 void MoveState::Update(float deltaTime)
 {
     GetShape()->Update(deltaTime);
-    GetMode<MovementMode>()->Update(deltaTime);
+    GetMode<MoveMode>()->Update(deltaTime);
 }
 
 void MoveState::DrawTo(sf::RenderTarget& renderTarget)
@@ -39,7 +39,7 @@ void MoveState::Enter()
 
 void MoveState::Exit()
 {
-    GetMode<MovementMode>()->SetDirection(MoveDirection::None);
+    GetMode<MoveMode>()->SetDirection(MoveDirection::None);
 }
 
 void MoveState::OnStopMove()

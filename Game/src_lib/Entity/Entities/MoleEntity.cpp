@@ -14,7 +14,7 @@
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Modes/IdleMode.h"
-#include "Entity/Modes/MovementMode.h"
+#include "Entity/Modes/MoveMode.h"
 #include "Entity/PropertyData.h"
 #include "Entity/Shapes/AnimationShape.h"
 #include "Entity/Shapes/Shape.h"
@@ -47,7 +47,7 @@ void MoleEntity::OnAddProperties(EntityService& entityService, const PropertyDat
 void MoleEntity::OnAddModes(EntityService& entityService)
 {
     entityService.AddMode<IdleMode>();
-    entityService.AddMode<MovementMode>();
+    entityService.AddMode<MoveMode>();
 }
 
 void MoleEntity::OnAddShape(EntityService& entityService, Shape& shape)

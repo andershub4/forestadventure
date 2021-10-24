@@ -22,10 +22,10 @@ class BasicState;
 class TransformAttribute;
 class VelocityAttribute;
 
-class MovementMode : public BasicMode
+class MoveMode : public BasicMode
 {
 public:
-    MovementMode(EntityService *owner);
+    MoveMode(EntityService *owner);
 
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;

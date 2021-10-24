@@ -278,7 +278,7 @@
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Version.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h" />
-    <ClInclude Include="Entity\Modes\MovementMode.h" />
+    <ClInclude Include="Entity\Modes\MoveMode.h" />
     <ClInclude Include="Scene\Components\IntroComponent.h" />
     <ClInclude Include="Scene\Components\LevelComponent.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
@@ -355,7 +355,7 @@
     <ClCompile Include="Scene\Transitions\NullTransition.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp" />
-    <ClCompile Include="Entity\Modes\MovementMode.cpp" />
+    <ClCompile Include="Entity\Modes\MoveMode.cpp" />
     <ClCompile Include="Scene\Components\IntroComponent.cpp" />
     <ClCompile Include="Scene\Components\LevelComponent.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />

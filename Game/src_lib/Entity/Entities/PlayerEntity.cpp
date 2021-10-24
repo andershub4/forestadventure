@@ -17,7 +17,7 @@
 #include "Entity/Modes/AttackMode.h"
 #include "Entity/Modes/AttackWeaponMode.h"
 #include "Entity/Modes/IdleMode.h"
-#include "Entity/Modes/MovementMode.h"
+#include "Entity/Modes/MoveMode.h"
 #include "Entity/PropertyData.h"
 #include "Entity/Shapes/AnimationShape.h"
 #include "Entity/Shapes/RectangleShape.h"
@@ -58,7 +58,7 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
 void PlayerEntity::OnAddModes(EntityService& entityService)
 {
     entityService.AddMode<IdleMode>();
-    entityService.AddMode<MovementMode>();
+    entityService.AddMode<MoveMode>();
     entityService.AddMode<AttackMode>();
     entityService.AddMode<AttackWeaponMode>();
 }

@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "MovementMode.h"
+#include "MoveMode.h"
 
 #include <unordered_map>
 
@@ -27,23 +27,23 @@ namespace FA {
 
 namespace Entity {
 
-MovementMode::MovementMode(EntityService *owner)
+MoveMode::MoveMode(EntityService *owner)
     : BasicMode(owner)
 {}
 
-void MovementMode::Awake()
+void MoveMode::Awake()
 {
     transform_ = Owner()->GetAttribute<TransformAttribute>();
     velocity_ = Owner()->GetAttribute<VelocityAttribute>();
 }
 
-void MovementMode::Update(float deltaTime)
+void MoveMode::Update(float deltaTime)
 {
     sf::Vector2f offset = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
     transform_->Move(offset);
 }
 
-void MovementMode::SetDirection(MoveDirection direction)
+void MoveMode::SetDirection(MoveDirection direction)
 {
     auto it = dirToVector.find(direction);
     if (it != dirToVector.end()) {
@@ -51,7 +51,7 @@ void MovementMode::SetDirection(MoveDirection direction)
     }
 }
 
-void MovementMode::Execute(BasicState &oldState)
+void MoveMode::Execute(BasicState &oldState)
 {
     oldState.SwitchState<MoveState>();
 }

@@ -129,7 +129,7 @@
     <ClCompile Include="Entity\Shapes\Shape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Modes\MovementMode.cpp">
+    <ClCompile Include="Entity\Modes\MoveMode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Entities\MoleEntity.cpp">
@@ -380,7 +380,7 @@
     <ClInclude Include="Entity\Shapes\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Modes\MovementMode.h">
+    <ClInclude Include="Entity\Modes\MoveMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\AnimationType.h">

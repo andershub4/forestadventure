@@ -9,7 +9,7 @@
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Modes/AttackMode.h"
 #include "Entity/Modes/AttackWeaponMode.h"
-#include "Entity/Modes/MovementMode.h"
+#include "Entity/Modes/MoveMode.h"
 #include "Entity/Shapes/Shape.h"
 #include "Enum/FrameType.h"
 
@@ -40,9 +40,9 @@ void IdleState::Enter()
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    GetMode<MovementMode>()->SetDirection(moveDir);
+    GetMode<MoveMode>()->SetDirection(moveDir);
     GetAttribute<FaceDirectionAttribute>()->SetDirection(faceDir);
-    GetMode<MovementMode>()->Execute(*this);
+    GetMode<MoveMode>()->Execute(*this);
 }
 
 void IdleState::OnAttack()
