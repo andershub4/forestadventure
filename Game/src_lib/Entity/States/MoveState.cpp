@@ -6,6 +6,7 @@
 
 #include "MoveState.h"
 
+#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/Modes/MoveMode.h"
 #include "Entity/Shapes/Shape.h"
@@ -39,7 +40,8 @@ void MoveState::Enter()
 
 void MoveState::Exit()
 {
-    GetMode<MoveMode>()->SetDirection(MoveDirection::None);
+    auto faceDir = GetAttribute<FaceDirectionAttribute>()->GetDirection();
+    GetMode<MoveMode>()->SetDirection(MoveDirection::None, faceDir);
 }
 
 void MoveState::OnStopMove()

@@ -8,6 +8,7 @@
 
 #include <unordered_map>
 
+#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/States/MoveState.h"
@@ -35,6 +36,7 @@ void MoveMode::Awake()
 {
     transform_ = Owner()->GetAttribute<TransformAttribute>();
     velocity_ = Owner()->GetAttribute<VelocityAttribute>();
+    faceDirection_ = Owner()->GetAttribute<FaceDirectionAttribute>();
 }
 
 void MoveMode::Update(float deltaTime)
@@ -43,12 +45,13 @@ void MoveMode::Update(float deltaTime)
     transform_->Move(offset);
 }
 
-void MoveMode::SetDirection(MoveDirection direction)
+void MoveMode::SetDirection(MoveDirection direction, FaceDirection faceDir)
 {
     auto it = dirToVector.find(direction);
     if (it != dirToVector.end()) {
         movementVector_ = it->second * velocity_->GetVelocity();
     }
+    faceDirection_->SetDirection(faceDir);
 }
 
 void MoveMode::Execute(BasicState &oldState)

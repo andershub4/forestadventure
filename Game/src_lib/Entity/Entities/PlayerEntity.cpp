@@ -57,6 +57,14 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
 
 void PlayerEntity::OnAddModes(EntityService& entityService)
 {
+    /*
+    auto idleMode = std::shared_ptr<IdleMode>();
+    idleMode.AddEvent(EventType::StartMove, OnStartMove());
+    idleMode.AddEvent(EventType::Attack, OnAttack());
+    idleMode.AddEvent(EventType::AttackWeapon, OnAttackWeapon());
+    idleMode.AddEvent(EventType::Collision, OnCollision());
+    entityService.AddMode(idleMode);
+    */
     entityService.AddMode<IdleMode>();
     entityService.AddMode<MoveMode>();
     entityService.AddMode<AttackMode>();

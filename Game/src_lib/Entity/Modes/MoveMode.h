@@ -15,12 +15,14 @@
 namespace FA {
 
 enum class MoveDirection;
+enum class FaceDirection;
 
 namespace Entity {
 
 class BasicState;
 class TransformAttribute;
 class VelocityAttribute;
+class FaceDirectionAttribute;
 
 class MoveMode : public BasicMode
 {
@@ -31,13 +33,14 @@ public:
     virtual void Update(float deltaTime) override;
     virtual FrameType GetFrameType() const override { return FrameType::Move; }
 
-    void SetDirection(MoveDirection direction);
+    void SetDirection(MoveDirection direction, FaceDirection faceDirection);
     void Execute(BasicState &oldState);
 
 private:
     sf::Vector2f movementVector_{};
     std::shared_ptr<TransformAttribute> transform_ = nullptr;
     std::shared_ptr<VelocityAttribute> velocity_ = nullptr;
+    std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
 };
 
 }  // namespace Entity

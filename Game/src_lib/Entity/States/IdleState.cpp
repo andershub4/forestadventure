@@ -6,7 +6,6 @@
 
 #include "IdleState.h"
 
-#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Modes/AttackMode.h"
 #include "Entity/Modes/AttackWeaponMode.h"
 #include "Entity/Modes/MoveMode.h"
@@ -40,8 +39,7 @@ void IdleState::Enter()
 
 void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
 {
-    GetMode<MoveMode>()->SetDirection(moveDir);
-    GetAttribute<FaceDirectionAttribute>()->SetDirection(faceDir);
+    GetMode<MoveMode>()->SetDirection(moveDir, faceDir);
     GetMode<MoveMode>()->Execute(*this);
 }
 
