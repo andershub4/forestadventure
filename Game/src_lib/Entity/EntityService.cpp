@@ -34,21 +34,19 @@ std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
     return attributeStore_.AddProperty<CameraAttribute>(this);
 }
 
-void EntityService::Awake()
-{
-    attributeStore_.Awake();
-    modeStore_.Awake();
-}
-
 void EntityService::InitProperties()
 {
     attributeStore_.Init();
-    modeStore_.Init();
 }
 
 Animation EntityService::GetAnimation(FrameType frameType, FaceDirection faceDir) const
 {
     return animationDb_.GetAnimation(entityType_, frameType, faceDir);
+}
+
+void EntityService::AddFrameType(FrameType frameType)
+{
+    frameTypes_.push_back(frameType);
 }
 
 }  // namespace Entity

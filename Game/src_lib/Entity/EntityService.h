@@ -39,14 +39,6 @@ public:
     }
 
     template <class T>
-    std::shared_ptr<T> AddMode()
-    {
-        auto b = modeStore_.AddProperty<T>(this);
-        frameTypes_.push_back(b->GetFrameType());
-        return b;
-    }
-
-    template <class T>
     std::shared_ptr<T> GetAttribute()
     {
         if (attributeStore_.HasProperty<T>()) {
@@ -58,30 +50,17 @@ public:
         }
     }
 
-    template <class T>
-    std::shared_ptr<T> GetMode()
-    {
-        if (modeStore_.HasProperty<T>()) {
-            return modeStore_.GetProperty<T>();
-        }
-        else {
-            LOG_ERROR(typeid(T).name(), " is not in modeStore");
-            return AddMode<T>();
-        }
-    }
-
     template <>
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
 
-    void Awake();
     void InitProperties();
     Animation GetAnimation(FrameType frameType, FaceDirection faceDir) const;
     std::vector<FrameType> GetFrameTypes() const { return frameTypes_; }
     std::shared_ptr<Shape> GetShape() const { return shape_; }
+    void AddFrameType(FrameType frameType);
 
 private:
     PropertyStore attributeStore_;
-    PropertyStore modeStore_;
     std::vector<FrameType> frameTypes_;
     CameraManager &cameraManager_;
     EntityType entityType_;

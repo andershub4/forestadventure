@@ -13,6 +13,10 @@
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/States/MoveState.h"
 #include "Enum/MoveDirection.h"
+#include "Entity/Events/StartMoveEvent.h"
+#include "Entity/Shapes/Shape.h"
+#include "Entity/EntityService.h"
+#include "Entity/StateController.h"
 
 namespace {
 
@@ -31,6 +35,24 @@ namespace Entity {
 MoveMode::MoveMode(EntityService *owner)
     : BasicMode(owner)
 {}
+
+void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
+{
+    auto m = std::dynamic_pointer_cast<StartMoveEvent>(event);
+    SetDirection(m->moveDirection_, m->faceDirection_);
+    Owner()->GetShape()->Set(FrameType::Move);
+}
+
+void MoveMode::Exit()
+{
+    auto faceDir = Owner()->GetAttribute<FaceDirectionAttribute>()->GetDirection();
+    SetDirection(MoveDirection::None, faceDir);
+}
+
+std::unique_ptr<BasicState> MoveMode::CreateState(StateController &stateController, std::shared_ptr<BasicEvent> event) const
+{
+    return stateController.CreateState<MoveState>(event);
+}
 
 void MoveMode::Awake()
 {
@@ -52,11 +74,6 @@ void MoveMode::SetDirection(MoveDirection direction, FaceDirection faceDir)
         movementVector_ = it->second * velocity_->GetVelocity();
     }
     faceDirection_->SetDirection(faceDir);
-}
-
-void MoveMode::Execute(BasicState &oldState)
-{
-    oldState.SwitchState<MoveState>();
 }
 
 }  // namespace Entity

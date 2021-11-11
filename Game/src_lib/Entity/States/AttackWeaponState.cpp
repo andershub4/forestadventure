@@ -6,43 +6,30 @@
 
 #include "AttackWeaponState.h"
 
-#include "Entity/Modes/IdleMode.h"
-#include "Entity/Modes/MoveMode.h"
 #include "Entity/Shapes/Shape.h"
-#include "Enum/FrameType.h"
 
 namespace FA {
 
 namespace Entity {
 
-AttackWeaponState::AttackWeaponState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService)
-    : BasicState(stateMachine, stateData, entityService)
-{}
+AttackWeaponState::AttackWeaponState(StateController& stateController, StateData& stateData,
+                                     EntityService& entityService, std::shared_ptr<BasicEvent> event)
+    : BasicState(stateController, stateData, entityService)
+{
+    InternalEnter(event);
+}
 
 AttackWeaponState::~AttackWeaponState() = default;
 
 void AttackWeaponState::Update(float deltaTime)
 {
     GetShape()->Update(deltaTime);
-    if (GetShape()->AnimationIsCompleted()) {
-        GetMode<IdleMode>()->Execute(*this);
-    }
+    BasicState::Update();
 }
 
 void AttackWeaponState::DrawTo(sf::RenderTarget& renderTarget)
 {
     GetShape()->DrawTo(renderTarget);
-}
-
-void AttackWeaponState::Enter()
-{
-    GetShape()->Set(FrameType::AttackWeapon);
-}
-
-void AttackWeaponState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
-{
-    GetMode<MoveMode>()->SetDirection(moveDir, faceDir);
-    GetMode<MoveMode>()->Execute(*this);
 }
 
 }  // namespace Entity

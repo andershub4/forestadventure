@@ -29,18 +29,23 @@ class MoveMode : public BasicMode
 public:
     MoveMode(EntityService *owner);
 
+    virtual void Enter(std::shared_ptr<BasicEvent> event) override;
+    virtual void Exit() override;
+
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;
     virtual FrameType GetFrameType() const override { return FrameType::Move; }
-
-    void SetDirection(MoveDirection direction, FaceDirection faceDirection);
-    void Execute(BasicState &oldState);
+    virtual ModeType GetModeType() const override { return ModeType::Move; }
+    virtual std::unique_ptr<BasicState> CreateState(StateController& stateController, std::shared_ptr<BasicEvent> event) const;
 
 private:
     sf::Vector2f movementVector_{};
     std::shared_ptr<TransformAttribute> transform_ = nullptr;
     std::shared_ptr<VelocityAttribute> velocity_ = nullptr;
     std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
+
+private:
+    void SetDirection(MoveDirection direction, FaceDirection faceDirection);
 };
 
 }  // namespace Entity

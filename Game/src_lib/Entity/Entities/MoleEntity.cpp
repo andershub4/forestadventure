@@ -44,10 +44,14 @@ void MoleEntity::OnAddProperties(EntityService& entityService, const PropertyDat
     v->SetVelocity(data.velocity_);
 }
 
-void MoleEntity::OnAddModes(EntityService& entityService)
+void MoleEntity::OnAddModes(StateController& stateController)
 {
-    entityService.AddMode<IdleMode>();
-    entityService.AddMode<MoveMode>();
+    auto idleMode = stateController.AddMode<IdleMode>(true);
+    idleMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
+    idleMode->AddEvent(EventType::Collision, ModeType::None, nullptr);
+
+    auto moveMode = stateController.AddMode<MoveMode>();
+    moveMode->AddEvent(EventType::StopMove, ModeType::Idle, nullptr);
 }
 
 void MoleEntity::OnAddShape(EntityService& entityService, Shape& shape)

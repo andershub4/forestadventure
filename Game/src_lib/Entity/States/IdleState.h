@@ -15,17 +15,14 @@ namespace Entity {
 class IdleState : public BasicState
 {
 public:
-    IdleState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService);
+    IdleState(StateController& stateController, StateData& stateData, EntityService& entityService,
+              std::shared_ptr<BasicEvent> event);
     virtual ~IdleState();
 
     virtual void Update(float deltaTime) override;
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
     virtual std::string Name() const override { return "IdleState"; }
-    virtual void Enter() override;
-
-    virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) override;
-    virtual void OnAttack() override;
-    virtual void OnAttackWeapon() override;
+    virtual ModeType GetModeType() const override { return ModeType::Idle; }
 };
 
 }  // namespace Entity

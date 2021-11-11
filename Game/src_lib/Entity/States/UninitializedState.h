@@ -15,13 +15,15 @@ namespace Entity {
 class UninitializedState : public BasicState
 {
 public:
-    UninitializedState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService_);
+    UninitializedState(StateController& stateController, StateData& stateData, EntityService& entityService,
+                       std::shared_ptr<BasicEvent> event);
     virtual ~UninitializedState();
 
     virtual void Create(const PropertyData& data);
     virtual void Update(float deltaTime) override {}
     virtual void DrawTo(sf::RenderTarget& renderTarget) override {}
     virtual std::string Name() const override { return "UninitializedState"; }
+    virtual ModeType GetModeType() const override { return ModeType::None; }
 
     virtual void OnInit() override;
 };

@@ -6,29 +6,26 @@
 
 #include "UninitializedState.h"
 
-#include "Entity/Modes/IdleMode.h"
-#include "Entity/Modes/UninitializedMode.h"
-
 namespace FA {
 
 namespace Entity {
 
-UninitializedState::UninitializedState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService)
-    : BasicState(stateMachine, stateData, entityService)
+UninitializedState::UninitializedState(StateController& stateController, StateData& stateData,
+                                       EntityService& entityService, std::shared_ptr<BasicEvent> event)
+    : BasicState(stateController, stateData, entityService)
 {}
 
 UninitializedState::~UninitializedState() = default;
 
 void UninitializedState::Create(const PropertyData& data)
 {
-    GetMode<UninitializedMode>()->Create(data);
+    BasicState::InternalCreate(data);
 }
 
 void UninitializedState::OnInit()
 {
     InitProperties();
-
-    GetMode<IdleMode>()->Execute(*this);
+    BasicState::Start();
 }
 
 }  // namespace Entity

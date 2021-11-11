@@ -14,16 +14,34 @@ namespace FA {
 namespace Entity {
 
 StateMachine::StateMachine(EntityService& entityService)
-{
-    currentState_ = std::make_unique<UninitializedState>(*this, stateData_, entityService);
-    // LOG_INFO("Enter ", currentState_->Name());
-    currentState_->Enter();
-}
+{}
 
 StateMachine::~StateMachine()
 {
     // LOG_INFO("Exit ", currentState_->Name());
     currentState_->Exit();
+}
+
+void StateMachine::Init(std::unique_ptr<BasicState> state)
+{
+    // LOG_INFO("Enter ", currentState_->Name());
+    currentState_ = std::move(state);
+    currentState_->Enter();
+}
+
+void StateMachine::HandleIsKeyPressed(Keyboard::Key key)
+{
+    currentState_->HandleIsKeyPressed(key);
+}
+
+void StateMachine::HandleKeyPressed(Keyboard::Key key)
+{
+    currentState_->HandleKeyPressed(key);
+}
+
+void StateMachine::HandleIsKeyReleased(Keyboard::Key key)
+{
+    currentState_->HandleIsKeyReleased(key);
 }
 
 void StateMachine::Create(const PropertyData& data)
@@ -48,36 +66,16 @@ void StateMachine::DrawTo(sf::RenderTarget& renderTarget)
 
 void StateMachine::SetState(std::unique_ptr<BasicState> newState)
 {
-    // LOG_INFO("Exit ", currentState_->Name());
+     // LOG_INFO("Exit ", currentState_->Name());
     currentState_->Exit();
     currentState_ = std::move(newState);
-    // LOG_INFO("Enter ", currentState_->Name());
+     // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }
 
 void StateMachine::OnInit()
 {
     currentState_->OnInit();
-}
-
-void StateMachine::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
-{
-    currentState_->OnStartMove(moveDir, faceDir);
-}
-
-void StateMachine::OnStopMove()
-{
-    currentState_->OnStopMove();
-}
-
-void StateMachine::OnAttack()
-{
-    currentState_->OnAttack();
-}
-
-void StateMachine::OnAttackWeapon()
-{
-    currentState_->OnAttackWeapon();
 }
 
 }  // namespace Entity

@@ -8,8 +8,6 @@
 
 #include <functional>
 
-#include <SFML/System/Vector2.hpp>
-
 #include "BasicMode.h"
 
 namespace FA {
@@ -26,8 +24,8 @@ public:
 
     virtual void Update(float deltaTime) override {}
     virtual FrameType GetFrameType() const override { return FrameType::Undefined; }
-
-    void Execute(BasicState &oldState);
+    virtual ModeType GetModeType() const override { return ModeType::Uninitialized; }
+    virtual std::unique_ptr<BasicState> CreateState(StateController &stateController, std::shared_ptr<BasicEvent> event) const override;
 
     void SetOnCreateCB(std::function<void(EntityService &, const PropertyData &)> onCreate) { onCreate_ = onCreate; }
     void Create(const PropertyData &data);

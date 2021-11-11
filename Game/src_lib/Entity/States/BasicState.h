@@ -9,19 +9,22 @@
 #include <memory>
 #include <string>
 
-#include "Entity/EntityService.h"
-#include "Enum/FaceDirection.h"
-#include "Enum/MoveDirection.h"
 #include "Fwd/SfmlFwd.h"
+#include "Entity/ModeType.h"
 
 namespace FA {
 
-class AnimationDb;
+namespace Keyboard {
+enum class Key;
+}
 
 namespace Entity {
 
-class StateMachine;
+class StateController;
 struct PropertyData;
+struct BasicEvent;
+class EntityService;
+class Shape;
 
 class BasicState
 {
@@ -30,67 +33,41 @@ public:
     {
     };
 
-    BasicState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService);
+    BasicState(StateController& stateController, StateData& stateData, EntityService& entityService);
     virtual ~BasicState();
 
     virtual void Create(const PropertyData& data) {}
     virtual void Update(float deltaTime) = 0;
     virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
     virtual std::string Name() const = 0;
+    virtual ModeType GetModeType() const = 0;
     virtual void Enter() {}
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
     virtual void OnInit() {}
-    virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) {}
-    virtual void OnStopMove() {}
-    virtual void OnAttack() {}
-    virtual void OnAttackWeapon() {}
 
-    void SwitchState(std::unique_ptr<BasicState> newState);
+    std::shared_ptr<Shape> GetShape() const;
 
-    template <class StateT, typename... Args>
-    void SwitchState(Args&&... args)
-    {
-        static_assert(std::is_base_of<BasicState, StateT>::value, "StateT must derive from BasicState");
-
-        SwitchState(std::make_unique<StateT>(stateMachine_, stateData_, entityService_, std::forward<Args>(args)...));
-    }
-
-    template <class T>
-    std::shared_ptr<T> GetAttribute() const
-    {
-        return entityService_.GetAttribute<T>();
-    }
-
-    template <class T>
-    std::shared_ptr<T> GetMode() const
-    {
-        return entityService_.GetMode<T>();
-    }
-
-    template <class T>
-    std::shared_ptr<T> AddAttribute()
-    {
-        return entityService_.AddAttribute<T>();
-    }
-
-    template <class T>
-    std::shared_ptr<T> AddMode()
-    {
-        return entityService_.AddMode<T>();
-    }
-
-    std::shared_ptr<Shape> GetShape() const { return entityService_.GetShape(); }
-
+    void HandleIsKeyPressed(Keyboard::Key key);
+    void HandleIsKeyReleased(Keyboard::Key key);
+    void HandleKeyPressed(Keyboard::Key key);
     void InitProperties();
 
 protected:
     StateData& stateData_;
 
+protected:
+    void Update();
+    void InternalCreate(const PropertyData& data);
+    void Start();
+    void InternalEnter(std::shared_ptr<BasicEvent> event);
+    void InternalExit();
+    void InternalUpdate(float deltaTime);
+
 private:
     EntityService& entityService_;
-    StateMachine& stateMachine_;
+    StateController& stateController_;
 };
 
 }  // namespace Entity

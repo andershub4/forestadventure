@@ -55,20 +55,26 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
-void PlayerEntity::OnAddModes(EntityService& entityService)
+void PlayerEntity::OnAddModes(StateController& stateController)
 {
-    /*
-    auto idleMode = std::shared_ptr<IdleMode>();
-    idleMode.AddEvent(EventType::StartMove, OnStartMove());
-    idleMode.AddEvent(EventType::Attack, OnAttack());
-    idleMode.AddEvent(EventType::AttackWeapon, OnAttackWeapon());
-    idleMode.AddEvent(EventType::Collision, OnCollision());
-    entityService.AddMode(idleMode);
-    */
-    entityService.AddMode<IdleMode>();
-    entityService.AddMode<MoveMode>();
-    entityService.AddMode<AttackMode>();
-    entityService.AddMode<AttackWeaponMode>();
+    auto idleMode = stateController.AddMode<IdleMode>(true);
+    idleMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
+    idleMode->AddEvent(EventType::Attack, ModeType::Attack, nullptr);
+    idleMode->AddEvent(EventType::AttackWeapon, ModeType::AttackWeapon, nullptr);
+    idleMode->AddEvent(EventType::Collision, ModeType::None, nullptr);
+
+    auto moveMode = stateController.AddMode<MoveMode>();
+    moveMode->AddEvent(EventType::StopMove, ModeType::Idle, nullptr);
+
+    auto attackMode = stateController.AddMode<AttackMode>();
+    attackMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
+    attackMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); },
+                            ModeType::Idle);
+
+    auto attackWeaponMode = stateController.AddMode<AttackWeaponMode>();
+    attackWeaponMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
+    attackWeaponMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); },
+                            ModeType::Idle);
 }
 
 void PlayerEntity::OnAddShape(EntityService& entityService, Shape& shape)
@@ -102,7 +108,7 @@ void PlayerEntity::OnDestroy()
 {
     Unsubscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
-
+/*
 void PlayerEntity::OnIsKeyPressed(Keyboard::Key key)
 {
     if (key == Keyboard::Key::Right) {
@@ -118,7 +124,8 @@ void PlayerEntity::OnIsKeyPressed(Keyboard::Key key)
         StartMove(MoveDirection::Down, FaceDirection::Down);
     }
 }
-
+*/
+/*
 void PlayerEntity::OnIsKeyReleased(Keyboard::Key key)
 {
     StopMove();
@@ -133,7 +140,7 @@ void PlayerEntity::OnKeyPressed(Keyboard::Key key)
         AttackWeapon();
     }
 }
-
+*/
 }  // namespace Entity
 
 }  // namespace FA

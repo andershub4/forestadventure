@@ -6,19 +6,18 @@
 
 #include "IdleState.h"
 
-#include "Entity/Modes/AttackMode.h"
-#include "Entity/Modes/AttackWeaponMode.h"
-#include "Entity/Modes/MoveMode.h"
 #include "Entity/Shapes/Shape.h"
-#include "Enum/FrameType.h"
 
 namespace FA {
 
 namespace Entity {
 
-IdleState::IdleState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService)
-    : BasicState(stateMachine, stateData, entityService)
-{}
+IdleState::IdleState(StateController& stateController, StateData& stateData, EntityService& entityService,
+                     std::shared_ptr<BasicEvent> event)
+    : BasicState(stateController, stateData, entityService)
+{
+    InternalEnter(event);
+}
 
 IdleState::~IdleState() = default;
 
@@ -30,27 +29,6 @@ void IdleState::Update(float deltaTime)
 void IdleState::DrawTo(sf::RenderTarget& renderTarget)
 {
     GetShape()->DrawTo(renderTarget);
-}
-
-void IdleState::Enter()
-{
-    GetShape()->Set(FrameType::Idle);
-}
-
-void IdleState::OnStartMove(MoveDirection moveDir, FaceDirection faceDir)
-{
-    GetMode<MoveMode>()->SetDirection(moveDir, faceDir);
-    GetMode<MoveMode>()->Execute(*this);
-}
-
-void IdleState::OnAttack()
-{
-    GetMode<AttackMode>()->Execute(*this);
-}
-
-void IdleState::OnAttackWeapon()
-{
-    GetMode<AttackWeaponMode>()->Execute(*this);
 }
 
 }  // namespace Entity

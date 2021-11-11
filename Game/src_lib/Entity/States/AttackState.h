@@ -15,15 +15,14 @@ namespace Entity {
 class AttackState : public BasicState
 {
 public:
-    AttackState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService);
+    AttackState(StateController& stateController, StateData& stateData,
+                EntityService& entityService, std::shared_ptr<BasicEvent> event);
     virtual ~AttackState();
 
     virtual void Update(float deltaTime) override;
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
     virtual std::string Name() const override { return "AttackState"; }
-    virtual void Enter() override;
-
-    virtual void OnStartMove(MoveDirection moveDir, FaceDirection faceDir) override;
+    virtual ModeType GetModeType() const override { return ModeType::Attack; }
 };
 
 }  // namespace Entity

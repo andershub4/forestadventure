@@ -6,47 +6,33 @@
 
 #include "MoveState.h"
 
-#include "Entity/Attributes/FaceDirectionAttribute.h"
-#include "Entity/Modes/IdleMode.h"
-#include "Entity/Modes/MoveMode.h"
 #include "Entity/Shapes/Shape.h"
-#include "Enum/FrameType.h"
 
 namespace FA {
 
 namespace Entity {
 
-MoveState::MoveState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService)
-    : BasicState(stateMachine, stateData, entityService)
-{}
+MoveState::MoveState(StateController& stateController, StateData& stateData, EntityService& entityService,
+                     std::shared_ptr<BasicEvent> event)
+    : BasicState(stateController, stateData, entityService)
+{
+    InternalEnter(event);
+}
 
-MoveState::~MoveState() = default;
+MoveState::~MoveState()
+{
+    InternalExit();
+}
 
 void MoveState::Update(float deltaTime)
 {
     GetShape()->Update(deltaTime);
-    GetMode<MoveMode>()->Update(deltaTime);
+    InternalUpdate(deltaTime);
 }
 
 void MoveState::DrawTo(sf::RenderTarget& renderTarget)
 {
     GetShape()->DrawTo(renderTarget);
-}
-
-void MoveState::Enter()
-{
-    GetShape()->Set(FrameType::Move);
-}
-
-void MoveState::Exit()
-{
-    auto faceDir = GetAttribute<FaceDirectionAttribute>()->GetDirection();
-    GetMode<MoveMode>()->SetDirection(MoveDirection::None, faceDir);
-}
-
-void MoveState::OnStopMove()
-{
-    GetMode<IdleMode>()->Execute(*this);
 }
 
 }  // namespace Entity

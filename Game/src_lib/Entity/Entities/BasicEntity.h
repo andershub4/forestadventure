@@ -10,7 +10,7 @@
 
 #include "Entity/EntityService.h"
 #include "Entity/Id.h"
-#include "Entity/StateMachine.h"
+#include "Entity/StateController.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -49,25 +49,17 @@ public:
 protected:
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
-    void StartMove(MoveDirection moveDir, FaceDirection faceDir);
-    void StopMove();
-    void Attack();
-    void AttackWeapon();
-
-    virtual void OnIsKeyPressed(Keyboard::Key key) {}
-    virtual void OnIsKeyReleased(Keyboard::Key key) {}
-    virtual void OnKeyPressed(Keyboard::Key key) {}
 
 private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
     EntityService entityService_;
-    StateMachine stateMachine_;
+    StateController stateController_;
     bool enableInput_ = true;
 
 private:
     virtual void OnAddProperties(EntityService& entityService, const PropertyData& data) {}
-    virtual void OnAddModes(EntityService& entityService) {}
+    virtual void OnAddModes(StateController& stateController) {}
     virtual void OnAddShape(EntityService& entityService, Shape& shape) {}
 
     void OnMessage(std::shared_ptr<Message> msg);

@@ -15,16 +15,14 @@ namespace Entity {
 class MoveState : public BasicState
 {
 public:
-    MoveState(StateMachine& stateMachine, StateData& stateData, EntityService& entityService);
+    MoveState(StateController& stateController, StateData& stateData, EntityService& entityService,
+              std::shared_ptr<BasicEvent> event);
     virtual ~MoveState();
 
     virtual void Update(float deltaTime) override;
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;
     virtual std::string Name() const override { return "MoveState"; }
-    virtual void Enter() override;
-    virtual void Exit() override;
-
-    virtual void OnStopMove() override;
+    virtual ModeType GetModeType() const override { return ModeType::Move; }
 };
 
 }  // namespace Entity

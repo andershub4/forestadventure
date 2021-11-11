@@ -214,11 +214,19 @@
     <ClInclude Include="Effect\BasicEffect.h" />
     <ClInclude Include="Effect\FadeEffect.h" />
     <ClInclude Include="Effect\NullEffect.h" />
+    <ClInclude Include="Entity\Action.h" />
     <ClInclude Include="Entity\Attributes\BasicAttribute.h" />
     <ClInclude Include="Entity\Attributes\VelocityAttribute.h" />
     <ClInclude Include="Entity\BasicProperty.h" />
+    <ClInclude Include="Entity\Events\AttackEvent.h" />
+    <ClInclude Include="Entity\Events\AttackWeapon.h" />
+    <ClInclude Include="Entity\Events\BasicEvent.h" />
+    <ClInclude Include="Entity\Events\StartMoveEvent.h" />
+    <ClInclude Include="Entity\Events\StopMoveEvent.h" />
+    <ClInclude Include="Entity\EventType.h" />
     <ClInclude Include="Entity\Modes\UninitializedMode.h" />
     <ClInclude Include="Entity\EntityService.h" />
+    <ClInclude Include="Entity\ModeType.h" />
     <ClInclude Include="Entity\Shapes\AnimationShape.h" />
     <ClInclude Include="Entity\Modes\AttackMode.h" />
     <ClInclude Include="Entity\Modes\AttackWeaponMode.h" />
@@ -234,6 +242,8 @@
     <ClInclude Include="Entity\Entities\StaticEntity.h" />
     <ClInclude Include="Entity\Shapes\BasicShape.h" />
     <ClInclude Include="Entity\Shapes\RectangleShape.h" />
+    <ClInclude Include="Entity\StateController.h" />
+    <ClInclude Include="Entity\UpdateInfo.h" />
     <ClInclude Include="Resource\EntityTextures.h" />
     <ClInclude Include="Entity\Factory.h" />
     <ClInclude Include="Entity\Id.h" />
@@ -327,6 +337,7 @@
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />
     <ClCompile Include="Entity\Factory.cpp" />
     <ClCompile Include="Entity\Shapes\RectangleShape.cpp" />
+    <ClCompile Include="Entity\StateController.cpp" />
     <ClCompile Include="Entity\StateMachine.cpp" />
     <ClCompile Include="Entity\States\BasicState.cpp" />
     <ClCompile Include="Entity\States\AttackState.cpp" />

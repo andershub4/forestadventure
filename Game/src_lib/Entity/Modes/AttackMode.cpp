@@ -7,6 +7,9 @@
 #include "AttackMode.h"
 
 #include "Entity/States/AttackState.h"
+#include "Entity/StateController.h"
+#include "Entity/EntityService.h"
+#include "Entity/Shapes/Shape.h"
 
 namespace FA {
 
@@ -16,9 +19,14 @@ AttackMode::AttackMode(EntityService *owner)
     : BasicMode(owner)
 {}
 
-void AttackMode::Execute(BasicState &oldState)
+void AttackMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    oldState.SwitchState<AttackState>();
+    Owner()->GetShape()->Set(FrameType::Attack);
+}
+
+std::unique_ptr<BasicState> AttackMode::CreateState(StateController &stateController, std::shared_ptr<BasicEvent> event) const
+{
+    return stateController.CreateState<AttackState>(event);
 }
 
 }  // namespace Entity

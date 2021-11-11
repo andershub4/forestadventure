@@ -7,6 +7,9 @@
 #include "IdleMode.h"
 
 #include "Entity/States/IdleState.h"
+#include "Entity/StateController.h"
+#include "Entity/EntityService.h"
+#include "Entity/Shapes/Shape.h"
 
 namespace FA {
 
@@ -16,9 +19,14 @@ IdleMode::IdleMode(EntityService *owner)
     : BasicMode(owner)
 {}
 
-void IdleMode::Execute(BasicState &oldState)
+void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    oldState.SwitchState<IdleState>();
+    Owner()->GetShape()->Set(FrameType::Idle);
+}
+
+std::unique_ptr<BasicState> IdleMode::CreateState(StateController &stateController, std::shared_ptr<BasicEvent> event) const
+{
+    return stateController.CreateState<IdleState>(event);
 }
 
 }  // namespace Entity

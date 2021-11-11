@@ -19,10 +19,12 @@ class AttackMode : public BasicMode
 public:
     AttackMode(EntityService *owner);
 
+    virtual void Enter(std::shared_ptr<BasicEvent> event) override;
+
     virtual void Update(float deltaTime) override {}
     virtual FrameType GetFrameType() const override { return FrameType::Attack; }
-
-    void Execute(BasicState &oldState);
+    virtual ModeType GetModeType() const override { return ModeType::Attack; }
+    virtual std::unique_ptr<BasicState> CreateState(StateController &stateController, std::shared_ptr<BasicEvent> event) const override;
 };
 
 }  // namespace Entity

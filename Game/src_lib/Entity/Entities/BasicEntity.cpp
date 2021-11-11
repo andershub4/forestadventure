@@ -24,13 +24,11 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     : id_(id)
     , messageBus_(messageBus)
     , entityService_(entityType, cameraManager, animationDb)
-    , stateMachine_(entityService_)
+    , stateController_(entityService_)
 {
-    auto u = entityService_.AddMode<UninitializedMode>();
-    u->SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {
+    stateController_.SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {
         OnAddProperties(entityService, propertyData);
-        OnAddModes(entityService);
-        entityService.Awake();
+        OnAddModes(stateController_);
         OnAddShape(entityService, *entityService.GetShape());
         entityService.GetShape()->Awake();
     });
@@ -40,22 +38,22 @@ BasicEntity::~BasicEntity() = default;
 
 void BasicEntity::Create(const PropertyData& data)
 {
-    stateMachine_.Create(data);
+    stateController_.Create(data);
 }
 
 void BasicEntity::Update(float deltaTime)
 {
-    stateMachine_.Update(deltaTime);
+    stateController_.Update(deltaTime);
 }
 
 void BasicEntity::LateUpdate()
 {
-    stateMachine_.LateUpdate();
+    stateController_.LateUpdate();
 }
 
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateMachine_.DrawTo(renderTarget);
+    stateController_.DrawTo(renderTarget);
 }
 
 void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
@@ -70,43 +68,23 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     if (msg->GetMessageType() == MessageType::IsKeyPressed) {
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
         auto key = m->GetKey();
-        OnIsKeyPressed(key);
+        stateController_.HandleIsKeyPressed(key);
     }
     else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
         auto m = std::dynamic_pointer_cast<IsKeyReleasedMessage>(msg);
         auto key = m->GetKey();
-        OnIsKeyReleased(key);
+        stateController_.HandleIsKeyReleased(key);
     }
     else if (msg->GetMessageType() == MessageType::KeyPressed) {
         auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
         auto key = m->GetKey();
-        OnKeyPressed(key);
+        stateController_.HandleKeyPressed(key);
     }
 }
 
 void BasicEntity::Init()
 {
-    stateMachine_.OnInit();
-}
-
-void BasicEntity::StartMove(MoveDirection moveDir, FaceDirection faceDir)
-{
-    stateMachine_.OnStartMove(moveDir, faceDir);
-}
-
-void BasicEntity::StopMove()
-{
-    stateMachine_.OnStopMove();
-}
-
-void BasicEntity::Attack()
-{
-    stateMachine_.OnAttack();
-}
-
-void BasicEntity::AttackWeapon()
-{
-    stateMachine_.OnAttackWeapon();
+    stateController_.OnInit();
 }
 
 void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)

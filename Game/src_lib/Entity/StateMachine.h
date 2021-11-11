@@ -10,7 +10,14 @@
 
 namespace FA {
 
+namespace Keyboard {
+enum class Key;
+}
+
 namespace Entity {
+
+class BasicState;
+struct PropertyData;
 
 class StateMachine
 {
@@ -18,17 +25,16 @@ public:
     StateMachine(EntityService& entityService);
     ~StateMachine();
 
+    void Init(std::unique_ptr<BasicState> state);
+    void HandleIsKeyPressed(Keyboard::Key key);
+    void HandleIsKeyReleased(Keyboard::Key key);
+    void HandleKeyPressed(Keyboard::Key key);
     void Create(const PropertyData& data);
     void Update(float deltaTime);
     void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);
     void SetState(std::unique_ptr<BasicState> newState);
-
     void OnInit();
-    void OnStartMove(MoveDirection moveDir, FaceDirection faceDir);
-    void OnStopMove();
-    void OnAttack();
-    void OnAttackWeapon();
 
 private:
     std::unique_ptr<BasicState> currentState_;

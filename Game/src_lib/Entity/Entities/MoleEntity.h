@@ -20,7 +20,7 @@ public:
 
     virtual std::string Name() const override { return "MoleEntity"; }
     virtual void OnAddProperties(EntityService& handler, const PropertyData& data) override;
-    virtual void OnAddModes(EntityService& entityService) override;
+    virtual void OnAddModes(StateController& stateController) override;
     virtual void OnAddShape(EntityService& entityService, Shape& shape) override;
 };
 
