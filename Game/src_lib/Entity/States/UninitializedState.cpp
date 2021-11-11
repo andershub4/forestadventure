@@ -24,7 +24,6 @@ void UninitializedState::Create(const PropertyData& data)
 
 void UninitializedState::OnInit()
 {
-    InitProperties();
     BasicState::Start();
 }
 

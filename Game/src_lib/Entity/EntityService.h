@@ -13,7 +13,7 @@
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 #include "Logging.h"
-#include "PropertyStore.h"
+#include "AttributeStore.h"
 
 namespace FA {
 
@@ -35,14 +35,14 @@ public:
     template <class T>
     std::shared_ptr<T> AddAttribute()
     {
-        return attributeStore_.AddProperty<T>(this);
+        return attributeStore_.AddAttribute<T>(this);
     }
 
     template <class T>
     std::shared_ptr<T> GetAttribute()
     {
-        if (attributeStore_.HasProperty<T>()) {
-            return attributeStore_.GetProperty<T>();
+        if (attributeStore_.HasAttribute<T>()) {
+            return attributeStore_.GetAttribute<T>();
         }
         else {
             LOG_ERROR(typeid(T).name(), " is not in attributeStore");
@@ -53,14 +53,13 @@ public:
     template <>
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
 
-    void InitProperties();
     Animation GetAnimation(FrameType frameType, FaceDirection faceDir) const;
     std::vector<FrameType> GetFrameTypes() const { return frameTypes_; }
     std::shared_ptr<Shape> GetShape() const { return shape_; }
     void AddFrameType(FrameType frameType);
 
 private:
-    PropertyStore attributeStore_;
+    AttributeStore attributeStore_;
     std::vector<FrameType> frameTypes_;
     CameraManager &cameraManager_;
     EntityType entityType_;

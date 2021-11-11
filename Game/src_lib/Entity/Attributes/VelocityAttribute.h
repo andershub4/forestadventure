@@ -21,8 +21,6 @@ class VelocityAttribute : public BasicAttribute
 public:
     VelocityAttribute(EntityService *owner);
 
-    virtual void Update(float deltaTime) override {}
-
     void SetVelocity(float velocity);
     float GetVelocity() const;
 

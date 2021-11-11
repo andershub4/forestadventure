@@ -22,8 +22,6 @@ class FaceDirectionAttribute : public BasicAttribute
 public:
     FaceDirectionAttribute(EntityService *owner);
 
-    virtual void Update(float deltaTime) override {}
-
     void SetDirection(FaceDirection direction);
     FaceDirection GetDirection() const;
     void SetAvailableDirections(const std::vector<FaceDirection> &directions);

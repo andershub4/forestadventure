@@ -71,11 +71,6 @@ std::shared_ptr<Shape> BasicState::GetShape() const
     return entityService_.GetShape();
 }
 
-void BasicState::InitProperties()
-{
-    entityService_.InitProperties();
-}
-
 void BasicState::Update()
 {
     stateController_.Update(GetModeType(), entityService_.GetShape());

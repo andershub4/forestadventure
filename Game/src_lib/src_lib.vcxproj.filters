@@ -216,13 +216,7 @@
     <ClCompile Include="Entity\Attributes\CameraAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\PropertyStore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\Attributes\BasicAttribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\BasicProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Attributes\VelocityAttribute.cpp">
@@ -470,7 +464,7 @@
     <ClInclude Include="Entity\Shapes\AnimationShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\PropertyStore.h">
+    <ClInclude Include="Entity\AttributeStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Modes\BasicMode.h">
@@ -501,9 +495,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Attributes\BasicAttribute.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\BasicProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Attributes\VelocityAttribute.h">

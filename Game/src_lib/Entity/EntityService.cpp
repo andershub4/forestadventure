@@ -31,12 +31,7 @@ std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
 {
     auto t = GetAttribute<TransformAttribute>();
     cameraManager_.Track(t->GetPosition());
-    return attributeStore_.AddProperty<CameraAttribute>(this);
-}
-
-void EntityService::InitProperties()
-{
-    attributeStore_.Init();
+    return attributeStore_.AddAttribute<CameraAttribute>(this);
 }
 
 Animation EntityService::GetAnimation(FrameType frameType, FaceDirection faceDir) const

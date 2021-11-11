@@ -11,7 +11,7 @@ namespace FA {
 namespace Entity {
 
 BasicAttribute::BasicAttribute(EntityService *owner)
-    : BasicProperty(owner)
+    : owner_(owner)
 {}
 
 BasicAttribute::~BasicAttribute() = default;

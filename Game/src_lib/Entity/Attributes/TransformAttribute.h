@@ -19,8 +19,6 @@ class TransformAttribute : public BasicAttribute
 public:
     TransformAttribute(EntityService *owner);
 
-    virtual void Update(float deltaTime) override{};
-
     void Move(const sf::Vector2f &offset);
     void SetPosition(const sf::Vector2f &position) { position_ = position; }
     const sf::Vector2f &GetPosition() const { return position_; }

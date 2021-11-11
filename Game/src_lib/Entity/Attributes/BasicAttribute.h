@@ -6,20 +6,28 @@
 
 #pragma once
 
-#include "Entity/BasicProperty.h"
-
 namespace FA {
 
 namespace Entity {
 
-class BasicAttribute : public BasicProperty
+class EntityService;
+
+class BasicAttribute
 {
 public:
     BasicAttribute(EntityService* owner);
     virtual ~BasicAttribute();
 
-    virtual void Awake() {}
-    virtual void Init() {}
+    BasicAttribute(const BasicAttribute&) = delete;
+    BasicAttribute& operator=(const BasicAttribute&) = delete;
+    BasicAttribute(BasicAttribute&&) = delete;
+    BasicAttribute& operator=(BasicAttribute&&) = delete;
+
+protected:
+    EntityService* Owner() const { return owner_; }
+
+private:
+    EntityService* owner_ = nullptr;
 };
 
 }  // namespace Entity

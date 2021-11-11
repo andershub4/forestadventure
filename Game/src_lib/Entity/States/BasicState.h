@@ -52,7 +52,6 @@ public:
     void HandleIsKeyPressed(Keyboard::Key key);
     void HandleIsKeyReleased(Keyboard::Key key);
     void HandleKeyPressed(Keyboard::Key key);
-    void InitProperties();
 
 protected:
     StateData& stateData_;
