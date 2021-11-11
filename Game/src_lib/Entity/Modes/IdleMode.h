@@ -27,7 +27,7 @@ public:
     virtual FrameType GetFrameType() const override { return FrameType::Idle; }
     virtual ModeType GetModeType() const override { return ModeType::Idle; }
     virtual std::unique_ptr<BasicState> CreateState(StateController& stateController,
-                                                    std::shared_ptr<BasicEvent> event) const;
+                                                    std::shared_ptr<BasicEvent> event) const override;
 };
 
 }  // namespace Entity
