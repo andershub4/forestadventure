@@ -107,39 +107,7 @@ void PlayerEntity::OnDestroy()
 {
     Unsubscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
-/*
-void PlayerEntity::OnIsKeyPressed(Keyboard::Key key)
-{
-    if (key == Keyboard::Key::Right) {
-        StartMove(MoveDirection::Right, FaceDirection::Right);
-    }
-    else if (key == Keyboard::Key::Left) {
-        StartMove(MoveDirection::Left, FaceDirection::Left);
-    }
-    else if (key == Keyboard::Key::Up) {
-        StartMove(MoveDirection::Up, FaceDirection::Up);
-    }
-    else if (key == Keyboard::Key::Down) {
-        StartMove(MoveDirection::Down, FaceDirection::Down);
-    }
-}
-*/
-/*
-void PlayerEntity::OnIsKeyReleased(Keyboard::Key key)
-{
-    StopMove();
-}
 
-void PlayerEntity::OnKeyPressed(Keyboard::Key key)
-{
-    if (key == Keyboard::Key::RControl) {
-        Attack();
-    }
-    else if (key == Keyboard::Key::Space) {
-        AttackWeapon();
-    }
-}
-*/
 }  // namespace Entity
 
 }  // namespace FA
