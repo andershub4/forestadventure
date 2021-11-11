@@ -27,7 +27,7 @@ class FaceDirectionAttribute;
 class MoveMode : public BasicMode
 {
 public:
-    MoveMode(EntityService *owner);
+    MoveMode(EntityService* owner);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
     virtual void Exit() override;
@@ -36,7 +36,8 @@ public:
     virtual void Update(float deltaTime) override;
     virtual FrameType GetFrameType() const override { return FrameType::Move; }
     virtual ModeType GetModeType() const override { return ModeType::Move; }
-    virtual std::unique_ptr<BasicState> CreateState(StateController& stateController, std::shared_ptr<BasicEvent> event) const;
+    virtual std::unique_ptr<BasicState> CreateState(StateController& stateController,
+                                                    std::shared_ptr<BasicEvent> event) const;
 
 private:
     sf::Vector2f movementVector_{};

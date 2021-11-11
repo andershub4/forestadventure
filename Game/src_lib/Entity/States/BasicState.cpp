@@ -7,13 +7,13 @@
 
 #include "BasicState.h"
 
-#include "Entity/StateController.h"
-#include "Entity/Events/StartMoveEvent.h"
-#include "Entity/Events/StopMoveEvent.h"
+#include "Entity/EntityService.h"
 #include "Entity/Events/AttackEvent.h"
 #include "Entity/Events/AttackWeapon.h"
+#include "Entity/Events/StartMoveEvent.h"
+#include "Entity/Events/StopMoveEvent.h"
+#include "Entity/StateController.h"
 #include "Enum/KeyboardKey.h"
-#include "Entity/EntityService.h"
 
 namespace FA {
 
@@ -32,7 +32,7 @@ void BasicState::HandleIsKeyPressed(Keyboard::Key key)
     std::shared_ptr<BasicEvent> event = nullptr;
 
     if (key == Keyboard::Key::Right) {
-       event = std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right);
+        event = std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right);
     }
     else if (key == Keyboard::Key::Left) {
         event = std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left);
@@ -100,7 +100,6 @@ void BasicState::InternalUpdate(float deltaTime)
 {
     stateController_.GetMode(GetModeType())->Update(deltaTime);
 }
-
 
 }  // namespace Entity
 

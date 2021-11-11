@@ -15,8 +15,8 @@ namespace Entity {
 class AttackState : public BasicState
 {
 public:
-    AttackState(StateController& stateController, StateData& stateData,
-                EntityService& entityService, std::shared_ptr<BasicEvent> event);
+    AttackState(StateController& stateController, StateData& stateData, EntityService& entityService,
+                std::shared_ptr<BasicEvent> event);
     virtual ~AttackState();
 
     virtual void Update(float deltaTime) override;

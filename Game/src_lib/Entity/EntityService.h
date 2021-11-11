@@ -9,11 +9,11 @@
 #include <memory>
 #include <vector>
 
+#include "AttributeStore.h"
 #include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 #include "Logging.h"
-#include "AttributeStore.h"
 
 namespace FA {
 

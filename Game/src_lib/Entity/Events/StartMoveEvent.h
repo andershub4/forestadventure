@@ -8,8 +8,8 @@
 
 #include "BasicEvent.h"
 
-#include "Enum/MoveDirection.h"
 #include "Enum/FaceDirection.h"
+#include "Enum/MoveDirection.h"
 
 namespace FA {
 

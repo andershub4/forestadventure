@@ -6,8 +6,8 @@
 
 #include "UninitializedMode.h"
 
-#include "Entity/States/UninitializedState.h"
 #include "Entity/StateController.h"
+#include "Entity/States/UninitializedState.h"
 
 namespace FA {
 
@@ -17,7 +17,8 @@ UninitializedMode::UninitializedMode(EntityService *owner)
     : BasicMode(owner)
 {}
 
-std::unique_ptr<BasicState> UninitializedMode::CreateState(StateController &stateController, std::shared_ptr<BasicEvent> event) const
+std::unique_ptr<BasicState> UninitializedMode::CreateState(StateController &stateController,
+                                                           std::shared_ptr<BasicEvent> event) const
 {
     return stateController.CreateState<UninitializedState>(event);
 }

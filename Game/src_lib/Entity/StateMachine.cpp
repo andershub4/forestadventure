@@ -66,10 +66,10 @@ void StateMachine::DrawTo(sf::RenderTarget& renderTarget)
 
 void StateMachine::SetState(std::unique_ptr<BasicState> newState)
 {
-     // LOG_INFO("Exit ", currentState_->Name());
+    // LOG_INFO("Exit ", currentState_->Name());
     currentState_->Exit();
     currentState_ = std::move(newState);
-     // LOG_INFO("Enter ", currentState_->Name());
+    // LOG_INFO("Enter ", currentState_->Name());
     currentState_->Enter();
 }
 

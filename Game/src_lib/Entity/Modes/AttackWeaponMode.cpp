@@ -6,10 +6,10 @@
 
 #include "AttackWeaponMode.h"
 
-#include "Entity/States/AttackWeaponState.h"
-#include "Entity/StateController.h"
 #include "Entity/EntityService.h"
 #include "Entity/Shapes/Shape.h"
+#include "Entity/StateController.h"
+#include "Entity/States/AttackWeaponState.h"
 
 namespace FA {
 
@@ -24,7 +24,8 @@ void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
     Owner()->GetShape()->Set(FrameType::AttackWeapon);
 }
 
-std::unique_ptr<BasicState> AttackWeaponMode::CreateState(StateController &stateController, std::shared_ptr<BasicEvent> event) const
+std::unique_ptr<BasicState> AttackWeaponMode::CreateState(StateController &stateController,
+                                                          std::shared_ptr<BasicEvent> event) const
 {
     return stateController.CreateState<AttackWeaponState>(event);
 }

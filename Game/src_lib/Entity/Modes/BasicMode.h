@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
 
-#include "Enum/FrameType.h"
 #include "Entity/Action.h"
-#include "Entity/UpdateInfo.h"
 #include "Entity/EventType.h"
+#include "Entity/UpdateInfo.h"
+#include "Enum/FrameType.h"
 
 namespace FA {
 
@@ -42,7 +42,8 @@ public:
 
     virtual FrameType GetFrameType() const = 0;
     virtual ModeType GetModeType() const = 0;
-    virtual std::unique_ptr<BasicState> CreateState(StateController& stateController, std::shared_ptr<BasicEvent> event) const = 0;
+    virtual std::unique_ptr<BasicState> CreateState(StateController& stateController,
+                                                    std::shared_ptr<BasicEvent> event) const = 0;
 
     void AddEvent(EventType eventType, ModeType modeType, std::function<void(std::shared_ptr<BasicEvent> event)> cb);
     void AddUpdateFn(std::function<bool(std::shared_ptr<Shape>)> updateFn, ModeType modeType);

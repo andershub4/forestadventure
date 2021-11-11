@@ -7,11 +7,11 @@
 #pragma once
 
 #include <functional>
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
 
-#include "StateMachine.h"
 #include "Modes/BasicMode.h"
+#include "StateMachine.h"
 
 namespace FA {
 
@@ -40,7 +40,7 @@ public:
     template <class T>
     std::unique_ptr<T> CreateState(std::shared_ptr<BasicEvent> event)
     {
-        return std::make_unique<T>(*this, stateData_, entityService_ , event);
+        return std::make_unique<T>(*this, stateData_, entityService_, event);
     }
 
     std::shared_ptr<BasicMode> GetMode(ModeType modeType) const;

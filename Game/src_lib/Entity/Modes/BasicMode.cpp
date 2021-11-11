@@ -18,7 +18,8 @@ BasicMode::BasicMode(EntityService *owner)
 
 BasicMode::~BasicMode() = default;
 
-void BasicMode::AddEvent(EventType eventType, ModeType modeType, std::function<void(std::shared_ptr<BasicEvent> event)> cb)
+void BasicMode::AddEvent(EventType eventType, ModeType modeType,
+                         std::function<void(std::shared_ptr<BasicEvent> event)> cb)
 {
     eventMap_[eventType] = {modeType, cb};
 }

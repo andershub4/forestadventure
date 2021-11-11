@@ -6,11 +6,11 @@
 
 #include "StateController.h"
 
+#include "EntityService.h"
+#include "Events/BasicEvent.h"
 #include "Logging.h"
 #include "Modes/UninitializedMode.h"
-#include "Events/BasicEvent.h"
 #include "Shapes/BasicShape.h"
-#include "EntityService.h"
 
 namespace FA {
 

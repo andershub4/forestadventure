@@ -12,6 +12,6 @@ namespace Entity {
 
 enum class ModeType { None, Uninitialized, Idle, Move, Attack, AttackWeapon };
 
-}  // namspace Entity
+}  // namespace Entity
 
 }  // namespace FA

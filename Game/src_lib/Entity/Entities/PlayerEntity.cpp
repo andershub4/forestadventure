@@ -68,13 +68,12 @@ void PlayerEntity::OnAddModes(StateController& stateController)
 
     auto attackMode = stateController.AddMode<AttackMode>();
     attackMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
-    attackMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); },
-                            ModeType::Idle);
+    attackMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); }, ModeType::Idle);
 
     auto attackWeaponMode = stateController.AddMode<AttackWeaponMode>();
     attackWeaponMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
     attackWeaponMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); },
-                            ModeType::Idle);
+                                  ModeType::Idle);
 }
 
 void PlayerEntity::OnAddShape(EntityService& entityService, Shape& shape)

@@ -11,12 +11,12 @@
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
-#include "Entity/States/MoveState.h"
-#include "Enum/MoveDirection.h"
+#include "Entity/EntityService.h"
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Shapes/Shape.h"
-#include "Entity/EntityService.h"
 #include "Entity/StateController.h"
+#include "Entity/States/MoveState.h"
+#include "Enum/MoveDirection.h"
 
 namespace {
 
@@ -49,7 +49,8 @@ void MoveMode::Exit()
     SetDirection(MoveDirection::None, faceDir);
 }
 
-std::unique_ptr<BasicState> MoveMode::CreateState(StateController &stateController, std::shared_ptr<BasicEvent> event) const
+std::unique_ptr<BasicState> MoveMode::CreateState(StateController &stateController,
+                                                  std::shared_ptr<BasicEvent> event) const
 {
     return stateController.CreateState<MoveState>(event);
 }

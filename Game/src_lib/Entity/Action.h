@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <memory>
 #include <functional>
+#include <memory>
 
 #include "ModeType.h"
 
@@ -21,7 +21,9 @@ struct Action
 {
     Action() = default;
     Action(ModeType modeType, std::function<void(std::shared_ptr<BasicEvent>)> cb)
-    : modeType_(modeType), cb_(cb) {}
+        : modeType_(modeType)
+        , cb_(cb)
+    {}
 
     ModeType modeType_ = ModeType::None;
     std::function<void(std::shared_ptr<BasicEvent>)> cb_;

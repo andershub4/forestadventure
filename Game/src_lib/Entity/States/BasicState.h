@@ -9,8 +9,8 @@
 #include <memory>
 #include <string>
 
-#include "Fwd/SfmlFwd.h"
 #include "Entity/ModeType.h"
+#include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
