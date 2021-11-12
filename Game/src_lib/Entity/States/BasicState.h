@@ -36,7 +36,6 @@ public:
     BasicState(StateController& stateController, StateData& stateData, EntityService& entityService);
     virtual ~BasicState();
 
-    virtual void Create(const PropertyData& data) {}
     virtual void Update(float deltaTime) = 0;
     virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
     virtual std::string Name() const = 0;

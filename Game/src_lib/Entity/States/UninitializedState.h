@@ -19,7 +19,6 @@ public:
                        std::shared_ptr<BasicEvent> event);
     virtual ~UninitializedState();
 
-    virtual void Create(const PropertyData& data);
     virtual void Update(float deltaTime) override {}
     virtual void DrawTo(sf::RenderTarget& renderTarget) override {}
     virtual std::string Name() const override { return "UninitializedState"; }

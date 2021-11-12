@@ -19,7 +19,6 @@ enum class FaceDirection;
 
 namespace Entity {
 
-class BasicState;
 class TransformAttribute;
 class VelocityAttribute;
 class FaceDirectionAttribute;

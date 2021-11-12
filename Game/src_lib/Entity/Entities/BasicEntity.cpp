@@ -41,6 +41,11 @@ void BasicEntity::Create(const PropertyData& data)
     stateController_.Create(data);
 }
 
+void BasicEntity::Init()
+{
+    stateController_.OnInit();
+}
+
 void BasicEntity::Update(float deltaTime)
 {
     stateController_.Update(deltaTime);
@@ -80,11 +85,6 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
         auto key = m->GetKey();
         stateController_.HandleKeyPressed(key);
     }
-}
-
-void BasicEntity::Init()
-{
-    stateController_.OnInit();
 }
 
 void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)

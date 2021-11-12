@@ -8,6 +8,7 @@
 
 #include "EntityService.h"
 #include "Events/BasicEvent.h"
+#include "Events/CreateEvent.h"
 #include "Logging.h"
 #include "Modes/UninitializedMode.h"
 #include "Shapes/BasicShape.h"
@@ -21,6 +22,11 @@ StateController::StateController(EntityService& entityService)
     , entityService_(entityService)
 {
     auto u = AddMode<UninitializedMode>();
+    u->AddEvent(EventType::Create, ModeType::None, [this](std::shared_ptr<BasicEvent> event) {
+        auto c = std::dynamic_pointer_cast<CreateEvent>(event);
+        auto data = c->data_;
+        onCreate_(entityService_, data);
+    });
     auto s = u->CreateState(*this, nullptr);
     stateMachine_.Init(std::move(s));
 }
@@ -48,18 +54,15 @@ void StateController::HandleKeyPressed(Keyboard::Key key)
 void StateController::HandleEvent(ModeType currentModeType, std::shared_ptr<BasicEvent> event)
 {
     auto currentMode = modes_.at(currentModeType);
-
     auto action = currentMode->GetAction(event->GetEventType());
 
-    if (action.modeType_ != ModeType::None) {
-        if (action.cb_) action.cb_(event);
+    if (action.cb_) action.cb_(event);
 
-        auto nextModeType = action.modeType_;
-        if (nextModeType != ModeType::None) {
-            auto nextMode = modes_.at(nextModeType);
-            auto nextState = nextMode->CreateState(*this, event);
-            stateMachine_.SetState(std::move(nextState));
-        }
+    auto nextModeType = action.modeType_;
+    if (nextModeType != ModeType::None) {
+        auto nextMode = modes_.at(nextModeType);
+        auto nextState = nextMode->CreateState(*this, event);
+        stateMachine_.SetState(std::move(nextState));
     }
 }
 
@@ -80,9 +83,8 @@ void StateController::DrawTo(sf::RenderTarget& renderTarget)
 
 void StateController::Create(const PropertyData& data)
 {
-    auto mode = modes_.at(ModeType::Uninitialized);
-    auto u = std::dynamic_pointer_cast<UninitializedMode>(mode);
-    u->Create(data);
+    auto event = std::make_shared<CreateEvent>(data);
+    HandleEvent(ModeType::Uninitialized, event);
 }
 
 void StateController::OnInit()
@@ -118,14 +120,14 @@ void StateController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
 
     modes_[mode->GetModeType()] = mode;
     mode->Awake();
-    if (startMode) startMode_ = mode;
+    if (startMode) {
+        startMode_ = mode;
+    }
 }
 
 void StateController::SetOnCreateCB(std::function<void(EntityService&, const PropertyData&)> onCreate)
 {
-    auto mode = modes_.at(ModeType::Uninitialized);
-    auto i = std::dynamic_pointer_cast<UninitializedMode>(mode);
-    i->SetOnCreateCB(onCreate);
+    onCreate_ = onCreate;
 }
 
 }  // namespace Entity

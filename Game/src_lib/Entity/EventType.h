@@ -10,7 +10,7 @@ namespace FA {
 
 namespace Entity {
 
-enum class EventType { None, StartMove, StopMove, Attack, AttackWeapon, Collision };
+enum class EventType { None, Create, StartMove, StopMove, Attack, AttackWeapon, Collision };
 
 }  // namespace Entity
 

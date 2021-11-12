@@ -7,7 +7,6 @@
 #include "StateMachine.h"
 
 #include "Logging.h"
-#include "States/UninitializedState.h"
 
 namespace FA {
 
@@ -42,11 +41,6 @@ void StateMachine::HandleKeyPressed(Keyboard::Key key)
 void StateMachine::HandleIsKeyReleased(Keyboard::Key key)
 {
     currentState_->HandleIsKeyReleased(key);
-}
-
-void StateMachine::Create(const PropertyData& data)
-{
-    currentState_->Create(data);
 }
 
 void StateMachine::Update(float deltaTime)

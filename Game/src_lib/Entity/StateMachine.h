@@ -17,7 +17,6 @@ enum class Key;
 namespace Entity {
 
 class BasicState;
-struct PropertyData;
 
 class StateMachine
 {
@@ -29,7 +28,6 @@ public:
     void HandleIsKeyPressed(Keyboard::Key key);
     void HandleIsKeyReleased(Keyboard::Key key);
     void HandleKeyPressed(Keyboard::Key key);
-    void Create(const PropertyData& data);
     void Update(float deltaTime);
     void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);

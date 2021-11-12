@@ -6,16 +6,11 @@
 
 #pragma once
 
-#include <functional>
-
 #include "BasicMode.h"
 
 namespace FA {
 
 namespace Entity {
-
-class BasicState;
-struct PropertyData;
 
 class UninitializedMode : public BasicMode
 {
@@ -27,12 +22,6 @@ public:
     virtual ModeType GetModeType() const override { return ModeType::Uninitialized; }
     virtual std::unique_ptr<BasicState> CreateState(StateController &stateController,
                                                     std::shared_ptr<BasicEvent> event) const override;
-
-    void SetOnCreateCB(std::function<void(EntityService &, const PropertyData &)> onCreate) { onCreate_ = onCreate; }
-    void Create(const PropertyData &data);
-
-private:
-    std::function<void(EntityService &, const PropertyData &)> onCreate_{};
 };
 
 }  // namespace Entity

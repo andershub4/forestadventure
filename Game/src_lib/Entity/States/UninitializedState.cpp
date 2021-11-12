@@ -17,11 +17,6 @@ UninitializedState::UninitializedState(StateController& stateController, StateDa
 
 UninitializedState::~UninitializedState() = default;
 
-void UninitializedState::Create(const PropertyData& data)
-{
-    BasicState::InternalCreate(data);
-}
-
 void UninitializedState::OnInit()
 {
     BasicState::Start();

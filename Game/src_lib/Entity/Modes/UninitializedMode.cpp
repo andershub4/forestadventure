@@ -23,11 +23,6 @@ std::unique_ptr<BasicState> UninitializedMode::CreateState(StateController &stat
     return stateController.CreateState<UninitializedState>(event);
 }
 
-void UninitializedMode::Create(const PropertyData &data)
-{
-    onCreate_(*Owner(), data);
-}
-
 }  // namespace Entity
 
 }  // namespace FA

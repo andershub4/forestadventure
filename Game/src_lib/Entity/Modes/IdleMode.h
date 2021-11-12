@@ -14,8 +14,6 @@ namespace FA {
 
 namespace Entity {
 
-class BasicState;
-
 class IdleMode : public BasicMode
 {
 public:

@@ -12,8 +12,6 @@ namespace FA {
 
 namespace Entity {
 
-class BasicState;
-
 class AttackWeaponMode : public BasicMode
 {
 public:
