@@ -17,11 +17,6 @@ UninitializedState::UninitializedState(StateController& stateController, StateDa
 
 UninitializedState::~UninitializedState() = default;
 
-void UninitializedState::OnInit()
-{
-    BasicState::Start();
-}
-
 }  // namespace Entity
 
 }  // namespace FA

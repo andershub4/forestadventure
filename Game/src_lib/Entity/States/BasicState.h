@@ -44,7 +44,6 @@ public:
     virtual void Exit() {}
 
     virtual void LateUpdate() {}
-    virtual void OnInit() {}
 
     std::shared_ptr<Shape> GetShape() const;
 
@@ -58,7 +57,6 @@ protected:
 protected:
     void Update();
     void InternalCreate(const PropertyData& data);
-    void Start();
     void InternalEnter(std::shared_ptr<BasicEvent> event);
     void InternalExit();
     void InternalUpdate(float deltaTime);

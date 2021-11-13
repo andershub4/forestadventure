@@ -53,14 +53,13 @@ public:
     void DrawTo(sf::RenderTarget& renderTarget);
 
     void Create(const PropertyData& data);
-    void Start();
+    void Init();
     void Update(ModeType currentModeType, std::shared_ptr<Shape> shape);
-    void OnInit();
     void SetOnCreateCB(std::function<void(EntityService&, const PropertyData&)> onCreate);
 
 private:
     std::unordered_map<ModeType, std::shared_ptr<BasicMode>> modes_;
-    std::shared_ptr<BasicMode> startMode_{nullptr};
+    ModeType startMode_ = ModeType::None;
     std::function<void(EntityService&, const PropertyData&)> onCreate_{};
     StateMachine stateMachine_;
     BasicState::StateData stateData_;

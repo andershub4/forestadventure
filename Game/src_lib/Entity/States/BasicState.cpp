@@ -81,11 +81,6 @@ void BasicState::InternalCreate(const PropertyData& data)
     stateController_.Create(data);
 }
 
-void BasicState::Start()
-{
-    stateController_.Start();
-}
-
 void BasicState::InternalEnter(std::shared_ptr<BasicEvent> event)
 {
     stateController_.GetMode(GetModeType())->Enter(event);

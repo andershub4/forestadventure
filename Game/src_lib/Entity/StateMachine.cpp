@@ -67,11 +67,6 @@ void StateMachine::SetState(std::unique_ptr<BasicState> newState)
     currentState_->Enter();
 }
 
-void StateMachine::OnInit()
-{
-    currentState_->OnInit();
-}
-
 }  // namespace Entity
 
 }  // namespace FA

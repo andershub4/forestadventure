@@ -9,6 +9,7 @@
 #include "EntityService.h"
 #include "Events/BasicEvent.h"
 #include "Events/CreateEvent.h"
+#include "Events/InitEvent.h"
 #include "Logging.h"
 #include "Modes/UninitializedMode.h"
 #include "Shapes/BasicShape.h"
@@ -27,6 +28,7 @@ StateController::StateController(EntityService& entityService)
         auto data = c->data_;
         onCreate_(entityService_, data);
     });
+
     auto s = u->CreateState(*this, nullptr);
     stateMachine_.Init(std::move(s));
 }
@@ -87,19 +89,10 @@ void StateController::Create(const PropertyData& data)
     HandleEvent(ModeType::Uninitialized, event);
 }
 
-void StateController::OnInit()
+void StateController::Init()
 {
-    stateMachine_.OnInit();
-}
-
-void StateController::Start()
-{
-    if (!startMode_) {
-        LOG_INFO("No startMode found");
-        std::abort();
-    }
-    auto nextState = startMode_->CreateState(*this, nullptr);
-    stateMachine_.SetState(std::move(nextState));
+    auto event = std::make_shared<InitEvent>();
+    HandleEvent(ModeType::Uninitialized, event);
 }
 
 void StateController::Update(ModeType currentModeType, std::shared_ptr<Shape> shape)
@@ -121,7 +114,9 @@ void StateController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
     modes_[mode->GetModeType()] = mode;
     mode->Awake();
     if (startMode) {
-        startMode_ = mode;
+        startMode_ = mode->GetModeType();
+        auto u = modes_.at(ModeType::Uninitialized);
+        u->AddEvent(EventType::Init, startMode_, nullptr);
     }
 }
 

@@ -23,8 +23,6 @@ public:
     virtual void DrawTo(sf::RenderTarget& renderTarget) override {}
     virtual std::string Name() const override { return "UninitializedState"; }
     virtual ModeType GetModeType() const override { return ModeType::None; }
-
-    virtual void OnInit() override;
 };
 
 }  // namespace Entity

@@ -43,7 +43,7 @@ void BasicEntity::Create(const PropertyData& data)
 
 void BasicEntity::Init()
 {
-    stateController_.OnInit();
+    stateController_.Init();
 }
 
 void BasicEntity::Update(float deltaTime)

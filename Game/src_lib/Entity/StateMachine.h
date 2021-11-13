@@ -32,7 +32,6 @@ public:
     void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);
     void SetState(std::unique_ptr<BasicState> newState);
-    void OnInit();
 
 private:
     std::unique_ptr<BasicState> currentState_;
