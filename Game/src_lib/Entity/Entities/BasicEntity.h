@@ -58,9 +58,9 @@ private:
     bool enableInput_ = true;
 
 private:
-    virtual void OnAddProperties(EntityService& entityService, const PropertyData& data) {}
-    virtual void OnAddModes(StateController& stateController) {}
-    virtual void OnAddShape(EntityService& entityService, Shape& shape) {}
+    virtual void DefineProperties(EntityService& entityService, const PropertyData& data) {}
+    virtual void DefineModes(StateController& stateController) {}
+    virtual void DefineShape(EntityService& entityService, Shape& shape) {}
 
     void OnMessage(std::shared_ptr<Message> msg);
     void HandleMessage(std::shared_ptr<Message> msg);

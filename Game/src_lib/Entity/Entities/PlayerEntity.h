@@ -19,9 +19,9 @@ public:
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
-    virtual void OnAddProperties(EntityService& handler, const PropertyData& data) override;
-    virtual void OnAddModes(StateController& stateController) override;
-    virtual void OnAddShape(EntityService& entityService, Shape& shape) override;
+    virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;
+    virtual void DefineModes(StateController& stateController) override;
+    virtual void DefineShape(EntityService& entityService, Shape& shape) override;
     virtual void OnDestroy() override;
 };
 

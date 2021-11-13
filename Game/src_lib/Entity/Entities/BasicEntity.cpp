@@ -27,9 +27,9 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     , stateController_(entityService_)
 {
     stateController_.SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {
-        OnAddProperties(entityService, propertyData);
-        OnAddModes(stateController_);
-        OnAddShape(entityService, *entityService.GetShape());
+        DefineProperties(entityService, propertyData);
+        DefineModes(stateController_);
+        DefineShape(entityService, *entityService.GetShape());
         entityService.GetShape()->Awake();
     });
 }

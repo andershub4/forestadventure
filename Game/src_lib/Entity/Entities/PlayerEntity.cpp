@@ -39,7 +39,7 @@ PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, const Anim
 
 PlayerEntity::~PlayerEntity() = default;
 
-void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyData& data)
+void PlayerEntity::DefineProperties(EntityService& entityService, const PropertyData& data)
 {
     auto t = entityService.AddAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
@@ -55,7 +55,7 @@ void PlayerEntity::OnAddProperties(EntityService& entityService, const PropertyD
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
-void PlayerEntity::OnAddModes(StateController& stateController)
+void PlayerEntity::DefineModes(StateController& stateController)
 {
     auto idleMode = stateController.AddMode<IdleMode>(true);
     idleMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
@@ -76,7 +76,7 @@ void PlayerEntity::OnAddModes(StateController& stateController)
                                   ModeType::Idle);
 }
 
-void PlayerEntity::OnAddShape(EntityService& entityService, Shape& shape)
+void PlayerEntity::DefineShape(EntityService& entityService, Shape& shape)
 {
     auto lookupKeyFunc = [](FrameType frameType, FaceDirection faceDir) {
         std::stringstream ss;

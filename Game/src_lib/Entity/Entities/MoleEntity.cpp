@@ -31,7 +31,7 @@ MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, const Animatio
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::OnAddProperties(EntityService& entityService, const PropertyData& data)
+void MoleEntity::DefineProperties(EntityService& entityService, const PropertyData& data)
 {
     auto t = entityService.AddAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
@@ -44,7 +44,7 @@ void MoleEntity::OnAddProperties(EntityService& entityService, const PropertyDat
     v->SetVelocity(data.velocity_);
 }
 
-void MoleEntity::OnAddModes(StateController& stateController)
+void MoleEntity::DefineModes(StateController& stateController)
 {
     auto idleMode = stateController.AddMode<IdleMode>(true);
     idleMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
@@ -54,7 +54,7 @@ void MoleEntity::OnAddModes(StateController& stateController)
     moveMode->AddEvent(EventType::StopMove, ModeType::Idle, nullptr);
 }
 
-void MoleEntity::OnAddShape(EntityService& entityService, Shape& shape)
+void MoleEntity::DefineShape(EntityService& entityService, Shape& shape)
 {
     auto lookupKeyFunc = [](FrameType frameType, FaceDirection faceDir) {
         std::stringstream ss;
