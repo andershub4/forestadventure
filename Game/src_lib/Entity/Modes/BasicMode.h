@@ -13,13 +13,17 @@
 #include "Entity/EventType.h"
 #include "Entity/UpdateInfo.h"
 #include "Enum/FrameType.h"
+#include "Fwd/SfmlFwd.h"
 
 namespace FA {
+
+namespace Keyboard {
+enum class Key;
+}
 
 namespace Entity {
 
 struct BasicEvent;
-class BasicState;
 class StateController;
 class Shape;
 class EntityService;
@@ -38,17 +42,20 @@ public:
     virtual void Enter(std::shared_ptr<BasicEvent> event) {}
     virtual void Exit() {}
     virtual void Update(float deltaTime) {}
+    virtual void DrawTo(sf::RenderTarget& renderTarget);
     virtual void Awake() {}
 
     virtual FrameType GetFrameType() const = 0;
     virtual ModeType GetModeType() const = 0;
-    virtual std::unique_ptr<BasicState> CreateState(StateController& stateController,
-                                                    std::shared_ptr<BasicEvent> event) const = 0;
 
     void AddEvent(EventType eventType, ModeType modeType, std::function<void(std::shared_ptr<BasicEvent> event)> cb);
     void AddUpdateFn(std::function<bool(std::shared_ptr<Shape>)> updateFn, ModeType modeType);
     Action GetAction(EventType eventType) const;
     UpdateInfo GetUpdateInfo() const;
+
+    std::shared_ptr<BasicEvent> HandleIsKeyPressed(Keyboard::Key key);
+    std::shared_ptr<BasicEvent> HandleIsKeyReleased(Keyboard::Key key);
+    std::shared_ptr<BasicEvent> HandleKeyPressed(Keyboard::Key key);
 
 protected:
     EntityService* Owner() const { return owner_; }

@@ -61,7 +61,6 @@ void Level::Create()
 void Level::Update(float deltaTime)
 {
     entityManager_.Update(deltaTime);
-    entityManager_.LateUpdate();
     cameraManager_.Update(renderTarget_);
 }
 

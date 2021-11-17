@@ -6,17 +6,28 @@
 
 #include "BasicMode.h"
 
+#include "Entity/EntityService.h"
+#include "Entity/Events/AttackEvent.h"
+#include "Entity/Events/AttackWeapon.h"
+#include "Entity/Events/StartMoveEvent.h"
+#include "Entity/Events/StopMoveEvent.h"
 #include "Entity/Shapes/Shape.h"
+#include "Enum/KeyboardKey.h"
 
 namespace FA {
 
 namespace Entity {
 
-BasicMode::BasicMode(EntityService *owner)
+BasicMode::BasicMode(EntityService* owner)
     : owner_(owner)
 {}
 
 BasicMode::~BasicMode() = default;
+
+void BasicMode::DrawTo(sf::RenderTarget& renderTarget)
+{
+    owner_->GetShape()->DrawTo(renderTarget);
+}
 
 void BasicMode::AddEvent(EventType eventType, ModeType modeType,
                          std::function<void(std::shared_ptr<BasicEvent> event)> cb)
@@ -43,6 +54,45 @@ Action BasicMode::GetAction(EventType eventType) const
 UpdateInfo BasicMode::GetUpdateInfo() const
 {
     return updateInfo_;
+}
+
+std::shared_ptr<BasicEvent> BasicMode::HandleIsKeyPressed(Keyboard::Key key)
+{
+    std::shared_ptr<BasicEvent> event = nullptr;
+
+    if (key == Keyboard::Key::Right) {
+        event = std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right);
+    }
+    else if (key == Keyboard::Key::Left) {
+        event = std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left);
+    }
+    else if (key == Keyboard::Key::Up) {
+        event = std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up);
+    }
+    else if (key == Keyboard::Key::Down) {
+        event = std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down);
+    }
+
+    return event;
+}
+
+std::shared_ptr<BasicEvent> BasicMode::HandleIsKeyReleased(Keyboard::Key key)
+{
+    return std::make_shared<StopMoveEvent>();
+}
+
+std::shared_ptr<BasicEvent> BasicMode::HandleKeyPressed(Keyboard::Key key)
+{
+    std::shared_ptr<BasicEvent> event = nullptr;
+
+    if (key == Keyboard::Key::RControl) {
+        event = std::make_shared<AttackEvent>();
+    }
+    else if (key == Keyboard::Key::Space) {
+        event = std::make_shared<AttackWeaponEvent>();
+    }
+
+    return event;
 }
 
 }  // namespace Entity

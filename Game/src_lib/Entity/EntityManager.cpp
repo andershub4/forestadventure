@@ -39,13 +39,6 @@ void EntityManager::Update(float deltaTime)
     }
 }
 
-void EntityManager::LateUpdate()
-{
-    for (const auto& entry : entityMap_) {
-        entry.second->LateUpdate();
-    }
-}
-
 void EntityManager::Create(EntityType type, const PropertyData& data, CameraManager& cameraManager,
                            const AnimationDb& animationDb)
 {

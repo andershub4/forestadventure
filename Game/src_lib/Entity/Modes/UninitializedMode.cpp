@@ -6,9 +6,6 @@
 
 #include "UninitializedMode.h"
 
-#include "Entity/StateController.h"
-#include "Entity/States/UninitializedState.h"
-
 namespace FA {
 
 namespace Entity {
@@ -16,12 +13,6 @@ namespace Entity {
 UninitializedMode::UninitializedMode(EntityService *owner)
     : BasicMode(owner)
 {}
-
-std::unique_ptr<BasicState> UninitializedMode::CreateState(StateController &stateController,
-                                                           std::shared_ptr<BasicEvent> event) const
-{
-    return stateController.CreateState<UninitializedState>(event);
-}
 
 }  // namespace Entity
 

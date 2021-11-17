@@ -8,8 +8,6 @@
 
 #include "Entity/EntityService.h"
 #include "Entity/Shapes/Shape.h"
-#include "Entity/StateController.h"
-#include "Entity/States/AttackState.h"
 
 namespace FA {
 
@@ -24,10 +22,9 @@ void AttackMode::Enter(std::shared_ptr<BasicEvent> event)
     Owner()->GetShape()->Set(FrameType::Attack);
 }
 
-std::unique_ptr<BasicState> AttackMode::CreateState(StateController &stateController,
-                                                    std::shared_ptr<BasicEvent> event) const
+void AttackMode::Update(float deltaTime)
 {
-    return stateController.CreateState<AttackState>(event);
+    Owner()->GetShape()->Update(deltaTime);
 }
 
 }  // namespace Entity

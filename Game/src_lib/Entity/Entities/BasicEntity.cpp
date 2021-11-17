@@ -51,11 +51,6 @@ void BasicEntity::Update(float deltaTime)
     stateController_.Update(deltaTime);
 }
 
-void BasicEntity::LateUpdate()
-{
-    stateController_.LateUpdate();
-}
-
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
     stateController_.DrawTo(renderTarget);

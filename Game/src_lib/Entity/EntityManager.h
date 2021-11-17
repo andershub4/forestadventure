@@ -31,7 +31,6 @@ public:
     ~EntityManager();
 
     void Update(float deltaTime);
-    void LateUpdate();
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
     void Create(EntityType type, const PropertyData &data, CameraManager &cameraManager,

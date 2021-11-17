@@ -8,8 +8,6 @@
 
 #include "Entity/EntityService.h"
 #include "Entity/Shapes/Shape.h"
-#include "Entity/StateController.h"
-#include "Entity/States/IdleState.h"
 
 namespace FA {
 
@@ -24,10 +22,9 @@ void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
     Owner()->GetShape()->Set(FrameType::Idle);
 }
 
-std::unique_ptr<BasicState> IdleMode::CreateState(StateController &stateController,
-                                                  std::shared_ptr<BasicEvent> event) const
+void IdleMode::Update(float deltaTime)
 {
-    return stateController.CreateState<IdleState>(event);
+    Owner()->GetShape()->Update(deltaTime);
 }
 
 }  // namespace Entity

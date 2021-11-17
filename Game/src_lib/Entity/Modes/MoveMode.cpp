@@ -14,8 +14,6 @@
 #include "Entity/EntityService.h"
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Shapes/Shape.h"
-#include "Entity/StateController.h"
-#include "Entity/States/MoveState.h"
 #include "Enum/MoveDirection.h"
 
 namespace {
@@ -49,12 +47,6 @@ void MoveMode::Exit()
     SetDirection(MoveDirection::None, faceDir);
 }
 
-std::unique_ptr<BasicState> MoveMode::CreateState(StateController &stateController,
-                                                  std::shared_ptr<BasicEvent> event) const
-{
-    return stateController.CreateState<MoveState>(event);
-}
-
 void MoveMode::Awake()
 {
     transform_ = Owner()->GetAttribute<TransformAttribute>();
@@ -64,6 +56,8 @@ void MoveMode::Awake()
 
 void MoveMode::Update(float deltaTime)
 {
+    Owner()->GetShape()->Update(deltaTime);
+
     sf::Vector2f offset = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
     transform_->Move(offset);
 }

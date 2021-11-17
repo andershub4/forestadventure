@@ -41,7 +41,6 @@ public:
     void Create(const PropertyData& data);
     void Init();
     void Update(float deltaTime);
-    void LateUpdate();
     void DrawTo(sf::RenderTarget& renderTarget);
     void EnableInput(bool enable) { enableInput_ = enable; }
     EntityId GetId() const { return id_; }

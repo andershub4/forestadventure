@@ -13,14 +13,14 @@
 #include "Logging.h"
 #include "Modes/UninitializedMode.h"
 #include "Shapes/BasicShape.h"
+#include "Shapes/Shape.h"
 
 namespace FA {
 
 namespace Entity {
 
 StateController::StateController(EntityService& entityService)
-    : stateMachine_(entityService)
-    , entityService_(entityService)
+    : entityService_(entityService)
 {
     auto u = AddMode<UninitializedMode>();
     u->AddEvent(EventType::Create, ModeType::None, [this](std::shared_ptr<BasicEvent> event) {
@@ -29,82 +29,80 @@ StateController::StateController(EntityService& entityService)
         onCreate_(entityService_, data);
     });
 
-    auto s = u->CreateState(*this, nullptr);
-    stateMachine_.Init(std::move(s));
+    currentMode_ = u;
 }
 
-std::shared_ptr<BasicMode> StateController::GetMode(ModeType modeType) const
+StateController::~StateController()
 {
-    return modes_.at(modeType);
+    currentMode_->Exit();
 }
 
 void StateController::HandleIsKeyPressed(Keyboard::Key key)
 {
-    stateMachine_.HandleIsKeyPressed(key);
+    auto event = currentMode_->HandleIsKeyPressed(key);
+    if (event) {
+        HandleEvent(event);
+    }
 }
 
 void StateController::HandleIsKeyReleased(Keyboard::Key key)
 {
-    stateMachine_.HandleIsKeyReleased(key);
+    auto event = currentMode_->HandleIsKeyReleased(key);
+    if (event) {
+        HandleEvent(event);
+    }
 }
 
 void StateController::HandleKeyPressed(Keyboard::Key key)
 {
-    stateMachine_.HandleKeyPressed(key);
+    auto event = currentMode_->HandleKeyPressed(key);
+    if (event) {
+        HandleEvent(event);
+    }
 }
 
-void StateController::HandleEvent(ModeType currentModeType, std::shared_ptr<BasicEvent> event)
+void StateController::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
-    auto currentMode = modes_.at(currentModeType);
-    auto action = currentMode->GetAction(event->GetEventType());
+    auto action = currentMode_->GetAction(event->GetEventType());
 
     if (action.cb_) action.cb_(event);
 
     auto nextModeType = action.modeType_;
     if (nextModeType != ModeType::None) {
-        auto nextMode = modes_.at(nextModeType);
-        auto nextState = nextMode->CreateState(*this, event);
-        stateMachine_.SetState(std::move(nextState));
+        currentMode_->Exit();
+        currentMode_ = modes_.at(nextModeType);
+        currentMode_->Enter(event);
     }
 }
 
 void StateController::Update(float deltaTime)
 {
-    stateMachine_.Update(deltaTime);
-}
+    currentMode_->Update(deltaTime);
 
-void StateController::LateUpdate()
-{
-    stateMachine_.LateUpdate();
+    auto updateInfo = currentMode_->GetUpdateInfo();
+    if (updateInfo.cb_ != nullptr && updateInfo.cb_(entityService_.GetShape())) {
+        auto nextModeType = updateInfo.modeType_;
+        currentMode_->Exit();
+        currentMode_ = modes_.at(nextModeType);
+        currentMode_->Enter(nullptr);
+    }
 }
 
 void StateController::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateMachine_.DrawTo(renderTarget);
+    currentMode_->DrawTo(renderTarget);
 }
 
 void StateController::Create(const PropertyData& data)
 {
     auto event = std::make_shared<CreateEvent>(data);
-    HandleEvent(ModeType::Uninitialized, event);
+    HandleEvent(event);
 }
 
 void StateController::Init()
 {
     auto event = std::make_shared<InitEvent>();
-    HandleEvent(ModeType::Uninitialized, event);
-}
-
-void StateController::Update(ModeType currentModeType, std::shared_ptr<Shape> shape)
-{
-    auto currentMode = modes_.at(currentModeType);
-    auto updateInfo = currentMode->GetUpdateInfo();
-    if (updateInfo.cb_(shape)) {
-        auto nextModeType = updateInfo.modeType_;
-        auto nextMode = modes_.at(nextModeType);
-        auto nextState = nextMode->CreateState(*this, nullptr);
-        stateMachine_.SetState(std::move(nextState));
-    }
+    HandleEvent(event);
 }
 
 void StateController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
