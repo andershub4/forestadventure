@@ -12,8 +12,6 @@
 #include "Events/InitEvent.h"
 #include "Logging.h"
 #include "Modes/UninitializedMode.h"
-#include "Shapes/BasicShape.h"
-#include "Shapes/Shape.h"
 
 namespace FA {
 
@@ -79,9 +77,8 @@ void StateController::Update(float deltaTime)
 {
     currentMode_->Update(deltaTime);
 
-    auto updateInfo = currentMode_->GetUpdateInfo();
-    if (updateInfo.cb_ != nullptr && updateInfo.cb_(entityService_.GetShape())) {
-        auto nextModeType = updateInfo.modeType_;
+    auto nextModeType = currentMode_->PollUpdate();
+    if (nextModeType != ModeType::None) {
         currentMode_->Exit();
         currentMode_ = modes_.at(nextModeType);
         currentMode_->Enter(nullptr);

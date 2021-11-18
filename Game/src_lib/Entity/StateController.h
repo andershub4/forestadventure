@@ -22,7 +22,6 @@ enum class Key;
 namespace Entity {
 
 struct BasicEvent;
-class Shape;
 struct PropertyData;
 class BasicMode;
 class EntityService;

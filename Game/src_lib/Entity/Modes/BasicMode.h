@@ -56,6 +56,7 @@ public:
     std::shared_ptr<BasicEvent> HandleIsKeyPressed(Keyboard::Key key);
     std::shared_ptr<BasicEvent> HandleIsKeyReleased(Keyboard::Key key);
     std::shared_ptr<BasicEvent> HandleKeyPressed(Keyboard::Key key);
+    ModeType PollUpdate() const;
 
 protected:
     EntityService* Owner() const { return owner_; }

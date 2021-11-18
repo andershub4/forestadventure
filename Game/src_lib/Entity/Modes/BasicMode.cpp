@@ -95,6 +95,15 @@ std::shared_ptr<BasicEvent> BasicMode::HandleKeyPressed(Keyboard::Key key)
     return event;
 }
 
+ModeType BasicMode::PollUpdate() const
+{
+    if (updateInfo_.cb_ != nullptr && updateInfo_.cb_(Owner()->GetShape())) {
+        return updateInfo_.modeType_;
+    }
+
+    return ModeType::None;
+}
+
 }  // namespace Entity
 
 }  // namespace FA
