@@ -26,7 +26,7 @@ class BasicShape;
 class Shape
 {
 public:
-    Shape(EntityService *owner);
+    Shape(EntityService *entityService);
     virtual ~Shape();
 
     void Awake();

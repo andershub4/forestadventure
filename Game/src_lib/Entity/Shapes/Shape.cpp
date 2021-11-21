@@ -18,8 +18,8 @@ namespace FA {
 
 namespace Entity {
 
-Shape::Shape(EntityService *owner)
-    : entityService_(owner)
+Shape::Shape(EntityService *entityService)
+    : entityService_(entityService)
 {}
 
 Shape::~Shape() = default;
