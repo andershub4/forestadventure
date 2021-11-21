@@ -14,6 +14,10 @@
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
+#include "Entity/Events/AttackEvent.h"
+#include "Entity/Events/AttackWeapon.h"
+#include "Entity/Events/StartMoveEvent.h"
+#include "Entity/Events/StopMoveEvent.h"
 #include "Entity/Modes/AttackMode.h"
 #include "Entity/Modes/AttackWeaponMode.h"
 #include "Entity/Modes/IdleMode.h"
@@ -74,6 +78,35 @@ void PlayerEntity::DefineModes(StateController& stateController)
     attackWeaponMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
     attackWeaponMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); },
                                   ModeType::Idle);
+}
+
+void PlayerEntity::DefineInputIsKeyPressed(EntityService& entityService)
+{
+    entityService.AddInputIsKeyPressed(Keyboard::Key::Right, []() {
+        return std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right);
+    });
+    entityService.AddInputIsKeyPressed(Keyboard::Key::Left, []() {
+        return std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left);
+    });
+    entityService.AddInputIsKeyPressed(
+        Keyboard::Key::Up, []() { return std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up); });
+    entityService.AddInputIsKeyPressed(Keyboard::Key::Down, []() {
+        return std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down);
+    });
+}
+
+void PlayerEntity::DefineInputIsKeyReleased(EntityService& entityService)
+{
+    entityService.AddInputIsKeyReleased(Keyboard::Key::Right, []() { return std::make_shared<StopMoveEvent>(); });
+    entityService.AddInputIsKeyReleased(Keyboard::Key::Left, []() { return std::make_shared<StopMoveEvent>(); });
+    entityService.AddInputIsKeyReleased(Keyboard::Key::Up, []() { return std::make_shared<StopMoveEvent>(); });
+    entityService.AddInputIsKeyReleased(Keyboard::Key::Down, []() { return std::make_shared<StopMoveEvent>(); });
+}
+
+void PlayerEntity::DefineInputKeyPressed(EntityService& entityService)
+{
+    entityService.AddInputKeyPressed(Keyboard::Key::RControl, []() { return std::make_shared<AttackEvent>(); });
+    entityService.AddInputKeyPressed(Keyboard::Key::Space, []() { return std::make_shared<AttackWeaponEvent>(); });
 }
 
 void PlayerEntity::DefineShape(EntityService& entityService, Shape& shape)

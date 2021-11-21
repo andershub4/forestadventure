@@ -20,10 +20,6 @@ class Message;
 enum class MessageType;
 class CameraManager;
 
-namespace Keyboard {
-enum class Key;
-}
-
 namespace Entity {
 
 struct PropertyData;
@@ -60,6 +56,9 @@ private:
     virtual void DefineProperties(EntityService& entityService, const PropertyData& data) {}
     virtual void DefineModes(StateController& stateController) {}
     virtual void DefineShape(EntityService& entityService, Shape& shape) {}
+    virtual void DefineInputIsKeyPressed(EntityService& entityService) {}
+    virtual void DefineInputIsKeyReleased(EntityService& entityService) {}
+    virtual void DefineInputKeyPressed(EntityService& entityService) {}
 
     void OnMessage(std::shared_ptr<Message> msg);
     void HandleMessage(std::shared_ptr<Message> msg);

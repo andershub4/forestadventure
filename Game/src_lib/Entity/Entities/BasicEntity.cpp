@@ -31,6 +31,9 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
         DefineModes(stateController_);
         DefineShape(entityService, *entityService.GetShape());
         entityService.GetShape()->Awake();
+        DefineInputIsKeyPressed(entityService);
+        DefineInputIsKeyReleased(entityService);
+        DefineInputKeyPressed(entityService);
     });
 }
 

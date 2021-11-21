@@ -44,6 +44,51 @@ void EntityService::AddFrameType(FrameType frameType)
     frameTypes_.push_back(frameType);
 }
 
+void EntityService::AddInputIsKeyPressed(Keyboard::Key key, std::function<std::shared_ptr<BasicEvent>()> func)
+{
+    isKeyPressedMap_[key] = func;
+}
+
+void EntityService::AddInputIsKeyReleased(Keyboard::Key key, std::function<std::shared_ptr<BasicEvent>()> func)
+{
+    isKeyReleasedMap_[key] = func;
+}
+
+void EntityService::AddInputKeyPressed(Keyboard::Key key, std::function<std::shared_ptr<BasicEvent>()> func)
+{
+    keyPressedMap_[key] = func;
+}
+
+std::shared_ptr<BasicEvent> EntityService::HandleIsKeyPressed(Keyboard::Key key)
+{
+    auto it = isKeyPressedMap_.find(key);
+    if (it != isKeyPressedMap_.end()) {
+        return isKeyPressedMap_[key]();
+    }
+
+    return nullptr;
+}
+
+std::shared_ptr<BasicEvent> EntityService::HandleIsKeyReleased(Keyboard::Key key)
+{
+    auto it = isKeyReleasedMap_.find(key);
+    if (it != isKeyReleasedMap_.end()) {
+        return isKeyReleasedMap_[key]();
+    }
+
+    return nullptr;
+}
+
+std::shared_ptr<BasicEvent> EntityService::HandleKeyPressed(Keyboard::Key key)
+{
+    auto it = keyPressedMap_.find(key);
+    if (it != keyPressedMap_.end()) {
+        return keyPressedMap_[key]();
+    }
+
+    return nullptr;
+}
+
 }  // namespace Entity
 
 }  // namespace FA

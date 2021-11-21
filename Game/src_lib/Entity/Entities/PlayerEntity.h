@@ -22,6 +22,9 @@ public:
     virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;
     virtual void DefineModes(StateController& stateController) override;
     virtual void DefineShape(EntityService& entityService, Shape& shape) override;
+    virtual void DefineInputIsKeyPressed(EntityService& entityService) override;
+    virtual void DefineInputIsKeyReleased(EntityService& entityService) override;
+    virtual void DefineInputKeyPressed(EntityService& entityService) override;
     virtual void OnDestroy() override;
 };
 

@@ -6,7 +6,9 @@
 
 #pragma once
 
+#include <functional>
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include "AttributeStore.h"
@@ -17,12 +19,17 @@
 
 namespace FA {
 
+namespace Keyboard {
+enum class Key;
+}
+
 class CameraManager;
 class AnimationDb;
 class Animation;
 
 namespace Entity {
 
+struct BasicEvent;
 class CameraAttribute;
 class Shape;
 
@@ -57,6 +64,12 @@ public:
     std::vector<FrameType> GetFrameTypes() const { return frameTypes_; }
     std::shared_ptr<Shape> GetShape() const { return shape_; }
     void AddFrameType(FrameType frameType);
+    void AddInputIsKeyPressed(Keyboard::Key key, std::function<std::shared_ptr<BasicEvent>()> func);
+    void AddInputIsKeyReleased(Keyboard::Key key, std::function<std::shared_ptr<BasicEvent>()> func);
+    void AddInputKeyPressed(Keyboard::Key key, std::function<std::shared_ptr<BasicEvent>()> func);
+    std::shared_ptr<BasicEvent> HandleIsKeyPressed(Keyboard::Key key);
+    std::shared_ptr<BasicEvent> HandleIsKeyReleased(Keyboard::Key key);
+    std::shared_ptr<BasicEvent> HandleKeyPressed(Keyboard::Key key);
 
 private:
     AttributeStore attributeStore_;
@@ -65,6 +78,9 @@ private:
     EntityType entityType_;
     const AnimationDb &animationDb_;
     std::shared_ptr<Shape> shape_ = nullptr;
+    std::unordered_map<Keyboard::Key, std::function<std::shared_ptr<BasicEvent>()>> isKeyPressedMap_;
+    std::unordered_map<Keyboard::Key, std::function<std::shared_ptr<BasicEvent>()>> isKeyReleasedMap_;
+    std::unordered_map<Keyboard::Key, std::function<std::shared_ptr<BasicEvent>()>> keyPressedMap_;
 };
 
 }  // namespace Entity
