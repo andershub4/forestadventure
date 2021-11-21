@@ -59,22 +59,22 @@ void PlayerEntity::DefineProperties(EntityService& entityService, const Property
     Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
-void PlayerEntity::DefineModes(StateController& stateController)
+void PlayerEntity::DefineModes(ModeController& modeController)
 {
-    auto idleMode = stateController.AddMode<IdleMode>(true);
+    auto idleMode = modeController.AddMode<IdleMode>(true);
     idleMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
     idleMode->AddEvent(EventType::Attack, ModeType::Attack, nullptr);
     idleMode->AddEvent(EventType::AttackWeapon, ModeType::AttackWeapon, nullptr);
     idleMode->AddEvent(EventType::Collision, ModeType::None, nullptr);
 
-    auto moveMode = stateController.AddMode<MoveMode>();
+    auto moveMode = modeController.AddMode<MoveMode>();
     moveMode->AddEvent(EventType::StopMove, ModeType::Idle, nullptr);
 
-    auto attackMode = stateController.AddMode<AttackMode>();
+    auto attackMode = modeController.AddMode<AttackMode>();
     attackMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
     attackMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); }, ModeType::Idle);
 
-    auto attackWeaponMode = stateController.AddMode<AttackWeaponMode>();
+    auto attackWeaponMode = modeController.AddMode<AttackWeaponMode>();
     attackWeaponMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
     attackWeaponMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); },
                                   ModeType::Idle);

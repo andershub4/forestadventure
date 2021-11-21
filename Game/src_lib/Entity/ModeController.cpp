@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "StateController.h"
+#include "ModeController.h"
 
 #include "EntityService.h"
 #include "Events/BasicEvent.h"
@@ -17,7 +17,7 @@ namespace FA {
 
 namespace Entity {
 
-StateController::StateController(EntityService& entityService)
+ModeController::ModeController(EntityService& entityService)
     : entityService_(entityService)
 {
     auto u = AddMode<UninitializedMode>();
@@ -30,12 +30,12 @@ StateController::StateController(EntityService& entityService)
     currentMode_ = u;
 }
 
-StateController::~StateController()
+ModeController::~ModeController()
 {
     currentMode_->Exit();
 }
 
-void StateController::HandleIsKeyPressed(Keyboard::Key key)
+void ModeController::HandleIsKeyPressed(Keyboard::Key key)
 {
     auto event = currentMode_->HandleIsKeyPressed(key);
     if (event) {
@@ -43,7 +43,7 @@ void StateController::HandleIsKeyPressed(Keyboard::Key key)
     }
 }
 
-void StateController::HandleIsKeyReleased(Keyboard::Key key)
+void ModeController::HandleIsKeyReleased(Keyboard::Key key)
 {
     auto event = currentMode_->HandleIsKeyReleased(key);
     if (event) {
@@ -51,7 +51,7 @@ void StateController::HandleIsKeyReleased(Keyboard::Key key)
     }
 }
 
-void StateController::HandleKeyPressed(Keyboard::Key key)
+void ModeController::HandleKeyPressed(Keyboard::Key key)
 {
     auto event = currentMode_->HandleKeyPressed(key);
     if (event) {
@@ -59,7 +59,7 @@ void StateController::HandleKeyPressed(Keyboard::Key key)
     }
 }
 
-void StateController::HandleEvent(std::shared_ptr<BasicEvent> event)
+void ModeController::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
     auto action = currentMode_->GetAction(event->GetEventType());
 
@@ -73,7 +73,7 @@ void StateController::HandleEvent(std::shared_ptr<BasicEvent> event)
     }
 }
 
-void StateController::Update(float deltaTime)
+void ModeController::Update(float deltaTime)
 {
     currentMode_->Update(deltaTime);
 
@@ -85,24 +85,24 @@ void StateController::Update(float deltaTime)
     }
 }
 
-void StateController::DrawTo(sf::RenderTarget& renderTarget)
+void ModeController::DrawTo(sf::RenderTarget& renderTarget)
 {
     currentMode_->DrawTo(renderTarget);
 }
 
-void StateController::Create(const PropertyData& data)
+void ModeController::Create(const PropertyData& data)
 {
     auto event = std::make_shared<CreateEvent>(data);
     HandleEvent(event);
 }
 
-void StateController::Init()
+void ModeController::Init()
 {
     auto event = std::make_shared<InitEvent>();
     HandleEvent(event);
 }
 
-void StateController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
+void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
 {
     entityService_.AddFrameType(mode->GetFrameType());
 
@@ -115,7 +115,7 @@ void StateController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
     }
 }
 
-void StateController::SetOnCreateCB(std::function<void(EntityService&, const PropertyData&)> onCreate)
+void ModeController::SetOnCreateCB(std::function<void(EntityService&, const PropertyData&)> onCreate)
 {
     onCreate_ = onCreate;
 }

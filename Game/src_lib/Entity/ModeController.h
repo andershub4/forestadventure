@@ -26,11 +26,11 @@ struct PropertyData;
 class BasicMode;
 class EntityService;
 
-class StateController
+class ModeController
 {
 public:
-    StateController(EntityService& entityService);
-    ~StateController();
+    ModeController(EntityService& entityService);
+    ~ModeController();
 
     template <class T>
     std::shared_ptr<T> AddMode(bool startMode = false)

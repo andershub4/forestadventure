@@ -20,7 +20,7 @@ public:
 
     virtual std::string Name() const override { return "PlayerEntity"; }
     virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;
-    virtual void DefineModes(StateController& stateController) override;
+    virtual void DefineModes(ModeController& modeController) override;
     virtual void DefineShape(EntityService& entityService, Shape& shape) override;
     virtual void DefineInputIsKeyPressed(EntityService& entityService) override;
     virtual void DefineInputIsKeyReleased(EntityService& entityService) override;

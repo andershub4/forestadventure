@@ -24,11 +24,11 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     : id_(id)
     , messageBus_(messageBus)
     , entityService_(entityType, cameraManager, animationDb)
-    , stateController_(entityService_)
+    , modeController_(entityService_)
 {
-    stateController_.SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {
+    modeController_.SetOnCreateCB([this](EntityService& entityService, const PropertyData& propertyData) {
         DefineProperties(entityService, propertyData);
-        DefineModes(stateController_);
+        DefineModes(modeController_);
         DefineShape(entityService, *entityService.GetShape());
         entityService.GetShape()->Awake();
         DefineInputIsKeyPressed(entityService);
@@ -41,22 +41,22 @@ BasicEntity::~BasicEntity() = default;
 
 void BasicEntity::Create(const PropertyData& data)
 {
-    stateController_.Create(data);
+    modeController_.Create(data);
 }
 
 void BasicEntity::Init()
 {
-    stateController_.Init();
+    modeController_.Init();
 }
 
 void BasicEntity::Update(float deltaTime)
 {
-    stateController_.Update(deltaTime);
+    modeController_.Update(deltaTime);
 }
 
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateController_.DrawTo(renderTarget);
+    modeController_.DrawTo(renderTarget);
 }
 
 void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
@@ -71,17 +71,17 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     if (msg->GetMessageType() == MessageType::IsKeyPressed) {
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
         auto key = m->GetKey();
-        stateController_.HandleIsKeyPressed(key);
+        modeController_.HandleIsKeyPressed(key);
     }
     else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
         auto m = std::dynamic_pointer_cast<IsKeyReleasedMessage>(msg);
         auto key = m->GetKey();
-        stateController_.HandleIsKeyReleased(key);
+        modeController_.HandleIsKeyReleased(key);
     }
     else if (msg->GetMessageType() == MessageType::KeyPressed) {
         auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
         auto key = m->GetKey();
-        stateController_.HandleKeyPressed(key);
+        modeController_.HandleKeyPressed(key);
     }
 }
 

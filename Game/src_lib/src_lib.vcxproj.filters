@@ -207,7 +207,7 @@
     <ClCompile Include="Entity\Shapes\RectangleShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\StateController.cpp">
+    <ClCompile Include="Entity\ModeController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -467,7 +467,7 @@
     <ClInclude Include="Entity\Shapes\BasicShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\StateController.h">
+    <ClInclude Include="Entity\ModeController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\ModeType.h">

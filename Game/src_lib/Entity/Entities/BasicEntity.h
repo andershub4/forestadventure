@@ -10,7 +10,7 @@
 
 #include "Entity/EntityService.h"
 #include "Entity/Id.h"
-#include "Entity/StateController.h"
+#include "Entity/ModeController.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -49,12 +49,12 @@ private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
     EntityService entityService_;
-    StateController stateController_;
+    ModeController modeController_;
     bool enableInput_ = true;
 
 private:
     virtual void DefineProperties(EntityService& entityService, const PropertyData& data) {}
-    virtual void DefineModes(StateController& stateController) {}
+    virtual void DefineModes(ModeController& modeController) {}
     virtual void DefineShape(EntityService& entityService, Shape& shape) {}
     virtual void DefineInputIsKeyPressed(EntityService& entityService) {}
     virtual void DefineInputIsKeyReleased(EntityService& entityService) {}

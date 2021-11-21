@@ -243,7 +243,7 @@
     <ClInclude Include="Entity\Entities\StaticEntity.h" />
     <ClInclude Include="Entity\Shapes\BasicShape.h" />
     <ClInclude Include="Entity\Shapes\RectangleShape.h" />
-    <ClInclude Include="Entity\StateController.h" />
+    <ClInclude Include="Entity\ModeController.h" />
     <ClInclude Include="Entity\UpdateInfo.h" />
     <ClInclude Include="Resource\EntityTextures.h" />
     <ClInclude Include="Entity\Factory.h" />
@@ -329,7 +329,7 @@
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />
     <ClCompile Include="Entity\Factory.cpp" />
     <ClCompile Include="Entity\Shapes\RectangleShape.cpp" />
-    <ClCompile Include="Entity\StateController.cpp" />
+    <ClCompile Include="Entity\ModeController.cpp" />
     <ClCompile Include="Entity\Entities\BasicEntity.cpp" />
     <ClCompile Include="Level\Camera.cpp" />
     <ClCompile Include="Level\CameraManager.cpp" />
