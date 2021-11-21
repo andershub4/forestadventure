@@ -17,7 +17,7 @@ namespace Entity {
 class IdleMode : public BasicMode
 {
 public:
-    IdleMode(EntityService* owner);
+    IdleMode(EntityService* entityService);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
 

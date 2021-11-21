@@ -13,18 +13,18 @@ namespace FA {
 
 namespace Entity {
 
-IdleMode::IdleMode(EntityService *owner)
-    : BasicMode(owner)
+IdleMode::IdleMode(EntityService *entityService)
+    : BasicMode(entityService)
 {}
 
 void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    Owner()->GetShape()->Set(FrameType::Idle);
+    Service()->GetShape()->Set(FrameType::Idle);
 }
 
 void IdleMode::Update(float deltaTime)
 {
-    Owner()->GetShape()->Update(deltaTime);
+    Service()->GetShape()->Update(deltaTime);
 }
 
 }  // namespace Entity

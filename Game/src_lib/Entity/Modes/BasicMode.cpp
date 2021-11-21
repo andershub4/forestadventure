@@ -14,15 +14,15 @@ namespace FA {
 
 namespace Entity {
 
-BasicMode::BasicMode(EntityService* owner)
-    : owner_(owner)
+BasicMode::BasicMode(EntityService* entityService)
+    : entityService_(entityService)
 {}
 
 BasicMode::~BasicMode() = default;
 
 void BasicMode::DrawTo(sf::RenderTarget& renderTarget)
 {
-    owner_->GetShape()->DrawTo(renderTarget);
+    entityService_->GetShape()->DrawTo(renderTarget);
 }
 
 void BasicMode::AddEvent(EventType eventType, ModeType modeType,
@@ -54,22 +54,22 @@ UpdateInfo BasicMode::GetUpdateInfo() const
 
 std::shared_ptr<BasicEvent> BasicMode::HandleIsKeyPressed(Keyboard::Key key)
 {
-    return owner_->HandleIsKeyPressed(key);
+    return entityService_->HandleIsKeyPressed(key);
 }
 
 std::shared_ptr<BasicEvent> BasicMode::HandleIsKeyReleased(Keyboard::Key key)
 {
-    return owner_->HandleIsKeyReleased(key);
+    return entityService_->HandleIsKeyReleased(key);
 }
 
 std::shared_ptr<BasicEvent> BasicMode::HandleKeyPressed(Keyboard::Key key)
 {
-    return owner_->HandleKeyPressed(key);
+    return entityService_->HandleKeyPressed(key);
 }
 
 ModeType BasicMode::PollUpdate() const
 {
-    if (updateInfo_.cb_ != nullptr && updateInfo_.cb_(Owner()->GetShape())) {
+    if (updateInfo_.cb_ != nullptr && updateInfo_.cb_(entityService_->GetShape())) {
         return updateInfo_.modeType_;
     }
 

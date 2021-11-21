@@ -30,33 +30,33 @@ namespace FA {
 
 namespace Entity {
 
-MoveMode::MoveMode(EntityService *owner)
-    : BasicMode(owner)
+MoveMode::MoveMode(EntityService *entityService)
+    : BasicMode(entityService)
 {}
 
 void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
 {
     auto m = std::dynamic_pointer_cast<StartMoveEvent>(event);
     SetDirection(m->moveDirection_, m->faceDirection_);
-    Owner()->GetShape()->Set(FrameType::Move);
+    Service()->GetShape()->Set(FrameType::Move);
 }
 
 void MoveMode::Exit()
 {
-    auto faceDir = Owner()->GetAttribute<FaceDirectionAttribute>()->GetDirection();
+    auto faceDir = Service()->GetAttribute<FaceDirectionAttribute>()->GetDirection();
     SetDirection(MoveDirection::None, faceDir);
 }
 
 void MoveMode::Awake()
 {
-    transform_ = Owner()->GetAttribute<TransformAttribute>();
-    velocity_ = Owner()->GetAttribute<VelocityAttribute>();
-    faceDirection_ = Owner()->GetAttribute<FaceDirectionAttribute>();
+    transform_ = Service()->GetAttribute<TransformAttribute>();
+    velocity_ = Service()->GetAttribute<VelocityAttribute>();
+    faceDirection_ = Service()->GetAttribute<FaceDirectionAttribute>();
 }
 
 void MoveMode::Update(float deltaTime)
 {
-    Owner()->GetShape()->Update(deltaTime);
+    Service()->GetShape()->Update(deltaTime);
 
     sf::Vector2f offset = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
     transform_->Move(offset);

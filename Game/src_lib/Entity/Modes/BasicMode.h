@@ -31,7 +31,7 @@ class EntityService;
 class BasicMode
 {
 public:
-    BasicMode(EntityService* owner);
+    BasicMode(EntityService* entityService);
     virtual ~BasicMode();
 
     BasicMode(const BasicMode&) = delete;
@@ -59,10 +59,10 @@ public:
     ModeType PollUpdate() const;
 
 protected:
-    EntityService* Owner() const { return owner_; }
+    EntityService* Service() const { return entityService_; }
 
 private:
-    EntityService* owner_ = nullptr;
+    EntityService* entityService_ = nullptr;
     std::unordered_map<EventType, Action> eventMap_;
     UpdateInfo updateInfo_{};
 };

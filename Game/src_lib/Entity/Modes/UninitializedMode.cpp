@@ -10,8 +10,8 @@ namespace FA {
 
 namespace Entity {
 
-UninitializedMode::UninitializedMode(EntityService *owner)
-    : BasicMode(owner)
+UninitializedMode::UninitializedMode(EntityService *entityService)
+    : BasicMode(entityService)
 {}
 
 }  // namespace Entity

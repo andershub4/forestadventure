@@ -15,7 +15,7 @@ namespace Entity {
 class AttackMode : public BasicMode
 {
 public:
-    AttackMode(EntityService *owner);
+    AttackMode(EntityService *entityService);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
 
