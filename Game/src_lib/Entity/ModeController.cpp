@@ -9,7 +9,6 @@
 #include "EntityService.h"
 #include "Events/BasicEvent.h"
 #include "Events/CreateEvent.h"
-#include "Events/InitEvent.h"
 #include "Logging.h"
 #include "Modes/UninitializedMode.h"
 
@@ -64,18 +63,6 @@ void ModeController::Update(float deltaTime)
 void ModeController::DrawTo(sf::RenderTarget& renderTarget)
 {
     currentMode_->DrawTo(renderTarget);
-}
-
-void ModeController::Create(const PropertyData& data)
-{
-    auto event = std::make_shared<CreateEvent>(data);
-    HandleEvent(event);
-}
-
-void ModeController::Init()
-{
-    auto event = std::make_shared<InitEvent>();
-    HandleEvent(event);
 }
 
 void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)

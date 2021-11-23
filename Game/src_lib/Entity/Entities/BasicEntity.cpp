@@ -8,6 +8,8 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/Events/CreateEvent.h"
+#include "Entity/Events/InitEvent.h"
 #include "Entity/Shapes/Shape.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
@@ -37,12 +39,12 @@ BasicEntity::~BasicEntity() = default;
 
 void BasicEntity::Create(const PropertyData& data)
 {
-    modeController_.Create(data);
+    HandleEvent(std::make_shared<CreateEvent>(data));
 }
 
 void BasicEntity::Init()
 {
-    modeController_.Init();
+    HandleEvent(std::make_shared<InitEvent>());
 }
 
 void BasicEntity::Update(float deltaTime)

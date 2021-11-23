@@ -40,8 +40,6 @@ public:
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
 
-    void Create(const PropertyData& data);
-    void Init();
     void SetOnCreateCB(std::function<void(EntityService&, const PropertyData&)> onCreate);
 
 private:
