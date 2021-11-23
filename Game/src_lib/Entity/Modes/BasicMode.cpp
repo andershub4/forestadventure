@@ -25,10 +25,9 @@ void BasicMode::DrawTo(sf::RenderTarget& renderTarget)
     entityService_->GetShape()->DrawTo(renderTarget);
 }
 
-void BasicMode::AddEvent(EventType eventType, ModeType modeType,
-                         std::function<void(std::shared_ptr<BasicEvent> event)> cb)
+void BasicMode::BindAction(const Action& action, EventType eventType)
 {
-    eventMap_[eventType] = {modeType, cb};
+    eventMap_[eventType] = action;
 }
 
 void BasicMode::AddUpdateFn(std::function<bool(std::shared_ptr<Shape>)> updateFn, ModeType modeType)

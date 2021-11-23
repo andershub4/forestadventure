@@ -43,7 +43,7 @@ public:
     virtual FrameType GetFrameType() const = 0;
     virtual ModeType GetModeType() const = 0;
 
-    void AddEvent(EventType eventType, ModeType modeType, std::function<void(std::shared_ptr<BasicEvent> event)> cb);
+    void BindAction(const Action& action, EventType eventType);
     void AddUpdateFn(std::function<bool(std::shared_ptr<Shape>)> updateFn, ModeType modeType);
     Action GetAction(EventType eventType) const;
     UpdateInfo GetUpdateInfo() const;

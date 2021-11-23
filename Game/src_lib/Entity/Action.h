@@ -24,6 +24,13 @@ struct Action
         : modeType_(modeType)
         , cb_(cb)
     {}
+    Action(ModeType modeType)
+        : modeType_(modeType)
+        , cb_(nullptr)
+    {}
+    Action(std::function<void(std::shared_ptr<BasicEvent>)> cb)
+        : cb_(cb)
+    {}
 
     ModeType modeType_ = ModeType::None;
     std::function<void(std::shared_ptr<BasicEvent>)> cb_;

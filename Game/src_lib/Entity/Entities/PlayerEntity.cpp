@@ -62,20 +62,20 @@ void PlayerEntity::DefineProperties(EntityService& entityService, const Property
 void PlayerEntity::DefineModes(ModeController& modeController)
 {
     auto idleMode = modeController.AddMode<IdleMode>(true);
-    idleMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
-    idleMode->AddEvent(EventType::Attack, ModeType::Attack, nullptr);
-    idleMode->AddEvent(EventType::AttackWeapon, ModeType::AttackWeapon, nullptr);
-    idleMode->AddEvent(EventType::Collision, ModeType::None, nullptr);
+    idleMode->BindAction(Action(ModeType::Move), EventType::StartMove);
+    idleMode->BindAction(Action(ModeType::Attack), EventType::Attack);
+    idleMode->BindAction(Action(ModeType::AttackWeapon), EventType::AttackWeapon);
+    idleMode->BindAction(Action(), EventType::Collision);
 
     auto moveMode = modeController.AddMode<MoveMode>();
-    moveMode->AddEvent(EventType::StopMove, ModeType::Idle, nullptr);
+    moveMode->BindAction(Action(ModeType::Idle), EventType::StopMove);
 
     auto attackMode = modeController.AddMode<AttackMode>();
-    attackMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
+    attackMode->BindAction(Action(ModeType::Move), EventType::StartMove);
     attackMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); }, ModeType::Idle);
 
     auto attackWeaponMode = modeController.AddMode<AttackWeaponMode>();
-    attackWeaponMode->AddEvent(EventType::StartMove, ModeType::Move, nullptr);
+    attackWeaponMode->BindAction(Action(ModeType::Move), EventType::StartMove);
     attackWeaponMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); },
                                   ModeType::Idle);
 }

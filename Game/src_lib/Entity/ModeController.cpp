@@ -20,11 +20,12 @@ ModeController::ModeController(EntityService& entityService)
     : entityService_(entityService)
 {
     auto u = AddMode<UninitializedMode>();
-    u->AddEvent(EventType::Create, ModeType::None, [this](std::shared_ptr<BasicEvent> event) {
+    auto cb = [this](std::shared_ptr<BasicEvent> event) {
         auto c = std::dynamic_pointer_cast<CreateEvent>(event);
         auto data = c->data_;
         onCreate_(entityService_, data);
-    });
+    };
+    u->BindAction(Action(cb), EventType::Create);
 
     currentMode_ = u;
     currentMode_->Enter(nullptr);
@@ -75,7 +76,7 @@ void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
     if (startMode) {
         startMode_ = mode->GetModeType();
         auto u = modes_.at(ModeType::Uninitialized);
-        u->AddEvent(EventType::Init, startMode_, nullptr);
+        u->BindAction(Action(startMode_), EventType::Init);
     }
 }
 
