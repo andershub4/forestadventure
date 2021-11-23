@@ -35,30 +35,6 @@ ModeController::~ModeController()
     currentMode_->Exit();
 }
 
-void ModeController::HandleIsKeyPressed(Keyboard::Key key)
-{
-    auto event = currentMode_->HandleIsKeyPressed(key);
-    if (event) {
-        HandleEvent(event);
-    }
-}
-
-void ModeController::HandleIsKeyReleased(Keyboard::Key key)
-{
-    auto event = currentMode_->HandleIsKeyReleased(key);
-    if (event) {
-        HandleEvent(event);
-    }
-}
-
-void ModeController::HandleKeyPressed(Keyboard::Key key)
-{
-    auto event = currentMode_->HandleKeyPressed(key);
-    if (event) {
-        HandleEvent(event);
-    }
-}
-
 void ModeController::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
     auto action = currentMode_->GetAction(event->GetEventType());

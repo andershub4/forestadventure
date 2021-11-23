@@ -15,10 +15,6 @@
 
 namespace FA {
 
-namespace Keyboard {
-enum class Key;
-}
-
 namespace Entity {
 
 struct BasicEvent;
@@ -40,9 +36,6 @@ public:
         return mode;
     }
 
-    void HandleIsKeyPressed(Keyboard::Key key);
-    void HandleIsKeyReleased(Keyboard::Key key);
-    void HandleKeyPressed(Keyboard::Key key);
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);

@@ -80,33 +80,38 @@ void PlayerEntity::DefineModes(ModeController& modeController)
                                   ModeType::Idle);
 }
 
-void PlayerEntity::DefineInputIsKeyPressed(EntityService& entityService)
+void PlayerEntity::HandleIsKeyPressed(Keyboard::Key key)
 {
-    entityService.AddInputIsKeyPressed(Keyboard::Key::Right, []() {
-        return std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right);
-    });
-    entityService.AddInputIsKeyPressed(Keyboard::Key::Left, []() {
-        return std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left);
-    });
-    entityService.AddInputIsKeyPressed(
-        Keyboard::Key::Up, []() { return std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up); });
-    entityService.AddInputIsKeyPressed(Keyboard::Key::Down, []() {
-        return std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down);
-    });
+    if (key == Keyboard::Key::Right) {
+        HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right));
+    }
+    else if (key == Keyboard::Key::Left) {
+        HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left));
+    }
+    else if (key == Keyboard::Key::Down) {
+        HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down));
+    }
+    else if (key == Keyboard::Key::Up) {
+        HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up));
+    }
 }
 
-void PlayerEntity::DefineInputIsKeyReleased(EntityService& entityService)
+void PlayerEntity::HandleIsKeyReleased(Keyboard::Key key)
 {
-    entityService.AddInputIsKeyReleased(Keyboard::Key::Right, []() { return std::make_shared<StopMoveEvent>(); });
-    entityService.AddInputIsKeyReleased(Keyboard::Key::Left, []() { return std::make_shared<StopMoveEvent>(); });
-    entityService.AddInputIsKeyReleased(Keyboard::Key::Up, []() { return std::make_shared<StopMoveEvent>(); });
-    entityService.AddInputIsKeyReleased(Keyboard::Key::Down, []() { return std::make_shared<StopMoveEvent>(); });
+    if (key == Keyboard::Key::Right || key == Keyboard::Key::Left || key == Keyboard::Key::Down ||
+        key == Keyboard::Key::Up) {
+        HandleEvent(std::make_shared<StopMoveEvent>());
+    }
 }
 
-void PlayerEntity::DefineInputKeyPressed(EntityService& entityService)
+void PlayerEntity::HandleKeyPressed(Keyboard::Key key)
 {
-    entityService.AddInputKeyPressed(Keyboard::Key::RControl, []() { return std::make_shared<AttackEvent>(); });
-    entityService.AddInputKeyPressed(Keyboard::Key::Space, []() { return std::make_shared<AttackWeaponEvent>(); });
+    if (key == Keyboard::Key::RControl) {
+        HandleEvent(std::make_shared<AttackEvent>());
+    }
+    else if (key == Keyboard::Key::Space) {
+        HandleEvent(std::make_shared<AttackWeaponEvent>());
+    }
 }
 
 void PlayerEntity::DefineShape(EntityService& entityService, Shape& shape)

@@ -52,21 +52,6 @@ UpdateInfo BasicMode::GetUpdateInfo() const
     return updateInfo_;
 }
 
-std::shared_ptr<BasicEvent> BasicMode::HandleIsKeyPressed(Keyboard::Key key)
-{
-    return entityService_->HandleIsKeyPressed(key);
-}
-
-std::shared_ptr<BasicEvent> BasicMode::HandleIsKeyReleased(Keyboard::Key key)
-{
-    return entityService_->HandleIsKeyReleased(key);
-}
-
-std::shared_ptr<BasicEvent> BasicMode::HandleKeyPressed(Keyboard::Key key)
-{
-    return entityService_->HandleKeyPressed(key);
-}
-
 ModeType BasicMode::PollUpdate() const
 {
     if (updateInfo_.cb_ != nullptr && updateInfo_.cb_(entityService_->GetShape())) {

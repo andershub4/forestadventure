@@ -22,10 +22,12 @@ public:
     virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;
     virtual void DefineModes(ModeController& modeController) override;
     virtual void DefineShape(EntityService& entityService, Shape& shape) override;
-    virtual void DefineInputIsKeyPressed(EntityService& entityService) override;
-    virtual void DefineInputIsKeyReleased(EntityService& entityService) override;
-    virtual void DefineInputKeyPressed(EntityService& entityService) override;
     virtual void OnDestroy() override;
+
+protected:
+    virtual void HandleIsKeyPressed(Keyboard::Key key) override;
+    virtual void HandleIsKeyReleased(Keyboard::Key key) override;
+    virtual void HandleKeyPressed(Keyboard::Key key) override;
 };
 
 }  // namespace Entity

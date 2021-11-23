@@ -17,10 +17,6 @@
 
 namespace FA {
 
-namespace Keyboard {
-enum class Key;
-}
-
 namespace Entity {
 
 struct BasicEvent;
@@ -52,9 +48,6 @@ public:
     Action GetAction(EventType eventType) const;
     UpdateInfo GetUpdateInfo() const;
 
-    std::shared_ptr<BasicEvent> HandleIsKeyPressed(Keyboard::Key key);
-    std::shared_ptr<BasicEvent> HandleIsKeyReleased(Keyboard::Key key);
-    std::shared_ptr<BasicEvent> HandleKeyPressed(Keyboard::Key key);
     ModeType PollUpdate() const;
 
 protected:

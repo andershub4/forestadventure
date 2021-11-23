@@ -31,9 +31,6 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
         DefineModes(modeController_);
         DefineShape(entityService, *entityService.GetShape());
         entityService.GetShape()->Awake();
-        DefineInputIsKeyPressed(entityService);
-        DefineInputIsKeyReleased(entityService);
-        DefineInputKeyPressed(entityService);
     });
 }
 
@@ -71,17 +68,17 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
     if (msg->GetMessageType() == MessageType::IsKeyPressed) {
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
         auto key = m->GetKey();
-        modeController_.HandleIsKeyPressed(key);
+        HandleIsKeyPressed(key);
     }
     else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
         auto m = std::dynamic_pointer_cast<IsKeyReleasedMessage>(msg);
         auto key = m->GetKey();
-        modeController_.HandleIsKeyReleased(key);
+        HandleIsKeyReleased(key);
     }
     else if (msg->GetMessageType() == MessageType::KeyPressed) {
         auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
         auto key = m->GetKey();
-        modeController_.HandleKeyPressed(key);
+        HandleKeyPressed(key);
     }
 }
 
@@ -93,6 +90,11 @@ void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
 void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)
 {
     messageBus_.RemoveSubscriber(Name(), messageTypes);
+}
+
+void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)
+{
+    modeController_.HandleEvent(event);
 }
 
 }  // namespace Entity

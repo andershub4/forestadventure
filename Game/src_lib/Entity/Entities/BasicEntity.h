@@ -15,6 +15,10 @@
 
 namespace FA {
 
+namespace Keyboard {
+enum class Key;
+}
+
 class MessageBus;
 class Message;
 enum class MessageType;
@@ -42,8 +46,13 @@ public:
     EntityId GetId() const { return id_; }
 
 protected:
+    virtual void HandleIsKeyPressed(Keyboard::Key key) {}
+    virtual void HandleIsKeyReleased(Keyboard::Key key) {}
+    virtual void HandleKeyPressed(Keyboard::Key key) {}
+
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
+    void HandleEvent(std::shared_ptr<BasicEvent> event);
 
 private:
     EntityId id_ = InvalidEntityId;
@@ -56,9 +65,6 @@ private:
     virtual void DefineProperties(EntityService& entityService, const PropertyData& data) {}
     virtual void DefineModes(ModeController& modeController) {}
     virtual void DefineShape(EntityService& entityService, Shape& shape) {}
-    virtual void DefineInputIsKeyPressed(EntityService& entityService) {}
-    virtual void DefineInputIsKeyReleased(EntityService& entityService) {}
-    virtual void DefineInputKeyPressed(EntityService& entityService) {}
 
     void OnMessage(std::shared_ptr<Message> msg);
     void HandleMessage(std::shared_ptr<Message> msg);
