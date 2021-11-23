@@ -39,12 +39,11 @@ void BasicMode::AddExitUpdateCondition(std::function<bool(std::shared_ptr<Shape>
 Action BasicMode::GetAction(EventType eventType) const
 {
     auto it = eventMap_.find(eventType);
-    if (it == eventMap_.end()) {
-        return {};
-    }
-    else {
+    if (it != eventMap_.end()) {
         return eventMap_.at(eventType);
     }
+
+    return {};
 }
 
 Action BasicMode::PollAction() const
