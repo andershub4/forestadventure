@@ -27,6 +27,7 @@ ModeController::ModeController(EntityService& entityService)
     });
 
     currentMode_ = u;
+    currentMode_->Enter(nullptr);
 }
 
 ModeController::~ModeController()
