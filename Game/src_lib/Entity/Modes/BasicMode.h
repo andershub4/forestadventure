@@ -11,7 +11,6 @@
 
 #include "Entity/Action.h"
 #include "Entity/EventType.h"
-#include "Entity/UpdateInfo.h"
 #include "Enum/FrameType.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -44,11 +43,9 @@ public:
     virtual ModeType GetModeType() const = 0;
 
     void BindAction(const Action& action, EventType eventType);
-    void AddUpdateFn(std::function<bool(std::shared_ptr<Shape>)> updateFn, ModeType modeType);
+    void AddExitUpdateCondition(std::function<bool(std::shared_ptr<Shape>)> exitCondition, ModeType modeType);
     Action GetAction(EventType eventType) const;
-    UpdateInfo GetUpdateInfo() const;
-
-    ModeType PollUpdate() const;
+    Action PollAction() const;
 
 protected:
     EntityService* Service() const { return entityService_; }
@@ -56,7 +53,8 @@ protected:
 private:
     EntityService* entityService_ = nullptr;
     std::unordered_map<EventType, Action> eventMap_;
-    UpdateInfo updateInfo_{};
+    std::function<bool(std::shared_ptr<Shape>)> exitCondition_ = [](std::shared_ptr<Shape>) { return false; };
+    ModeType nextModeType_ = ModeType::None;
 };
 
 }  // namespace Entity

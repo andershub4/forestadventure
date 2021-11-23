@@ -21,6 +21,7 @@ struct BasicEvent;
 struct PropertyData;
 class BasicMode;
 class EntityService;
+struct Action;
 
 class ModeController
 {
@@ -51,6 +52,7 @@ private:
 
 private:
     void AddMode(std::shared_ptr<BasicMode> mode, bool startMode);
+    void DoAction(const Action& action, std::shared_ptr<BasicEvent> event = nullptr);
 };
 
 }  // namespace Entity

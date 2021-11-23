@@ -39,27 +39,15 @@ ModeController::~ModeController()
 void ModeController::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
     auto action = currentMode_->GetAction(event->GetEventType());
-
-    if (action.cb_) action.cb_(event);
-
-    auto nextModeType = action.modeType_;
-    if (nextModeType != ModeType::None) {
-        currentMode_->Exit();
-        currentMode_ = modes_.at(nextModeType);
-        currentMode_->Enter(event);
-    }
+    DoAction(action, event);
 }
 
 void ModeController::Update(float deltaTime)
 {
     currentMode_->Update(deltaTime);
 
-    auto nextModeType = currentMode_->PollUpdate();
-    if (nextModeType != ModeType::None) {
-        currentMode_->Exit();
-        currentMode_ = modes_.at(nextModeType);
-        currentMode_->Enter(nullptr);
-    }
+    auto action = currentMode_->PollAction();
+    DoAction(action);
 }
 
 void ModeController::DrawTo(sf::RenderTarget& renderTarget)
@@ -83,6 +71,18 @@ void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
 void ModeController::SetOnCreateCB(std::function<void(EntityService&, const PropertyData&)> onCreate)
 {
     onCreate_ = onCreate;
+}
+
+void ModeController::DoAction(const Action& action, std::shared_ptr<BasicEvent> event)
+{
+    if (action.cb_) action.cb_(event);
+
+    auto nextModeType = action.modeType_;
+    if (nextModeType != ModeType::None) {
+        currentMode_->Exit();
+        currentMode_ = modes_.at(nextModeType);
+        currentMode_->Enter(event);
+    }
 }
 
 }  // namespace Entity

@@ -485,9 +485,6 @@
     <ClInclude Include="Entity\Action.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\UpdateInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Events\StopMoveEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>

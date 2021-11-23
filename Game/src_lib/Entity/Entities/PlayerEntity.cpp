@@ -70,14 +70,14 @@ void PlayerEntity::DefineModes(ModeController& modeController)
     auto moveMode = modeController.AddMode<MoveMode>();
     moveMode->BindAction(Action(ModeType::Idle), EventType::StopMove);
 
+    auto c = [](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); };
     auto attackMode = modeController.AddMode<AttackMode>();
     attackMode->BindAction(Action(ModeType::Move), EventType::StartMove);
-    attackMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); }, ModeType::Idle);
+    attackMode->AddExitUpdateCondition(c, ModeType::Idle);
 
     auto attackWeaponMode = modeController.AddMode<AttackWeaponMode>();
     attackWeaponMode->BindAction(Action(ModeType::Move), EventType::StartMove);
-    attackWeaponMode->AddUpdateFn([](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); },
-                                  ModeType::Idle);
+    attackWeaponMode->AddExitUpdateCondition(c, ModeType::Idle);
 }
 
 void PlayerEntity::HandleIsKeyPressed(Keyboard::Key key)

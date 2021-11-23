@@ -30,9 +30,10 @@ void BasicMode::BindAction(const Action& action, EventType eventType)
     eventMap_[eventType] = action;
 }
 
-void BasicMode::AddUpdateFn(std::function<bool(std::shared_ptr<Shape>)> updateFn, ModeType modeType)
+void BasicMode::AddExitUpdateCondition(std::function<bool(std::shared_ptr<Shape>)> exitCondition, ModeType modeType)
 {
-    updateInfo_ = {modeType, updateFn};
+    exitCondition_ = exitCondition;
+    nextModeType_ = modeType;
 }
 
 Action BasicMode::GetAction(EventType eventType) const
@@ -46,18 +47,13 @@ Action BasicMode::GetAction(EventType eventType) const
     }
 }
 
-UpdateInfo BasicMode::GetUpdateInfo() const
+Action BasicMode::PollAction() const
 {
-    return updateInfo_;
-}
-
-ModeType BasicMode::PollUpdate() const
-{
-    if (updateInfo_.cb_ != nullptr && updateInfo_.cb_(entityService_->GetShape())) {
-        return updateInfo_.modeType_;
+    if (exitCondition_(entityService_->GetShape())) {
+        return Action(nextModeType_);
     }
 
-    return ModeType::None;
+    return {};
 }
 
 }  // namespace Entity
