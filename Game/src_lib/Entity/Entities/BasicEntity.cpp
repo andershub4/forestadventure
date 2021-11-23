@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Modes/UninitializedMode.h"
 #include "Entity/Shapes/Shape.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
