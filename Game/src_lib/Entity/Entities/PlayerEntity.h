@@ -19,15 +19,17 @@ public:
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
-    virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;
-    virtual void DefineModes(ModeController& modeController) override;
-    virtual void DefineShape(EntityService& entityService, Shape& shape) override;
     virtual void OnDestroy() override;
 
 protected:
     virtual void HandleIsKeyPressed(Keyboard::Key key) override;
     virtual void HandleIsKeyReleased(Keyboard::Key key) override;
     virtual void HandleKeyPressed(Keyboard::Key key) override;
+
+private:
+    virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;
+    virtual void DefineModes(ModeController& modeController) override;
+    virtual void DefineShape(EntityService& entityService, Shape& shape) override;
 };
 
 }  // namespace Entity

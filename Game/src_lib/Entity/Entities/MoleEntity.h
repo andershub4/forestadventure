@@ -19,6 +19,8 @@ public:
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
+
+private:
     virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;
     virtual void DefineModes(ModeController& modeController) override;
     virtual void DefineShape(EntityService& entityService, Shape& shape) override;
