@@ -25,7 +25,7 @@ class EntityService;
 class BasicMode
 {
 public:
-    BasicMode(EntityService* entityService);
+    BasicMode(EntityService& entityService);
     virtual ~BasicMode();
 
     BasicMode(const BasicMode&) = delete;
@@ -48,10 +48,10 @@ public:
     Action PollAction() const;
 
 protected:
-    EntityService* Service() const { return entityService_; }
+    EntityService& Service() const { return entityService_; }
 
 private:
-    EntityService* entityService_ = nullptr;
+    EntityService& entityService_;
     std::unordered_map<EventType, Action> eventMap_;
     std::function<bool(std::shared_ptr<Shape>)> exitCondition_ = [](std::shared_ptr<Shape>) { return false; };
     ModeType nextModeType_ = ModeType::None;

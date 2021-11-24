@@ -14,7 +14,7 @@ namespace FA {
 
 namespace Entity {
 
-BasicMode::BasicMode(EntityService* entityService)
+BasicMode::BasicMode(EntityService& entityService)
     : entityService_(entityService)
 {}
 
@@ -22,7 +22,7 @@ BasicMode::~BasicMode() = default;
 
 void BasicMode::DrawTo(sf::RenderTarget& renderTarget)
 {
-    entityService_->GetShape()->DrawTo(renderTarget);
+    entityService_.GetShape()->DrawTo(renderTarget);
 }
 
 void BasicMode::BindAction(const Action& action, EventType eventType)
@@ -48,7 +48,7 @@ Action BasicMode::GetAction(EventType eventType) const
 
 Action BasicMode::PollAction() const
 {
-    if (exitCondition_(entityService_->GetShape())) {
+    if (exitCondition_(entityService_.GetShape())) {
         return Action(nextModeType_);
     }
 

@@ -13,18 +13,18 @@ namespace FA {
 
 namespace Entity {
 
-AttackWeaponMode::AttackWeaponMode(EntityService *entityService)
+AttackWeaponMode::AttackWeaponMode(EntityService &entityService)
     : BasicMode(entityService)
 {}
 
 void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    Service()->GetShape()->Set(FrameType::AttackWeapon);
+    Service().GetShape()->Set(FrameType::AttackWeapon);
 }
 
 void AttackWeaponMode::Update(float deltaTime)
 {
-    Service()->GetShape()->Update(deltaTime);
+    Service().GetShape()->Update(deltaTime);
 }
 
 }  // namespace Entity

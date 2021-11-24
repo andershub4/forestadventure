@@ -15,7 +15,7 @@ namespace Entity {
 class UninitializedMode : public BasicMode
 {
 public:
-    UninitializedMode(EntityService *entityService);
+    UninitializedMode(EntityService &entityService);
 
     virtual void Update(float deltaTime) override {}
     virtual FrameType GetFrameType() const override { return FrameType::Undefined; }

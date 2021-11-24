@@ -26,7 +26,7 @@ class FaceDirectionAttribute;
 class MoveMode : public BasicMode
 {
 public:
-    MoveMode(EntityService* entityService);
+    MoveMode(EntityService& entityService);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
     virtual void Exit() override;

@@ -32,7 +32,7 @@ public:
     template <class T>
     std::shared_ptr<T> AddMode(bool startMode = false)
     {
-        auto mode = std::make_shared<T>(&entityService_);
+        auto mode = std::make_shared<T>(entityService_);
         AddMode(mode, startMode);
         return mode;
     }
