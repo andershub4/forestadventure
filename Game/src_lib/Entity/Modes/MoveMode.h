@@ -29,7 +29,6 @@ public:
     MoveMode(EntityService& entityService);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
-    virtual void Exit() override;
 
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;

@@ -41,12 +41,6 @@ void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
     shape_->Set(FrameType::Move);
 }
 
-void MoveMode::Exit()
-{
-    auto faceDir = Service().GetAttribute<FaceDirectionAttribute>()->GetDirection();
-    SetDirection(MoveDirection::None, faceDir);
-}
-
 void MoveMode::Awake()
 {
     transform_ = Service().GetAttribute<TransformAttribute>();
