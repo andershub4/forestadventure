@@ -19,12 +19,17 @@ AttackWeaponMode::AttackWeaponMode(EntityService &entityService)
 
 void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    Service().GetShape()->Set(FrameType::AttackWeapon);
+    shape_->Set(FrameType::AttackWeapon);
+}
+
+void AttackWeaponMode::Awake()
+{
+    shape_ = Service().GetShape();
 }
 
 void AttackWeaponMode::Update(float deltaTime)
 {
-    Service().GetShape()->Update(deltaTime);
+    shape_->Update(deltaTime);
 }
 
 }  // namespace Entity

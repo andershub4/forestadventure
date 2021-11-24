@@ -19,12 +19,17 @@ IdleMode::IdleMode(EntityService &entityService)
 
 void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    Service().GetShape()->Set(FrameType::Idle);
+    shape_->Set(FrameType::Idle);
+}
+
+void IdleMode::Awake()
+{
+    shape_ = Service().GetShape();
 }
 
 void IdleMode::Update(float deltaTime)
 {
-    Service().GetShape()->Update(deltaTime);
+    shape_->Update(deltaTime);
 }
 
 }  // namespace Entity

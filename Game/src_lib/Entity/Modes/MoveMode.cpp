@@ -38,7 +38,7 @@ void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
 {
     auto m = std::dynamic_pointer_cast<StartMoveEvent>(event);
     SetDirection(m->moveDirection_, m->faceDirection_);
-    Service().GetShape()->Set(FrameType::Move);
+    shape_->Set(FrameType::Move);
 }
 
 void MoveMode::Exit()
@@ -52,11 +52,12 @@ void MoveMode::Awake()
     transform_ = Service().GetAttribute<TransformAttribute>();
     velocity_ = Service().GetAttribute<VelocityAttribute>();
     faceDirection_ = Service().GetAttribute<FaceDirectionAttribute>();
+    shape_ = Service().GetShape();
 }
 
 void MoveMode::Update(float deltaTime)
 {
-    Service().GetShape()->Update(deltaTime);
+    shape_->Update(deltaTime);
 
     sf::Vector2f offset = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
     transform_->Move(offset);

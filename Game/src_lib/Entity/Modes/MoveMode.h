@@ -41,6 +41,7 @@ private:
     std::shared_ptr<TransformAttribute> transform_ = nullptr;
     std::shared_ptr<VelocityAttribute> velocity_ = nullptr;
     std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
+    std::shared_ptr<Shape> shape_ = nullptr;
 
 private:
     void SetDirection(MoveDirection direction, FaceDirection faceDirection);
