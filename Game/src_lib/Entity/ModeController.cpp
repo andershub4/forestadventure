@@ -57,12 +57,13 @@ void ModeController::DrawTo(sf::RenderTarget& renderTarget)
 
 void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
 {
-    entityService_.AddFrameType(mode->GetFrameType());
-
-    modes_[mode->GetModeType()] = mode;
+    auto modeType = mode->GetModeType();
+    entityService_.AddModeType(modeType);
+    modes_[modeType] = mode;
     mode->Awake();
+
     if (startMode) {
-        startMode_ = mode->GetModeType();
+        startMode_ = modeType;
         auto u = modes_.at(ModeType::Uninitialized);
         u->BindAction(Action(startMode_), EventType::Init);
     }

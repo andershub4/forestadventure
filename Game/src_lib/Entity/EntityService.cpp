@@ -39,9 +39,9 @@ Animation EntityService::GetAnimation(FrameType frameType, FaceDirection faceDir
     return animationDb_.GetAnimation(entityType_, frameType, faceDir);
 }
 
-void EntityService::AddFrameType(FrameType frameType)
+void EntityService::AddModeType(ModeType modeType)
 {
-    frameTypes_.push_back(frameType);
+    modeTypes_.push_back(modeType);
 }
 
 }  // namespace Entity

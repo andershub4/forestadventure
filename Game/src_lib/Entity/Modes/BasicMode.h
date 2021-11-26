@@ -11,7 +11,6 @@
 
 #include "Entity/Action.h"
 #include "Entity/EventType.h"
-#include "Enum/FrameType.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -39,7 +38,6 @@ public:
     virtual void DrawTo(sf::RenderTarget& renderTarget);
     virtual void Awake() {}
 
-    virtual FrameType GetFrameType() const = 0;
     virtual ModeType GetModeType() const = 0;
 
     void BindAction(const Action& action, EventType eventType);

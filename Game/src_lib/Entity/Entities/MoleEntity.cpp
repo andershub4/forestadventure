@@ -24,6 +24,22 @@ namespace FA {
 
 namespace Entity {
 
+namespace {
+
+FrameType ModeTypeToFrameType(ModeType modeType)
+{
+    switch (modeType) {
+        case ModeType::Idle:
+            return FrameType::Idle;
+        case ModeType::Move:
+            return FrameType::Move;
+        default:
+            return FrameType::Undefined;
+    }
+}
+
+}  // namespace
+
 MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, const AnimationDb& animationDb,
                        MessageBus& messageBus)
     : BasicEntity(id, EntityType::Mole, cameraManager, animationDb, messageBus)
@@ -65,7 +81,8 @@ void MoleEntity::DefineShape(EntityService& entityService, Shape& shape)
     auto a = std::make_shared<AnimationShape>(lookupKeyFunc);
     auto dirs = entityService.GetAttribute<FaceDirectionAttribute>()->GetAvailableDirections();
 
-    for (auto frameType : entityService.GetFrameTypes()) {
+    for (auto modeType : entityService.GetModeTypes()) {
+        auto frameType = ModeTypeToFrameType(modeType);
         if (frameType == FrameType::Undefined) continue;
         for (auto faceDir : dirs) {
             auto animation = entityService.GetAnimation(frameType, faceDir);

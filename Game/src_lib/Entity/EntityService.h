@@ -16,6 +16,7 @@
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 #include "Logging.h"
+#include "ModeType.h"
 
 namespace FA {
 
@@ -56,13 +57,13 @@ public:
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
 
     Animation GetAnimation(FrameType frameType, FaceDirection faceDir) const;
-    std::vector<FrameType> GetFrameTypes() const { return frameTypes_; }
+    std::vector<ModeType> GetModeTypes() const { return modeTypes_; }
     std::shared_ptr<Shape> GetShape() const { return shape_; }
-    void AddFrameType(FrameType frameType);
+    void AddModeType(ModeType modeType);
 
 private:
     AttributeStore attributeStore_;
-    std::vector<FrameType> frameTypes_;
+    std::vector<ModeType> modeTypes_;
     CameraManager &cameraManager_;
     EntityType entityType_;
     const AnimationDb &animationDb_;

@@ -18,7 +18,6 @@ public:
     UninitializedMode(EntityService &entityService);
 
     virtual void Update(float deltaTime) override {}
-    virtual FrameType GetFrameType() const override { return FrameType::Undefined; }
     virtual ModeType GetModeType() const override { return ModeType::Uninitialized; }
 };
 

@@ -23,7 +23,6 @@ public:
 
     virtual void Awake() override;
     virtual void Update(float deltaTime) override;
-    virtual FrameType GetFrameType() const override { return FrameType::Idle; }
     virtual ModeType GetModeType() const override { return ModeType::Idle; }
 
 private:
