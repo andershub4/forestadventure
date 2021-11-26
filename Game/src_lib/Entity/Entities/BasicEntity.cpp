@@ -34,22 +34,6 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
 
 BasicEntity::~BasicEntity() = default;
 
-void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
-{
-    auto c = std::dynamic_pointer_cast<CreateEvent>(event);
-    auto data = c->data_;
-    DefineProperties(entityService_, data);
-    DefineModes(modeController_);
-    DefineShape(entityService_, *entityService_.GetShape());
-    entityService_.GetShape()->Awake();
-    Subscribe(Messages());
-}
-
-void BasicEntity::OnDestroy(std::shared_ptr<BasicEvent> event)
-{
-    Unsubscribe(Messages());
-}
-
 void BasicEntity::Create(const PropertyData& data)
 {
     HandleEvent(std::make_shared<CreateEvent>(data));
@@ -73,6 +57,37 @@ void BasicEntity::Update(float deltaTime)
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
     modeController_.DrawTo(renderTarget);
+}
+
+void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)
+{
+    modeController_.HandleEvent(event);
+}
+
+void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
+{
+    auto c = std::dynamic_pointer_cast<CreateEvent>(event);
+    auto data = c->data_;
+    DefineProperties(entityService_, data);
+    DefineModes(modeController_);
+    DefineShape(entityService_, *entityService_.GetShape());
+    entityService_.GetShape()->Awake();
+    Subscribe(Messages());
+}
+
+void BasicEntity::OnDestroy(std::shared_ptr<BasicEvent> event)
+{
+    Unsubscribe(Messages());
+}
+
+void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
+{
+    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
+}
+
+void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)
+{
+    messageBus_.RemoveSubscriber(Name(), messageTypes);
 }
 
 void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
@@ -99,21 +114,6 @@ void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
         auto key = m->GetKey();
         HandleKeyPressed(key);
     }
-}
-
-void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
-{
-    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
-}
-
-void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)
-{
-    messageBus_.RemoveSubscriber(Name(), messageTypes);
-}
-
-void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)
-{
-    modeController_.HandleEvent(event);
 }
 
 }  // namespace Entity
