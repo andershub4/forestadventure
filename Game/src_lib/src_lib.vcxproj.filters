@@ -500,5 +500,8 @@
     <ClInclude Include="Entity\Events\InitEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\Events\DestroyEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

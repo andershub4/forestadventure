@@ -19,9 +19,6 @@ ModeController::ModeController(EntityService& entityService)
     : entityService_(entityService)
 {
     auto u = AddMode<UninitializedMode>();
-    auto cb = [this](std::shared_ptr<BasicEvent> event) { onCreate_(event); };
-    u->BindAction(Action(cb), EventType::Create);
-
     currentMode_ = u;
     currentMode_->Enter(nullptr);
 }
@@ -52,6 +49,8 @@ void ModeController::DrawTo(sf::RenderTarget& renderTarget)
 
 void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
 {
+    mode->BindAction(Action(onDestroy_), EventType::Destroy);
+
     auto modeType = mode->GetModeType();
     entityService_.AddModeType(modeType);
     modes_[modeType] = mode;
@@ -66,7 +65,13 @@ void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
 
 void ModeController::SetOnCreateCB(std::function<void(std::shared_ptr<BasicEvent>)> onCreate)
 {
-    onCreate_ = onCreate;
+    auto u = modes_.at(ModeType::Uninitialized);
+    u->BindAction(Action(onCreate), EventType::Create);
+}
+
+void ModeController::SetOnDestroyCB(std::function<void(std::shared_ptr<BasicEvent>)> onDestroy)
+{
+    onDestroy_ = onDestroy;
 }
 
 void ModeController::DoAction(const Action& action, std::shared_ptr<BasicEvent> event)

@@ -36,9 +36,9 @@ public:
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
-    virtual void OnDestroy() {}
 
     void Create(const PropertyData& data);
+    void Destroy();
     void Init();
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
@@ -49,9 +49,8 @@ protected:
     virtual void HandleIsKeyPressed(Keyboard::Key key) {}
     virtual void HandleIsKeyReleased(Keyboard::Key key) {}
     virtual void HandleKeyPressed(Keyboard::Key key) {}
+    virtual std::vector<MessageType> Messages() const { return {}; }
 
-    void Subscribe(const std::vector<MessageType>& messageTypes);
-    void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void HandleEvent(std::shared_ptr<BasicEvent> event);
 
 private:
@@ -66,6 +65,11 @@ private:
     virtual void DefineModes(ModeController& modeController) {}
     virtual void DefineShape(EntityService& entityService, Shape& shape) {}
 
+    void OnCreate(std::shared_ptr<BasicEvent> event);
+    void OnDestroy();
+    void OnDestroy(std::shared_ptr<BasicEvent> event);
+    void Subscribe(const std::vector<MessageType>& messageTypes);
+    void Unsubscribe(const std::vector<MessageType>& messageTypes);
     void OnMessage(std::shared_ptr<Message> msg);
     void HandleMessage(std::shared_ptr<Message> msg);
 };

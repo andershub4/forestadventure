@@ -42,12 +42,13 @@ public:
     void DrawTo(sf::RenderTarget& renderTarget);
 
     void SetOnCreateCB(std::function<void(std::shared_ptr<BasicEvent> event)> onCreate);
+    void SetOnDestroyCB(std::function<void(std::shared_ptr<BasicEvent> event)> onDestroy);
 
 private:
     std::unordered_map<ModeType, std::shared_ptr<BasicMode>> modes_;
     std::shared_ptr<BasicMode> currentMode_ = nullptr;
     ModeType startMode_ = ModeType::None;
-    std::function<void(std::shared_ptr<BasicEvent> event)> onCreate_{};
+    std::function<void(std::shared_ptr<BasicEvent> event)> onDestroy_{};
     EntityService& entityService_;
 
 private:

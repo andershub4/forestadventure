@@ -21,7 +21,7 @@ EntityManager::EntityManager(const Factory& factory)
 EntityManager::~EntityManager()
 {
     for (const auto& entry : entityMap_) {
-        entry.second->OnDestroy();
+        entry.second->Destroy();
     }
 }
 

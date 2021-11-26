@@ -19,12 +19,12 @@ public:
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
-    virtual void OnDestroy() override;
 
 protected:
     virtual void HandleIsKeyPressed(Keyboard::Key key) override;
     virtual void HandleIsKeyReleased(Keyboard::Key key) override;
     virtual void HandleKeyPressed(Keyboard::Key key) override;
+    virtual std::vector<MessageType> Messages() const override;
 
 private:
     virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;

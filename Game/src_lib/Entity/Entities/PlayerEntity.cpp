@@ -75,8 +75,6 @@ void PlayerEntity::DefineProperties(EntityService& entityService, const Property
     auto v = entityService.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
     entityService.AddAttribute<CameraAttribute>();
-
-    Subscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
 }
 
 void PlayerEntity::DefineModes(ModeController& modeController)
@@ -162,9 +160,9 @@ void PlayerEntity::DefineShape(EntityService& entityService, Shape& shape)
     shape.AddBasicShape(r);
 }
 
-void PlayerEntity::OnDestroy()
+std::vector<MessageType> PlayerEntity::Messages() const
 {
-    Unsubscribe({MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed});
+    return {MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed};
 }
 
 }  // namespace Entity

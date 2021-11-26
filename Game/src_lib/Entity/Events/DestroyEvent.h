@@ -6,11 +6,16 @@
 
 #pragma once
 
+#include "BasicEvent.h"
+
 namespace FA {
 
 namespace Entity {
 
-enum class EventType { None, Create, Destroy, Init, StartMove, StopMove, Attack, AttackWeapon, Collision };
+struct DestroyEvent : public BasicEvent
+{
+    virtual EventType GetEventType() const { return EventType::Destroy; }
+};
 
 }  // namespace Entity
 

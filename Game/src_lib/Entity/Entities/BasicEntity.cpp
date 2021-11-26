@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/Events/CreateEvent.h"
+#include "Entity/Events/DestroyEvent.h"
 #include "Entity/Events/InitEvent.h"
 #include "Entity/Shapes/Shape.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -27,22 +28,36 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     , entityService_(entityType, cameraManager, animationDb)
     , modeController_(entityService_)
 {
-    modeController_.SetOnCreateCB([this](std::shared_ptr<BasicEvent> event) {
-        auto c = std::dynamic_pointer_cast<CreateEvent>(event);
-        auto data = c->data_;
-
-        DefineProperties(entityService_, data);
-        DefineModes(modeController_);
-        DefineShape(entityService_, *entityService_.GetShape());
-        entityService_.GetShape()->Awake();
-    });
+    modeController_.SetOnCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });
+    modeController_.SetOnDestroyCB([this](std::shared_ptr<BasicEvent> event) { OnDestroy(event); });
 }
 
 BasicEntity::~BasicEntity() = default;
 
+void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
+{
+    auto c = std::dynamic_pointer_cast<CreateEvent>(event);
+    auto data = c->data_;
+    DefineProperties(entityService_, data);
+    DefineModes(modeController_);
+    DefineShape(entityService_, *entityService_.GetShape());
+    entityService_.GetShape()->Awake();
+    Subscribe(Messages());
+}
+
+void BasicEntity::OnDestroy(std::shared_ptr<BasicEvent> event)
+{
+    Unsubscribe(Messages());
+}
+
 void BasicEntity::Create(const PropertyData& data)
 {
     HandleEvent(std::make_shared<CreateEvent>(data));
+}
+
+void BasicEntity::Destroy()
+{
+    HandleEvent(std::make_shared<DestroyEvent>());
 }
 
 void BasicEntity::Init()
