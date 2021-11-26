@@ -66,7 +66,6 @@ private:
     virtual void DefineShape(EntityService& entityService, Shape& shape) {}
 
     void OnCreate(std::shared_ptr<BasicEvent> event);
-    void OnDestroy();
     void OnDestroy(std::shared_ptr<BasicEvent> event);
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
