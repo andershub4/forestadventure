@@ -8,7 +8,6 @@
 
 #include "EntityService.h"
 #include "Events/BasicEvent.h"
-#include "Events/CreateEvent.h"
 #include "Logging.h"
 #include "Modes/UninitializedMode.h"
 
@@ -20,11 +19,7 @@ ModeController::ModeController(EntityService& entityService)
     : entityService_(entityService)
 {
     auto u = AddMode<UninitializedMode>();
-    auto cb = [this](std::shared_ptr<BasicEvent> event) {
-        auto c = std::dynamic_pointer_cast<CreateEvent>(event);
-        auto data = c->data_;
-        onCreate_(entityService_, data);
-    };
+    auto cb = [this](std::shared_ptr<BasicEvent> event) { onCreate_(entityService_, event); };
     u->BindAction(Action(cb), EventType::Create);
 
     currentMode_ = u;
@@ -69,7 +64,7 @@ void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
     }
 }
 
-void ModeController::SetOnCreateCB(std::function<void(EntityService&, const PropertyData&)> onCreate)
+void ModeController::SetOnCreateCB(std::function<void(EntityService&, std::shared_ptr<BasicEvent>)> onCreate)
 {
     onCreate_ = onCreate;
 }

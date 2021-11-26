@@ -41,13 +41,13 @@ public:
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
 
-    void SetOnCreateCB(std::function<void(EntityService&, const PropertyData&)> onCreate);
+    void SetOnCreateCB(std::function<void(EntityService&, std::shared_ptr<BasicEvent> event)> onCreate);
 
 private:
     std::unordered_map<ModeType, std::shared_ptr<BasicMode>> modes_;
     std::shared_ptr<BasicMode> currentMode_ = nullptr;
     ModeType startMode_ = ModeType::None;
-    std::function<void(EntityService&, const PropertyData&)> onCreate_{};
+    std::function<void(EntityService&, std::shared_ptr<BasicEvent> event)> onCreate_{};
     EntityService& entityService_;
 
 private:
