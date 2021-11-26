@@ -28,8 +28,8 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     , entityService_(entityType, cameraManager, animationDb)
     , modeController_(entityService_)
 {
-    modeController_.SetOnCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });
-    modeController_.SetOnDestroyCB([this](std::shared_ptr<BasicEvent> event) { OnDestroy(event); });
+    modeController_.RegisterCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });
+    modeController_.RegisterDestroyCB([this](std::shared_ptr<BasicEvent> event) { OnDestroy(event); });
 }
 
 BasicEntity::~BasicEntity() = default;

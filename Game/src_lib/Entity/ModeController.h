@@ -41,8 +41,8 @@ public:
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
 
-    void SetOnCreateCB(std::function<void(std::shared_ptr<BasicEvent> event)> onCreate);
-    void SetOnDestroyCB(std::function<void(std::shared_ptr<BasicEvent> event)> onDestroy);
+    void RegisterCreateCB(std::function<void(std::shared_ptr<BasicEvent> event)> onCreate);
+    void RegisterDestroyCB(std::function<void(std::shared_ptr<BasicEvent> event)> onDestroy);
 
 private:
     std::unordered_map<ModeType, std::shared_ptr<BasicMode>> modes_;

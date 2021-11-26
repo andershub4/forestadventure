@@ -63,13 +63,13 @@ void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
     }
 }
 
-void ModeController::SetOnCreateCB(std::function<void(std::shared_ptr<BasicEvent>)> onCreate)
+void ModeController::RegisterCreateCB(std::function<void(std::shared_ptr<BasicEvent>)> onCreate)
 {
     auto u = modes_.at(ModeType::Uninitialized);
     u->BindAction(Action(onCreate), EventType::Create);
 }
 
-void ModeController::SetOnDestroyCB(std::function<void(std::shared_ptr<BasicEvent>)> onDestroy)
+void ModeController::RegisterDestroyCB(std::function<void(std::shared_ptr<BasicEvent>)> onDestroy)
 {
     onDestroy_ = onDestroy;
 }
