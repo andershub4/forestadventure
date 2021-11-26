@@ -27,14 +27,14 @@ BasicEntity::BasicEntity(EntityId id, EntityType entityType, CameraManager& came
     , entityService_(entityType, cameraManager, animationDb)
     , modeController_(entityService_)
 {
-    modeController_.SetOnCreateCB([this](EntityService& entityService, std::shared_ptr<BasicEvent> event) {
+    modeController_.SetOnCreateCB([this](std::shared_ptr<BasicEvent> event) {
         auto c = std::dynamic_pointer_cast<CreateEvent>(event);
         auto data = c->data_;
 
-        DefineProperties(entityService, data);
+        DefineProperties(entityService_, data);
         DefineModes(modeController_);
-        DefineShape(entityService, *entityService.GetShape());
-        entityService.GetShape()->Awake();
+        DefineShape(entityService_, *entityService_.GetShape());
+        entityService_.GetShape()->Awake();
     });
 }
 

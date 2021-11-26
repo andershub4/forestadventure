@@ -19,7 +19,7 @@ ModeController::ModeController(EntityService& entityService)
     : entityService_(entityService)
 {
     auto u = AddMode<UninitializedMode>();
-    auto cb = [this](std::shared_ptr<BasicEvent> event) { onCreate_(entityService_, event); };
+    auto cb = [this](std::shared_ptr<BasicEvent> event) { onCreate_(event); };
     u->BindAction(Action(cb), EventType::Create);
 
     currentMode_ = u;
@@ -64,7 +64,7 @@ void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
     }
 }
 
-void ModeController::SetOnCreateCB(std::function<void(EntityService&, std::shared_ptr<BasicEvent>)> onCreate)
+void ModeController::SetOnCreateCB(std::function<void(std::shared_ptr<BasicEvent>)> onCreate)
 {
     onCreate_ = onCreate;
 }
