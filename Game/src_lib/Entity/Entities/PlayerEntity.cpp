@@ -27,10 +27,7 @@
 #include "Entity/Shapes/RectangleShape.h"
 #include "Entity/Shapes/Shape.h"
 #include "Enum/KeyboardKey.h"
-#include "Message/BroadcastMessage/IsKeyPressedMessage.h"
-#include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
-#include "Message/BroadcastMessage/KeyPressedMessage.h"
-#include "Message/MessageBus.h"
+#include "Enum/MessageType.h"
 
 namespace FA {
 

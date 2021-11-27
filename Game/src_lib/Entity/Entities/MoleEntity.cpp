@@ -18,7 +18,6 @@
 #include "Entity/PropertyData.h"
 #include "Entity/Shapes/AnimationShape.h"
 #include "Entity/Shapes/Shape.h"
-#include "Message/MessageBus.h"
 
 namespace FA {
 
