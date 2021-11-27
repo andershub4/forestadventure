@@ -30,10 +30,10 @@ void BasicMode::BindAction(const Action& action, EventType eventType)
     eventMap_[eventType] = action;
 }
 
-void BasicMode::AddExitUpdateCondition(std::function<bool(std::shared_ptr<Shape>)> exitCondition, ModeType modeType)
+void BasicMode::BindActionDuringUpdate(const Action& action, std::function<bool(std::shared_ptr<Shape>)> condition)
 {
-    exitCondition_ = exitCondition;
-    nextModeType_ = modeType;
+    actionCondition_ = condition;
+    nextAction_ = action;
 }
 
 Action BasicMode::GetAction(EventType eventType) const
@@ -48,8 +48,8 @@ Action BasicMode::GetAction(EventType eventType) const
 
 Action BasicMode::PollAction() const
 {
-    if (exitCondition_(entityService_.GetShape())) {
-        return Action::ChangeTo(nextModeType_);
+    if (actionCondition_(entityService_.GetShape())) {
+        return nextAction_;
     }
 
     return {};

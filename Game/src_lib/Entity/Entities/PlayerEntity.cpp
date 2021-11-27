@@ -127,14 +127,14 @@ void PlayerEntity::DefineModes(ModeController& modeController)
     auto moveMode = modeController.AddMode<MoveMode>();
     moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
 
-    auto c = [](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); };
+    auto condition = [](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); };
     auto attackMode = modeController.AddMode<AttackMode>();
     attackMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
-    attackMode->AddExitUpdateCondition(c, ModeType::Idle);
+    attackMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
 
     auto attackWeaponMode = modeController.AddMode<AttackWeaponMode>();
     attackWeaponMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
-    attackWeaponMode->AddExitUpdateCondition(c, ModeType::Idle);
+    attackWeaponMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
 }
 
 void PlayerEntity::DefineShape(EntityService& entityService, Shape& shape)

@@ -41,7 +41,7 @@ public:
     virtual ModeType GetModeType() const = 0;
 
     void BindAction(const Action& action, EventType eventType);
-    void AddExitUpdateCondition(std::function<bool(std::shared_ptr<Shape>)> exitCondition, ModeType modeType);
+    void BindActionDuringUpdate(const Action& action, std::function<bool(std::shared_ptr<Shape>)> condition);
     Action GetAction(EventType eventType) const;
     Action PollAction() const;
 
@@ -51,8 +51,8 @@ protected:
 private:
     EntityService& entityService_;
     std::unordered_map<EventType, Action> eventMap_;
-    std::function<bool(std::shared_ptr<Shape>)> exitCondition_ = [](std::shared_ptr<Shape>) { return false; };
-    ModeType nextModeType_ = ModeType::None;
+    std::function<bool(std::shared_ptr<Shape>)> actionCondition_ = [](std::shared_ptr<Shape>) { return false; };
+    Action nextAction_{};
 };
 
 }  // namespace Entity
