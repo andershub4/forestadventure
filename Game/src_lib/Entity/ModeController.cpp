@@ -55,9 +55,8 @@ void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
     mode->Awake();
 
     if (startMode) {
-        startMode_ = modeType;
         auto u = modes_.at(ModeType::Uninitialized);
-        u->BindAction(Action::ChangeTo(startMode_), EventType::Init);
+        u->BindAction(Action::ChangeTo(modeType), EventType::Init);
     }
 }
 
