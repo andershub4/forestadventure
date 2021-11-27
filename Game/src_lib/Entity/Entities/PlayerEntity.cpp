@@ -126,14 +126,22 @@ void PlayerEntity::DefineModes(ModeController& modeController)
 
     auto moveMode = modeController.AddMode<MoveMode>();
     moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
+    moveMode->BindAction(Action::Ignore(), EventType::StartMove);
+    moveMode->BindAction(Action::Ignore(), EventType::Attack);
+    moveMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
 
     auto condition = [](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); };
+
     auto attackMode = modeController.AddMode<AttackMode>();
     attackMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
+    attackMode->BindAction(Action::Ignore(), EventType::Attack);
+    attackMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
     attackMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
 
     auto attackWeaponMode = modeController.AddMode<AttackWeaponMode>();
     attackWeaponMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
+    attackWeaponMode->BindAction(Action::Ignore(), EventType::Attack);
+    attackWeaponMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
     attackWeaponMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
 }
 

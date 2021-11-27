@@ -9,6 +9,7 @@
 #include "Entity/EntityService.h"
 #include "Entity/Shapes/Shape.h"
 #include "Enum/KeyboardKey.h"
+#include "Logging.h"
 
 namespace FA {
 
@@ -42,8 +43,10 @@ Action BasicMode::GetAction(EventType eventType) const
     if (it != eventMap_.end()) {
         return eventMap_.at(eventType);
     }
-
-    return {};
+    else {
+        LOG_ERROR("ModeType ", GetModeType(), " can't handle ", eventType);
+        return {};
+    }
 }
 
 Action BasicMode::PollAction() const

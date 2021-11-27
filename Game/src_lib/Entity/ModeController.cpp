@@ -8,7 +8,6 @@
 
 #include "EntityService.h"
 #include "Events/BasicEvent.h"
-#include "Logging.h"
 #include "Modes/UninitializedMode.h"
 
 namespace FA {
@@ -18,8 +17,7 @@ namespace Entity {
 ModeController::ModeController(EntityService& entityService)
     : entityService_(entityService)
 {
-    auto u = AddMode<UninitializedMode>();
-    currentMode_ = u;
+    currentMode_ = AddMode<UninitializedMode>();
     currentMode_->Enter(nullptr);
 }
 
