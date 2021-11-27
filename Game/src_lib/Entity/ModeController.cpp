@@ -49,7 +49,7 @@ void ModeController::DrawTo(sf::RenderTarget& renderTarget)
 
 void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
 {
-    mode->BindAction(Action(onDestroy_), EventType::Destroy);
+    mode->BindAction(Action::Call(onDestroy_), EventType::Destroy);
 
     auto modeType = mode->GetModeType();
     entityService_.AddModeType(modeType);
@@ -59,14 +59,14 @@ void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
     if (startMode) {
         startMode_ = modeType;
         auto u = modes_.at(ModeType::Uninitialized);
-        u->BindAction(Action(startMode_), EventType::Init);
+        u->BindAction(Action::ChangeTo(startMode_), EventType::Init);
     }
 }
 
 void ModeController::RegisterCreateCB(std::function<void(std::shared_ptr<BasicEvent>)> onCreate)
 {
     auto u = modes_.at(ModeType::Uninitialized);
-    u->BindAction(Action(onCreate), EventType::Create);
+    u->BindAction(Action::Call(onCreate), EventType::Create);
 }
 
 void ModeController::RegisterDestroyCB(std::function<void(std::shared_ptr<BasicEvent>)> onDestroy)

@@ -49,7 +49,7 @@ Action BasicMode::GetAction(EventType eventType) const
 Action BasicMode::PollAction() const
 {
     if (exitCondition_(entityService_.GetShape())) {
-        return Action(nextModeType_);
+        return Action::ChangeTo(nextModeType_);
     }
 
     return {};

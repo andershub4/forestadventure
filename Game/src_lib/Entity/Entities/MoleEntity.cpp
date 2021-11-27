@@ -63,11 +63,11 @@ void MoleEntity::DefineProperties(EntityService& entityService, const PropertyDa
 void MoleEntity::DefineModes(ModeController& modeController)
 {
     auto idleMode = modeController.AddMode<IdleMode>(true);
-    idleMode->BindAction(Action(ModeType::Move), EventType::StartMove);
-    idleMode->BindAction(Action(), EventType::Collision);
+    idleMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
+    idleMode->BindAction(Action::Ignore(), EventType::Collision);
 
     auto moveMode = modeController.AddMode<MoveMode>();
-    moveMode->BindAction(Action(ModeType::Idle), EventType::StopMove);
+    moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
 }
 
 void MoleEntity::DefineShape(EntityService& entityService, Shape& shape)
