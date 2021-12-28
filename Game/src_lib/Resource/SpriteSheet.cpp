@@ -15,6 +15,7 @@ namespace FA {
 SpriteSheet::SpriteSheet(const sf::Texture* texture, const sf::Vector2u& frameCount)
     : texture_(texture)
     , frameCount_(frameCount)
+    , isValid_(true)
 {}
 
 std::vector<sf::IntRect> SpriteSheet::MirrorX(const std::vector<sf::IntRect>& frames)

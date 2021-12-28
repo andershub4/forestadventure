@@ -13,23 +13,67 @@
 #include "Resource/TextureManager.h"
 #include "TextureId.h"
 
+namespace FA {
+
 namespace {
 
-FA::SpriteSheet::FrameData CreateFrameData(const sf::Texture* t, const sf::Vector2u& sheetSize,
-                                           const sf::Vector2u start, unsigned int n, unsigned int defaultIndex)
+struct AnimationData
 {
-    if (t != nullptr) {
-        FA::SpriteSheet spriteSheet(t, sheetSize);
-        auto f = spriteSheet.Scan(start, n, defaultIndex);
-        return f;
+    std::string sheetId_;
+    struct FrameData
+    {
+        sf::Vector2u start_;
+        unsigned int n_;
+        unsigned int defaultIndex_;
+        bool mirror_;
+    };
+
+    FrameData data_;
+    FrameType frameType_;
+    FaceDirection dir_;
+};
+
+std::vector<AnimationData> playerData = {
+    {TextureId::HeroWalkSide, {{0, 0}, 6, 0, true}, FrameType::Move, FaceDirection::Left},
+    {TextureId::HeroWalkSide, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Right},
+    {TextureId::HeroWalkFront, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Down},
+    {TextureId::HeroWalkBack, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Up},
+    {TextureId::HeroIdleSide, {{0, 0}, 1, 0, true}, FrameType::Idle, FaceDirection::Left},
+    {TextureId::HeroIdleSide, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Right},
+    {TextureId::HeroIdleFront, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Down},
+    {TextureId::HeroIdleBack, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Up},
+    {TextureId::HeroAttackSide, {{0, 0}, 3, 0, true}, FrameType::Attack, FaceDirection::Left},
+    {TextureId::HeroAttackSide, {{0, 0}, 3, 0, false}, FrameType::Attack, FaceDirection::Right},
+    {TextureId::HeroAttackFront, {{0, 0}, 3, 0, false}, FrameType::Attack, FaceDirection::Down},
+    {TextureId::HeroAttackBack, {{0, 0}, 3, 0, false}, FrameType::Attack, FaceDirection::Up},
+    {TextureId::HeroAttackWeaponSide, {{0, 0}, 3, 0, true}, FrameType::AttackWeapon, FaceDirection::Left},
+    {TextureId::HeroAttackWeaponSide, {{0, 0}, 3, 0, false}, FrameType::AttackWeapon, FaceDirection::Right},
+    {TextureId::HeroAttackWeaponFront, {{0, 0}, 3, 0, false}, FrameType::AttackWeapon, FaceDirection::Down},
+    {TextureId::HeroAttackWeaponBack, {{0, 0}, 3, 0, false}, FrameType::AttackWeapon, FaceDirection::Up}};
+
+std::vector<AnimationData> moleData = {
+    {TextureId::MoleWalkSide, {{0, 0}, 6, 0, true}, FrameType::Move, FaceDirection::Left},
+    {TextureId::MoleWalkSide, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Right},
+    {TextureId::MoleWalkFront, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Down},
+    {TextureId::MoleWalkBack, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Up},
+    {TextureId::MoleIdleSide, {{0, 0}, 1, 0, true}, FrameType::Idle, FaceDirection::Left},
+    {TextureId::MoleIdleSide, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Right},
+    {TextureId::MoleIdleFront, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Down},
+    {TextureId::MoleIdleBack, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Up}};
+
+SpriteSheet::FrameData CreateFrameData(const SpriteSheet& sheet, const sf::Vector2u start, unsigned int n,
+                                       unsigned int defaultIndex)
+{
+    SpriteSheet::FrameData f;
+
+    if (sheet.IsValid()) {
+        f = sheet.Scan(start, n, defaultIndex);
     }
 
-    return FA::SpriteSheet::FrameData();
+    return f;
 }
 
 }  // namespace
-
-namespace FA {
 
 AnimationDb::AnimationDb(TextureManager& textureManager)
     : textureManager_(textureManager)
@@ -42,11 +86,6 @@ void AnimationDb::Load()
     InitMole();
 }
 
-Animation AnimationDb::GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
-{
-    return map_.at({entityType, frameType, faceDir});
-}
-
 void AnimationDb::LoadTextures()
 {
     LOG_INFO("Load entity textures");
@@ -54,164 +93,40 @@ void AnimationDb::LoadTextures()
     for (const auto& v : textures) {
         auto p = ssPath + v.path_;
         textureManager_.Add(v.name_, p);
+        const sf::Texture* t = textureManager_.Get(v.name_);
+        auto size = v.size_;
+        SpriteSheet s(t, size);
+        sheetMap_.insert({v.name_, s});
     }
 }
 
 void AnimationDb::InitPlayer()
 {
-    InitPlayerMove();
-    InitPlayerIdle();
-    InitPlayerAttack();
-    InitPlayerAttackWeapon();
-}
-
-void AnimationDb::InitPlayerMove()
-{
     float t = 0.1f;
-    Key k = std::make_tuple(EntityType::Player, FrameType::Move, FaceDirection::Left);
 
-    auto side = CreateFrameData(GetTexture(TextureId::HeroWalkSide), {6, 1}, {0, 0}, 6, 0);
-    if (side.isValid_) {
-        std::get<2>(k) = FaceDirection::Left;
-        AddAnimation(k, Animation(side.texture_, SpriteSheet::MirrorX(side.frames_), side.defaultFrame_, t));
-        std::get<2>(k) = FaceDirection::Right;
-        AddAnimation(k, Animation(side.texture_, side.frames_, side.defaultFrame_, t));
-    }
-    auto front = CreateFrameData(GetTexture(TextureId::HeroWalkFront), {6, 1}, {0, 0}, 6, 0);
-    if (front.isValid_) {
-        std::get<2>(k) = FaceDirection::Down;
-        AddAnimation(k, Animation(front.texture_, front.frames_, front.defaultFrame_, t));
-    }
-    auto back = CreateFrameData(GetTexture(TextureId::HeroWalkBack), {6, 1}, {0, 0}, 6, 0);
-    if (back.isValid_) {
-        std::get<2>(k) = FaceDirection::Up;
-        AddAnimation(k, Animation(back.texture_, back.frames_, back.defaultFrame_, t));
-    }
-}
-
-void AnimationDb::InitPlayerIdle()
-{
-    float t = 0.1f;
-    Key k = std::make_tuple(EntityType::Player, FrameType::Idle, FaceDirection::Left);
-
-    auto side = CreateFrameData(GetTexture(TextureId::HeroIdleSide), {1, 1}, {0, 0}, 1, 0);
-    if (side.isValid_) {
-        std::get<2>(k) = FaceDirection::Left;
-        AddAnimation(k, Animation(side.texture_, SpriteSheet::MirrorX(side.frames_), side.defaultFrame_, t));
-        std::get<2>(k) = FaceDirection::Right;
-        AddAnimation(k, Animation(side.texture_, side.frames_, side.defaultFrame_, t));
-    }
-    auto front = CreateFrameData(GetTexture(TextureId::HeroIdleFront), {1, 1}, {0, 0}, 1, 0);
-    if (front.isValid_) {
-        std::get<2>(k) = FaceDirection::Down;
-        AddAnimation(k, Animation(front.texture_, front.frames_, front.defaultFrame_, t));
-    }
-    auto back = CreateFrameData(GetTexture(TextureId::HeroIdleBack), {1, 1}, {0, 0}, 1, 0);
-    if (back.isValid_) {
-        std::get<2>(k) = FaceDirection::Up;
-        AddAnimation(k, Animation(back.texture_, back.frames_, back.defaultFrame_, t));
-    }
-}
-
-void AnimationDb::InitPlayerAttack()
-{
-    float t = 0.1f;
-    Key k = std::make_tuple(EntityType::Player, FrameType::Attack, FaceDirection::Left);
-
-    auto side = CreateFrameData(GetTexture(TextureId::HeroAttackSide), {3, 1}, {0, 0}, 3, 0);
-    if (side.isValid_) {
-        std::get<2>(k) = FaceDirection::Left;
-        AddAnimation(k, Animation(side.texture_, SpriteSheet::MirrorX(side.frames_), side.defaultFrame_, t));
-        std::get<2>(k) = FaceDirection::Right;
-        AddAnimation(k, Animation(side.texture_, side.frames_, side.defaultFrame_, t));
-    }
-    auto front = CreateFrameData(GetTexture(TextureId::HeroAttackFront), {3, 1}, {0, 0}, 3, 0);
-    if (front.isValid_) {
-        std::get<2>(k) = FaceDirection::Down;
-        AddAnimation(k, Animation(front.texture_, front.frames_, front.defaultFrame_, t));
-    }
-    auto back = CreateFrameData(GetTexture(TextureId::HeroAttackBack), {3, 1}, {0, 0}, 3, 0);
-    if (back.isValid_) {
-        std::get<2>(k) = FaceDirection::Up;
-        AddAnimation(k, Animation(back.texture_, back.frames_, back.defaultFrame_, t));
-    }
-}
-
-void AnimationDb::InitPlayerAttackWeapon()
-{
-    float t = 0.1f;
-    Key k = std::make_tuple(EntityType::Player, FrameType::AttackWeapon, FaceDirection::Left);
-
-    auto side = CreateFrameData(GetTexture(TextureId::HeroAttackWeaponSide), {3, 1}, {0, 0}, 3, 0);
-    if (side.isValid_) {
-        std::get<2>(k) = FaceDirection::Left;
-        AddAnimation(k, Animation(side.texture_, SpriteSheet::MirrorX(side.frames_), side.defaultFrame_, t));
-        std::get<2>(k) = FaceDirection::Right;
-        AddAnimation(k, Animation(side.texture_, side.frames_, side.defaultFrame_, t));
-    }
-    auto front = CreateFrameData(GetTexture(TextureId::HeroAttackWeaponFront), {3, 1}, {0, 0}, 3, 0);
-    if (front.isValid_) {
-        std::get<2>(k) = FaceDirection::Down;
-        AddAnimation(k, Animation(front.texture_, front.frames_, front.defaultFrame_, t));
-    }
-    auto back = CreateFrameData(GetTexture(TextureId::HeroAttackWeaponBack), {3, 1}, {0, 0}, 3, 0);
-    if (back.isValid_) {
-        std::get<2>(k) = FaceDirection::Up;
-        AddAnimation(k, Animation(back.texture_, back.frames_, back.defaultFrame_, t));
+    for (const auto& item : playerData) {
+        auto data =
+            CreateFrameData(GetSheet(item.sheetId_), item.data_.start_, item.data_.n_, item.data_.defaultIndex_);
+        if (data.isValid_) {
+            Key k = std::make_tuple(EntityType::Player, item.frameType_, item.dir_);
+            auto frames = item.data_.mirror_ ? SpriteSheet::MirrorX(data.frames_) : data.frames_;
+            AddAnimation(k, Animation(data.texture_, frames, data.defaultFrame_, t));
+        }
     }
 }
 
 void AnimationDb::InitMole()
 {
-    InitMoleMove();
-    InitMoleIdle();
-}
-
-void AnimationDb::InitMoleMove()
-{
     float t = 0.1f;
-    Key k = std::make_tuple(EntityType::Mole, FrameType::Move, FaceDirection::Left);
 
-    auto side = CreateFrameData(GetTexture(TextureId::MoleWalkSide), {6, 1}, {0, 0}, 6, 0);
-    if (side.isValid_) {
-        std::get<2>(k) = FaceDirection::Left;
-        AddAnimation(k, Animation(side.texture_, SpriteSheet::MirrorX(side.frames_), side.defaultFrame_, t));
-        std::get<2>(k) = FaceDirection::Right;
-        AddAnimation(k, Animation(side.texture_, side.frames_, side.defaultFrame_, t));
-    }
-    auto front = CreateFrameData(GetTexture(TextureId::MoleWalkFront), {6, 1}, {0, 0}, 6, 0);
-    if (front.isValid_) {
-        std::get<2>(k) = FaceDirection::Down;
-        AddAnimation(k, Animation(front.texture_, front.frames_, front.defaultFrame_, t));
-    }
-    auto back = CreateFrameData(GetTexture(TextureId::MoleWalkBack), {6, 1}, {0, 0}, 6, 0);
-    if (back.isValid_) {
-        std::get<2>(k) = FaceDirection::Up;
-        AddAnimation(k, Animation(back.texture_, back.frames_, back.defaultFrame_, t));
-    }
-}
-
-void AnimationDb::InitMoleIdle()
-{
-    float t = 0.1f;
-    Key k = std::make_tuple(EntityType::Mole, FrameType::Idle, FaceDirection::Left);
-
-    auto side = CreateFrameData(GetTexture(TextureId::MoleIdleSide), {1, 1}, {0, 0}, 1, 0);
-    if (side.isValid_) {
-        std::get<2>(k) = FaceDirection::Left;
-        AddAnimation(k, Animation(side.texture_, SpriteSheet::MirrorX(side.frames_), side.defaultFrame_, t));
-        std::get<2>(k) = FaceDirection::Right;
-        AddAnimation(k, Animation(side.texture_, side.frames_, side.defaultFrame_, t));
-    }
-    auto front = CreateFrameData(GetTexture(TextureId::MoleIdleFront), {1, 1}, {0, 0}, 1, 0);
-    if (front.isValid_) {
-        std::get<2>(k) = FaceDirection::Down;
-        AddAnimation(k, Animation(front.texture_, front.frames_, front.defaultFrame_, t));
-    }
-    auto back = CreateFrameData(GetTexture(TextureId::MoleIdleBack), {1, 1}, {0, 0}, 1, 0);
-    if (back.isValid_) {
-        std::get<2>(k) = FaceDirection::Up;
-        AddAnimation(k, Animation(back.texture_, back.frames_, back.defaultFrame_, t));
+    for (const auto& item : moleData) {
+        auto data =
+            CreateFrameData(GetSheet(item.sheetId_), item.data_.start_, item.data_.n_, item.data_.defaultIndex_);
+        if (data.isValid_) {
+            Key k = std::make_tuple(EntityType::Mole, item.frameType_, item.dir_);
+            auto frames = item.data_.mirror_ ? SpriteSheet::MirrorX(data.frames_) : data.frames_;
+            AddAnimation(k, Animation(data.texture_, frames, data.defaultFrame_, t));
+        }
     }
 }
 
@@ -220,9 +135,20 @@ void AnimationDb::AddAnimation(Key k, const Animation& animation)
     map_[k] = animation;
 }
 
-const sf::Texture* AnimationDb::GetTexture(const std::string& name) const
+Animation AnimationDb::GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
 {
-    return textureManager_.Get(name);
+    return map_.at({entityType, frameType, faceDir});
+}
+
+SpriteSheet AnimationDb::GetSheet(const std::string& name) const
+{
+    auto it = sheetMap_.find(name);
+
+    if (it != sheetMap_.end()) {
+        return sheetMap_.at(name);
+    }
+
+    return SpriteSheet();
 }
 
 }  // namespace FA

@@ -7,12 +7,14 @@
 #pragma once
 
 #include <map>
+#include <unordered_map>
 #include <tuple>
 
 #include "Animation/Animation.h"
 #include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
+#include "Resource/SpriteSheet.h"
 
 namespace FA {
 
@@ -29,22 +31,15 @@ private:
     using Key = std::tuple<EntityType, FrameType, FaceDirection>;
     std::map<Key, Animation> map_;
     TextureManager &textureManager_;
+    std::unordered_map<std::string, SpriteSheet> sheetMap_;
 
 private:
     void AddAnimation(Key k, const Animation &animation);
-    const sf::Texture *GetTexture(const std::string &name) const;
-
+    SpriteSheet GetSheet(const std::string &name) const;
     void LoadTextures();
 
     void InitPlayer();
-    void InitPlayerMove();
-    void InitPlayerIdle();
-    void InitPlayerAttack();
-    void InitPlayerAttackWeapon();
-
     void InitMole();
-    void InitMoleMove();
-    void InitMoleIdle();
 };
 
 }  // namespace FA

@@ -27,15 +27,18 @@ public:
         bool isValid_ = false;
     };
 
+    SpriteSheet() = default;
     SpriteSheet(const sf::Texture* texture, const sf::Vector2u& frameCount);
 
     static std::vector<sf::IntRect> MirrorX(const std::vector<sf::IntRect>& frames);
 
+    bool IsValid() const { return isValid_; }
     FrameData Scan(const sf::Vector2u& uvCoord, unsigned int nFrames, unsigned int defaultFrame) const;
 
 private:
     const sf::Texture* texture_;
     sf::Vector2u frameCount_;
+    bool isValid_ = false;
 
 private:
     unsigned int CalcFrameSize() const;
