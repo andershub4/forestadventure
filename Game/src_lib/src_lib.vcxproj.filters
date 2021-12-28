@@ -410,10 +410,10 @@
     <ClInclude Include="Scene\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\TextureId.h">
+    <ClInclude Include="Resource\SheetId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\EntityTextures.h">
+    <ClInclude Include="Resource\SheetData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Shapes\AnimationShape.h">

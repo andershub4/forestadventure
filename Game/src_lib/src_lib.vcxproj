@@ -245,7 +245,7 @@
     <ClInclude Include="Entity\Shapes\BasicShape.h" />
     <ClInclude Include="Entity\Shapes\RectangleShape.h" />
     <ClInclude Include="Entity\ModeController.h" />
-    <ClInclude Include="Resource\EntityTextures.h" />
+    <ClInclude Include="Resource\SheetData.h" />
     <ClInclude Include="Entity\Factory.h" />
     <ClInclude Include="Entity\Id.h" />
     <ClInclude Include="Entity\Entities\BasicEntity.h" />
@@ -256,7 +256,7 @@
     <ClInclude Include="Enum\MoveDirection.h" />
     <ClInclude Include="Enum\KeyboardKey.h" />
     <ClInclude Include="Enum\MessageType.h" />
-    <ClInclude Include="Resource\TextureId.h" />
+    <ClInclude Include="Resource\SheetId.h" />
     <ClInclude Include="Level\Camera.h" />
     <ClInclude Include="Level\CameraManager.h" />
     <ClInclude Include="Level\Level.h" />
