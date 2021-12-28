@@ -9,8 +9,6 @@
 #include "EntityTextures.h"
 #include "Folder.h"
 #include "Logging.h"
-#include "Resource/SpriteSheet.h"
-#include "Resource/TextureManager.h"
 #include "TextureId.h"
 
 namespace FA {

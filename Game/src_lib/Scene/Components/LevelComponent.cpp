@@ -12,8 +12,6 @@
 #include "Folder.h"
 #include "Level/Level.h"
 #include "Message/MessageBus.h"
-#include "Resource/AnimationDb.h"
-#include "Resource/TextureManager.h"
 #include "Scene/Layer.h"
 #include "Scene/Transitions/BasicTransition.h"
 #include "Tile/TileMapReader.h"

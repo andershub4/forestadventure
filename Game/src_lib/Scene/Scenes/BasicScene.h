@@ -7,12 +7,12 @@
 #pragma once
 
 #include "Fwd/SfmlFwd.h"
+#include "Resource/TextureManager.h"
 #include "Scene/Manager.h"
 #include "Scene/Transitions/NullTransition.h"
 
 namespace FA {
 
-class TextureManager;
 class MessageBus;
 class Message;
 

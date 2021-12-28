@@ -11,11 +11,11 @@
 #include "BasicComponent.h"
 
 #include "Resource/AnimationDb.h"
+#include "Resource/TextureManager.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
 
-class TextureManager;
 class BasicEffect;
 class Level;
 

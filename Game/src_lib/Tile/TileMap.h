@@ -15,11 +15,10 @@
 #include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 #include "Fwd/SfmlFwd.h"
+#include "Resource/TextureManager.h"
 #include "TileMapData.h"
 
 namespace FA {
-
-class TextureManager;
 
 namespace Tile {
 

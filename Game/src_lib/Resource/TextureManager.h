@@ -6,24 +6,14 @@
 
 #pragma once
 
-#include <memory>
-#include <unordered_map>
+#include <string>
 
-#include "Fwd/SfmlFwd.h"
+#include "ResourceManager.h"
+
+#include <SFML/Graphics/Texture.hpp>
 
 namespace FA {
 
-class TextureManager
-{
-public:
-    TextureManager();
-    ~TextureManager();
-
-    void Add(const std::string& name, const std::string& path);
-    const sf::Texture* Get(const std::string& name) const;
-
-private:
-    std::unordered_map<std::string, std::unique_ptr<sf::Texture>> textures_;
-};
+using TextureManager = ResourceManager<std::string, sf::Texture>;
 
 }  // namespace FA

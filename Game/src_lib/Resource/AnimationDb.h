@@ -7,18 +7,17 @@
 #pragma once
 
 #include <map>
-#include <unordered_map>
 #include <tuple>
+#include <unordered_map>
 
 #include "Animation/Animation.h"
 #include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 #include "Resource/SpriteSheet.h"
+#include "Resource/TextureManager.h"
 
 namespace FA {
-
-class TextureManager;
 
 class AnimationDb
 {

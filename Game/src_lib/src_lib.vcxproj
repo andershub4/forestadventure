@@ -262,6 +262,7 @@
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="Resource\AnimationDb.h" />
+    <ClInclude Include="Resource\TextureManager.h" />
     <ClInclude Include="Scene\Components\PreAlphaComponent.h" />
     <ClInclude Include="Scene\Layer.h" />
     <ClInclude Include="UI\Title.h" />
@@ -291,7 +292,7 @@
     <ClInclude Include="Message\BroadcastMessage\CloseWindowMessage.h" />
     <ClInclude Include="Message\Message.h" />
     <ClInclude Include="Message\MessageBus.h" />
-    <ClInclude Include="Resource\TextureManager.h" />
+    <ClInclude Include="Resource\ResourceManager.h" />
     <ClInclude Include="Scene\Components\BasicComponent.h" />
     <ClInclude Include="Scene\Components\HelperComponent.h" />
     <ClInclude Include="Resource\SpriteSheet.h" />
@@ -359,7 +360,6 @@
     <ClCompile Include="Message\BroadcastMessage\KeyReleasedMessage.cpp" />
     <ClCompile Include="Message\Message.cpp" />
     <ClCompile Include="Message\MessageBus.cpp" />
-    <ClCompile Include="Resource\TextureManager.cpp" />
     <ClCompile Include="Scene\Components\BasicComponent.cpp" />
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
     <ClCompile Include="Resource\SpriteSheet.cpp" />

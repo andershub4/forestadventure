@@ -11,11 +11,11 @@
 
 #include "Components/BasicComponent.h"
 #include "Fwd/SfmlFwd.h"
+#include "Resource/TextureManager.h"
 
 namespace FA {
 
 class MessageBus;
-class TextureManager;
 class Message;
 
 namespace Scene {
