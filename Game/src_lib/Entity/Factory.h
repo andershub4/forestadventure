@@ -27,7 +27,8 @@ public:
     Factory(MessageBus& messageBus);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager, TextureManager& textureManager) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager,
+                                        TextureManager& textureManager) const;
 
 private:
     mutable Entity::EntityId id_{0};

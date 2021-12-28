@@ -20,7 +20,8 @@ Factory::Factory(MessageBus& messageBus)
 
 Factory::~Factory() = default;
 
-std::unique_ptr<BasicEntity> Factory::Create(EntityType type, CameraManager& cameraManager, TextureManager &textureManager) const
+std::unique_ptr<BasicEntity> Factory::Create(EntityType type, CameraManager& cameraManager,
+                                             TextureManager& textureManager) const
 {
     switch (type) {
         case EntityType::Mole:

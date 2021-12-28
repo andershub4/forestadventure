@@ -15,7 +15,8 @@
 
 namespace FA {
 
-Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, const Tile::TileMap &tileMap, TextureManager &textureManager)
+Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, const Tile::TileMap &tileMap,
+             TextureManager &textureManager)
     : tileMap_(tileMap)
     , renderTarget_(renderTarget)
     , cameraManager_(renderTarget.getSize(), tileMap.GetSize())

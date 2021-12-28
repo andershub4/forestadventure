@@ -54,8 +54,8 @@ private:
     void LoadTextures();
     void Init(EntityType entityType, const std::vector<AnimationData> &animationData);
 
-    //void InitPlayer();
-    //void InitMole();
+    // void InitPlayer();
+    // void InitMole();
 };
 
 }  // namespace FA
