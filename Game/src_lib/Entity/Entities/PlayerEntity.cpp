@@ -56,7 +56,7 @@ FrameType ModeTypeToFrameType(ModeType modeType)
 
 PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, TextureManager& textureManager,
                            MessageBus& messageBus)
-    : BasicEntity(id, EntityType::Player, cameraManager, textureManager, messageBus)
+    : BasicEntity(id, cameraManager, textureManager, messageBus)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
@@ -181,7 +181,7 @@ void PlayerEntity::DefineShape(EntityService& entityService, Shape& shape)
         auto frameType = ModeTypeToFrameType(modeType);
         if (frameType == FrameType::Undefined) continue;
         for (auto faceDir : dirs) {
-            auto animation = entityService.GetAnimation(frameType, faceDir);
+            auto animation = entityService.GetAnimation(Type(), frameType, faceDir);
             a->AddAnimation(frameType, faceDir, animation);
         }
     }

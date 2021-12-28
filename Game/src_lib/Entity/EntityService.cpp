@@ -16,9 +16,8 @@ namespace FA {
 
 namespace Entity {
 
-EntityService::EntityService(EntityType entityType, CameraManager& cameraManager, TextureManager& textureManager)
+EntityService::EntityService(CameraManager& cameraManager, TextureManager& textureManager)
     : cameraManager_(cameraManager)
-    , entityType_(entityType)
     , animationDb_(textureManager)
     , shape_(std::make_shared<Shape>(this))
 {}
@@ -33,14 +32,14 @@ std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
     return attributeStore_.AddAttribute<CameraAttribute>(this);
 }
 
-void EntityService::LoadAnimations(const std::vector<AnimationData>& animationData)
+void EntityService::LoadAnimations(EntityType entityType, const std::vector<AnimationData>& animationData)
 {
-    animationDb_.Load(entityType_, animationData);
+    animationDb_.Load(entityType, animationData);
 }
 
-Animation EntityService::GetAnimation(FrameType frameType, FaceDirection faceDir) const
+Animation EntityService::GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
 {
-    return animationDb_.GetAnimation(entityType_, frameType, faceDir);
+    return animationDb_.GetAnimation(entityType, frameType, faceDir);
 }
 
 void EntityService::AddModeType(ModeType modeType)

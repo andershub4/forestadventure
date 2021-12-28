@@ -19,6 +19,7 @@ public:
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
+    virtual EntityType Type() const override { return EntityType::Mole; }
 
 protected:
     virtual std::vector<AnimationData> Animations() const override;

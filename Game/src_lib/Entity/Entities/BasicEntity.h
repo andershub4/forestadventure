@@ -31,11 +31,11 @@ struct PropertyData;
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, EntityType entityType, CameraManager& cameraManager, TextureManager& textureManager,
-                MessageBus& messageBus);
+    BasicEntity(EntityId id, CameraManager& cameraManager, TextureManager& textureManager, MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
+    virtual EntityType Type() const = 0;
 
     void Create(const PropertyData& data);
     void Destroy();

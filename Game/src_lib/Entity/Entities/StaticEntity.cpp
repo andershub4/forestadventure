@@ -16,7 +16,7 @@ namespace Entity {
 
 StaticEntity::StaticEntity(EntityId id, CameraManager& cameraManager, TextureManager& textureManager,
                            MessageBus& messageBus)
-    : BasicEntity(id, EntityType::Static, cameraManager, textureManager, messageBus)
+    : BasicEntity(id, cameraManager, textureManager, messageBus)
 {}
 
 StaticEntity::~StaticEntity() = default;

@@ -19,6 +19,7 @@ public:
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
+    virtual EntityType Type() const override { return EntityType::Player; }
 
 protected:
     virtual void HandleIsKeyPressed(Keyboard::Key key) override;

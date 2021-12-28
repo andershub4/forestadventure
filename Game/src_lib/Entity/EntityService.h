@@ -12,7 +12,6 @@
 #include <vector>
 
 #include "AttributeStore.h"
-#include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 #include "Logging.h"
@@ -32,7 +31,7 @@ class Shape;
 class EntityService
 {
 public:
-    EntityService(EntityType entityType, CameraManager &cameraManager, TextureManager &textureManager);
+    EntityService(CameraManager &cameraManager, TextureManager &textureManager);
     ~EntityService();
 
     template <class T>
@@ -56,8 +55,8 @@ public:
     template <>
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
 
-    void LoadAnimations(const std::vector<AnimationData> &animationData);
-    Animation GetAnimation(FrameType frameType, FaceDirection faceDir) const;
+    void LoadAnimations(EntityType entityType, const std::vector<AnimationData> &animationData);
+    Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
     std::vector<ModeType> GetModeTypes() const { return modeTypes_; }
     std::shared_ptr<Shape> GetShape() const { return shape_; }
     void AddModeType(ModeType modeType);
@@ -66,7 +65,6 @@ private:
     AttributeStore attributeStore_;
     std::vector<ModeType> modeTypes_;
     CameraManager &cameraManager_;
-    EntityType entityType_;
     AnimationDb animationDb_;
     std::shared_ptr<Shape> shape_ = nullptr;
 };
