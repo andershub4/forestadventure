@@ -17,11 +17,11 @@
 #include "Enum/FrameType.h"
 #include "Logging.h"
 #include "ModeType.h"
+#include "Resource/AnimationDb.h"
 
 namespace FA {
 
 class CameraManager;
-class AnimationDb;
 class Animation;
 
 namespace Entity {
@@ -32,7 +32,7 @@ class Shape;
 class EntityService
 {
 public:
-    EntityService(EntityType entityType, CameraManager &cameraManager, const AnimationDb &animationDb);
+    EntityService(EntityType entityType, CameraManager &cameraManager, TextureManager &textureManager);
     ~EntityService();
 
     template <class T>
@@ -56,6 +56,7 @@ public:
     template <>
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
 
+    void LoadAnimations(const std::vector<AnimationData> &animationData);
     Animation GetAnimation(FrameType frameType, FaceDirection faceDir) const;
     std::vector<ModeType> GetModeTypes() const { return modeTypes_; }
     std::shared_ptr<Shape> GetShape() const { return shape_; }
@@ -66,7 +67,7 @@ private:
     std::vector<ModeType> modeTypes_;
     CameraManager &cameraManager_;
     EntityType entityType_;
-    const AnimationDb &animationDb_;
+    AnimationDb animationDb_;
     std::shared_ptr<Shape> shape_ = nullptr;
 };
 

@@ -10,12 +10,12 @@
 
 #include "Enum/EntityType.h"
 #include "Id.h"
+#include "Resource/TextureManager.h"
 
 namespace FA {
 
 class MessageBus;
 class CameraManager;
-class AnimationDb;
 
 namespace Entity {
 
@@ -27,8 +27,7 @@ public:
     Factory(MessageBus& messageBus);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager,
-                                        const AnimationDb& animationDb) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager, TextureManager& textureManager) const;
 
 private:
     mutable Entity::EntityId id_{0};

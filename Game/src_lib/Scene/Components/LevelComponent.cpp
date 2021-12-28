@@ -23,7 +23,7 @@ namespace Scene {
 LevelComponent::LevelComponent(MessageBus& messageBus, const Layer& layer, TextureManager& textureManager)
     : BasicComponent(messageBus, layer)
     , messageBus_(messageBus)
-    , animationDb_(textureManager)
+    , textureManager_(textureManager)
     , tileMap_(textureManager, scale_)
 {}
 
@@ -31,14 +31,12 @@ LevelComponent::~LevelComponent() = default;
 
 void LevelComponent::OnCreate()
 {
-    animationDb_.Load();
-
     auto path = GetAssetsPath() + "/map/test.tmx";
     Tile::TileMapReader tileMapReader;
     auto tileMapData = tileMapReader.Parse(path);
     tileMap_.Create(tileMapData);
 
-    level_ = std::make_unique<Level>(messageBus_, layerTexture_, tileMap_, animationDb_);
+    level_ = std::make_unique<Level>(messageBus_, layerTexture_, tileMap_, textureManager_);
     level_->Create();
 }
 

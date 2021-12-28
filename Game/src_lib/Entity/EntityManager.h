@@ -12,10 +12,10 @@
 #include "Entity/Id.h"
 #include "Enum/EntityType.h"
 #include "Fwd/SfmlFwd.h"
+#include "Resource/TextureManager.h"
 
 namespace FA {
 
-class AnimationDb;
 class CameraManager;
 
 namespace Entity {
@@ -34,7 +34,7 @@ public:
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
     void Create(EntityType type, const PropertyData &data, CameraManager &cameraManager,
-                const AnimationDb &animationDb);
+                TextureManager &textureManager);
     void Init();
 
 private:

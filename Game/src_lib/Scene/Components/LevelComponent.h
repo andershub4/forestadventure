@@ -10,7 +10,6 @@
 
 #include "BasicComponent.h"
 
-#include "Resource/AnimationDb.h"
 #include "Resource/TextureManager.h"
 #include "Tile/TileMap.h"
 
@@ -42,7 +41,7 @@ private:
     std::unique_ptr<BasicEffect> effect_ = nullptr;
     MessageBus& messageBus_;
     Tile::TileMap tileMap_;
-    AnimationDb animationDb_;
+    TextureManager& textureManager_;
 };
 
 }  // namespace Scene

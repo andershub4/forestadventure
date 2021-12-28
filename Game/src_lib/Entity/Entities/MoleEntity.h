@@ -15,10 +15,13 @@ namespace Entity {
 class MoleEntity : public BasicEntity
 {
 public:
-    MoleEntity(EntityId id, CameraManager& cameraManager, const AnimationDb& animationDb, MessageBus& messageBus);
+    MoleEntity(EntityId id, CameraManager& cameraManager, TextureManager &textureManager, MessageBus& messageBus);
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
+
+protected:
+    virtual std::vector<AnimationData> Animations() const override;
 
 private:
     virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;

@@ -15,50 +15,6 @@ namespace FA {
 
 namespace {
 
-struct AnimationData
-{
-    std::string sheetId_;
-    struct FrameData
-    {
-        sf::Vector2u start_;
-        unsigned int n_;
-        unsigned int defaultIndex_;
-        bool mirror_;
-    };
-
-    FrameData data_;
-    FrameType frameType_;
-    FaceDirection dir_;
-};
-
-std::vector<AnimationData> playerData = {
-    {SheetId::HeroWalkSide, {{0, 0}, 6, 0, true}, FrameType::Move, FaceDirection::Left},
-    {SheetId::HeroWalkSide, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Right},
-    {SheetId::HeroWalkFront, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Down},
-    {SheetId::HeroWalkBack, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Up},
-    {SheetId::HeroIdleSide, {{0, 0}, 1, 0, true}, FrameType::Idle, FaceDirection::Left},
-    {SheetId::HeroIdleSide, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Right},
-    {SheetId::HeroIdleFront, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Down},
-    {SheetId::HeroIdleBack, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Up},
-    {SheetId::HeroAttackSide, {{0, 0}, 3, 0, true}, FrameType::Attack, FaceDirection::Left},
-    {SheetId::HeroAttackSide, {{0, 0}, 3, 0, false}, FrameType::Attack, FaceDirection::Right},
-    {SheetId::HeroAttackFront, {{0, 0}, 3, 0, false}, FrameType::Attack, FaceDirection::Down},
-    {SheetId::HeroAttackBack, {{0, 0}, 3, 0, false}, FrameType::Attack, FaceDirection::Up},
-    {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0, true}, FrameType::AttackWeapon, FaceDirection::Left},
-    {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0, false}, FrameType::AttackWeapon, FaceDirection::Right},
-    {SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0, false}, FrameType::AttackWeapon, FaceDirection::Down},
-    {SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0, false}, FrameType::AttackWeapon, FaceDirection::Up}};
-
-std::vector<AnimationData> moleData = {
-    {SheetId::MoleWalkSide, {{0, 0}, 6, 0, true}, FrameType::Move, FaceDirection::Left},
-    {SheetId::MoleWalkSide, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Right},
-    {SheetId::MoleWalkFront, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Down},
-    {SheetId::MoleWalkBack, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Up},
-    {SheetId::MoleIdleSide, {{0, 0}, 1, 0, true}, FrameType::Idle, FaceDirection::Left},
-    {SheetId::MoleIdleSide, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Right},
-    {SheetId::MoleIdleFront, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Down},
-    {SheetId::MoleIdleBack, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Up}};
-
 SpriteSheet::FrameData CreateFrameData(const SpriteSheet& sheet, const sf::Vector2u start, unsigned int n,
                                        unsigned int defaultIndex)
 {
@@ -77,11 +33,10 @@ AnimationDb::AnimationDb(TextureManager& textureManager)
     : textureManager_(textureManager)
 {}
 
-void AnimationDb::Load()
+void AnimationDb::Load(EntityType entityType, const std::vector<AnimationData>& animationData)
 {
     LoadTextures();
-    InitPlayer();
-    InitMole();
+    Init(entityType, animationData);
 }
 
 void AnimationDb::LoadTextures()
@@ -98,30 +53,15 @@ void AnimationDb::LoadTextures()
     }
 }
 
-void AnimationDb::InitPlayer()
+void AnimationDb::Init(EntityType entityType, const std::vector<AnimationData>& animationData)
 {
     float t = 0.1f;
 
-    for (const auto& item : playerData) {
+    for (const auto& item : animationData) {
         auto data =
             CreateFrameData(GetSheet(item.sheetId_), item.data_.start_, item.data_.n_, item.data_.defaultIndex_);
         if (data.isValid_) {
-            Key k = std::make_tuple(EntityType::Player, item.frameType_, item.dir_);
-            auto frames = item.data_.mirror_ ? SpriteSheet::MirrorX(data.frames_) : data.frames_;
-            AddAnimation(k, Animation(data.texture_, frames, data.defaultFrame_, t));
-        }
-    }
-}
-
-void AnimationDb::InitMole()
-{
-    float t = 0.1f;
-
-    for (const auto& item : moleData) {
-        auto data =
-            CreateFrameData(GetSheet(item.sheetId_), item.data_.start_, item.data_.n_, item.data_.defaultIndex_);
-        if (data.isValid_) {
-            Key k = std::make_tuple(EntityType::Mole, item.frameType_, item.dir_);
+            Key k = std::make_tuple(entityType, item.frameType_, item.dir_);
             auto frames = item.data_.mirror_ ? SpriteSheet::MirrorX(data.frames_) : data.frames_;
             AddAnimation(k, Animation(data.texture_, frames, data.defaultFrame_, t));
         }

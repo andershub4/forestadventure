@@ -19,11 +19,27 @@
 
 namespace FA {
 
+struct AnimationData
+{
+    std::string sheetId_;
+    struct FrameData
+    {
+        sf::Vector2u start_;
+        unsigned int n_;
+        unsigned int defaultIndex_;
+        bool mirror_;
+    };
+
+    FrameData data_;
+    FrameType frameType_;
+    FaceDirection dir_;
+};
+
 class AnimationDb
 {
 public:
     AnimationDb(TextureManager &textureManager);
-    void Load();
+    void Load(EntityType entityType, const std::vector<AnimationData> &animationData);
     Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
 private:
@@ -36,9 +52,10 @@ private:
     void AddAnimation(Key k, const Animation &animation);
     SpriteSheet GetSheet(const std::string &name) const;
     void LoadTextures();
+    void Init(EntityType entityType, const std::vector<AnimationData> &animationData);
 
-    void InitPlayer();
-    void InitMole();
+    //void InitPlayer();
+    //void InitMole();
 };
 
 }  // namespace FA

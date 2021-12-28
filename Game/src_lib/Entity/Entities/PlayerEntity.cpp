@@ -28,6 +28,7 @@
 #include "Entity/Shapes/Shape.h"
 #include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
+#include "Resource/SheetId.h"
 
 namespace FA {
 
@@ -53,9 +54,8 @@ FrameType ModeTypeToFrameType(ModeType modeType)
 
 }  // namespace
 
-PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, const AnimationDb& animationDb,
-                           MessageBus& messageBus)
-    : BasicEntity(id, EntityType::Player, cameraManager, animationDb, messageBus)
+PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, TextureManager &textureManager, MessageBus& messageBus)
+    : BasicEntity(id, EntityType::Player, cameraManager, textureManager, messageBus)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
@@ -97,6 +97,29 @@ void PlayerEntity::HandleKeyPressed(Keyboard::Key key)
 std::vector<MessageType> PlayerEntity::Messages() const
 {
     return {MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed};
+}
+
+std::vector<AnimationData> PlayerEntity::Animations() const
+{
+    std::vector<AnimationData> data = {
+        {SheetId::HeroWalkSide, {{0, 0}, 6, 0, true}, FrameType::Move, FaceDirection::Left},
+        {SheetId::HeroWalkSide, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Right},
+        {SheetId::HeroWalkFront, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Down},
+        {SheetId::HeroWalkBack, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Up},
+        {SheetId::HeroIdleSide, {{0, 0}, 1, 0, true}, FrameType::Idle, FaceDirection::Left},
+        {SheetId::HeroIdleSide, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Right},
+        {SheetId::HeroIdleFront, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Down},
+        {SheetId::HeroIdleBack, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Up},
+        {SheetId::HeroAttackSide, {{0, 0}, 3, 0, true}, FrameType::Attack, FaceDirection::Left},
+        {SheetId::HeroAttackSide, {{0, 0}, 3, 0, false}, FrameType::Attack, FaceDirection::Right},
+        {SheetId::HeroAttackFront, {{0, 0}, 3, 0, false}, FrameType::Attack, FaceDirection::Down},
+        {SheetId::HeroAttackBack, {{0, 0}, 3, 0, false}, FrameType::Attack, FaceDirection::Up},
+        {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0, true}, FrameType::AttackWeapon, FaceDirection::Left},
+        {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0, false}, FrameType::AttackWeapon, FaceDirection::Right},
+        {SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0, false}, FrameType::AttackWeapon, FaceDirection::Down},
+        {SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0, false}, FrameType::AttackWeapon, FaceDirection::Up}};
+
+    return data;
 }
 
 void PlayerEntity::DefineProperties(EntityService& entityService, const PropertyData& data)

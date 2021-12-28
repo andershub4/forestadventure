@@ -31,8 +31,7 @@ struct PropertyData;
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, EntityType entityType, CameraManager& cameraManager, const AnimationDb& animationDb,
-                MessageBus& messageBus);
+    BasicEntity(EntityId id, EntityType entityType, CameraManager& cameraManager, TextureManager &textureManager, MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
@@ -50,6 +49,7 @@ protected:
     virtual void HandleIsKeyReleased(Keyboard::Key key) {}
     virtual void HandleKeyPressed(Keyboard::Key key) {}
     virtual std::vector<MessageType> Messages() const { return {}; }
+    virtual std::vector<AnimationData> Animations() const { return {}; }
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
 

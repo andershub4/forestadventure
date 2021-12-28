@@ -10,17 +10,16 @@
 #include "Attributes//FaceDirectionAttribute.h"
 #include "Attributes//TransformAttribute.h"
 #include "Level/CameraManager.h"
-#include "Resource/AnimationDb.h"
 #include "Shapes/Shape.h"
 
 namespace FA {
 
 namespace Entity {
 
-EntityService::EntityService(EntityType entityType, CameraManager& cameraManager, const AnimationDb& animationDb)
+EntityService::EntityService(EntityType entityType, CameraManager& cameraManager, TextureManager &textureManager)
     : cameraManager_(cameraManager)
     , entityType_(entityType)
-    , animationDb_(animationDb)
+    , animationDb_(textureManager)
     , shape_(std::make_shared<Shape>(this))
 {}
 
@@ -32,6 +31,11 @@ std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
     auto t = GetAttribute<TransformAttribute>();
     cameraManager_.Track(t->GetPosition());
     return attributeStore_.AddAttribute<CameraAttribute>(this);
+}
+
+void EntityService::LoadAnimations(const std::vector<AnimationData>& animationData)
+{
+    animationDb_.Load(entityType_, animationData);
 }
 
 Animation EntityService::GetAnimation(FrameType frameType, FaceDirection faceDir) const

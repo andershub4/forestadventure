@@ -15,7 +15,7 @@ namespace Entity {
 class PlayerEntity : public BasicEntity
 {
 public:
-    PlayerEntity(EntityId id, CameraManager& cameraManager, const AnimationDb& animationDb, MessageBus& messageBus);
+    PlayerEntity(EntityId id, CameraManager& cameraManager, TextureManager &textureManager, MessageBus& messageBus);
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }
@@ -25,6 +25,7 @@ protected:
     virtual void HandleIsKeyReleased(Keyboard::Key key) override;
     virtual void HandleKeyPressed(Keyboard::Key key) override;
     virtual std::vector<MessageType> Messages() const override;
+    virtual std::vector<AnimationData> Animations() const override;
 
 private:
     virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;

@@ -13,7 +13,6 @@
 #include "Entity/EntityManager.h"
 #include "Entity/Factory.h"
 #include "Fwd/SfmlFwd.h"
-#include "Resource/AnimationDb.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
@@ -24,7 +23,7 @@ class Level
 {
 public:
     Level(MessageBus& messageBus, sf::RenderTarget& renderTarget, const Tile::TileMap& tileMap,
-          const AnimationDb& animationDb);
+          TextureManager& textureManager);
     ~Level();
 
     void Update(float deltaTime);
@@ -42,7 +41,7 @@ private:
     Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
     CameraManager cameraManager_;
-    AnimationDb animationDb_;
+    TextureManager& textureManager_;
 };
 
 }  // namespace FA

@@ -15,14 +15,13 @@
 
 namespace FA {
 
-Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, const Tile::TileMap &tileMap,
-             const AnimationDb &animationDb)
+Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, const Tile::TileMap &tileMap, TextureManager &textureManager)
     : tileMap_(tileMap)
     , renderTarget_(renderTarget)
     , cameraManager_(renderTarget.getSize(), tileMap.GetSize())
     , factory_(messageBus)
     , entityManager_(factory_)
-    , animationDb_(animationDb)
+    , textureManager_(textureManager)
 {}
 
 Level::~Level() = default;
@@ -38,7 +37,7 @@ void Level::Create()
         data.faceDir_ = objectData.faceDir_;
         data.velocity_ = 120.0;
         data.scale_ = static_cast<float>(tileMap_.GetScale());
-        entityManager_.Create(objectData.type_, data, cameraManager_, animationDb_);
+        entityManager_.Create(objectData.type_, data, cameraManager_, textureManager_);
     }
 
     entityManager_.Init();

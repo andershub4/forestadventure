@@ -39,10 +39,9 @@ void EntityManager::Update(float deltaTime)
     }
 }
 
-void EntityManager::Create(EntityType type, const PropertyData& data, CameraManager& cameraManager,
-                           const AnimationDb& animationDb)
+void EntityManager::Create(EntityType type, const PropertyData& data, CameraManager& cameraManager, TextureManager &textureManager)
 {
-    auto entity = factory_.Create(type, cameraManager, animationDb);
+    auto entity = factory_.Create(type, cameraManager, textureManager);
     entity->Create(data);
     AddEntity(std::move(entity));
 }

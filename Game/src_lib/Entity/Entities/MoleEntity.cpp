@@ -18,6 +18,7 @@
 #include "Entity/PropertyData.h"
 #include "Entity/Shapes/AnimationShape.h"
 #include "Entity/Shapes/Shape.h"
+#include "Resource/SheetId.h"
 
 namespace FA {
 
@@ -39,12 +40,26 @@ FrameType ModeTypeToFrameType(ModeType modeType)
 
 }  // namespace
 
-MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, const AnimationDb& animationDb,
-                       MessageBus& messageBus)
-    : BasicEntity(id, EntityType::Mole, cameraManager, animationDb, messageBus)
+MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, TextureManager& textureManager, MessageBus& messageBus)
+    : BasicEntity(id, EntityType::Mole, cameraManager, textureManager, messageBus)
 {}
 
 MoleEntity::~MoleEntity() = default;
+
+std::vector<AnimationData> MoleEntity::Animations() const
+{
+    std::vector<AnimationData> data = {
+        {SheetId::MoleWalkSide, {{0, 0}, 6, 0, true}, FrameType::Move, FaceDirection::Left},
+        {SheetId::MoleWalkSide, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Right},
+        {SheetId::MoleWalkFront, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Down},
+        {SheetId::MoleWalkBack, {{0, 0}, 6, 0, false}, FrameType::Move, FaceDirection::Up},
+        {SheetId::MoleIdleSide, {{0, 0}, 1, 0, true}, FrameType::Idle, FaceDirection::Left},
+        {SheetId::MoleIdleSide, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Right},
+        {SheetId::MoleIdleFront, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Down},
+        {SheetId::MoleIdleBack, {{0, 0}, 1, 0, false}, FrameType::Idle, FaceDirection::Up}};
+
+    return data;
+}
 
 void MoleEntity::DefineProperties(EntityService& entityService, const PropertyData& data)
 {
