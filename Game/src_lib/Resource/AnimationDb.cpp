@@ -57,12 +57,13 @@ void AnimationDb::Init(EntityType entityType, const std::vector<AnimationData>& 
 {
     float t = 0.1f;
 
-    for (const auto& item : animationData) {
-        auto data =
-            CreateFrameData(GetSheet(item.sheetId_), item.data_.start_, item.data_.n_, item.data_.defaultIndex_);
+    for (const auto& animation : animationData) {
+        auto location = animation.data_;
+        auto sheet = GetSheet(animation.sheetId_);
+        auto data = CreateFrameData(sheet, location.start_, location.nFrames_, location.defaultFrame_);
         if (data.isValid_) {
-            Key k = std::make_tuple(entityType, item.frameType_, item.dir_);
-            auto frames = item.data_.mirror_ ? SpriteSheet::MirrorX(data.frames_) : data.frames_;
+            Key k = std::make_tuple(entityType, animation.frameType_, animation.dir_);
+            auto frames = animation.mirror_ ? SpriteSheet::MirrorX(data.frames_) : data.frames_;
             AddAnimation(k, Animation(data.texture_, frames, data.defaultFrame_, t));
         }
     }
