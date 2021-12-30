@@ -9,7 +9,6 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "CameraManager.h"
 #include "Entity/EntityManager.h"
 #include "Entity/Factory.h"
 #include "Fwd/SfmlFwd.h"
@@ -18,29 +17,31 @@
 namespace FA {
 
 class MessageBus;
+class CameraManager;
 
 class Level
 {
 public:
-    Level(MessageBus& messageBus, sf::RenderTarget& renderTarget, const Tile::TileMap& tileMap,
-          TextureManager& textureManager);
+    Level(MessageBus& messageBus, TextureManager& textureManager);
     ~Level();
 
     void Update(float deltaTime);
-    void Draw();
+    void Draw(sf::RenderTarget& renderTarget);
 
-    void Create();
+    void Load();
+    void Create(CameraManager& cameraManager);
     void EnableInput(bool enable);
+    sf::Vector2u GetMapSize() const;
 
 private:
-    sf::RenderTarget& renderTarget_;
+    static const unsigned int scale_{2};
+
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
     Entity::Factory factory_;
     Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
-    CameraManager cameraManager_;
     TextureManager& textureManager_;
 };
 

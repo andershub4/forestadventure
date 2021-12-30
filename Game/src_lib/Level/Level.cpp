@@ -12,22 +12,29 @@
 
 #include "Entity/PropertyData.h"
 #include "Logging.h"
+#include "Tile/TileMapReader.h"
+#include "Folder.h"
 
 namespace FA {
 
-Level::Level(MessageBus &messageBus, sf::RenderTarget &renderTarget, const Tile::TileMap &tileMap,
-             TextureManager &textureManager)
-    : tileMap_(tileMap)
-    , renderTarget_(renderTarget)
-    , cameraManager_(renderTarget.getSize(), tileMap.GetSize())
-    , factory_(messageBus)
+Level::Level(MessageBus &messageBus, TextureManager &textureManager)
+    : factory_(messageBus)
     , entityManager_(factory_)
     , textureManager_(textureManager)
+    , tileMap_(textureManager, scale_)
 {}
 
 Level::~Level() = default;
 
-void Level::Create()
+void Level::Load()
+{
+    auto path = GetAssetsPath() + "/map/test.tmx";
+    Tile::TileMapReader tileMapReader;
+    auto tileMapData = tileMapReader.Parse(path);
+    tileMap_.Create(tileMapData);
+}
+
+void Level::Create(CameraManager &cameraManager)
 {
     LOG_INFO_ENTER_FUNC();
 
@@ -38,7 +45,7 @@ void Level::Create()
         data.faceDir_ = objectData.faceDir_;
         data.velocity_ = 120.0;
         data.scale_ = static_cast<float>(tileMap_.GetScale());
-        entityManager_.Create(objectData.type_, data, cameraManager_, textureManager_);
+        entityManager_.Create(objectData.type_, data, cameraManager, textureManager_);
     }
 
     entityManager_.Init();
@@ -61,21 +68,25 @@ void Level::Create()
 void Level::Update(float deltaTime)
 {
     entityManager_.Update(deltaTime);
-    cameraManager_.Update(renderTarget_);
 }
 
-void Level::Draw()
+void Level::Draw(sf::RenderTarget &renderTarget)
 {
-    renderTarget_.draw(backgroundSprite_);
-    entityManager_.DrawTo(renderTarget_);
+    renderTarget.draw(backgroundSprite_);
+    entityManager_.DrawTo(renderTarget);
     for (const auto &tile : fringeLayer_) {
-        renderTarget_.draw(tile);
+        renderTarget.draw(tile);
     }
 }
 
 void Level::EnableInput(bool enable)
 {
     entityManager_.EnableInput(enable);
+}
+
+sf::Vector2u Level::GetMapSize() const
+{
+    return tileMap_.GetSize();
 }
 
 }  // namespace FA

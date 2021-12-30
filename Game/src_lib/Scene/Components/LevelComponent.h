@@ -10,8 +10,8 @@
 
 #include "BasicComponent.h"
 
+#include "Level/CameraManager.h"
 #include "Resource/TextureManager.h"
-#include "Tile/TileMap.h"
 
 namespace FA {
 
@@ -35,12 +35,10 @@ public:
     virtual void OnCreate() override;
 
 private:
-    static const unsigned int scale_{2};
-
     std::unique_ptr<Level> level_ = nullptr;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
     MessageBus& messageBus_;
-    Tile::TileMap tileMap_;
+    CameraManager cameraManager_;
     TextureManager& textureManager_;
 };
 

@@ -14,9 +14,8 @@
 
 namespace FA {
 
-CameraManager::CameraManager(const sf::Vector2u& renderTargetSize, const sf::Vector2u& mapSize)
+CameraManager::CameraManager(const sf::Vector2u& renderTargetSize)
     : renderTargetSize_(renderTargetSize)
-    , mapSize_(mapSize)
 {}
 
 CameraManager::~CameraManager() = default;
@@ -29,6 +28,11 @@ void CameraManager::Track(const sf::Vector2f& trackingPoint)
 void CameraManager::Update(sf::RenderTarget& renderTarget)
 {
     if (camera_) camera_->UpdatePosition(renderTarget);
+}
+
+void CameraManager::SetMapSize(const sf::Vector2u& mapSize)
+{
+    mapSize_ = mapSize;
 }
 
 }  // namespace FA
