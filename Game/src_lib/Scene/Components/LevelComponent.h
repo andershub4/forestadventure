@@ -37,9 +37,7 @@ public:
 private:
     std::unique_ptr<Level> level_ = nullptr;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
-    MessageBus& messageBus_;
     CameraManager cameraManager_;
-    TextureManager& textureManager_;
 };
 
 }  // namespace Scene

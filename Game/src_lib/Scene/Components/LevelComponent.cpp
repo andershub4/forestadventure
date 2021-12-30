@@ -20,11 +20,9 @@ namespace Scene {
 
 LevelComponent::LevelComponent(MessageBus& messageBus, const Layer& layer, TextureManager& textureManager)
     : BasicComponent(messageBus, layer)
-    , messageBus_(messageBus)
     , cameraManager_(layerTexture_.getSize())
-    , textureManager_(textureManager)
 {
-    level_ = std::make_unique<Level>(messageBus_, textureManager_);
+    level_ = std::make_unique<Level>(messageBus, textureManager);
 }
 
 LevelComponent::~LevelComponent() = default;
