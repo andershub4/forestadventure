@@ -32,9 +32,9 @@ std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
     return attributeStore_.AddAttribute<CameraAttribute>(this);
 }
 
-void EntityService::LoadAnimations(EntityType entityType, const std::vector<AnimationData>& animationData)
+void EntityService::LoadAnimation(EntityType entityType, const AnimationData& data)
 {
-    animationDb_.Load(entityType, animationData);
+    animationDb_.LoadAnimation(entityType, data);
 }
 
 Animation EntityService::GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const

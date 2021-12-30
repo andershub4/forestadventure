@@ -6,9 +6,7 @@
 
 #pragma once
 
-#include <functional>
 #include <memory>
-#include <unordered_map>
 #include <vector>
 
 #include "AttributeStore.h"
@@ -56,7 +54,7 @@ public:
     template <>
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
 
-    void LoadAnimations(EntityType entityType, const std::vector<AnimationData> &animationData);
+    void LoadAnimation(EntityType entityType, const AnimationData &data);
     Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
     std::vector<ModeType> GetModeTypes() const { return modeTypes_; }
     std::shared_ptr<Shape> GetShape() const { return shape_; }

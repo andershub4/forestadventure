@@ -8,7 +8,6 @@
 
 #include <map>
 #include <tuple>
-#include <vector>
 
 #include "Animation/Animation.h"
 #include "Enum/EntityType.h"
@@ -29,7 +28,7 @@ struct AnimationData
         unsigned int defaultFrame_ = 0;
     };
 
-    LocationData data_;
+    LocationData locationData_;
     bool mirror_;
     FrameType frameType_;
     FaceDirection dir_;
@@ -39,7 +38,7 @@ class AnimationDb
 {
 public:
     AnimationDb(SheetManager &sheetManager);
-    void Load(EntityType entityType, const std::vector<AnimationData> &animationData);
+    void LoadAnimation(EntityType entityType, const AnimationData &data);
     Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
 private:

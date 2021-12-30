@@ -30,19 +30,17 @@ AnimationDb::AnimationDb(SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {}
 
-void AnimationDb::Load(EntityType entityType, const std::vector<AnimationData>& animationData)
+void AnimationDb::LoadAnimation(EntityType entityType, const AnimationData& data)
 {
     float t = 0.1f;
 
-    for (const auto& animation : animationData) {
-        auto location = animation.data_;
-        auto sheet = sheetManager_.GetSheet(animation.sheetId_);
-        auto data = CreateFrameData(sheet, location.start_, location.nFrames_, location.defaultFrame_);
-        if (data.isValid_) {
-            Key k = std::make_tuple(entityType, animation.frameType_, animation.dir_);
-            auto frames = animation.mirror_ ? SpriteSheet::MirrorX(data.frames_) : data.frames_;
-            AddAnimation(k, Animation(data.texture_, frames, data.defaultFrame_, t));
-        }
+    auto location = data.locationData_;
+    auto sheet = sheetManager_.GetSheet(data.sheetId_);
+    auto frameData = CreateFrameData(sheet, location.start_, location.nFrames_, location.defaultFrame_);
+    if (frameData.isValid_) {
+        Key k = std::make_tuple(entityType, data.frameType_, data.dir_);
+        auto frames = data.mirror_ ? SpriteSheet::MirrorX(frameData.frames_) : frameData.frames_;
+        AddAnimation(k, Animation(frameData.texture_, frames, frameData.defaultFrame_, t));
     }
 }
 
