@@ -21,7 +21,7 @@ SheetManager::SheetManager(TextureManager& textureManager)
 
 void SheetManager::LoadSheet(const SheetData& data)
 {
-    auto ssPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/spritesheets/";
+    auto ssPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
     auto p = ssPath + data.path_;
     textureManager_.Add(data.name_, p);
     const sf::Texture* t = textureManager_.Get(data.name_);
