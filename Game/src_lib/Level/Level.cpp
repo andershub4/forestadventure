@@ -59,7 +59,7 @@ void Level::Load()
     auto tileMapData = tileMapReader.Parse(path);
     tileMap_.Create(tileMapData);
 
-    for (const auto sheetData : textureSheets) {
+    for (const auto& sheetData : textureSheets) {
         sheetManager_.LoadSheet(sheetData);
     }
 }
