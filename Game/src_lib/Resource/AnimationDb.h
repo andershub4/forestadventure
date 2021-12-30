@@ -8,16 +8,16 @@
 
 #include <map>
 #include <tuple>
-#include <unordered_map>
+#include <vector>
 
 #include "Animation/Animation.h"
 #include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
-#include "Resource/SpriteSheet.h"
-#include "Resource/TextureManager.h"
 
 namespace FA {
+
+class SheetManager;
 
 struct AnimationData
 {
@@ -38,21 +38,17 @@ struct AnimationData
 class AnimationDb
 {
 public:
-    AnimationDb(TextureManager &textureManager);
+    AnimationDb(SheetManager &sheetManager);
     void Load(EntityType entityType, const std::vector<AnimationData> &animationData);
     Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
 private:
     using Key = std::tuple<EntityType, FrameType, FaceDirection>;
     std::map<Key, Animation> map_;
-    TextureManager &textureManager_;
-    std::unordered_map<std::string, SpriteSheet> sheetMap_;
+    SheetManager &sheetManager_;
 
 private:
     void AddAnimation(Key k, const Animation &animation);
-    SpriteSheet GetSheet(const std::string &name) const;
-    void LoadTextures();
-    void Init(EntityType entityType, const std::vector<AnimationData> &animationData);
 };
 
 }  // namespace FA

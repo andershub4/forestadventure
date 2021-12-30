@@ -40,9 +40,8 @@ FrameType ModeTypeToFrameType(ModeType modeType)
 
 }  // namespace
 
-MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, TextureManager& textureManager,
-                       MessageBus& messageBus)
-    : BasicEntity(id, cameraManager, textureManager, messageBus)
+MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, SheetManager& sheetManager, MessageBus& messageBus)
+    : BasicEntity(id, cameraManager, sheetManager, messageBus)
 {}
 
 MoleEntity::~MoleEntity() = default;

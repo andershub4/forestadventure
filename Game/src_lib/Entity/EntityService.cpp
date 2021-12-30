@@ -16,9 +16,9 @@ namespace FA {
 
 namespace Entity {
 
-EntityService::EntityService(CameraManager& cameraManager, TextureManager& textureManager)
+EntityService::EntityService(CameraManager& cameraManager, SheetManager& sheetManager)
     : cameraManager_(cameraManager)
-    , animationDb_(textureManager)
+    , animationDb_(sheetManager)
     , shape_(std::make_shared<Shape>(this))
 {}
 

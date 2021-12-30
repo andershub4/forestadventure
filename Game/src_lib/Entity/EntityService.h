@@ -22,6 +22,7 @@ namespace FA {
 
 class CameraManager;
 class Animation;
+class SheetManager;
 
 namespace Entity {
 
@@ -31,7 +32,7 @@ class Shape;
 class EntityService
 {
 public:
-    EntityService(CameraManager &cameraManager, TextureManager &textureManager);
+    EntityService(CameraManager &cameraManager, SheetManager &sheetManager);
     ~EntityService();
 
     template <class T>

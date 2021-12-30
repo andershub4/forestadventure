@@ -11,17 +11,43 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/PropertyData.h"
-#include "Logging.h"
-#include "Tile/TileMapReader.h"
 #include "Folder.h"
+#include "Logging.h"
+#include "Resource/SheetData.h"
+#include "Resource/SheetId.h"
+#include "Tile/TileMapReader.h"
 
 namespace FA {
+
+namespace {
+
+const std::vector<SheetData> textureSheets = {
+    {SheetId::HeroWalkSide, "hero/walk/hero-walk-side.png", {6, 1}},
+    {SheetId::HeroWalkFront, "hero/walk/hero-walk-front.png", {6, 1}},
+    {SheetId::HeroWalkBack, "hero/walk/hero-back-walk.png", {6, 1}},
+    {SheetId::HeroAttackSide, "hero/attack/hero-attack-side.png", {3, 1}},
+    {SheetId::HeroAttackFront, "hero/attack/hero-attack-front.png", {3, 1}},
+    {SheetId::HeroAttackBack, "hero/attack/hero-attack-back.png", {3, 1}},
+    {SheetId::HeroAttackWeaponSide, "hero/attack-weapon/hero-attack-side-weapon.png", {3, 1}},
+    {SheetId::HeroAttackWeaponFront, "hero/attack-weapon/hero-attack-front-weapon.png", {3, 1}},
+    {SheetId::HeroAttackWeaponBack, "hero/attack-weapon/hero-attack-back-weapon.png", {3, 1}},
+    {SheetId::HeroIdleSide, "hero/idle/hero-idle-side.png", {1, 1}},
+    {SheetId::HeroIdleFront, "hero/idle/hero-idle-front.png", {1, 1}},
+    {SheetId::HeroIdleBack, "hero/idle/hero-idle-back.png", {1, 1}},
+    {SheetId::MoleWalkSide, "mole/walk/mole-walk-side.png", {6, 1}},
+    {SheetId::MoleWalkFront, "mole/walk/mole-walk-front.png", {6, 1}},
+    {SheetId::MoleWalkBack, "mole/walk/mole-walk-back.png", {6, 1}},
+    {SheetId::MoleIdleSide, "mole/idle/mole-idle-side.png", {1, 1}},
+    {SheetId::MoleIdleFront, "mole/idle/mole-idle-front.png", {1, 1}},
+    {SheetId::MoleIdleBack, "mole/idle/mole-idle-back.png", {1, 1}}};
+
+}  // namespace
 
 Level::Level(MessageBus &messageBus, TextureManager &textureManager)
     : factory_(messageBus)
     , entityManager_(factory_)
-    , textureManager_(textureManager)
     , tileMap_(textureManager, scale_)
+    , sheetManager_(textureManager)
 {}
 
 Level::~Level() = default;
@@ -32,6 +58,10 @@ void Level::Load()
     Tile::TileMapReader tileMapReader;
     auto tileMapData = tileMapReader.Parse(path);
     tileMap_.Create(tileMapData);
+
+    for (const auto sheetData : textureSheets) {
+        sheetManager_.LoadSheet(sheetData);
+    }
 }
 
 void Level::Create(CameraManager &cameraManager)
@@ -45,7 +75,7 @@ void Level::Create(CameraManager &cameraManager)
         data.faceDir_ = objectData.faceDir_;
         data.velocity_ = 120.0;
         data.scale_ = static_cast<float>(tileMap_.GetScale());
-        entityManager_.Create(objectData.type_, data, cameraManager, textureManager_);
+        entityManager_.Create(objectData.type_, data, cameraManager, sheetManager_);
     }
 
     entityManager_.Init();

@@ -23,6 +23,7 @@ class MessageBus;
 class Message;
 enum class MessageType;
 class CameraManager;
+class SheetManager;
 
 namespace Entity {
 
@@ -31,7 +32,7 @@ struct PropertyData;
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, CameraManager& cameraManager, TextureManager& textureManager, MessageBus& messageBus);
+    BasicEntity(EntityId id, CameraManager& cameraManager, SheetManager& sheetManager, MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;

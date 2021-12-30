@@ -262,6 +262,7 @@
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="Resource\AnimationDb.h" />
+    <ClInclude Include="Resource\SheetManager.h" />
     <ClInclude Include="Resource\TextureManager.h" />
     <ClInclude Include="Scene\Components\PreAlphaComponent.h" />
     <ClInclude Include="Scene\Layer.h" />
@@ -337,6 +338,7 @@
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Resource\AnimationDb.cpp" />
+    <ClCompile Include="Resource\SheetManager.cpp" />
     <ClCompile Include="Scene\Components\PreAlphaComponent.cpp" />
     <ClCompile Include="UI\Title.cpp" />
     <ClCompile Include="Util\Random.cpp" />

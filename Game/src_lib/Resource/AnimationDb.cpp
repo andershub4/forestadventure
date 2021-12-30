@@ -6,10 +6,7 @@
 
 #include "AnimationDb.h"
 
-#include "Folder.h"
-#include "Logging.h"
-#include "SheetData.h"
-#include "SheetId.h"
+#include "SheetManager.h"
 
 namespace FA {
 
@@ -29,37 +26,17 @@ SpriteSheet::FrameData CreateFrameData(const SpriteSheet& sheet, const sf::Vecto
 
 }  // namespace
 
-AnimationDb::AnimationDb(TextureManager& textureManager)
-    : textureManager_(textureManager)
+AnimationDb::AnimationDb(SheetManager& sheetManager)
+    : sheetManager_(sheetManager)
 {}
 
 void AnimationDb::Load(EntityType entityType, const std::vector<AnimationData>& animationData)
-{
-    LoadTextures();
-    Init(entityType, animationData);
-}
-
-void AnimationDb::LoadTextures()
-{
-    LOG_INFO("Load entity textures");
-    auto ssPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/spritesheets/";
-    for (const auto& v : sheetData) {
-        auto p = ssPath + v.path_;
-        textureManager_.Add(v.name_, p);
-        const sf::Texture* t = textureManager_.Get(v.name_);
-        auto size = v.size_;
-        SpriteSheet s(t, size);
-        sheetMap_.insert({v.name_, s});
-    }
-}
-
-void AnimationDb::Init(EntityType entityType, const std::vector<AnimationData>& animationData)
 {
     float t = 0.1f;
 
     for (const auto& animation : animationData) {
         auto location = animation.data_;
-        auto sheet = GetSheet(animation.sheetId_);
+        auto sheet = sheetManager_.GetSheet(animation.sheetId_);
         auto data = CreateFrameData(sheet, location.start_, location.nFrames_, location.defaultFrame_);
         if (data.isValid_) {
             Key k = std::make_tuple(entityType, animation.frameType_, animation.dir_);
@@ -77,17 +54,6 @@ void AnimationDb::AddAnimation(Key k, const Animation& animation)
 Animation AnimationDb::GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
 {
     return map_.at({entityType, frameType, faceDir});
-}
-
-SpriteSheet AnimationDb::GetSheet(const std::string& name) const
-{
-    auto it = sheetMap_.find(name);
-
-    if (it != sheetMap_.end()) {
-        return sheetMap_.at(name);
-    }
-
-    return SpriteSheet();
 }
 
 }  // namespace FA

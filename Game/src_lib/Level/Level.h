@@ -12,6 +12,8 @@
 #include "Entity/EntityManager.h"
 #include "Entity/Factory.h"
 #include "Fwd/SfmlFwd.h"
+#include "Resource/SheetManager.h"
+#include "Resource/TextureManager.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
@@ -42,7 +44,7 @@ private:
     Entity::Factory factory_;
     Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
-    TextureManager& textureManager_;
+    SheetManager sheetManager_;
 };
 
 }  // namespace FA
