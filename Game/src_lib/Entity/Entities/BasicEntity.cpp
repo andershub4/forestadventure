@@ -70,6 +70,9 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
     for (const auto& data : Animations()) {
         entityService_.LoadAnimation(Type(), data);
     }
+    for (const auto& data : Images()) {
+        entityService_.LoadImage(Type(), data);
+    }
     DefineProperties(entityService_, data);
     DefineModes(modeController_);
     DefineShape(entityService_, *entityService_.GetShape());

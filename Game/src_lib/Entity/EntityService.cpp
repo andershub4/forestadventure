@@ -19,6 +19,7 @@ namespace Entity {
 EntityService::EntityService(CameraManager& cameraManager, SheetManager& sheetManager)
     : cameraManager_(cameraManager)
     , animationDb_(sheetManager)
+    , imageDb_(sheetManager)
     , shape_(std::make_shared<Shape>(this))
 {}
 
@@ -40,6 +41,16 @@ void EntityService::LoadAnimation(EntityType entityType, const AnimationData& da
 Animation EntityService::GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
 {
     return animationDb_.GetAnimation(entityType, frameType, faceDir);
+}
+
+void EntityService::LoadImage(EntityType entityType, const ImageData& data)
+{
+    imageDb_.LoadImage(entityType, data);
+}
+
+Image EntityService::GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
+{
+    return imageDb_.GetImage(entityType, frameType, faceDir);
 }
 
 void EntityService::AddModeType(ModeType modeType)

@@ -210,6 +210,7 @@
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
     <ClInclude Include="Animation\Animator.h" />
+    <ClInclude Include="Animation\Image.h" />
     <ClInclude Include="Constant\Screen.h" />
     <ClInclude Include="Effect\BasicEffect.h" />
     <ClInclude Include="Effect\FadeEffect.h" />
@@ -243,8 +244,10 @@
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
     <ClInclude Include="Entity\Entities\StaticEntity.h" />
     <ClInclude Include="Entity\Shapes\BasicShape.h" />
+    <ClInclude Include="Entity\Shapes\ImageShape.h" />
     <ClInclude Include="Entity\Shapes\RectangleShape.h" />
     <ClInclude Include="Entity\ModeController.h" />
+    <ClInclude Include="Resource\ImageDb.h" />
     <ClInclude Include="Resource\SheetData.h" />
     <ClInclude Include="Entity\Factory.h" />
     <ClInclude Include="Entity\Id.h" />
@@ -311,6 +314,7 @@
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Animation\Animator.cpp" />
+    <ClCompile Include="Animation\Image.cpp" />
     <ClCompile Include="Effect\BasicEffect.cpp" />
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />
@@ -330,6 +334,7 @@
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />
     <ClCompile Include="Entity\Factory.cpp" />
+    <ClCompile Include="Entity\Shapes\ImageShape.cpp" />
     <ClCompile Include="Entity\Shapes\RectangleShape.cpp" />
     <ClCompile Include="Entity\ModeController.cpp" />
     <ClCompile Include="Entity\Entities\BasicEntity.cpp" />
@@ -338,6 +343,7 @@
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Resource\AnimationDb.cpp" />
+    <ClCompile Include="Resource\ImageDb.cpp" />
     <ClCompile Include="Resource\SheetManager.cpp" />
     <ClCompile Include="Scene\Components\PreAlphaComponent.cpp" />
     <ClCompile Include="UI\Title.cpp" />

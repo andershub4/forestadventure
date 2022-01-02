@@ -15,6 +15,7 @@
 #include "Logging.h"
 #include "ModeType.h"
 #include "Resource/AnimationDb.h"
+#include "Resource/ImageDb.h"
 
 namespace FA {
 
@@ -56,6 +57,10 @@ public:
 
     void LoadAnimation(EntityType entityType, const AnimationData &data);
     Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
+    
+    void LoadImage(EntityType entityType, const ImageData &data);
+    Image GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
+    
     std::vector<ModeType> GetModeTypes() const { return modeTypes_; }
     std::shared_ptr<Shape> GetShape() const { return shape_; }
     void AddModeType(ModeType modeType);
@@ -65,6 +70,7 @@ private:
     std::vector<ModeType> modeTypes_;
     CameraManager &cameraManager_;
     AnimationDb animationDb_;
+    ImageDb imageDb_;
     std::shared_ptr<Shape> shape_ = nullptr;
 };
 
