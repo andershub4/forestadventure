@@ -27,6 +27,13 @@ public:
         bool isValid_ = false;
     };
 
+    struct SingleFrame
+    {
+        const sf::Texture* texture_ = nullptr;
+        sf::IntRect frame_;
+        bool isValid_ = false;
+    };
+
     SpriteSheet() = default;
     SpriteSheet(const sf::Texture* texture, const sf::Vector2u& frameCount);
 
@@ -34,6 +41,7 @@ public:
 
     bool IsValid() const { return isValid_; }
     FrameData Scan(const sf::Vector2u& uvCoord, unsigned int nFrames, unsigned int defaultFrame) const;
+    SingleFrame At(const sf::Vector2u& uvCoord) const;
 
 private:
     const sf::Texture* texture_;
@@ -42,8 +50,7 @@ private:
 
 private:
     sf::Vector2u CalcFrameSize() const;
-    std::vector<sf::IntRect> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nFrames,
-                                            const sf::Vector2u& frameSize) const;
+    std::vector<sf::IntRect> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nFrames) const;
 };
 
 }  // namespace FA
