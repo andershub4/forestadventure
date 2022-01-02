@@ -41,9 +41,9 @@ private:
     bool isValid_ = false;
 
 private:
-    unsigned int CalcFrameSize() const;
+    sf::Vector2u CalcFrameSize() const;
     std::vector<sf::IntRect> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nFrames,
-                                            unsigned int frameSize) const;
+                                            const sf::Vector2u& frameSize) const;
 };
 
 }  // namespace FA

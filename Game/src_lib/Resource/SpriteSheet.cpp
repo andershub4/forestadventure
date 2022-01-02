@@ -31,9 +31,9 @@ std::vector<sf::IntRect> SpriteSheet::MirrorX(const std::vector<sf::IntRect>& fr
 SpriteSheet::FrameData SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nFrames,
                                          unsigned int defaultFrame) const
 {
-    unsigned int frameSize = CalcFrameSize();
+    auto frameSize = CalcFrameSize();
 
-    if (frameSize > 0) {
+    if (frameSize.x > 0 && frameSize.y) {
         auto frames = GenerateFrames(uvCoord, nFrames, frameSize);
         return {texture_, defaultFrame, frames, true};
     }
@@ -41,28 +41,28 @@ SpriteSheet::FrameData SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned i
     return {};
 }
 
-unsigned int SpriteSheet::CalcFrameSize() const
+sf::Vector2u SpriteSheet::CalcFrameSize() const
 {
     sf::Vector2u textureSize = texture_->getSize();
 
-    if (frameCount_.x > 0)
-        return textureSize.x / frameCount_.x;
+    if (frameCount_.x > 0 && frameCount_.y > 0)
+        return {textureSize.x / frameCount_.x, textureSize.y / frameCount_.y};
     else
-        LOG_ERROR("Can't calculate frameSize due to frameCount.x  ", frameCount_.x);
+        LOG_ERROR("Can't calculate frameSize due to frameCount.x, frameCount.y  ", frameCount_.x, frameCount_.y);
 
-    return 0;
+    return {};
 }
 
 std::vector<sf::IntRect> SpriteSheet::GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nFrames,
-                                                     unsigned int frameSize) const
+                                                     const sf::Vector2u& frameSize) const
 {
     std::vector<sf::IntRect> frames;
     // build frames from left to right
     for (unsigned int i = 0; i < nFrames; i++) {
-        int left = static_cast<int>((uvCoord.x * frameSize) + i * frameSize);
-        int top = static_cast<int>(uvCoord.y * frameSize);
-        int width = static_cast<int>(frameSize);
-        int height = static_cast<int>(frameSize);
+        int left = static_cast<int>((uvCoord.x * frameSize.x) + i * frameSize.x);
+        int top = static_cast<int>(uvCoord.y * frameSize.y);
+        int width = static_cast<int>(frameSize.x);
+        int height = static_cast<int>(frameSize.y);
         sf::IntRect frame = {left, top, width, height};
         frames.push_back(frame);
     }
