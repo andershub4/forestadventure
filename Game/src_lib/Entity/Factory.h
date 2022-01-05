@@ -20,6 +20,7 @@ class SheetManager;
 namespace Entity {
 
 class BasicEntity;
+class EntityManager;
 
 class Factory
 {
@@ -27,8 +28,8 @@ public:
     Factory(MessageBus& messageBus);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager,
-                                        const SheetManager& sheetManager) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager, const SheetManager& sheetManager,
+                                        EntityManager& entityManager) const;
 
 private:
     mutable Entity::EntityId id_{0};

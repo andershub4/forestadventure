@@ -41,11 +41,20 @@ void EntityManager::Update(float deltaTime)
     }
 }
 
-void EntityManager::Create(EntityType type, const PropertyData& data)
+void EntityManager::CreateEntity(EntityType type, const PropertyData& data)
 {
-    auto entity = factory_.Create(type, cameraManager_, sheetManager_);
+    auto entity = factory_.Create(type, cameraManager_, sheetManager_, *this);
     entity->Create(data);
-    AddEntity(std::move(entity));
+    createdEntities_.push_back(std::move(entity));
+}
+
+void EntityManager::HandleCreatedEntities()
+{
+    for (auto& entity : createdEntities_) {
+        entity->Init();
+        AddEntity(std::move(entity));
+    }
+    createdEntities_.clear();
 }
 
 void EntityManager::Init()

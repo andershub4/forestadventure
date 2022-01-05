@@ -27,11 +27,12 @@ namespace Entity {
 
 class CameraAttribute;
 class Shape;
+class EntityManager;
 
 class EntityService
 {
 public:
-    EntityService(CameraManager &cameraManager, const SheetManager &sheetManager);
+    EntityService(CameraManager &cameraManager, const SheetManager &sheetManager, EntityManager &entityManager);
     ~EntityService();
 
     template <class T>
@@ -57,10 +58,10 @@ public:
 
     void LoadAnimation(EntityType entityType, const AnimationData &data);
     Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
-    
+
     void LoadImage(EntityType entityType, const ImageData &data);
     Image GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
-    
+
     std::vector<ModeType> GetModeTypes() const { return modeTypes_; }
     std::shared_ptr<Shape> GetShape() const { return shape_; }
     void AddModeType(ModeType modeType);
@@ -72,6 +73,7 @@ private:
     AnimationDb animationDb_;
     ImageDb imageDb_;
     std::shared_ptr<Shape> shape_ = nullptr;
+    EntityManager &entityManager_;
 };
 
 }  // namespace Entity

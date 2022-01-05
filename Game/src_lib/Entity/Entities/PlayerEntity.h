@@ -15,7 +15,8 @@ namespace Entity {
 class PlayerEntity : public BasicEntity
 {
 public:
-    PlayerEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager, MessageBus& messageBus);
+    PlayerEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
+                 EntityManager& entityManager, MessageBus& messageBus);
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }

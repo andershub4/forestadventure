@@ -9,6 +9,7 @@
 #include "Attributes//CameraAttribute.h"
 #include "Attributes//FaceDirectionAttribute.h"
 #include "Attributes//TransformAttribute.h"
+#include "EntityManager.h"
 #include "Level/CameraManager.h"
 #include "Shapes/Shape.h"
 
@@ -16,11 +17,13 @@ namespace FA {
 
 namespace Entity {
 
-EntityService::EntityService(CameraManager& cameraManager, const SheetManager& sheetManager)
+EntityService::EntityService(CameraManager& cameraManager, const SheetManager& sheetManager,
+                             EntityManager& entityManager)
     : cameraManager_(cameraManager)
     , animationDb_(sheetManager)
     , imageDb_(sheetManager)
     , shape_(std::make_shared<Shape>(this))
+    , entityManager_(entityManager)
 {}
 
 EntityService::~EntityService() = default;

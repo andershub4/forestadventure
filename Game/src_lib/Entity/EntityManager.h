@@ -33,14 +33,16 @@ public:
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    void Create(EntityType type, const PropertyData &data);
-    void Init(); 
+    void CreateEntity(EntityType type, const PropertyData &data);
+    void HandleCreatedEntities();
+    void Init();
 
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
     const Factory &factory_;
     CameraManager &cameraManager_;
     const SheetManager &sheetManager_;
+    std::vector<std::unique_ptr<BasicEntity>> createdEntities_;
 
 private:
     void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);

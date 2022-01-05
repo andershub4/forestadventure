@@ -21,10 +21,11 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager, MessageBus& messageBus)
+BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
+                         EntityManager& entityManager, MessageBus& messageBus)
     : id_(id)
     , messageBus_(messageBus)
-    , entityService_(cameraManager, sheetManager)
+    , entityService_(cameraManager, sheetManager, entityManager)
     , modeController_(entityService_)
 {
     modeController_.RegisterCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });

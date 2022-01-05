@@ -28,11 +28,13 @@ class SheetManager;
 namespace Entity {
 
 struct PropertyData;
+class EntityManager;
 
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager, MessageBus& messageBus);
+    BasicEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
+                EntityManager& entityManager, MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;

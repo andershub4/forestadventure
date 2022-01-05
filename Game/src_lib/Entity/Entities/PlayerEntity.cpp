@@ -55,8 +55,8 @@ FrameType ModeTypeToFrameType(ModeType modeType)
 }  // namespace
 
 PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                           MessageBus& messageBus)
-    : BasicEntity(id, cameraManager, sheetManager, messageBus)
+                           EntityManager& entityManager, MessageBus& messageBus)
+    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus)
 {}
 
 PlayerEntity::~PlayerEntity() = default;

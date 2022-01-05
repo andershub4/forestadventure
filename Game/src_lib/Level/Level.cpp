@@ -77,10 +77,10 @@ void Level::Create()
         data.faceDir_ = objectData.faceDir_;
         data.velocity_ = 120.0;
         data.scale_ = static_cast<float>(tileMap_.GetScale());
-        entityManager_.Create(objectData.type_, data);
+        entityManager_.CreateEntity(objectData.type_, data);
     }
 
-    entityManager_.Init();
+    entityManager_.HandleCreatedEntities();
 
     LOG_INFO("Create background texture");
     backgroundTexture_.create(tileMap_.GetSize().x, tileMap_.GetSize().y);
@@ -99,6 +99,7 @@ void Level::Create()
 
 void Level::Update(float deltaTime)
 {
+    entityManager_.HandleCreatedEntities();
     entityManager_.Update(deltaTime);
 }
 

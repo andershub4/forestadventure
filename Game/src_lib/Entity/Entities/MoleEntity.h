@@ -15,7 +15,8 @@ namespace Entity {
 class MoleEntity : public BasicEntity
 {
 public:
-    MoleEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager, MessageBus& messageBus);
+    MoleEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
+               EntityManager& entityManager, MessageBus& messageBus);
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
