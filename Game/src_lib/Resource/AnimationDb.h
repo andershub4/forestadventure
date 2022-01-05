@@ -37,14 +37,14 @@ struct AnimationData
 class AnimationDb
 {
 public:
-    AnimationDb(SheetManager &sheetManager);
+    AnimationDb(const SheetManager &sheetManager);
     void LoadAnimation(EntityType entityType, const AnimationData &data);
     Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
 private:
     using Key = std::tuple<EntityType, FrameType, FaceDirection>;
     std::map<Key, Animation> map_;
-    SheetManager &sheetManager_;
+    const SheetManager &sheetManager_;
 
 private:
     void AddAnimation(Key k, const Animation &animation);

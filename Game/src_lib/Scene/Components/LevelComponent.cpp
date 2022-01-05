@@ -22,7 +22,7 @@ LevelComponent::LevelComponent(MessageBus& messageBus, const Layer& layer, Textu
     : BasicComponent(messageBus, layer)
     , cameraManager_(layerTexture_.getSize())
 {
-    level_ = std::make_unique<Level>(messageBus, textureManager);
+    level_ = std::make_unique<Level>(messageBus, textureManager, cameraManager_);
 }
 
 LevelComponent::~LevelComponent() = default;
@@ -32,7 +32,7 @@ void LevelComponent::OnCreate()
     level_->Load();
     auto s = level_->GetMapSize();
     cameraManager_.SetMapSize(s);
-    level_->Create(cameraManager_);
+    level_->Create();
 }
 
 void LevelComponent::Draw()

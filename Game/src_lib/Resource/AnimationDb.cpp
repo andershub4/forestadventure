@@ -26,7 +26,7 @@ SpriteSheet::FrameData CreateFrameData(const SpriteSheet& sheet, const sf::Vecto
 
 }  // namespace
 
-AnimationDb::AnimationDb(SheetManager& sheetManager)
+AnimationDb::AnimationDb(const SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {}
 

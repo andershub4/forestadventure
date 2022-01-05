@@ -31,7 +31,7 @@ class Shape;
 class EntityService
 {
 public:
-    EntityService(CameraManager &cameraManager, SheetManager &sheetManager);
+    EntityService(CameraManager &cameraManager, const SheetManager &sheetManager);
     ~EntityService();
 
     template <class T>

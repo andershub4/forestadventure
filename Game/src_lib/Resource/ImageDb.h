@@ -30,14 +30,14 @@ struct ImageData
 class ImageDb
 {
 public:
-    ImageDb(SheetManager &sheetManager);
+    ImageDb(const SheetManager &sheetManager);
     void LoadImage(EntityType entityType, const ImageData &data);
     Image GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
 private:
     using Key = std::tuple<EntityType, FrameType, FaceDirection>;
     std::map<Key, Image> map_;
-    SheetManager &sheetManager_;
+    const SheetManager &sheetManager_;
 
 private:
     void AddImage(Key k, const Image &image);

@@ -24,14 +24,14 @@ class CameraManager;
 class Level
 {
 public:
-    Level(MessageBus& messageBus, TextureManager& textureManager);
+    Level(MessageBus& messageBus, TextureManager& textureManager, CameraManager& cameraManager);
     ~Level();
 
     void Update(float deltaTime);
     void Draw(sf::RenderTarget& renderTarget);
 
     void Load();
-    void Create(CameraManager& cameraManager);
+    void Create();
     void EnableInput(bool enable);
     sf::Vector2u GetMapSize() const;
 
@@ -42,9 +42,9 @@ private:
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
     Entity::Factory factory_;
-    Entity::EntityManager entityManager_;
     Tile::TileMap tileMap_;
     SheetManager sheetManager_;
+    Entity::EntityManager entityManager_;
 };
 
 }  // namespace FA

@@ -14,7 +14,7 @@ namespace FA {
 
 namespace Entity {
 
-StaticEntity::StaticEntity(EntityId id, CameraManager& cameraManager, SheetManager& sheetManager,
+StaticEntity::StaticEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
                            MessageBus& messageBus)
     : BasicEntity(id, cameraManager, sheetManager, messageBus)
 {}

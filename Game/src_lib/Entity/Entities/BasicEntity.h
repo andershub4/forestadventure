@@ -32,7 +32,7 @@ struct PropertyData;
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, CameraManager& cameraManager, SheetManager& sheetManager, MessageBus& messageBus);
+    BasicEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager, MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;

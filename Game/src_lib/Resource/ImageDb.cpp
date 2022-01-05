@@ -25,7 +25,7 @@ SpriteSheet::SingleFrame CreateSingleFrame(const SpriteSheet& sheet, const sf::V
 
 }  // namespace
 
-ImageDb::ImageDb(SheetManager& sheetManager)
+ImageDb::ImageDb(const SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {}
 

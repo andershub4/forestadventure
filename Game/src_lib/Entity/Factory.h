@@ -28,7 +28,7 @@ public:
     ~Factory();
 
     std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager,
-                                        SheetManager& sheetManager) const;
+                                        const SheetManager& sheetManager) const;
 
 private:
     mutable Entity::EntityId id_{0};

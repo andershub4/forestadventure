@@ -27,18 +27,20 @@ struct PropertyData;
 class EntityManager
 {
 public:
-    EntityManager(const Factory &factory);
+    EntityManager(const Factory &factory, CameraManager &cameraManager, const SheetManager &sheetManager);
     ~EntityManager();
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    void Create(EntityType type, const PropertyData &data, CameraManager &cameraManager, SheetManager &sheetManager);
-    void Init();
+    void Create(EntityType type, const PropertyData &data);
+    void Init(); 
 
 private:
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
     const Factory &factory_;
+    CameraManager &cameraManager_;
+    const SheetManager &sheetManager_;
 
 private:
     void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);

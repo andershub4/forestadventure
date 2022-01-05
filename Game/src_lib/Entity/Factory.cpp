@@ -21,7 +21,7 @@ Factory::Factory(MessageBus& messageBus)
 Factory::~Factory() = default;
 
 std::unique_ptr<BasicEntity> Factory::Create(EntityType type, CameraManager& cameraManager,
-                                             SheetManager& sheetManager) const
+                                             const SheetManager& sheetManager) const
 {
     switch (type) {
         case EntityType::Mole:

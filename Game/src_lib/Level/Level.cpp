@@ -43,11 +43,12 @@ const std::vector<SheetData> textureSheets = {
 
 }  // namespace
 
-Level::Level(MessageBus &messageBus, TextureManager &textureManager)
+Level::Level(MessageBus &messageBus, TextureManager &textureManager, CameraManager &cameraManager)
     : factory_(messageBus)
-    , entityManager_(factory_)
     , tileMap_(textureManager, scale_)
     , sheetManager_(textureManager)
+    , entityManager_(factory_, cameraManager, sheetManager_)
+
 {}
 
 Level::~Level() = default;
@@ -64,18 +65,19 @@ void Level::Load()
     }
 }
 
-void Level::Create(CameraManager &cameraManager)
+void Level::Create()
 {
     LOG_INFO_ENTER_FUNC();
 
     LOG_INFO("Create entities");
+
     for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
         Entity::PropertyData data;
         data.position_ = static_cast<sf::Vector2f>(objectData.position_);
         data.faceDir_ = objectData.faceDir_;
         data.velocity_ = 120.0;
         data.scale_ = static_cast<float>(tileMap_.GetScale());
-        entityManager_.Create(objectData.type_, data, cameraManager, sheetManager_);
+        entityManager_.Create(objectData.type_, data);
     }
 
     entityManager_.Init();

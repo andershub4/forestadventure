@@ -21,7 +21,7 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, SheetManager& sheetManager, MessageBus& messageBus)
+BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager, MessageBus& messageBus)
     : id_(id)
     , messageBus_(messageBus)
     , entityService_(cameraManager, sheetManager)

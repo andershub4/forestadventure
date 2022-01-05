@@ -16,7 +16,7 @@ namespace FA {
 
 namespace Entity {
 
-EntityService::EntityService(CameraManager& cameraManager, SheetManager& sheetManager)
+EntityService::EntityService(CameraManager& cameraManager, const SheetManager& sheetManager)
     : cameraManager_(cameraManager)
     , animationDb_(sheetManager)
     , imageDb_(sheetManager)
