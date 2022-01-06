@@ -34,9 +34,9 @@ const std::vector<SheetData> textureSheets = {
     {SheetId::HeroIdleSide, "spritesheets/hero/idle/hero-idle-side.png", {1, 1}},
     {SheetId::HeroIdleFront, "spritesheets/hero/idle/hero-idle-front.png", {1, 1}},
     {SheetId::HeroIdleBack, "spritesheets/hero/idle/hero-idle-back.png", {1, 1}},
-    {SheetId::MoleWalkSide, "spritesheets/mole/walk/mole-walk-side.png", {6, 1}},
-    {SheetId::MoleWalkFront, "spritesheets/mole/walk/mole-walk-front.png", {6, 1}},
-    {SheetId::MoleWalkBack, "spritesheets/mole/walk/mole-walk-back.png", {6, 1}},
+    {SheetId::MoleWalkSide, "spritesheets/mole/walk/mole-walk-side.png", {4, 1}},
+    {SheetId::MoleWalkFront, "spritesheets/mole/walk/mole-walk-front.png", {4, 1}},
+    {SheetId::MoleWalkBack, "spritesheets/mole/walk/mole-walk-back.png", {4, 1}},
     {SheetId::MoleIdleSide, "spritesheets/mole/idle/mole-idle-side.png", {1, 1}},
     {SheetId::MoleIdleFront, "spritesheets/mole/idle/mole-idle-front.png", {1, 1}},
     {SheetId::MoleIdleBack, "spritesheets/mole/idle/mole-idle-back.png", {1, 1}}};
