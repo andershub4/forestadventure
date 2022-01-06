@@ -32,6 +32,19 @@ void ModeController::HandleEvent(std::shared_ptr<BasicEvent> event)
     DoAction(action, event);
 }
 
+void ModeController::QueueInitEvents(std::shared_ptr<BasicEvent> event)
+{
+    queuedInitEvents_.push_back(event);
+}
+
+void ModeController::HandleQueuedInitEvents()
+{
+    for (auto event : queuedInitEvents_) {
+        HandleEvent(event);
+    }
+    queuedInitEvents_.clear();
+}
+
 void ModeController::Update(float deltaTime)
 {
     currentMode_->Update(deltaTime);

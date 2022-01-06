@@ -45,6 +45,7 @@ public:
     void Init();
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
+    void QueueInitEvents(std::shared_ptr<BasicEvent> event);
     void EnableInput(bool enable) { enableInput_ = enable; }
     EntityId GetId() const { return id_; }
 

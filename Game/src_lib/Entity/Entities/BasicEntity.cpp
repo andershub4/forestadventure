@@ -47,6 +47,7 @@ void BasicEntity::Destroy()
 void BasicEntity::Init()
 {
     HandleEvent(std::make_shared<InitEvent>());
+    modeController_.HandleQueuedInitEvents();
 }
 
 void BasicEntity::Update(float deltaTime)
@@ -57,6 +58,11 @@ void BasicEntity::Update(float deltaTime)
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
     modeController_.DrawTo(renderTarget);
+}
+
+void BasicEntity::QueueInitEvents(std::shared_ptr<BasicEvent> event)
+{
+    modeController_.QueueInitEvents(event);
 }
 
 void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)

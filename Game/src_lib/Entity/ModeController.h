@@ -18,7 +18,6 @@ namespace FA {
 namespace Entity {
 
 struct BasicEvent;
-struct PropertyData;
 class BasicMode;
 class EntityService;
 struct Action;
@@ -40,6 +39,8 @@ public:
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
+    void QueueInitEvents(std::shared_ptr<BasicEvent> event);
+    void HandleQueuedInitEvents();
 
     void RegisterCreateCB(std::function<void(std::shared_ptr<BasicEvent> event)> onCreate);
     void RegisterDestroyCB(std::function<void(std::shared_ptr<BasicEvent> event)> onDestroy);
@@ -49,6 +50,7 @@ private:
     std::shared_ptr<BasicMode> currentMode_ = nullptr;
     std::function<void(std::shared_ptr<BasicEvent> event)> onDestroy_{};
     EntityService& entityService_;
+    std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
 
 private:
     void AddMode(std::shared_ptr<BasicMode> mode, bool startMode);
