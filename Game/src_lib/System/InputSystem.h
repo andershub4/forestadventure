@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <unordered_set>
-
 #include "Enum/KeyboardKey.h"
 #include "Fwd/SfmlFwd.h"
 
