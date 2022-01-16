@@ -59,6 +59,8 @@ protected:
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
 
+    virtual void PostUpdate(EntityService& entityService) {}
+
 private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;

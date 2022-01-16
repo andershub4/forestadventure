@@ -219,6 +219,12 @@
     <ClCompile Include="Resource\ImageDb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\SpawnManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Entities\ArrowEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -525,6 +531,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\ImageDb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\SpawnManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Entities\ArrowEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

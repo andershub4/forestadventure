@@ -218,6 +218,7 @@
     <ClInclude Include="Entity\Action.h" />
     <ClInclude Include="Entity\Attributes\BasicAttribute.h" />
     <ClInclude Include="Entity\Attributes\VelocityAttribute.h" />
+    <ClInclude Include="Entity\Entities\ArrowEntity.h" />
     <ClInclude Include="Entity\Events\AttackEvent.h" />
     <ClInclude Include="Entity\Events\AttackWeapon.h" />
     <ClInclude Include="Entity\Events\BasicEvent.h" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Entity\Shapes\ImageShape.h" />
     <ClInclude Include="Entity\Shapes\RectangleShape.h" />
     <ClInclude Include="Entity\ModeController.h" />
+    <ClInclude Include="Entity\SpawnManager.h" />
     <ClInclude Include="Resource\ImageDb.h" />
     <ClInclude Include="Resource\SheetData.h" />
     <ClInclude Include="Entity\Factory.h" />
@@ -320,6 +322,7 @@
     <ClCompile Include="Effect\NullEffect.cpp" />
     <ClCompile Include="Entity\Attributes\BasicAttribute.cpp" />
     <ClCompile Include="Entity\Attributes\VelocityAttribute.cpp" />
+    <ClCompile Include="Entity\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Entity\Modes\UninitializedMode.cpp" />
     <ClCompile Include="Entity\EntityService.cpp" />
     <ClCompile Include="Entity\Shapes\AnimationShape.cpp" />
@@ -338,6 +341,7 @@
     <ClCompile Include="Entity\Shapes\RectangleShape.cpp" />
     <ClCompile Include="Entity\ModeController.cpp" />
     <ClCompile Include="Entity\Entities\BasicEntity.cpp" />
+    <ClCompile Include="Entity\SpawnManager.cpp" />
     <ClCompile Include="Level\Camera.cpp" />
     <ClCompile Include="Level\CameraManager.cpp" />
     <ClCompile Include="Level\Level.cpp" />

@@ -20,6 +20,7 @@ AttackWeaponMode::AttackWeaponMode(EntityService &entityService)
 void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
 {
     shape_->Set(FrameType::AttackWeapon);
+    Service().SpawnEntity();
 }
 
 void AttackWeaponMode::Awake()

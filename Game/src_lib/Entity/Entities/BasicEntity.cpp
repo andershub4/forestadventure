@@ -53,6 +53,8 @@ void BasicEntity::Init()
 void BasicEntity::Update(float deltaTime)
 {
     modeController_.Update(deltaTime);
+
+    PostUpdate(entityService_);
 }
 
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)

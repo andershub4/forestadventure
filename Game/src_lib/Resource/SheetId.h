@@ -30,6 +30,7 @@ const std::string MoleWalkBack = "MoleWalkBack";
 const std::string MoleIdleSide = "MoleIdleSide";
 const std::string MoleIdleFront = "MoleIdleFront";
 const std::string MoleIdleBack = "MoleIdleBack";
+const std::string Arrow = "Arrow";
 
 }  // namespace SheetId
 

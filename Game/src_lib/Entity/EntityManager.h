@@ -33,8 +33,10 @@ public:
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    void CreateEntity(EntityType type, const PropertyData &data);
+    BasicEntity &CreateEntity(EntityType type, const PropertyData &data);
+    void DeleteEntity(EntityId id);
     void HandleCreatedEntities();
+    void HandleDeletedEntities();
     void Init();
 
 private:
@@ -43,6 +45,7 @@ private:
     CameraManager &cameraManager_;
     const SheetManager &sheetManager_;
     std::vector<std::unique_ptr<BasicEntity>> createdEntities_;
+    std::vector<EntityId> deletedEntities_;
 
 private:
     void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);

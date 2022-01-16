@@ -25,6 +25,7 @@ public:
     void Track(const sf::Vector2f& trackingPoint);
     void Update(sf::RenderTarget& renderTarget);
     void SetMapSize(const sf::Vector2u& mapSize);
+    sf::Vector2u GetMapSize() const;
 
 private:
     sf::Vector2u renderTargetSize_{};

@@ -12,6 +12,7 @@
 #include "EntityManager.h"
 #include "Level/CameraManager.h"
 #include "Shapes/Shape.h"
+#include "SpawnManager.h"
 
 namespace FA {
 
@@ -24,6 +25,7 @@ EntityService::EntityService(CameraManager& cameraManager, const SheetManager& s
     , imageDb_(sheetManager)
     , shape_(std::make_shared<Shape>(this))
     , entityManager_(entityManager)
+    , spawnManager_(entityManager)
 {}
 
 EntityService::~EntityService() = default;
@@ -34,6 +36,11 @@ std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
     auto t = GetAttribute<TransformAttribute>();
     cameraManager_.Track(t->GetPosition());
     return attributeStore_.AddAttribute<CameraAttribute>(this);
+}
+
+sf::Vector2u EntityService::GetMapSize() const
+{
+    return cameraManager_.GetMapSize();
 }
 
 void EntityService::LoadAnimation(EntityType entityType, const AnimationData& data)
@@ -59,6 +66,20 @@ Image EntityService::GetImage(EntityType entityType, FrameType frameType, FaceDi
 void EntityService::AddModeType(ModeType modeType)
 {
     modeTypes_.push_back(modeType);
+}
+
+void EntityService::SpawnEntity()
+{
+    auto position = GetAttribute<TransformAttribute>()->GetPosition();
+    auto scale = GetAttribute<TransformAttribute>()->GetScale();
+    auto faceDirection = GetAttribute<FaceDirectionAttribute>()->GetDirection();
+    float velocity = 120.0f;
+    spawnManager_.SpawnArrow(position, faceDirection, scale, velocity);
+}
+
+void EntityService::DeleteEntity(EntityId id)
+{
+    entityManager_.DeleteEntity(id);
 }
 
 }  // namespace Entity

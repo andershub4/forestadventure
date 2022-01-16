@@ -6,6 +6,7 @@
 
 #include "Factory.h"
 
+#include "Entities/ArrowEntity.h"
 #include "Entities/MoleEntity.h"
 #include "Entities/PlayerEntity.h"
 #include "Logging.h"
@@ -29,6 +30,10 @@ std::unique_ptr<BasicEntity> Factory::Create(EntityType type, CameraManager& cam
             break;
         case EntityType::Player:
             return std::make_unique<PlayerEntity>(id_++, cameraManager, sheetManager, entityManager, messageBus_);
+            break;
+        case EntityType::Arrow:
+            return std::make_unique<ArrowEntity>(id_++, cameraManager, sheetManager, entityManager, messageBus_);
+            break;
         default:
             auto t = static_cast<int>(type);
             LOG_ERROR("Could not create entity of type: ", t);

@@ -12,10 +12,12 @@
 #include "AttributeStore.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
+#include "Id.h"
 #include "Logging.h"
 #include "ModeType.h"
 #include "Resource/AnimationDb.h"
 #include "Resource/ImageDb.h"
+#include "SpawnManager.h"
 
 namespace FA {
 
@@ -56,6 +58,8 @@ public:
     template <>
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
 
+    sf::Vector2u GetMapSize() const;
+
     void LoadAnimation(EntityType entityType, const AnimationData &data);
     Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
@@ -66,6 +70,9 @@ public:
     std::shared_ptr<Shape> GetShape() const { return shape_; }
     void AddModeType(ModeType modeType);
 
+    void SpawnEntity();
+    void DeleteEntity(EntityId id);
+
 private:
     AttributeStore attributeStore_;
     std::vector<ModeType> modeTypes_;
@@ -74,6 +81,7 @@ private:
     ImageDb imageDb_;
     std::shared_ptr<Shape> shape_ = nullptr;
     EntityManager &entityManager_;
+    SpawnManager spawnManager_;
 };
 
 }  // namespace Entity
