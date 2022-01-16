@@ -209,7 +209,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
-    <ClInclude Include="Animation\Animator.h" />
     <ClInclude Include="Animation\Image.h" />
     <ClInclude Include="Constant\Screen.h" />
     <ClInclude Include="Effect\BasicEffect.h" />
@@ -315,7 +314,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\Animation.cpp" />
-    <ClCompile Include="Animation\Animator.cpp" />
     <ClCompile Include="Animation\Image.cpp" />
     <ClCompile Include="Effect\BasicEffect.cpp" />
     <ClCompile Include="Effect\FadeEffect.cpp" />

@@ -8,10 +8,11 @@
 
 #include <functional>
 #include <string>
+#include <unordered_map>
 
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Animation/Animator.h"
+#include "Animation/Animation.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 
@@ -33,10 +34,14 @@ public:
     bool IsCompleted() const;
 
 private:
-    Animator animator_;
+    std::unordered_map<std::string, Animation> animationMap_;
     sf::Sprite sprite_;
     Animation currentAnimation_;
     std::function<std::string(FrameType, FaceDirection)> lookupKeyFunc_;
+
+private:
+    void AddAnimation(const std::string &key, const Animation &animation);
+    Animation GetAnimation(const std::string &key) const;
 };
 
 }  // namespace Entity
