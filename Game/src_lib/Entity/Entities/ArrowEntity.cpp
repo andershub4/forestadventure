@@ -77,11 +77,11 @@ void ArrowEntity::DefineProperties(EntityService& entityService, const PropertyD
 
 void ArrowEntity::DefineModes(ModeController& modeController)
 {
-    auto idleMode = modeController.AddMode<IdleMode>(true);
+    auto idleMode = modeController.RegisterMode<IdleMode>(true);
     idleMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
     idleMode->BindAction(Action::Ignore(), EventType::Collision);
 
-    auto moveMode = modeController.AddMode<MoveMode>();
+    auto moveMode = modeController.RegisterMode<MoveMode>();
     moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
 }
 

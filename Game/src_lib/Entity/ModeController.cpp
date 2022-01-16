@@ -17,7 +17,7 @@ namespace Entity {
 ModeController::ModeController(EntityService& entityService)
     : entityService_(entityService)
 {
-    currentMode_ = AddMode<UninitializedMode>();
+    currentMode_ = RegisterMode<UninitializedMode>();
     currentMode_->Enter(nullptr);
 }
 
@@ -58,7 +58,7 @@ void ModeController::DrawTo(sf::RenderTarget& renderTarget)
     currentMode_->DrawTo(renderTarget);
 }
 
-void ModeController::AddMode(std::shared_ptr<BasicMode> mode, bool startMode)
+void ModeController::RegisterMode(std::shared_ptr<BasicMode> mode, bool startMode)
 {
     mode->BindAction(Action::Call(onDestroy_), EventType::Destroy);
 

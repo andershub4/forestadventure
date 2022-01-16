@@ -139,13 +139,13 @@ void PlayerEntity::DefineProperties(EntityService& entityService, const Property
 
 void PlayerEntity::DefineModes(ModeController& modeController)
 {
-    auto idleMode = modeController.AddMode<IdleMode>(true);
+    auto idleMode = modeController.RegisterMode<IdleMode>(true);
     idleMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
     idleMode->BindAction(Action::ChangeTo(ModeType::Attack), EventType::Attack);
     idleMode->BindAction(Action::ChangeTo(ModeType::AttackWeapon), EventType::AttackWeapon);
     idleMode->BindAction(Action::Ignore(), EventType::Collision);
 
-    auto moveMode = modeController.AddMode<MoveMode>();
+    auto moveMode = modeController.RegisterMode<MoveMode>();
     moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
     moveMode->BindAction(Action::Ignore(), EventType::StartMove);
     moveMode->BindAction(Action::Ignore(), EventType::Attack);
@@ -153,13 +153,13 @@ void PlayerEntity::DefineModes(ModeController& modeController)
 
     auto condition = [](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); };
 
-    auto attackMode = modeController.AddMode<AttackMode>();
+    auto attackMode = modeController.RegisterMode<AttackMode>();
     attackMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
     attackMode->BindAction(Action::Ignore(), EventType::Attack);
     attackMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
     attackMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
 
-    auto attackWeaponMode = modeController.AddMode<AttackWeaponMode>();
+    auto attackWeaponMode = modeController.RegisterMode<AttackWeaponMode>();
     attackWeaponMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
     attackWeaponMode->BindAction(Action::Ignore(), EventType::Attack);
     attackWeaponMode->BindAction(Action::Ignore(), EventType::AttackWeapon);

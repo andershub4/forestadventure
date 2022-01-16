@@ -29,10 +29,10 @@ public:
     ~ModeController();
 
     template <class T>
-    std::shared_ptr<T> AddMode(bool startMode = false)
+    std::shared_ptr<T> RegisterMode(bool startMode = false)
     {
         auto mode = std::make_shared<T>(entityService_);
-        AddMode(mode, startMode);
+        RegisterMode(mode, startMode);
         return mode;
     }
 
@@ -53,7 +53,7 @@ private:
     std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
 
 private:
-    void AddMode(std::shared_ptr<BasicMode> mode, bool startMode);
+    void RegisterMode(std::shared_ptr<BasicMode> mode, bool startMode);
     void DoAction(const Action& action, std::shared_ptr<BasicEvent> event = nullptr);
 };
 
