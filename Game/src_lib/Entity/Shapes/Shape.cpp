@@ -9,11 +9,12 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "AnimationShape.h"
-#include "ImageShape.h"
 #include "BasicShape.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/EntityService.h"
+#include "ImageShape.h"
+#include "RectangleShape.h"
 
 namespace FA {
 
@@ -27,6 +28,12 @@ Shape::~Shape() = default;
 
 void Shape::Awake()
 {
+#ifdef _DEBUG
+    auto r = std::make_shared<RectangleShape>();
+    r->SetSize({1.0, 1.0});
+    AddBasicShape(r);
+#endif
+
     transform_ = entityService_->GetAttribute<TransformAttribute>();
     faceDirection_ = entityService_->GetAttribute<FaceDirectionAttribute>();
 

@@ -187,13 +187,6 @@ void PlayerEntity::DefineShape(EntityService& entityService, Shape& shape)
     }
 
     shape.AddAnimationShape(a);
-
-#ifdef _DEBUG
-    auto r = std::make_shared<RectangleShape>();
-    r->SetSize({1.0, 1.0});
-
-    shape.AddBasicShape(r);
-#endif
 }
 
 }  // namespace Entity
