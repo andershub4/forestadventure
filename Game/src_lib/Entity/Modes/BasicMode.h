@@ -45,7 +45,7 @@ public:
     virtual void Exit() {}
     virtual void Update(float deltaTime) {}
     virtual void DrawTo(sf::RenderTarget& renderTarget);
-    virtual void Awake() {}
+    virtual void Register() {}
 
     virtual ModeType GetModeType() const = 0;
 

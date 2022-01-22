@@ -31,7 +31,7 @@ public:
     Shape(EntityService *entityService);
     virtual ~Shape();
 
-    void Awake();
+    void Register();
     void Update(float deltaTime);
 
     void DrawTo(sf::RenderTarget &renderTarget);

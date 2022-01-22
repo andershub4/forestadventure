@@ -25,7 +25,7 @@ void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
     shape_->SetImage(GetImage(dir));
 }
 
-void IdleMode::Awake()
+void IdleMode::Register()
 {
     faceDirection_ = Service().GetAttribute<FaceDirectionAttribute>();
     shape_ = Service().GetShape();

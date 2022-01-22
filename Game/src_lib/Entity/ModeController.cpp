@@ -64,7 +64,7 @@ void ModeController::RegisterMode(std::shared_ptr<BasicMode> mode, bool startMod
 
     auto modeType = mode->GetModeType();
     modes_[modeType] = mode;
-    mode->Awake();
+    mode->Register();
 
     if (startMode) {
         auto u = modes_.at(ModeType::Uninitialized);

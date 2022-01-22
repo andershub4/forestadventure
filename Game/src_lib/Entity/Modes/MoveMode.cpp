@@ -44,7 +44,7 @@ void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
     shape_->SetImage(GetImage(dir));
 }
 
-void MoveMode::Awake()
+void MoveMode::Register()
 {
     transform_ = Service().GetAttribute<TransformAttribute>();
     velocity_ = Service().GetAttribute<VelocityAttribute>();

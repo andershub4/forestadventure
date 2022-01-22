@@ -22,7 +22,7 @@ Shape::Shape(EntityService *entityService)
 
 Shape::~Shape() = default;
 
-void Shape::Awake()
+void Shape::Register()
 {
 #ifdef _DEBUG
     rShape_.setSize({1.0, 1.0});

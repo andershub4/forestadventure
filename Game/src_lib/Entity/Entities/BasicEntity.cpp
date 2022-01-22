@@ -85,7 +85,7 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
     DefineProperties(entityService_, data);
     DefineModes(modeController_, entityService_);
 
-    entityService_.GetShape()->Awake();
+    entityService_.GetShape()->Register();
     Subscribe(Messages());
 }
 

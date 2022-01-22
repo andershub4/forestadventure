@@ -25,7 +25,7 @@ void AttackMode::Enter(std::shared_ptr<BasicEvent> event)
     shape_->SetImage(GetImage(dir));
 }
 
-void AttackMode::Awake()
+void AttackMode::Register()
 {
     faceDirection_ = Service().GetAttribute<FaceDirectionAttribute>();
     shape_ = Service().GetShape();

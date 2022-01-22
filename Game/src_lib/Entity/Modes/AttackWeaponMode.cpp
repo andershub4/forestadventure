@@ -27,7 +27,7 @@ void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
     Service().SpawnEntity();
 }
 
-void AttackWeaponMode::Awake()
+void AttackWeaponMode::Register()
 {
     faceDirection_ = Service().GetAttribute<FaceDirectionAttribute>();
     shape_ = Service().GetShape();

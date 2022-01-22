@@ -21,7 +21,7 @@ public:
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
 
-    virtual void Awake() override;
+    virtual void Register() override;
     virtual void Update(float deltaTime) override;
     virtual ModeType GetModeType() const override { return ModeType::Attack; }
 
