@@ -7,14 +7,12 @@
 #pragma once
 
 #include <memory>
-#include <vector>
 
 #include "AttributeStore.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
 #include "Id.h"
 #include "Logging.h"
-#include "ModeType.h"
 #include "Resource/AnimationDb.h"
 #include "Resource/ImageDb.h"
 #include "SpawnManager.h"
@@ -66,16 +64,13 @@ public:
     void LoadImage(EntityType entityType, const ImageData &data);
     Image GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
-    std::vector<ModeType> GetModeTypes() const { return modeTypes_; }
     std::shared_ptr<Shape> GetShape() const { return shape_; }
-    void AddModeType(ModeType modeType);
 
     void SpawnEntity();
     void DeleteEntity(EntityId id);
 
 private:
     AttributeStore attributeStore_;
-    std::vector<ModeType> modeTypes_;
     CameraManager &cameraManager_;
     AnimationDb animationDb_;
     ImageDb imageDb_;

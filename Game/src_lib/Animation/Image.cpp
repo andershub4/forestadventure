@@ -14,6 +14,7 @@ Image::Image(const sf::Texture* texture, const sf::IntRect& frame, float rotatio
     : texture_(texture)
     , frame_(frame)
     , rotation_(rotation)
+    , isValid_(true)
 {}
 
 void Image::ApplyTo(sf::Sprite& sprite)
@@ -25,5 +26,10 @@ void Image::ApplyTo(sf::Sprite& sprite)
 
 void Image::Update(float deltaTime)
 {}
+
+bool Image::IsValid() const
+{
+    return isValid_;
+}
 
 }  // namespace FA

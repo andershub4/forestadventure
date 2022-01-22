@@ -11,7 +11,7 @@
 #include "Attributes//TransformAttribute.h"
 #include "EntityManager.h"
 #include "Level/CameraManager.h"
-#include "Shapes/Shape.h"
+#include "Shape.h"
 #include "SpawnManager.h"
 
 namespace FA {
@@ -61,11 +61,6 @@ void EntityService::LoadImage(EntityType entityType, const ImageData& data)
 Image EntityService::GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
 {
     return imageDb_.GetImage(entityType, frameType, faceDir);
-}
-
-void EntityService::AddModeType(ModeType modeType)
-{
-    modeTypes_.push_back(modeType);
 }
 
 void EntityService::SpawnEntity()

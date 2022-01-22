@@ -13,7 +13,7 @@
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/EntityService.h"
 #include "Entity/Events/StartMoveEvent.h"
-#include "Entity/Shapes/Shape.h"
+#include "Entity/Shape.h"
 #include "Enum/MoveDirection.h"
 
 namespace {
@@ -38,7 +38,10 @@ void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
 {
     auto m = std::dynamic_pointer_cast<StartMoveEvent>(event);
     SetDirection(m->moveDirection_, m->faceDirection_);
-    shape_->Set(FrameType::Move);
+
+    auto dir = Service().GetAttribute<FaceDirectionAttribute>()->GetDirection();
+    shape_->SetAnimation(GetAnimation(dir));
+    shape_->SetImage(GetImage(dir));
 }
 
 void MoveMode::Awake()

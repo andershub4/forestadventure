@@ -63,7 +63,6 @@ void ModeController::RegisterMode(std::shared_ptr<BasicMode> mode, bool startMod
     mode->BindAction(Action::Call(onDestroy_), EventType::Destroy);
 
     auto modeType = mode->GetModeType();
-    entityService_.AddModeType(modeType);
     modes_[modeType] = mode;
     mode->Awake();
 

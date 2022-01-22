@@ -6,8 +6,9 @@
 
 #include "AttackMode.h"
 
+#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/EntityService.h"
-#include "Entity/Shapes/Shape.h"
+#include "Entity/Shape.h"
 
 namespace FA {
 
@@ -19,7 +20,9 @@ AttackMode::AttackMode(EntityService &entityService)
 
 void AttackMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    shape_->Set(FrameType::Attack);
+    auto dir = Service().GetAttribute<FaceDirectionAttribute>()->GetDirection();
+    shape_->SetAnimation(GetAnimation(dir));
+    shape_->SetImage(GetImage(dir));
 }
 
 void AttackMode::Awake()

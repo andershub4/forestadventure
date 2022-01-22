@@ -20,11 +20,13 @@ public:
 
     void Update(float deltaTime);
     void ApplyTo(sf::Sprite& sprite);
+    bool IsValid() const;
 
 private:
     const sf::Texture* texture_ = nullptr;
     sf::IntRect frame_;
     float rotation_{};
+    bool isValid_ = false;
 };
 
 }  // namespace FA

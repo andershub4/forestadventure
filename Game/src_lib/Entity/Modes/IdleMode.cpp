@@ -6,8 +6,9 @@
 
 #include "IdleMode.h"
 
+#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/EntityService.h"
-#include "Entity/Shapes/Shape.h"
+#include "Entity/Shape.h"
 
 namespace FA {
 
@@ -19,7 +20,9 @@ IdleMode::IdleMode(EntityService &entityService)
 
 void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    shape_->Set(FrameType::Idle);
+    auto dir = Service().GetAttribute<FaceDirectionAttribute>()->GetDirection();
+    shape_->SetAnimation(GetAnimation(dir));
+    shape_->SetImage(GetImage(dir));
 }
 
 void IdleMode::Awake()

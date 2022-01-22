@@ -24,12 +24,9 @@ public:
 
     void SetDirection(FaceDirection direction);
     FaceDirection GetDirection() const;
-    void SetAvailableDirections(const std::vector<FaceDirection> &directions);
-    std::vector<FaceDirection> GetAvailableDirections() const;
 
 private:
     FaceDirection direction_ = FaceDirection::Down;
-    std::vector<FaceDirection> availableDirections_;
 };
 
 }  // namespace Entity

@@ -230,7 +230,6 @@
     <ClInclude Include="Entity\Modes\UninitializedMode.h" />
     <ClInclude Include="Entity\EntityService.h" />
     <ClInclude Include="Entity\ModeType.h" />
-    <ClInclude Include="Entity\Shapes\AnimationShape.h" />
     <ClInclude Include="Entity\Modes\AttackMode.h" />
     <ClInclude Include="Entity\Modes\AttackWeaponMode.h" />
     <ClInclude Include="Entity\Modes\BasicMode.h" />
@@ -243,9 +242,6 @@
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
     <ClInclude Include="Entity\Entities\StaticEntity.h" />
-    <ClInclude Include="Entity\Shapes\BasicShape.h" />
-    <ClInclude Include="Entity\Shapes\ImageShape.h" />
-    <ClInclude Include="Entity\Shapes\RectangleShape.h" />
     <ClInclude Include="Entity\ModeController.h" />
     <ClInclude Include="Entity\SpawnManager.h" />
     <ClInclude Include="Resource\ImageDb.h" />
@@ -301,7 +297,7 @@
     <ClInclude Include="Scene\Components\BasicComponent.h" />
     <ClInclude Include="Scene\Components\HelperComponent.h" />
     <ClInclude Include="Resource\SpriteSheet.h" />
-    <ClInclude Include="Entity\Shapes\Shape.h" />
+    <ClInclude Include="Entity\Shape.h" />
     <ClInclude Include="Entity\EntityManager.h" />
     <ClInclude Include="System\InputSystem.h" />
     <ClInclude Include="Tile\TileMapData.h" />
@@ -323,7 +319,6 @@
     <ClCompile Include="Entity\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Entity\Modes\UninitializedMode.cpp" />
     <ClCompile Include="Entity\EntityService.cpp" />
-    <ClCompile Include="Entity\Shapes\AnimationShape.cpp" />
     <ClCompile Include="Entity\Modes\AttackMode.cpp" />
     <ClCompile Include="Entity\Modes\AttackWeaponMode.cpp" />
     <ClCompile Include="Entity\Modes\BasicMode.cpp" />
@@ -335,8 +330,6 @@
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />
     <ClCompile Include="Entity\Factory.cpp" />
-    <ClCompile Include="Entity\Shapes\ImageShape.cpp" />
-    <ClCompile Include="Entity\Shapes\RectangleShape.cpp" />
     <ClCompile Include="Entity\ModeController.cpp" />
     <ClCompile Include="Entity\Entities\BasicEntity.cpp" />
     <ClCompile Include="Entity\SpawnManager.cpp" />
@@ -373,7 +366,7 @@
     <ClCompile Include="Scene\Components\BasicComponent.cpp" />
     <ClCompile Include="Scene\Components\HelperComponent.cpp" />
     <ClCompile Include="Resource\SpriteSheet.cpp" />
-    <ClCompile Include="Entity\Shapes\Shape.cpp" />
+    <ClCompile Include="Entity\Shape.cpp" />
     <ClCompile Include="Entity\EntityManager.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Tile\TileMap.cpp" />

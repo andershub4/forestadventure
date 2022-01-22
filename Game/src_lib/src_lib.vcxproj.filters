@@ -102,7 +102,7 @@
     <ClCompile Include="Resource\SpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Shapes\Shape.cpp">
+    <ClCompile Include="Entity\Shape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Modes\MoveMode.cpp">
@@ -159,9 +159,6 @@
     <ClCompile Include="Entity\Attributes\TransformAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Shapes\AnimationShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\EntityService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -198,16 +195,10 @@
     <ClCompile Include="Entity\Modes\UninitializedMode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Shapes\RectangleShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\ModeController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Resource\SheetManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\Shapes\ImageShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Animation\Image.cpp">
@@ -344,7 +335,7 @@
     <ClInclude Include="Resource\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Shapes\Shape.h">
+    <ClInclude Include="Entity\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Modes\MoveMode.h">
@@ -428,9 +419,6 @@
     <ClInclude Include="Resource\SheetData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Shapes\AnimationShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\AttributeStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -468,12 +456,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Modes\UninitializedMode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\Shapes\RectangleShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\Shapes\BasicShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\ModeController.h">
@@ -516,9 +498,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\SheetManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\Shapes\ImageShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Animation\Image.h">

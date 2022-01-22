@@ -11,7 +11,7 @@
 #include "Entity/Events/CreateEvent.h"
 #include "Entity/Events/DestroyEvent.h"
 #include "Entity/Events/InitEvent.h"
-#include "Entity/Shapes/Shape.h"
+#include "Entity/Shape.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -83,8 +83,8 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
         entityService_.LoadImage(Type(), data);
     }
     DefineProperties(entityService_, data);
-    DefineModes(modeController_);
-    DefineShape(entityService_, *entityService_.GetShape());
+    DefineModes(modeController_, entityService_);
+
     entityService_.GetShape()->Awake();
     Subscribe(Messages());
 }

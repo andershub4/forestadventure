@@ -24,16 +24,6 @@ FaceDirection FaceDirectionAttribute::GetDirection() const
     return direction_;
 }
 
-void FaceDirectionAttribute::SetAvailableDirections(const std::vector<FaceDirection> &directions)
-{
-    availableDirections_ = directions;
-}
-
-std::vector<FaceDirection> FaceDirectionAttribute::GetAvailableDirections() const
-{
-    return availableDirections_;
-}
-
 }  // namespace Entity
 
 }  // namespace FA

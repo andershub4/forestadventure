@@ -26,6 +26,7 @@ public:
     void Start();
     void Stop();
     bool IsCompleted() const;
+    bool IsValid() const;
 
 private:
     const sf::Texture* texture_ = nullptr;
@@ -37,6 +38,7 @@ private:
     unsigned int nFrames_{};
     unsigned int defaultFrame_{};
     bool isCompleted_ = false;
+    bool isValid_ = false;
 };
 
 }  // namespace FA

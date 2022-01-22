@@ -18,6 +18,7 @@ Animation::Animation(const sf::Texture* texture, const std::vector<sf::IntRect>&
     , time_(0.0)
     , defaultFrame_(defaultFrame)
     , iFrame_(defaultFrame)
+    , isValid_(true)
 {
     nFrames_ = frames.size();
 }
@@ -55,6 +56,11 @@ void Animation::Stop()
 bool Animation::IsCompleted() const
 {
     return isCompleted_;
+}
+
+bool Animation::IsValid() const
+{
+    return isValid_;
 }
 
 }  // namespace FA

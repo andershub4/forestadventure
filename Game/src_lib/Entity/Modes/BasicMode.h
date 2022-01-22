@@ -9,8 +9,11 @@
 #include <memory>
 #include <unordered_map>
 
+#include "Animation/Animation.h"
+#include "Animation/Image.h"
 #include "Entity/Action.h"
 #include "Entity/EventType.h"
+#include "Enum/FaceDirection.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -24,6 +27,12 @@ class EntityService;
 class BasicMode
 {
 public:
+    struct Direction
+    {
+        Animation animation_;
+        Image image_;
+    };
+
     BasicMode(EntityService& entityService);
     virtual ~BasicMode();
 
@@ -44,15 +53,19 @@ public:
     void BindActionDuringUpdate(const Action& action, std::function<bool(std::shared_ptr<Shape>)> condition);
     Action GetAction(EventType eventType) const;
     Action PollAction() const;
+    Direction& AddDirection(FaceDirection faceDirection);
 
 protected:
     EntityService& Service() const { return entityService_; }
+    Animation GetAnimation(FaceDirection faceDirection) const;
+    Image GetImage(FaceDirection faceDirection) const;
 
 private:
     EntityService& entityService_;
     std::unordered_map<EventType, Action> eventMap_;
     std::function<bool(std::shared_ptr<Shape>)> actionCondition_ = [](std::shared_ptr<Shape>) { return false; };
     Action nextAction_{};
+    std::unordered_map<FaceDirection, Direction> directions_;
 };
 
 }  // namespace Entity

@@ -27,8 +27,7 @@ protected:
 
 private:
     virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;
-    virtual void DefineModes(ModeController& modeController) override;
-    virtual void DefineShape(EntityService& entityService, Shape& shape) override;
+    virtual void DefineModes(ModeController& modeController, const EntityService& entityService) override;
 };
 
 }  // namespace Entity
