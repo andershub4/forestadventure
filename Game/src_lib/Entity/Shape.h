@@ -13,8 +13,8 @@
 #endif
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Animation/Animation.h"
-#include "Animation/Image.h"
+#include "Draw/Animation.h"
+#include "Draw/Image.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {

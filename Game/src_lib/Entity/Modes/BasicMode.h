@@ -9,8 +9,8 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Animation/Animation.h"
-#include "Animation/Image.h"
+#include "Draw/Animation.h"
+#include "Draw/Image.h"
 #include "Entity/Action.h"
 #include "Entity/EventType.h"
 #include "Enum/FaceDirection.h"

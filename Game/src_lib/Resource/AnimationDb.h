@@ -9,7 +9,7 @@
 #include <map>
 #include <tuple>
 
-#include "Animation/Animation.h"
+#include "Draw/Animation.h"
 #include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/FrameType.h"
