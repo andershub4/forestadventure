@@ -12,6 +12,8 @@ namespace FA {
 
 namespace Entity {
 
+class FaceDirectionAttribute;
+
 class AttackMode : public BasicMode
 {
 public:
@@ -24,6 +26,7 @@ public:
     virtual ModeType GetModeType() const override { return ModeType::Attack; }
 
 private:
+    std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
     std::shared_ptr<Shape> shape_ = nullptr;
 };
 

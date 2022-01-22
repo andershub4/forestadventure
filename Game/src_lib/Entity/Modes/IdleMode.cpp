@@ -20,13 +20,14 @@ IdleMode::IdleMode(EntityService &entityService)
 
 void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    auto dir = Service().GetAttribute<FaceDirectionAttribute>()->GetDirection();
+    auto dir = faceDirection_->GetDirection();
     shape_->SetAnimation(GetAnimation(dir));
     shape_->SetImage(GetImage(dir));
 }
 
 void IdleMode::Awake()
 {
+    faceDirection_ = Service().GetAttribute<FaceDirectionAttribute>();
     shape_ = Service().GetShape();
 }
 

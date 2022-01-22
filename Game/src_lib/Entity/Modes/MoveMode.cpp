@@ -39,7 +39,7 @@ void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
     auto m = std::dynamic_pointer_cast<StartMoveEvent>(event);
     SetDirection(m->moveDirection_, m->faceDirection_);
 
-    auto dir = Service().GetAttribute<FaceDirectionAttribute>()->GetDirection();
+    auto dir = faceDirection_->GetDirection();
     shape_->SetAnimation(GetAnimation(dir));
     shape_->SetImage(GetImage(dir));
 }
