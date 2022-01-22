@@ -48,6 +48,7 @@ void MoleEntity::DefineProperties(EntityService& entityService, const PropertyDa
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
     auto f = entityService.AddAttribute<FaceDirectionAttribute>();
+    f->SetDirection(data.faceDir_);
     auto v = entityService.AddAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
 }
