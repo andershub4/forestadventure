@@ -23,7 +23,10 @@ void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
     auto dir = faceDirection_->GetDirection();
     shape_->SetAnimation(GetAnimation(dir));
     shape_->SetImage(GetImage(dir));
+}
 
+void AttackWeaponMode::Exit()
+{
     Service().SpawnEntity();
 }
 

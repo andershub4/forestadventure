@@ -20,6 +20,7 @@ public:
     AttackWeaponMode(EntityService &entityService);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
+    virtual void Exit() override;
 
     virtual void Register() override;
     virtual void Update(float deltaTime) override;
