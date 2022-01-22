@@ -22,7 +22,7 @@ namespace Entity {
 
 class BasicEntity;
 class Factory;
-struct PropertyData;
+struct AttributeData;
 
 class EntityManager
 {
@@ -33,7 +33,7 @@ public:
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void EnableInput(bool enable);
-    BasicEntity &CreateEntity(EntityType type, const PropertyData &data);
+    BasicEntity &CreateEntity(EntityType type, const AttributeData &data);
     void DeleteEntity(EntityId id);
     void HandleCreatedEntities();
     void HandleDeletedEntities();

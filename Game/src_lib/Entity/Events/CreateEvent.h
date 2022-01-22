@@ -8,7 +8,7 @@
 
 #include "BasicEvent.h"
 
-#include "Entity/PropertyData.h"
+#include "Entity/AttributeData.h"
 
 namespace FA {
 
@@ -16,13 +16,13 @@ namespace Entity {
 
 struct CreateEvent : public BasicEvent
 {
-    CreateEvent(const PropertyData &data)
+    CreateEvent(const AttributeData &data)
         : data_(data)
     {}
 
     virtual EventType GetEventType() const { return EventType::Create; }
 
-    PropertyData data_;
+    AttributeData data_;
 };
 
 }  // namespace Entity

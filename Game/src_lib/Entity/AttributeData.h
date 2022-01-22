@@ -14,7 +14,7 @@ namespace FA {
 
 namespace Entity {
 
-struct PropertyData
+struct AttributeData
 {
     sf::Vector2f position_{};
     FaceDirection faceDir_{};

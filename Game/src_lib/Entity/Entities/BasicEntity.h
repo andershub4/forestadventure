@@ -27,7 +27,7 @@ class SheetManager;
 
 namespace Entity {
 
-struct PropertyData;
+struct AttributeData;
 class EntityManager;
 
 class BasicEntity
@@ -40,7 +40,7 @@ public:
     virtual std::string Name() const = 0;
     virtual EntityType Type() const = 0;
 
-    void Create(const PropertyData& data);
+    void Create(const AttributeData& data);
     void Destroy();
     void Init();
     void Update(float deltaTime);
@@ -69,7 +69,7 @@ private:
     bool enableInput_ = true;
 
 private:
-    virtual void DefineProperties(EntityService& entityService, const PropertyData& data) {}
+    virtual void AddAttributes(EntityService& entityService, const AttributeData& data) {}
     virtual void DefineModes(ModeController& modeController, const EntityService& entityService) {}
 
     void OnCreate(std::shared_ptr<BasicEvent> event);

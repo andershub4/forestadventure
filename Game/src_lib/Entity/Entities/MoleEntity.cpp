@@ -8,12 +8,12 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/AttributeData.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/Modes/MoveMode.h"
-#include "Entity/PropertyData.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -42,7 +42,7 @@ std::vector<AnimationData> MoleEntity::Animations() const
     return data;
 }
 
-void MoleEntity::DefineProperties(EntityService& entityService, const PropertyData& data)
+void MoleEntity::AddAttributes(EntityService& entityService, const AttributeData& data)
 {
     auto t = entityService.AddAttribute<TransformAttribute>();
     t->SetPosition(data.position_);

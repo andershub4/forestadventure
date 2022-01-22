@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/AttributeData.h"
 #include "Entity/Attributes/CameraAttribute.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
@@ -20,7 +21,6 @@
 #include "Entity/Modes/AttackWeaponMode.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/Modes/MoveMode.h"
-#include "Entity/PropertyData.h"
 #include "Entity/Shape.h"
 #include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
@@ -99,7 +99,7 @@ std::vector<AnimationData> PlayerEntity::Animations() const
     return data;
 }
 
-void PlayerEntity::DefineProperties(EntityService& entityService, const PropertyData& data)
+void PlayerEntity::AddAttributes(EntityService& entityService, const AttributeData& data)
 {
     auto t = entityService.AddAttribute<TransformAttribute>();
     t->SetPosition(data.position_);

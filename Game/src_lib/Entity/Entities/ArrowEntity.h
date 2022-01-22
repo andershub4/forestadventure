@@ -28,7 +28,7 @@ protected:
     virtual void PostUpdate(EntityService& entityService) override;
 
 private:
-    virtual void DefineProperties(EntityService& handler, const PropertyData& data) override;
+    virtual void AddAttributes(EntityService& handler, const AttributeData& data) override;
     virtual void DefineModes(ModeController& modeController, const EntityService& entityService) override;
 };
 

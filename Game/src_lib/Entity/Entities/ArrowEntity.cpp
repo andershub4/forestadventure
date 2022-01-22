@@ -8,12 +8,12 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/AttributeData.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/Modes/MoveMode.h"
-#include "Entity/PropertyData.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -37,7 +37,7 @@ std::vector<ImageData> ArrowEntity::Images() const
     return data;
 }
 
-void ArrowEntity::DefineProperties(EntityService& entityService, const PropertyData& data)
+void ArrowEntity::AddAttributes(EntityService& entityService, const AttributeData& data)
 {
     auto t = entityService.AddAttribute<TransformAttribute>();
     t->SetPosition(data.position_);

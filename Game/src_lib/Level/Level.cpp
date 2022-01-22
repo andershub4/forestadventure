@@ -10,7 +10,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/PropertyData.h"
+#include "Entity/AttributeData.h"
 #include "Folder.h"
 #include "Logging.h"
 #include "Resource/SheetData.h"
@@ -73,7 +73,7 @@ void Level::Create()
     LOG_INFO("Create entities");
 
     for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
-        Entity::PropertyData data;
+        Entity::AttributeData data;
         data.position_ = static_cast<sf::Vector2f>(objectData.position_);
         data.faceDir_ = objectData.faceDir_;
         data.velocity_ = 120.0;

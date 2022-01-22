@@ -238,7 +238,7 @@
     <ClInclude Include="Entity\Modes\IdleMode.h" />
     <ClInclude Include="Entity\Attributes\TransformAttribute.h" />
     <ClInclude Include="Entity\AttributeStore.h" />
-    <ClInclude Include="Entity\PropertyData.h" />
+    <ClInclude Include="Entity\AttributeData.h" />
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
     <ClInclude Include="Entity\Entities\StaticEntity.h" />

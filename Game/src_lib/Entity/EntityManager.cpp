@@ -41,7 +41,7 @@ void EntityManager::Update(float deltaTime)
     }
 }
 
-BasicEntity& EntityManager::CreateEntity(EntityType type, const PropertyData& data)
+BasicEntity& EntityManager::CreateEntity(EntityType type, const AttributeData& data)
 {
     auto entity = factory_.Create(type, cameraManager_, sheetManager_, *this);
     entity->Create(data);

@@ -34,7 +34,7 @@ BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetM
 
 BasicEntity::~BasicEntity() = default;
 
-void BasicEntity::Create(const PropertyData& data)
+void BasicEntity::Create(const AttributeData& data)
 {
     HandleEvent(std::make_shared<CreateEvent>(data));
 }
@@ -82,7 +82,7 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
     for (const auto& data : Images()) {
         entityService_.LoadImage(Type(), data);
     }
-    DefineProperties(entityService_, data);
+    AddAttributes(entityService_, data);
     DefineModes(modeController_, entityService_);
 
     entityService_.GetShape()->Register();
