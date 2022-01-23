@@ -6,12 +6,19 @@
 
 #pragma once
 
+#include <unordered_map>
+
+#include <SFML/System/Vector2.hpp>
+
 #include "BasicMode.h"
+
+#include "Enum/EntityType.h"
 
 namespace FA {
 
 namespace Entity {
 
+class TransformAttribute;
 class FaceDirectionAttribute;
 
 class AttackWeaponMode : public BasicMode
@@ -27,8 +34,12 @@ public:
     virtual ModeType GetModeType() const override { return ModeType::AttackWeapon; }
 
 private:
+    std::shared_ptr<TransformAttribute> transform_ = nullptr;
     std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
     std::shared_ptr<Shape> shape_ = nullptr;
+    EntityType entityType_ = EntityType::Unknown;
+    sf::Vector2f offset_;
+    float velocity_ = 0.0f;
 };
 
 }  // namespace Entity

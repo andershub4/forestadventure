@@ -63,13 +63,10 @@ Image EntityService::GetImage(EntityType entityType, FrameType frameType, FaceDi
     return imageDb_.GetImage(entityType, frameType, faceDir);
 }
 
-void EntityService::SpawnEntity()
+void EntityService::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position,
+                                float scale, float velocity)
 {
-    auto position = GetAttribute<TransformAttribute>()->GetPosition();
-    auto scale = GetAttribute<TransformAttribute>()->GetScale();
-    auto faceDirection = GetAttribute<FaceDirectionAttribute>()->GetDirection();
-    float velocity = 120.0f;
-    spawnManager_.SpawnArrow(position, faceDirection, scale, velocity);
+    spawnManager_.Spawn(entityType, position, faceDirection, scale, velocity);
 }
 
 void EntityService::DeleteEntity(EntityId id)

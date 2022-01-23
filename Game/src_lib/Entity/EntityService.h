@@ -66,7 +66,8 @@ public:
 
     std::shared_ptr<Shape> GetShape() const { return shape_; }
 
-    void SpawnEntity();
+    void SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f &position, float scale,
+                     float velocity);
     void DeleteEntity(EntityId id);
 
 private:

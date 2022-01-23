@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -23,7 +24,7 @@ public:
 
     void Update(float deltaTime);
 
-    void SpawnArrow(const sf::Vector2f &position, FaceDirection faceDir, float scale, float velocity);
+    void Spawn(EntityType entityType, const sf::Vector2f &position, FaceDirection faceDir, float scale, float velocity);
 
 private:
     EntityManager &entityManager_;

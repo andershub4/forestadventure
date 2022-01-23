@@ -30,6 +30,15 @@ namespace FA {
 
 namespace Entity {
 
+namespace {
+
+const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirection::Down, {0.0, 30.0}},
+                                                                     {FaceDirection::Left, {-10.0, 10.0}},
+                                                                     {FaceDirection::Right, {10.0, 10.0}},
+                                                                     {FaceDirection::Up, {0.0, -30.0}}};
+
+}  // namespace
+
 PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
                            EntityManager& entityManager, MessageBus& messageBus)
     : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus)
@@ -67,7 +76,8 @@ void PlayerEntity::HandleKeyPressed(Keyboard::Key key)
         HandleEvent(std::make_shared<AttackEvent>());
     }
     else if (key == Keyboard::Key::Space) {
-        HandleEvent(std::make_shared<AttackWeaponEvent>());
+        float velocity = 120.0f * 8;
+        HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow, arrowOffset, velocity));
     }
 }
 
