@@ -27,7 +27,7 @@ MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 MoleEntity::~MoleEntity() = default;
 
-std::vector<AnimationData> MoleEntity::Animations() const
+std::vector<AnimationData> MoleEntity::AnimationDataStore() const
 {
     std::vector<AnimationData> data = {
         {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true, FrameType::Move, FaceDirection::Left},

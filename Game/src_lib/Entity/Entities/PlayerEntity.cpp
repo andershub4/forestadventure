@@ -86,7 +86,7 @@ std::vector<MessageType> PlayerEntity::Messages() const
     return {MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed};
 }
 
-std::vector<AnimationData> PlayerEntity::Animations() const
+std::vector<AnimationData> PlayerEntity::AnimationDataStore() const
 {
     std::vector<AnimationData> data = {
         {SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true, FrameType::Move, FaceDirection::Left},

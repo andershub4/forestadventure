@@ -27,7 +27,7 @@ ArrowEntity::ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetM
 
 ArrowEntity::~ArrowEntity() = default;
 
-std::vector<ImageData> ArrowEntity::Images() const
+std::vector<ImageData> ArrowEntity::ImageDataStore() const
 {
     std::vector<ImageData> data = {{SheetId::Arrow, {0, 0}, 270.0f, FrameType::Move, FaceDirection::Left},
                                    {SheetId::Arrow, {0, 0}, 90.0f, FrameType::Move, FaceDirection::Right},

@@ -54,8 +54,8 @@ protected:
     virtual void HandleIsKeyReleased(Keyboard::Key key) {}
     virtual void HandleKeyPressed(Keyboard::Key key) {}
     virtual std::vector<MessageType> Messages() const { return {}; }
-    virtual std::vector<AnimationData> Animations() const { return {}; }
-    virtual std::vector<ImageData> Images() const { return {}; }
+    virtual std::vector<AnimationData> AnimationDataStore() const { return {}; }
+    virtual std::vector<ImageData> ImageDataStore() const { return {}; }
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
 
