@@ -31,7 +31,7 @@ protected:
 
 private:
     virtual void AddAttributes(EntityService& handler, const AttributeData& data) override;
-    virtual void DefineModes(ModeController& modeController, const EntityService& entityService) override;
+    virtual void RegisterModes(ModeController& modeController, const EntityService& entityService) override;
 };
 
 }  // namespace Entity

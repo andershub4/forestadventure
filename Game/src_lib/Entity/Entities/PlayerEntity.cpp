@@ -121,7 +121,7 @@ void PlayerEntity::AddAttributes(EntityService& entityService, const AttributeDa
     entityService.AddAttribute<CameraAttribute>();
 }
 
-void PlayerEntity::DefineModes(ModeController& modeController, const EntityService& entityService)
+void PlayerEntity::RegisterModes(ModeController& modeController, const EntityService& entityService)
 {
     auto idleMode = modeController.RegisterMode<IdleMode>(true);
     idleMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);

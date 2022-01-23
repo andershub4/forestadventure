@@ -53,7 +53,7 @@ void MoleEntity::AddAttributes(EntityService& entityService, const AttributeData
     v->SetVelocity(data.velocity_);
 }
 
-void MoleEntity::DefineModes(ModeController& modeController, const EntityService& entityService)
+void MoleEntity::RegisterModes(ModeController& modeController, const EntityService& entityService)
 {
     auto idleMode = modeController.RegisterMode<IdleMode>(true);
     idleMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);

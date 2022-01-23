@@ -83,7 +83,7 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
         entityService_.LoadImage(Type(), data);
     }
     AddAttributes(entityService_, data);
-    DefineModes(modeController_, entityService_);
+    RegisterModes(modeController_, entityService_);
 
     entityService_.GetShape()->Register();
     Subscribe(Messages());

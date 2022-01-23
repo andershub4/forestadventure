@@ -70,7 +70,7 @@ private:
 
 private:
     virtual void AddAttributes(EntityService& entityService, const AttributeData& data) {}
-    virtual void DefineModes(ModeController& modeController, const EntityService& entityService) {}
+    virtual void RegisterModes(ModeController& modeController, const EntityService& entityService) {}
 
     void OnCreate(std::shared_ptr<BasicEvent> event);
     void OnDestroy(std::shared_ptr<BasicEvent> event);
