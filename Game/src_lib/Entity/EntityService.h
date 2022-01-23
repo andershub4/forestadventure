@@ -58,10 +58,10 @@ public:
 
     sf::Vector2u GetMapSize() const;
 
-    void LoadAnimation(EntityType entityType, const AnimationData &data);
+    void AddAnimation(EntityType entityType, const AnimationData &data);
     Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
-    void LoadImage(EntityType entityType, const ImageData &data);
+    void AddImage(EntityType entityType, const ImageData &data);
     Image GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
     std::shared_ptr<Shape> GetShape() const { return shape_; }

@@ -38,7 +38,7 @@ class AnimationDb
 {
 public:
     AnimationDb(const SheetManager &sheetManager);
-    void LoadAnimation(EntityType entityType, const AnimationData &data);
+    void AddAnimation(EntityType entityType, const AnimationData &data);
     Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
 private:

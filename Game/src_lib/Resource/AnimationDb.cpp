@@ -30,7 +30,7 @@ AnimationDb::AnimationDb(const SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {}
 
-void AnimationDb::LoadAnimation(EntityType entityType, const AnimationData& data)
+void AnimationDb::AddAnimation(EntityType entityType, const AnimationData& data)
 {
     float t = 0.1f;
 

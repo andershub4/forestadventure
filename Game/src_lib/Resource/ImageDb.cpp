@@ -29,7 +29,7 @@ ImageDb::ImageDb(const SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {}
 
-void ImageDb::LoadImage(EntityType entityType, const ImageData& data)
+void ImageDb::AddImage(EntityType entityType, const ImageData& data)
 {
     float t = 0.1f;
 

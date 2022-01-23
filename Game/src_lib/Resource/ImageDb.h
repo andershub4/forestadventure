@@ -31,7 +31,7 @@ class ImageDb
 {
 public:
     ImageDb(const SheetManager &sheetManager);
-    void LoadImage(EntityType entityType, const ImageData &data);
+    void AddImage(EntityType entityType, const ImageData &data);
     Image GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
 
 private:
