@@ -512,5 +512,8 @@
     <ClInclude Include="Entity\Entities\ArrowEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Constant\Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

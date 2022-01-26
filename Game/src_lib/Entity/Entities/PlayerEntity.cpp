@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
 #include "Entity/Attributes/CameraAttribute.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
@@ -76,7 +77,7 @@ void PlayerEntity::HandleKeyPressed(Keyboard::Key key)
         HandleEvent(std::make_shared<AttackEvent>());
     }
     else if (key == Keyboard::Key::Space) {
-        float velocity = 120.0f * 8;
+        float velocity = constant::Entity::stdVelocity * 8.0f;
         HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow, arrowOffset, velocity));
     }
 }

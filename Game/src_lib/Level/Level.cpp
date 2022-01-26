@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
 #include "Folder.h"
 #include "Logging.h"
@@ -76,7 +77,7 @@ void Level::Create()
         Entity::AttributeData data;
         data.position_ = static_cast<sf::Vector2f>(objectData.position_);
         data.faceDir_ = objectData.faceDir_;
-        data.velocity_ = 120.0;
+        data.velocity_ = constant::Entity::stdVelocity;
         data.scale_ = static_cast<float>(tileMap_.GetScale());
         entityManager_.CreateEntity(objectData.type_, data);
     }
