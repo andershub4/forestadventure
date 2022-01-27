@@ -19,7 +19,7 @@ class FaceDirectionAttribute;
 class IdleMode : public BasicMode
 {
 public:
-    IdleMode(EntityService& entityService);
+    IdleMode(EntityService& entityService, ModeController& modeController);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
 

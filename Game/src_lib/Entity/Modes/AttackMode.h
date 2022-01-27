@@ -17,7 +17,7 @@ class FaceDirectionAttribute;
 class AttackMode : public BasicMode
 {
 public:
-    AttackMode(EntityService &entityService);
+    AttackMode(EntityService& entityService, ModeController& modeController);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
 

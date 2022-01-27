@@ -14,8 +14,8 @@ namespace FA {
 
 namespace Entity {
 
-IdleMode::IdleMode(EntityService &entityService)
-    : BasicMode(entityService)
+IdleMode::IdleMode(EntityService& entityService, ModeController& modeController)
+    : BasicMode(entityService, modeController)
 {}
 
 void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
@@ -34,6 +34,7 @@ void IdleMode::Register()
 void IdleMode::Update(float deltaTime)
 {
     shape_->Update(deltaTime);
+    BasicUpdate();
 }
 
 }  // namespace Entity

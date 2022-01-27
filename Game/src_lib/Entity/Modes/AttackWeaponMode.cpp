@@ -16,8 +16,8 @@ namespace FA {
 
 namespace Entity {
 
-AttackWeaponMode::AttackWeaponMode(EntityService &entityService)
-    : BasicMode(entityService)
+AttackWeaponMode::AttackWeaponMode(EntityService& entityService, ModeController& modeController)
+    : BasicMode(entityService, modeController)
 {}
 
 void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
@@ -49,6 +49,7 @@ void AttackWeaponMode::Register()
 void AttackWeaponMode::Update(float deltaTime)
 {
     shape_->Update(deltaTime);
+    BasicUpdate();
 }
 
 }  // namespace Entity

@@ -28,8 +28,7 @@ ModeController::~ModeController()
 
 void ModeController::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
-    auto action = currentMode_->GetAction(event->GetEventType());
-    DoAction(action, event);
+    currentMode_->HandleEvent(event);
 }
 
 void ModeController::QueueInitEvents(std::shared_ptr<BasicEvent> event)
@@ -48,9 +47,6 @@ void ModeController::HandleQueuedInitEvents()
 void ModeController::Update(float deltaTime)
 {
     currentMode_->Update(deltaTime);
-
-    auto action = currentMode_->PollAction();
-    DoAction(action);
 }
 
 void ModeController::DrawTo(sf::RenderTarget& renderTarget)
@@ -83,16 +79,11 @@ void ModeController::RegisterDestroyCB(std::function<void(std::shared_ptr<BasicE
     onDestroy_ = onDestroy;
 }
 
-void ModeController::DoAction(const Action& action, std::shared_ptr<BasicEvent> event)
+void ModeController::ChangeModeTo(ModeType nextModeType, std::shared_ptr<BasicEvent> event)
 {
-    if (action.cb_) action.cb_(event);
-
-    auto nextModeType = action.modeType_;
-    if (nextModeType != ModeType::None) {
-        currentMode_->Exit();
-        currentMode_ = modes_.at(nextModeType);
-        currentMode_->Enter(event);
-    }
+    currentMode_->Exit();
+    currentMode_ = modes_.at(nextModeType);
+    currentMode_->Enter(event);
 }
 
 }  // namespace Entity

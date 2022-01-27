@@ -7,6 +7,8 @@
 #include "BasicMode.h"
 
 #include "Entity/EntityService.h"
+#include "Entity/Events/BasicEvent.h"
+#include "Entity/ModeController.h"
 #include "Entity/Shape.h"
 #include "Logging.h"
 
@@ -14,8 +16,9 @@ namespace FA {
 
 namespace Entity {
 
-BasicMode::BasicMode(EntityService& entityService)
+BasicMode::BasicMode(EntityService& entityService, ModeController& modeController)
     : entityService_(entityService)
+    , modeController_(modeController)
 {}
 
 BasicMode::~BasicMode() = default;
@@ -23,6 +26,12 @@ BasicMode::~BasicMode() = default;
 void BasicMode::DrawTo(sf::RenderTarget& renderTarget)
 {
     entityService_.GetShape()->DrawTo(renderTarget);
+}
+
+void BasicMode::HandleEvent(std::shared_ptr<BasicEvent> event)
+{
+    auto action = GetAction(event->GetEventType());
+    DoAction(action, event);
 }
 
 void BasicMode::BindAction(const Action& action, EventType eventType)
@@ -93,6 +102,22 @@ Image BasicMode::GetImage(FaceDirection faceDirection) const
     else {
         return Image();
     }
+}
+
+void BasicMode::DoAction(const Action& action, std::shared_ptr<BasicEvent> event)
+{
+    if (action.cb_) action.cb_(event);
+
+    auto nextModeType = action.modeType_;
+    if (nextModeType != ModeType::None) {
+        modeController_.ChangeModeTo(nextModeType, event);
+    }
+}
+
+void BasicMode::BasicUpdate()
+{
+    auto action = PollAction();
+    DoAction(action);
 }
 
 }  // namespace Entity

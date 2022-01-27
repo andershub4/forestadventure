@@ -30,8 +30,8 @@ namespace FA {
 
 namespace Entity {
 
-MoveMode::MoveMode(EntityService &entityService)
-    : BasicMode(entityService)
+MoveMode::MoveMode(EntityService& entityService, ModeController& modeController)
+    : BasicMode(entityService, modeController)
 {}
 
 void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
@@ -58,6 +58,7 @@ void MoveMode::Update(float deltaTime)
 
     sf::Vector2f offset = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
     transform_->Move(offset);
+    BasicUpdate();
 }
 
 void MoveMode::SetDirection(MoveDirection direction, FaceDirection faceDir)

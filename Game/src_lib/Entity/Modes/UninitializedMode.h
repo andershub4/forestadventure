@@ -15,7 +15,7 @@ namespace Entity {
 class UninitializedMode : public BasicMode
 {
 public:
-    UninitializedMode(EntityService &entityService);
+    UninitializedMode(EntityService& entityService, ModeController& modeController);
 
     virtual void Update(float deltaTime) override {}
     virtual ModeType GetModeType() const override { return ModeType::Uninitialized; }

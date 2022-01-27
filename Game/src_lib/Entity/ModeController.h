@@ -31,7 +31,7 @@ public:
     template <class T>
     std::shared_ptr<T> RegisterMode(bool startMode = false)
     {
-        auto mode = std::make_shared<T>(entityService_);
+        auto mode = std::make_shared<T>(entityService_, *this);
         RegisterMode(mode, startMode);
         return mode;
     }
@@ -45,6 +45,8 @@ public:
     void RegisterCreateCB(std::function<void(std::shared_ptr<BasicEvent> event)> onCreate);
     void RegisterDestroyCB(std::function<void(std::shared_ptr<BasicEvent> event)> onDestroy);
 
+    void ChangeModeTo(ModeType nextModeType, std::shared_ptr<BasicEvent> event);
+
 private:
     std::unordered_map<ModeType, std::shared_ptr<BasicMode>> modes_;
     std::shared_ptr<BasicMode> currentMode_ = nullptr;
@@ -54,7 +56,6 @@ private:
 
 private:
     void RegisterMode(std::shared_ptr<BasicMode> mode, bool startMode);
-    void DoAction(const Action& action, std::shared_ptr<BasicEvent> event = nullptr);
 };
 
 }  // namespace Entity
