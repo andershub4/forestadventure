@@ -21,8 +21,7 @@ namespace Entity {
 EntityService::EntityService(CameraManager& cameraManager, const SheetManager& sheetManager,
                              EntityManager& entityManager)
     : cameraManager_(cameraManager)
-    , animationDb_(sheetManager)
-    , imageDb_(sheetManager)
+    , frameHandler_(sheetManager)
     , shape_(std::make_shared<Shape>(this))
     , entityManager_(entityManager)
     , spawnManager_(entityManager)
@@ -43,24 +42,14 @@ sf::Vector2u EntityService::GetMapSize() const
     return cameraManager_.GetMapSize();
 }
 
-void EntityService::AddAnimation(const AnimationData& data)
+Animation EntityService::MakeAnimation(const AnimationData& data) const
 {
-    animationDb_.AddAnimation(data);
+    return frameHandler_.MakeAnimation(data);
 }
 
-Animation EntityService::GetAnimation(const std::string& k) const
+Image EntityService::MakeImage(const ImageData& data) const
 {
-    return animationDb_.GetAnimation(k);
-}
-
-void EntityService::AddImage(const ImageData& data)
-{
-    imageDb_.AddImage(data);
-}
-
-Image EntityService::GetImage(const std::string& k) const
-{
-    return imageDb_.GetImage(k);
+    return frameHandler_.MakeImage(data);
 }
 
 void EntityService::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position,

@@ -27,7 +27,6 @@ protected:
     virtual void HandleIsKeyReleased(Keyboard::Key key) override;
     virtual void HandleKeyPressed(Keyboard::Key key) override;
     virtual std::vector<MessageType> Messages() const override;
-    virtual std::vector<AnimationData> AnimationDataStore() const override;
 
 private:
     virtual void AddAttributes(EntityService& handler, const AttributeData& data) override;

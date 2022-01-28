@@ -165,7 +165,7 @@
     <ClCompile Include="Entity\Attributes\FaceDirectionAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\AnimationDb.cpp">
+    <ClCompile Include="Resource\FrameHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Modes\IdleMode.cpp">
@@ -202,9 +202,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Draw\Image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\ImageDb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\SpawnManager.cpp">
@@ -431,7 +428,7 @@
     <ClInclude Include="Entity\Attributes\FaceDirectionAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\AnimationDb.h">
+    <ClInclude Include="Resource\FrameHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Modes\AttackMode.h">
@@ -501,9 +498,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Draw\Image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\ImageDb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\SpawnManager.h">

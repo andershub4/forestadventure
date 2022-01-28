@@ -12,14 +12,14 @@
 #include "Enum/FaceDirection.h"
 #include "Id.h"
 #include "Logging.h"
-#include "Resource/AnimationDb.h"
-#include "Resource/ImageDb.h"
+#include "Resource/FrameHandler.h"
 #include "SpawnManager.h"
 
 namespace FA {
 
 class CameraManager;
 class Animation;
+class Image;
 class SheetManager;
 
 namespace Entity {
@@ -57,11 +57,8 @@ public:
 
     sf::Vector2u GetMapSize() const;
 
-    void AddAnimation(const AnimationData &data);
-    Animation GetAnimation(const std::string &k) const;
-
-    void AddImage(const ImageData &data);
-    Image GetImage(const std::string &k) const;
+    Animation MakeAnimation(const AnimationData &data) const;
+    Image MakeImage(const ImageData &data) const;
 
     std::shared_ptr<Shape> GetShape() const { return shape_; }
 
@@ -72,8 +69,7 @@ public:
 private:
     AttributeStore attributeStore_;
     CameraManager &cameraManager_;
-    AnimationDb animationDb_;
-    ImageDb imageDb_;
+    const FrameHandler frameHandler_;
     std::shared_ptr<Shape> shape_ = nullptr;
     EntityManager &entityManager_;
     SpawnManager spawnManager_;

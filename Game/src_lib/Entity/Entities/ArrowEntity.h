@@ -23,8 +23,6 @@ public:
     virtual EntityType Type() const override { return EntityType::Arrow; }
 
 protected:
-    virtual std::vector<ImageData> ImageDataStore() const override;
-
     virtual void PostUpdate(EntityService& entityService) override;
 
 private:

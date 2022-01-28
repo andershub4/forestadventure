@@ -20,22 +20,21 @@ namespace FA {
 
 namespace Entity {
 
+namespace {
+
+std::unordered_map<std::string, ImageData> imageDatas = {{"Left", {SheetId::Arrow, {0, 0}, 270.0f}},
+                                                         {"Right", {SheetId::Arrow, {0, 0}, 90.0f}},
+                                                         {"Down", {SheetId::Arrow, {0, 0}, 180.0f}},
+                                                         {"Up", {SheetId::Arrow, {0, 0}, 0.0f}}};
+
+}
+
 ArrowEntity::ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
                          EntityManager& entityManager, MessageBus& messageBus)
     : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus)
 {}
 
 ArrowEntity::~ArrowEntity() = default;
-
-std::vector<ImageData> ArrowEntity::ImageDataStore() const
-{
-    std::vector<ImageData> data = {{"Left", SheetId::Arrow, {0, 0}, 270.0f},
-                                   {"Right", SheetId::Arrow, {0, 0}, 90.0f},
-                                   {"Down", SheetId::Arrow, {0, 0}, 180.0f},
-                                   {"Up", SheetId::Arrow, {0, 0}, 0.0f}};
-
-    return data;
-}
 
 void ArrowEntity::AddAttributes(EntityService& entityService, const AttributeData& data)
 {
@@ -61,10 +60,10 @@ void ArrowEntity::RegisterModes(ModeController& modeController, const EntityServ
     auto& mright = moveMode->AddDirection(FaceDirection::Right);
     auto& mup = moveMode->AddDirection(FaceDirection::Up);
     auto& mdown = moveMode->AddDirection(FaceDirection::Down);
-    mleft.image_ = entityService.GetImage("Left");
-    mright.image_ = entityService.GetImage("Right");
-    mup.image_ = entityService.GetImage("Up");
-    mdown.image_ = entityService.GetImage("Down");
+    mleft.image_ = entityService.MakeImage(imageDatas.at("Left"));
+    mright.image_ = entityService.MakeImage(imageDatas.at("Right"));
+    mup.image_ = entityService.MakeImage(imageDatas.at("Up"));
+    mdown.image_ = entityService.MakeImage(imageDatas.at("Down"));
 }
 
 void ArrowEntity::PostUpdate(EntityService& entityService)

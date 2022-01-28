@@ -6,11 +6,10 @@
 
 #pragma once
 
-#include <map>
 #include <string>
-#include <tuple>
 
 #include "Draw/Animation.h"
+#include "Draw/Image.h"
 
 namespace FA {
 
@@ -18,7 +17,6 @@ class SheetManager;
 
 struct AnimationData
 {
-    std::string key_;
     std::string sheetId_;
     struct LocationData
     {
@@ -31,19 +29,22 @@ struct AnimationData
     bool mirror_;
 };
 
-class AnimationDb
+struct ImageData
+{
+    std::string sheetId_;
+    sf::Vector2u position_;
+    float rotation_;
+};
+
+class FrameHandler
 {
 public:
-    AnimationDb(const SheetManager &sheetManager);
-    void AddAnimation(const AnimationData &data);
-    Animation GetAnimation(const std::string &k) const;
+    FrameHandler(const SheetManager &sheetManager);
+    Animation MakeAnimation(const AnimationData &data) const;
+    Image MakeImage(const ImageData &data) const;
 
 private:
-    std::map<std::string, Animation> map_;
     const SheetManager &sheetManager_;
-
-private:
-    void AddAnimation(const std::string &k, const Animation &animation);
 };
 
 }  // namespace FA

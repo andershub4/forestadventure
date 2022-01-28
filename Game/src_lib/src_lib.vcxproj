@@ -245,7 +245,6 @@
     <ClInclude Include="Entity\Entities\StaticEntity.h" />
     <ClInclude Include="Entity\ModeController.h" />
     <ClInclude Include="Entity\SpawnManager.h" />
-    <ClInclude Include="Resource\ImageDb.h" />
     <ClInclude Include="Resource\SheetData.h" />
     <ClInclude Include="Entity\Factory.h" />
     <ClInclude Include="Entity\Id.h" />
@@ -262,7 +261,7 @@
     <ClInclude Include="Level\CameraManager.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Logging.h" />
-    <ClInclude Include="Resource\AnimationDb.h" />
+    <ClInclude Include="Resource\FrameHandler.h" />
     <ClInclude Include="Resource\SheetManager.h" />
     <ClInclude Include="Resource\TextureManager.h" />
     <ClInclude Include="Scene\Components\PreAlphaComponent.h" />
@@ -338,8 +337,7 @@
     <ClCompile Include="Level\CameraManager.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Logging.cpp" />
-    <ClCompile Include="Resource\AnimationDb.cpp" />
-    <ClCompile Include="Resource\ImageDb.cpp" />
+    <ClCompile Include="Resource\FrameHandler.cpp" />
     <ClCompile Include="Resource\SheetManager.cpp" />
     <ClCompile Include="Scene\Components\PreAlphaComponent.cpp" />
     <ClCompile Include="UI\Title.cpp" />
