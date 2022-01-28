@@ -8,8 +8,7 @@
 
 #include <string>
 
-#include "Draw/Animation.h"
-#include "Draw/Image.h"
+#include <SFML/System/Vector2.hpp>
 
 namespace FA {
 

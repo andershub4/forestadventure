@@ -7,6 +7,8 @@
 #include "FrameHandler.h"
 
 #include "SheetManager.h"
+#include "Draw/Animation.h"
+#include "Draw/Image.h"
 
 namespace FA {
 
