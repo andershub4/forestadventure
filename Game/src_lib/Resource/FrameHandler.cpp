@@ -12,9 +12,9 @@ namespace FA {
 
 namespace {
 
-SpriteSheet::SingleFrame CreateSingleFrame(const SpriteSheet& sheet, const sf::Vector2u position)
+SpriteSheet::Frame CreateFrame(const SpriteSheet& sheet, const sf::Vector2u position)
 {
-    SpriteSheet::SingleFrame f;
+    SpriteSheet::Frame f;
 
     if (sheet.IsValid()) {
         f = sheet.At(position);
@@ -23,10 +23,10 @@ SpriteSheet::SingleFrame CreateSingleFrame(const SpriteSheet& sheet, const sf::V
     return f;
 }
 
-SpriteSheet::FrameData CreateFrameData(const SpriteSheet& sheet, const sf::Vector2u start, unsigned int n,
-                                       unsigned int defaultIndex)
+SpriteSheet::FrameSeq CreateFrameSeq(const SpriteSheet& sheet, const sf::Vector2u start, unsigned int n,
+                                     unsigned int defaultIndex)
 {
-    SpriteSheet::FrameData f;
+    SpriteSheet::FrameSeq f;
 
     if (sheet.IsValid()) {
         f = sheet.Scan(start, n, defaultIndex);
@@ -47,11 +47,11 @@ Animation FrameHandler::MakeAnimation(const AnimationData& data) const
 
     auto location = data.locationData_;
     auto sheet = sheetManager_.GetSheet(data.sheetId_);
-    auto frameData = CreateFrameData(sheet, location.start_, location.nFrames_, location.defaultFrame_);
+    auto frameSeq = CreateFrameSeq(sheet, location.start_, location.nRects_, location.defaultIndex_);
 
-    if (frameData.isValid_) {
-        auto frames = data.mirror_ ? SpriteSheet::MirrorX(frameData.frames_) : frameData.frames_;
-        return Animation(frameData.texture_, frames, frameData.defaultFrame_, t);
+    if (frameSeq.isValid_) {
+        auto rects = data.mirror_ ? SpriteSheet::MirrorX(frameSeq.rects_) : frameSeq.rects_;
+        return Animation(frameSeq.texture_, rects, frameSeq.defaultIndex_, t);
     }
 
     return Animation();
@@ -60,10 +60,10 @@ Animation FrameHandler::MakeAnimation(const AnimationData& data) const
 Image FrameHandler::MakeImage(const ImageData& data) const
 {
     auto sheet = sheetManager_.GetSheet(data.sheetId_);
-    auto singleFrame = CreateSingleFrame(sheet, data.position_);
+    auto frame = CreateFrame(sheet, data.position_);
 
-    if (singleFrame.isValid_) {
-        return Image(singleFrame.texture_, singleFrame.frame_, data.rotation_);
+    if (frame.isValid_) {
+        return Image(frame.texture_, frame.rect_, data.rotation_);
     }
 
     return Image();

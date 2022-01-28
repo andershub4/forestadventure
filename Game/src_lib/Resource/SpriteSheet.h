@@ -19,38 +19,38 @@ namespace FA {
 class SpriteSheet
 {
 public:
-    struct FrameData
+    struct FrameSeq
     {
         const sf::Texture* texture_ = nullptr;
-        unsigned int defaultFrame_ = 0;
-        std::vector<sf::IntRect> frames_;
+        unsigned int defaultIndex_ = 0;
+        std::vector<sf::IntRect> rects_;
         bool isValid_ = false;
     };
 
-    struct SingleFrame
+    struct Frame
     {
         const sf::Texture* texture_ = nullptr;
-        sf::IntRect frame_;
+        sf::IntRect rect_;
         bool isValid_ = false;
     };
 
     SpriteSheet() = default;
-    SpriteSheet(const sf::Texture* texture, const sf::Vector2u& frameCount);
+    SpriteSheet(const sf::Texture* texture, const sf::Vector2u& rectCount);
 
-    static std::vector<sf::IntRect> MirrorX(const std::vector<sf::IntRect>& frames);
+    static std::vector<sf::IntRect> MirrorX(const std::vector<sf::IntRect>& rects);
 
     bool IsValid() const { return isValid_; }
-    FrameData Scan(const sf::Vector2u& uvCoord, unsigned int nFrames, unsigned int defaultFrame) const;
-    SingleFrame At(const sf::Vector2u& uvCoord) const;
+    FrameSeq Scan(const sf::Vector2u& uvCoord, unsigned int nRects, unsigned int defaultIndex) const;
+    Frame At(const sf::Vector2u& uvCoord) const;
 
 private:
     const sf::Texture* texture_;
-    sf::Vector2u frameCount_;
+    sf::Vector2u rectCount_;
     bool isValid_ = false;
 
 private:
-    sf::Vector2u CalcFrameSize() const;
-    std::vector<sf::IntRect> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nFrames) const;
+    sf::Vector2u CalcRectSize() const;
+    std::vector<sf::IntRect> GenerateRects(const sf::Vector2u& uvCoord, unsigned int nRects) const;
 };
 
 }  // namespace FA

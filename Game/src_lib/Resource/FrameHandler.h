@@ -14,6 +14,8 @@
 namespace FA {
 
 class SheetManager;
+class Animation;
+class Image;
 
 struct AnimationData
 {
@@ -21,8 +23,8 @@ struct AnimationData
     struct LocationData
     {
         sf::Vector2u start_;
-        unsigned int nFrames_;
-        unsigned int defaultFrame_ = 0;
+        unsigned int nRects_;
+        unsigned int defaultIndex_ = 0;
     };
 
     LocationData locationData_;

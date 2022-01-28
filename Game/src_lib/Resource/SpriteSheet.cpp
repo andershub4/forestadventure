@@ -12,70 +12,70 @@
 
 namespace FA {
 
-SpriteSheet::SpriteSheet(const sf::Texture* texture, const sf::Vector2u& frameCount)
+SpriteSheet::SpriteSheet(const sf::Texture* texture, const sf::Vector2u& rectCount)
     : texture_(texture)
-    , frameCount_(frameCount)
+    , rectCount_(rectCount)
     , isValid_(true)
 {}
 
-std::vector<sf::IntRect> SpriteSheet::MirrorX(const std::vector<sf::IntRect>& frames)
+std::vector<sf::IntRect> SpriteSheet::MirrorX(const std::vector<sf::IntRect>& rects)
 {
-    std::vector<sf::IntRect> mirrorFrames;
-    for (const auto& frame : frames) {
-        mirrorFrames.emplace_back(frame.left + frame.width, frame.top, -frame.width, frame.height);
+    std::vector<sf::IntRect> mirrorRects;
+    for (const auto& rect : rects) {
+        mirrorRects.emplace_back(rect.left + rect.width, rect.top, -rect.width, rect.height);
     }
 
-    return mirrorFrames;
+    return mirrorRects;
 }
 
-SpriteSheet::FrameData SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nFrames,
-                                         unsigned int defaultFrame) const
+SpriteSheet::FrameSeq SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nRects,
+                                        unsigned int defaultIndex) const
 {
-    auto frames = GenerateFrames(uvCoord, nFrames);
-    return {texture_, defaultFrame, frames, true};
+    auto rects = GenerateRects(uvCoord, nRects);
+    return {texture_, defaultIndex, rects, true};
 }
 
-SpriteSheet::SingleFrame SpriteSheet::At(const sf::Vector2u& uvCoord) const
+SpriteSheet::Frame SpriteSheet::At(const sf::Vector2u& uvCoord) const
 {
-    auto frameSize = CalcFrameSize();
+    auto rectSize = CalcRectSize();
 
-    if (frameSize.x > 0 && frameSize.y) {
-        int left = static_cast<int>(uvCoord.x * frameSize.x);
-        int top = static_cast<int>(uvCoord.y * frameSize.y);
-        int width = static_cast<int>(frameSize.x);
-        int height = static_cast<int>(frameSize.y);
-        sf::IntRect frame = {left, top, width, height};
-        return {texture_, frame, true};
+    if (rectSize.x > 0 && rectSize.y) {
+        int left = static_cast<int>(uvCoord.x * rectSize.x);
+        int top = static_cast<int>(uvCoord.y * rectSize.y);
+        int width = static_cast<int>(rectSize.x);
+        int height = static_cast<int>(rectSize.y);
+        sf::IntRect rect = {left, top, width, height};
+        return {texture_, rect, true};
     }
 
     return {};
 }
 
-sf::Vector2u SpriteSheet::CalcFrameSize() const
+sf::Vector2u SpriteSheet::CalcRectSize() const
 {
     sf::Vector2u textureSize = texture_->getSize();
 
-    if (frameCount_.x > 0 && frameCount_.y > 0)
-        return {textureSize.x / frameCount_.x, textureSize.y / frameCount_.y};
+    if (rectCount_.x > 0 && rectCount_.y > 0)
+        return {textureSize.x / rectCount_.x, textureSize.y / rectCount_.y};
     else
-        LOG_ERROR("Can't calculate frameSize due to frameCount.x, frameCount.y  ", frameCount_.x, frameCount_.y);
+        LOG_ERROR("Can't calculate rectSize due to rectCount.x, rectCount.y  ", rectCount_.x, rectCount_.y);
 
     return {};
 }
 
-std::vector<sf::IntRect> SpriteSheet::GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nFrames) const
+std::vector<sf::IntRect> SpriteSheet::GenerateRects(const sf::Vector2u& uvCoord, unsigned int nRects) const
 {
-    std::vector<sf::IntRect> frames;
-    auto startFrame = At(uvCoord).frame_;
+    std::vector<sf::IntRect> rects;
+    auto startRect = At(uvCoord).rect_;
 
     // build frames from left to right
-    for (unsigned int i = 0; i < nFrames; i++) {
-        auto frame = startFrame;
-        frame.left += i * frame.width;
-        frames.push_back(frame);
+    for (unsigned int i = 0; i < nRects; i++) {
+        auto rect = startRect;
+        rect.left += i * rect.width;
+        rects.push_back(rect);
     }
 
-    return frames;
+    return rects;
 }
 
 }  // namespace FA
