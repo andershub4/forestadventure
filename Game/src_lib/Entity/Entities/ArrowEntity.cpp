@@ -29,10 +29,10 @@ ArrowEntity::~ArrowEntity() = default;
 
 std::vector<ImageData> ArrowEntity::ImageDataStore() const
 {
-    std::vector<ImageData> data = {{SheetId::Arrow, {0, 0}, 270.0f, FrameType::Move, FaceDirection::Left},
-                                   {SheetId::Arrow, {0, 0}, 90.0f, FrameType::Move, FaceDirection::Right},
-                                   {SheetId::Arrow, {0, 0}, 180.0f, FrameType::Move, FaceDirection::Down},
-                                   {SheetId::Arrow, {0, 0}, 0.0f, FrameType::Move, FaceDirection::Up}};
+    std::vector<ImageData> data = {{"Left", SheetId::Arrow, {0, 0}, 270.0f},
+                                   {"Right", SheetId::Arrow, {0, 0}, 90.0f},
+                                   {"Down", SheetId::Arrow, {0, 0}, 180.0f},
+                                   {"Up", SheetId::Arrow, {0, 0}, 0.0f}};
 
     return data;
 }
@@ -61,10 +61,10 @@ void ArrowEntity::RegisterModes(ModeController& modeController, const EntityServ
     auto& mright = moveMode->AddDirection(FaceDirection::Right);
     auto& mup = moveMode->AddDirection(FaceDirection::Up);
     auto& mdown = moveMode->AddDirection(FaceDirection::Down);
-    mleft.image_ = entityService.GetImage(Type(), FrameType::Move, FaceDirection::Left);
-    mright.image_ = entityService.GetImage(Type(), FrameType::Move, FaceDirection::Right);
-    mup.image_ = entityService.GetImage(Type(), FrameType::Move, FaceDirection::Up);
-    mdown.image_ = entityService.GetImage(Type(), FrameType::Move, FaceDirection::Down);
+    mleft.image_ = entityService.GetImage("Left");
+    mright.image_ = entityService.GetImage("Right");
+    mup.image_ = entityService.GetImage("Up");
+    mdown.image_ = entityService.GetImage("Down");
 }
 
 void ArrowEntity::PostUpdate(EntityService& entityService)

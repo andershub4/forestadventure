@@ -29,26 +29,24 @@ ImageDb::ImageDb(const SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {}
 
-void ImageDb::AddImage(EntityType entityType, const ImageData& data)
+void ImageDb::AddImage(const ImageData& data)
 {
-    float t = 0.1f;
-
     auto sheet = sheetManager_.GetSheet(data.sheetId_);
     auto singleFrame = CreateSingleFrame(sheet, data.position_);
     if (singleFrame.isValid_) {
-        Key k = std::make_tuple(entityType, data.frameType_, data.dir_);
+        auto k = data.key_;
         AddImage(k, Image(singleFrame.texture_, singleFrame.frame_, data.rotation_));
     }
 }
 
-void ImageDb::AddImage(Key k, const Image& image)
+void ImageDb::AddImage(const std::string& k, const Image& image)
 {
     map_[k] = image;
 }
 
-Image ImageDb::GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
+Image ImageDb::GetImage(const std::string& k) const
 {
-    return map_.at({entityType, frameType, faceDir});
+    return map_.at(k);
 }
 
 }  // namespace FA

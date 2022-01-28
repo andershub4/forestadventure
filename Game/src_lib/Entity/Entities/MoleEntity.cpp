@@ -29,15 +29,14 @@ MoleEntity::~MoleEntity() = default;
 
 std::vector<AnimationData> MoleEntity::AnimationDataStore() const
 {
-    std::vector<AnimationData> data = {
-        {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true, FrameType::Move, FaceDirection::Left},
-        {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false, FrameType::Move, FaceDirection::Right},
-        {SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false, FrameType::Move, FaceDirection::Down},
-        {SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false, FrameType::Move, FaceDirection::Up},
-        {SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true, FrameType::Idle, FaceDirection::Left},
-        {SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false, FrameType::Idle, FaceDirection::Right},
-        {SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false, FrameType::Idle, FaceDirection::Down},
-        {SheetId::MoleIdleBack, {{0, 0}, 1, 0}, false, FrameType::Idle, FaceDirection::Up}};
+    std::vector<AnimationData> data = {{"Move_Left", SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true},
+                                       {"Move_Right", SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false},
+                                       {"Move_Down", SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false},
+                                       {"Move_Up", SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false},
+                                       {"Idle_Left", SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true},
+                                       {"Idle_Right", SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false},
+                                       {"Idle_Down", SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false},
+                                       {"Idle_Up", SheetId::MoleIdleBack, {{0, 0}, 1, 0}, false}};
 
     return data;
 }
@@ -63,10 +62,10 @@ void MoleEntity::RegisterModes(ModeController& modeController, const EntityServi
     auto& iright = idleMode->AddDirection(FaceDirection::Right);
     auto& iup = idleMode->AddDirection(FaceDirection::Up);
     auto& idown = idleMode->AddDirection(FaceDirection::Down);
-    ileft.animation_ = entityService.GetAnimation(Type(), FrameType::Idle, FaceDirection::Left);
-    iright.animation_ = entityService.GetAnimation(Type(), FrameType::Idle, FaceDirection::Right);
-    iup.animation_ = entityService.GetAnimation(Type(), FrameType::Idle, FaceDirection::Up);
-    idown.animation_ = entityService.GetAnimation(Type(), FrameType::Idle, FaceDirection::Down);
+    ileft.animation_ = entityService.GetAnimation("Idle_Left");
+    iright.animation_ = entityService.GetAnimation("Idle_Right");
+    iup.animation_ = entityService.GetAnimation("Idle_Up");
+    idown.animation_ = entityService.GetAnimation("Idle_Down");
 
     auto moveMode = modeController.RegisterMode<MoveMode>();
     moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
@@ -75,10 +74,10 @@ void MoleEntity::RegisterModes(ModeController& modeController, const EntityServi
     auto& mright = moveMode->AddDirection(FaceDirection::Right);
     auto& mup = moveMode->AddDirection(FaceDirection::Up);
     auto& mdown = moveMode->AddDirection(FaceDirection::Down);
-    mleft.animation_ = entityService.GetAnimation(Type(), FrameType::Move, FaceDirection::Left);
-    mright.animation_ = entityService.GetAnimation(Type(), FrameType::Move, FaceDirection::Right);
-    mup.animation_ = entityService.GetAnimation(Type(), FrameType::Move, FaceDirection::Up);
-    mdown.animation_ = entityService.GetAnimation(Type(), FrameType::Move, FaceDirection::Down);
+    mleft.animation_ = entityService.GetAnimation("Move_Left");
+    mright.animation_ = entityService.GetAnimation("Move_Right");
+    mup.animation_ = entityService.GetAnimation("Move_Up");
+    mdown.animation_ = entityService.GetAnimation("Move_Down");
 }
 
 }  // namespace Entity

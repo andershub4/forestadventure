@@ -10,7 +10,6 @@
 
 #include "AttributeStore.h"
 #include "Enum/FaceDirection.h"
-#include "Enum/FrameType.h"
 #include "Id.h"
 #include "Logging.h"
 #include "Resource/AnimationDb.h"
@@ -58,11 +57,11 @@ public:
 
     sf::Vector2u GetMapSize() const;
 
-    void AddAnimation(EntityType entityType, const AnimationData &data);
-    Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
+    void AddAnimation(const AnimationData &data);
+    Animation GetAnimation(const std::string &k) const;
 
-    void AddImage(EntityType entityType, const ImageData &data);
-    Image GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
+    void AddImage(const ImageData &data);
+    Image GetImage(const std::string &k) const;
 
     std::shared_ptr<Shape> GetShape() const { return shape_; }
 

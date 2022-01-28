@@ -43,24 +43,24 @@ sf::Vector2u EntityService::GetMapSize() const
     return cameraManager_.GetMapSize();
 }
 
-void EntityService::AddAnimation(EntityType entityType, const AnimationData& data)
+void EntityService::AddAnimation(const AnimationData& data)
 {
-    animationDb_.AddAnimation(entityType, data);
+    animationDb_.AddAnimation(data);
 }
 
-Animation EntityService::GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
+Animation EntityService::GetAnimation(const std::string& k) const
 {
-    return animationDb_.GetAnimation(entityType, frameType, faceDir);
+    return animationDb_.GetAnimation(k);
 }
 
-void EntityService::AddImage(EntityType entityType, const ImageData& data)
+void EntityService::AddImage(const ImageData& data)
 {
-    imageDb_.AddImage(entityType, data);
+    imageDb_.AddImage(data);
 }
 
-Image EntityService::GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
+Image EntityService::GetImage(const std::string& k) const
 {
-    return imageDb_.GetImage(entityType, frameType, faceDir);
+    return imageDb_.GetImage(k);
 }
 
 void EntityService::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position,

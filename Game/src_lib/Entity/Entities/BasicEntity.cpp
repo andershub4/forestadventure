@@ -75,10 +75,10 @@ void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)
 void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
 {
     for (const auto& data : AnimationDataStore()) {
-        entityService_.AddAnimation(Type(), data);
+        entityService_.AddAnimation(data);
     }
     for (const auto& data : ImageDataStore()) {
-        entityService_.AddImage(Type(), data);
+        entityService_.AddImage(data);
     }
 
     auto c = std::dynamic_pointer_cast<CreateEvent>(event);

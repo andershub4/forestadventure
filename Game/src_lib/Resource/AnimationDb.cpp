@@ -30,7 +30,7 @@ AnimationDb::AnimationDb(const SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {}
 
-void AnimationDb::AddAnimation(EntityType entityType, const AnimationData& data)
+void AnimationDb::AddAnimation(const AnimationData& data)
 {
     float t = 0.1f;
 
@@ -38,20 +38,20 @@ void AnimationDb::AddAnimation(EntityType entityType, const AnimationData& data)
     auto sheet = sheetManager_.GetSheet(data.sheetId_);
     auto frameData = CreateFrameData(sheet, location.start_, location.nFrames_, location.defaultFrame_);
     if (frameData.isValid_) {
-        Key k = std::make_tuple(entityType, data.frameType_, data.dir_);
+        auto k = data.key_;
         auto frames = data.mirror_ ? SpriteSheet::MirrorX(frameData.frames_) : frameData.frames_;
         AddAnimation(k, Animation(frameData.texture_, frames, frameData.defaultFrame_, t));
     }
 }
 
-void AnimationDb::AddAnimation(Key k, const Animation& animation)
+void AnimationDb::AddAnimation(const std::string& k, const Animation& animation)
 {
     map_[k] = animation;
 }
 
-Animation AnimationDb::GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const
+Animation AnimationDb::GetAnimation(const std::string& k) const
 {
-    return map_.at({entityType, frameType, faceDir});
+    return map_.at(k);
 }
 
 }  // namespace FA

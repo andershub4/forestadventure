@@ -7,12 +7,10 @@
 #pragma once
 
 #include <map>
+#include <string>
 #include <tuple>
 
 #include "Draw/Animation.h"
-#include "Enum/EntityType.h"
-#include "Enum/FaceDirection.h"
-#include "Enum/FrameType.h"
 
 namespace FA {
 
@@ -20,6 +18,7 @@ class SheetManager;
 
 struct AnimationData
 {
+    std::string key_;
     std::string sheetId_;
     struct LocationData
     {
@@ -30,24 +29,21 @@ struct AnimationData
 
     LocationData locationData_;
     bool mirror_;
-    FrameType frameType_;
-    FaceDirection dir_;
 };
 
 class AnimationDb
 {
 public:
     AnimationDb(const SheetManager &sheetManager);
-    void AddAnimation(EntityType entityType, const AnimationData &data);
-    Animation GetAnimation(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
+    void AddAnimation(const AnimationData &data);
+    Animation GetAnimation(const std::string &k) const;
 
 private:
-    using Key = std::tuple<EntityType, FrameType, FaceDirection>;
-    std::map<Key, Animation> map_;
+    std::map<std::string, Animation> map_;
     const SheetManager &sheetManager_;
 
 private:
-    void AddAnimation(Key k, const Animation &animation);
+    void AddAnimation(const std::string &k, const Animation &animation);
 };
 
 }  // namespace FA

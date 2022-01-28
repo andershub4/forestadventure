@@ -7,12 +7,10 @@
 #pragma once
 
 #include <map>
+#include <string>
 #include <tuple>
 
 #include "Draw/Image.h"
-#include "Enum/EntityType.h"
-#include "Enum/FaceDirection.h"
-#include "Enum/FrameType.h"
 
 namespace FA {
 
@@ -20,27 +18,25 @@ class SheetManager;
 
 struct ImageData
 {
+    std::string key_;
     std::string sheetId_;
     sf::Vector2u position_;
     float rotation_;
-    FrameType frameType_;
-    FaceDirection dir_;
 };
 
 class ImageDb
 {
 public:
     ImageDb(const SheetManager &sheetManager);
-    void AddImage(EntityType entityType, const ImageData &data);
-    Image GetImage(EntityType entityType, FrameType frameType, FaceDirection faceDir) const;
+    void AddImage(const ImageData &data);
+    Image GetImage(const std::string &k) const;
 
 private:
-    using Key = std::tuple<EntityType, FrameType, FaceDirection>;
-    std::map<Key, Image> map_;
+    std::map<std::string, Image> map_;
     const SheetManager &sheetManager_;
 
 private:
-    void AddImage(Key k, const Image &image);
+    void AddImage(const std::string &k, const Image &image);
 };
 
 }  // namespace FA
