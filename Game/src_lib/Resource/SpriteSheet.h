@@ -16,48 +16,18 @@
 
 namespace FA {
 
+struct Frame;
+
 class SpriteSheet
 {
 public:
-    struct FrameSeq
-    {
-        FrameSeq(const sf::Texture* texture, unsigned int defaultIndex, const std::vector<sf::IntRect> rects)
-            : texture_(texture)
-            , defaultIndex_(defaultIndex)
-            , rects_(rects)
-            , isValid_(true)
-        {}
-
-        FrameSeq() = default;
-
-        const sf::Texture* texture_ = nullptr;
-        unsigned int defaultIndex_ = 0;
-        std::vector<sf::IntRect> rects_;
-        bool isValid_ = false;
-    };
-
-    struct Frame
-    {
-        Frame(const sf::Texture* texture, const sf::IntRect& rect)
-            : texture_(texture)
-            , rect_(rect)
-            , isValid_(true)
-        {}
-
-        Frame() = default;
-
-        const sf::Texture* texture_ = nullptr;
-        sf::IntRect rect_;
-        bool isValid_ = false;
-    };
-
     SpriteSheet() = default;
     SpriteSheet(const sf::Texture* texture, const sf::Vector2u& rectCount);
 
-    static std::vector<sf::IntRect> MirrorX(const std::vector<sf::IntRect>& rects);
+    static std::vector<Frame> MirrorX(const std::vector<Frame>& frames);
 
     bool IsValid() const { return isValid_; }
-    FrameSeq Scan(const sf::Vector2u& uvCoord, unsigned int nRects, unsigned int defaultIndex) const;
+    std::vector<Frame> Scan(const sf::Vector2u& uvCoord, unsigned int nRects, unsigned int defaultIndex) const;
     Frame At(const sf::Vector2u& uvCoord) const;
 
 private:
@@ -67,7 +37,7 @@ private:
 
 private:
     sf::Vector2u CalcRectSize() const;
-    std::vector<sf::IntRect> GenerateRects(const sf::Vector2u& uvCoord, unsigned int nRects) const;
+    std::vector<Frame> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const;
 };
 
 }  // namespace FA

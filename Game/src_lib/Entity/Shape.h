@@ -13,9 +13,9 @@
 #endif
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Draw/Animation.h"
-#include "Draw/Image.h"
 #include "Fwd/SfmlFwd.h"
+#include "Resource/Animation.h"
+#include "Resource/Image.h"
 
 namespace FA {
 

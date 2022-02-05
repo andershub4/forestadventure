@@ -18,7 +18,7 @@
     <ClCompile Include="Game\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Draw\Animation.cpp">
+    <ClCompile Include="Resource\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Message\MessageBus.cpp">
@@ -201,7 +201,7 @@
     <ClCompile Include="Resource\SheetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Draw\Image.cpp">
+    <ClCompile Include="Resource\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\SpawnManager.cpp">
@@ -227,7 +227,7 @@
     <ClInclude Include="Resource\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Draw\Animation.h">
+    <ClInclude Include="Resource\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Fwd\SfmlFwd.h">
@@ -506,7 +506,7 @@
     <ClInclude Include="Resource\SheetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Draw\Image.h">
+    <ClInclude Include="Resource\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\SpawnManager.h">
@@ -525,6 +525,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tile\ImageTileSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

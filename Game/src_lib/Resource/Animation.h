@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
+#include "Frame.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -18,8 +19,7 @@ class Animation
 {
 public:
     Animation() = default;
-    Animation(const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame,
-              float switchTime);
+    Animation(const std::vector<Frame>& frames, unsigned int defaultFrame, float switchTime);
 
     void Update(float deltaTime);  // delta time; time since previous time to current frame
     void ApplyTo(sf::Sprite& sprite);
@@ -34,9 +34,9 @@ private:
     float time_{};        // time since we last switched frame
     float switchTime_{};  // time before to switch to next frame
     unsigned int iFrame_{};
-    std::vector<sf::IntRect> frames_;
+    std::vector<Frame> frames_;
     unsigned int nFrames_{};
-    unsigned int defaultFrame_{};
+    unsigned int defaultIndex_{};
     bool isCompleted_ = false;
     bool isValid_ = false;
 };

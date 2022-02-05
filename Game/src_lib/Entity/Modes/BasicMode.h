@@ -9,12 +9,12 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Draw/Animation.h"
-#include "Draw/Image.h"
 #include "Entity/Action.h"
 #include "Entity/EventType.h"
 #include "Enum/FaceDirection.h"
 #include "Fwd/SfmlFwd.h"
+#include "Resource/Animation.h"
+#include "Resource/Image.h"
 
 namespace FA {
 

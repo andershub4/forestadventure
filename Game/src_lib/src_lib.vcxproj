@@ -209,8 +209,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constant\Entity.h" />
-    <ClInclude Include="Draw\Animation.h" />
-    <ClInclude Include="Draw\Image.h" />
+    <ClInclude Include="Resource\Animation.h" />
+    <ClInclude Include="Resource\Frame.h" />
+    <ClInclude Include="Resource\Image.h" />
     <ClInclude Include="Constant\Screen.h" />
     <ClInclude Include="Effect\BasicEffect.h" />
     <ClInclude Include="Effect\FadeEffect.h" />
@@ -312,8 +313,8 @@
     <ClInclude Include="Folder.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Draw\Animation.cpp" />
-    <ClCompile Include="Draw\Image.cpp" />
+    <ClCompile Include="Resource\Animation.cpp" />
+    <ClCompile Include="Resource\Image.cpp" />
     <ClCompile Include="Effect\BasicEffect.cpp" />
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />

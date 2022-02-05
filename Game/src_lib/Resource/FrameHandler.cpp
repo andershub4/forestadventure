@@ -6,17 +6,17 @@
 
 #include "FrameHandler.h"
 
+#include "Animation.h"
+#include "Image.h"
 #include "SheetManager.h"
-#include "Draw/Animation.h"
-#include "Draw/Image.h"
 
 namespace FA {
 
 namespace {
 
-SpriteSheet::Frame CreateFrame(const SpriteSheet& sheet, const sf::Vector2u position)
+Frame CreateFrame(const SpriteSheet& sheet, const sf::Vector2u position)
 {
-    SpriteSheet::Frame f;
+    Frame f;
 
     if (sheet.IsValid()) {
         f = sheet.At(position);
@@ -25,10 +25,10 @@ SpriteSheet::Frame CreateFrame(const SpriteSheet& sheet, const sf::Vector2u posi
     return f;
 }
 
-SpriteSheet::FrameSeq CreateFrameSeq(const SpriteSheet& sheet, const sf::Vector2u start, unsigned int n,
-                                     unsigned int defaultIndex)
+std::vector<Frame> CreateFrames(const SpriteSheet& sheet, const sf::Vector2u start, unsigned int n,
+                                unsigned int defaultIndex)
 {
-    SpriteSheet::FrameSeq f;
+    std::vector<Frame> f;
 
     if (sheet.IsValid()) {
         f = sheet.Scan(start, n, defaultIndex);
@@ -49,11 +49,11 @@ Animation FrameHandler::MakeAnimation(const AnimationData& data) const
 
     auto location = data.locationData_;
     auto sheet = sheetManager_.GetSheet(data.sheetId_);
-    auto frameSeq = CreateFrameSeq(sheet, location.start_, location.nRects_, location.defaultIndex_);
+    auto frames = CreateFrames(sheet, location.start_, location.nRects_, location.defaultIndex_);
 
-    if (frameSeq.isValid_) {
-        auto rects = data.mirror_ ? SpriteSheet::MirrorX(frameSeq.rects_) : frameSeq.rects_;
-        return Animation(frameSeq.texture_, rects, frameSeq.defaultIndex_, t);
+    if (!frames.empty()) {
+        auto f = data.mirror_ ? SpriteSheet::MirrorX(frames) : frames;
+        return Animation(f, location.defaultIndex_, t);
     }
 
     return Animation();

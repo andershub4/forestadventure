@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
+#include "Frame.h"
 #include "Logging.h"
 
 namespace FA {
@@ -18,24 +19,26 @@ SpriteSheet::SpriteSheet(const sf::Texture* texture, const sf::Vector2u& rectCou
     , isValid_(true)
 {}
 
-std::vector<sf::IntRect> SpriteSheet::MirrorX(const std::vector<sf::IntRect>& rects)
+std::vector<Frame> SpriteSheet::MirrorX(const std::vector<Frame>& frames)
 {
-    std::vector<sf::IntRect> mirrorRects;
-    for (const auto& rect : rects) {
-        mirrorRects.emplace_back(rect.left + rect.width, rect.top, -rect.width, rect.height);
+    std::vector<Frame> mirrorFrames;
+
+    for (const auto& frame : frames) {
+        Frame f = frame;
+        f.rect_.left = frame.rect_.left + frame.rect_.width;
+        f.rect_.width = -frame.rect_.width;
+        mirrorFrames.push_back(f);
     }
 
-    return mirrorRects;
+    return mirrorFrames;
 }
 
-SpriteSheet::FrameSeq SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nRects,
-                                        unsigned int defaultIndex) const
+std::vector<Frame> SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nRects, unsigned int defaultIndex) const
 {
-    auto rects = GenerateRects(uvCoord, nRects);
-    return FrameSeq(texture_, defaultIndex, rects);
+    return GenerateFrames(uvCoord, nRects);
 }
 
-SpriteSheet::Frame SpriteSheet::At(const sf::Vector2u& uvCoord) const
+Frame SpriteSheet::At(const sf::Vector2u& uvCoord) const
 {
     auto rectSize = CalcRectSize();
 
@@ -63,19 +66,21 @@ sf::Vector2u SpriteSheet::CalcRectSize() const
     return {};
 }
 
-std::vector<sf::IntRect> SpriteSheet::GenerateRects(const sf::Vector2u& uvCoord, unsigned int nRects) const
+std::vector<Frame> SpriteSheet::GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const
 {
-    std::vector<sf::IntRect> rects;
-    auto startRect = At(uvCoord).rect_;
+    std::vector<Frame> frames;
+    auto startFrame = At(uvCoord);
 
-    // build frames from left to right
-    for (unsigned int i = 0; i < nRects; i++) {
-        auto rect = startRect;
-        rect.left += i * rect.width;
-        rects.push_back(rect);
+    if (startFrame.isValid_) {
+        // build frames from left to right
+        for (unsigned int i = 0; i < nRects; i++) {
+            auto frame = startFrame;
+            frame.rect_.left += i * frame.rect_.width;
+            frames.push_back(frame);
+        }
     }
 
-    return rects;
+    return frames;
 }
 
 }  // namespace FA

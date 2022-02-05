@@ -7,17 +7,16 @@
 #include "Animation.h"
 
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 namespace FA {
 
-Animation::Animation(const sf::Texture* texture, const std::vector<sf::IntRect>& frames, unsigned int defaultFrame,
-                     float switchTime)
-    : texture_(texture)
-    , frames_(frames)
+Animation::Animation(const std::vector<Frame>& frames, unsigned int defaultIndex, float switchTime)
+    : frames_(frames)
     , switchTime_(switchTime)
     , time_(0.0)
-    , defaultFrame_(defaultFrame)
-    , iFrame_(defaultFrame)
+    , defaultIndex_(defaultIndex)
+    , iFrame_(defaultIndex)
     , isValid_(true)
 {
     nFrames_ = frames.size();
@@ -25,8 +24,8 @@ Animation::Animation(const sf::Texture* texture, const std::vector<sf::IntRect>&
 
 void Animation::ApplyTo(sf::Sprite& sprite)
 {
-    sprite.setTexture(*texture_);
-    sprite.setTextureRect(frames_[iFrame_]);
+    sprite.setTexture(*frames_[iFrame_].texture_);
+    sprite.setTextureRect(frames_[iFrame_].rect_);
 }
 
 void Animation::Update(float deltaTime)
@@ -50,7 +49,7 @@ void Animation::Start()
 void Animation::Stop()
 {
     isStopped_ = true;
-    iFrame_ = defaultFrame_;
+    iFrame_ = defaultIndex_;
 }
 
 bool Animation::IsCompleted() const
