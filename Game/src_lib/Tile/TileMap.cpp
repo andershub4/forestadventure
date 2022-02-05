@@ -7,6 +7,7 @@
 #include "TileMap.h"
 
 #include "GridTileSet.h"
+#include "ImageTileSet.h"
 #include "Logging.h"
 
 namespace FA {
@@ -31,7 +32,12 @@ void TileMap::Create(const TileMapData& tileMapData)
 
 std::unique_ptr<BasicTileSet> TileMap::CreateTileSet(const TileMapData::TileSet& tileSet) const
 {
-    return std::make_unique<GridTileSet>(tileSet, textureManager_);
+    if (!tileSet.tiles_.empty()) {
+        return std::make_unique<ImageTileSet>(tileSet, textureManager_);
+    }
+    else {
+        return std::make_unique<GridTileSet>(tileSet, textureManager_);
+    }
 }
 
 void TileMap::CreateTileSets()

@@ -31,6 +31,23 @@ struct TileMapData
         std::string textureFilePath_;
     };
 
+    struct Animation
+    {
+        struct Frame
+        {
+            int tileId_{};
+            int duration_{};
+        };
+        std::vector<Frame> frames_;
+    };
+
+    struct Tile
+    {
+        int id_{};
+        Image image_;
+        Animation animation_;
+    };
+    
     struct TileSet
     {
         struct Dimensions
@@ -42,6 +59,7 @@ struct TileMapData
         };
         Dimensions dimensions_;
         Image image_{};
+        std::vector<Tile> tiles_;
         int firstGid_{};
     };
 

@@ -19,9 +19,23 @@ struct Image
     const sf::Texture *texture_ = nullptr;
 };
 
+struct Animation
+{
+    sf::Vector2i size_;
+    struct Frame
+    {
+        sf::IntRect uvRect_;
+        const sf::Texture *texture_ = nullptr;
+        float switchTime_{};
+    };
+
+    std::vector<Frame> frames_;
+};
+
 struct Tile
 {
     Image image_;
+    Animation animation;
 };
 
 class BasicTileSet

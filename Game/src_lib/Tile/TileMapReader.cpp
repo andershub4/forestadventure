@@ -67,6 +67,7 @@ void TileMapReader::ReadTileSets(const TmxParser& tmxParser, const std::string& 
                 set.dimensions_.columns_ = tsxParser.tileSet_.columns_;
                 set.dimensions_.tileCount_ = tsxParser.tileSet_.tileCount_;
                 set.image_ = GetImage(tsxDir, tsxParser);
+                set.tiles_ = GetTiles(tsxDir, tsxParser);
                 tileMapData_.tileSets_.push_back(set);
             }
             else {
@@ -80,6 +81,27 @@ TileMapData::Image TileMapReader::GetImage(const std::string& tsxDir, const TsxP
 {
     auto textureFilePath = GetFilePath(tsxDir, tsxParser.image_.source_);
     return {tsxParser.image_.width_, tsxParser.image_.height_, textureFilePath};
+}
+
+std::vector<TileMapData::Tile> TileMapReader::GetTiles(const std::string& tsxDir, const TsxParser& tsxParser) const
+{
+    std::vector<TileMapData::Tile> tiles;
+    auto parsedTiles = tsxParser.tiles_;
+    for (const auto& parsedTile : parsedTiles) {
+        TileMapData::Tile tile;
+        tile.image_.textureFilePath_ = GetFilePath(tsxDir, parsedTile.image_.source_);
+        tile.id_ = parsedTile.id_;
+        auto animation = parsedTile.animation_;
+        for (const auto& frame : animation.frames_) {
+            TileMapData::Animation::Frame f;
+            f.tileId_ = frame.tiledId_;
+            f.duration_ = frame.duration_;
+            tile.animation_.frames_.push_back(f);
+        }
+        tiles.push_back(tile);
+    }
+
+    return tiles;
 }
 
 void TileMapReader::ReadLayers(const TmxParser& tmxParser)
