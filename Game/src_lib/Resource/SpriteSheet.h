@@ -21,6 +21,15 @@ class SpriteSheet
 public:
     struct FrameSeq
     {
+        FrameSeq(const sf::Texture* texture, unsigned int defaultIndex, const std::vector<sf::IntRect> rects)
+            : texture_(texture)
+            , defaultIndex_(defaultIndex)
+            , rects_(rects)
+            , isValid_(true)
+        {}
+
+        FrameSeq() = default;
+
         const sf::Texture* texture_ = nullptr;
         unsigned int defaultIndex_ = 0;
         std::vector<sf::IntRect> rects_;
@@ -29,6 +38,14 @@ public:
 
     struct Frame
     {
+        Frame(const sf::Texture* texture, const sf::IntRect& rect)
+            : texture_(texture)
+            , rect_(rect)
+            , isValid_(true)
+        {}
+
+        Frame() = default;
+
         const sf::Texture* texture_ = nullptr;
         sf::IntRect rect_;
         bool isValid_ = false;
@@ -44,7 +61,7 @@ public:
     Frame At(const sf::Vector2u& uvCoord) const;
 
 private:
-    const sf::Texture* texture_;
+    const sf::Texture* texture_ = nullptr;
     sf::Vector2u rectCount_;
     bool isValid_ = false;
 

@@ -32,7 +32,7 @@ SpriteSheet::FrameSeq SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned in
                                         unsigned int defaultIndex) const
 {
     auto rects = GenerateRects(uvCoord, nRects);
-    return {texture_, defaultIndex, rects, true};
+    return FrameSeq(texture_, defaultIndex, rects);
 }
 
 SpriteSheet::Frame SpriteSheet::At(const sf::Vector2u& uvCoord) const
@@ -45,7 +45,7 @@ SpriteSheet::Frame SpriteSheet::At(const sf::Vector2u& uvCoord) const
         int width = static_cast<int>(rectSize.x);
         int height = static_cast<int>(rectSize.y);
         sf::IntRect rect = {left, top, width, height};
-        return {texture_, rect, true};
+        return Frame(texture_, rect);
     }
 
     return {};
