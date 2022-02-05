@@ -6,9 +6,8 @@
 
 #include "TileMap.h"
 
-#include "Folder.h"
+#include "GridTileSet.h"
 #include "Logging.h"
-#include "Resource/TextureManager.h"
 
 namespace FA {
 
@@ -30,18 +29,18 @@ void TileMap::Create(const TileMapData& tileMapData)
     CreateObjectGroups();
 }
 
+std::unique_ptr<BasicTileSet> TileMap::CreateTileSet(const TileMapData::TileSet& tileSet) const
+{
+    return std::make_unique<GridTileSet>(tileSet, textureManager_);
+}
+
 void TileMap::CreateTileSets()
 {
     for (const auto& tileSet : tileMapData_.tileSets_) {
-        TileMap::TileSet s;
-        s.firstGid_ = tileSet.firstGid_;
-        s.columns_ = tileSet.columns_;
-        s.tileSize_ = sf::Vector2u(tileSet.tileWidth_, tileSet.tileHeight_);
-        auto p = tileSet.textureFilePath_;
-        auto name = GetHead(p);
-        textureManager_.Add(name, p);
-        s.texture_ = textureManager_.Get(name);
-        tileSets_.push_back(s);
+        auto s = CreateTileSet(tileSet);
+        s->Load();
+        auto firstGid = tileSet.firstGid_;
+        tileSets_[firstGid] = std::move(s);
     }
 }
 
@@ -61,10 +60,10 @@ void TileMap::CreateLayers()
             float y = static_cast<float>((inx / nCols) * tileHeight * scale_);
             auto tileInfo = GetTileInfo(tileId);
 
-            if (tileInfo.texture_ != nullptr) {
+            if (tileInfo.image_.texture_ != nullptr) {
                 sf::Sprite tile;
-                tile.setTexture(*tileInfo.texture_);
-                tile.setTextureRect(tileInfo.uvRect_);
+                tile.setTexture(*tileInfo.image_.texture_);
+                tile.setTextureRect(tileInfo.image_.uvRect_);
                 tile.setPosition(x, y);
                 tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
                 layers_[layerName].push_back(tile);
@@ -109,19 +108,18 @@ sf::Vector2u TileMap::GetSize() const
     return {nCols * tileWidth * scale_, nRows * tileHeight * scale_};
 }
 
-TileMap::TileInfo TileMap::GetTileInfo(int id)
+Tile TileMap::GetTileInfo(int id)
 {
-    auto it = tileSets_.begin();
-    id--;
+    auto it = tileSets_.lower_bound(id);
 
-    auto texture = it->texture_;
-    auto column = id % it->columns_;
-    auto row = id / it->columns_;
-    auto u = column * it->tileSize_.x;
-    auto v = row * it->tileSize_.y;
-    sf::IntRect uvRect = sf::IntRect(u, v, it->tileSize_.x, it->tileSize_.y);
-
-    return {texture, uvRect};
+    if (it != tileSets_.end()) {
+        auto firstGid = it->first;
+        return it->second->GetTile(id - firstGid);
+    }
+    else {
+        LOG_ERROR("Id ", id, "not found");
+        return {};
+    }
 }
 
 EntityType TileMap::ObjTypeStrToEnum(const std::string& typeStr) const

@@ -24,13 +24,24 @@ struct TileMapData
         int tileHeight_{};
     };
 
+    struct Image
+    {
+        int width_{};
+        int height_{};
+        std::string textureFilePath_;
+    };
+
     struct TileSet
     {
-        int tileWidth_{};
-        int tileHeight_{};
-        int columns_{};
-        int tileCount_{};
-        std::string textureFilePath_;
+        struct Dimensions
+        {
+            int tileWidth_{};
+            int tileHeight_{};
+            int columns_{};
+            int tileCount_{};
+        };
+        Dimensions dimensions_;
+        Image image_{};
         int firstGid_{};
     };
 

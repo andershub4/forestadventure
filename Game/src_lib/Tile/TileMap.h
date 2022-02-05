@@ -7,11 +7,13 @@
 #pragma once
 
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "BasicTileSet.h"
 #include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 #include "Fwd/SfmlFwd.h"
@@ -42,24 +44,10 @@ public:
     unsigned int GetScale() const { return scale_; }
 
 private:
-    struct TileSet
-    {
-        const sf::Texture *texture_ = nullptr;
-        sf::Vector2u tileSize_;
-        int columns_{};
-        int firstGid_{};
-    };
-
-    struct TileInfo
-    {
-        const sf::Texture *texture_ = nullptr;
-        sf::IntRect uvRect_;
-    };
-
     TextureManager &textureManager_;
     TileMapData tileMapData_;
     std::map<std::string, std::vector<sf::Sprite>> layers_;
-    std::vector<TileSet> tileSets_;
+    std::map<int, std::unique_ptr<BasicTileSet>, std::greater<int>> tileSets_;
     std::map<std::string, std::vector<ObjectData>> objectGroups_;
     unsigned int scale_{};
 
@@ -67,7 +55,8 @@ private:
     void CreateTileSets();
     void CreateLayers();
     void CreateObjectGroups();
-    TileInfo GetTileInfo(int id);
+    std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet &tileSet) const;
+    Tile GetTileInfo(int id);
     EntityType ObjTypeStrToEnum(const std::string &typeStr) const;
     FaceDirection FaceDirStrToEnum(const std::string &faceDirStr) const;
 };

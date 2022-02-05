@@ -8,7 +8,6 @@
 
 #include "Folder.h"
 #include "Logging.h"
-#include "Resource/TextureManager.h"
 #include "TmxParser.h"
 #include "TsxParser.h"
 
@@ -57,24 +56,30 @@ void TileMapReader::ReadTileSets(const TmxParser& tmxParser, const std::string& 
     }
     else {
         for (const auto& parsedSet : tmxParser.tileSets_) {
-            auto tsxFilePath = GetFilePath(tmxDir, parsedSet.source_);
+            auto tsxFilePath = GetFilePath(tmxDir, parsedSet.tsxSource_);
+            auto tsxDir = GetHead(tsxFilePath);
             TsxParser tsxParser;
             if (tsxParser.Parse(tsxFilePath)) {
                 TileMapData::TileSet set;
                 set.firstGid_ = parsedSet.firstGid_;
-                set.tileWidth_ = tsxParser.tileSet_.tileWidth_;
-                set.tileHeight_ = tsxParser.tileSet_.tileHeight_;
-                set.columns_ = tsxParser.tileSet_.columns_;
-                set.tileCount_ = tsxParser.tileSet_.tileCount_;
-                auto tsxDir = GetHead(tsxFilePath);
-                set.textureFilePath_ = GetFilePath(tsxDir, tsxParser.image_.source_);
+                set.dimensions_.tileWidth_ = tsxParser.tileSet_.tileWidth_;
+                set.dimensions_.tileHeight_ = tsxParser.tileSet_.tileHeight_;
+                set.dimensions_.columns_ = tsxParser.tileSet_.columns_;
+                set.dimensions_.tileCount_ = tsxParser.tileSet_.tileCount_;
+                set.image_ = GetImage(tsxDir, tsxParser);
                 tileMapData_.tileSets_.push_back(set);
             }
             else {
-                LOG_ERROR("Can not load: ", parsedSet.source_);
+                LOG_ERROR("Can not load: ", parsedSet.tsxSource_);
             }
         }
     }
+}
+
+TileMapData::Image TileMapReader::GetImage(const std::string& tsxDir, const TsxParser& tsxParser) const
+{
+    auto textureFilePath = GetFilePath(tsxDir, tsxParser.image_.source_);
+    return {tsxParser.image_.width_, tsxParser.image_.height_, textureFilePath};
 }
 
 void TileMapReader::ReadLayers(const TmxParser& tmxParser)
