@@ -44,8 +44,46 @@ void TsxParser::ParseTileSetElement(tinyxml2::XMLElement* tileSetElement)
     LOG_TMXINFO("tileWidth: ", tileSet_.tileWidth_, " tileHeight: ", tileSet_.tileHeight_);
     LOG_TMXINFO("tileCount: ", tileSet_.tileCount_, " columns: ", tileSet_.columns_);
 
-    tinyxml2::XMLElement* imageElement = tileSetElement->FirstChildElement("image");
-    ParseImageElement(imageElement, image_);
+    tinyxml2::XMLElement* tileElement = tileSetElement->FirstChildElement("tile");
+    if (tileElement) {  // Collection of images
+        while (tileElement != nullptr) {
+            Tile tile;
+            ParseTileElement(tileElement, tile);
+            tiles_.push_back(tile);
+            tileElement = tileElement->NextSiblingElement("tile");
+        }
+    }
+    else {  // Based on grid image
+        tinyxml2::XMLElement* imageElement = tileSetElement->FirstChildElement("image");
+        ParseImageElement(imageElement, image_);
+    }
+}
+
+void TsxParser::ParseTileElement(tinyxml2::XMLElement* tileElement, Tile& tile)
+{
+    tileElement->QueryAttribute("id", &tile.id_);
+    tinyxml2::XMLElement* imageElement = tileElement->FirstChildElement("image");
+    ParseImageElement(imageElement, tile.image_);
+    tinyxml2::XMLElement* animationElement = tileElement->FirstChildElement("animation");
+
+    if (animationElement) {
+        tinyxml2::XMLElement* frameElement = animationElement->FirstChildElement("frame");
+
+        while (frameElement != nullptr) {
+            Tile::Animation::Frame frame;
+            ParseFrameElement(frameElement, frame);
+            tile.animation_.frames_.push_back(frame);
+            frameElement = frameElement->NextSiblingElement("frame");
+        }
+    }
+}
+
+void TsxParser::ParseFrameElement(tinyxml2::XMLElement* frameElement, Tile::Animation::Frame& frame)
+{
+    frameElement->QueryAttribute("tileid", &frame.tiledId_);
+    frameElement->QueryAttribute("duration", &frame.duration_);
+    LOG_TMXINFO("tileId: ", frame.tiledId_);
+    LOG_TMXINFO("duration: ", frame.duration_);
 }
 
 void TsxParser::ParseImageElement(tinyxml2::XMLElement* imageElement, Image& image)
