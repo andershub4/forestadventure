@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
+#include "Frame.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -16,15 +17,14 @@ class Image
 {
 public:
     Image() = default;
-    Image(const sf::Texture* texture, const sf::IntRect& frame, float rotation);
+    Image(const Frame& frame, float rotation);
 
     void Update(float deltaTime);
     void ApplyTo(sf::Sprite& sprite);
     bool IsValid() const;
 
 private:
-    const sf::Texture* texture_ = nullptr;
-    sf::IntRect frame_;
+    Frame frame_;
     float rotation_{};
     bool isValid_ = false;
 };

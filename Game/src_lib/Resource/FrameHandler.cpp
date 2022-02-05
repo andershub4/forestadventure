@@ -65,7 +65,7 @@ Image FrameHandler::MakeImage(const ImageData& data) const
     auto frame = CreateFrame(sheet, data.position_);
 
     if (frame.isValid_) {
-        return Image(frame.texture_, frame.rect_, data.rotation_);
+        return Image(frame, data.rotation_);
     }
 
     return Image();

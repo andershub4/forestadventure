@@ -10,17 +10,16 @@
 
 namespace FA {
 
-Image::Image(const sf::Texture* texture, const sf::IntRect& frame, float rotation)
-    : texture_(texture)
-    , frame_(frame)
+Image::Image(const Frame& frame, float rotation)
+    : frame_(frame)
     , rotation_(rotation)
     , isValid_(true)
 {}
 
 void Image::ApplyTo(sf::Sprite& sprite)
 {
-    sprite.setTexture(*texture_);
-    sprite.setTextureRect(frame_);
+    sprite.setTexture(*frame_.texture_);
+    sprite.setTextureRect(frame_.rect_);
     sprite.setRotation(rotation_);
 }
 
