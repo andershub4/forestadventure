@@ -33,7 +33,7 @@ std::vector<Frame> SpriteSheet::MirrorX(const std::vector<Frame>& frames)
     return mirrorFrames;
 }
 
-std::vector<Frame> SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nRects, unsigned int defaultIndex) const
+std::vector<Frame> SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const
 {
     return GenerateFrames(uvCoord, nRects);
 }

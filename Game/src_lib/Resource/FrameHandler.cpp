@@ -25,13 +25,12 @@ Frame CreateFrame(const SpriteSheet& sheet, const sf::Vector2u position)
     return f;
 }
 
-std::vector<Frame> CreateFrames(const SpriteSheet& sheet, const sf::Vector2u start, unsigned int n,
-                                unsigned int defaultIndex)
+std::vector<Frame> CreateFrames(const SpriteSheet& sheet, const sf::Vector2u start, unsigned int nRects)
 {
     std::vector<Frame> f;
 
     if (sheet.IsValid()) {
-        f = sheet.Scan(start, n, defaultIndex);
+        f = sheet.Scan(start, nRects);
     }
 
     return f;
@@ -49,7 +48,7 @@ Animation FrameHandler::MakeAnimation(const AnimationData& data) const
 
     auto location = data.locationData_;
     auto sheet = sheetManager_.GetSheet(data.sheetId_);
-    auto frames = CreateFrames(sheet, location.start_, location.nRects_, location.defaultIndex_);
+    auto frames = CreateFrames(sheet, location.start_, location.nRects_);
 
     if (!frames.empty()) {
         auto f = data.mirror_ ? SpriteSheet::MirrorX(frames) : frames;

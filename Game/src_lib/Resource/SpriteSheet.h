@@ -27,7 +27,7 @@ public:
     static std::vector<Frame> MirrorX(const std::vector<Frame>& frames);
 
     bool IsValid() const { return isValid_; }
-    std::vector<Frame> Scan(const sf::Vector2u& uvCoord, unsigned int nRects, unsigned int defaultIndex) const;
+    std::vector<Frame> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const;
     Frame At(const sf::Vector2u& uvCoord) const;
 
 private:
