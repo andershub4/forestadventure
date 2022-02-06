@@ -38,16 +38,12 @@ std::vector<Frame> CreateFrames(const SpriteSheet& sheet, const sf::Vector2u sta
 
 }  // namespace
 
-FrameHandler::FrameHandler(const SheetManager& sheetManager)
-    : sheetManager_(sheetManager)
-{}
-
-Animation FrameHandler::MakeAnimation(const AnimationData& data) const
+Animation FrameHandler::MakeAnimation(const SheetManager& sheetManager, const AnimationData& data) const
 {
     float t = 0.1f;
 
     auto location = data.locationData_;
-    auto sheet = sheetManager_.GetSheet(data.sheetId_);
+    auto sheet = sheetManager.GetSheet(data.sheetId_);
     auto frames = CreateFrames(sheet, location.start_, location.nRects_);
 
     if (!frames.empty()) {
@@ -58,9 +54,9 @@ Animation FrameHandler::MakeAnimation(const AnimationData& data) const
     return Animation();
 }
 
-Image FrameHandler::MakeImage(const ImageData& data) const
+Image FrameHandler::MakeImage(const SheetManager& sheetManager, const ImageData& data) const
 {
-    auto sheet = sheetManager_.GetSheet(data.sheetId_);
+    auto sheet = sheetManager.GetSheet(data.sheetId_);
     auto frame = CreateFrame(sheet, data.position_);
 
     if (frame.isValid_) {

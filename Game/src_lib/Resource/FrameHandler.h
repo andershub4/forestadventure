@@ -40,12 +40,8 @@ struct ImageData
 class FrameHandler
 {
 public:
-    FrameHandler(const SheetManager &sheetManager);
-    Animation MakeAnimation(const AnimationData &data) const;
-    Image MakeImage(const ImageData &data) const;
-
-private:
-    const SheetManager &sheetManager_;
+    Animation MakeAnimation(const SheetManager &sheetManager, const AnimationData &data) const;
+    Image MakeImage(const SheetManager &sheetManager, const ImageData &data) const;
 };
 
 }  // namespace FA

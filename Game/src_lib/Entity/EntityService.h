@@ -70,6 +70,7 @@ private:
     AttributeStore attributeStore_;
     CameraManager &cameraManager_;
     const FrameHandler frameHandler_;
+    const SheetManager &sheetManager_;
     std::shared_ptr<Shape> shape_ = nullptr;
     EntityManager &entityManager_;
     SpawnManager spawnManager_;
