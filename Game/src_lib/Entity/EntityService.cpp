@@ -11,6 +11,8 @@
 #include "Attributes//TransformAttribute.h"
 #include "EntityManager.h"
 #include "Level/CameraManager.h"
+#include "Resource/Animation.h"
+#include "Resource/Image.h"
 #include "Shape.h"
 #include "SpawnManager.h"
 
@@ -44,12 +46,15 @@ sf::Vector2u EntityService::GetMapSize() const
 
 Animation EntityService::MakeAnimation(const AnimationData& data) const
 {
-    return frameHandler_.MakeAnimation(sheetManager_, data);
+    float t = 0.1f;
+    auto frames = frameHandler_.MakeFrames(sheetManager_, data);
+    return Animation(frames, data.locationData_.defaultIndex_, t);
 }
 
 Image EntityService::MakeImage(const ImageData& data) const
 {
-    return frameHandler_.MakeImage(sheetManager_, data);
+    auto frame = frameHandler_.MakeFrame(sheetManager_, data);
+    return Image(frame, data.rotation_);
 }
 
 void EntityService::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position,

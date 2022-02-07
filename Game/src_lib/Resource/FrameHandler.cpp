@@ -6,8 +6,7 @@
 
 #include "FrameHandler.h"
 
-#include "Animation.h"
-#include "Image.h"
+#include "Frame.h"
 #include "SheetManager.h"
 
 namespace FA {
@@ -38,7 +37,7 @@ std::vector<Frame> CreateFrames(const SpriteSheet& sheet, const sf::Vector2u sta
 
 }  // namespace
 
-Animation FrameHandler::MakeAnimation(const SheetManager& sheetManager, const AnimationData& data) const
+std::vector<Frame> FrameHandler::MakeFrames(const SheetManager& sheetManager, const AnimationData& data) const
 {
     float t = 0.1f;
 
@@ -46,24 +45,15 @@ Animation FrameHandler::MakeAnimation(const SheetManager& sheetManager, const An
     auto sheet = sheetManager.GetSheet(data.sheetId_);
     auto frames = CreateFrames(sheet, location.start_, location.nRects_);
 
-    if (!frames.empty()) {
-        auto f = data.mirror_ ? SpriteSheet::MirrorX(frames) : frames;
-        return Animation(f, location.defaultIndex_, t);
-    }
-
-    return Animation();
+    return data.mirror_ ? SpriteSheet::MirrorX(frames) : frames;
 }
 
-Image FrameHandler::MakeImage(const SheetManager& sheetManager, const ImageData& data) const
+Frame FrameHandler::MakeFrame(const SheetManager& sheetManager, const ImageData& data) const
 {
     auto sheet = sheetManager.GetSheet(data.sheetId_);
     auto frame = CreateFrame(sheet, data.position_);
 
-    if (frame.isValid_) {
-        return Image(frame, data.rotation_);
-    }
-
-    return Image();
+    return frame;
 }
 
 }  // namespace FA

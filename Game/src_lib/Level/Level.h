@@ -42,8 +42,8 @@ private:
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
     Entity::Factory factory_;
-    Tile::TileMap tileMap_;
     SheetManager sheetManager_;
+    Tile::TileMap tileMap_;
     Entity::EntityManager entityManager_;
 };
 

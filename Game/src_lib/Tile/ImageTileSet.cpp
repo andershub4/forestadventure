@@ -6,12 +6,14 @@
 
 #include "ImageTileSet.h"
 
+#include "Resource/Frame.h"
+
 namespace FA {
 
 namespace Tile {
 
-ImageTileSet::ImageTileSet(const TileMapData::TileSet &tileSet, TextureManager &textureManager)
-    : BasicTileSet(textureManager)
+ImageTileSet::ImageTileSet(const TileMapData::TileSet &tileSet, SheetManager &sheetManager)
+    : BasicTileSet(sheetManager)
     , tileSet_(tileSet)
 {}
 
@@ -20,12 +22,14 @@ ImageTileSet::~ImageTileSet() = default;
 void ImageTileSet::Load()
 {
     for (const auto &tile : tileSet_.tiles_) {
-        Tile t;
         auto id = tile.id_;
         auto p = tile.image_.textureFilePath_;
-        auto w = tile.image_.width_;
-        auto h = tile.image_.height_;
-        t.image_ = LoadImage(p, w, h);
+        LoadSheet(p, sf::Vector2u(1, 1));
+        auto frame = GetFrame({0, 0});
+
+        Tile t;
+        t.image_.texture_ = frame.texture_;
+        t.image_.uvRect_ = frame.rect_;
         tiles_[id] = t;
     }
 

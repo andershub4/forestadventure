@@ -47,8 +47,8 @@ const std::vector<SheetData> textureSheets = {
 
 Level::Level(MessageBus &messageBus, TextureManager &textureManager, CameraManager &cameraManager)
     : factory_(messageBus)
-    , tileMap_(textureManager, scale_)
     , sheetManager_(textureManager)
+    , tileMap_(sheetManager_, scale_)
     , entityManager_(factory_, cameraManager, sheetManager_)
 
 {}

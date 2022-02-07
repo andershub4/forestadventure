@@ -6,9 +6,16 @@
 
 #pragma once
 
-#include "Resource/TextureManager.h"
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Vector2.hpp>
+
+#include "Fwd/SfmlFwd.h"
+#include "Resource/FrameHandler.h"
 
 namespace FA {
+
+struct Frame;
+class SheetManager;
 
 namespace Tile {
 
@@ -21,7 +28,6 @@ struct Image
 
 struct Animation
 {
-    sf::Vector2i size_;
     struct Frame
     {
         sf::IntRect uvRect_;
@@ -41,20 +47,20 @@ struct Tile
 class BasicTileSet
 {
 public:
-    BasicTileSet(TextureManager &textureManager);
+    BasicTileSet(SheetManager &sheetManager);
     virtual ~BasicTileSet();
 
     virtual void Load() = 0;
     virtual Tile GetTile(int id) const = 0;
 
 protected:
-    Image LoadImage(const std::string &filePath, int w, int h);
+    void LoadSheet(const std::string &filePath, const sf::Vector2u &size);
+    Frame GetFrame(const sf::Vector2u &uvCoord) const;
 
 private:
-    TextureManager &textureManager_;
-
-private:
-    const sf::Texture *LoadTexture(const std::string &textureFilePath);
+    SheetManager &sheetManager_;
+    const FrameHandler frameHandler_;
+    std::string name_;
 };
 
 }  // namespace Tile

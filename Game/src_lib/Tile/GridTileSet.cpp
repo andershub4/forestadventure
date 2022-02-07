@@ -6,12 +6,14 @@
 
 #include "GridTileSet.h"
 
+#include "Resource/Frame.h"
+
 namespace FA {
 
 namespace Tile {
 
-GridTileSet::GridTileSet(const TileMapData::TileSet &tileSet, TextureManager &textureManager)
-    : BasicTileSet(textureManager)
+GridTileSet::GridTileSet(const TileMapData::TileSet &tileSet, SheetManager &sheetManager)
+    : BasicTileSet(sheetManager)
     , tileSet_(tileSet)
 {}
 
@@ -20,28 +22,21 @@ GridTileSet::~GridTileSet() = default;
 void GridTileSet::Load()
 {
     auto p = tileSet_.image_.textureFilePath_;
-    auto w = tileSet_.image_.width_;
-    auto h = tileSet_.image_.height_;
-    image_ = LoadImage(p, w, h);
+    auto nCols = tileSet_.dimensions_.columns_;
+    auto nRows = tileSet_.dimensions_.tileCount_ / tileSet_.dimensions_.columns_;
+    LoadSheet(p, sf::Vector2u(nCols, nRows));
 }
 
 Tile GridTileSet::GetTile(int id) const
 {
     auto nCols = tileSet_.dimensions_.columns_;
-    auto tileW = tileSet_.dimensions_.tileWidth_;
-    auto tileH = tileSet_.dimensions_.tileHeight_;
-
     auto column = id % nCols;
     auto row = id / nCols;
-    auto u = column * tileW;
-    auto v = row * tileH;
-    sf::IntRect uvRect = sf::IntRect(u, v, tileW, tileH);
+    auto frame = GetFrame(sf::Vector2u(column, row));
 
     Tile t;
-    t.image_.texture_ = image_.texture_;
-    t.image_.size_ = sf::Vector2i(tileW, tileH);
-    t.image_.uvRect_ = uvRect;
-
+    t.image_.texture_ = frame.texture_;
+    t.image_.uvRect_ = frame.rect_;
     return t;
 }
 

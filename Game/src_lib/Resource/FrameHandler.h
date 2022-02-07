@@ -7,14 +7,14 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include <SFML/System/Vector2.hpp>
 
 namespace FA {
 
 class SheetManager;
-class Animation;
-class Image;
+struct Frame;
 
 struct AnimationData
 {
@@ -40,8 +40,8 @@ struct ImageData
 class FrameHandler
 {
 public:
-    Animation MakeAnimation(const SheetManager &sheetManager, const AnimationData &data) const;
-    Image MakeImage(const SheetManager &sheetManager, const ImageData &data) const;
+    std::vector<Frame> MakeFrames(const SheetManager &sheetManager, const AnimationData &data) const;
+    Frame MakeFrame(const SheetManager &sheetManager, const ImageData &data) const;
 };
 
 }  // namespace FA

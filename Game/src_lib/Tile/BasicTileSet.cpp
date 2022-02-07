@@ -7,32 +7,31 @@
 #include "BasicTileSet.h"
 
 #include "Folder.h"
+#include "Resource/Frame.h"
+#include "Resource/SheetManager.h"
+#include "Resource/SpriteSheet.h"
 
 namespace FA {
 
 namespace Tile {
 
-BasicTileSet::BasicTileSet(TextureManager &textureManager)
-    : textureManager_(textureManager)
+BasicTileSet::BasicTileSet(SheetManager &sheetManager)
+    : sheetManager_(sheetManager)
+    , frameHandler_()
 {}
 
 BasicTileSet::~BasicTileSet() = default;
 
-Image BasicTileSet::LoadImage(const std::string &filePath, int w, int h)
+void BasicTileSet::LoadSheet(const std::string &filePath, const sf::Vector2u &size)
 {
-    Image i;
-    i.texture_ = LoadTexture(filePath);
-    i.size_ = {w, h};
-    i.uvRect_ = {0, 0, w, h};
-
-    return i;
+    name_ = GetHead(filePath);
+    sheetManager_.LoadSheet(name_, filePath, size);
 }
 
-const sf::Texture *BasicTileSet::LoadTexture(const std::string &textureFilePath)
+Frame BasicTileSet::GetFrame(const sf::Vector2u &uvCoord) const
 {
-    auto name = GetHead(textureFilePath);
-    textureManager_.Add(name, textureFilePath);
-    return textureManager_.Get(name);
+    ImageData data{name_, uvCoord, 0.0};
+    return frameHandler_.MakeFrame(sheetManager_, data);
 }
 
 }  // namespace Tile

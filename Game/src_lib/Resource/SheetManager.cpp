@@ -30,6 +30,14 @@ void SheetManager::LoadSheet(const SheetData& data)
     sheetMap_.insert({data.name_, s});
 }
 
+void SheetManager::LoadSheet(const std::string& name, const std::string& p, const sf::Vector2u& size)
+{
+    textureManager_.Add(name, p);
+    const sf::Texture* t = textureManager_.Get(name);
+    SpriteSheet s(t, size);
+    sheetMap_.insert({name, s});
+}
+
 SpriteSheet SheetManager::GetSheet(const std::string& name) const
 {
     auto it = sheetMap_.find(name);

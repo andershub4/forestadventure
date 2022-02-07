@@ -19,7 +19,7 @@ namespace Tile {
 class GridTileSet : public BasicTileSet
 {
 public:
-    GridTileSet(const TileMapData::TileSet &tileSet, TextureManager &textureManager);
+    GridTileSet(const TileMapData::TileSet &tileSet, SheetManager &sheetManager);
     virtual ~GridTileSet();
 
     virtual void Load() override;

@@ -14,8 +14,8 @@ namespace FA {
 
 namespace Tile {
 
-TileMap::TileMap(TextureManager& textureManager, unsigned int scale)
-    : textureManager_(textureManager)
+TileMap::TileMap(SheetManager& sheetManager, unsigned int scale)
+    : sheetManager_(sheetManager)
     , scale_(scale)
 {}
 
@@ -33,10 +33,10 @@ void TileMap::Create(const TileMapData& tileMapData)
 std::unique_ptr<BasicTileSet> TileMap::CreateTileSet(const TileMapData::TileSet& tileSet) const
 {
     if (!tileSet.tiles_.empty()) {
-        return std::make_unique<ImageTileSet>(tileSet, textureManager_);
+        return std::make_unique<ImageTileSet>(tileSet, sheetManager_);
     }
     else {
-        return std::make_unique<GridTileSet>(tileSet, textureManager_);
+        return std::make_unique<GridTileSet>(tileSet, sheetManager_);
     }
 }
 

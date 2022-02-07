@@ -17,10 +17,11 @@
 #include "Enum/EntityType.h"
 #include "Enum/FaceDirection.h"
 #include "Fwd/SfmlFwd.h"
-#include "Resource/TextureManager.h"
 #include "TileMapData.h"
 
 namespace FA {
+
+class SheetManager;
 
 namespace Tile {
 
@@ -35,7 +36,7 @@ public:
     };
 
 public:
-    TileMap(TextureManager &textureManager, unsigned int scale);
+    TileMap(SheetManager &sheetManager, unsigned int scale);
     ~TileMap();
     void Create(const TileMapData &tileMapData);
     const std::vector<sf::Sprite> &GetLayer(const std::string &name);
@@ -44,7 +45,7 @@ public:
     unsigned int GetScale() const { return scale_; }
 
 private:
-    TextureManager &textureManager_;
+    SheetManager &sheetManager_;
     TileMapData tileMapData_;
     std::map<std::string, std::vector<sf::Sprite>> layers_;
     std::map<int, std::unique_ptr<BasicTileSet>, std::greater<int>> tileSets_;

@@ -19,7 +19,7 @@ namespace Tile {
 class ImageTileSet : public BasicTileSet
 {
 public:
-    ImageTileSet(const TileMapData::TileSet &tileSet, TextureManager &textureManager);
+    ImageTileSet(const TileMapData::TileSet &tileSet, SheetManager &sheetManager);
     virtual ~ImageTileSet();
 
     virtual void Load();
