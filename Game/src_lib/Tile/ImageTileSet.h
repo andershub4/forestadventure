@@ -27,7 +27,7 @@ public:
 
 private:
     TileMapData::TileSet tileSet_;
-    std::unordered_map<int, Tile> tiles_;
+    std::unordered_map<int, FrameInfo> frameInfo_;
 };
 
 }  // namespace Tile

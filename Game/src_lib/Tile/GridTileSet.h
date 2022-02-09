@@ -27,7 +27,6 @@ public:
 
 private:
     TileMapData::TileSet tileSet_;
-    Image image_;
 };
 
 }  // namespace Tile

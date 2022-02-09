@@ -12,6 +12,9 @@
 #include "Fwd/SfmlFwd.h"
 #include "Resource/FrameHandler.h"
 
+#include "Resource/Animation.h"
+#include "Resource/Image.h"
+
 namespace FA {
 
 struct Frame;
@@ -19,22 +22,9 @@ class SheetManager;
 
 namespace Tile {
 
-struct Image
+struct FrameInfo
 {
-    sf::Vector2i size_;
-    sf::IntRect uvRect_;
-    const sf::Texture *texture_ = nullptr;
-};
-
-struct Animation
-{
-    struct Frame
-    {
-        sf::IntRect uvRect_;
-        const sf::Texture *texture_ = nullptr;
-        float switchTime_{};
-    };
-
+    Frame frame_;
     std::vector<Frame> frames_;
 };
 

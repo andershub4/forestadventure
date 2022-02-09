@@ -66,14 +66,11 @@ void TileMap::CreateLayers()
             float y = static_cast<float>((inx / nCols) * tileHeight * scale_);
             auto tileInfo = GetTileInfo(tileId);
 
-            if (tileInfo.image_.texture_ != nullptr) {
-                sf::Sprite tile;
-                tile.setTexture(*tileInfo.image_.texture_);
-                tile.setTextureRect(tileInfo.image_.uvRect_);
-                tile.setPosition(x, y);
-                tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
-                layers_[layerName].push_back(tile);
-            }
+            sf::Sprite tile;
+            tileInfo.image_.ApplyTo(tile);
+            tile.setPosition(x, y);
+            tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
+            layers_[layerName].push_back(tile);
         }
     }
 }

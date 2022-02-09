@@ -26,36 +26,32 @@ void ImageTileSet::Load()
         auto p = tile.image_.textureFilePath_;
         LoadSheet(p, sf::Vector2u(1, 1));
         auto frame = GetFrame({0, 0});
-
-        Tile t;
-        t.image_.texture_ = frame.texture_;
-        t.image_.uvRect_ = frame.rect_;
-        tiles_[id] = t;
+        frameInfo_[id].frame_ = frame;
     }
-
     for (const auto &tile : tileSet_.tiles_) {
         auto id = tile.id_;
         auto animation = tile.animation_;
         auto frames = animation.frames_;
 
         if (!frames.empty()) {
-            Animation animation;
+            std::vector<Frame> f;
             for (auto frame : frames) {
-                Animation::Frame f;
                 auto id = frame.tileId_;
-                f.texture_ = tiles_.at(id).image_.texture_;
-                f.uvRect_ = tiles_.at(id).image_.uvRect_;
-                f.switchTime_ = frame.duration_ / 1000.0f;
-                animation.frames_.push_back(f);
+                auto texture = frameInfo_.at(id).frame_.texture_;
+                auto uvRect_ = frameInfo_.at(id).frame_.rect_;
+                f.push_back(Frame(texture, uvRect_));
             }
-            tiles_[id].animation = animation;
+            frameInfo_.at(id).frames_ = f;
         }
     }
 }
 
 Tile ImageTileSet::GetTile(int id) const
 {
-    return tiles_.at(id);
+    auto i = Image(frameInfo_.at(id).frame_, 0.0);
+    auto a = Animation(frameInfo_.at(id).frames_, 0, 0.01f);
+
+    return {i, a};
 }
 
 }  // namespace Tile

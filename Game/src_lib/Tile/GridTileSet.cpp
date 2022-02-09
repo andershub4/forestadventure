@@ -33,11 +33,9 @@ Tile GridTileSet::GetTile(int id) const
     auto column = id % nCols;
     auto row = id / nCols;
     auto frame = GetFrame(sf::Vector2u(column, row));
+    auto i = Image(frame, 0.0);
 
-    Tile t;
-    t.image_.texture_ = frame.texture_;
-    t.image_.uvRect_ = frame.rect_;
-    return t;
+    return {i, {}};
 }
 
 }  // namespace Tile
