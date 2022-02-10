@@ -6,6 +6,7 @@
 
 #include "GridTileSet.h"
 
+#include "FrameData.h"
 #include "Resource/Frame.h"
 
 namespace FA {
@@ -27,15 +28,14 @@ void GridTileSet::Load()
     LoadSheet(p, sf::Vector2u(nCols, nRows));
 }
 
-Tile GridTileSet::GetTile(int id) const
+FrameData GridTileSet::GetFrameData(int id) const
 {
     auto nCols = tileSet_.dimensions_.columns_;
     auto column = id % nCols;
     auto row = id / nCols;
     auto frame = GetFrame(sf::Vector2u(column, row));
-    auto i = Image(frame, 0.0);
 
-    return {i, {}};
+    return {frame, {}};
 }
 
 }  // namespace Tile

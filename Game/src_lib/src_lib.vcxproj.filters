@@ -530,5 +530,8 @@
     <ClInclude Include="Resource\Frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tile\FrameData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

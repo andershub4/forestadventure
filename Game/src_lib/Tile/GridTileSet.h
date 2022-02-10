@@ -23,7 +23,7 @@ public:
     virtual ~GridTileSet();
 
     virtual void Load() override;
-    virtual Tile GetTile(int id) const override;
+    virtual FrameData GetFrameData(int id) const override;
 
 private:
     TileMapData::TileSet tileSet_;

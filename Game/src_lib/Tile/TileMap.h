@@ -57,7 +57,7 @@ private:
     void CreateLayers();
     void CreateObjectGroups();
     std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet &tileSet) const;
-    Tile GetTileInfo(int id);
+    FrameData GetFrameData(int id);
     EntityType ObjTypeStrToEnum(const std::string &typeStr) const;
     FaceDirection FaceDirStrToEnum(const std::string &faceDirStr) const;
 };

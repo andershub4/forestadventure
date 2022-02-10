@@ -23,11 +23,11 @@ public:
     virtual ~ImageTileSet();
 
     virtual void Load();
-    virtual Tile GetTile(int id) const override;
+    virtual FrameData GetFrameData(int id) const override;
 
 private:
     TileMapData::TileSet tileSet_;
-    std::unordered_map<int, FrameInfo> frameInfo_;
+    std::unordered_map<int, FrameData> frameData_;
 };
 
 }  // namespace Tile

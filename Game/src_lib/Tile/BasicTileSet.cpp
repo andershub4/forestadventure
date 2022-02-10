@@ -9,7 +9,6 @@
 #include "Folder.h"
 #include "Resource/Frame.h"
 #include "Resource/SheetManager.h"
-#include "Resource/SpriteSheet.h"
 
 namespace FA {
 

@@ -12,9 +12,6 @@
 #include "Fwd/SfmlFwd.h"
 #include "Resource/FrameHandler.h"
 
-#include "Resource/Animation.h"
-#include "Resource/Image.h"
-
 namespace FA {
 
 struct Frame;
@@ -22,17 +19,7 @@ class SheetManager;
 
 namespace Tile {
 
-struct FrameInfo
-{
-    Frame frame_;
-    std::vector<Frame> frames_;
-};
-
-struct Tile
-{
-    Image image_;
-    Animation animation;
-};
+struct FrameData;
 
 class BasicTileSet
 {
@@ -41,7 +28,7 @@ public:
     virtual ~BasicTileSet();
 
     virtual void Load() = 0;
-    virtual Tile GetTile(int id) const = 0;
+    virtual FrameData GetFrameData(int id) const = 0;
 
 protected:
     void LoadSheet(const std::string &filePath, const sf::Vector2u &size);

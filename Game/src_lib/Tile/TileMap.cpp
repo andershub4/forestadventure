@@ -6,9 +6,11 @@
 
 #include "TileMap.h"
 
+#include "FrameData.h"
 #include "GridTileSet.h"
 #include "ImageTileSet.h"
 #include "Logging.h"
+#include "Resource/Image.h"
 
 namespace FA {
 
@@ -64,10 +66,11 @@ void TileMap::CreateLayers()
             if (tileId == 0) continue;
             float x = static_cast<float>((inx % nCols) * tileWidth * scale_);
             float y = static_cast<float>((inx / nCols) * tileHeight * scale_);
-            auto tileInfo = GetTileInfo(tileId);
+            auto frameData = GetFrameData(tileId);
+            Image image(frameData.frame_, 0.0);
 
             sf::Sprite tile;
-            tileInfo.image_.ApplyTo(tile);
+            image.ApplyTo(tile);
             tile.setPosition(x, y);
             tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
             layers_[layerName].push_back(tile);
@@ -111,13 +114,13 @@ sf::Vector2u TileMap::GetSize() const
     return {nCols * tileWidth * scale_, nRows * tileHeight * scale_};
 }
 
-Tile TileMap::GetTileInfo(int id)
+FrameData TileMap::GetFrameData(int id)
 {
     auto it = tileSets_.lower_bound(id);
 
     if (it != tileSets_.end()) {
         auto firstGid = it->first;
-        return it->second->GetTile(id - firstGid);
+        return it->second->GetFrameData(id - firstGid);
     }
     else {
         LOG_ERROR("Id ", id, "not found");
