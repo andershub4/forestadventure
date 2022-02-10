@@ -32,6 +32,7 @@ public:
     {
         EntityType type_{};
         sf::Vector2u position_{};
+        unsigned int scale_{};
         FaceDirection faceDir_{};
     };
 
@@ -42,7 +43,6 @@ public:
     const std::vector<sf::Sprite> &GetLayer(const std::string &name);
     const std::vector<ObjectData> GetObjectGroup(const std::string &name);
     sf::Vector2u GetSize() const;
-    unsigned int GetScale() const { return scale_; }
 
 private:
     SheetManager &sheetManager_;

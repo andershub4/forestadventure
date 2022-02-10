@@ -78,7 +78,7 @@ void Level::Create()
         data.position_ = static_cast<sf::Vector2f>(objectData.position_);
         data.faceDir_ = objectData.faceDir_;
         data.velocity_ = constant::Entity::stdVelocity;
-        data.scale_ = static_cast<float>(tileMap_.GetScale());
+        data.scale_ = static_cast<float>(objectData.scale_);
         entityManager_.CreateEntity(objectData.type_, data);
     }
 

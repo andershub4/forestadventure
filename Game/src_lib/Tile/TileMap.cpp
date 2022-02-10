@@ -86,6 +86,7 @@ void TileMap::CreateObjectGroups()
         for (const auto& object : group.objects_) {
             TileMap::ObjectData objectData;
             objectData.position_ = {object.x_ * scale_, object.y_ * scale_};
+            objectData.scale_ = scale_;
             objectData.type_ = ObjTypeStrToEnum(object.typeStr_);
             objectData.faceDir_ = FaceDirStrToEnum(object.properties_.at("FaceDirection"));
             objectDatas.push_back(objectData);
