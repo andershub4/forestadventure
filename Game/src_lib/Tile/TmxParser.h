@@ -35,7 +35,7 @@ public:
     struct TileSet
     {
         int firstGid_{};
-        std::string source_{};
+        std::string tsxSource_{};
     };
 
     struct Layer

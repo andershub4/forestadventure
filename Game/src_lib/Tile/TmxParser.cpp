@@ -72,9 +72,9 @@ void TmxParser::ParseMapElement(tinyxml2::XMLElement* mapElement)
 void TmxParser::ParseTileSetElement(tinyxml2::XMLElement* tileSetElement, TileSet& tileSet)
 {
     tileSetElement->QueryAttribute("firstgid", &tileSet.firstGid_);
-    tileSet.source_ = tileSetElement->Attribute("source");
+    tileSet.tsxSource_ = tileSetElement->Attribute("source");
     LOG_TMXINFO("firstGid: ", tileSet.firstGid_);
-    LOG_TMXINFO("source: ", tileSet.source_);
+    LOG_TMXINFO("tsxSource: ", tileSet.tsxSource_);
 }
 
 void TmxParser::ParseLayerElement(tinyxml2::XMLElement* layerElement, Layer& layer)
