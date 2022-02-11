@@ -64,16 +64,14 @@ void TileMap::CreateLayers()
         for (auto it = layer.tileIds_.begin(); layer.tileIds_.end() != it; ++it, ++inx) {
             auto tileId = *it;
             if (tileId == 0) continue;
-            float x = static_cast<float>((inx % nCols) * tileWidth * scale_);
-            float y = static_cast<float>((inx / nCols) * tileHeight * scale_);
+            unsigned int x = (inx % nCols) * tileWidth * scale_;
+            unsigned int y = (inx / nCols) * tileHeight * scale_;
             auto frameData = GetFrameData(tileId);
-            Image image(frameData.frame_, 0.0);
-
-            sf::Sprite tile;
-            image.ApplyTo(tile);
-            tile.setPosition(x, y);
-            tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
-            layers_[layerName].push_back(tile);
+            TileMap::TileData tileData;
+            tileData.position_ = {x, y};
+            tileData.scale_ = scale_;
+            tileData.frameData_ = frameData;
+            layers_[layerName].push_back(tileData);
         }
     }
 }
@@ -95,12 +93,12 @@ void TileMap::CreateObjectGroups()
     }
 }
 
-const std::vector<sf::Sprite>& TileMap::GetLayer(const std::string& name)
+const std::vector<TileMap::TileData>& TileMap::GetLayer(const std::string& name) const
 {
     return layers_.at(name);
 }
 
-const std::vector<TileMap::ObjectData> TileMap::GetObjectGroup(const std::string& name)
+const std::vector<TileMap::ObjectData> TileMap::GetObjectGroup(const std::string& name) const
 {
     return objectGroups_.at(name);
 }

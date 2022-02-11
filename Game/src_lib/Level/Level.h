@@ -45,6 +45,11 @@ private:
     SheetManager sheetManager_;
     Tile::TileMap tileMap_;
     Entity::EntityManager entityManager_;
+
+private:
+    void CreateTile(const Tile::TileMap::TileData& data);
+    void CreateFringeTile(const Tile::TileMap::TileData& data);
+    void CreateEntity(const Tile::TileMap::ObjectData& data);
 };
 
 }  // namespace FA
