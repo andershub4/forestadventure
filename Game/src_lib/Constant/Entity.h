@@ -14,6 +14,7 @@ class Entity
 {
 public:
     static constexpr float stdVelocity = 120.0f;
+    static constexpr float stdSwitchTime = 0.1f;
 };
 
 }  // namespace constant

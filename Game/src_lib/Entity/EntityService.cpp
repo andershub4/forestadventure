@@ -9,6 +9,7 @@
 #include "Attributes//CameraAttribute.h"
 #include "Attributes//FaceDirectionAttribute.h"
 #include "Attributes//TransformAttribute.h"
+#include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Level/CameraManager.h"
 #include "Resource/Animation.h"
@@ -46,7 +47,7 @@ sf::Vector2u EntityService::GetMapSize() const
 
 Animation EntityService::MakeAnimation(const AnimationData& data) const
 {
-    float t = 0.1f;
+    float t = constant::Entity::stdSwitchTime;
     auto frames = frameHandler_.MakeFrames(sheetManager_, data);
     auto alignFn = [](sf::Sprite& sprite) {
         sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);

@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
 #include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
@@ -40,7 +41,7 @@ void TileEntity::RegisterModes(ModeController& modeController, const EntityServi
     auto idleMode = modeController.RegisterMode<IdleMode>(true);
     auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);
     idleMode->BindAction(Action::Ignore(), EventType::Collision);
-    float t = 0.1f;
+    float t = constant::Entity::stdSwitchTime;
     mUndef.animation_ = Animation(frames_, 0, t);
 }
 
