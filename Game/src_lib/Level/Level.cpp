@@ -71,31 +71,9 @@ void Level::Load()
 void Level::Create()
 {
     LOG_INFO_ENTER_FUNC();
-
-    LOG_INFO("Create background texture");
-    backgroundTexture_.create(tileMap_.GetSize().x, tileMap_.GetSize().y);
-    for (const auto &tileData : tileMap_.GetLayer("Ground Layer 1")) {
-        CreateBackgroundTile(tileData);
-    }
-    for (const auto &tileData : tileMap_.GetLayer("Ground Layer 2")) {
-        CreateBackgroundTile(tileData);
-    }
-    backgroundTexture_.display();
-    backgroundSprite_.setTexture(backgroundTexture_.getTexture());
-
-    LOG_INFO("Create entities");
-    for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
-        CreateObjectEntity(objectData);
-    }
-    for (const auto &tileData : tileMap_.GetLayer("Dynamic Layer 1")) {
-        CreateTileEntity(tileData);
-    }
-    entityManager_.HandleCreatedEntities();
-
-    for (const auto &tileData : tileMap_.GetLayer("Fringe Layer")) {
-        CreateFringeTile(tileData);
-    }
-
+    CreateBackground();
+    CreateEntities();
+    CreateFringe();
     LOG_INFO_EXIT_FUNC();
 }
 
@@ -123,6 +101,40 @@ void Level::EnableInput(bool enable)
 sf::Vector2u Level::GetMapSize() const
 {
     return tileMap_.GetSize();
+}
+
+void Level::CreateBackground()
+{
+    LOG_INFO("Create background texture");
+    backgroundTexture_.create(tileMap_.GetSize().x, tileMap_.GetSize().y);
+    for (const auto &tileData : tileMap_.GetLayer("Ground Layer 1")) {
+        CreateBackgroundTile(tileData);
+    }
+    for (const auto &tileData : tileMap_.GetLayer("Ground Layer 2")) {
+        CreateBackgroundTile(tileData);
+    }
+    backgroundTexture_.display();
+    backgroundSprite_.setTexture(backgroundTexture_.getTexture());
+}
+
+void Level::CreateEntities()
+{
+    LOG_INFO("Create entities");
+    for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
+        CreateObjectEntity(objectData);
+    }
+    for (const auto &tileData : tileMap_.GetLayer("Dynamic Layer 1")) {
+        CreateTileEntity(tileData);
+    }
+    entityManager_.HandleCreatedEntities();
+}
+
+void Level::CreateFringe()
+{
+    LOG_INFO("Create fringe");
+    for (const auto &tileData : tileMap_.GetLayer("Fringe Layer")) {
+        CreateFringeTile(tileData);
+    }
 }
 
 void Level::CreateBackgroundTile(const Tile::TileMap::TileData &data)

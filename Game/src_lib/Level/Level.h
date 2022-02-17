@@ -47,6 +47,10 @@ private:
     Entity::EntityManager entityManager_;
 
 private:
+    void CreateBackground();
+    void CreateEntities();
+    void CreateFringe();
+
     void CreateBackgroundTile(const Tile::TileMap::TileData& data);
     void CreateTileEntity(const Tile::TileMap::TileData& data);
     void CreateFringeTile(const Tile::TileMap::TileData& data);
