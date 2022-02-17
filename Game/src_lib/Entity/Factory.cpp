@@ -9,6 +9,7 @@
 #include "Entities/ArrowEntity.h"
 #include "Entities/MoleEntity.h"
 #include "Entities/PlayerEntity.h"
+#include "Entities/TileEntity.h"
 #include "Logging.h"
 
 namespace FA {
@@ -33,6 +34,9 @@ std::unique_ptr<BasicEntity> Factory::Create(EntityType type, CameraManager& cam
             break;
         case EntityType::Arrow:
             return std::make_unique<ArrowEntity>(id_++, cameraManager, sheetManager, entityManager, messageBus_);
+            break;
+        case EntityType::Tile:
+            return std::make_unique<TileEntity>(id_++, cameraManager, sheetManager, entityManager, messageBus_);
             break;
         default:
             auto t = static_cast<int>(type);

@@ -33,7 +33,8 @@ FrameData GridTileSet::GetFrameData(int id) const
     auto nCols = tileSet_.dimensions_.columns_;
     auto column = id % nCols;
     auto row = id / nCols;
-    auto frame = GetFrame(sf::Vector2u(column, row));
+    auto p = tileSet_.image_.textureFilePath_;
+    auto frame = GetFrame(p, sf::Vector2u(column, row));
 
     return {frame, {}};
 }

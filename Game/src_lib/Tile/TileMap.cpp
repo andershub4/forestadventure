@@ -64,11 +64,15 @@ void TileMap::CreateLayers()
         for (auto it = layer.tileIds_.begin(); layer.tileIds_.end() != it; ++it, ++inx) {
             auto tileId = *it;
             if (tileId == 0) continue;
-            unsigned int x = (inx % nCols) * tileWidth * scale_;
-            unsigned int y = (inx / nCols) * tileHeight * scale_;
             auto frameData = GetFrameData(tileId);
             TileMap::TileData tileData;
-            tileData.position_ = {x, y};
+            unsigned int x = (inx % nCols) * tileWidth;
+            unsigned int y = (inx / nCols) * tileHeight;
+            if (frameData.frame_.rect_.height > tileHeight) {
+                y += tileHeight;
+                y -= frameData.frame_.rect_.height;
+            }
+            tileData.position_ = {x * scale_, y * scale_};
             tileData.scale_ = scale_;
             tileData.frameData_ = frameData;
             layers_[layerName].push_back(tileData);

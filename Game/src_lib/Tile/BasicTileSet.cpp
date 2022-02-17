@@ -6,7 +6,6 @@
 
 #include "BasicTileSet.h"
 
-#include "Folder.h"
 #include "Resource/Frame.h"
 #include "Resource/SheetManager.h"
 
@@ -23,13 +22,12 @@ BasicTileSet::~BasicTileSet() = default;
 
 void BasicTileSet::LoadSheet(const std::string &filePath, const sf::Vector2u &size)
 {
-    name_ = GetHead(filePath);
-    sheetManager_.LoadSheet(name_, filePath, size);
+    sheetManager_.LoadSheet(filePath, filePath, size);
 }
 
-Frame BasicTileSet::GetFrame(const sf::Vector2u &uvCoord) const
+Frame BasicTileSet::GetFrame(const std::string &filePath, const sf::Vector2u &uvCoord) const
 {
-    ImageData data{name_, uvCoord, 0.0};
+    ImageData data{filePath, uvCoord, 0.0};
     return frameHandler_.MakeFrame(sheetManager_, data);
 }
 

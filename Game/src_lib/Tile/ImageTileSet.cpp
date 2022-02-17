@@ -26,7 +26,7 @@ void ImageTileSet::Load()
         auto id = tile.id_;
         auto p = tile.image_.textureFilePath_;
         LoadSheet(p, sf::Vector2u(1, 1));
-        auto frame = GetFrame({0, 0});
+        auto frame = GetFrame(p, {0, 0});
         frameData_[id].frame_ = frame;
     }
     for (const auto &tile : tileSet_.tiles_) {

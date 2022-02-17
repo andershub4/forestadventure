@@ -209,6 +209,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constant\Entity.h" />
+    <ClInclude Include="Entity\Entities\TileEntity.h" />
     <ClInclude Include="Resource\Animation.h" />
     <ClInclude Include="Resource\Frame.h" />
     <ClInclude Include="Resource\Image.h" />
@@ -314,6 +315,7 @@
     <ClInclude Include="Folder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\Entities\TileEntity.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\Image.cpp" />
     <ClCompile Include="Effect\BasicEffect.cpp" />

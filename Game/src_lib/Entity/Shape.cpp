@@ -69,8 +69,6 @@ void Shape::SetAnimation(const Animation &animation)
     if (animation.IsValid()) {
         currentAnimation_ = animation;
         currentAnimation_.ApplyTo(animationSprite_);
-        animationSprite_.setOrigin(animationSprite_.getLocalBounds().width / 2,
-                                   animationSprite_.getLocalBounds().height / 2);
         currentAnimation_.Start();
     }
 }

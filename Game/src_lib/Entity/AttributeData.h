@@ -6,9 +6,12 @@
 
 #pragma once
 
+#include <vector>
+
 #include <SFML/System/Vector2.hpp>
 
 #include "Enum/FaceDirection.h"
+#include "Resource/Frame.h"
 
 namespace FA {
 
@@ -20,6 +23,8 @@ struct AttributeData
     FaceDirection faceDir_{};
     float velocity_{};
     float scale_{};
+    std::vector<Frame> frames_;
+    Frame frame_;
 };
 
 }  // namespace Entity

@@ -11,13 +11,15 @@
 
 namespace FA {
 
-Animation::Animation(const std::vector<Frame>& frames, unsigned int defaultIndex, float switchTime)
+Animation::Animation(const std::vector<Frame>& frames, unsigned int defaultIndex, float switchTime,
+                     std::function<void(sf::Sprite&)> alignFn)
     : frames_(frames)
     , switchTime_(switchTime)
     , time_(0.0)
     , defaultIndex_(defaultIndex)
     , iFrame_(defaultIndex)
     , isValid_(true)
+    , alignFn_(alignFn)
 {
     nFrames_ = frames.size();
 }
@@ -26,6 +28,7 @@ void Animation::ApplyTo(sf::Sprite& sprite)
 {
     sprite.setTexture(*frames_[iFrame_].texture_);
     sprite.setTextureRect(frames_[iFrame_].rect_);
+    if (alignFn_) alignFn_(sprite);
 }
 
 void Animation::Update(float deltaTime)

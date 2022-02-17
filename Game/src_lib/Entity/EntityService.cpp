@@ -48,7 +48,10 @@ Animation EntityService::MakeAnimation(const AnimationData& data) const
 {
     float t = 0.1f;
     auto frames = frameHandler_.MakeFrames(sheetManager_, data);
-    return Animation(frames, data.locationData_.defaultIndex_, t);
+    auto alignFn = [](sf::Sprite& sprite) {
+        sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+    };
+    return Animation(frames, data.locationData_.defaultIndex_, t, alignFn);
 }
 
 Image EntityService::MakeImage(const ImageData& data) const

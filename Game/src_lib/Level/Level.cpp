@@ -58,7 +58,7 @@ Level::~Level() = default;
 
 void Level::Load()
 {
-    auto path = GetAssetsPath() + "/map/test.tmx";
+    auto path = GetAssetsPath() + "/map/simpletest.tmx";
     Tile::TileMapReader tileMapReader;
     auto tileMapData = tileMapReader.Parse(path);
     tileMap_.Create(tileMapData);
@@ -72,24 +72,25 @@ void Level::Create()
 {
     LOG_INFO_ENTER_FUNC();
 
-    LOG_INFO("Create entities");
-
-    for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
-        CreateEntity(objectData);
-    }
-
-    entityManager_.HandleCreatedEntities();
-
     LOG_INFO("Create background texture");
     backgroundTexture_.create(tileMap_.GetSize().x, tileMap_.GetSize().y);
     for (const auto &tileData : tileMap_.GetLayer("Ground Layer 1")) {
-        CreateTile(tileData);
+        CreateBackgroundTile(tileData);
     }
     for (const auto &tileData : tileMap_.GetLayer("Ground Layer 2")) {
-        CreateTile(tileData);
+        CreateBackgroundTile(tileData);
     }
     backgroundTexture_.display();
     backgroundSprite_.setTexture(backgroundTexture_.getTexture());
+
+    LOG_INFO("Create entities");
+    for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
+        CreateObjectEntity(objectData);
+    }
+    for (const auto &tileData : tileMap_.GetLayer("Dynamic Layer 1")) {
+        CreateTileEntity(tileData);
+    }
+    entityManager_.HandleCreatedEntities();
 
     for (const auto &tileData : tileMap_.GetLayer("Fringe Layer")) {
         CreateFringeTile(tileData);
@@ -124,7 +125,17 @@ sf::Vector2u Level::GetMapSize() const
     return tileMap_.GetSize();
 }
 
-void Level::CreateEntity(const Tile::TileMap::ObjectData &data)
+void Level::CreateBackgroundTile(const Tile::TileMap::TileData &data)
+{
+    Image image(data.frameData_.frame_, 0.0);
+    sf::Sprite tile;
+    image.ApplyTo(tile);
+    tile.setPosition(static_cast<sf::Vector2f>(data.position_));
+    tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
+    backgroundTexture_.draw(tile);
+}
+
+void Level::CreateObjectEntity(const Tile::TileMap::ObjectData &data)
 {
     Entity::AttributeData d;
     d.position_ = static_cast<sf::Vector2f>(data.position_);
@@ -134,14 +145,15 @@ void Level::CreateEntity(const Tile::TileMap::ObjectData &data)
     entityManager_.CreateEntity(data.type_, d);
 }
 
-void Level::CreateTile(const Tile::TileMap::TileData &data)
+void Level::CreateTileEntity(const Tile::TileMap::TileData &data)
 {
-    Image image(data.frameData_.frame_, 0.0);
-    sf::Sprite tile;
-    image.ApplyTo(tile);
-    tile.setPosition(static_cast<sf::Vector2f>(data.position_));
-    tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
-    backgroundTexture_.draw(tile);
+    Entity::AttributeData d;
+    d.position_ = static_cast<sf::Vector2f>(data.position_);
+    d.faceDir_ = FaceDirection::Undefined;
+    d.scale_ = static_cast<float>(data.scale_);
+    d.frames_ = data.frameData_.frames_;
+    d.frame_ = data.frameData_.frame_;
+    entityManager_.CreateEntity(EntityType::Tile, d);
 }
 
 void Level::CreateFringeTile(const Tile::TileMap::TileData &data)

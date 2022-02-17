@@ -32,7 +32,7 @@ public:
 
 protected:
     void LoadSheet(const std::string &filePath, const sf::Vector2u &size);
-    Frame GetFrame(const sf::Vector2u &uvCoord) const;
+    Frame GetFrame(const std::string &filePath, const sf::Vector2u &uvCoord) const;
 
 private:
     SheetManager &sheetManager_;

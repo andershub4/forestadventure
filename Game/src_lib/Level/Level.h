@@ -47,9 +47,10 @@ private:
     Entity::EntityManager entityManager_;
 
 private:
-    void CreateTile(const Tile::TileMap::TileData& data);
+    void CreateBackgroundTile(const Tile::TileMap::TileData& data);
+    void CreateTileEntity(const Tile::TileMap::TileData& data);
     void CreateFringeTile(const Tile::TileMap::TileData& data);
-    void CreateEntity(const Tile::TileMap::ObjectData& data);
+    void CreateObjectEntity(const Tile::TileMap::ObjectData& data);
 };
 
 }  // namespace FA
