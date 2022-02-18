@@ -47,7 +47,8 @@ public:
 public:
     TileMap(SheetManager &sheetManager, unsigned int scale);
     ~TileMap();
-    void Create(const TileMapData &tileMapData);
+    void Load(const TileMapData &tileMapData);
+    void Setup();
     const std::vector<TileData> &GetLayer(const std::string &name) const;
     const std::vector<ObjectData> GetObjectGroup(const std::string &name) const;
     sf::Vector2u GetSize() const;
@@ -61,9 +62,9 @@ private:
     unsigned int scale_{};
 
 private:
-    void CreateTileSets();
-    void CreateLayers();
-    void CreateObjectGroups();
+    void LoadTileSets();
+    void SetupLayers();
+    void SetupObjectGroups();
     std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet &tileSet) const;
     FrameData GetFrameData(int id);
     EntityType ObjTypeStrToEnum(const std::string &typeStr) const;

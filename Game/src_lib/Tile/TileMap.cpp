@@ -23,13 +23,17 @@ TileMap::TileMap(SheetManager& sheetManager, unsigned int scale)
 
 TileMap::~TileMap() = default;
 
-void TileMap::Create(const TileMapData& tileMapData)
+void TileMap::Load(const TileMapData& tileMapData)
 {
-    LOG_INFO("Create tile map");
     tileMapData_ = tileMapData;
-    CreateTileSets();
-    CreateLayers();
-    CreateObjectGroups();
+    LoadTileSets();
+}
+
+void TileMap::Setup()
+{
+    LOG_INFO("Setup tile map");
+    SetupLayers();
+    SetupObjectGroups();
 }
 
 std::unique_ptr<BasicTileSet> TileMap::CreateTileSet(const TileMapData::TileSet& tileSet) const
@@ -42,7 +46,7 @@ std::unique_ptr<BasicTileSet> TileMap::CreateTileSet(const TileMapData::TileSet&
     }
 }
 
-void TileMap::CreateTileSets()
+void TileMap::LoadTileSets()
 {
     for (const auto& tileSet : tileMapData_.tileSets_) {
         auto s = CreateTileSet(tileSet);
@@ -52,7 +56,7 @@ void TileMap::CreateTileSets()
     }
 }
 
-void TileMap::CreateLayers()
+void TileMap::SetupLayers()
 {
     auto nCols = tileMapData_.mapProperties_.width_;
     auto tileWidth = tileMapData_.mapProperties_.tileWidth_;
@@ -80,7 +84,7 @@ void TileMap::CreateLayers()
     }
 }
 
-void TileMap::CreateObjectGroups()
+void TileMap::SetupObjectGroups()
 {
     for (const auto& group : tileMapData_.objectGroups_) {
         auto groupName = group.name_;

@@ -61,7 +61,7 @@ void Level::Load()
     auto path = GetAssetsPath() + "/map/simpletest.tmx";
     Tile::TileMapReader tileMapReader;
     auto tileMapData = tileMapReader.Parse(path);
-    tileMap_.Create(tileMapData);
+    tileMap_.Load(tileMapData);
     auto sheetPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
 
     for (const auto &sheetData : textureSheets) {
@@ -72,6 +72,7 @@ void Level::Load()
 void Level::Create()
 {
     LOG_INFO_ENTER_FUNC();
+    tileMap_.Setup();
     CreateBackground();
     CreateEntities();
     CreateFringe();
