@@ -20,7 +20,7 @@ class SheetManager
 {
 public:
     SheetManager(TextureManager &textureManager);
-    void LoadSheet(const SheetData &data);
+    void LoadSheet(const std::string &sheetPath, const SheetData &data);
     void LoadSheet(const std::string &name, const std::string &p, const sf::Vector2u &size);
     SpriteSheet GetSheet(const std::string &name) const;
 

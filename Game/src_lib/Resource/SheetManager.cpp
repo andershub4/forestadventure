@@ -6,7 +6,6 @@
 
 #include "SheetManager.h"
 
-#include "Folder.h"
 #include "SheetData.h"
 
 namespace FA {
@@ -19,15 +18,10 @@ SheetManager::SheetManager(TextureManager& textureManager)
     : textureManager_(textureManager)
 {}
 
-void SheetManager::LoadSheet(const SheetData& data)
+void SheetManager::LoadSheet(const std::string& sheetPath, const SheetData& data)
 {
-    auto ssPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
-    auto p = ssPath + data.path_;
-    textureManager_.Add(data.name_, p);
-    const sf::Texture* t = textureManager_.Get(data.name_);
-    auto size = data.size_;
-    SpriteSheet s(t, size);
-    sheetMap_.insert({data.name_, s});
+    auto p = sheetPath + data.path_;
+    LoadSheet(data.name_, p, data.size_);
 }
 
 void SheetManager::LoadSheet(const std::string& name, const std::string& p, const sf::Vector2u& size)

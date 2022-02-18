@@ -62,9 +62,10 @@ void Level::Load()
     Tile::TileMapReader tileMapReader;
     auto tileMapData = tileMapReader.Parse(path);
     tileMap_.Create(tileMapData);
+    auto sheetPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
 
     for (const auto &sheetData : textureSheets) {
-        sheetManager_.LoadSheet(sheetData);
+        sheetManager_.LoadSheet(sheetPath, sheetData);
     }
 }
 
