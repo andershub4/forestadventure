@@ -39,8 +39,6 @@ std::vector<Frame> CreateFrames(const SpriteSheet& sheet, const sf::Vector2u sta
 
 std::vector<Frame> FrameHandler::MakeFrames(const SheetManager& sheetManager, const AnimationData& data) const
 {
-    float t = 0.1f;
-
     auto location = data.locationData_;
     auto sheet = sheetManager.GetSheet(data.sheetId_);
     auto frames = CreateFrames(sheet, location.start_, location.nRects_);
