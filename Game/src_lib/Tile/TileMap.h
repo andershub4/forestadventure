@@ -11,11 +11,6 @@
 #include <string>
 #include <vector>
 
-#include <SFML/Graphics/Sprite.hpp>
-
-#include "BasicTileSet.h"
-#include "Enum/EntityType.h"
-#include "Enum/FaceDirection.h"
 #include "FrameData.h"
 #include "Fwd/SfmlFwd.h"
 #include "TileMapData.h"
@@ -25,6 +20,8 @@ namespace FA {
 class SheetManager;
 
 namespace Tile {
+
+class BasicTileSet;
 
 class TileMap
 {
@@ -38,10 +35,10 @@ public:
 
     struct ObjectData
     {
-        EntityType type_{};
+        std::string typeStr_{};
         sf::Vector2u position_{};
         unsigned int scale_{};
-        FaceDirection faceDir_{};
+        std::string faceDirStr_{};
     };
 
 public:
@@ -67,8 +64,6 @@ private:
     void SetupObjectGroups();
     std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet &tileSet) const;
     FrameData GetFrameData(int id);
-    EntityType ObjTypeStrToEnum(const std::string &typeStr) const;
-    FaceDirection FaceDirStrToEnum(const std::string &faceDirStr) const;
 };
 
 }  // namespace Tile

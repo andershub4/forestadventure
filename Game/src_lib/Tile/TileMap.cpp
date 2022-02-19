@@ -10,7 +10,6 @@
 #include "GridTileSet.h"
 #include "ImageTileSet.h"
 #include "Logging.h"
-#include "Resource/Image.h"
 
 namespace FA {
 
@@ -93,8 +92,8 @@ void TileMap::SetupObjectGroups()
             TileMap::ObjectData objectData;
             objectData.position_ = {object.x_ * scale_, object.y_ * scale_};
             objectData.scale_ = scale_;
-            objectData.type_ = ObjTypeStrToEnum(object.typeStr_);
-            objectData.faceDir_ = FaceDirStrToEnum(object.properties_.at("FaceDirection"));
+            objectData.typeStr_ = object.typeStr_;
+            objectData.faceDirStr_ = object.properties_.at("FaceDirection");
             objectDatas.push_back(objectData);
         }
         objectGroups_[groupName] = objectDatas;
@@ -133,40 +132,6 @@ FrameData TileMap::GetFrameData(int id)
         LOG_ERROR("Id ", id, "not found");
         return {};
     }
-}
-
-EntityType TileMap::ObjTypeStrToEnum(const std::string& typeStr) const
-{
-    auto result = EntityType::Unknown;
-
-    if (typeStr == "Mole") {
-        result = EntityType::Mole;
-    }
-    else if (typeStr == "Player") {
-        result = EntityType::Player;
-    }
-
-    return result;
-}
-
-FaceDirection TileMap::FaceDirStrToEnum(const std::string& faceDirStr) const
-{
-    auto result = FaceDirection::Down;
-
-    if (faceDirStr == "Up") {
-        result = FaceDirection::Up;
-    }
-    else if (faceDirStr == "Down") {
-        result = FaceDirection::Down;
-    }
-    else if (faceDirStr == "Right") {
-        result = FaceDirection::Right;
-    }
-    else if (faceDirStr == "Left") {
-        result = FaceDirection::Left;
-    }
-
-    return result;
 }
 
 }  // namespace Tile

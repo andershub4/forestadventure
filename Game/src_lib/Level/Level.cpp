@@ -44,6 +44,40 @@ const std::vector<SheetData> textureSheets = {
     {SheetId::MoleIdleBack, "spritesheets/mole/idle/mole-idle-back.png", {1, 1}},
     {SheetId::Arrow, "sprites/misc/arrow.png", {1, 1}}};
 
+EntityType ObjTypeStrToEnum(const std::string &typeStr)
+{
+    auto result = EntityType::Unknown;
+
+    if (typeStr == "Mole") {
+        result = EntityType::Mole;
+    }
+    else if (typeStr == "Player") {
+        result = EntityType::Player;
+    }
+
+    return result;
+}
+
+FaceDirection FaceDirStrToEnum(const std::string &faceDirStr)
+{
+    auto result = FaceDirection::Down;
+
+    if (faceDirStr == "Up") {
+        result = FaceDirection::Up;
+    }
+    else if (faceDirStr == "Down") {
+        result = FaceDirection::Down;
+    }
+    else if (faceDirStr == "Right") {
+        result = FaceDirection::Right;
+    }
+    else if (faceDirStr == "Left") {
+        result = FaceDirection::Left;
+    }
+
+    return result;
+}
+
 }  // namespace
 
 Level::Level(MessageBus &messageBus, TextureManager &textureManager, CameraManager &cameraManager)
@@ -153,10 +187,10 @@ void Level::CreateObjectEntity(const Tile::TileMap::ObjectData &data)
 {
     Entity::AttributeData d;
     d.position_ = static_cast<sf::Vector2f>(data.position_);
-    d.faceDir_ = data.faceDir_;
+    d.faceDir_ = FaceDirStrToEnum(data.faceDirStr_);
     d.velocity_ = constant::Entity::stdVelocity;
     d.scale_ = static_cast<float>(data.scale_);
-    entityManager_.CreateEntity(data.type_, d);
+    entityManager_.CreateEntity(ObjTypeStrToEnum(data.typeStr_), d);
 }
 
 void Level::CreateTileEntity(const Tile::TileMap::TileData &data)
