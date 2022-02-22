@@ -21,7 +21,7 @@ public:
     PreAlphaLayer(MessageBus& messageBus, const sf::IntRect& rect);
     virtual ~PreAlphaLayer();
 
-    virtual LayerId GetId() const override { return LayerId::Intro; }
+    virtual LayerId GetId() const override { return LayerId::PreAlpha; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void EnableInput(bool enable) override {}
