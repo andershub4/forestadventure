@@ -48,16 +48,16 @@
     <ClCompile Include="Scene\Manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\Components\BasicComponent.cpp">
+    <ClCompile Include="Scene\Layers\BasicLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\Components\HelperComponent.cpp">
+    <ClCompile Include="Scene\Layers\HelperLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\Components\IntroComponent.cpp">
+    <ClCompile Include="Scene\Layers\IntroLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\Components\LevelComponent.cpp">
+    <ClCompile Include="Scene\Layers\LevelLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Scene\Scenes\BasicScene.cpp">
@@ -150,7 +150,7 @@
     <ClCompile Include="UI\Title.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\Components\PreAlphaComponent.cpp">
+    <ClCompile Include="Scene\Layers\PreAlphaLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Logging.cpp">
@@ -287,16 +287,16 @@
     <ClInclude Include="Scene\Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\Components\BasicComponent.h">
+    <ClInclude Include="Scene\Layers\BasicLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\Components\HelperComponent.h">
+    <ClInclude Include="Scene\Layers\HelperLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\Components\IntroComponent.h">
+    <ClInclude Include="Scene\Layers\IntroLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\Components\LevelComponent.h">
+    <ClInclude Include="Scene\Layers\LevelLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Scenes\BasicScene.h">
@@ -320,7 +320,7 @@
     <ClInclude Include="Scene\Transitions\NullTransition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\ComponentId.h">
+    <ClInclude Include="Scene\LayerId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tile\TileMap.h">
@@ -410,7 +410,7 @@
     <ClInclude Include="UI\Title.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\Components\PreAlphaComponent.h">
+    <ClInclude Include="Scene\Layers\PreAlphaLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Logging.h">

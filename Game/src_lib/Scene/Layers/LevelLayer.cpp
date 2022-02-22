@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "LevelComponent.h"
+#include "LevelLayer.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -17,16 +17,16 @@ namespace FA {
 
 namespace Scene {
 
-LevelComponent::LevelComponent(MessageBus& messageBus, const sf::IntRect& rect, TextureManager& textureManager)
-    : BasicComponent(messageBus, rect)
+LevelLayer::LevelLayer(MessageBus& messageBus, const sf::IntRect& rect, TextureManager& textureManager)
+    : BasicLayer(messageBus, rect)
     , cameraManager_(layerTexture_.getSize())
 {
     level_ = std::make_unique<Level>(messageBus, textureManager, cameraManager_);
 }
 
-LevelComponent::~LevelComponent() = default;
+LevelLayer::~LevelLayer() = default;
 
-void LevelComponent::OnCreate()
+void LevelLayer::OnCreate()
 {
     level_->Load();
     auto s = level_->GetMapSize();
@@ -34,32 +34,32 @@ void LevelComponent::OnCreate()
     level_->Create();
 }
 
-void LevelComponent::Draw()
+void LevelLayer::Draw()
 {
     level_->Draw(layerTexture_);
     if (effect_) effect_->DrawTo(layerTexture_);
 }
 
-void LevelComponent::Update(float deltaTime)
+void LevelLayer::Update(float deltaTime)
 {
     level_->Update(deltaTime);
     cameraManager_.Update(layerTexture_);
     if (effect_) effect_->Update(deltaTime);
 }
 
-void LevelComponent::EnableInput(bool enable)
+void LevelLayer::EnableInput(bool enable)
 {
     level_->EnableInput(enable);
 }
 
-void LevelComponent::EnterTransition(const BasicTransition& transition)
+void LevelLayer::EnterTransition(const BasicTransition& transition)
 {
     sf::Vector2f layerPos = layerTexture_.mapPixelToCoords({0, 0});
     sf::Vector2f layerSize = static_cast<sf::Vector2f>(layerTexture_.getSize());
     effect_ = transition.CreateEffect(layerPos, layerSize);
 }
 
-void LevelComponent::ExitTransition(const BasicTransition& transition)
+void LevelLayer::ExitTransition(const BasicTransition& transition)
 {
     effect_.reset();
 }

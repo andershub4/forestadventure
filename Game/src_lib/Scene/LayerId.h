@@ -10,7 +10,7 @@ namespace FA {
 
 namespace Scene {
 
-enum class ComponentId { Level, Intro, Helper, PreAlpha };
+enum class LayerId { Level, Intro, Helper, PreAlpha };
 
 }  // namespace Scene
 

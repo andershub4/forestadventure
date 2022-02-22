@@ -9,7 +9,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Scene/ComponentId.h"
+#include "Scene/LayerId.h"
 
 namespace FA {
 
@@ -20,13 +20,13 @@ namespace Scene {
 
 class BasicTransition;
 
-class BasicComponent
+class BasicLayer
 {
 public:
-    BasicComponent(MessageBus& messageBus, const sf::IntRect& rect);
-    virtual ~BasicComponent();
+    BasicLayer(MessageBus& messageBus, const sf::IntRect& rect);
+    virtual ~BasicLayer();
 
-    virtual ComponentId GetId() const = 0;
+    virtual LayerId GetId() const = 0;
     virtual void Update(float deltaTime) = 0;
     virtual void Draw() = 0;
     virtual void EnableInput(bool enable) = 0;

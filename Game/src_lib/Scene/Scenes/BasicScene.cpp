@@ -11,11 +11,11 @@ namespace FA {
 namespace Scene {
 
 BasicScene::BasicScene(Manager &sceneManager, MessageBus &messageBus, TextureManager &textureManager,
-                       Manager::Components &components, Manager::Data &data)
+                       Manager::Layers &layers, Manager::Data &data)
     : sceneManager_(sceneManager)
     , messageBus_(messageBus)
     , textureManager_(textureManager)
-    , components_(components)
+    , layers_(layers)
     , data_(data)
 {}
 

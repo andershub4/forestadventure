@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "IntroComponent.h"
+#include "IntroLayer.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -16,13 +16,13 @@ namespace FA {
 
 namespace Scene {
 
-IntroComponent::IntroComponent(MessageBus& messageBus, const sf::IntRect& rect)
-    : BasicComponent(messageBus, rect)
+IntroLayer::IntroLayer(MessageBus& messageBus, const sf::IntRect& rect)
+    : BasicLayer(messageBus, rect)
 {}
 
-IntroComponent::~IntroComponent() = default;
+IntroLayer::~IntroLayer() = default;
 
-void IntroComponent::OnCreate()
+void IntroLayer::OnCreate()
 {
     std::string path = GetAssetsPath() + "/font/intuitive/intuitive.ttf";
     if (!font_.loadFromFile(path)) {
@@ -48,13 +48,13 @@ void IntroComponent::OnCreate()
     pressText_.setPosition(pressTextPos);
 }
 
-void IntroComponent::Draw()
+void IntroLayer::Draw()
 {
     layerTexture_.draw(introText_);
     layerTexture_.draw(pressText_);
 }
 
-void IntroComponent::Update(float deltaTime)
+void IntroLayer::Update(float deltaTime)
 {}
 
 }  // namespace Scene

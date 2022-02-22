@@ -11,9 +11,9 @@
 #include "Constant/Screen.h"
 #include "IntroScene.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
-#include "Scene/Components/HelperComponent.h"
-#include "Scene/Components/LevelComponent.h"
-#include "Scene/Components/PreAlphaComponent.h"
+#include "Scene/Layers/HelperLayer.h"
+#include "Scene/Layers/LevelLayer.h"
+#include "Scene/Layers/PreAlphaLayer.h"
 #include "Scene/Transitions/FadeTransition.h"
 
 namespace FA {
@@ -21,8 +21,8 @@ namespace FA {
 namespace Scene {
 
 PlayScene::PlayScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-                     Manager::Components& components, Manager::Data& data)
-    : BasicScene(sceneManager, messageBus, textureManager, components, data)
+                     Manager::Layers& layers, Manager::Data& data)
+    : BasicScene(sceneManager, messageBus, textureManager, layers, data)
 {}
 
 PlayScene::~PlayScene() = default;
@@ -30,34 +30,34 @@ PlayScene::~PlayScene() = default;
 void PlayScene::Enter()
 {
     sf::IntRect rect(0, 0, constant::Screen::width, constant::Screen::height);
-    components_.clear();
-    components_[ComponentId::Level] = std::make_unique<LevelComponent>(messageBus_, rect, textureManager_);
+    layers_.clear();
+    layers_[LayerId::Level] = std::make_unique<LevelLayer>(messageBus_, rect, textureManager_);
 #ifdef _DEBUG
-    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, rect, Name());
+    layers_[LayerId::Helper] = std::make_unique<HelperLayer>(messageBus_, rect, Name());
 #endif
-    components_[ComponentId::PreAlpha] = std::make_unique<PreAlphaComponent>(messageBus_, rect);
+    layers_[LayerId::PreAlpha] = std::make_unique<PreAlphaLayer>(messageBus_, rect);
 
-    for (const auto& entry : components_) {
-        auto& component = entry.second;
-        component->OnCreate();
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->OnCreate();
     }
 }
 
 void PlayScene::DrawTo(sf::RenderTarget& renderTarget)
 {
-    for (const auto& entry : components_) {
-        auto& component = entry.second;
-        component->Clear();
-        component->Draw();
-        component->DrawTo(renderTarget);
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->Clear();
+        layer->Draw();
+        layer->DrawTo(renderTarget);
     }
 }
 
 void PlayScene::Update(float deltaTime)
 {
-    for (const auto& entry : components_) {
-        auto& component = entry.second;
-        component->Update(deltaTime);
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->Update(deltaTime);
     }
 }
 

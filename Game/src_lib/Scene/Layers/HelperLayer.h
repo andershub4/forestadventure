@@ -10,19 +10,19 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include "BasicComponent.h"
+#include "BasicLayer.h"
 
 namespace FA {
 
 namespace Scene {
 
-class HelperComponent : public BasicComponent
+class HelperLayer : public BasicLayer
 {
 public:
-    HelperComponent(MessageBus& messageBus, const sf::IntRect& rect, const std::string& sceneName);
-    virtual ~HelperComponent();
+    HelperLayer(MessageBus& messageBus, const sf::IntRect& rect, const std::string& sceneName);
+    virtual ~HelperLayer();
 
-    virtual ComponentId GetId() const override { return ComponentId::Helper; }
+    virtual LayerId GetId() const override { return LayerId::Helper; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void EnableInput(bool enable) override {}

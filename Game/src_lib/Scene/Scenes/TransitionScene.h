@@ -18,7 +18,7 @@ class TransitionScene : public BasicScene
 {
 public:
     TransitionScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-                    Manager::Components& components, Manager::Data& Data, std::unique_ptr<BasicTransition> transition);
+                    Manager::Layers& layers, Manager::Data& Data, std::unique_ptr<BasicTransition> transition);
     virtual ~TransitionScene();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;

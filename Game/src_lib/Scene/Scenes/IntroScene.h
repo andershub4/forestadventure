@@ -16,7 +16,7 @@ class IntroScene : public BasicScene
 {
 public:
     IntroScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-               Manager::Components& components, Manager::Data& data);
+               Manager::Layers& components, Manager::Data& data);
     virtual ~IntroScene();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;

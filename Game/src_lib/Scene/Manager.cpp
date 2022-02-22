@@ -17,7 +17,7 @@ namespace Scene {
 
 Manager::Manager(MessageBus& messageBus, TextureManager& textureManager)
 {
-    currentScene_ = std::make_unique<IntroScene>(*this, messageBus, textureManager, components_, data_);
+    currentScene_ = std::make_unique<IntroScene>(*this, messageBus, textureManager, layers_, data_);
     // LOG_INFO("Enter ", currentScene_->Name());
     currentScene_->Enter();
 }
@@ -40,8 +40,8 @@ void Manager::SetScene(std::unique_ptr<BasicScene> newScene)
 void Manager::SetTransitionScene(MessageBus& messageBus, TextureManager& textureManager,
                                  std::unique_ptr<BasicTransition> transition)
 {
-    SetScene(std::make_unique<TransitionScene>(*this, messageBus, textureManager, components_, data_,
-                                               std::move(transition)));
+    SetScene(
+        std::make_unique<TransitionScene>(*this, messageBus, textureManager, layers_, data_, std::move(transition)));
 }
 
 void Manager::DrawTo(sf::RenderTarget& renderTarget)

@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "HelperComponent.h"
+#include "HelperLayer.h"
 
 #include <cmath>
 
@@ -18,14 +18,14 @@ namespace FA {
 
 namespace Scene {
 
-HelperComponent::HelperComponent(MessageBus& messageBus, const sf::IntRect& rect, const std::string& sceneName)
-    : BasicComponent(messageBus, rect)
+HelperLayer::HelperLayer(MessageBus& messageBus, const sf::IntRect& rect, const std::string& sceneName)
+    : BasicLayer(messageBus, rect)
     , sceneName_(sceneName)
 {}
 
-HelperComponent::~HelperComponent() = default;
+HelperLayer::~HelperLayer() = default;
 
-void HelperComponent::OnCreate()
+void HelperLayer::OnCreate()
 {
     std::string path = GetAssetsPath() + "/font/cello-sans/hinted-CelloSans-Medium.ttf";
     if (!font_.loadFromFile(path)) {
@@ -57,7 +57,7 @@ void HelperComponent::OnCreate()
     dotShape_.setPosition(layerTexture_.getSize().x / 2.0f, layerTexture_.getSize().y / 2.0f);
 }
 
-void HelperComponent::Draw()
+void HelperLayer::Draw()
 {
     layerTexture_.draw(sceneText_);
     layerTexture_.draw(fpsText_);
@@ -65,7 +65,7 @@ void HelperComponent::Draw()
     layerTexture_.draw(dotShape_);
 }
 
-void HelperComponent::Update(float deltaTime)
+void HelperLayer::Update(float deltaTime)
 {
     unsigned int fps = static_cast<unsigned int>(std::floor(1.0f / deltaTime));
     fpsNumberText_.setString(std::to_string(fps));

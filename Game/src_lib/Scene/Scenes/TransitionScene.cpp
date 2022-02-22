@@ -7,7 +7,7 @@
 #include "TransitionScene.h"
 
 #include "Constant/Screen.h"
-#include "Scene/Components/HelperComponent.h"
+#include "Scene/Layers/HelperLayer.h"
 #include "Scene/Transitions/BasicTransition.h"
 
 namespace FA {
@@ -15,9 +15,9 @@ namespace FA {
 namespace Scene {
 
 TransitionScene::TransitionScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-                                 Manager::Components& components, Manager::Data& data,
+                                 Manager::Layers& layers, Manager::Data& data,
                                  std::unique_ptr<BasicTransition> transition)
-    : BasicScene(sceneManager, messageBus, textureManager, components, data)
+    : BasicScene(sceneManager, messageBus, textureManager, layers, data)
     , transition_(std::move(transition))
 {}
 
@@ -27,31 +27,31 @@ void TransitionScene::Enter()
 {
     sf::IntRect rect(0, 0, constant::Screen::width, constant::Screen::height);
 #ifdef _DEBUG
-    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, rect, Name());
-    components_[ComponentId::Helper]->OnCreate();
+    layers_[LayerId::Helper] = std::make_unique<HelperLayer>(messageBus_, rect, Name());
+    layers_[LayerId::Helper]->OnCreate();
 #endif
-    for (const auto& entry : components_) {
-        auto& component = entry.second;
-        component->EnterTransition(*transition_);
-        component->EnableInput(false);
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->EnterTransition(*transition_);
+        layer->EnableInput(false);
     }
 }
 
 void TransitionScene::Exit()
 {
-    for (const auto& entry : components_) {
-        auto& component = entry.second;
-        component->ExitTransition(*transition_);
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->ExitTransition(*transition_);
     }
 }
 
 void TransitionScene::DrawTo(sf::RenderTarget& renderTarget)
 {
-    for (const auto& entry : components_) {
-        auto& component = entry.second;
-        component->Clear();
-        component->Draw();
-        component->DrawTo(renderTarget);
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->Clear();
+        layer->Draw();
+        layer->DrawTo(renderTarget);
     }
 }
 
@@ -64,9 +64,9 @@ void TransitionScene::Update(float deltaTime)
         return;
     }
 
-    for (const auto& entry : components_) {
-        auto& component = entry.second;
-        component->Update(deltaTime);
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->Update(deltaTime);
     }
 }
 

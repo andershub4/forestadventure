@@ -9,19 +9,19 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include "BasicComponent.h"
+#include "BasicLayer.h"
 
 namespace FA {
 
 namespace Scene {
 
-class IntroComponent : public BasicComponent
+class PreAlphaLayer : public BasicLayer
 {
 public:
-    IntroComponent(MessageBus& messageBus, const sf::IntRect& rect);
-    virtual ~IntroComponent();
+    PreAlphaLayer(MessageBus& messageBus, const sf::IntRect& rect);
+    virtual ~PreAlphaLayer();
 
-    virtual ComponentId GetId() const override { return ComponentId::Intro; }
+    virtual LayerId GetId() const override { return LayerId::Intro; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void EnableInput(bool enable) override {}
@@ -29,8 +29,7 @@ public:
 
 private:
     sf::Font font_;
-    sf::Text introText_;
-    sf::Text pressText_;
+    sf::Text versionText_;
 };
 
 }  // namespace Scene

@@ -9,8 +9,8 @@
 #include <map>
 #include <memory>
 
-#include "Components/BasicComponent.h"
 #include "Fwd/SfmlFwd.h"
+#include "Layers/BasicLayer.h"
 #include "Resource/TextureManager.h"
 
 namespace FA {
@@ -26,7 +26,7 @@ class BasicTransition;
 class Manager
 {
 public:
-    using Components = std::map<ComponentId, std::unique_ptr<BasicComponent>>;
+    using Layers = std::map<LayerId, std::unique_ptr<BasicLayer>>;
 
     struct Data
     {
@@ -40,7 +40,7 @@ public:
     void SetScene(MessageBus& messageBus, TextureManager& textureManager)
     {
         auto createSceneFn = [this](MessageBus& messageBus, TextureManager& textureManager) {
-            return std::make_unique<SceneT>(*this, messageBus, textureManager, components_, data_);
+            return std::make_unique<SceneT>(*this, messageBus, textureManager, layers_, data_);
         };
 
         auto transition = std::make_unique<TransitionT>(createSceneFn);
@@ -62,7 +62,7 @@ public:
 private:
     std::unique_ptr<BasicScene> currentScene_;
     Data data_;
-    Components components_;
+    Layers layers_;
 
     void SetTransitionScene(MessageBus& messageBus, TextureManager& textureManager,
                             std::unique_ptr<BasicTransition> transition);

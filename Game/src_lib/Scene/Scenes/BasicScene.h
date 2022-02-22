@@ -21,8 +21,8 @@ namespace Scene {
 class BasicScene
 {
 public:
-    BasicScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-               Manager::Components& components, Manager::Data& data);
+    BasicScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager, Manager::Layers& layers,
+               Manager::Data& data);
     virtual ~BasicScene();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
@@ -52,7 +52,7 @@ public:
 
 protected:
     Manager::Data& data_;
-    Manager::Components& components_;
+    Manager::Layers& layers_;
     TextureManager& textureManager_;
     MessageBus& messageBus_;
 

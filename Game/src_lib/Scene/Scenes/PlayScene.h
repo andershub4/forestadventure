@@ -15,8 +15,8 @@ namespace Scene {
 class PlayScene : public BasicScene
 {
 public:
-    PlayScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-              Manager::Components& components, Manager::Data& data);
+    PlayScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager, Manager::Layers& layers,
+              Manager::Data& data);
     virtual ~PlayScene();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) override;

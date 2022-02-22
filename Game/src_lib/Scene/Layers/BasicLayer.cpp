@@ -4,13 +4,13 @@
  *	See file LICENSE for full license details.
  */
 
-#include "BasicComponent.h"
+#include "BasicLayer.h"
 
 namespace FA {
 
 namespace Scene {
 
-BasicComponent::BasicComponent(MessageBus& messageBus, const sf::IntRect& rect)
+BasicLayer::BasicLayer(MessageBus& messageBus, const sf::IntRect& rect)
     : messageBus_(messageBus)
 {
     layerTexture_.create(rect.width, rect.height);
@@ -18,14 +18,14 @@ BasicComponent::BasicComponent(MessageBus& messageBus, const sf::IntRect& rect)
     sprite_.setPosition(static_cast<float>(rect.left), static_cast<float>(rect.top));
 }
 
-BasicComponent::~BasicComponent() = default;
+BasicLayer::~BasicLayer() = default;
 
-void BasicComponent::Clear()
+void BasicLayer::Clear()
 {
     layerTexture_.clear(sf::Color::Transparent);
 }
 
-void BasicComponent::DrawTo(sf::RenderTarget& renderTarget)
+void BasicLayer::DrawTo(sf::RenderTarget& renderTarget)
 {
     layerTexture_.display();
     renderTarget.draw(sprite_);

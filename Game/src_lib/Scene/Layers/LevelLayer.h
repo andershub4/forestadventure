@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include "BasicComponent.h"
+#include "BasicLayer.h"
 
 #include "Level/CameraManager.h"
 #include "Resource/TextureManager.h"
@@ -20,13 +20,13 @@ class Level;
 
 namespace Scene {
 
-class LevelComponent : public BasicComponent
+class LevelLayer : public BasicLayer
 {
 public:
-    LevelComponent(MessageBus& messageBus, const sf::IntRect& rect, TextureManager& textureManager);
-    virtual ~LevelComponent();
+    LevelLayer(MessageBus& messageBus, const sf::IntRect& rect, TextureManager& textureManager);
+    virtual ~LevelLayer();
 
-    virtual ComponentId GetId() const override { return ComponentId::Level; }
+    virtual LayerId GetId() const override { return LayerId::Level; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void EnableInput(bool enable) override;

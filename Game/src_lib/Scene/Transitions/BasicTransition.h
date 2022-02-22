@@ -23,7 +23,7 @@ class BasicEffect;
 namespace Scene {
 
 class BasicScene;
-class BasicComponent;
+class BasicLayer;
 
 class BasicTransition
 {

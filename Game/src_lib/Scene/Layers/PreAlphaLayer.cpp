@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "PreAlphaComponent.h"
+#include "PreAlphaLayer.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -16,13 +16,13 @@ namespace FA {
 
 namespace Scene {
 
-PreAlphaComponent::PreAlphaComponent(MessageBus& messageBus, const sf::IntRect& rect)
-    : BasicComponent(messageBus, rect)
+PreAlphaLayer::PreAlphaLayer(MessageBus& messageBus, const sf::IntRect& rect)
+    : BasicLayer(messageBus, rect)
 {}
 
-PreAlphaComponent::~PreAlphaComponent() = default;
+PreAlphaLayer::~PreAlphaLayer() = default;
 
-void PreAlphaComponent::OnCreate()
+void PreAlphaLayer::OnCreate()
 {
     std::string path = GetAssetsPath() + "/font/intuitive/intuitive.ttf";
     if (!font_.loadFromFile(path)) {
@@ -39,12 +39,12 @@ void PreAlphaComponent::OnCreate()
     versionText_.setPosition(versionTextPos);
 }
 
-void PreAlphaComponent::Draw()
+void PreAlphaLayer::Draw()
 {
     layerTexture_.draw(versionText_);
 }
 
-void PreAlphaComponent::Update(float deltaTime)
+void PreAlphaLayer::Update(float deltaTime)
 {}
 
 }  // namespace Scene
