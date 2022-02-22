@@ -17,7 +17,6 @@
 #include "Resource/Image.h"
 #include "Resource/SheetData.h"
 #include "Resource/SheetId.h"
-#include "Tile/TileMapReader.h"
 
 namespace FA {
 
@@ -85,7 +84,6 @@ Level::Level(MessageBus &messageBus, TextureManager &textureManager, CameraManag
     , sheetManager_(textureManager)
     , tileMap_(sheetManager_, scale_)
     , entityManager_(factory_, cameraManager, sheetManager_)
-
 {}
 
 Level::~Level() = default;
@@ -93,9 +91,7 @@ Level::~Level() = default;
 void Level::Load()
 {
     auto path = GetAssetsPath() + "/map/simpletest.tmx";
-    Tile::TileMapReader tileMapReader;
-    auto tileMapData = tileMapReader.Parse(path);
-    tileMap_.Load(tileMapData);
+    tileMap_.Load(path);
     auto sheetPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
 
     for (const auto &sheetData : textureSheets) {

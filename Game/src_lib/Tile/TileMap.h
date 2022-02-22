@@ -22,6 +22,7 @@ class SheetManager;
 namespace Tile {
 
 class BasicTileSet;
+class TileMapReader;
 
 class TileMap
 {
@@ -44,7 +45,7 @@ public:
 public:
     TileMap(SheetManager &sheetManager, unsigned int scale);
     ~TileMap();
-    void Load(const TileMapData &tileMapData);
+    void Load(const std::string &fileName);
     void Setup();
     const std::vector<TileData> &GetLayer(const std::string &name) const;
     const std::vector<ObjectData> GetObjectGroup(const std::string &name) const;
@@ -53,6 +54,7 @@ public:
 private:
     SheetManager &sheetManager_;
     TileMapData tileMapData_;
+    std::unique_ptr<TileMapReader> tileMapReader_ = nullptr;
     std::map<std::string, std::vector<TileData>> layers_;
     std::map<int, std::unique_ptr<BasicTileSet>, std::greater<int>> tileSets_;
     std::map<std::string, std::vector<ObjectData>> objectGroups_;

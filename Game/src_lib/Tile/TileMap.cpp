@@ -10,6 +10,7 @@
 #include "GridTileSet.h"
 #include "ImageTileSet.h"
 #include "Logging.h"
+#include "TileMapReader.h"
 
 namespace FA {
 
@@ -18,13 +19,15 @@ namespace Tile {
 TileMap::TileMap(SheetManager& sheetManager, unsigned int scale)
     : sheetManager_(sheetManager)
     , scale_(scale)
-{}
+{
+    tileMapReader_ = std::make_unique<TileMapReader>();
+}
 
 TileMap::~TileMap() = default;
 
-void TileMap::Load(const TileMapData& tileMapData)
+void TileMap::Load(const std::string& fileName)
 {
-    tileMapData_ = tileMapData;
+    tileMapData_ = tileMapReader_->Parse(fileName);
     LoadTileSets();
 }
 
