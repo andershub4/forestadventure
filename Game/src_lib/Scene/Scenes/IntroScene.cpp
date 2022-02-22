@@ -14,7 +14,6 @@
 #include "Scene/Components/HelperComponent.h"
 #include "Scene/Components/IntroComponent.h"
 #include "Scene/Components/PreAlphaComponent.h"
-#include "Scene/Layer.h"
 
 namespace FA {
 
@@ -29,13 +28,14 @@ IntroScene::~IntroScene() = default;
 
 void IntroScene::Enter()
 {
-    Layer layer{0.0f, 0.0f, constant::Screen::width, constant::Screen::height};
+    //    Layer layer{0.0f, 0.0f, constant::Screen::width, constant::Screen::height};
+    sf::IntRect rect(0, 0, constant::Screen::width, constant::Screen::height);
     components_.clear();
-    components_[ComponentId::Intro] = std::make_unique<IntroComponent>(messageBus_, layer);
+    components_[ComponentId::Intro] = std::make_unique<IntroComponent>(messageBus_, rect);
 #ifdef _DEBUG
-    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, layer, Name());
+    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, rect, Name());
 #endif
-    components_[ComponentId::PreAlpha] = std::make_unique<PreAlphaComponent>(messageBus_, layer);
+    components_[ComponentId::PreAlpha] = std::make_unique<PreAlphaComponent>(messageBus_, rect);
 
     for (const auto& entry : components_) {
         auto& component = entry.second;

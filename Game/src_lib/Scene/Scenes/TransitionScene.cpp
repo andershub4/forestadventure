@@ -8,7 +8,6 @@
 
 #include "Constant/Screen.h"
 #include "Scene/Components/HelperComponent.h"
-#include "Scene/Layer.h"
 #include "Scene/Transitions/BasicTransition.h"
 
 namespace FA {
@@ -26,9 +25,9 @@ TransitionScene::~TransitionScene() = default;
 
 void TransitionScene::Enter()
 {
-    Layer layer{0.0f, 0.0f, constant::Screen::width, constant::Screen::height};
+    sf::IntRect rect(0, 0, constant::Screen::width, constant::Screen::height);
 #ifdef _DEBUG
-    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, layer, Name());
+    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, rect, Name());
     components_[ComponentId::Helper]->OnCreate();
 #endif
     for (const auto& entry : components_) {

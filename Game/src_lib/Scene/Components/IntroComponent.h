@@ -18,7 +18,7 @@ namespace Scene {
 class IntroComponent : public BasicComponent
 {
 public:
-    IntroComponent(MessageBus& messageBus, const Layer& layer);
+    IntroComponent(MessageBus& messageBus, const sf::IntRect& rect);
     virtual ~IntroComponent();
 
     virtual ComponentId GetId() const override { return ComponentId::Intro; }

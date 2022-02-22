@@ -6,18 +6,16 @@
 
 #include "BasicComponent.h"
 
-#include "Scene/Layer.h"
-
 namespace FA {
 
 namespace Scene {
 
-BasicComponent::BasicComponent(MessageBus& messageBus, const Layer& layer)
+BasicComponent::BasicComponent(MessageBus& messageBus, const sf::IntRect& rect)
     : messageBus_(messageBus)
 {
-    layerTexture_.create(layer.width_, layer.height_);
+    layerTexture_.create(rect.width, rect.height);
     sprite_.setTexture(layerTexture_.getTexture());
-    sprite_.setPosition(layer.x_, layer.y_);
+    sprite_.setPosition(static_cast<float>(rect.left), static_cast<float>(rect.top));
 }
 
 BasicComponent::~BasicComponent() = default;

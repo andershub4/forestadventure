@@ -13,14 +13,13 @@
 #include "Folder.h"
 #include "Logging.h"
 #include "Message/MessageBus.h"
-#include "Scene/Layer.h"
 
 namespace FA {
 
 namespace Scene {
 
-HelperComponent::HelperComponent(MessageBus& messageBus, const Layer& layer, const std::string& sceneName)
-    : BasicComponent(messageBus, layer)
+HelperComponent::HelperComponent(MessageBus& messageBus, const sf::IntRect& rect, const std::string& sceneName)
+    : BasicComponent(messageBus, rect)
     , sceneName_(sceneName)
 {}
 

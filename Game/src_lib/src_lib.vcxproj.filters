@@ -419,9 +419,6 @@
     <ClInclude Include="Entity\Attributes\TransformAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\Layer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Resource\SheetId.h">
       <Filter>Header Files</Filter>
     </ClInclude>

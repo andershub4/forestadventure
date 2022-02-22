@@ -11,14 +11,13 @@
 #include "Folder.h"
 #include "Logging.h"
 #include "Message/MessageBus.h"
-#include "Scene/Layer.h"
 
 namespace FA {
 
 namespace Scene {
 
-PreAlphaComponent::PreAlphaComponent(MessageBus& messageBus, const Layer& layer)
-    : BasicComponent(messageBus, layer)
+PreAlphaComponent::PreAlphaComponent(MessageBus& messageBus, const sf::IntRect& rect)
+    : BasicComponent(messageBus, rect)
 {}
 
 PreAlphaComponent::~PreAlphaComponent() = default;

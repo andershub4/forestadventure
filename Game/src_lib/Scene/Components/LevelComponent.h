@@ -23,7 +23,7 @@ namespace Scene {
 class LevelComponent : public BasicComponent
 {
 public:
-    LevelComponent(MessageBus& messageBus, const Layer& layer, TextureManager& textureManager);
+    LevelComponent(MessageBus& messageBus, const sf::IntRect& rect, TextureManager& textureManager);
     virtual ~LevelComponent();
 
     virtual ComponentId GetId() const override { return ComponentId::Level; }

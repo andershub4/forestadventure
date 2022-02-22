@@ -267,7 +267,6 @@
     <ClInclude Include="Resource\SheetManager.h" />
     <ClInclude Include="Resource\TextureManager.h" />
     <ClInclude Include="Scene\Components\PreAlphaComponent.h" />
-    <ClInclude Include="Scene\Layer.h" />
     <ClInclude Include="Tile\BasicTileSet.h" />
     <ClInclude Include="Tile\FrameData.h" />
     <ClInclude Include="Tile\GridTileSet.h" />

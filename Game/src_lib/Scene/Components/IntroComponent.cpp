@@ -11,14 +11,13 @@
 #include "Folder.h"
 #include "Logging.h"
 #include "Message/MessageBus.h"
-#include "Scene/Layer.h"
 
 namespace FA {
 
 namespace Scene {
 
-IntroComponent::IntroComponent(MessageBus& messageBus, const Layer& layer)
-    : BasicComponent(messageBus, layer)
+IntroComponent::IntroComponent(MessageBus& messageBus, const sf::IntRect& rect)
+    : BasicComponent(messageBus, rect)
 {}
 
 IntroComponent::~IntroComponent() = default;

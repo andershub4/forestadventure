@@ -19,12 +19,11 @@ class BasicEffect;
 namespace Scene {
 
 class BasicTransition;
-struct Layer;
 
 class BasicComponent
 {
 public:
-    BasicComponent(MessageBus& messageBus, const Layer& layer);
+    BasicComponent(MessageBus& messageBus, const sf::IntRect& rect);
     virtual ~BasicComponent();
 
     virtual ComponentId GetId() const = 0;

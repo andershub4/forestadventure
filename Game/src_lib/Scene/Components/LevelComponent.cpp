@@ -11,15 +11,14 @@
 #include "Effect/BasicEffect.h"
 #include "Level/Level.h"
 #include "Message/MessageBus.h"
-#include "Scene/Layer.h"
 #include "Scene/Transitions/BasicTransition.h"
 
 namespace FA {
 
 namespace Scene {
 
-LevelComponent::LevelComponent(MessageBus& messageBus, const Layer& layer, TextureManager& textureManager)
-    : BasicComponent(messageBus, layer)
+LevelComponent::LevelComponent(MessageBus& messageBus, const sf::IntRect& rect, TextureManager& textureManager)
+    : BasicComponent(messageBus, rect)
     , cameraManager_(layerTexture_.getSize())
 {
     level_ = std::make_unique<Level>(messageBus, textureManager, cameraManager_);

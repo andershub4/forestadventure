@@ -14,7 +14,6 @@
 #include "Scene/Components/HelperComponent.h"
 #include "Scene/Components/LevelComponent.h"
 #include "Scene/Components/PreAlphaComponent.h"
-#include "Scene/Layer.h"
 #include "Scene/Transitions/FadeTransition.h"
 
 namespace FA {
@@ -30,13 +29,13 @@ PlayScene::~PlayScene() = default;
 
 void PlayScene::Enter()
 {
-    Layer layer{0.0f, 0.0f, constant::Screen::width, constant::Screen::height};
+    sf::IntRect rect(0, 0, constant::Screen::width, constant::Screen::height);
     components_.clear();
-    components_[ComponentId::Level] = std::make_unique<LevelComponent>(messageBus_, layer, textureManager_);
+    components_[ComponentId::Level] = std::make_unique<LevelComponent>(messageBus_, rect, textureManager_);
 #ifdef _DEBUG
-    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, layer, Name());
+    components_[ComponentId::Helper] = std::make_unique<HelperComponent>(messageBus_, rect, Name());
 #endif
-    components_[ComponentId::PreAlpha] = std::make_unique<PreAlphaComponent>(messageBus_, layer);
+    components_[ComponentId::PreAlpha] = std::make_unique<PreAlphaComponent>(messageBus_, rect);
 
     for (const auto& entry : components_) {
         auto& component = entry.second;
