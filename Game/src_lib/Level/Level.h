@@ -31,7 +31,7 @@ public:
     void Draw(sf::RenderTarget& renderTarget);
 
     void Load();
-    void Create();
+    void Setup();
     void EnableInput(bool enable);
     sf::Vector2u GetMapSize() const;
 

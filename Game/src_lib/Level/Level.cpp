@@ -103,7 +103,7 @@ void Level::Load()
     }
 }
 
-void Level::Create()
+void Level::Setup()
 {
     LOG_INFO_ENTER_FUNC();
     tileMap_.Setup();

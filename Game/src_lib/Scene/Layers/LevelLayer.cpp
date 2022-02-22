@@ -31,7 +31,7 @@ void LevelLayer::OnCreate()
     level_->Load();
     auto s = level_->GetMapSize();
     cameraManager_.SetMapSize(s);
-    level_->Create();
+    level_->Setup();
 }
 
 void LevelLayer::Draw()
