@@ -7,7 +7,6 @@
 #include "FadeTransition.h"
 
 #include "Constant/Screen.h"
-#include "Scene/Components/BasicComponent.h"
 
 namespace FA {
 
