@@ -11,9 +11,10 @@
 #include <string>
 #include <vector>
 
+#include <SFML/System/Vector2.hpp>
+
 #include "FrameData.h"
 #include "Fwd/SfmlFwd.h"
-#include "TileMapData.h"
 
 namespace FA {
 
@@ -23,6 +24,7 @@ namespace Tile {
 
 class BasicTileSet;
 class TileMapReader;
+struct TileMapData;
 
 class TileMap
 {
@@ -53,7 +55,8 @@ public:
 
 private:
     SheetManager &sheetManager_;
-    TileMapData tileMapData_;
+    std::unique_ptr<TileMapData> tileMapData_ = nullptr;
+    ;
     std::unique_ptr<TileMapReader> tileMapReader_ = nullptr;
     std::map<std::string, std::vector<TileData>> layers_;
     std::map<int, std::unique_ptr<BasicTileSet>, std::greater<int>> tileSets_;
@@ -64,7 +67,6 @@ private:
     void LoadTileSets();
     void SetupLayers();
     void SetupObjectGroups();
-    std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet &tileSet) const;
     FrameData GetFrameData(int id);
 };
 

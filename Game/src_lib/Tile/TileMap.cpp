@@ -10,11 +10,26 @@
 #include "GridTileSet.h"
 #include "ImageTileSet.h"
 #include "Logging.h"
+#include "TileMapData.h"
 #include "TileMapReader.h"
 
 namespace FA {
 
 namespace Tile {
+
+namespace {
+
+std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet& tileSet, SheetManager& sheetManager)
+{
+    if (!tileSet.tiles_.empty()) {
+        return std::make_unique<ImageTileSet>(tileSet, sheetManager);
+    }
+    else {
+        return std::make_unique<GridTileSet>(tileSet, sheetManager);
+    }
+}
+
+}  // namespace
 
 TileMap::TileMap(SheetManager& sheetManager, unsigned int scale)
     : sheetManager_(sheetManager)
@@ -27,7 +42,7 @@ TileMap::~TileMap() = default;
 
 void TileMap::Load(const std::string& fileName)
 {
-    tileMapData_ = tileMapReader_->Parse(fileName);
+    tileMapData_ = std::make_unique<TileMapData>(tileMapReader_->Parse(fileName));
     LoadTileSets();
 }
 
@@ -38,20 +53,10 @@ void TileMap::Setup()
     SetupObjectGroups();
 }
 
-std::unique_ptr<BasicTileSet> TileMap::CreateTileSet(const TileMapData::TileSet& tileSet) const
-{
-    if (!tileSet.tiles_.empty()) {
-        return std::make_unique<ImageTileSet>(tileSet, sheetManager_);
-    }
-    else {
-        return std::make_unique<GridTileSet>(tileSet, sheetManager_);
-    }
-}
-
 void TileMap::LoadTileSets()
 {
-    for (const auto& tileSet : tileMapData_.tileSets_) {
-        auto s = CreateTileSet(tileSet);
+    for (const auto& tileSet : tileMapData_->tileSets_) {
+        auto s = CreateTileSet(tileSet, sheetManager_);
         s->Load();
         auto firstGid = tileSet.firstGid_;
         tileSets_[firstGid] = std::move(s);
@@ -60,11 +65,11 @@ void TileMap::LoadTileSets()
 
 void TileMap::SetupLayers()
 {
-    auto nCols = tileMapData_.mapProperties_.width_;
-    auto tileWidth = tileMapData_.mapProperties_.tileWidth_;
-    auto tileHeight = tileMapData_.mapProperties_.tileHeight_;
+    auto nCols = tileMapData_->mapProperties_.width_;
+    auto tileWidth = tileMapData_->mapProperties_.tileWidth_;
+    auto tileHeight = tileMapData_->mapProperties_.tileHeight_;
 
-    for (const auto& layer : tileMapData_.layers_) {
+    for (const auto& layer : tileMapData_->layers_) {
         int inx = 0;
         auto layerName = layer.name_;
         for (auto it = layer.tileIds_.begin(); layer.tileIds_.end() != it; ++it, ++inx) {
@@ -88,7 +93,7 @@ void TileMap::SetupLayers()
 
 void TileMap::SetupObjectGroups()
 {
-    for (const auto& group : tileMapData_.objectGroups_) {
+    for (const auto& group : tileMapData_->objectGroups_) {
         auto groupName = group.name_;
         std::vector<TileMap::ObjectData> objectDatas;
         for (const auto& object : group.objects_) {
@@ -115,10 +120,10 @@ const std::vector<TileMap::ObjectData> TileMap::GetObjectGroup(const std::string
 
 sf::Vector2u TileMap::GetSize() const
 {
-    auto nCols = tileMapData_.mapProperties_.width_;
-    auto nRows = tileMapData_.mapProperties_.height_;
-    auto tileWidth = tileMapData_.mapProperties_.tileWidth_;
-    auto tileHeight = tileMapData_.mapProperties_.tileHeight_;
+    auto nCols = tileMapData_->mapProperties_.width_;
+    auto nRows = tileMapData_->mapProperties_.height_;
+    auto tileWidth = tileMapData_->mapProperties_.tileWidth_;
+    auto tileHeight = tileMapData_->mapProperties_.tileHeight_;
 
     return {nCols * tileWidth * scale_, nRows * tileHeight * scale_};
 }
