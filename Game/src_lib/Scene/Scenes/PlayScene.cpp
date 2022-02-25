@@ -41,6 +41,13 @@ void PlayScene::Enter()
         auto& layer = entry.second;
         layer->OnCreate();
     }
+
+    Subscribe({MessageType::CloseWindow, MessageType::KeyPressed});
+}
+
+void PlayScene::Exit()
+{
+    Unsubscribe({MessageType::CloseWindow, MessageType::KeyPressed});
 }
 
 void PlayScene::DrawTo(sf::RenderTarget& renderTarget)
@@ -61,10 +68,8 @@ void PlayScene::Update(float deltaTime)
     }
 }
 
-void PlayScene::OnKeyPressed(std::shared_ptr<Message> message)
+void PlayScene::OnKeyPressed(Keyboard::Key key)
 {
-    auto m = std::dynamic_pointer_cast<KeyPressedMessage>(message);
-    auto key = m->GetKey();
     if (key == Keyboard::Key::Escape) {
         data_.isRunning_ = false;
     }

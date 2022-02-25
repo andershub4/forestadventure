@@ -8,8 +8,6 @@
 
 #include "Constant/Screen.h"
 #include "Logging.h"
-#include "Message/BroadcastMessage/CloseWindowMessage.h"
-#include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "System/InputSystem.h"
 #include "UI/Title.h"
 
@@ -19,11 +17,7 @@ Game::Game()
     : sceneManager_(messageBus_, textureManager_)
 {
     LOG_INFO_ENTER_FUNC();
-
     InitWindow();
-    auto cb = [this](std::shared_ptr<Message> message) { OnMessage(message); };
-    messageBus_.AddSubscriber("game", {MessageType::KeyPressed, MessageType::CloseWindow}, cb);
-
     LOG_INFO_EXIT_FUNC();
 }
 
@@ -53,19 +47,6 @@ void Game::GameLoop()
     window_.close();
 
     LOG_INFO_EXIT_FUNC();
-}
-
-void Game::OnMessage(std::shared_ptr<Message> message)
-{
-    if (message->GetMessageType() == MessageType::KeyPressed) {
-        sceneManager_.OnKeyPressed(message);
-    }
-    else if (message->GetMessageType() == MessageType::CloseWindow) {
-        sceneManager_.OnCloseWindow(message);
-    }
-    else {
-        // cant happen
-    }
 }
 
 void Game::InitWindow()

@@ -23,8 +23,9 @@ public:
     virtual void Update(float deltaTime) override;
     virtual std::string Name() const override { return "PlayScene"; }
 
-    virtual void OnKeyPressed(std::shared_ptr<Message> message) override;
+    virtual void OnKeyPressed(Keyboard::Key key) override;
     virtual void Enter() override;
+    virtual void Exit() override;
 };
 
 }  // namespace Scene

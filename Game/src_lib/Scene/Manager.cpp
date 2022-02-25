@@ -7,7 +7,6 @@
 #include "Manager.h"
 
 #include "Logging.h"
-#include "Message/Message.h"
 #include "Scenes/IntroScene.h"
 #include "Scenes/TransitionScene.h"
 
@@ -57,26 +56,6 @@ void Manager::Update(float deltaTime)
 bool Manager::IsRunning() const
 {
     return currentScene_->IsRunning();
-}
-
-void Manager::OnKeyPressed(std::shared_ptr<Message> message)
-{
-    currentScene_->OnKeyPressed(message);
-}
-
-void Manager::OnKeyReleased(std::shared_ptr<Message> message)
-{
-    currentScene_->OnKeyReleased(message);
-}
-
-void Manager::OnIsKeyPressed(std::shared_ptr<Message> message)
-{
-    currentScene_->OnIsKeyPressed(message);
-}
-
-void Manager::OnCloseWindow(std::shared_ptr<Message> message)
-{
-    currentScene_->OnCloseWindow(message);
 }
 
 }  // namespace Scene

@@ -54,11 +54,6 @@ public:
 
     bool IsRunning() const;
 
-    void OnKeyPressed(std::shared_ptr<Message> message);
-    void OnKeyReleased(std::shared_ptr<Message> message);
-    void OnIsKeyPressed(std::shared_ptr<Message> message);
-    void OnCloseWindow(std::shared_ptr<Message> message);
-
 private:
     std::unique_ptr<BasicScene> currentScene_;
     Data data_;

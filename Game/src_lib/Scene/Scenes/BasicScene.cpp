@@ -6,6 +6,10 @@
 
 #include "BasicScene.h"
 
+#include "Message/BroadcastMessage/CloseWindowMessage.h"
+#include "Message/BroadcastMessage/KeyPressedMessage.h"
+#include "Message/MessageBus.h"
+
 namespace FA {
 
 namespace Scene {
@@ -28,7 +32,7 @@ void BasicScene::SwitchScene(std::unique_ptr<BasicScene> newScene)
     sceneManager_.SetScene(std::move(newScene));
 }
 
-void BasicScene::OnCloseWindow(std::shared_ptr<Message> message)
+void BasicScene::OnCloseWindow()
 {
     data_.isRunning_ = false;
 }
@@ -36,6 +40,29 @@ void BasicScene::OnCloseWindow(std::shared_ptr<Message> message)
 bool BasicScene::IsRunning() const
 {
     return data_.isRunning_;
+}
+
+void BasicScene::Subscribe(const std::vector<MessageType> &messageTypes)
+{
+    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
+}
+
+void BasicScene::Unsubscribe(const std::vector<MessageType> &messageTypes)
+{
+    messageBus_.RemoveSubscriber(Name(), messageTypes);
+}
+
+void BasicScene::OnMessage(std::shared_ptr<Message> msg)
+{
+    if (msg->GetMessageType() == MessageType::CloseWindow) {
+        auto m = std::dynamic_pointer_cast<CloseWindowMessage>(msg);
+        OnCloseWindow();
+    }
+    else if (msg->GetMessageType() == MessageType::KeyPressed) {
+        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
+        auto key = m->GetKey();
+        OnKeyPressed(key);
+    }
 }
 
 }  // namespace Scene

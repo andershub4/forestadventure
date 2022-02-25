@@ -13,8 +13,13 @@
 
 namespace FA {
 
+namespace Keyboard {
+enum class Key;
+}
+
 class MessageBus;
 class Message;
+enum class MessageType;
 
 namespace Scene {
 
@@ -29,10 +34,7 @@ public:
     virtual void Update(float deltaTime) = 0;
     virtual std::string Name() const = 0;
 
-    virtual void OnKeyPressed(std::shared_ptr<Message> message) {}
-    virtual void OnKeyReleased(std::shared_ptr<Message> message) {}
-    virtual void OnIsKeyPressed(std::shared_ptr<Message> message) {}
-    virtual void OnCloseWindow(std::shared_ptr<Message> message);
+    virtual void OnKeyPressed(Keyboard::Key key) {}
     virtual void Enter() {}
     virtual void Exit() {}
 
@@ -56,8 +58,17 @@ protected:
     TextureManager& textureManager_;
     MessageBus& messageBus_;
 
+protected:
+    virtual std::vector<MessageType> Messages() const { return {}; }
+    void Subscribe(const std::vector<MessageType>& messageTypes);
+    void Unsubscribe(const std::vector<MessageType>& messageTypes);
+
 private:
     Manager& sceneManager_;
+
+private:
+    void OnCloseWindow();
+    void OnMessage(std::shared_ptr<Message> msg);
 };
 
 }  // namespace Scene

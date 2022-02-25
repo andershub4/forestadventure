@@ -31,7 +31,6 @@ private:
     Scene::Manager sceneManager_;
 
 private:
-    void OnMessage(std::shared_ptr<Message> message);
     void InitWindow();
 };
 
