@@ -26,6 +26,7 @@ public:
     LevelLayer(MessageBus& messageBus, const sf::IntRect& rect, TextureManager& textureManager);
     virtual ~LevelLayer();
 
+    virtual std::string Name() const override { return "Level"; }
     virtual LayerId GetId() const override { return LayerId::Level; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;

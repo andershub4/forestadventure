@@ -21,6 +21,7 @@ public:
     IntroLayer(MessageBus& messageBus, const sf::IntRect& rect);
     virtual ~IntroLayer();
 
+    virtual std::string Name() const override { return "Intro"; }
     virtual LayerId GetId() const override { return LayerId::Intro; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;

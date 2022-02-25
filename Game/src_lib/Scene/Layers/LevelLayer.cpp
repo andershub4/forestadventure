@@ -10,7 +10,6 @@
 
 #include "Effect/BasicEffect.h"
 #include "Level/Level.h"
-#include "Message/MessageBus.h"
 #include "Scene/Transitions/BasicTransition.h"
 
 namespace FA {

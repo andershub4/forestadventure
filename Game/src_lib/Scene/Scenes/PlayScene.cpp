@@ -43,11 +43,19 @@ void PlayScene::Enter()
     }
 
     Subscribe({MessageType::CloseWindow, MessageType::KeyPressed});
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->SubscribeMessages();
+    }
 }
 
 void PlayScene::Exit()
 {
     Unsubscribe({MessageType::CloseWindow, MessageType::KeyPressed});
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->UnsubscribeMessages();
+    }
 }
 
 void PlayScene::DrawTo(sf::RenderTarget& renderTarget)

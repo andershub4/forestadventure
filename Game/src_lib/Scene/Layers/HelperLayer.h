@@ -22,11 +22,14 @@ public:
     HelperLayer(MessageBus& messageBus, const sf::IntRect& rect, const std::string& sceneName);
     virtual ~HelperLayer();
 
+    virtual std::string Name() const override { return "Helper"; }
     virtual LayerId GetId() const override { return LayerId::Helper; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void EnableInput(bool enable) override {}
     virtual void OnCreate() override;
+    virtual void SubscribeMessages() override;
+    virtual void UnsubscribeMessages() override;
 
 private:
     sf::RectangleShape dotShape_;
@@ -35,6 +38,9 @@ private:
     sf::Text fpsText_;
     sf::Text fpsNumberText_;
     std::string sceneName_;
+
+private:
+    virtual void OnMessage(std::shared_ptr<Message> message) override;
 };
 
 }  // namespace Scene

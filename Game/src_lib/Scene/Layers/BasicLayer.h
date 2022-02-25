@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
@@ -14,7 +16,9 @@
 namespace FA {
 
 class MessageBus;
+class Message;
 class BasicEffect;
+enum class MessageType;
 
 namespace Scene {
 
@@ -26,6 +30,7 @@ public:
     BasicLayer(MessageBus& messageBus, const sf::IntRect& rect);
     virtual ~BasicLayer();
 
+    virtual std::string Name() const = 0;
     virtual LayerId GetId() const = 0;
     virtual void Update(float deltaTime) = 0;
     virtual void Draw() = 0;
@@ -33,6 +38,8 @@ public:
     virtual void EnterTransition(const BasicTransition& transition) {}
     virtual void ExitTransition(const BasicTransition& transition) {}
     virtual void OnCreate() {}
+    virtual void SubscribeMessages() {}
+    virtual void UnsubscribeMessages() {}
 
     void Clear();
     void DrawTo(sf::RenderTarget& renderTarget);
@@ -40,9 +47,16 @@ public:
 protected:
     sf::RenderTexture layerTexture_;
 
+protected:
+    void Subscribe(const std::vector<MessageType>& messageTypes);
+    void Unsubscribe(const std::vector<MessageType>& messageTypes);
+
 private:
     sf::Sprite sprite_;
     MessageBus& messageBus_;
+
+private:
+    virtual void OnMessage(std::shared_ptr<Message> msg) {}
 };
 
 }  // namespace Scene

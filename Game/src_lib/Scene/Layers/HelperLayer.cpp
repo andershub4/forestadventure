@@ -57,6 +57,16 @@ void HelperLayer::OnCreate()
     dotShape_.setPosition(layerTexture_.getSize().x / 2.0f, layerTexture_.getSize().y / 2.0f);
 }
 
+void HelperLayer::SubscribeMessages()
+{
+    Subscribe({});
+}
+
+void HelperLayer::UnsubscribeMessages()
+{
+    Unsubscribe({});
+}
+
 void HelperLayer::Draw()
 {
     layerTexture_.draw(sceneText_);
@@ -70,6 +80,9 @@ void HelperLayer::Update(float deltaTime)
     unsigned int fps = static_cast<unsigned int>(std::floor(1.0f / deltaTime));
     fpsNumberText_.setString(std::to_string(fps));
 }
+
+void HelperLayer::OnMessage(std::shared_ptr<Message> message)
+{}
 
 }  // namespace Scene
 

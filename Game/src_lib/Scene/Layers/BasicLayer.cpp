@@ -6,6 +6,8 @@
 
 #include "BasicLayer.h"
 
+#include "Message/MessageBus.h"
+
 namespace FA {
 
 namespace Scene {
@@ -29,6 +31,16 @@ void BasicLayer::DrawTo(sf::RenderTarget& renderTarget)
 {
     layerTexture_.display();
     renderTarget.draw(sprite_);
+}
+
+void BasicLayer::Subscribe(const std::vector<MessageType>& messageTypes)
+{
+    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
+}
+
+void BasicLayer::Unsubscribe(const std::vector<MessageType>& messageTypes)
+{
+    messageBus_.RemoveSubscriber(Name(), messageTypes);
 }
 
 }  // namespace Scene

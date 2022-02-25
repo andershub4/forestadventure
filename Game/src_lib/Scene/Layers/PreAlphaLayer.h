@@ -21,6 +21,7 @@ public:
     PreAlphaLayer(MessageBus& messageBus, const sf::IntRect& rect);
     virtual ~PreAlphaLayer();
 
+    virtual std::string Name() const override { return "PreAlpha"; }
     virtual LayerId GetId() const override { return LayerId::PreAlpha; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
