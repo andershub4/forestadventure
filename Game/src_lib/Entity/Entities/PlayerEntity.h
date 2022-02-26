@@ -23,14 +23,12 @@ public:
     virtual EntityType Type() const override { return EntityType::Player; }
 
 protected:
-    virtual void HandleIsKeyPressed(Keyboard::Key key) override;
-    virtual void HandleIsKeyReleased(Keyboard::Key key) override;
-    virtual void HandleKeyPressed(Keyboard::Key key) override;
     virtual std::vector<MessageType> Messages() const override;
 
 private:
     virtual void AddAttributes(EntityService& handler, const AttributeData& data) override;
     virtual void RegisterModes(ModeController& modeController, const EntityService& entityService) override;
+    virtual void OnMessage(std::shared_ptr<Message> msg) override;
 };
 
 }  // namespace Entity

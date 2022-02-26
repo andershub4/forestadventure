@@ -12,9 +12,6 @@
 #include "Entity/Events/DestroyEvent.h"
 #include "Entity/Events/InitEvent.h"
 #include "Entity/Shape.h"
-#include "Message/BroadcastMessage/IsKeyPressedMessage.h"
-#include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
-#include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/MessageBus.h"
 
 namespace FA {
@@ -90,38 +87,14 @@ void BasicEntity::OnDestroy(std::shared_ptr<BasicEvent> event)
 
 void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
 {
-    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
+    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) {
+        if (enableInput_) OnMessage(message);
+    });
 }
 
 void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)
 {
     messageBus_.RemoveSubscriber(Name(), messageTypes);
-}
-
-void BasicEntity::OnMessage(std::shared_ptr<Message> msg)
-{
-    if (enableInput_) {
-        HandleMessage(msg);
-    }
-}
-
-void BasicEntity::HandleMessage(std::shared_ptr<Message> msg)
-{
-    if (msg->GetMessageType() == MessageType::IsKeyPressed) {
-        auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
-        auto key = m->GetKey();
-        HandleIsKeyPressed(key);
-    }
-    else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
-        auto m = std::dynamic_pointer_cast<IsKeyReleasedMessage>(msg);
-        auto key = m->GetKey();
-        HandleIsKeyReleased(key);
-    }
-    else if (msg->GetMessageType() == MessageType::KeyPressed) {
-        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
-        auto key = m->GetKey();
-        HandleKeyPressed(key);
-    }
 }
 
 }  // namespace Entity

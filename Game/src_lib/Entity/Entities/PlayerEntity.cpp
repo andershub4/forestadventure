@@ -25,6 +25,9 @@
 #include "Entity/Shape.h"
 #include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
+#include "Message/BroadcastMessage/IsKeyPressedMessage.h"
+#include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
+#include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -65,44 +68,48 @@ PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, const Shee
 
 PlayerEntity::~PlayerEntity() = default;
 
-void PlayerEntity::HandleIsKeyPressed(Keyboard::Key key)
-{
-    if (key == Keyboard::Key::Right) {
-        HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right));
-    }
-    else if (key == Keyboard::Key::Left) {
-        HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left));
-    }
-    else if (key == Keyboard::Key::Down) {
-        HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down));
-    }
-    else if (key == Keyboard::Key::Up) {
-        HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up));
-    }
-}
-
-void PlayerEntity::HandleIsKeyReleased(Keyboard::Key key)
-{
-    if (key == Keyboard::Key::Right || key == Keyboard::Key::Left || key == Keyboard::Key::Down ||
-        key == Keyboard::Key::Up) {
-        HandleEvent(std::make_shared<StopMoveEvent>());
-    }
-}
-
-void PlayerEntity::HandleKeyPressed(Keyboard::Key key)
-{
-    if (key == Keyboard::Key::RControl) {
-        HandleEvent(std::make_shared<AttackEvent>());
-    }
-    else if (key == Keyboard::Key::Space) {
-        float velocity = constant::Entity::stdVelocity * 8.0f;
-        HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow, arrowOffset, velocity));
-    }
-}
-
 std::vector<MessageType> PlayerEntity::Messages() const
 {
     return {MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed};
+}
+
+void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
+{
+    if (msg->GetMessageType() == MessageType::IsKeyPressed) {
+        auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
+        auto key = m->GetKey();
+        if (key == Keyboard::Key::Right) {
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right));
+        }
+        else if (key == Keyboard::Key::Left) {
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left));
+        }
+        else if (key == Keyboard::Key::Down) {
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down));
+        }
+        else if (key == Keyboard::Key::Up) {
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up));
+        }
+    }
+    else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
+        auto m = std::dynamic_pointer_cast<IsKeyReleasedMessage>(msg);
+        auto key = m->GetKey();
+        if (key == Keyboard::Key::Right || key == Keyboard::Key::Left || key == Keyboard::Key::Down ||
+            key == Keyboard::Key::Up) {
+            HandleEvent(std::make_shared<StopMoveEvent>());
+        }
+    }
+    else if (msg->GetMessageType() == MessageType::KeyPressed) {
+        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
+        auto key = m->GetKey();
+        if (key == Keyboard::Key::RControl) {
+            HandleEvent(std::make_shared<AttackEvent>());
+        }
+        else if (key == Keyboard::Key::Space) {
+            float velocity = constant::Entity::stdVelocity * 8.0f;
+            HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow, arrowOffset, velocity));
+        }
+    }
 }
 
 void PlayerEntity::AddAttributes(EntityService& entityService, const AttributeData& data)
