@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Screen.h"
+#include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "PlayScene.h"
 #include "Scene/Layers/HelperLayer.h"
@@ -75,13 +76,21 @@ void IntroScene::Update(float deltaTime)
     }
 }
 
-void IntroScene::OnKeyPressed(Keyboard::Key key)
+void IntroScene::OnMessage(std::shared_ptr<Message> msg)
 {
-    if (key == Keyboard::Key::Escape) {
-        data_.isRunning_ = false;
+    if (msg->GetMessageType() == MessageType::CloseWindow) {
+        auto m = std::dynamic_pointer_cast<CloseWindowMessage>(msg);
+        OnCloseWindow();
     }
-    else if (key == Keyboard::Key::Return) {
-        SwitchScene<PlayScene>();
+    else if (msg->GetMessageType() == MessageType::KeyPressed) {
+        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
+        auto key = m->GetKey();
+        if (key == Keyboard::Key::Escape) {
+            data_.isRunning_ = false;
+        }
+        else if (key == Keyboard::Key::Return) {
+            SwitchScene<PlayScene>();
+        }
     }
 }
 

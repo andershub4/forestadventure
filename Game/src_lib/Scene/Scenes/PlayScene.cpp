@@ -10,6 +10,7 @@
 
 #include "Constant/Screen.h"
 #include "IntroScene.h"
+#include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Scene/Layers/HelperLayer.h"
 #include "Scene/Layers/LevelLayer.h"
@@ -76,15 +77,23 @@ void PlayScene::Update(float deltaTime)
     }
 }
 
-void PlayScene::OnKeyPressed(Keyboard::Key key)
+void PlayScene::OnMessage(std::shared_ptr<Message> msg)
 {
-    if (key == Keyboard::Key::Escape) {
-        data_.isRunning_ = false;
+    if (msg->GetMessageType() == MessageType::CloseWindow) {
+        auto m = std::dynamic_pointer_cast<CloseWindowMessage>(msg);
+        OnCloseWindow();
     }
-    else if (key == Keyboard::Key::Return) {
-        // TODO: If player press Return, while pressing an arrow key, Transition scene is shown.
-        // However, player is still moving (and input is disabled).
-        SwitchScene<IntroScene, FadeTransition>();
+    else if (msg->GetMessageType() == MessageType::KeyPressed) {
+        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
+        auto key = m->GetKey();
+        if (key == Keyboard::Key::Escape) {
+            data_.isRunning_ = false;
+        }
+        else if (key == Keyboard::Key::Return) {
+            // TODO: If player press Return, while pressing an arrow key, Transition scene is shown.
+            // However, player is still moving (and input is disabled).
+            SwitchScene<IntroScene, FadeTransition>();
+        }
     }
 }
 
