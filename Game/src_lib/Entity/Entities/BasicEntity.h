@@ -47,10 +47,9 @@ public:
 
 protected:
     virtual std::vector<MessageType> Messages() const { return {}; }
+    virtual void PostUpdate(EntityService& entityService) {}
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
-
-    virtual void PostUpdate(EntityService& entityService) {}
 
 private:
     EntityId id_ = InvalidEntityId;
