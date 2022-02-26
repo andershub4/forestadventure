@@ -86,7 +86,7 @@ void IntroScene::OnMessage(std::shared_ptr<Message> msg)
         auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
         auto key = m->GetKey();
         if (key == Keyboard::Key::Escape) {
-            data_.isRunning_ = false;
+            OnCloseWindow();
         }
         else if (key == Keyboard::Key::Return) {
             SwitchScene<PlayScene>();
