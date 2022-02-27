@@ -67,8 +67,10 @@ void EntityManager::HandleCreatedEntities()
 void EntityManager::HandleDeletedEntities()
 {
     for (auto id : deletedEntities_) {
+        entityMap_[id]->Destroy();
         entityMap_.erase(id);
     }
+    deletedEntities_.clear();
 }
 
 void EntityManager::Init()
