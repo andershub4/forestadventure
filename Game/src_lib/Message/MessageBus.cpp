@@ -42,22 +42,12 @@ void MessageBus::RemoveSubscriber(const std::string& subscriber, const std::vect
     }
 }
 
-void MessageBus::PushMessage(std::shared_ptr<Message> message)
+void MessageBus::PushMessage(std::shared_ptr<Message> msg)
 {
-    queue_.push(message);
-}
-
-void MessageBus::DispatchMessages()
-{
-    while (!queue_.empty()) {
-        auto msg = queue_.front();
-        auto type = msg->GetMessageType();
-        const auto& subscribers = subscribersMap_[type];
-        for (const auto& subscriber : subscribers) {
-            if (subscriber.onMessage_ != nullptr) subscriber.onMessage_(msg);
-        }
-
-        queue_.pop();
+    auto type = msg->GetMessageType();
+    const auto& subscribers = subscribersMap_[type];
+    for (const auto& subscriber : subscribers) {
+        if (subscriber.onMessage_ != nullptr) subscriber.onMessage_(msg);
     }
 }
 

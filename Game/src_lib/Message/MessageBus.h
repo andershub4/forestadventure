@@ -8,7 +8,6 @@
 
 #include <functional>
 #include <memory>
-#include <queue>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -29,7 +28,6 @@ public:
     void RemoveSubscriber(const std::string& subscriber, MessageType messageType);
     void RemoveSubscriber(const std::string& subscriber, const std::vector<MessageType>& messageTypes);
     void PushMessage(std::shared_ptr<Message> message);
-    void DispatchMessages();
 
 private:
     struct Subscriber
@@ -39,7 +37,6 @@ private:
     };
 
     std::unordered_map<MessageType, std::vector<Subscriber>> subscribersMap_;
-    std::queue<std::shared_ptr<Message>> queue_;
 };
 
 }  // namespace FA

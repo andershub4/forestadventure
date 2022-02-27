@@ -35,7 +35,6 @@ void Game::GameLoop()
         float deltaTime = elapsed.asSeconds();
 
         inputSystem.Update(deltaTime);
-        messageBus_.DispatchMessages();
 
         sceneManager_.Update(deltaTime);
 
