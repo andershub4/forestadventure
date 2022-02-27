@@ -209,6 +209,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constant\Entity.h" />
+    <ClInclude Include="Entity\Entities\CoinEntity.h" />
     <ClInclude Include="Entity\Entities\TileEntity.h" />
     <ClInclude Include="Message\BroadcastMessage\EntityCreatedMessage.h" />
     <ClInclude Include="Message\BroadcastMessage\EntityDestroyedMessage.h" />
@@ -316,6 +317,7 @@
     <ClInclude Include="Folder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\Entities\CoinEntity.cpp" />
     <ClCompile Include="Entity\Entities\TileEntity.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\Image.cpp" />

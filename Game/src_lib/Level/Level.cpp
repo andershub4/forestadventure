@@ -41,7 +41,8 @@ const std::vector<SheetData> textureSheets = {
     {SheetId::MoleIdleSide, "spritesheets/mole/idle/mole-idle-side.png", {1, 1}},
     {SheetId::MoleIdleFront, "spritesheets/mole/idle/mole-idle-front.png", {1, 1}},
     {SheetId::MoleIdleBack, "spritesheets/mole/idle/mole-idle-back.png", {1, 1}},
-    {SheetId::Arrow, "sprites/misc/arrow.png", {1, 1}}};
+    {SheetId::Arrow, "sprites/misc/arrow.png", {1, 1}},
+    {SheetId::Coin, "spritesheets/misc/coin.png", {4, 1}}};
 
 EntityType ObjTypeStrToEnum(const std::string &typeStr)
 {
@@ -53,13 +54,16 @@ EntityType ObjTypeStrToEnum(const std::string &typeStr)
     else if (typeStr == "Player") {
         result = EntityType::Player;
     }
+    else if (typeStr == "Coin") {
+        result = EntityType::Coin;
+    }
 
     return result;
 }
 
 FaceDirection FaceDirStrToEnum(const std::string &faceDirStr)
 {
-    auto result = FaceDirection::Down;
+    auto result = FaceDirection::Undefined;
 
     if (faceDirStr == "Up") {
         result = FaceDirection::Up;

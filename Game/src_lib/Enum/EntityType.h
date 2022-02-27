@@ -8,6 +8,6 @@
 
 namespace FA {
 
-enum class EntityType { Unknown, Static, Player, Mole, Arrow, Tile };
+enum class EntityType { Unknown, Static, Player, Mole, Arrow, Tile, Coin };
 
 }  // namespace FA

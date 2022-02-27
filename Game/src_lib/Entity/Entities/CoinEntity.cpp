@@ -1,0 +1,55 @@
+/*
+ *	Copyright (C) 2022 Anders Wennmo
+ *	This file is part of forestadventure which is released under MIT license.
+ *	See file LICENSE for full license details.
+ */
+
+#include "CoinEntity.h"
+
+#include <SFML/Graphics/RenderWindow.hpp>
+
+#include "Constant/Entity.h"
+#include "Entity/AttributeData.h"
+#include "Entity/Attributes/FaceDirectionAttribute.h"
+#include "Entity/Attributes/TransformAttribute.h"
+#include "Entity/Modes/IdleMode.h"
+#include "Resource/Animation.h"
+#include "Resource/SheetId.h"
+
+namespace FA {
+
+namespace Entity {
+
+namespace {
+
+std::unordered_map<std::string, AnimationData> animationDatas = {{"Undefined", {SheetId::Coin, {{0, 0}, 4, 0}, false}}};
+
+}
+
+CoinEntity::CoinEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
+                       EntityManager& entityManager, MessageBus& messageBus)
+    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus)
+{}
+
+CoinEntity::~CoinEntity() = default;
+
+void CoinEntity::AddAttributes(EntityService& entityService, const AttributeData& data)
+{
+    auto t = entityService.AddAttribute<TransformAttribute>();
+    t->SetPosition(data.position_);
+    t->SetScale(data.scale_);
+    auto f = entityService.AddAttribute<FaceDirectionAttribute>();
+    f->SetDirection(data.faceDir_);
+}
+
+void CoinEntity::RegisterModes(ModeController& modeController, const EntityService& entityService)
+{
+    auto idleMode = modeController.RegisterMode<IdleMode>(true);
+    auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);
+    idleMode->BindAction(Action::Ignore(), EventType::Collision);
+    mUndef.animation_ = entityService.MakeAnimation(animationDatas.at("Undefined"));
+}
+
+}  // namespace Entity
+
+}  // namespace FA

@@ -222,6 +222,9 @@
     <ClCompile Include="Entity\Entities\TileEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\Entities\CoinEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -540,6 +543,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Message\BroadcastMessage\EntityDestroyedMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Entities\CoinEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
