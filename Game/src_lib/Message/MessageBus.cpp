@@ -42,7 +42,7 @@ void MessageBus::RemoveSubscriber(const std::string& subscriber, const std::vect
     }
 }
 
-void MessageBus::PushMessage(std::shared_ptr<Message> msg)
+void MessageBus::SendMessage(std::shared_ptr<Message> msg)
 {
     auto type = msg->GetMessageType();
     const auto& subscribers = subscribersMap_[type];

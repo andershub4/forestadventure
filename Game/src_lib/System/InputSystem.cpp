@@ -62,19 +62,19 @@ void InputSystem::ProcessEvent(const sf::Event& event)
             auto it = supportedKeys.find(event.key.code);
             auto key = (it != supportedKeys.end()) ? it->second : Keyboard::Key::Undefined;
             auto msg = std::make_shared<KeyPressedMessage>(key);
-            messageBus_.PushMessage(msg);
+            messageBus_.SendMessage(msg);
             break;
         }
         case sf::Event::KeyReleased: {
             auto it = supportedKeys.find(event.key.code);
             auto key = (it != supportedKeys.end()) ? it->second : Keyboard::Key::Undefined;
             auto msg = std::make_shared<KeyReleasedMessage>(key);
-            messageBus_.PushMessage(msg);
+            messageBus_.SendMessage(msg);
             break;
         }
         case sf::Event::Closed: {
             auto msg = std::make_shared<CloseWindowMessage>();
-            messageBus_.PushMessage(msg);
+            messageBus_.SendMessage(msg);
             break;
         }
     }
@@ -110,11 +110,11 @@ void InputSystem::ProcessIsKeyPressed()
 
     if (pressedKey != Keyboard::Key::Undefined) {
         auto msg = std::make_shared<IsKeyPressedMessage>(pressedKey);
-        messageBus_.PushMessage(msg);
+        messageBus_.SendMessage(msg);
     }
     if (releasedKey != Keyboard::Key::Undefined) {
         auto msg = std::make_shared<IsKeyReleasedMessage>(releasedKey);
-        messageBus_.PushMessage(msg);
+        messageBus_.SendMessage(msg);
     }
 }
 

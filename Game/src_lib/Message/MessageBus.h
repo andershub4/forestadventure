@@ -27,7 +27,7 @@ public:
                        MessageCB onMessage);
     void RemoveSubscriber(const std::string& subscriber, MessageType messageType);
     void RemoveSubscriber(const std::string& subscriber, const std::vector<MessageType>& messageTypes);
-    void PushMessage(std::shared_ptr<Message> message);
+    void SendMessage(std::shared_ptr<Message> message);
 
 private:
     struct Subscriber
