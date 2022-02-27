@@ -10,8 +10,11 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Enum/MessageType.h"
 #include "Folder.h"
 #include "Logging.h"
+#include "Message/BroadcastMessage/EntityCreatedMessage.h"
+#include "Message/BroadcastMessage/EntityDestroyedMessage.h"
 #include "Message/MessageBus.h"
 
 namespace FA {
@@ -53,18 +56,32 @@ void HelperLayer::OnCreate()
     sf::Vector2f fpsNumberTextPos(1220.0f, 0.0f);
     fpsNumberText_.setPosition(fpsNumberTextPos);
 
+    nEntitiesText_.setFont(font_);
+    nEntitiesText_.setString("Entities count:");
+    nEntitiesText_.setCharacterSize(24);
+    nEntitiesText_.setFillColor(sf::Color::White);
+    sf::Vector2f nEntitiesTextPos(0.0f, 50.0f);
+    nEntitiesText_.setPosition(nEntitiesTextPos);
+
+    nEntitiesCountText_.setFont(font_);
+    nEntitiesCountText_.setString("0");
+    nEntitiesCountText_.setCharacterSize(24);
+    nEntitiesCountText_.setFillColor(sf::Color::White);
+    sf::Vector2f nEntitiesCountTextPos(180.0f, 50.0f);
+    nEntitiesCountText_.setPosition(nEntitiesCountTextPos);
+
     dotShape_.setSize(sf::Vector2f(1.0, 1.0));
     dotShape_.setPosition(layerTexture_.getSize().x / 2.0f, layerTexture_.getSize().y / 2.0f);
 }
 
 void HelperLayer::SubscribeMessages()
 {
-    Subscribe({});
+    Subscribe({MessageType::EntityCreated, MessageType::EntityDestroyed});
 }
 
 void HelperLayer::UnsubscribeMessages()
 {
-    Unsubscribe({});
+    Unsubscribe({MessageType::EntityCreated, MessageType::EntityDestroyed});
 }
 
 void HelperLayer::Draw()
@@ -72,6 +89,8 @@ void HelperLayer::Draw()
     layerTexture_.draw(sceneText_);
     layerTexture_.draw(fpsText_);
     layerTexture_.draw(fpsNumberText_);
+    layerTexture_.draw(nEntitiesText_);
+    layerTexture_.draw(nEntitiesCountText_);
     layerTexture_.draw(dotShape_);
 }
 
@@ -79,10 +98,18 @@ void HelperLayer::Update(float deltaTime)
 {
     unsigned int fps = static_cast<unsigned int>(std::floor(1.0f / deltaTime));
     fpsNumberText_.setString(std::to_string(fps));
+    nEntitiesCountText_.setString(std::to_string(nEntities_));
 }
 
-void HelperLayer::OnMessage(std::shared_ptr<Message> message)
-{}
+void HelperLayer::OnMessage(std::shared_ptr<Message> msg)
+{
+    if (msg->GetMessageType() == MessageType::EntityCreated) {
+        nEntities_++;
+    }
+    else if (msg->GetMessageType() == MessageType::EntityDestroyed) {
+        nEntities_--;
+    }
+}
 
 }  // namespace Scene
 

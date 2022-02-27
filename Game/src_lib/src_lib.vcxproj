@@ -210,6 +210,8 @@
   <ItemGroup>
     <ClInclude Include="Constant\Entity.h" />
     <ClInclude Include="Entity\Entities\TileEntity.h" />
+    <ClInclude Include="Message\BroadcastMessage\EntityCreatedMessage.h" />
+    <ClInclude Include="Message\BroadcastMessage\EntityDestroyedMessage.h" />
     <ClInclude Include="Resource\Animation.h" />
     <ClInclude Include="Resource\Frame.h" />
     <ClInclude Include="Resource\Image.h" />

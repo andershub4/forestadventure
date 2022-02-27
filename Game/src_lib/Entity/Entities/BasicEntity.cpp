@@ -12,6 +12,8 @@
 #include "Entity/Events/DestroyEvent.h"
 #include "Entity/Events/InitEvent.h"
 #include "Entity/Shape.h"
+#include "Message/BroadcastMessage/EntityCreatedMessage.h"
+#include "Message/BroadcastMessage/EntityDestroyedMessage.h"
 #include "Message/MessageBus.h"
 
 namespace FA {
@@ -78,11 +80,13 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
 
     entityService_.GetShape()->Register();
     Subscribe(Messages());
+    messageBus_.PushMessage(std::make_shared<EntityCreatedMessage>());
 }
 
 void BasicEntity::OnDestroy(std::shared_ptr<BasicEvent> event)
 {
     Unsubscribe(Messages());
+    messageBus_.PushMessage(std::make_shared<EntityDestroyedMessage>());
 }
 
 void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)

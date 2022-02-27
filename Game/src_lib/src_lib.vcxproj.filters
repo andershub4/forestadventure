@@ -536,5 +536,11 @@
     <ClInclude Include="Entity\Entities\TileEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Message\BroadcastMessage\EntityCreatedMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Message\BroadcastMessage\EntityDestroyedMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

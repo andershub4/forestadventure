@@ -8,6 +8,15 @@
 
 namespace FA {
 
-enum class MessageType { Undefined, KeyPressed, KeyReleased, IsKeyPressed, IsKeyReleased, CloseWindow };
+enum class MessageType {
+    Undefined,
+    KeyPressed,
+    KeyReleased,
+    IsKeyPressed,
+    IsKeyReleased,
+    CloseWindow,
+    EntityCreated,
+    EntityDestroyed
+};
 
 }  // namespace FA

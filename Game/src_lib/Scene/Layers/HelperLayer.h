@@ -37,7 +37,10 @@ private:
     sf::Text sceneText_;
     sf::Text fpsText_;
     sf::Text fpsNumberText_;
+    sf::Text nEntitiesText_;
+    sf::Text nEntitiesCountText_;
     std::string sceneName_;
+    unsigned int nEntities_ = 0;
 
 private:
     virtual void OnMessage(std::shared_ptr<Message> message) override;
