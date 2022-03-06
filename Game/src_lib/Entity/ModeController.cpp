@@ -26,6 +26,11 @@ ModeController::~ModeController()
     currentMode_->Exit();
 }
 
+std::shared_ptr<BasicMode> ModeController::GetMode(ModeType modeType) const
+{
+    return modes_.at(modeType);
+}
+
 void ModeController::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
     currentMode_->HandleEvent(event);

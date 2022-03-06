@@ -33,21 +33,33 @@ CoinEntity::CoinEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 CoinEntity::~CoinEntity() = default;
 
-void CoinEntity::AddAttributes(EntityService& entityService, const AttributeData& data)
-{
-    auto t = entityService.AddAttribute<TransformAttribute>();
-    t->SetPosition(data.position_);
-    t->SetScale(data.scale_);
-    auto f = entityService.AddAttribute<FaceDirectionAttribute>();
-    f->SetDirection(data.faceDir_);
-}
-
-void CoinEntity::RegisterModes(ModeController& modeController, const EntityService& entityService)
+void CoinEntity::RegisterModes(ModeController& modeController)
 {
     auto idleMode = modeController.RegisterMode<IdleMode>(true);
-    auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);
     idleMode->BindAction(Action::Ignore(), EventType::Collision);
+}
+
+void CoinEntity::RegisterAttributes(EntityService& entityService)
+{
+    entityService.AddAttribute<TransformAttribute>();
+    entityService.AddAttribute<FaceDirectionAttribute>();
+}
+
+void CoinEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
+                           const AttributeData& data)
+{
+    auto idleMode = modeController.GetMode(ModeType::Idle);
+    auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);
     mUndef.animation_ = entityService.MakeAnimation(animationDatas.at("Undefined"));
+}
+
+void CoinEntity::InitAttributes(EntityService& entityService, const AttributeData& data)
+{
+    auto t = entityService.GetAttribute<TransformAttribute>();
+    t->SetPosition(data.position_);
+    t->SetScale(data.scale_);
+    auto f = entityService.GetAttribute<FaceDirectionAttribute>();
+    f->SetDirection(data.faceDir_);
 }
 
 }  // namespace Entity

@@ -26,8 +26,11 @@ protected:
     virtual std::vector<MessageType> Messages() const override;
 
 private:
-    virtual void AddAttributes(EntityService& handler, const AttributeData& data) override;
-    virtual void RegisterModes(ModeController& modeController, const EntityService& entityService) override;
+    virtual void RegisterModes(ModeController& modeController) override;
+    virtual void RegisterAttributes(EntityService& entityService) override;
+    virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
+                           const AttributeData& data) override;
+    virtual void InitAttributes(EntityService& entityServcice, const AttributeData& data) override;
     virtual void OnMessage(std::shared_ptr<Message> msg) override;
 };
 

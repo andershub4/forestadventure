@@ -26,23 +26,34 @@ TileEntity::TileEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 TileEntity::~TileEntity() = default;
 
-void TileEntity::AddAttributes(EntityService& entityService, const AttributeData& data)
-{
-    auto t = entityService.AddAttribute<TransformAttribute>();
-    t->SetPosition(data.position_);
-    t->SetScale(data.scale_);
-    auto f = entityService.AddAttribute<FaceDirectionAttribute>();
-    f->SetDirection(data.faceDir_);
-    frames_ = data.frames_;
-}
-
-void TileEntity::RegisterModes(ModeController& modeController, const EntityService& entityService)
+void TileEntity::RegisterModes(ModeController& modeController)
 {
     auto idleMode = modeController.RegisterMode<IdleMode>(true);
-    auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);
     idleMode->BindAction(Action::Ignore(), EventType::Collision);
+}
+
+void TileEntity::RegisterAttributes(EntityService& entityService)
+{
+    entityService.AddAttribute<TransformAttribute>();
+    entityService.AddAttribute<FaceDirectionAttribute>();
+}
+
+void TileEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
+                           const AttributeData& data)
+{
+    auto idleMode = modeController.GetMode(ModeType::Idle);
+    auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);
     float t = constant::Entity::stdSwitchTime;
-    mUndef.animation_ = Animation(frames_, 0, t);
+    mUndef.animation_ = Animation(data.frames_, 0, t);
+}
+
+void TileEntity::InitAttributes(EntityService& entityService, const AttributeData& data)
+{
+    auto t = entityService.GetAttribute<TransformAttribute>();
+    t->SetPosition(data.position_);
+    t->SetScale(data.scale_);
+    auto f = entityService.GetAttribute<FaceDirectionAttribute>();
+    f->SetDirection(data.faceDir_);
 }
 
 }  // namespace Entity

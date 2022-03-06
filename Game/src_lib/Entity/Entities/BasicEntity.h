@@ -59,8 +59,12 @@ private:
     bool enableInput_ = true;
 
 private:
-    virtual void AddAttributes(EntityService& entityService, const AttributeData& data) {}
-    virtual void RegisterModes(ModeController& modeController, const EntityService& entityService) {}
+    virtual void RegisterModes(ModeController& modeController) {}
+    virtual void RegisterAttributes(EntityService& entityService) {}
+    virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
+                           const AttributeData& data)
+    {}
+    virtual void InitAttributes(EntityService& entityService, const AttributeData& data) {}
     virtual void OnMessage(std::shared_ptr<Message> msg) {}
 
     void OnCreate(std::shared_ptr<BasicEvent> event);

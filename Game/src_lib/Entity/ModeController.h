@@ -36,6 +36,8 @@ public:
         return mode;
     }
 
+    std::shared_ptr<BasicMode> GetMode(ModeType modeType) const;
+
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);

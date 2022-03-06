@@ -36,18 +36,7 @@ ArrowEntity::ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetM
 
 ArrowEntity::~ArrowEntity() = default;
 
-void ArrowEntity::AddAttributes(EntityService& entityService, const AttributeData& data)
-{
-    auto t = entityService.AddAttribute<TransformAttribute>();
-    t->SetPosition(data.position_);
-    t->SetScale(data.scale_);
-    auto f = entityService.AddAttribute<FaceDirectionAttribute>();
-    f->SetDirection(data.faceDir_);
-    auto v = entityService.AddAttribute<VelocityAttribute>();
-    v->SetVelocity(data.velocity_);
-}
-
-void ArrowEntity::RegisterModes(ModeController& modeController, const EntityService& entityService)
+void ArrowEntity::RegisterModes(ModeController& modeController)
 {
     auto idleMode = modeController.RegisterMode<IdleMode>(true);
     idleMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
@@ -55,6 +44,19 @@ void ArrowEntity::RegisterModes(ModeController& modeController, const EntityServ
 
     auto moveMode = modeController.RegisterMode<MoveMode>();
     moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
+}
+
+void ArrowEntity::RegisterAttributes(EntityService& entityService)
+{
+    entityService.AddAttribute<TransformAttribute>();
+    entityService.AddAttribute<FaceDirectionAttribute>();
+    entityService.AddAttribute<VelocityAttribute>();
+}
+
+void ArrowEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
+                            const AttributeData& data)
+{
+    auto moveMode = modeController.GetMode(ModeType::Move);
 
     auto& mleft = moveMode->AddDirection(FaceDirection::Left);
     auto& mright = moveMode->AddDirection(FaceDirection::Right);
@@ -64,6 +66,17 @@ void ArrowEntity::RegisterModes(ModeController& modeController, const EntityServ
     mright.image_ = entityService.MakeImage(imageDatas.at("Right"));
     mup.image_ = entityService.MakeImage(imageDatas.at("Up"));
     mdown.image_ = entityService.MakeImage(imageDatas.at("Down"));
+}
+
+void ArrowEntity::InitAttributes(EntityService& entityService, const AttributeData& data)
+{
+    auto t = entityService.GetAttribute<TransformAttribute>();
+    t->SetPosition(data.position_);
+    t->SetScale(data.scale_);
+    auto f = entityService.GetAttribute<FaceDirectionAttribute>();
+    f->SetDirection(data.faceDir_);
+    auto v = entityService.GetAttribute<VelocityAttribute>();
+    v->SetVelocity(data.velocity_);
 }
 
 void ArrowEntity::PostUpdate(EntityService& entityService)

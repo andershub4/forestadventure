@@ -112,25 +112,47 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void PlayerEntity::AddAttributes(EntityService& entityService, const AttributeData& data)
-{
-    auto t = entityService.AddAttribute<TransformAttribute>();
-    t->SetPosition(data.position_);
-    t->SetScale(data.scale_);
-    auto f = entityService.AddAttribute<FaceDirectionAttribute>();
-    f->SetDirection(data.faceDir_);
-    auto v = entityService.AddAttribute<VelocityAttribute>();
-    v->SetVelocity(data.velocity_);
-    entityService.AddAttribute<CameraAttribute>();
-}
-
-void PlayerEntity::RegisterModes(ModeController& modeController, const EntityService& entityService)
+void PlayerEntity::RegisterModes(ModeController& modeController)
 {
     auto idleMode = modeController.RegisterMode<IdleMode>(true);
     idleMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
     idleMode->BindAction(Action::ChangeTo(ModeType::Attack), EventType::Attack);
     idleMode->BindAction(Action::ChangeTo(ModeType::AttackWeapon), EventType::AttackWeapon);
     idleMode->BindAction(Action::Ignore(), EventType::Collision);
+
+    auto moveMode = modeController.RegisterMode<MoveMode>();
+    moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
+    moveMode->BindAction(Action::Ignore(), EventType::StartMove);
+    moveMode->BindAction(Action::Ignore(), EventType::Attack);
+    moveMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
+
+    auto condition = [](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); };
+
+    auto attackMode = modeController.RegisterMode<AttackMode>();
+    attackMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
+    attackMode->BindAction(Action::Ignore(), EventType::Attack);
+    attackMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
+    attackMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
+
+    auto attackWeaponMode = modeController.RegisterMode<AttackWeaponMode>();
+    attackWeaponMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
+    attackWeaponMode->BindAction(Action::Ignore(), EventType::Attack);
+    attackWeaponMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
+    attackWeaponMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
+}
+
+void PlayerEntity::RegisterAttributes(EntityService& entityService)
+{
+    entityService.AddAttribute<TransformAttribute>();
+    entityService.AddAttribute<FaceDirectionAttribute>();
+    entityService.AddAttribute<VelocityAttribute>();
+    entityService.AddAttribute<CameraAttribute>();
+}
+
+void PlayerEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
+                             const AttributeData& data)
+{
+    auto idleMode = modeController.GetMode(ModeType::Idle);
 
     auto& ileft = idleMode->AddDirection(FaceDirection::Left);
     auto& iright = idleMode->AddDirection(FaceDirection::Right);
@@ -141,11 +163,7 @@ void PlayerEntity::RegisterModes(ModeController& modeController, const EntitySer
     iup.animation_ = entityService.MakeAnimation(animationDatas.at("Idle_Up"));
     idown.animation_ = entityService.MakeAnimation(animationDatas.at("Idle_Down"));
 
-    auto moveMode = modeController.RegisterMode<MoveMode>();
-    moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
-    moveMode->BindAction(Action::Ignore(), EventType::StartMove);
-    moveMode->BindAction(Action::Ignore(), EventType::Attack);
-    moveMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
+    auto moveMode = modeController.GetMode(ModeType::Move);
 
     auto& mleft = moveMode->AddDirection(FaceDirection::Left);
     auto& mright = moveMode->AddDirection(FaceDirection::Right);
@@ -156,13 +174,7 @@ void PlayerEntity::RegisterModes(ModeController& modeController, const EntitySer
     mup.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Up"));
     mdown.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Down"));
 
-    auto condition = [](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); };
-
-    auto attackMode = modeController.RegisterMode<AttackMode>();
-    attackMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
-    attackMode->BindAction(Action::Ignore(), EventType::Attack);
-    attackMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
-    attackMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
+    auto attackMode = modeController.GetMode(ModeType::Attack);
 
     auto& aleft = attackMode->AddDirection(FaceDirection::Left);
     auto& aright = attackMode->AddDirection(FaceDirection::Right);
@@ -173,11 +185,7 @@ void PlayerEntity::RegisterModes(ModeController& modeController, const EntitySer
     aup.animation_ = entityService.MakeAnimation(animationDatas.at("Attack_Up"));
     adown.animation_ = entityService.MakeAnimation(animationDatas.at("Attack_Down"));
 
-    auto attackWeaponMode = modeController.RegisterMode<AttackWeaponMode>();
-    attackWeaponMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
-    attackWeaponMode->BindAction(Action::Ignore(), EventType::Attack);
-    attackWeaponMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
-    attackWeaponMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
+    auto attackWeaponMode = modeController.GetMode(ModeType::AttackWeapon);
 
     auto& awleft = attackWeaponMode->AddDirection(FaceDirection::Left);
     auto& awright = attackWeaponMode->AddDirection(FaceDirection::Right);
@@ -187,6 +195,17 @@ void PlayerEntity::RegisterModes(ModeController& modeController, const EntitySer
     awright.animation_ = entityService.MakeAnimation(animationDatas.at("AttackW_Right"));
     awup.animation_ = entityService.MakeAnimation(animationDatas.at("AttackW_Up"));
     awdown.animation_ = entityService.MakeAnimation(animationDatas.at("AttackW_Down"));
+}
+
+void PlayerEntity::InitAttributes(EntityService& entityService, const AttributeData& data)
+{
+    auto t = entityService.GetAttribute<TransformAttribute>();
+    t->SetPosition(data.position_);
+    t->SetScale(data.scale_);
+    auto f = entityService.GetAttribute<FaceDirectionAttribute>();
+    f->SetDirection(data.faceDir_);
+    auto v = entityService.GetAttribute<VelocityAttribute>();
+    v->SetVelocity(data.velocity_);
 }
 
 }  // namespace Entity
