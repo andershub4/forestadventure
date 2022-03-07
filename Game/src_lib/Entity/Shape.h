@@ -28,7 +28,7 @@ class EntityService;
 class Shape
 {
 public:
-    Shape(EntityService *entityService);
+    Shape(const EntityService *entityService);
     virtual ~Shape();
 
     void Register();
@@ -41,7 +41,7 @@ public:
     void SetImage(const Image &image);
 
 private:
-    EntityService *entityService_ = nullptr;
+    const EntityService *entityService_ = nullptr;
     std::shared_ptr<TransformAttribute> transform_ = nullptr;
     std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
 

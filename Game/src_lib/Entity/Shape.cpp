@@ -16,7 +16,7 @@ namespace FA {
 
 namespace Entity {
 
-Shape::Shape(EntityService *entityService)
+Shape::Shape(const EntityService *entityService)
     : entityService_(entityService)
 {}
 

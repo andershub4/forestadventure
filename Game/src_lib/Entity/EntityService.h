@@ -41,14 +41,14 @@ public:
     }
 
     template <class T>
-    std::shared_ptr<T> GetAttribute()
+    std::shared_ptr<T> GetAttribute() const
     {
         if (attributeStore_.HasAttribute<T>()) {
             return attributeStore_.GetAttribute<T>();
         }
         else {
             LOG_ERROR(typeid(T).name(), " is not in attributeStore");
-            return AddAttribute<T>();
+            return nullptr;
         }
     }
 

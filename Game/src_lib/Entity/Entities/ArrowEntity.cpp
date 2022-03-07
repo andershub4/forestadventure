@@ -68,7 +68,7 @@ void ArrowEntity::InitModes(const ModeController& modeController, const EntitySe
     mdown.image_ = entityService.MakeImage(imageDatas.at("Down"));
 }
 
-void ArrowEntity::InitAttributes(EntityService& entityService, const AttributeData& data)
+void ArrowEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
 {
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);

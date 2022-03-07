@@ -53,7 +53,7 @@ void CoinEntity::InitModes(const ModeController& modeController, const EntitySer
     mUndef.animation_ = entityService.MakeAnimation(animationDatas.at("Undefined"));
 }
 
-void CoinEntity::InitAttributes(EntityService& entityService, const AttributeData& data)
+void CoinEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
 {
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);

@@ -47,7 +47,7 @@ void TileEntity::InitModes(const ModeController& modeController, const EntitySer
     mUndef.animation_ = Animation(data.frames_, 0, t);
 }
 
-void TileEntity::InitAttributes(EntityService& entityService, const AttributeData& data)
+void TileEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
 {
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);

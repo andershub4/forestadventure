@@ -197,7 +197,7 @@ void PlayerEntity::InitModes(const ModeController& modeController, const EntityS
     awdown.animation_ = entityService.MakeAnimation(animationDatas.at("AttackW_Down"));
 }
 
-void PlayerEntity::InitAttributes(EntityService& entityService, const AttributeData& data)
+void PlayerEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
 {
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);

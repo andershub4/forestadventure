@@ -83,7 +83,7 @@ void MoleEntity::InitModes(const ModeController& modeController, const EntitySer
     mdown.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Down"));
 }
 
-void MoleEntity::InitAttributes(EntityService& entityService, const AttributeData& data)
+void MoleEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
 {
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
