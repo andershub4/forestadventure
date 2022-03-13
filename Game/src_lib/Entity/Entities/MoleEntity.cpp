@@ -22,16 +22,19 @@ namespace Entity {
 
 namespace {
 
-std::unordered_map<std::string, AnimationData> animationDatas = {
-    {"Move_Left", {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true}},
-    {"Move_Right", {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false}},
-    {"Move_Down", {SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false}},
-    {"Move_Up", {SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false}},
-    {"Idle_Left", {SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true}},
-    {"Idle_Right", {SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false}},
-    {"Idle_Down", {SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}},
-    {"Idle_Up", {SheetId::MoleIdleBack, {{0, 0}, 1, 0}, false}}};
-}
+const std::unordered_map<ModeType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
+    {ModeType::Move,
+     {{FaceDirection::Left, {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true}},
+      {FaceDirection::Right, {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false}},
+      {FaceDirection::Down, {SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false}},
+      {FaceDirection::Up, {SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false}}}},
+    {ModeType::Idle,
+     {{FaceDirection::Left, {SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true}},
+      {FaceDirection::Right, {SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false}},
+      {FaceDirection::Down, {SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}},
+      {FaceDirection::Up, {SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}}}}};
+
+}  // namespace
 
 MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
                        EntityManager& entityManager, MessageBus& messageBus)
@@ -57,30 +60,25 @@ void MoleEntity::RegisterAttributes(EntityService& entityService)
     entityService.AddAttribute<VelocityAttribute>();
 }
 
+void MoleEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
+                          const EntityService& entityService)
+{
+    auto modeType = mode->GetModeType();
+    auto modeData = animationDatas.at(modeType);
+
+    for (auto direction : directions) {
+        auto& d = mode->AddDirection(direction);
+        d.animation_ = entityService.MakeAnimation(modeData.at(direction));
+    }
+}
+
 void MoleEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
                            const AttributeData& data)
 {
-    auto idleMode = modeController.GetMode(ModeType::Idle);
+    auto directions = entityService.GetAttribute<FaceDirectionAttribute>()->GetAllDirections();
 
-    auto& ileft = idleMode->AddDirection(FaceDirection::Left);
-    auto& iright = idleMode->AddDirection(FaceDirection::Right);
-    auto& iup = idleMode->AddDirection(FaceDirection::Up);
-    auto& idown = idleMode->AddDirection(FaceDirection::Down);
-    ileft.animation_ = entityService.MakeAnimation(animationDatas.at("Idle_Left"));
-    iright.animation_ = entityService.MakeAnimation(animationDatas.at("Idle_Right"));
-    iup.animation_ = entityService.MakeAnimation(animationDatas.at("Idle_Up"));
-    idown.animation_ = entityService.MakeAnimation(animationDatas.at("Idle_Down"));
-
-    auto moveMode = modeController.GetMode(ModeType::Move);
-
-    auto& mleft = moveMode->AddDirection(FaceDirection::Left);
-    auto& mright = moveMode->AddDirection(FaceDirection::Right);
-    auto& mup = moveMode->AddDirection(FaceDirection::Up);
-    auto& mdown = moveMode->AddDirection(FaceDirection::Down);
-    mleft.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Left"));
-    mright.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Right"));
-    mup.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Up"));
-    mdown.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Down"));
+    InitMode(modeController.GetMode(ModeType::Idle), directions, entityService);
+    InitMode(modeController.GetMode(ModeType::Move), directions, entityService);
 }
 
 void MoleEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
@@ -89,6 +87,7 @@ void MoleEntity::InitAttributes(const EntityService& entityService, const Attrib
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
     auto f = entityService.GetAttribute<FaceDirectionAttribute>();
+    f->SetAllDirections({FaceDirection::Down, FaceDirection::Left, FaceDirection::Right, FaceDirection::Up});
     f->SetDirection(data.faceDir_);
     auto v = entityService.GetAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);

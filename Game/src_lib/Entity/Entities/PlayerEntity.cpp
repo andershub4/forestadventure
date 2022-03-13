@@ -41,23 +41,27 @@ const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirect
                                                                      {FaceDirection::Right, {10.0, 10.0}},
                                                                      {FaceDirection::Up, {0.0, -30.0}}};
 
-const std::unordered_map<std::string, AnimationData> animationDatas = {
-    {"Move_Left", {SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true}},
-    {"Move_Right", {SheetId::HeroWalkSide, {{0, 0}, 6, 0}, false}},
-    {"Move_Down", {SheetId::HeroWalkFront, {{0, 0}, 6, 0}, false}},
-    {"Move_Up", {SheetId::HeroWalkBack, {{0, 0}, 6, 0}, false}},
-    {"Idle_Left", {SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true}},
-    {"Idle_Right", {SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false}},
-    {"Idle_Down", {SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}},
-    {"Idle_Up", {SheetId::HeroIdleBack, {{0, 0}, 1, 0}, false}},
-    {"Attack_Left", {SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true}},
-    {"Attack_Right", {SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false}},
-    {"Attack_Down", {SheetId::HeroAttackFront, {{0, 0}, 3, 0}, false}},
-    {"Attack_Up", {SheetId::HeroAttackBack, {{0, 0}, 3, 0}, false}},
-    {"AttackW_Left", {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, true}},
-    {"AttackW_Right", {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, false}},
-    {"AttackW_Down", {SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false}},
-    {"AttackW_Up", {SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0}, false}}};
+const std::unordered_map<ModeType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
+    {ModeType::Move,
+     {{FaceDirection::Left, {SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true}},
+      {FaceDirection::Right, {SheetId::HeroWalkSide, {{0, 0}, 6, 0}, false}},
+      {FaceDirection::Down, {SheetId::HeroWalkFront, {{0, 0}, 6, 0}, false}},
+      {FaceDirection::Up, {SheetId::HeroWalkBack, {{0, 0}, 6, 0}, false}}}},
+    {ModeType::Idle,
+     {{FaceDirection::Left, {SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true}},
+      {FaceDirection::Right, {SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false}},
+      {FaceDirection::Down, {SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}},
+      {FaceDirection::Up, {SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}}}},
+    {ModeType::Attack,
+     {{FaceDirection::Left, {SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true}},
+      {FaceDirection::Right, {SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false}},
+      {FaceDirection::Down, {SheetId::HeroAttackFront, {{0, 0}, 3, 0}, false}},
+      {FaceDirection::Up, {SheetId::HeroAttackBack, {{0, 0}, 3, 0}, false}}}},
+    {ModeType::AttackWeapon,
+     {{FaceDirection::Left, {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, true}},
+      {FaceDirection::Right, {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, false}},
+      {FaceDirection::Down, {SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false}},
+      {FaceDirection::Up, {SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0}, false}}}}};
 
 }  // namespace
 
@@ -149,52 +153,27 @@ void PlayerEntity::RegisterAttributes(EntityService& entityService)
     entityService.AddAttribute<CameraAttribute>();
 }
 
+void PlayerEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
+                            const EntityService& entityService)
+{
+    auto modeType = mode->GetModeType();
+    auto modeData = animationDatas.at(modeType);
+
+    for (auto direction : directions) {
+        auto& d = mode->AddDirection(direction);
+        d.animation_ = entityService.MakeAnimation(modeData.at(direction));
+    }
+}
+
 void PlayerEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
                              const AttributeData& data)
 {
-    auto idleMode = modeController.GetMode(ModeType::Idle);
+    auto directions = entityService.GetAttribute<FaceDirectionAttribute>()->GetAllDirections();
 
-    auto& ileft = idleMode->AddDirection(FaceDirection::Left);
-    auto& iright = idleMode->AddDirection(FaceDirection::Right);
-    auto& iup = idleMode->AddDirection(FaceDirection::Up);
-    auto& idown = idleMode->AddDirection(FaceDirection::Down);
-    ileft.animation_ = entityService.MakeAnimation(animationDatas.at("Idle_Left"));
-    iright.animation_ = entityService.MakeAnimation(animationDatas.at("Idle_Right"));
-    iup.animation_ = entityService.MakeAnimation(animationDatas.at("Idle_Up"));
-    idown.animation_ = entityService.MakeAnimation(animationDatas.at("Idle_Down"));
-
-    auto moveMode = modeController.GetMode(ModeType::Move);
-
-    auto& mleft = moveMode->AddDirection(FaceDirection::Left);
-    auto& mright = moveMode->AddDirection(FaceDirection::Right);
-    auto& mup = moveMode->AddDirection(FaceDirection::Up);
-    auto& mdown = moveMode->AddDirection(FaceDirection::Down);
-    mleft.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Left"));
-    mright.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Right"));
-    mup.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Up"));
-    mdown.animation_ = entityService.MakeAnimation(animationDatas.at("Move_Down"));
-
-    auto attackMode = modeController.GetMode(ModeType::Attack);
-
-    auto& aleft = attackMode->AddDirection(FaceDirection::Left);
-    auto& aright = attackMode->AddDirection(FaceDirection::Right);
-    auto& aup = attackMode->AddDirection(FaceDirection::Up);
-    auto& adown = attackMode->AddDirection(FaceDirection::Down);
-    aleft.animation_ = entityService.MakeAnimation(animationDatas.at("Attack_Left"));
-    aright.animation_ = entityService.MakeAnimation(animationDatas.at("Attack_Right"));
-    aup.animation_ = entityService.MakeAnimation(animationDatas.at("Attack_Up"));
-    adown.animation_ = entityService.MakeAnimation(animationDatas.at("Attack_Down"));
-
-    auto attackWeaponMode = modeController.GetMode(ModeType::AttackWeapon);
-
-    auto& awleft = attackWeaponMode->AddDirection(FaceDirection::Left);
-    auto& awright = attackWeaponMode->AddDirection(FaceDirection::Right);
-    auto& awup = attackWeaponMode->AddDirection(FaceDirection::Up);
-    auto& awdown = attackWeaponMode->AddDirection(FaceDirection::Down);
-    awleft.animation_ = entityService.MakeAnimation(animationDatas.at("AttackW_Left"));
-    awright.animation_ = entityService.MakeAnimation(animationDatas.at("AttackW_Right"));
-    awup.animation_ = entityService.MakeAnimation(animationDatas.at("AttackW_Up"));
-    awdown.animation_ = entityService.MakeAnimation(animationDatas.at("AttackW_Down"));
+    InitMode(modeController.GetMode(ModeType::Idle), directions, entityService);
+    InitMode(modeController.GetMode(ModeType::Move), directions, entityService);
+    InitMode(modeController.GetMode(ModeType::Attack), directions, entityService);
+    InitMode(modeController.GetMode(ModeType::AttackWeapon), directions, entityService);
 }
 
 void PlayerEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
@@ -203,6 +182,7 @@ void PlayerEntity::InitAttributes(const EntityService& entityService, const Attr
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
     auto f = entityService.GetAttribute<FaceDirectionAttribute>();
+    f->SetAllDirections({FaceDirection::Down, FaceDirection::Left, FaceDirection::Right, FaceDirection::Up});
     f->SetDirection(data.faceDir_);
     auto v = entityService.GetAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
