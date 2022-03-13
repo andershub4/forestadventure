@@ -31,7 +31,6 @@ public:
     bool IsValid() const;
 
 private:
-    const sf::Texture* texture_ = nullptr;
     bool isStopped_ = true;
     float time_{};        // time since we last switched frame
     float switchTime_{};  // time before to switch to next frame
