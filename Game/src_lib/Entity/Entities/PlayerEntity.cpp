@@ -51,7 +51,7 @@ const std::unordered_map<ModeType, std::unordered_map<FaceDirection, AnimationDa
      {{FaceDirection::Left, {SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true}},
       {FaceDirection::Right, {SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false}},
       {FaceDirection::Down, {SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}},
-      {FaceDirection::Up, {SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}}}},
+      {FaceDirection::Up, {SheetId::HeroIdleBack, {{0, 0}, 1, 0}, false}}}},
     {ModeType::Attack,
      {{FaceDirection::Left, {SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true}},
       {FaceDirection::Right, {SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false}},
