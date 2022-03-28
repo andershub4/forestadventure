@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
 
@@ -74,7 +74,7 @@ struct TileMapData
         std::string typeStr_{};
         int x_{};
         int y_{};
-        std::map<std::string, std::string> properties_;
+        std::unordered_map<std::string, std::string> properties_;
     };
 
     struct ObjectGroup

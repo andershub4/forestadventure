@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 #include <SFML/System/Vector2.hpp>
@@ -20,7 +20,7 @@ namespace Entity {
 struct AttributeData
 {
     sf::Vector2f position_{};
-    std::map<std::string, std::string> properties_;
+    std::unordered_map<std::string, std::string> properties_;
     float velocity_{};
     float scale_{};
     std::vector<Frame> frames_;

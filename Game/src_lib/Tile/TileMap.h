@@ -42,7 +42,7 @@ public:
         std::string typeStr_{};
         sf::Vector2u position_{};
         unsigned int scale_{};
-        std::map<std::string, std::string> properties_;
+        std::unordered_map<std::string, std::string> properties_;
     };
 
 public:
