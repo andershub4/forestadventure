@@ -20,7 +20,8 @@ AttackMode::AttackMode(EntityService& entityService, ModeController& modeControl
 
 void AttackMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    auto dir = faceDirection_->GetDirection();
+    auto dir = Service().GetProperty<FaceDirection>("FaceDirection");
+
     shape_->SetAnimation(GetAnimation(dir));
     shape_->SetImage(GetImage(dir));
 }

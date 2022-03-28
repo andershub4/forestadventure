@@ -23,7 +23,7 @@ AttackWeaponMode::AttackWeaponMode(EntityService& entityService, ModeController&
 void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
 {
     auto m = std::dynamic_pointer_cast<AttackWeaponEvent>(event);
-    auto dir = faceDirection_->GetDirection();
+    auto dir = Service().GetProperty<FaceDirection>("FaceDirection");
     shape_->SetAnimation(GetAnimation(dir));
     shape_->SetImage(GetImage(dir));
     offset_ = m->offset_.at(dir);
@@ -33,7 +33,7 @@ void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
 
 void AttackWeaponMode::Exit()
 {
-    auto dir = faceDirection_->GetDirection();
+    auto dir = Service().GetProperty<FaceDirection>("FaceDirection");
     auto position = transform_->GetPosition() + offset_;
     auto scale = transform_->GetScale();
     Service().SpawnEntity(entityType_, dir, position, scale, velocity_);

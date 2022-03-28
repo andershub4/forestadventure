@@ -58,6 +58,7 @@ void MoleEntity::RegisterAttributes(EntityService& entityService)
     entityService.AddAttribute<TransformAttribute>();
     entityService.AddAttribute<FaceDirectionAttribute>();
     entityService.AddAttribute<VelocityAttribute>();
+    entityService.RegisterCustomProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
 void MoleEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
@@ -88,7 +89,6 @@ void MoleEntity::InitAttributes(const EntityService& entityService, const Attrib
     t->SetScale(data.scale_);
     auto f = entityService.GetAttribute<FaceDirectionAttribute>();
     f->SetAllDirections({FaceDirection::Down, FaceDirection::Left, FaceDirection::Right, FaceDirection::Up});
-    f->SetDirection(data.faceDir_);
     auto v = entityService.GetAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
 }

@@ -225,6 +225,9 @@
     <ClCompile Include="Entity\Entities\CoinEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\PropertyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -546,6 +549,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Entities\CoinEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Properties\BasicProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Properties\Property.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\PropertyStore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\PropertyManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

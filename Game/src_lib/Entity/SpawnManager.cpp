@@ -30,7 +30,6 @@ void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, Fa
 {
     Entity::AttributeData data;
     data.position_ = position;
-    data.faceDir_ = faceDir;
     data.velocity_ = velocity;
     data.scale_ = scale;
 

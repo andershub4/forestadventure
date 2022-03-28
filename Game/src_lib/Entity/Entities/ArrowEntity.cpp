@@ -51,6 +51,7 @@ void ArrowEntity::RegisterAttributes(EntityService& entityService)
     entityService.AddAttribute<TransformAttribute>();
     entityService.AddAttribute<FaceDirectionAttribute>();
     entityService.AddAttribute<VelocityAttribute>();
+    entityService.RegisterCustomProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
 void ArrowEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
@@ -73,8 +74,6 @@ void ArrowEntity::InitAttributes(const EntityService& entityService, const Attri
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
-    auto f = entityService.GetAttribute<FaceDirectionAttribute>();
-    f->SetDirection(data.faceDir_);
     auto v = entityService.GetAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
 }

@@ -28,7 +28,6 @@ void Shape::Register()
     rShape_.setSize({1.0, 1.0});
 #endif
     transform_ = entityService_->GetAttribute<TransformAttribute>();
-    faceDirection_ = entityService_->GetAttribute<FaceDirectionAttribute>();
 }
 
 void Shape::Update(float deltaTime)

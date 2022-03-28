@@ -12,6 +12,7 @@
 #include "Enum/FaceDirection.h"
 #include "Id.h"
 #include "Logging.h"
+#include "PropertyManager.h"
 #include "Resource/FrameHandler.h"
 #include "SpawnManager.h"
 
@@ -55,6 +56,26 @@ public:
     template <>
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
 
+    void ReadCustomProperty(const std::string &name, const std::string &valueStr);
+
+    template <class T>
+    void RegisterCustomProperty(const std::string &name, const T &value)
+    {
+        propertyManager_.RegisterCustomProperty<T>(name, value);
+    }
+
+    template <class T>
+    T GetProperty(const std::string &name) const
+    {
+        return propertyManager_.Get<T>(name);
+    }
+
+    template <class T>
+    void SetProperty(const std::string &name, const T &value)
+    {
+        propertyManager_.Set<T>(name, value);
+    }
+
     sf::Vector2u GetMapSize() const;
 
     Animation MakeAnimation(const AnimationData &data) const;
@@ -74,6 +95,7 @@ private:
     std::shared_ptr<Shape> shape_ = nullptr;
     EntityManager &entityManager_;
     SpawnManager spawnManager_;
+    PropertyManager propertyManager_;
 };
 
 }  // namespace Entity

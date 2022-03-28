@@ -101,9 +101,7 @@ void TileMap::SetupObjectGroups()
             objectData.position_ = {object.x_ * scale_, object.y_ * scale_};
             objectData.scale_ = scale_;
             objectData.typeStr_ = object.typeStr_;
-            objectData.faceDirStr_ = object.properties_.find("FaceDirection") == object.properties_.end()
-                                         ? "Undefined"
-                                         : object.properties_.at("FaceDirection");
+            objectData.properties_ = object.properties_;
             objectDatas.push_back(objectData);
         }
         objectGroups_[groupName] = objectDatas;

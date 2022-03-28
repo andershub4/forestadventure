@@ -40,6 +40,11 @@ std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
     return attributeStore_.AddAttribute<CameraAttribute>(this);
 }
 
+void EntityService::ReadCustomProperty(const std::string& name, const std::string& valueStr)
+{
+    propertyManager_.ReadCustomProperty(name, valueStr);
+}
+
 sf::Vector2u EntityService::GetMapSize() const
 {
     return cameraManager_.GetMapSize();

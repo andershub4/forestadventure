@@ -211,6 +211,10 @@
     <ClInclude Include="Constant\Entity.h" />
     <ClInclude Include="Entity\Entities\CoinEntity.h" />
     <ClInclude Include="Entity\Entities\TileEntity.h" />
+    <ClInclude Include="Entity\Properties\BasicProperty.h" />
+    <ClInclude Include="Entity\Properties\Property.h" />
+    <ClInclude Include="Entity\PropertyManager.h" />
+    <ClInclude Include="Entity\PropertyStore.h" />
     <ClInclude Include="Message\BroadcastMessage\EntityCreatedMessage.h" />
     <ClInclude Include="Message\BroadcastMessage\EntityDestroyedMessage.h" />
     <ClInclude Include="Resource\Animation.h" />
@@ -319,6 +323,7 @@
   <ItemGroup>
     <ClCompile Include="Entity\Entities\CoinEntity.cpp" />
     <ClCompile Include="Entity\Entities\TileEntity.cpp" />
+    <ClCompile Include="Entity\PropertyManager.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\Image.cpp" />
     <ClCompile Include="Effect\BasicEffect.cpp" />

@@ -12,6 +12,7 @@
 
 #include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
+#include "Enum/FaceDirection.h"
 #include "Folder.h"
 #include "Logging.h"
 #include "Resource/Image.h"
@@ -187,7 +188,7 @@ void Level::CreateObjectEntity(const Tile::TileMap::ObjectData &data)
 {
     Entity::AttributeData d;
     d.position_ = static_cast<sf::Vector2f>(data.position_);
-    d.faceDir_ = FaceDirStrToEnum(data.faceDirStr_);
+    d.properties_ = data.properties_;
     d.velocity_ = constant::Entity::stdVelocity;
     d.scale_ = static_cast<float>(data.scale_);
     entityManager_.CreateEntity(ObjTypeStrToEnum(data.typeStr_), d);
@@ -197,7 +198,6 @@ void Level::CreateTileEntity(const Tile::TileMap::TileData &data)
 {
     Entity::AttributeData d;
     d.position_ = static_cast<sf::Vector2f>(data.position_);
-    d.faceDir_ = FaceDirection::Undefined;
     d.scale_ = static_cast<float>(data.scale_);
     d.frames_ = data.frameData_.frames_;
     d.frame_ = data.frameData_.frame_;

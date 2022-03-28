@@ -75,10 +75,15 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
 {
     auto c = std::dynamic_pointer_cast<CreateEvent>(event);
     auto data = c->data_;
+
     RegisterAttributes(entityService_);
     RegisterModes(modeController_);
     InitAttributes(entityService_, data);
     InitModes(modeController_, entityService_, data);
+
+    for (const auto& p : data.properties_) {
+        entityService_.ReadCustomProperty(p.first, p.second);
+    }
 
     entityService_.GetShape()->Register();
     Subscribe(Messages());

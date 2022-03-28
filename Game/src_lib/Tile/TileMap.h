@@ -9,6 +9,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include <SFML/System/Vector2.hpp>
@@ -41,7 +42,7 @@ public:
         std::string typeStr_{};
         sf::Vector2u position_{};
         unsigned int scale_{};
-        std::string faceDirStr_{};
+        std::map<std::string, std::string> properties_;
     };
 
 public:
