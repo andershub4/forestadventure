@@ -36,7 +36,7 @@ void TileEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
     entityService.AddAttribute<FaceDirectionAttribute>();
-    entityService.RegisterCustomProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);
+    entityService.RegisterMandatoryProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);
 }
 
 void TileEntity::InitModes(const ModeController& modeController, const EntityService& entityService,

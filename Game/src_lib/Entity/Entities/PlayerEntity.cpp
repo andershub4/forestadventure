@@ -151,7 +151,7 @@ void PlayerEntity::RegisterAttributes(EntityService& entityService)
     entityService.AddAttribute<FaceDirectionAttribute>();
     entityService.AddAttribute<VelocityAttribute>();
     entityService.AddAttribute<CameraAttribute>();
-    entityService.RegisterCustomProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
+    entityService.RegisterMandatoryProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
 void PlayerEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
