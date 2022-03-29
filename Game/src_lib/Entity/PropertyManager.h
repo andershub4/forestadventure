@@ -25,7 +25,7 @@ public:
     void ReadCustomProperty(const std::string &name, const std::string &valueStr);
 
     template <class T>
-    void RegisterMandatoryProperty(const std::string &name, const T &value)
+    void Register(const std::string &name, const T &value)
     {
         propertyStore_.Add<T>(name, value);
     }

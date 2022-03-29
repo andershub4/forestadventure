@@ -58,7 +58,7 @@ void MoleEntity::RegisterAttributes(EntityService& entityService)
     entityService.AddAttribute<TransformAttribute>();
     entityService.AddAttribute<FaceDirectionAttribute>();
     entityService.AddAttribute<VelocityAttribute>();
-    entityService.RegisterMandatoryProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
+    entityService.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
 void MoleEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
