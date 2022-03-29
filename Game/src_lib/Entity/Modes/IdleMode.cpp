@@ -6,7 +6,6 @@
 
 #include "IdleMode.h"
 
-#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/EntityService.h"
 #include "Entity/Shape.h"
 
@@ -27,7 +26,6 @@ void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
 
 void IdleMode::Register()
 {
-    faceDirection_ = Service().GetAttribute<FaceDirectionAttribute>();
     shape_ = Service().GetShape();
 }
 

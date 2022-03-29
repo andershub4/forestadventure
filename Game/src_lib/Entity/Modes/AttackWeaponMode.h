@@ -19,7 +19,6 @@ namespace FA {
 namespace Entity {
 
 class TransformAttribute;
-class FaceDirectionAttribute;
 
 class AttackWeaponMode : public BasicMode
 {
@@ -35,7 +34,6 @@ public:
 
 private:
     std::shared_ptr<TransformAttribute> transform_ = nullptr;
-    std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
     std::shared_ptr<Shape> shape_ = nullptr;
     EntityType entityType_ = EntityType::Unknown;
     sf::Vector2f offset_;

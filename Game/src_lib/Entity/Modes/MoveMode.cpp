@@ -8,7 +8,6 @@
 
 #include <unordered_map>
 
-#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/EntityService.h"
@@ -48,7 +47,6 @@ void MoveMode::Register()
 {
     transform_ = Service().GetAttribute<TransformAttribute>();
     velocity_ = Service().GetAttribute<VelocityAttribute>();
-    faceDirection_ = Service().GetAttribute<FaceDirectionAttribute>();
     shape_ = Service().GetShape();
 }
 

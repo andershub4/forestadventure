@@ -9,7 +9,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/AttributeData.h"
-#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Modes/IdleMode.h"
@@ -56,9 +55,10 @@ void MoleEntity::RegisterModes(ModeController& modeController)
 void MoleEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
-    entityService.AddAttribute<FaceDirectionAttribute>();
     entityService.AddAttribute<VelocityAttribute>();
     entityService.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
+    entityService.Register<std::vector<FaceDirection>>(
+        "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
 }
 
 void MoleEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
@@ -76,7 +76,7 @@ void MoleEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<Fac
 void MoleEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
                            const AttributeData& data)
 {
-    auto directions = entityService.GetAttribute<FaceDirectionAttribute>()->GetAllDirections();
+    auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
 
     InitMode(modeController.GetMode(ModeType::Idle), directions, entityService);
     InitMode(modeController.GetMode(ModeType::Move), directions, entityService);
@@ -87,8 +87,6 @@ void MoleEntity::InitAttributes(const EntityService& entityService, const Attrib
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
-    auto f = entityService.GetAttribute<FaceDirectionAttribute>();
-    f->SetAllDirections({FaceDirection::Down, FaceDirection::Left, FaceDirection::Right, FaceDirection::Up});
     auto v = entityService.GetAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
 }

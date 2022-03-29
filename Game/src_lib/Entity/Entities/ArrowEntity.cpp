@@ -9,7 +9,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/AttributeData.h"
-#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Modes/IdleMode.h"
@@ -49,7 +48,6 @@ void ArrowEntity::RegisterModes(ModeController& modeController)
 void ArrowEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
-    entityService.AddAttribute<FaceDirectionAttribute>();
     entityService.AddAttribute<VelocityAttribute>();
     entityService.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }

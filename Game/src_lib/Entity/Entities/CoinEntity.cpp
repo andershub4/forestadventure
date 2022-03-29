@@ -10,7 +10,6 @@
 
 #include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
-#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Resource/Animation.h"
@@ -42,7 +41,6 @@ void CoinEntity::RegisterModes(ModeController& modeController)
 void CoinEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
-    entityService.AddAttribute<FaceDirectionAttribute>();
     entityService.Register<FaceDirection>("FaceDirection", FaceDirection::Undefined);
 }
 

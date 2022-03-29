@@ -6,7 +6,6 @@
 
 #include "AttackMode.h"
 
-#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/EntityService.h"
 #include "Entity/Shape.h"
 
@@ -28,7 +27,6 @@ void AttackMode::Enter(std::shared_ptr<BasicEvent> event)
 
 void AttackMode::Register()
 {
-    faceDirection_ = Service().GetAttribute<FaceDirectionAttribute>();
     shape_ = Service().GetShape();
 }
 

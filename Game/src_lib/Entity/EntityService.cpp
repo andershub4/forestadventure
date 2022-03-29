@@ -7,7 +7,6 @@
 #include "EntityService.h"
 
 #include "Attributes//CameraAttribute.h"
-#include "Attributes//FaceDirectionAttribute.h"
 #include "Attributes//TransformAttribute.h"
 #include "Constant/Entity.h"
 #include "EntityManager.h"

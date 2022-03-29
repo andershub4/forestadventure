@@ -6,7 +6,6 @@
 
 #include "AttackWeaponMode.h"
 
-#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/EntityService.h"
 #include "Entity/Events/AttackWeapon.h"
@@ -42,7 +41,6 @@ void AttackWeaponMode::Exit()
 void AttackWeaponMode::Register()
 {
     transform_ = Service().GetAttribute<TransformAttribute>();
-    faceDirection_ = Service().GetAttribute<FaceDirectionAttribute>();
     shape_ = Service().GetShape();
 }
 

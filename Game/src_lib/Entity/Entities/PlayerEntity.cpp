@@ -11,7 +11,6 @@
 #include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
 #include "Entity/Attributes/CameraAttribute.h"
-#include "Entity/Attributes/FaceDirectionAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Events/AttackEvent.h"
@@ -148,10 +147,11 @@ void PlayerEntity::RegisterModes(ModeController& modeController)
 void PlayerEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
-    entityService.AddAttribute<FaceDirectionAttribute>();
     entityService.AddAttribute<VelocityAttribute>();
     entityService.AddAttribute<CameraAttribute>();
     entityService.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
+    entityService.Register<std::vector<FaceDirection>>(
+        "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
 }
 
 void PlayerEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
@@ -169,7 +169,7 @@ void PlayerEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<F
 void PlayerEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
                              const AttributeData& data)
 {
-    auto directions = entityService.GetAttribute<FaceDirectionAttribute>()->GetAllDirections();
+    auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
 
     InitMode(modeController.GetMode(ModeType::Idle), directions, entityService);
     InitMode(modeController.GetMode(ModeType::Move), directions, entityService);
@@ -182,8 +182,6 @@ void PlayerEntity::InitAttributes(const EntityService& entityService, const Attr
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
-    auto f = entityService.GetAttribute<FaceDirectionAttribute>();
-    f->SetAllDirections({FaceDirection::Down, FaceDirection::Left, FaceDirection::Right, FaceDirection::Up});
     auto v = entityService.GetAttribute<VelocityAttribute>();
     v->SetVelocity(data.velocity_);
 }
