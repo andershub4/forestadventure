@@ -56,8 +56,8 @@ void MoleEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
     entityService.AddAttribute<VelocityAttribute>();
-    entityService.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
-    entityService.Register<std::vector<FaceDirection>>(
+    entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
+    entityService.RegisterProperty<std::vector<FaceDirection>>(
         "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
 }
 

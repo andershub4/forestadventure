@@ -41,7 +41,7 @@ void CoinEntity::RegisterModes(ModeController& modeController)
 void CoinEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
-    entityService.Register<FaceDirection>("FaceDirection", FaceDirection::Undefined);
+    entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);
 }
 
 void CoinEntity::InitModes(const ModeController& modeController, const EntityService& entityService,

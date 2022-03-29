@@ -49,7 +49,7 @@ void ArrowEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
     entityService.AddAttribute<VelocityAttribute>();
-    entityService.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
+    entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
 void ArrowEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
