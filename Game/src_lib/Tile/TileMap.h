@@ -12,10 +12,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include <SFML/System/Vector2.hpp>
-
 #include "FrameData.h"
-#include "Fwd/SfmlFwd.h"
 
 namespace FA {
 
@@ -32,7 +29,8 @@ class TileMap
 public:
     struct TileData
     {
-        sf::Vector2u position_{};
+        unsigned int x_{};
+        unsigned int y_{};
         unsigned int scale_{};
         FrameData frameData_{};
     };
@@ -40,7 +38,8 @@ public:
     struct ObjectData
     {
         std::string typeStr_{};
-        sf::Vector2u position_{};
+        unsigned int x_{};
+        unsigned int y_{};
         unsigned int scale_{};
         std::unordered_map<std::string, std::string> properties_;
     };

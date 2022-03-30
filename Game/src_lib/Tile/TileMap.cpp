@@ -83,7 +83,8 @@ void TileMap::SetupLayers()
                 y += tileHeight;
                 y -= frameData.frame_.rect_.height;
             }
-            tileData.position_ = {x * scale_, y * scale_};
+            tileData.x_ = x * scale_;
+            tileData.y_ = y * scale_;
             tileData.scale_ = scale_;
             tileData.frameData_ = frameData;
             layers_[layerName].push_back(tileData);
@@ -98,7 +99,8 @@ void TileMap::SetupObjectGroups()
         std::vector<TileMap::ObjectData> objectDatas;
         for (const auto& object : group.objects_) {
             TileMap::ObjectData objectData;
-            objectData.position_ = {object.x_ * scale_, object.y_ * scale_};
+            objectData.x_ = object.x_ * scale_;
+            objectData.y_ = object.y_ * scale_;
             objectData.scale_ = scale_;
             objectData.typeStr_ = object.typeStr_;
             objectData.properties_ = object.properties_;

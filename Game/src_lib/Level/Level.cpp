@@ -179,7 +179,7 @@ void Level::CreateBackgroundTile(const Tile::TileMap::TileData &data)
     Image image(data.frameData_.frame_, 0.0);
     sf::Sprite tile;
     image.ApplyTo(tile);
-    tile.setPosition(static_cast<sf::Vector2f>(data.position_));
+    tile.setPosition(static_cast<float>(data.x_), static_cast<float>(data.y_));
     tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
     backgroundTexture_.draw(tile);
 }
@@ -187,7 +187,7 @@ void Level::CreateBackgroundTile(const Tile::TileMap::TileData &data)
 void Level::CreateObjectEntity(const Tile::TileMap::ObjectData &data)
 {
     Entity::AttributeData d;
-    d.position_ = static_cast<sf::Vector2f>(data.position_);
+    d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     d.properties_ = data.properties_;
     d.velocity_ = constant::Entity::stdVelocity;
     d.scale_ = static_cast<float>(data.scale_);
@@ -197,7 +197,7 @@ void Level::CreateObjectEntity(const Tile::TileMap::ObjectData &data)
 void Level::CreateTileEntity(const Tile::TileMap::TileData &data)
 {
     Entity::AttributeData d;
-    d.position_ = static_cast<sf::Vector2f>(data.position_);
+    d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     d.scale_ = static_cast<float>(data.scale_);
     d.frames_ = data.frameData_.frames_;
     d.frame_ = data.frameData_.frame_;
@@ -209,7 +209,7 @@ void Level::CreateFringeTile(const Tile::TileMap::TileData &data)
     Image image(data.frameData_.frame_, 0.0);
     sf::Sprite tile;
     image.ApplyTo(tile);
-    tile.setPosition(static_cast<sf::Vector2f>(data.position_));
+    tile.setPosition(static_cast<float>(data.x_), static_cast<float>(data.y_));
     tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
     fringeLayer_.push_back(tile);
 }
