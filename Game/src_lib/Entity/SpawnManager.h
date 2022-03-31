@@ -24,7 +24,7 @@ public:
 
     void Update(float deltaTime);
 
-    void Spawn(EntityType entityType, const sf::Vector2f &position, FaceDirection faceDir, float scale, float velocity);
+    void Spawn(EntityType entityType, const sf::Vector2f &position, FaceDirection faceDir, float scale);
 
 private:
     EntityManager &entityManager_;

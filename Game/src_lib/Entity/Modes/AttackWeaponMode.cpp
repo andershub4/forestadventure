@@ -27,7 +27,6 @@ void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
     shape_->SetImage(GetImage(dir));
     offset_ = m->offset_.at(dir);
     entityType_ = m->entityType_;
-    velocity_ = m->velocity_;
 }
 
 void AttackWeaponMode::Exit()
@@ -35,7 +34,7 @@ void AttackWeaponMode::Exit()
     auto dir = Service().GetProperty<FaceDirection>("FaceDirection");
     auto position = transform_->GetPosition() + offset_;
     auto scale = transform_->GetScale();
-    Service().SpawnEntity(entityType_, dir, position, scale, velocity_);
+    Service().SpawnEntity(entityType_, dir, position, scale);
 }
 
 void AttackWeaponMode::Register()

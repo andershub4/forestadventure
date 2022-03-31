@@ -66,9 +66,9 @@ Image EntityService::MakeImage(const ImageData& data) const
 }
 
 void EntityService::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position,
-                                float scale, float velocity)
+                                float scale)
 {
-    spawnManager_.Spawn(entityType, position, faceDirection, scale, velocity);
+    spawnManager_.Spawn(entityType, position, faceDirection, scale);
 }
 
 void EntityService::DeleteEntity(EntityId id)

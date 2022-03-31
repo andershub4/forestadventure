@@ -25,8 +25,7 @@ SpawnManager::~SpawnManager() = default;
 void SpawnManager::Update(float deltaTime)
 {}
 
-void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, FaceDirection faceDir, float scale,
-                         float velocity)
+void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, FaceDirection faceDir, float scale)
 {
     Entity::AttributeData data;
     data.position_ = position;
