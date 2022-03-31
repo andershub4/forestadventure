@@ -21,7 +21,6 @@ struct AttributeData
 {
     sf::Vector2f position_{};
     std::unordered_map<std::string, std::string> properties_;
-    float velocity_{};
     float scale_{};
     std::vector<Frame> frames_;
     Frame frame_;

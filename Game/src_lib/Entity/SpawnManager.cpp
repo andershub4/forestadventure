@@ -30,7 +30,6 @@ void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, Fa
 {
     Entity::AttributeData data;
     data.position_ = position;
-    data.velocity_ = velocity;
     data.scale_ = scale;
 
     auto &entity = entityManager_.CreateEntity(entityType, data);

@@ -9,7 +9,6 @@
 #include <unordered_map>
 
 #include "Entity/Attributes/TransformAttribute.h"
-#include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/EntityService.h"
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Shape.h"
@@ -46,7 +45,6 @@ void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
 void MoveMode::Register()
 {
     transform_ = Service().GetAttribute<TransformAttribute>();
-    velocity_ = Service().GetAttribute<VelocityAttribute>();
     shape_ = Service().GetShape();
 }
 
@@ -61,9 +59,10 @@ void MoveMode::Update(float deltaTime)
 
 void MoveMode::SetDirection(MoveDirection direction, FaceDirection faceDir)
 {
+    auto velocity = Service().GetProperty<float>("Velocity");
     auto it = dirToVector.find(direction);
     if (it != dirToVector.end()) {
-        movementVector_ = it->second * velocity_->GetVelocity();
+        movementVector_ = it->second * velocity;
     }
 
     Service().SetProperty("FaceDirection", faceDir);

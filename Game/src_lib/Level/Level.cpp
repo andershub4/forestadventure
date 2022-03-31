@@ -189,7 +189,6 @@ void Level::CreateObjectEntity(const Tile::TileMap::ObjectData &data)
     Entity::AttributeData d;
     d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     d.properties_ = data.properties_;
-    d.velocity_ = constant::Entity::stdVelocity;
     d.scale_ = static_cast<float>(data.scale_);
     entityManager_.CreateEntity(ObjTypeStrToEnum(data.typeStr_), d);
 }

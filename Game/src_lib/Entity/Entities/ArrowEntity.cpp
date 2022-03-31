@@ -8,9 +8,9 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
 #include "Entity/Attributes/TransformAttribute.h"
-#include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/Modes/MoveMode.h"
 #include "Resource/SheetId.h"
@@ -48,7 +48,7 @@ void ArrowEntity::RegisterModes(ModeController& modeController)
 void ArrowEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
-    entityService.AddAttribute<VelocityAttribute>();
+    entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity * 8.0f);
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
@@ -72,8 +72,6 @@ void ArrowEntity::InitAttributes(const EntityService& entityService, const Attri
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
-    auto v = entityService.GetAttribute<VelocityAttribute>();
-    v->SetVelocity(data.velocity_);
 }
 
 void ArrowEntity::PostUpdate(EntityService& entityService)

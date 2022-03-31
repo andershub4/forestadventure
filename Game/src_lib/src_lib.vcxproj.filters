@@ -186,9 +186,6 @@
     <ClCompile Include="Entity\Attributes\BasicAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Attributes\VelocityAttribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\Modes\UninitializedMode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -456,9 +453,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Attributes\BasicAttribute.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\Attributes\VelocityAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Modes\UninitializedMode.h">

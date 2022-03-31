@@ -226,7 +226,6 @@
     <ClInclude Include="Effect\NullEffect.h" />
     <ClInclude Include="Entity\Action.h" />
     <ClInclude Include="Entity\Attributes\BasicAttribute.h" />
-    <ClInclude Include="Entity\Attributes\VelocityAttribute.h" />
     <ClInclude Include="Entity\Entities\ArrowEntity.h" />
     <ClInclude Include="Entity\Events\AttackEvent.h" />
     <ClInclude Include="Entity\Events\AttackWeapon.h" />
@@ -329,7 +328,6 @@
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />
     <ClCompile Include="Entity\Attributes\BasicAttribute.cpp" />
-    <ClCompile Include="Entity\Attributes\VelocityAttribute.cpp" />
     <ClCompile Include="Entity\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Entity\Modes\UninitializedMode.cpp" />
     <ClCompile Include="Entity\EntityService.cpp" />

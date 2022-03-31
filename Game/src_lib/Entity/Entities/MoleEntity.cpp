@@ -8,9 +8,9 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
 #include "Entity/Attributes/TransformAttribute.h"
-#include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/Modes/MoveMode.h"
 #include "Resource/SheetId.h"
@@ -55,7 +55,7 @@ void MoleEntity::RegisterModes(ModeController& modeController)
 void MoleEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
-    entityService.AddAttribute<VelocityAttribute>();
+    entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity);
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
     entityService.RegisterProperty<std::vector<FaceDirection>>(
         "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
@@ -87,8 +87,6 @@ void MoleEntity::InitAttributes(const EntityService& entityService, const Attrib
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
-    auto v = entityService.GetAttribute<VelocityAttribute>();
-    v->SetVelocity(data.velocity_);
 }
 
 }  // namespace Entity

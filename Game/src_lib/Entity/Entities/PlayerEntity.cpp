@@ -12,7 +12,6 @@
 #include "Entity/AttributeData.h"
 #include "Entity/Attributes/CameraAttribute.h"
 #include "Entity/Attributes/TransformAttribute.h"
-#include "Entity/Attributes/VelocityAttribute.h"
 #include "Entity/Events/AttackEvent.h"
 #include "Entity/Events/AttackWeapon.h"
 #include "Entity/Events/StartMoveEvent.h"
@@ -147,8 +146,8 @@ void PlayerEntity::RegisterModes(ModeController& modeController)
 void PlayerEntity::RegisterAttributes(EntityService& entityService)
 {
     entityService.AddAttribute<TransformAttribute>();
-    entityService.AddAttribute<VelocityAttribute>();
     entityService.AddAttribute<CameraAttribute>();
+    entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity);
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
     entityService.RegisterProperty<std::vector<FaceDirection>>(
         "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
@@ -182,8 +181,6 @@ void PlayerEntity::InitAttributes(const EntityService& entityService, const Attr
     auto t = entityService.GetAttribute<TransformAttribute>();
     t->SetPosition(data.position_);
     t->SetScale(data.scale_);
-    auto v = entityService.GetAttribute<VelocityAttribute>();
-    v->SetVelocity(data.velocity_);
 }
 
 }  // namespace Entity
