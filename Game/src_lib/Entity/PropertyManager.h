@@ -21,7 +21,6 @@ class PropertyManager
 public:
     PropertyManager();
 
-    void ReadCommonProperty(const std::string &name, const std::string &valueStr);
     void ReadCustomProperty(const std::string &name, const std::string &valueStr);
 
     template <class T>

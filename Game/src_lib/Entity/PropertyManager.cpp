@@ -42,20 +42,6 @@ FaceDirection ToValue(const std::string &valueStr)
 
 PropertyManager::PropertyManager() = default;
 
-void PropertyManager::ReadCommonProperty(const std::string &name, const std::string &valueStr)
-{
-    sf::Vector2f pos;
-
-    if (name == "X") {
-        pos.x = ToValue<float>(valueStr);
-    }
-    else if (name == "Y") {
-        pos.y = ToValue<float>(valueStr);
-    }
-
-    propertyStore_.Set<sf::Vector2f>("Position", pos);
-}
-
 void PropertyManager::ReadCustomProperty(const std::string &name, const std::string &valueStr)
 {
     if (name == "FaceDirection") {
