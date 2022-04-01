@@ -10,7 +10,6 @@
 
 #include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
-#include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/Modes/MoveMode.h"
 #include "Resource/SheetId.h"
@@ -47,7 +46,8 @@ void ArrowEntity::RegisterModes(ModeController& modeController)
 
 void ArrowEntity::RegisterAttributes(EntityService& entityService)
 {
-    entityService.AddAttribute<TransformAttribute>();
+    entityService.RegisterProperty<float>("Scale", 1.0);
+    entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
     entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity * 8.0f);
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
@@ -67,16 +67,9 @@ void ArrowEntity::InitModes(const ModeController& modeController, const EntitySe
     mdown.image_ = entityService.MakeImage(imageDatas.at("Down"));
 }
 
-void ArrowEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
-{
-    auto t = entityService.GetAttribute<TransformAttribute>();
-    t->SetPosition(data.position_);
-    t->SetScale(data.scale_);
-}
-
 void ArrowEntity::PostUpdate(EntityService& entityService)
 {
-    auto position = entityService.GetAttribute<TransformAttribute>()->GetPosition();
+    auto position = entityService.GetProperty<sf::Vector2f>("Position");
     auto mapW = static_cast<float>(entityService.GetMapSize().x);
     auto mapH = static_cast<float>(entityService.GetMapSize().y);
     auto mapRect = sf::FloatRect(0, 0, mapW, mapH);

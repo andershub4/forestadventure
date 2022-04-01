@@ -11,7 +11,6 @@
 #include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
 #include "Entity/Attributes/CameraAttribute.h"
-#include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Events/AttackEvent.h"
 #include "Entity/Events/AttackWeapon.h"
 #include "Entity/Events/StartMoveEvent.h"
@@ -145,12 +144,13 @@ void PlayerEntity::RegisterModes(ModeController& modeController)
 
 void PlayerEntity::RegisterAttributes(EntityService& entityService)
 {
-    entityService.AddAttribute<TransformAttribute>();
-    entityService.AddAttribute<CameraAttribute>();
+    entityService.RegisterProperty<float>("Scale", 1.0);
+    entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
     entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity);
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
     entityService.RegisterProperty<std::vector<FaceDirection>>(
         "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
+    entityService.AddAttribute<CameraAttribute>();
 }
 
 void PlayerEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
@@ -174,13 +174,6 @@ void PlayerEntity::InitModes(const ModeController& modeController, const EntityS
     InitMode(modeController.GetMode(ModeType::Move), directions, entityService);
     InitMode(modeController.GetMode(ModeType::Attack), directions, entityService);
     InitMode(modeController.GetMode(ModeType::AttackWeapon), directions, entityService);
-}
-
-void PlayerEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
-{
-    auto t = entityService.GetAttribute<TransformAttribute>();
-    t->SetPosition(data.position_);
-    t->SetScale(data.scale_);
 }
 
 }  // namespace Entity

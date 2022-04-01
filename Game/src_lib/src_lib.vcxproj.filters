@@ -156,9 +156,6 @@
     <ClCompile Include="Logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Attributes\TransformAttribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\EntityService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -414,9 +411,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Logging.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\Attributes\TransformAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\SheetId.h">

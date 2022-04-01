@@ -30,7 +30,6 @@ private:
     virtual void RegisterAttributes(EntityService& entityService) override;
     virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
                            const AttributeData& data) override;
-    virtual void InitAttributes(const EntityService& entityServcice, const AttributeData& data) override;
     virtual void OnMessage(std::shared_ptr<Message> msg) override;
 
     void InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,

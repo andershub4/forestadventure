@@ -29,8 +29,14 @@ public:
     T Get(const std::string& name) const
     {
         auto a = properties_.at(name);
-        auto p = std::dynamic_pointer_cast<Property<T>>(a);
-        return p->value_;
+        return std::dynamic_pointer_cast<Property<T>>(a)->value_;
+    }
+
+    template <class T>
+    T& GetRef(const std::string& name) const
+    {
+        auto a = properties_.at(name);
+        return std::dynamic_pointer_cast<Property<T>>(a)->value_;
     }
 
     template <class T>

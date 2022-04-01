@@ -244,7 +244,6 @@
     <ClInclude Include="Entity\Modes\BasicMode.h" />
     <ClInclude Include="Entity\Attributes\CameraAttribute.h" />
     <ClInclude Include="Entity\Modes\IdleMode.h" />
-    <ClInclude Include="Entity\Attributes\TransformAttribute.h" />
     <ClInclude Include="Entity\AttributeStore.h" />
     <ClInclude Include="Entity\AttributeData.h" />
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
@@ -336,7 +335,6 @@
     <ClCompile Include="Entity\Modes\BasicMode.cpp" />
     <ClCompile Include="Entity\Attributes\CameraAttribute.cpp" />
     <ClCompile Include="Entity\Modes\IdleMode.cpp" />
-    <ClCompile Include="Entity\Attributes\TransformAttribute.cpp" />
     <ClCompile Include="Entity\Entities\MoleEntity.cpp" />
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />

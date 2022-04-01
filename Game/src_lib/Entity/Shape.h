@@ -21,8 +21,6 @@ namespace FA {
 
 namespace Entity {
 
-class TransformAttribute;
-class FaceDirectionAttribute;
 class EntityService;
 
 class Shape
@@ -42,8 +40,6 @@ public:
 
 private:
     const EntityService *entityService_ = nullptr;
-    std::shared_ptr<TransformAttribute> transform_ = nullptr;
-    std::shared_ptr<FaceDirectionAttribute> faceDirection_ = nullptr;
 
 #ifdef _DEBUG
     sf::RectangleShape rShape_;

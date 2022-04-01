@@ -8,7 +8,6 @@
 
 #include <unordered_map>
 
-#include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/EntityService.h"
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Shape.h"
@@ -44,7 +43,6 @@ void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
 
 void MoveMode::Register()
 {
-    transform_ = Service().GetAttribute<TransformAttribute>();
     shape_ = Service().GetShape();
 }
 
@@ -53,7 +51,10 @@ void MoveMode::Update(float deltaTime)
     shape_->Update(deltaTime);
 
     sf::Vector2f offset = {movementVector_.x * deltaTime, movementVector_.y * deltaTime};
-    transform_->Move(offset);
+    auto current = Service().GetProperty<sf::Vector2f>("Position");
+    auto n = current + offset;
+    Service().SetProperty<sf::Vector2f>("Position", n);
+
     BasicUpdate();
 }
 

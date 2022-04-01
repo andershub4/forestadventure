@@ -36,6 +36,12 @@ public:
     }
 
     template <class T>
+    T &GetRef(const std::string &name) const
+    {
+        return propertyStore_.GetRef<T>(name);
+    }
+
+    template <class T>
     void Set(const std::string &name, const T &value)
     {
         propertyStore_.Set<T>(name, value);

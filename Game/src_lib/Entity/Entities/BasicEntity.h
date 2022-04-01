@@ -64,7 +64,6 @@ private:
     virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
                            const AttributeData& data)
     {}
-    virtual void InitAttributes(const EntityService& entityService, const AttributeData& data) {}
     virtual void OnMessage(std::shared_ptr<Message> msg) {}
 
     void OnCreate(std::shared_ptr<BasicEvent> event);

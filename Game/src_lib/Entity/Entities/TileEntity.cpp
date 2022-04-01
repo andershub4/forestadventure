@@ -10,7 +10,6 @@
 
 #include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
-#include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Resource/Animation.h"
 
@@ -33,7 +32,8 @@ void TileEntity::RegisterModes(ModeController& modeController)
 
 void TileEntity::RegisterAttributes(EntityService& entityService)
 {
-    entityService.AddAttribute<TransformAttribute>();
+    entityService.RegisterProperty<float>("Scale", 1.0);
+    entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);
 }
 
@@ -44,13 +44,6 @@ void TileEntity::InitModes(const ModeController& modeController, const EntitySer
     auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);
     float t = constant::Entity::stdSwitchTime;
     mUndef.animation_ = Animation(data.frames_, 0, t);
-}
-
-void TileEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
-{
-    auto t = entityService.GetAttribute<TransformAttribute>();
-    t->SetPosition(data.position_);
-    t->SetScale(data.scale_);
 }
 
 }  // namespace Entity

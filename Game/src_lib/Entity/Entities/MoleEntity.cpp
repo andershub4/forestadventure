@@ -10,7 +10,6 @@
 
 #include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
-#include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/Modes/MoveMode.h"
 #include "Resource/SheetId.h"
@@ -54,7 +53,8 @@ void MoleEntity::RegisterModes(ModeController& modeController)
 
 void MoleEntity::RegisterAttributes(EntityService& entityService)
 {
-    entityService.AddAttribute<TransformAttribute>();
+    entityService.RegisterProperty<float>("Scale", 1.0);
+    entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
     entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity);
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
     entityService.RegisterProperty<std::vector<FaceDirection>>(
@@ -80,13 +80,6 @@ void MoleEntity::InitModes(const ModeController& modeController, const EntitySer
 
     InitMode(modeController.GetMode(ModeType::Idle), directions, entityService);
     InitMode(modeController.GetMode(ModeType::Move), directions, entityService);
-}
-
-void MoleEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
-{
-    auto t = entityService.GetAttribute<TransformAttribute>();
-    t->SetPosition(data.position_);
-    t->SetScale(data.scale_);
 }
 
 }  // namespace Entity

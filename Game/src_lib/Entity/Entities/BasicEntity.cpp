@@ -78,8 +78,10 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
 
     RegisterAttributes(entityService_);
     RegisterModes(modeController_);
-    InitAttributes(entityService_, data);
     InitModes(modeController_, entityService_, data);
+
+    entityService_.ReadObjectData(data.position_);
+    entityService_.InitOtherData(data.scale_);
 
     for (const auto& p : data.properties_) {
         entityService_.ReadCustomProperty(p.first, p.second);

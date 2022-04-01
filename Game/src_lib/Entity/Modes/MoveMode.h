@@ -18,8 +18,6 @@ enum class MoveDirection;
 
 namespace Entity {
 
-class TransformAttribute;
-
 class MoveMode : public BasicMode
 {
 public:
@@ -33,7 +31,6 @@ public:
 
 private:
     sf::Vector2f movementVector_{};
-    std::shared_ptr<TransformAttribute> transform_ = nullptr;
     std::shared_ptr<Shape> shape_ = nullptr;
 
 private:

@@ -6,7 +6,6 @@
 
 #include "AttackWeaponMode.h"
 
-#include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/EntityService.h"
 #include "Entity/Events/AttackWeapon.h"
 #include "Entity/Shape.h"
@@ -32,14 +31,13 @@ void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
 void AttackWeaponMode::Exit()
 {
     auto dir = Service().GetProperty<FaceDirection>("FaceDirection");
-    auto position = transform_->GetPosition() + offset_;
-    auto scale = transform_->GetScale();
+    auto position = Service().GetProperty<sf::Vector2f>("Position") + offset_;
+    auto scale = Service().GetProperty<float>("Scale");
     Service().SpawnEntity(entityType_, dir, position, scale);
 }
 
 void AttackWeaponMode::Register()
 {
-    transform_ = Service().GetAttribute<TransformAttribute>();
     shape_ = Service().GetShape();
 }
 

@@ -10,7 +10,6 @@
 
 #include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
-#include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Resource/Animation.h"
 #include "Resource/SheetId.h"
@@ -40,7 +39,8 @@ void CoinEntity::RegisterModes(ModeController& modeController)
 
 void CoinEntity::RegisterAttributes(EntityService& entityService)
 {
-    entityService.AddAttribute<TransformAttribute>();
+    entityService.RegisterProperty<float>("Scale", 1.0);
+    entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);
 }
 
@@ -50,13 +50,6 @@ void CoinEntity::InitModes(const ModeController& modeController, const EntitySer
     auto idleMode = modeController.GetMode(ModeType::Idle);
     auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);
     mUndef.animation_ = entityService.MakeAnimation(animationDatas.at("Undefined"));
-}
-
-void CoinEntity::InitAttributes(const EntityService& entityService, const AttributeData& data)
-{
-    auto t = entityService.GetAttribute<TransformAttribute>();
-    t->SetPosition(data.position_);
-    t->SetScale(data.scale_);
 }
 
 }  // namespace Entity

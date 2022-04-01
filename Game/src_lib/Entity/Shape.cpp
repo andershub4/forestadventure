@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Attributes/TransformAttribute.h"
 #include "Entity/EntityService.h"
 
 namespace FA {
@@ -26,7 +25,6 @@ void Shape::Register()
 #ifdef _DEBUG
     rShape_.setSize({1.0, 1.0});
 #endif
-    transform_ = entityService_->GetAttribute<TransformAttribute>();
 }
 
 void Shape::Update(float deltaTime)
@@ -34,18 +32,20 @@ void Shape::Update(float deltaTime)
     if (currentAnimation_.IsValid()) {
         currentAnimation_.Update(deltaTime);
         currentAnimation_.ApplyTo(animationSprite_);
-        animationSprite_.setPosition(transform_->GetPosition());
-        animationSprite_.setScale(transform_->GetScale(), transform_->GetScale());
+        animationSprite_.setPosition(entityService_->GetProperty<sf::Vector2f>("Position"));
+        animationSprite_.setScale(entityService_->GetProperty<float>("Scale"),
+                                  entityService_->GetProperty<float>("Scale"));
     }
 
     if (currentImage_.IsValid()) {
-        imageSprite_.setPosition(transform_->GetPosition());
-        imageSprite_.setScale(transform_->GetScale(), transform_->GetScale());
+        imageSprite_.setPosition(entityService_->GetProperty<sf::Vector2f>("Position"));
+
+        imageSprite_.setScale(entityService_->GetProperty<float>("Scale"), entityService_->GetProperty<float>("Scale"));
     }
 
 #ifdef _DEBUG
-    rShape_.setPosition(transform_->GetPosition());
-    rShape_.setScale(transform_->GetScale(), transform_->GetScale());
+    rShape_.setPosition(entityService_->GetProperty<sf::Vector2f>("Position"));
+    rShape_.setScale(entityService_->GetProperty<float>("Scale"), entityService_->GetProperty<float>("Scale"));
 #endif
 }
 

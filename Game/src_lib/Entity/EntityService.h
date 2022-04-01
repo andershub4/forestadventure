@@ -56,7 +56,9 @@ public:
     template <>
     std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
 
+    void ReadObjectData(const sf::Vector2f &position);
     void ReadCustomProperty(const std::string &name, const std::string &valueStr);
+    void InitOtherData(float scale);
 
     template <class T>
     void RegisterProperty(const std::string &name, const T &value)

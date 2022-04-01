@@ -7,7 +7,6 @@
 #include "EntityService.h"
 
 #include "Attributes//CameraAttribute.h"
-#include "Attributes//TransformAttribute.h"
 #include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Level/CameraManager.h"
@@ -34,14 +33,23 @@ EntityService::~EntityService() = default;
 template <>
 std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
 {
-    auto t = GetAttribute<TransformAttribute>();
-    cameraManager_.Track(t->GetPosition());
+    cameraManager_.Track(propertyManager_.GetRef<sf::Vector2f>("Position"));
     return attributeStore_.AddAttribute<CameraAttribute>(this);
+}
+
+void EntityService::ReadObjectData(const sf::Vector2f& position)
+{
+    propertyManager_.Set<sf::Vector2f>("Position", position);
 }
 
 void EntityService::ReadCustomProperty(const std::string& name, const std::string& valueStr)
 {
     propertyManager_.ReadCustomProperty(name, valueStr);
+}
+
+void EntityService::InitOtherData(float scale)
+{
+    propertyManager_.Set<float>("Scale", scale);
 }
 
 sf::Vector2u EntityService::GetMapSize() const
