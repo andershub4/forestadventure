@@ -37,7 +37,6 @@ public:
 
     void ReadObjectData(const sf::Vector2f &position);
     void ReadCustomProperty(const std::string &name, const std::string &valueStr);
-    void InitOtherData(float scale);
 
     template <class T>
     void RegisterProperty(const std::string &name, const T &value)
@@ -64,7 +63,7 @@ public:
 
     std::shared_ptr<Shape> GetShape() const { return shape_; }
 
-    void SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f &position, float scale);
+    void SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f &position);
     void DeleteEntity(EntityId id);
 
 private:

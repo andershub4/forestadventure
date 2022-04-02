@@ -87,7 +87,7 @@ FaceDirection FaceDirStrToEnum(const std::string &faceDirStr)
 Level::Level(MessageBus &messageBus, TextureManager &textureManager, CameraManager &cameraManager)
     : factory_(messageBus)
     , sheetManager_(textureManager)
-    , tileMap_(sheetManager_, scale_)
+    , tileMap_(sheetManager_)
     , entityManager_(factory_, cameraManager, sheetManager_)
 {}
 
@@ -180,7 +180,6 @@ void Level::CreateBackgroundTile(const Tile::TileMap::TileData &data)
     sf::Sprite tile;
     image.ApplyTo(tile);
     tile.setPosition(static_cast<float>(data.x_), static_cast<float>(data.y_));
-    tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
     backgroundTexture_.draw(tile);
 }
 
@@ -189,7 +188,6 @@ void Level::CreateObjectEntity(const Tile::TileMap::ObjectData &data)
     Entity::PropertyData d;
     d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     d.properties_ = data.properties_;
-    d.scale_ = static_cast<float>(data.scale_);
     entityManager_.CreateEntity(ObjTypeStrToEnum(data.typeStr_), d);
 }
 
@@ -197,7 +195,6 @@ void Level::CreateTileEntity(const Tile::TileMap::TileData &data)
 {
     Entity::PropertyData d;
     d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
-    d.scale_ = static_cast<float>(data.scale_);
     d.frames_ = data.frameData_.frames_;
     d.frame_ = data.frameData_.frame_;
     entityManager_.CreateEntity(EntityType::Tile, d);
@@ -209,7 +206,6 @@ void Level::CreateFringeTile(const Tile::TileMap::TileData &data)
     sf::Sprite tile;
     image.ApplyTo(tile);
     tile.setPosition(static_cast<float>(data.x_), static_cast<float>(data.y_));
-    tile.setScale(static_cast<float>(scale_), static_cast<float>(scale_));
     fringeLayer_.push_back(tile);
 }
 

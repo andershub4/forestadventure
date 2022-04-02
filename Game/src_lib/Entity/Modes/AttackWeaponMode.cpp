@@ -32,8 +32,7 @@ void AttackWeaponMode::Exit()
 {
     auto dir = Service().GetProperty<FaceDirection>("FaceDirection");
     auto position = Service().GetProperty<sf::Vector2f>("Position") + offset_;
-    auto scale = Service().GetProperty<float>("Scale");
-    Service().SpawnEntity(entityType_, dir, position, scale);
+    Service().SpawnEntity(entityType_, dir, position);
 }
 
 void AttackWeaponMode::Register()

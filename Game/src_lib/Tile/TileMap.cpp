@@ -31,9 +31,8 @@ std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet& tileSet,
 
 }  // namespace
 
-TileMap::TileMap(SheetManager& sheetManager, unsigned int scale)
+TileMap::TileMap(SheetManager& sheetManager)
     : sheetManager_(sheetManager)
-    , scale_(scale)
 {
     tileMapReader_ = std::make_unique<TileMapReader>();
 }
@@ -83,9 +82,8 @@ void TileMap::SetupLayers()
                 y += tileHeight;
                 y -= frameData.frame_.rect_.height;
             }
-            tileData.x_ = x * scale_;
-            tileData.y_ = y * scale_;
-            tileData.scale_ = scale_;
+            tileData.x_ = x;
+            tileData.y_ = y;
             tileData.frameData_ = frameData;
             layers_[layerName].push_back(tileData);
         }
@@ -99,9 +97,8 @@ void TileMap::SetupObjectGroups()
         std::vector<TileMap::ObjectData> objectDatas;
         for (const auto& object : group.objects_) {
             TileMap::ObjectData objectData;
-            objectData.x_ = object.x_ * scale_;
-            objectData.y_ = object.y_ * scale_;
-            objectData.scale_ = scale_;
+            objectData.x_ = object.x_;
+            objectData.y_ = object.y_;
             objectData.typeStr_ = object.typeStr_;
             objectData.properties_ = object.properties_;
             objectDatas.push_back(objectData);
@@ -126,8 +123,9 @@ sf::Vector2u TileMap::GetSize() const
     auto nRows = tileMapData_->mapProperties_.height_;
     auto tileWidth = tileMapData_->mapProperties_.tileWidth_;
     auto tileHeight = tileMapData_->mapProperties_.tileHeight_;
+    auto size = sf::Vector2i(nCols * tileWidth, nRows * tileHeight);
 
-    return {nCols * tileWidth * scale_, nRows * tileHeight * scale_};
+    return static_cast<sf::Vector2u>(size);
 }
 
 FrameData TileMap::GetFrameData(int id)

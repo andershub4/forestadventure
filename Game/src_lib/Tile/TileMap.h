@@ -31,7 +31,6 @@ public:
     {
         unsigned int x_{};
         unsigned int y_{};
-        unsigned int scale_{};
         FrameData frameData_{};
     };
 
@@ -40,12 +39,11 @@ public:
         std::string typeStr_{};
         unsigned int x_{};
         unsigned int y_{};
-        unsigned int scale_{};
         std::unordered_map<std::string, std::string> properties_;
     };
 
 public:
-    TileMap(SheetManager &sheetManager, unsigned int scale);
+    TileMap(SheetManager &sheetManager);
     ~TileMap();
     void Load(const std::string &fileName);
     void Setup();
@@ -56,12 +54,10 @@ public:
 private:
     SheetManager &sheetManager_;
     std::unique_ptr<TileMapData> tileMapData_ = nullptr;
-    ;
     std::unique_ptr<TileMapReader> tileMapReader_ = nullptr;
     std::map<std::string, std::vector<TileData>> layers_;
     std::map<int, std::unique_ptr<BasicTileSet>, std::greater<int>> tileSets_;
     std::map<std::string, std::vector<ObjectData>> objectGroups_;
-    unsigned int scale_{};
 
 private:
     void LoadTileSets();

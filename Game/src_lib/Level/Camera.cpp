@@ -18,8 +18,10 @@ Camera::Camera(const sf::Vector2f& trackingPoint, const sf::Vector2u& viewSize, 
     : trackingPoint_(trackingPoint)
 {
     auto size_f = static_cast<sf::Vector2f>(viewSize);
+    const float zoomFactor = 0.5;
     view_.setSize(size_f);
-    auto centerPos = size_f / 2.0f;
+    view_.zoom(zoomFactor);
+    auto centerPos = size_f / (2.0f * (1 / zoomFactor));
     minViewPosition_ = {centerPos.x, centerPos.y};
     maxViewPosition_ = {mapSize.x - centerPos.x, mapSize.y - centerPos.y};
 }

@@ -44,11 +44,6 @@ void EntityService::ReadCustomProperty(const std::string& name, const std::strin
     propertyManager_.ReadCustomProperty(name, valueStr);
 }
 
-void EntityService::InitOtherData(float scale)
-{
-    propertyManager_.Set<float>("Scale", scale);
-}
-
 sf::Vector2u EntityService::GetMapSize() const
 {
     return cameraManager_.GetMapSize();
@@ -70,10 +65,9 @@ Image EntityService::MakeImage(const ImageData& data) const
     return Image(frame, data.rotation_);
 }
 
-void EntityService::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position,
-                                float scale)
+void EntityService::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position)
 {
-    spawnManager_.Spawn(entityType, position, faceDirection, scale);
+    spawnManager_.Spawn(entityType, position, faceDirection);
 }
 
 void EntityService::DeleteEntity(EntityId id)
