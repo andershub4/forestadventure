@@ -6,7 +6,6 @@
 
 #include "EntityService.h"
 
-#include "Attributes//CameraAttribute.h"
 #include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Level/CameraManager.h"
@@ -30,11 +29,9 @@ EntityService::EntityService(CameraManager& cameraManager, const SheetManager& s
 
 EntityService::~EntityService() = default;
 
-template <>
-std::shared_ptr<CameraAttribute> EntityService::AddAttribute<CameraAttribute>()
+void EntityService::AddCamera()
 {
     cameraManager_.Track(propertyManager_.GetRef<sf::Vector2f>("Position"));
-    return attributeStore_.AddAttribute<CameraAttribute>(this);
 }
 
 void EntityService::ReadObjectData(const sf::Vector2f& position)

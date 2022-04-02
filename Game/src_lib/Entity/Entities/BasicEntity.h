@@ -61,6 +61,7 @@ private:
 private:
     virtual void RegisterModes(ModeController& modeController) {}
     virtual void RegisterAttributes(EntityService& entityService) {}
+    virtual void Start(EntityService& entityService) {}
     virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
                            const AttributeData& data)
     {}

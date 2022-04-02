@@ -25,7 +25,6 @@ class SheetManager;
 
 namespace Entity {
 
-class CameraAttribute;
 class Shape;
 class EntityManager;
 
@@ -53,8 +52,7 @@ public:
         }
     }
 
-    template <>
-    std::shared_ptr<CameraAttribute> AddAttribute<CameraAttribute>();
+    void AddCamera();
 
     void ReadObjectData(const sf::Vector2f &position);
     void ReadCustomProperty(const std::string &name, const std::string &valueStr);

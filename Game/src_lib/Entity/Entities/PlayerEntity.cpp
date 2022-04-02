@@ -10,7 +10,6 @@
 
 #include "Constant/Entity.h"
 #include "Entity/AttributeData.h"
-#include "Entity/Attributes/CameraAttribute.h"
 #include "Entity/Events/AttackEvent.h"
 #include "Entity/Events/AttackWeapon.h"
 #include "Entity/Events/StartMoveEvent.h"
@@ -150,7 +149,11 @@ void PlayerEntity::RegisterAttributes(EntityService& entityService)
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
     entityService.RegisterProperty<std::vector<FaceDirection>>(
         "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
-    entityService.AddAttribute<CameraAttribute>();
+}
+
+void PlayerEntity::Start(EntityService& entityService)
+{
+    entityService.AddCamera();
 }
 
 void PlayerEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
