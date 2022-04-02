@@ -106,8 +106,7 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
             HandleEvent(std::make_shared<AttackEvent>());
         }
         else if (key == Keyboard::Key::Space) {
-            float velocity = constant::Entity::stdVelocity * 8.0f;
-            HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow, arrowOffset, velocity));
+            HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow, arrowOffset));
         }
     }
 }

@@ -21,18 +21,15 @@ namespace Entity {
 
 struct AttackWeaponEvent : public BasicEvent
 {
-    AttackWeaponEvent(EntityType entityType, const std::unordered_map<FaceDirection, sf::Vector2f> &offset,
-                      float velocity)
+    AttackWeaponEvent(EntityType entityType, const std::unordered_map<FaceDirection, sf::Vector2f> &offset)
         : entityType_(entityType)
         , offset_(offset)
-        , velocity_(velocity)
     {}
 
     virtual EventType GetEventType() const { return EventType::AttackWeapon; }
 
     EntityType entityType_ = EntityType::Unknown;
     std::unordered_map<FaceDirection, sf::Vector2f> offset_;
-    float velocity_;
 };
 
 }  // namespace Entity
