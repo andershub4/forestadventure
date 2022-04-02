@@ -33,7 +33,7 @@ BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetM
 
 BasicEntity::~BasicEntity() = default;
 
-void BasicEntity::Create(const AttributeData& data)
+void BasicEntity::Create(const PropertyData& data)
 {
     HandleEvent(std::make_shared<CreateEvent>(data));
 }
@@ -76,7 +76,7 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
     auto c = std::dynamic_pointer_cast<CreateEvent>(event);
     auto data = c->data_;
 
-    RegisterAttributes(entityService_);
+    RegisterProperties(entityService_);
     RegisterModes(modeController_);
     InitModes(modeController_, entityService_, data);
 

@@ -9,9 +9,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/AttributeData.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/Modes/MoveMode.h"
+#include "Entity/PropertyData.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -44,7 +44,7 @@ void ArrowEntity::RegisterModes(ModeController& modeController)
     moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
 }
 
-void ArrowEntity::RegisterAttributes(EntityService& entityService)
+void ArrowEntity::RegisterProperties(EntityService& entityService)
 {
     entityService.RegisterProperty<float>("Scale", 1.0);
     entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
@@ -53,7 +53,7 @@ void ArrowEntity::RegisterAttributes(EntityService& entityService)
 }
 
 void ArrowEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
-                            const AttributeData& data)
+                            const PropertyData& data)
 {
     auto moveMode = modeController.GetMode(ModeType::Move);
 

@@ -9,8 +9,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/AttributeData.h"
 #include "Entity/Modes/IdleMode.h"
+#include "Entity/PropertyData.h"
 #include "Resource/Animation.h"
 #include "Resource/SheetId.h"
 
@@ -37,7 +37,7 @@ void CoinEntity::RegisterModes(ModeController& modeController)
     idleMode->BindAction(Action::Ignore(), EventType::Collision);
 }
 
-void CoinEntity::RegisterAttributes(EntityService& entityService)
+void CoinEntity::RegisterProperties(EntityService& entityService)
 {
     entityService.RegisterProperty<float>("Scale", 1.0);
     entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
@@ -45,7 +45,7 @@ void CoinEntity::RegisterAttributes(EntityService& entityService)
 }
 
 void CoinEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const AttributeData& data)
+                           const PropertyData& data)
 {
     auto idleMode = modeController.GetMode(ModeType::Idle);
     auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);

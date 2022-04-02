@@ -242,7 +242,7 @@
     <ClInclude Include="Entity\Modes\AttackWeaponMode.h" />
     <ClInclude Include="Entity\Modes\BasicMode.h" />
     <ClInclude Include="Entity\Modes\IdleMode.h" />
-    <ClInclude Include="Entity\AttributeData.h" />
+    <ClInclude Include="Entity\PropertyData.h" />
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
     <ClInclude Include="Entity\Entities\StaticEntity.h" />

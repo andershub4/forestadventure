@@ -23,7 +23,7 @@ class SheetManager;
 
 namespace Entity {
 
-struct AttributeData;
+struct PropertyData;
 class EntityManager;
 
 class BasicEntity
@@ -36,7 +36,7 @@ public:
     virtual std::string Name() const = 0;
     virtual EntityType Type() const = 0;
 
-    void Create(const AttributeData& data);
+    void Create(const PropertyData& data);
     void Destroy();
     void Init();
     void Update(float deltaTime);
@@ -60,10 +60,10 @@ private:
 
 private:
     virtual void RegisterModes(ModeController& modeController) {}
-    virtual void RegisterAttributes(EntityService& entityService) {}
+    virtual void RegisterProperties(EntityService& entityService) {}
     virtual void Start(EntityService& entityService) {}
     virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const AttributeData& data)
+                           const PropertyData& data)
     {}
     virtual void OnMessage(std::shared_ptr<Message> msg) {}
 

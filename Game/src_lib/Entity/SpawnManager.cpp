@@ -6,11 +6,11 @@
 
 #include "SpawnManager.h"
 
-#include "AttributeData.h"
 #include "Entities/BasicEntity.h"
 #include "EntityManager.h"
 #include "Enum/MoveDirection.h"
 #include "Events/StartMoveEvent.h"
+#include "PropertyData.h"
 
 namespace FA {
 
@@ -27,7 +27,7 @@ void SpawnManager::Update(float deltaTime)
 
 void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, FaceDirection faceDir, float scale)
 {
-    Entity::AttributeData data;
+    Entity::PropertyData data;
     data.position_ = position;
     data.scale_ = scale;
 

@@ -9,8 +9,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/AttributeData.h"
 #include "Entity/Modes/IdleMode.h"
+#include "Entity/PropertyData.h"
 #include "Resource/Animation.h"
 
 namespace FA {
@@ -30,7 +30,7 @@ void TileEntity::RegisterModes(ModeController& modeController)
     idleMode->BindAction(Action::Ignore(), EventType::Collision);
 }
 
-void TileEntity::RegisterAttributes(EntityService& entityService)
+void TileEntity::RegisterProperties(EntityService& entityService)
 {
     entityService.RegisterProperty<float>("Scale", 1.0);
     entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
@@ -38,7 +38,7 @@ void TileEntity::RegisterAttributes(EntityService& entityService)
 }
 
 void TileEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const AttributeData& data)
+                           const PropertyData& data)
 {
     auto idleMode = modeController.GetMode(ModeType::Idle);
     auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);

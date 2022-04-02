@@ -27,9 +27,9 @@ protected:
 
 private:
     virtual void RegisterModes(ModeController& modeController) override;
-    virtual void RegisterAttributes(EntityService& entityService) override;
+    virtual void RegisterProperties(EntityService& entityService) override;
     virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const AttributeData& data) override;
+                           const PropertyData& data) override;
 };
 
 }  // namespace Entity

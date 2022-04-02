@@ -17,7 +17,7 @@ namespace FA {
 
 namespace Entity {
 
-struct AttributeData
+struct PropertyData
 {
     sf::Vector2f position_{};
     std::unordered_map<std::string, std::string> properties_;

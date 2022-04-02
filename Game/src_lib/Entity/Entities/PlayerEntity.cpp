@@ -9,7 +9,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/AttributeData.h"
 #include "Entity/Events/AttackEvent.h"
 #include "Entity/Events/AttackWeapon.h"
 #include "Entity/Events/StartMoveEvent.h"
@@ -18,6 +17,7 @@
 #include "Entity/Modes/AttackWeaponMode.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/Modes/MoveMode.h"
+#include "Entity/PropertyData.h"
 #include "Entity/Shape.h"
 #include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
@@ -141,7 +141,7 @@ void PlayerEntity::RegisterModes(ModeController& modeController)
     attackWeaponMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
 }
 
-void PlayerEntity::RegisterAttributes(EntityService& entityService)
+void PlayerEntity::RegisterProperties(EntityService& entityService)
 {
     entityService.RegisterProperty<float>("Scale", 1.0);
     entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
@@ -169,7 +169,7 @@ void PlayerEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<F
 }
 
 void PlayerEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
-                             const AttributeData& data)
+                             const PropertyData& data)
 {
     auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
 
