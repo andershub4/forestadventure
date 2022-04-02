@@ -32,10 +32,10 @@ namespace Entity {
 
 namespace {
 
-const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirection::Down, {0.0, 30.0}},
-                                                                     {FaceDirection::Left, {-10.0, 10.0}},
-                                                                     {FaceDirection::Right, {10.0, 10.0}},
-                                                                     {FaceDirection::Up, {0.0, -30.0}}};
+const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirection::Down, {0.0, 15.0}},
+                                                                     {FaceDirection::Left, {-15.0, 5.0}},
+                                                                     {FaceDirection::Right, {15.0, 5.0}},
+                                                                     {FaceDirection::Up, {0.0, -15.0}}};
 
 const std::unordered_map<ModeType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
     {ModeType::Move,
