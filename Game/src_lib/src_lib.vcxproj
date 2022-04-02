@@ -225,7 +225,6 @@
     <ClInclude Include="Effect\FadeEffect.h" />
     <ClInclude Include="Effect\NullEffect.h" />
     <ClInclude Include="Entity\Action.h" />
-    <ClInclude Include="Entity\Attributes\BasicAttribute.h" />
     <ClInclude Include="Entity\Entities\ArrowEntity.h" />
     <ClInclude Include="Entity\Events\AttackEvent.h" />
     <ClInclude Include="Entity\Events\AttackWeapon.h" />
@@ -243,7 +242,6 @@
     <ClInclude Include="Entity\Modes\AttackWeaponMode.h" />
     <ClInclude Include="Entity\Modes\BasicMode.h" />
     <ClInclude Include="Entity\Modes\IdleMode.h" />
-    <ClInclude Include="Entity\AttributeStore.h" />
     <ClInclude Include="Entity\AttributeData.h" />
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
@@ -325,7 +323,6 @@
     <ClCompile Include="Effect\BasicEffect.cpp" />
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />
-    <ClCompile Include="Entity\Attributes\BasicAttribute.cpp" />
     <ClCompile Include="Entity\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Entity\Modes\UninitializedMode.cpp" />
     <ClCompile Include="Entity\EntityService.cpp" />

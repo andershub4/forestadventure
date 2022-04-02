@@ -8,7 +8,6 @@
 
 #include <memory>
 
-#include "AttributeStore.h"
 #include "Enum/FaceDirection.h"
 #include "Id.h"
 #include "Logging.h"
@@ -33,24 +32,6 @@ class EntityService
 public:
     EntityService(CameraManager &cameraManager, const SheetManager &sheetManager, EntityManager &entityManager);
     ~EntityService();
-
-    template <class T>
-    std::shared_ptr<T> AddAttribute()
-    {
-        return attributeStore_.AddAttribute<T>(this);
-    }
-
-    template <class T>
-    std::shared_ptr<T> GetAttribute() const
-    {
-        if (attributeStore_.HasAttribute<T>()) {
-            return attributeStore_.GetAttribute<T>();
-        }
-        else {
-            LOG_ERROR(typeid(T).name(), " is not in attributeStore");
-            return nullptr;
-        }
-    }
 
     void AddCamera();
 
@@ -87,7 +68,6 @@ public:
     void DeleteEntity(EntityId id);
 
 private:
-    AttributeStore attributeStore_;
     CameraManager &cameraManager_;
     const FrameHandler frameHandler_;
     const SheetManager &sheetManager_;
