@@ -25,6 +25,7 @@ void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
     shape_->SetAnimation(GetAnimation(dir));
     shape_->SetImage(GetImage(dir));
     offset_ = m->offset_.at(dir);
+    rotation_ = m->rotation_.at(dir);
     entityType_ = m->entityType_;
 }
 
@@ -32,7 +33,7 @@ void AttackWeaponMode::Exit()
 {
     auto dir = Service().GetProperty<FaceDirection>("FaceDirection");
     auto position = Service().GetProperty<sf::Vector2f>("Position") + offset_;
-    Service().SpawnEntity(entityType_, dir, position);
+    Service().SpawnEntity(entityType_, dir, position, rotation_);
 }
 
 void AttackWeaponMode::Register()

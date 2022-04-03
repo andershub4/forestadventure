@@ -176,7 +176,7 @@ void Level::CreateFringe()
 
 void Level::CreateBackgroundTile(const Tile::TileMap::TileData &data)
 {
-    Image image(data.frameData_.frame_, 0.0);
+    Image image(data.frameData_.frame_);
     sf::Sprite tile;
     image.ApplyTo(tile);
     tile.setPosition(static_cast<float>(data.x_), static_cast<float>(data.y_));
@@ -202,7 +202,7 @@ void Level::CreateTileEntity(const Tile::TileMap::TileData &data)
 
 void Level::CreateFringeTile(const Tile::TileMap::TileData &data)
 {
-    Image image(data.frameData_.frame_, 0.0);
+    Image image(data.frameData_.frame_);
     sf::Sprite tile;
     image.ApplyTo(tile);
     tile.setPosition(static_cast<float>(data.x_), static_cast<float>(data.y_));

@@ -17,15 +17,17 @@ namespace Entity {
 
 struct StartMoveEvent : public BasicEvent
 {
-    StartMoveEvent(MoveDirection moveDirection, FaceDirection faceDirection)
+    StartMoveEvent(MoveDirection moveDirection, FaceDirection faceDirection, float rotation)
         : moveDirection_(moveDirection)
         , faceDirection_(faceDirection)
+        , rotation_(rotation)
     {}
 
     virtual EventType GetEventType() const { return EventType::StartMove; }
 
     MoveDirection moveDirection_ = MoveDirection::None;
     FaceDirection faceDirection_ = FaceDirection::Undefined;
+    float rotation_{};
 };
 
 }  // namespace Entity

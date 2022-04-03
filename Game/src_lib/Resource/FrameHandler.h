@@ -34,7 +34,6 @@ struct ImageData
 {
     std::string sheetId_;
     sf::Vector2u position_;
-    float rotation_;
 };
 
 class FrameHandler

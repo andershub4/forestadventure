@@ -34,6 +34,7 @@ private:
     std::shared_ptr<Shape> shape_ = nullptr;
     EntityType entityType_ = EntityType::Unknown;
     sf::Vector2f offset_;
+    float rotation_{};
 };
 
 }  // namespace Entity

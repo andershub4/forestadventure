@@ -27,7 +27,7 @@ void BasicTileSet::LoadSheet(const std::string &filePath, const sf::Vector2u &si
 
 Frame BasicTileSet::GetFrame(const std::string &filePath, const sf::Vector2u &uvCoord) const
 {
-    ImageData data{filePath, uvCoord, 0.0};
+    ImageData data{filePath, uvCoord};
     return frameHandler_.MakeFrame(sheetManager_, data);
 }
 

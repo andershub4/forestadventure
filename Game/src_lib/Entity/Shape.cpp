@@ -33,18 +33,20 @@ void Shape::Update(float deltaTime)
         currentAnimation_.Update(deltaTime);
         currentAnimation_.ApplyTo(animationSprite_);
         animationSprite_.setPosition(entityService_->GetProperty<sf::Vector2f>("Position"));
+        animationSprite_.setRotation(entityService_->GetProperty<float>("Rotation"));
         animationSprite_.setScale(entityService_->GetProperty<float>("Scale"),
                                   entityService_->GetProperty<float>("Scale"));
     }
 
     if (currentImage_.IsValid()) {
         imageSprite_.setPosition(entityService_->GetProperty<sf::Vector2f>("Position"));
-
+        imageSprite_.setRotation(entityService_->GetProperty<float>("Rotation"));
         imageSprite_.setScale(entityService_->GetProperty<float>("Scale"), entityService_->GetProperty<float>("Scale"));
     }
 
 #ifdef _DEBUG
     rShape_.setPosition(entityService_->GetProperty<sf::Vector2f>("Position"));
+    rShape_.setRotation(entityService_->GetProperty<float>("Rotation"));
     rShape_.setScale(entityService_->GetProperty<float>("Scale"), entityService_->GetProperty<float>("Scale"));
 #endif
 }

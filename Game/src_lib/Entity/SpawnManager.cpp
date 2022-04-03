@@ -25,7 +25,7 @@ SpawnManager::~SpawnManager() = default;
 void SpawnManager::Update(float deltaTime)
 {}
 
-void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, FaceDirection faceDir)
+void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, FaceDirection faceDir, float rotation)
 {
     Entity::PropertyData data;
     data.position_ = position;
@@ -42,7 +42,7 @@ void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, Fa
     else if (faceDir == FaceDirection::Right)
         moveDirection = MoveDirection::Right;
 
-    entity.QueueInitEvents(std::make_shared<StartMoveEvent>(moveDirection, faceDir));
+    entity.QueueInitEvents(std::make_shared<StartMoveEvent>(moveDirection, faceDir, rotation));
 }
 
 }  // namespace Entity

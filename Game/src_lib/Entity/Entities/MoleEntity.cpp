@@ -53,6 +53,7 @@ void MoleEntity::RegisterModes(ModeController& modeController)
 
 void MoleEntity::RegisterProperties(EntityService& entityService)
 {
+    entityService.RegisterProperty<float>("Rotation", 0.0);
     entityService.RegisterProperty<float>("Scale", 1.0);
     entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
     entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity);

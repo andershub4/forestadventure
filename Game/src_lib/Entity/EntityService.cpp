@@ -62,12 +62,13 @@ Animation EntityService::MakeAnimation(const AnimationData& data) const
 Image EntityService::MakeImage(const ImageData& data) const
 {
     auto frame = frameHandler_.MakeFrame(sheetManager_, data);
-    return Image(frame, data.rotation_);
+    return Image(frame);
 }
 
-void EntityService::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position)
+void EntityService::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position,
+                                float rotation)
 {
-    spawnManager_.Spawn(entityType, position, faceDirection);
+    spawnManager_.Spawn(entityType, position, faceDirection, rotation);
 }
 
 void EntityService::DeleteEntity(EntityId id)

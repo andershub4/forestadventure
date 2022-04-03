@@ -37,6 +37,11 @@ const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirect
                                                                      {FaceDirection::Right, {15.0, 5.0}},
                                                                      {FaceDirection::Up, {0.0, -15.0}}};
 
+const std::unordered_map<FaceDirection, float> arrowRotation = {{FaceDirection::Down, 180.0f},
+                                                                {FaceDirection::Left, 270.0f},
+                                                                {FaceDirection::Right, 90.0f},
+                                                                {FaceDirection::Up, 0.0f}};
+
 const std::unordered_map<ModeType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
     {ModeType::Move,
      {{FaceDirection::Left, {SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true}},
@@ -79,16 +84,16 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
         auto key = m->GetKey();
         if (key == Keyboard::Key::Right) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right, 0.0f));
         }
         else if (key == Keyboard::Key::Left) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left, 0.0f));
         }
         else if (key == Keyboard::Key::Down) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down, 0.0f));
         }
         else if (key == Keyboard::Key::Up) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up, 0.0f));
         }
     }
     else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
@@ -106,7 +111,7 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
             HandleEvent(std::make_shared<AttackEvent>());
         }
         else if (key == Keyboard::Key::Space) {
-            HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow, arrowOffset));
+            HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow, arrowOffset, arrowRotation));
         }
     }
 }
@@ -142,6 +147,7 @@ void PlayerEntity::RegisterModes(ModeController& modeController)
 
 void PlayerEntity::RegisterProperties(EntityService& entityService)
 {
+    entityService.RegisterProperty<float>("Rotation", 0.0);
     entityService.RegisterProperty<float>("Scale", 1.0);
     entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
     entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity);

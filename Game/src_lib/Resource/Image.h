@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <SFML/Graphics/Rect.hpp>
-
 #include "Frame.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -17,7 +15,7 @@ class Image
 {
 public:
     Image() = default;
-    Image(const Frame& frame, float rotation);
+    Image(const Frame& frame);
 
     void Update(float deltaTime);
     void ApplyTo(sf::Sprite& sprite);
@@ -25,7 +23,6 @@ public:
 
 private:
     Frame frame_;
-    float rotation_{};
     bool isValid_ = false;
 };
 

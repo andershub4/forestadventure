@@ -32,6 +32,7 @@ void TileEntity::RegisterModes(ModeController& modeController)
 
 void TileEntity::RegisterProperties(EntityService& entityService)
 {
+    entityService.RegisterProperty<float>("Rotation", 0.0);
     entityService.RegisterProperty<float>("Scale", 1.0);
     entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);

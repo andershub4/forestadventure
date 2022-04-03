@@ -20,10 +20,10 @@ namespace Entity {
 
 namespace {
 
-std::unordered_map<std::string, ImageData> imageDatas = {{"Left", {SheetId::Arrow, {0, 0}, 270.0f}},
-                                                         {"Right", {SheetId::Arrow, {0, 0}, 90.0f}},
-                                                         {"Down", {SheetId::Arrow, {0, 0}, 180.0f}},
-                                                         {"Up", {SheetId::Arrow, {0, 0}, 0.0f}}};
+std::unordered_map<std::string, ImageData> imageDatas = {{"Left", {SheetId::Arrow, {0, 0}}},
+                                                         {"Right", {SheetId::Arrow, {0, 0}}},
+                                                         {"Down", {SheetId::Arrow, {0, 0}}},
+                                                         {"Up", {SheetId::Arrow, {0, 0}}}};
 
 }
 
@@ -46,6 +46,7 @@ void ArrowEntity::RegisterModes(ModeController& modeController)
 
 void ArrowEntity::RegisterProperties(EntityService& entityService)
 {
+    entityService.RegisterProperty<float>("Rotation", 0.0);
     entityService.RegisterProperty<float>("Scale", 1.0);
     entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
     entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity * 8.0f);

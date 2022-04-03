@@ -10,9 +10,8 @@
 
 namespace FA {
 
-Image::Image(const Frame& frame, float rotation)
+Image::Image(const Frame& frame)
     : frame_(frame)
-    , rotation_(rotation)
     , isValid_(true)
 {}
 
@@ -20,7 +19,6 @@ void Image::ApplyTo(sf::Sprite& sprite)
 {
     sprite.setTexture(*frame_.texture_);
     sprite.setTextureRect(frame_.rect_);
-    sprite.setRotation(rotation_);
 }
 
 void Image::Update(float deltaTime)
