@@ -9,8 +9,6 @@
 #include <functional>
 #include <vector>
 
-#include <SFML/Graphics/Rect.hpp>
-
 #include "Frame.h"
 #include "Fwd/SfmlFwd.h"
 
