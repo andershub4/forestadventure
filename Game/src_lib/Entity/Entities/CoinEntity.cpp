@@ -11,7 +11,6 @@
 #include "Constant/Entity.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/PropertyData.h"
-#include "Resource/Animation.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -20,7 +19,7 @@ namespace Entity {
 
 namespace {
 
-std::unordered_map<std::string, AnimationData> animationDatas = {{"Undefined", {SheetId::Coin, {{0, 0}, 4, 0}, false}}};
+AnimationData animationData = {SheetId::Coin, {{0, 0}, 4, 0}, false};
 
 }
 
@@ -45,12 +44,25 @@ void CoinEntity::RegisterProperties(EntityService& entityService)
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);
 }
 
+void CoinEntity::BuildAnimations(const EntityService& entityService, ModeType modeType)
+{
+    animation_ = entityService.MakeAnimation(animationData);
+}
+
+Animation CoinEntity::GetAnimation(const EntityService& entityService, ModeType modeType) const
+{
+    return animation_;
+}
+
 void CoinEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
                            const PropertyData& data)
 {
     auto idleMode = modeController.GetMode(ModeType::Idle);
-    auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);
-    mUndef.animation_ = entityService.MakeAnimation(animationDatas.at("Undefined"));
+    auto modeType = idleMode->GetModeType();
+
+    BuildAnimations(entityService, ModeType::Idle);
+    idleMode->SetAnimationFn(
+        [this, modeType](const EntityService& entityService) { return GetAnimation(entityService, modeType); });
 }
 
 }  // namespace Entity

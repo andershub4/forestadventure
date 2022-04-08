@@ -19,9 +19,8 @@ IdleMode::IdleMode(EntityService& entityService, ModeController& modeController)
 
 void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
 {
-    auto dir = Service().GetProperty<FaceDirection>("FaceDirection");
-    shape_->SetAnimation(GetAnimation(dir));
-    shape_->SetImage(GetImage(dir));
+    shape_->SetAnimation(GetAnimation());
+    shape_->SetImage(GetImage());
 }
 
 void IdleMode::Register()

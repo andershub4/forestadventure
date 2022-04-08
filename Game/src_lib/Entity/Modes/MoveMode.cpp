@@ -11,6 +11,7 @@
 #include "Entity/EntityService.h"
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Shape.h"
+#include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 
 namespace {
@@ -37,9 +38,8 @@ void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
     SetDirection(m->moveDirection_, m->faceDirection_);
 
     Service().SetProperty<float>("Rotation", m->rotation_);
-    auto dir = Service().GetProperty<FaceDirection>("FaceDirection");
-    shape_->SetAnimation(GetAnimation(dir));
-    shape_->SetImage(GetImage(dir));
+    shape_->SetAnimation(GetAnimation());
+    shape_->SetImage(GetImage());
 }
 
 void MoveMode::Register()

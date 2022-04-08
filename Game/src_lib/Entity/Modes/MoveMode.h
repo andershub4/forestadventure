@@ -15,6 +15,7 @@
 namespace FA {
 
 enum class MoveDirection;
+enum class FaceDirection;
 
 namespace Entity {
 

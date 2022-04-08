@@ -66,38 +66,19 @@ Action BasicMode::PollAction() const
     return {};
 }
 
-BasicMode::Direction& BasicMode::AddDirection(FaceDirection faceDirection)
+Animation BasicMode::GetAnimation() const
 {
-    auto it = directions_.find(faceDirection);
-
-    if (it == directions_.end()) {
-        directions_[faceDirection] = BasicMode::Direction();
-    }
-    else {
-        LOG_ERROR("faceDirection: ", faceDirection, " already exist");
-    }
-
-    return directions_.at(faceDirection);
-}
-
-Animation BasicMode::GetAnimation(FaceDirection faceDirection) const
-{
-    auto it = directions_.find(faceDirection);
-
-    if (it != directions_.end()) {
-        return directions_.at(faceDirection).animation_;
-    }
+    if (animationFn_)
+        return animationFn_(entityService_);
     else {
         return Animation();
     }
 }
 
-Image BasicMode::GetImage(FaceDirection faceDirection) const
+Image BasicMode::GetImage() const
 {
-    auto it = directions_.find(faceDirection);
-
-    if (it != directions_.end()) {
-        return directions_.at(faceDirection).image_;
+    if (imageFn_) {
+        return imageFn_(entityService_);
     }
     else {
         return Image();

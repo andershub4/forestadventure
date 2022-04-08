@@ -8,6 +8,8 @@
 
 #include "BasicEntity.h"
 
+#include "Resource/Image.h"
+
 namespace FA {
 
 namespace Entity {
@@ -26,10 +28,16 @@ protected:
     virtual void PostUpdate(EntityService& entityService) override;
 
 private:
+    Image image_;
+
+private:
     virtual void RegisterModes(ModeController& modeController) override;
     virtual void RegisterProperties(EntityService& entityService) override;
     virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
                            const PropertyData& data) override;
+
+    void BuildImages(const EntityService& entityService, ModeType modeType);
+    Image GetImage(const EntityService& entityService, ModeType modeType) const;
 };
 
 }  // namespace Entity

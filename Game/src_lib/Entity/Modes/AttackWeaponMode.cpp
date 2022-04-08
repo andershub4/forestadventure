@@ -22,8 +22,8 @@ void AttackWeaponMode::Enter(std::shared_ptr<BasicEvent> event)
 {
     auto m = std::dynamic_pointer_cast<AttackWeaponEvent>(event);
     auto dir = Service().GetProperty<FaceDirection>("FaceDirection");
-    shape_->SetAnimation(GetAnimation(dir));
-    shape_->SetImage(GetImage(dir));
+    shape_->SetAnimation(GetAnimation());
+    shape_->SetImage(GetImage());
     offset_ = m->offset_.at(dir);
     rotation_ = m->rotation_.at(dir);
     entityType_ = m->entityType_;

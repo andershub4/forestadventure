@@ -8,6 +8,8 @@
 
 #include "BasicEntity.h"
 
+#include "Resource/Animation.h"
+
 namespace FA {
 
 namespace Entity {
@@ -21,6 +23,9 @@ public:
 
     virtual std::string Name() const override { return "TileEntity"; }
     virtual EntityType Type() const override { return EntityType::Tile; }
+
+private:
+    Animation animation_;
 
 private:
     virtual void RegisterModes(ModeController& modeController) override;

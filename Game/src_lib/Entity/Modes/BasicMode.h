@@ -11,12 +11,12 @@
 
 #include "Entity/Action.h"
 #include "Entity/EventType.h"
-#include "Enum/FaceDirection.h"
 #include "Fwd/SfmlFwd.h"
-#include "Resource/Animation.h"
-#include "Resource/Image.h"
 
 namespace FA {
+
+class Animation;
+class Image;
 
 namespace Entity {
 
@@ -28,12 +28,6 @@ class ModeController;
 class BasicMode
 {
 public:
-    struct Direction
-    {
-        Animation animation_;
-        Image image_;
-    };
-
     BasicMode(EntityService& entityService, ModeController& modeController);
     virtual ~BasicMode();
 
@@ -53,12 +47,13 @@ public:
 
     void BindAction(const Action& action, EventType eventType);
     void BindActionDuringUpdate(const Action& action, std::function<bool(std::shared_ptr<Shape>)> condition);
-    Direction& AddDirection(FaceDirection faceDirection);
+    void SetAnimationFn(std::function<Animation(const EntityService&)> fn) { animationFn_ = fn; }
+    void SetImageFn(std::function<Image(const EntityService&)> fn) { imageFn_ = fn; }
 
 protected:
     EntityService& Service() const { return entityService_; }
-    Animation GetAnimation(FaceDirection faceDirection) const;
-    Image GetImage(FaceDirection faceDirection) const;
+    Animation GetAnimation() const;
+    Image GetImage() const;
     void BasicUpdate();
 
 private:
@@ -67,7 +62,8 @@ private:
     std::unordered_map<EventType, Action> eventMap_;
     std::function<bool(std::shared_ptr<Shape>)> actionCondition_ = [](std::shared_ptr<Shape>) { return false; };
     Action nextAction_{};
-    std::unordered_map<FaceDirection, Direction> directions_;
+    std::function<Animation(const EntityService&)> animationFn_;
+    std::function<Image(const EntityService&)> imageFn_;
 
 private:
     Action GetAction(EventType eventType) const;

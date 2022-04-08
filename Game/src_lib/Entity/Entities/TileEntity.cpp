@@ -11,7 +11,6 @@
 #include "Constant/Entity.h"
 #include "Entity/Modes/IdleMode.h"
 #include "Entity/PropertyData.h"
-#include "Resource/Animation.h"
 
 namespace FA {
 
@@ -42,9 +41,10 @@ void TileEntity::InitModes(const ModeController& modeController, const EntitySer
                            const PropertyData& data)
 {
     auto idleMode = modeController.GetMode(ModeType::Idle);
-    auto& mUndef = idleMode->AddDirection(FaceDirection::Undefined);
+
     float t = constant::Entity::stdSwitchTime;
-    mUndef.animation_ = Animation(data.frames_, 0, t);
+    animation_ = Animation(data.frames_, 0, t);
+    idleMode->SetAnimationFn([this](const EntityService& entityService) { return animation_; });
 }
 
 }  // namespace Entity

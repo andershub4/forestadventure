@@ -53,19 +53,25 @@ void ArrowEntity::RegisterProperties(EntityService& entityService)
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
+void ArrowEntity::BuildImages(const EntityService& entityService, ModeType modeType)
+{
+    image_ = entityService.MakeImage({SheetId::Arrow, {0, 0}});
+}
+
+Image ArrowEntity::GetImage(const EntityService& entityService, ModeType modeType) const
+{
+    return image_;
+}
+
 void ArrowEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
                             const PropertyData& data)
 {
     auto moveMode = modeController.GetMode(ModeType::Move);
+    auto modeType = moveMode->GetModeType();
 
-    auto& mleft = moveMode->AddDirection(FaceDirection::Left);
-    auto& mright = moveMode->AddDirection(FaceDirection::Right);
-    auto& mup = moveMode->AddDirection(FaceDirection::Up);
-    auto& mdown = moveMode->AddDirection(FaceDirection::Down);
-    mleft.image_ = entityService.MakeImage(imageDatas.at("Left"));
-    mright.image_ = entityService.MakeImage(imageDatas.at("Right"));
-    mup.image_ = entityService.MakeImage(imageDatas.at("Up"));
-    mdown.image_ = entityService.MakeImage(imageDatas.at("Down"));
+    BuildImages(entityService, ModeType::Idle);
+    moveMode->SetImageFn(
+        [this, modeType](const EntityService& entityService) { return GetImage(entityService, modeType); });
 }
 
 void ArrowEntity::PostUpdate(EntityService& entityService)

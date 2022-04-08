@@ -8,6 +8,8 @@
 
 #include "BasicEntity.h"
 
+#include "Resource/Animation.h"
+
 namespace FA {
 
 namespace Entity {
@@ -26,6 +28,9 @@ protected:
     virtual std::vector<MessageType> Messages() const override;
 
 private:
+    std::unordered_map<ModeType, std::unordered_map<FaceDirection, Animation>> animations_;
+
+private:
     virtual void RegisterModes(ModeController& modeController) override;
     virtual void RegisterProperties(EntityService& entityService) override;
     virtual void Start(EntityService& entityService) override;
@@ -35,6 +40,9 @@ private:
 
     void InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
                   const EntityService& entityService);
+
+    void BuildAnimations(const EntityService& entityService, ModeType modeType);
+    Animation GetAnimation(const EntityService& entityService, ModeType modeType) const;
 };
 
 }  // namespace Entity

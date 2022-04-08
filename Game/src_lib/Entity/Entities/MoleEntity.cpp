@@ -62,16 +62,33 @@ void MoleEntity::RegisterProperties(EntityService& entityService)
         "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
 }
 
+void MoleEntity::BuildAnimations(const EntityService& entityService, ModeType modeType)
+{
+    auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
+    auto modeData = animationDatas.at(modeType);
+    auto& m = animations_[modeType];
+
+    for (auto direction : directions) {
+        m[direction] = entityService.MakeAnimation(modeData.at(direction));
+    }
+}
+
+Animation MoleEntity::GetAnimation(const EntityService& entityService, ModeType modeType) const
+{
+    auto dir = entityService.GetProperty<FaceDirection>("FaceDirection");
+
+    return animations_.at(modeType).at(dir);
+}
+
 void MoleEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
                           const EntityService& entityService)
 {
     auto modeType = mode->GetModeType();
     auto modeData = animationDatas.at(modeType);
 
-    for (auto direction : directions) {
-        auto& d = mode->AddDirection(direction);
-        d.animation_ = entityService.MakeAnimation(modeData.at(direction));
-    }
+    BuildAnimations(entityService, modeType);
+    mode->SetAnimationFn(
+        [this, modeType](const EntityService& entityService) { return GetAnimation(entityService, modeType); });
 }
 
 void MoleEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
