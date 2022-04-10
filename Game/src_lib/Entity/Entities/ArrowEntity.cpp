@@ -18,15 +18,6 @@ namespace FA {
 
 namespace Entity {
 
-namespace {
-
-std::unordered_map<std::string, ImageData> imageDatas = {{"Left", {SheetId::Arrow, {0, 0}}},
-                                                         {"Right", {SheetId::Arrow, {0, 0}}},
-                                                         {"Down", {SheetId::Arrow, {0, 0}}},
-                                                         {"Up", {SheetId::Arrow, {0, 0}}}};
-
-}
-
 ArrowEntity::ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
                          EntityManager& entityManager, MessageBus& messageBus)
     : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus)

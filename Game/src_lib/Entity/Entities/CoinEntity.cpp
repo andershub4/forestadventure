@@ -17,12 +17,6 @@ namespace FA {
 
 namespace Entity {
 
-namespace {
-
-AnimationData animationData = {SheetId::Coin, {{0, 0}, 4, 0}, false};
-
-}
-
 CoinEntity::CoinEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
                        EntityManager& entityManager, MessageBus& messageBus)
     : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus)
@@ -46,7 +40,7 @@ void CoinEntity::RegisterProperties(EntityService& entityService)
 
 void CoinEntity::BuildAnimations(const EntityService& entityService, ModeType modeType)
 {
-    animation_ = entityService.MakeAnimation(animationData);
+    animation_ = entityService.MakeAnimation({SheetId::Coin, {{0, 0}, 4, 0}, false});
 }
 
 Animation CoinEntity::GetAnimation(const EntityService& entityService, ModeType modeType) const
