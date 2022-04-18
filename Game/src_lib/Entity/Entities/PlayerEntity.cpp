@@ -13,12 +13,12 @@
 #include "Entity/Events/AttackWeapon.h"
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Events/StopMoveEvent.h"
-#include "Entity/Modes/AttackMode.h"
-#include "Entity/Modes/AttackWeaponMode.h"
-#include "Entity/Modes/IdleMode.h"
-#include "Entity/Modes/MoveMode.h"
 #include "Entity/PropertyData.h"
 #include "Entity/Shape.h"
+#include "Entity/States/AttackState.h"
+#include "Entity/States/AttackWeaponState.h"
+#include "Entity/States/IdleState.h"
+#include "Entity/States/MoveState.h"
 #include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -42,23 +42,23 @@ const std::unordered_map<FaceDirection, float> arrowRotation = {{FaceDirection::
                                                                 {FaceDirection::Right, 90.0f},
                                                                 {FaceDirection::Up, 0.0f}};
 
-const std::unordered_map<ModeType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
-    {ModeType::Move,
+const std::unordered_map<StateType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
+    {StateType::Move,
      {{FaceDirection::Left, {SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true}},
       {FaceDirection::Right, {SheetId::HeroWalkSide, {{0, 0}, 6, 0}, false}},
       {FaceDirection::Down, {SheetId::HeroWalkFront, {{0, 0}, 6, 0}, false}},
       {FaceDirection::Up, {SheetId::HeroWalkBack, {{0, 0}, 6, 0}, false}}}},
-    {ModeType::Idle,
+    {StateType::Idle,
      {{FaceDirection::Left, {SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true}},
       {FaceDirection::Right, {SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false}},
       {FaceDirection::Down, {SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}},
       {FaceDirection::Up, {SheetId::HeroIdleBack, {{0, 0}, 1, 0}, false}}}},
-    {ModeType::Attack,
+    {StateType::Attack,
      {{FaceDirection::Left, {SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true}},
       {FaceDirection::Right, {SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false}},
       {FaceDirection::Down, {SheetId::HeroAttackFront, {{0, 0}, 3, 0}, false}},
       {FaceDirection::Up, {SheetId::HeroAttackBack, {{0, 0}, 3, 0}, false}}}},
-    {ModeType::AttackWeapon,
+    {StateType::AttackWeapon,
      {{FaceDirection::Left, {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, true}},
       {FaceDirection::Right, {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, false}},
       {FaceDirection::Down, {SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false}},
@@ -116,33 +116,33 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
     }
 }
 
-void PlayerEntity::RegisterModes(ModeController& modeController)
+void PlayerEntity::RegisterStates(StateMachine& stateMachine)
 {
-    auto idleMode = modeController.RegisterMode<IdleMode>(true);
-    idleMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
-    idleMode->BindAction(Action::ChangeTo(ModeType::Attack), EventType::Attack);
-    idleMode->BindAction(Action::ChangeTo(ModeType::AttackWeapon), EventType::AttackWeapon);
-    idleMode->BindAction(Action::Ignore(), EventType::Collision);
+    auto idleState = stateMachine.RegisterState<IdleState>(true);
+    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    idleState->BindAction(Action::ChangeTo(StateType::Attack), EventType::Attack);
+    idleState->BindAction(Action::ChangeTo(StateType::AttackWeapon), EventType::AttackWeapon);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
 
-    auto moveMode = modeController.RegisterMode<MoveMode>();
-    moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
-    moveMode->BindAction(Action::Ignore(), EventType::StartMove);
-    moveMode->BindAction(Action::Ignore(), EventType::Attack);
-    moveMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
+    auto moveState = stateMachine.RegisterState<MoveState>();
+    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
+    moveState->BindAction(Action::Ignore(), EventType::StartMove);
+    moveState->BindAction(Action::Ignore(), EventType::Attack);
+    moveState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 
     auto condition = [](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); };
 
-    auto attackMode = modeController.RegisterMode<AttackMode>();
-    attackMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
-    attackMode->BindAction(Action::Ignore(), EventType::Attack);
-    attackMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
-    attackMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
+    auto attackState = stateMachine.RegisterState<AttackState>();
+    attackState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    attackState->BindAction(Action::Ignore(), EventType::Attack);
+    attackState->BindAction(Action::Ignore(), EventType::AttackWeapon);
+    attackState->BindActionDuringUpdate(Action::ChangeTo(StateType::Idle), condition);
 
-    auto attackWeaponMode = modeController.RegisterMode<AttackWeaponMode>();
-    attackWeaponMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
-    attackWeaponMode->BindAction(Action::Ignore(), EventType::Attack);
-    attackWeaponMode->BindAction(Action::Ignore(), EventType::AttackWeapon);
-    attackWeaponMode->BindActionDuringUpdate(Action::ChangeTo(ModeType::Idle), condition);
+    auto attackWeaponState = stateMachine.RegisterState<AttackWeaponState>();
+    attackWeaponState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    attackWeaponState->BindAction(Action::Ignore(), EventType::Attack);
+    attackWeaponState->BindAction(Action::Ignore(), EventType::AttackWeapon);
+    attackWeaponState->BindActionDuringUpdate(Action::ChangeTo(StateType::Idle), condition);
 }
 
 void PlayerEntity::RegisterProperties(EntityService& entityService)
@@ -161,44 +161,43 @@ void PlayerEntity::Start(EntityService& entityService)
     entityService.AddCamera();
 }
 
-void PlayerEntity::BuildAnimations(const EntityService& entityService, ModeType modeType)
+void PlayerEntity::BuildAnimations(const EntityService& entityService, StateType stateType)
 {
     auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
-    auto modeData = animationDatas.at(modeType);
-    auto& m = animations_[modeType];
+    auto stateData = animationDatas.at(stateType);
+    auto& m = animations_[stateType];
 
     for (auto direction : directions) {
-        m[direction] = entityService.MakeAnimation(modeData.at(direction));
+        m[direction] = entityService.MakeAnimation(stateData.at(direction));
     }
 }
 
-Animation PlayerEntity::GetAnimation(const EntityService& entityService, ModeType modeType) const
+Animation PlayerEntity::GetAnimation(const EntityService& entityService, StateType stateType) const
 {
     auto dir = entityService.GetProperty<FaceDirection>("FaceDirection");
 
-    return animations_.at(modeType).at(dir);
+    return animations_.at(stateType).at(dir);
 }
 
-void PlayerEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
-                            const EntityService& entityService)
+void PlayerEntity::InitState(std::shared_ptr<BasicState> state, const std::vector<FaceDirection>& directions,
+                             const EntityService& entityService)
 {
-    auto modeType = mode->GetModeType();
-    auto modeData = animationDatas.at(modeType);
+    auto stateType = state->GetStateType();
 
-    BuildAnimations(entityService, modeType);
-    mode->SetAnimationFn(
-        [this, modeType](const EntityService& entityService) { return GetAnimation(entityService, modeType); });
+    BuildAnimations(entityService, stateType);
+    state->SetAnimationFn(
+        [this, stateType](const EntityService& entityService) { return GetAnimation(entityService, stateType); });
 }
 
-void PlayerEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
-                             const PropertyData& data)
+void PlayerEntity::InitStates(const StateMachine& stateMachine, const EntityService& entityService,
+                              const PropertyData& data)
 {
     auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
 
-    InitMode(modeController.GetMode(ModeType::Idle), directions, entityService);
-    InitMode(modeController.GetMode(ModeType::Move), directions, entityService);
-    InitMode(modeController.GetMode(ModeType::Attack), directions, entityService);
-    InitMode(modeController.GetMode(ModeType::AttackWeapon), directions, entityService);
+    InitState(stateMachine.GetState(StateType::Idle), directions, entityService);
+    InitState(stateMachine.GetState(StateType::Move), directions, entityService);
+    InitState(stateMachine.GetState(StateType::Attack), directions, entityService);
+    InitState(stateMachine.GetState(StateType::AttackWeapon), directions, entityService);
 }
 
 }  // namespace Entity

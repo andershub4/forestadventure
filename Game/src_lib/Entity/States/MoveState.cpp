@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "MoveMode.h"
+#include "MoveState.h"
 
 #include <unordered_map>
 
@@ -28,11 +28,11 @@ namespace FA {
 
 namespace Entity {
 
-MoveMode::MoveMode(EntityService& entityService, ModeController& modeController)
-    : BasicMode(entityService, modeController)
+MoveState::MoveState(EntityService& entityService, StateMachine& stateMachine)
+    : BasicState(entityService, stateMachine)
 {}
 
-void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
+void MoveState::Enter(std::shared_ptr<BasicEvent> event)
 {
     auto m = std::dynamic_pointer_cast<StartMoveEvent>(event);
     SetDirection(m->moveDirection_, m->faceDirection_);
@@ -42,12 +42,12 @@ void MoveMode::Enter(std::shared_ptr<BasicEvent> event)
     shape_->SetImage(GetImage());
 }
 
-void MoveMode::Register()
+void MoveState::Register()
 {
     shape_ = Service().GetShape();
 }
 
-void MoveMode::Update(float deltaTime)
+void MoveState::Update(float deltaTime)
 {
     shape_->Update(deltaTime);
 
@@ -59,7 +59,7 @@ void MoveMode::Update(float deltaTime)
     BasicUpdate();
 }
 
-void MoveMode::SetDirection(MoveDirection direction, FaceDirection faceDir)
+void MoveState::SetDirection(MoveDirection direction, FaceDirection faceDir)
 {
     auto velocity = Service().GetProperty<float>("Velocity");
     auto it = dirToVector.find(direction);

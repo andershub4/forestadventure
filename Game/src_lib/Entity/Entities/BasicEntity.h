@@ -10,7 +10,7 @@
 
 #include "Entity/EntityService.h"
 #include "Entity/Id.h"
-#include "Entity/ModeController.h"
+#include "Entity/StateMachine.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -55,15 +55,15 @@ private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
     EntityService entityService_;
-    ModeController modeController_;
+    StateMachine stateMachine_;
     bool enableInput_ = true;
 
 private:
-    virtual void RegisterModes(ModeController& modeController) {}
+    virtual void RegisterStates(StateMachine& stateMachine) {}
     virtual void RegisterProperties(EntityService& entityService) {}
     virtual void Start(EntityService& entityService) {}
-    virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const PropertyData& data)
+    virtual void InitStates(const StateMachine& stateMachine, const EntityService& entityService,
+                            const PropertyData& data)
     {}
     virtual void OnMessage(std::shared_ptr<Message> msg) {}
 

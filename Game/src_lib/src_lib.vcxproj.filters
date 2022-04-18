@@ -105,7 +105,7 @@
     <ClCompile Include="Entity\Shape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Modes\MoveMode.cpp">
+    <ClCompile Include="Entity\States\MoveState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Entities\MoleEntity.cpp">
@@ -162,25 +162,22 @@
     <ClCompile Include="Resource\FrameHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Modes\IdleMode.cpp">
+    <ClCompile Include="Entity\States\IdleState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Modes\AttackMode.cpp">
+    <ClCompile Include="Entity\States\AttackState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Modes\AttackWeaponMode.cpp">
+    <ClCompile Include="Entity\States\AttackWeaponState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Level\CameraManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Modes\BasicMode.cpp">
+    <ClCompile Include="Entity\States\UninitializedState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Modes\UninitializedMode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\ModeController.cpp">
+    <ClCompile Include="Entity\StateMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Resource\SheetManager.cpp">
@@ -211,6 +208,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\PropertyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\States\BasicState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -338,7 +338,7 @@
     <ClInclude Include="Entity\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Modes\MoveMode.h">
+    <ClInclude Include="Entity\States\MoveState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\AnimationType.h">
@@ -413,34 +413,28 @@
     <ClInclude Include="Resource\SheetData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Modes\BasicMode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\EntityService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\FrameHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Modes\AttackMode.h">
+    <ClInclude Include="Entity\States\AttackState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Modes\AttackWeaponMode.h">
+    <ClInclude Include="Entity\States\AttackWeaponState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Modes\IdleMode.h">
+    <ClInclude Include="Entity\States\IdleState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Level\CameraManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Modes\UninitializedMode.h">
+    <ClInclude Include="Entity\States\UninitializedState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ModeController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\ModeType.h">
+    <ClInclude Include="Entity\StateMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Events\BasicEvent.h">
@@ -528,6 +522,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\PropertyManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\States\BasicState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\StateType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

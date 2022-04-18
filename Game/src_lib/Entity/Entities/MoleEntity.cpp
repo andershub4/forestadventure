@@ -9,9 +9,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Modes/IdleMode.h"
-#include "Entity/Modes/MoveMode.h"
 #include "Entity/PropertyData.h"
+#include "Entity/States/IdleState.h"
+#include "Entity/States/MoveState.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -20,13 +20,13 @@ namespace Entity {
 
 namespace {
 
-const std::unordered_map<ModeType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
-    {ModeType::Move,
+const std::unordered_map<StateType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
+    {StateType::Move,
      {{FaceDirection::Left, {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true}},
       {FaceDirection::Right, {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false}},
       {FaceDirection::Down, {SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false}},
       {FaceDirection::Up, {SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false}}}},
-    {ModeType::Idle,
+    {StateType::Idle,
      {{FaceDirection::Left, {SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true}},
       {FaceDirection::Right, {SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false}},
       {FaceDirection::Down, {SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}},
@@ -41,14 +41,14 @@ MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::RegisterModes(ModeController& modeController)
+void MoleEntity::RegisterStates(StateMachine& stateMachine)
 {
-    auto idleMode = modeController.RegisterMode<IdleMode>(true);
-    idleMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
-    idleMode->BindAction(Action::Ignore(), EventType::Collision);
+    auto idleState = stateMachine.RegisterState<IdleState>(true);
+    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
 
-    auto moveMode = modeController.RegisterMode<MoveMode>();
-    moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
+    auto moveState = stateMachine.RegisterState<MoveState>();
+    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 
 void MoleEntity::RegisterProperties(EntityService& entityService)
@@ -62,42 +62,41 @@ void MoleEntity::RegisterProperties(EntityService& entityService)
         "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
 }
 
-void MoleEntity::BuildAnimations(const EntityService& entityService, ModeType modeType)
+void MoleEntity::BuildAnimations(const EntityService& entityService, StateType stateType)
 {
     auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
-    auto modeData = animationDatas.at(modeType);
-    auto& m = animations_[modeType];
+    auto stateData = animationDatas.at(stateType);
+    auto& m = animations_[stateType];
 
     for (auto direction : directions) {
-        m[direction] = entityService.MakeAnimation(modeData.at(direction));
+        m[direction] = entityService.MakeAnimation(stateData.at(direction));
     }
 }
 
-Animation MoleEntity::GetAnimation(const EntityService& entityService, ModeType modeType) const
+Animation MoleEntity::GetAnimation(const EntityService& entityService, StateType stateType) const
 {
     auto dir = entityService.GetProperty<FaceDirection>("FaceDirection");
 
-    return animations_.at(modeType).at(dir);
+    return animations_.at(stateType).at(dir);
 }
 
-void MoleEntity::InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
-                          const EntityService& entityService)
+void MoleEntity::InitState(std::shared_ptr<BasicState> state, const std::vector<FaceDirection>& directions,
+                           const EntityService& entityService)
 {
-    auto modeType = mode->GetModeType();
-    auto modeData = animationDatas.at(modeType);
+    auto stateType = state->GetStateType();
 
-    BuildAnimations(entityService, modeType);
-    mode->SetAnimationFn(
-        [this, modeType](const EntityService& entityService) { return GetAnimation(entityService, modeType); });
+    BuildAnimations(entityService, stateType);
+    state->SetAnimationFn(
+        [this, stateType](const EntityService& entityService) { return GetAnimation(entityService, stateType); });
 }
 
-void MoleEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const PropertyData& data)
+void MoleEntity::InitStates(const StateMachine& stateMachine, const EntityService& entityService,
+                            const PropertyData& data)
 {
     auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
 
-    InitMode(modeController.GetMode(ModeType::Idle), directions, entityService);
-    InitMode(modeController.GetMode(ModeType::Move), directions, entityService);
+    InitState(stateMachine.GetState(StateType::Idle), directions, entityService);
+    InitState(stateMachine.GetState(StateType::Move), directions, entityService);
 }
 
 }  // namespace Entity

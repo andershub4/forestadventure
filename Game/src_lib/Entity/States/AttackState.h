@@ -6,35 +6,25 @@
 
 #pragma once
 
-#include <unordered_map>
-
-#include <SFML/System/Vector2.hpp>
-
-#include "BasicMode.h"
-
-#include "Enum/EntityType.h"
+#include "BasicState.h"
 
 namespace FA {
 
 namespace Entity {
 
-class AttackWeaponMode : public BasicMode
+class AttackState : public BasicState
 {
 public:
-    AttackWeaponMode(EntityService& entityService, ModeController& modeController);
+    AttackState(EntityService& entityService, StateMachine& stateMachine);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
-    virtual void Exit() override;
 
     virtual void Register() override;
     virtual void Update(float deltaTime) override;
-    virtual ModeType GetModeType() const override { return ModeType::AttackWeapon; }
+    virtual StateType GetStateType() const override { return StateType::Attack; }
 
 private:
     std::shared_ptr<Shape> shape_ = nullptr;
-    EntityType entityType_ = EntityType::Unknown;
-    sf::Vector2f offset_;
-    float rotation_{};
 };
 
 }  // namespace Entity

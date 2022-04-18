@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "IdleMode.h"
+#include "IdleState.h"
 
 #include "Entity/EntityService.h"
 #include "Entity/Shape.h"
@@ -13,22 +13,22 @@ namespace FA {
 
 namespace Entity {
 
-IdleMode::IdleMode(EntityService& entityService, ModeController& modeController)
-    : BasicMode(entityService, modeController)
+IdleState::IdleState(EntityService& entityService, StateMachine& stateMachine)
+    : BasicState(entityService, stateMachine)
 {}
 
-void IdleMode::Enter(std::shared_ptr<BasicEvent> event)
+void IdleState::Enter(std::shared_ptr<BasicEvent> event)
 {
     shape_->SetAnimation(GetAnimation());
     shape_->SetImage(GetImage());
 }
 
-void IdleMode::Register()
+void IdleState::Register()
 {
     shape_ = Service().GetShape();
 }
 
-void IdleMode::Update(float deltaTime)
+void IdleState::Update(float deltaTime)
 {
     shape_->Update(deltaTime);
     BasicUpdate();

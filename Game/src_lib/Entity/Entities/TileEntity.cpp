@@ -9,8 +9,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Modes/IdleMode.h"
 #include "Entity/PropertyData.h"
+#include "Entity/States/IdleState.h"
 
 namespace FA {
 
@@ -23,10 +23,10 @@ TileEntity::TileEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 TileEntity::~TileEntity() = default;
 
-void TileEntity::RegisterModes(ModeController& modeController)
+void TileEntity::RegisterStates(StateMachine& stateMachine)
 {
-    auto idleMode = modeController.RegisterMode<IdleMode>(true);
-    idleMode->BindAction(Action::Ignore(), EventType::Collision);
+    auto idleState = stateMachine.RegisterState<IdleState>(true);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
 }
 
 void TileEntity::RegisterProperties(EntityService& entityService)
@@ -37,14 +37,14 @@ void TileEntity::RegisterProperties(EntityService& entityService)
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);
 }
 
-void TileEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const PropertyData& data)
+void TileEntity::InitStates(const StateMachine& stateMachine, const EntityService& entityService,
+                            const PropertyData& data)
 {
-    auto idleMode = modeController.GetMode(ModeType::Idle);
+    auto idleState = stateMachine.GetState(StateType::Idle);
 
     float t = constant::Entity::stdSwitchTime;
     animation_ = Animation(data.frames_, 0, t);
-    idleMode->SetAnimationFn([this](const EntityService& entityService) { return animation_; });
+    idleState->SetAnimationFn([this](const EntityService& entityService) { return animation_; });
 }
 
 }  // namespace Entity

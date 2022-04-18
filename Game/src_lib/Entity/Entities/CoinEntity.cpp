@@ -9,8 +9,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Modes/IdleMode.h"
 #include "Entity/PropertyData.h"
+#include "Entity/States/IdleState.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -24,10 +24,10 @@ CoinEntity::CoinEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 CoinEntity::~CoinEntity() = default;
 
-void CoinEntity::RegisterModes(ModeController& modeController)
+void CoinEntity::RegisterStates(StateMachine& stateMachine)
 {
-    auto idleMode = modeController.RegisterMode<IdleMode>(true);
-    idleMode->BindAction(Action::Ignore(), EventType::Collision);
+    auto idleState = stateMachine.RegisterState<IdleState>(true);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
 }
 
 void CoinEntity::RegisterProperties(EntityService& entityService)
@@ -38,25 +38,25 @@ void CoinEntity::RegisterProperties(EntityService& entityService)
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);
 }
 
-void CoinEntity::BuildAnimations(const EntityService& entityService, ModeType modeType)
+void CoinEntity::BuildAnimations(const EntityService& entityService, StateType stateType)
 {
     animation_ = entityService.MakeAnimation({SheetId::Coin, {{0, 0}, 4, 0}, false});
 }
 
-Animation CoinEntity::GetAnimation(const EntityService& entityService, ModeType modeType) const
+Animation CoinEntity::GetAnimation(const EntityService& entityService, StateType stateType) const
 {
     return animation_;
 }
 
-void CoinEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const PropertyData& data)
+void CoinEntity::InitStates(const StateMachine& stateMachine, const EntityService& entityService,
+                            const PropertyData& data)
 {
-    auto idleMode = modeController.GetMode(ModeType::Idle);
-    auto modeType = idleMode->GetModeType();
+    auto idleState = stateMachine.GetState(StateType::Idle);
+    auto stateType = idleState->GetStateType();
 
-    BuildAnimations(entityService, ModeType::Idle);
-    idleMode->SetAnimationFn(
-        [this, modeType](const EntityService& entityService) { return GetAnimation(entityService, modeType); });
+    BuildAnimations(entityService, StateType::Idle);
+    idleState->SetAnimationFn(
+        [this, stateType](const EntityService& entityService) { return GetAnimation(entityService, stateType); });
 }
 
 }  // namespace Entity

@@ -25,19 +25,19 @@ public:
     virtual EntityType Type() const override { return EntityType::Mole; }
 
 private:
-    std::unordered_map<ModeType, std::unordered_map<FaceDirection, Animation>> animations_;
+    std::unordered_map<StateType, std::unordered_map<FaceDirection, Animation>> animations_;
 
 private:
-    virtual void RegisterModes(ModeController& modeController) override;
+    virtual void RegisterStates(StateMachine& stateMachine) override;
     virtual void RegisterProperties(EntityService& entityService) override;
-    virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const PropertyData& data) override;
+    virtual void InitStates(const StateMachine& stateMachine, const EntityService& entityService,
+                            const PropertyData& data) override;
 
-    void InitMode(std::shared_ptr<BasicMode> mode, const std::vector<FaceDirection>& directions,
-                  const EntityService& entityService);
+    void InitState(std::shared_ptr<BasicState> state, const std::vector<FaceDirection>& directions,
+                   const EntityService& entityService);
 
-    void BuildAnimations(const EntityService& entityService, ModeType modeType);
-    Animation GetAnimation(const EntityService& entityService, ModeType modeType) const;
+    void BuildAnimations(const EntityService& entityService, StateType stateType);
+    Animation GetAnimation(const EntityService& entityService, StateType stateType) const;
 };
 
 }  // namespace Entity

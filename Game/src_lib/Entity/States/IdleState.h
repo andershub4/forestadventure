@@ -6,22 +6,24 @@
 
 #pragma once
 
-#include "BasicMode.h"
+#include <SFML/System/Vector2.hpp>
+
+#include "BasicState.h"
 
 namespace FA {
 
 namespace Entity {
 
-class AttackMode : public BasicMode
+class IdleState : public BasicState
 {
 public:
-    AttackMode(EntityService& entityService, ModeController& modeController);
+    IdleState(EntityService& entityService, StateMachine& stateMachine);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
 
     virtual void Register() override;
     virtual void Update(float deltaTime) override;
-    virtual ModeType GetModeType() const override { return ModeType::Attack; }
+    virtual StateType GetStateType() const override { return StateType::Idle; }
 
 private:
     std::shared_ptr<Shape> shape_ = nullptr;

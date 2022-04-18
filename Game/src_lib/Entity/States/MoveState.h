@@ -6,27 +6,36 @@
 
 #pragma once
 
+#include <memory>
+
 #include <SFML/System/Vector2.hpp>
 
-#include "BasicMode.h"
+#include "BasicState.h"
 
 namespace FA {
 
+enum class MoveDirection;
+enum class FaceDirection;
+
 namespace Entity {
 
-class IdleMode : public BasicMode
+class MoveState : public BasicState
 {
 public:
-    IdleMode(EntityService& entityService, ModeController& modeController);
+    MoveState(EntityService& entityService, StateMachine& stateMachine);
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
 
     virtual void Register() override;
     virtual void Update(float deltaTime) override;
-    virtual ModeType GetModeType() const override { return ModeType::Idle; }
+    virtual StateType GetStateType() const override { return StateType::Move; }
 
 private:
+    sf::Vector2f movementVector_{};
     std::shared_ptr<Shape> shape_ = nullptr;
+
+private:
+    void SetDirection(MoveDirection direction, FaceDirection faceDirection);
 };
 
 }  // namespace Entity

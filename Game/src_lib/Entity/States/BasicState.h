@@ -23,18 +23,18 @@ namespace Entity {
 struct BasicEvent;
 class Shape;
 class EntityService;
-class ModeController;
+class StateMachine;
 
-class BasicMode
+class BasicState
 {
 public:
-    BasicMode(EntityService& entityService, ModeController& modeController);
-    virtual ~BasicMode();
+    BasicState(EntityService& entityService, StateMachine& stateMachine);
+    virtual ~BasicState();
 
-    BasicMode(const BasicMode&) = delete;
-    BasicMode& operator=(const BasicMode&) = delete;
-    BasicMode(BasicMode&&) = delete;
-    BasicMode& operator=(BasicMode&&) = delete;
+    BasicState(const BasicState&) = delete;
+    BasicState& operator=(const BasicState&) = delete;
+    BasicState(BasicState&&) = delete;
+    BasicState& operator=(BasicState&&) = delete;
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) {}
     virtual void Exit() {}
@@ -43,7 +43,7 @@ public:
     virtual void HandleEvent(std::shared_ptr<BasicEvent> event);
     virtual void Register() {}
 
-    virtual ModeType GetModeType() const = 0;
+    virtual StateType GetStateType() const = 0;
 
     void BindAction(const Action& action, EventType eventType);
     void BindActionDuringUpdate(const Action& action, std::function<bool(std::shared_ptr<Shape>)> condition);
@@ -58,7 +58,7 @@ protected:
 
 private:
     EntityService& entityService_;
-    ModeController& modeController_;
+    StateMachine& stateMachine_;
     std::unordered_map<EventType, Action> eventMap_;
     std::function<bool(std::shared_ptr<Shape>)> actionCondition_ = [](std::shared_ptr<Shape>) { return false; };
     Action nextAction_{};

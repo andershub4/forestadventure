@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include "BasicMode.h"
+#include "BasicState.h"
 
 namespace FA {
 
 namespace Entity {
 
-class UninitializedMode : public BasicMode
+class UninitializedState : public BasicState
 {
 public:
-    UninitializedMode(EntityService& entityService, ModeController& modeController);
+    UninitializedState(EntityService& entityService, StateMachine& stateMachine);
 
     virtual void Update(float deltaTime) override {}
-    virtual ModeType GetModeType() const override { return ModeType::Uninitialized; }
+    virtual StateType GetStateType() const override { return StateType::Uninitialized; }
 };
 
 }  // namespace Entity

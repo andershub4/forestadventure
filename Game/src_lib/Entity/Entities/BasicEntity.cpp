@@ -25,10 +25,10 @@ BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetM
     : id_(id)
     , messageBus_(messageBus)
     , entityService_(cameraManager, sheetManager, entityManager)
-    , modeController_(entityService_)
+    , stateMachine_(entityService_)
 {
-    modeController_.RegisterCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });
-    modeController_.RegisterDestroyCB([this](std::shared_ptr<BasicEvent> event) { OnDestroy(event); });
+    stateMachine_.RegisterCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });
+    stateMachine_.RegisterDestroyCB([this](std::shared_ptr<BasicEvent> event) { OnDestroy(event); });
 }
 
 BasicEntity::~BasicEntity() = default;
@@ -46,29 +46,29 @@ void BasicEntity::Destroy()
 void BasicEntity::Init()
 {
     HandleEvent(std::make_shared<InitEvent>());
-    modeController_.HandleQueuedInitEvents();
+    stateMachine_.HandleQueuedInitEvents();
 }
 
 void BasicEntity::Update(float deltaTime)
 {
-    modeController_.Update(deltaTime);
+    stateMachine_.Update(deltaTime);
 
     PostUpdate(entityService_);
 }
 
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
-    modeController_.DrawTo(renderTarget);
+    stateMachine_.DrawTo(renderTarget);
 }
 
 void BasicEntity::QueueInitEvents(std::shared_ptr<BasicEvent> event)
 {
-    modeController_.QueueInitEvents(event);
+    stateMachine_.QueueInitEvents(event);
 }
 
 void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
-    modeController_.HandleEvent(event);
+    stateMachine_.HandleEvent(event);
 }
 
 void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
@@ -77,8 +77,8 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
     auto data = c->data_;
 
     RegisterProperties(entityService_);
-    RegisterModes(modeController_);
-    InitModes(modeController_, entityService_, data);
+    RegisterStates(stateMachine_);
+    InitStates(stateMachine_, entityService_, data);
 
     entityService_.ReadObjectData(data.position_);
 

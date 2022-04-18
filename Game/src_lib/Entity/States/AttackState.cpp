@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "AttackMode.h"
+#include "AttackState.h"
 
 #include "Entity/EntityService.h"
 #include "Entity/Shape.h"
@@ -13,22 +13,22 @@ namespace FA {
 
 namespace Entity {
 
-AttackMode::AttackMode(EntityService& entityService, ModeController& modeController)
-    : BasicMode(entityService, modeController)
+AttackState::AttackState(EntityService& entityService, StateMachine& stateMachine)
+    : BasicState(entityService, stateMachine)
 {}
 
-void AttackMode::Enter(std::shared_ptr<BasicEvent> event)
+void AttackState::Enter(std::shared_ptr<BasicEvent> event)
 {
     shape_->SetAnimation(GetAnimation());
     shape_->SetImage(GetImage());
 }
 
-void AttackMode::Register()
+void AttackState::Register()
 {
     shape_ = Service().GetShape();
 }
 
-void AttackMode::Update(float deltaTime)
+void AttackState::Update(float deltaTime)
 {
     shape_->Update(deltaTime);
     BasicUpdate();

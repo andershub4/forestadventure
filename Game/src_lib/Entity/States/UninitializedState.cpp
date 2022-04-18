@@ -4,14 +4,14 @@
  *	See file LICENSE for full license details.
  */
 
-#include "UninitializedMode.h"
+#include "UninitializedState.h"
 
 namespace FA {
 
 namespace Entity {
 
-UninitializedMode::UninitializedMode(EntityService& entityService, ModeController& modeController)
-    : BasicMode(entityService, modeController)
+UninitializedState::UninitializedState(EntityService& entityService, StateMachine& stateMachine)
+    : BasicState(entityService, stateMachine)
 {}
 
 }  // namespace Entity

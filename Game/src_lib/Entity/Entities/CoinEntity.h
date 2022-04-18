@@ -28,13 +28,13 @@ private:
     Animation animation_;
 
 private:
-    virtual void RegisterModes(ModeController& modeController) override;
+    virtual void RegisterStates(StateMachine& stateMachine) override;
     virtual void RegisterProperties(EntityService& entityService) override;
-    virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const PropertyData& data) override;
+    virtual void InitStates(const StateMachine& stateMachine, const EntityService& entityService,
+                            const PropertyData& data) override;
 
-    void BuildAnimations(const EntityService& entityService, ModeType modeType);
-    Animation GetAnimation(const EntityService& entityService, ModeType modeType) const;
+    void BuildAnimations(const EntityService& entityService, StateType stateType);
+    Animation GetAnimation(const EntityService& entityService, StateType stateType) const;
 };
 
 }  // namespace Entity

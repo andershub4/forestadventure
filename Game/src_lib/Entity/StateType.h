@@ -12,28 +12,28 @@ namespace FA {
 
 namespace Entity {
 
-enum class ModeType { None, Uninitialized, Idle, Move, Attack, AttackWeapon };
+enum class StateType { None, Uninitialized, Idle, Move, Attack, AttackWeapon };
 
-inline std::ostream& operator<<(std::ostream& os, const ModeType& e)
+inline std::ostream& operator<<(std::ostream& os, const StateType& e)
 {
     std::string str;
     switch (e) {
-        case ModeType::Uninitialized:
+        case StateType::Uninitialized:
             str = "Uninitialized";
             break;
-        case ModeType::Attack:
+        case StateType::Attack:
             str = "Attack";
             break;
-        case ModeType::AttackWeapon:
+        case StateType::AttackWeapon:
             str = "AttackWeapon";
             break;
-        case ModeType::Idle:
+        case StateType::Idle:
             str = "Idle";
             break;
-        case ModeType::Move:
+        case StateType::Move:
             str = "Move";
             break;
-        case ModeType::None:
+        case StateType::None:
             str = "None";
             break;
     }

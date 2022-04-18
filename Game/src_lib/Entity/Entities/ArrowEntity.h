@@ -31,13 +31,13 @@ private:
     Image image_;
 
 private:
-    virtual void RegisterModes(ModeController& modeController) override;
+    virtual void RegisterStates(StateMachine& stateMachine) override;
     virtual void RegisterProperties(EntityService& entityService) override;
-    virtual void InitModes(const ModeController& modeController, const EntityService& entityService,
-                           const PropertyData& data) override;
+    virtual void InitStates(const StateMachine& stateMachine, const EntityService& entityService,
+                            const PropertyData& data) override;
 
-    void BuildImages(const EntityService& entityService, ModeType modeType);
-    Image GetImage(const EntityService& entityService, ModeType modeType) const;
+    void BuildImages(const EntityService& entityService, StateType stateType);
+    Image GetImage(const EntityService& entityService, StateType stateType) const;
 };
 
 }  // namespace Entity

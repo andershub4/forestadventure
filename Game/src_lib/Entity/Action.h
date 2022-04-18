@@ -9,7 +9,7 @@
 #include <functional>
 #include <memory>
 
-#include "ModeType.h"
+#include "StateType.h"
 
 namespace FA {
 
@@ -21,20 +21,20 @@ struct Action
 {
     Action() = default;
 
-    ModeType modeType_ = ModeType::None;
+    StateType stateType_ = StateType::None;
     std::function<void(std::shared_ptr<BasicEvent>)> cb_;
 
     static Action Ignore();
-    static Action ChangeTo(ModeType modeType);
+    static Action ChangeTo(StateType stateType);
     static Action Call(std::function<void(std::shared_ptr<BasicEvent>)> cb);
 
 private:
-    Action(ModeType modeType, std::function<void(std::shared_ptr<BasicEvent>)> cb)
-        : modeType_(modeType)
+    Action(StateType stateType, std::function<void(std::shared_ptr<BasicEvent>)> cb)
+        : stateType_(stateType)
         , cb_(cb)
     {}
-    Action(ModeType modeType)
-        : modeType_(modeType)
+    Action(StateType stateType)
+        : stateType_(stateType)
         , cb_(nullptr)
     {}
     Action(std::function<void(std::shared_ptr<BasicEvent>)> cb)
@@ -47,9 +47,9 @@ inline Action Action::Ignore()
     return Action();
 }
 
-inline Action Action::ChangeTo(ModeType modeType)
+inline Action Action::ChangeTo(StateType stateType)
 {
-    return Action(modeType);
+    return Action(stateType);
 }
 
 inline Action Action::Call(std::function<void(std::shared_ptr<BasicEvent>)> cb)

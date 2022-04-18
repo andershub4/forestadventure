@@ -9,9 +9,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Modes/IdleMode.h"
-#include "Entity/Modes/MoveMode.h"
 #include "Entity/PropertyData.h"
+#include "Entity/States/IdleState.h"
+#include "Entity/States/MoveState.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -25,14 +25,14 @@ ArrowEntity::ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetM
 
 ArrowEntity::~ArrowEntity() = default;
 
-void ArrowEntity::RegisterModes(ModeController& modeController)
+void ArrowEntity::RegisterStates(StateMachine& stateMachine)
 {
-    auto idleMode = modeController.RegisterMode<IdleMode>(true);
-    idleMode->BindAction(Action::ChangeTo(ModeType::Move), EventType::StartMove);
-    idleMode->BindAction(Action::Ignore(), EventType::Collision);
+    auto idleState = stateMachine.RegisterState<IdleState>(true);
+    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
 
-    auto moveMode = modeController.RegisterMode<MoveMode>();
-    moveMode->BindAction(Action::ChangeTo(ModeType::Idle), EventType::StopMove);
+    auto moveState = stateMachine.RegisterState<MoveState>();
+    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 
 void ArrowEntity::RegisterProperties(EntityService& entityService)
@@ -44,25 +44,25 @@ void ArrowEntity::RegisterProperties(EntityService& entityService)
     entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
-void ArrowEntity::BuildImages(const EntityService& entityService, ModeType modeType)
+void ArrowEntity::BuildImages(const EntityService& entityService, StateType stateType)
 {
     image_ = entityService.MakeImage({SheetId::Arrow, {0, 0}});
 }
 
-Image ArrowEntity::GetImage(const EntityService& entityService, ModeType modeType) const
+Image ArrowEntity::GetImage(const EntityService& entityService, StateType stateType) const
 {
     return image_;
 }
 
-void ArrowEntity::InitModes(const ModeController& modeController, const EntityService& entityService,
-                            const PropertyData& data)
+void ArrowEntity::InitStates(const StateMachine& stateMachine, const EntityService& entityService,
+                             const PropertyData& data)
 {
-    auto moveMode = modeController.GetMode(ModeType::Move);
-    auto modeType = moveMode->GetModeType();
+    auto moveState = stateMachine.GetState(StateType::Move);
+    auto stateType = moveState->GetStateType();
 
-    BuildImages(entityService, ModeType::Idle);
-    moveMode->SetImageFn(
-        [this, modeType](const EntityService& entityService) { return GetImage(entityService, modeType); });
+    BuildImages(entityService, StateType::Idle);
+    moveState->SetImageFn(
+        [this, stateType](const EntityService& entityService) { return GetImage(entityService, stateType); });
 }
 
 void ArrowEntity::PostUpdate(EntityService& entityService)
