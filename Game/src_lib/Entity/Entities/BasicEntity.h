@@ -10,6 +10,8 @@
 
 #include "Entity/EntityService.h"
 #include "Entity/Id.h"
+#include "Entity/PropertyManager.h"
+#include "Entity/Shape.h"
 #include "Entity/StateMachine.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -25,6 +27,10 @@ namespace Entity {
 
 struct PropertyData;
 class EntityManager;
+class BasicAbility;
+class Shape;
+class AnimationSprite;
+class ImageSprite;
 
 class BasicEntity
 {
@@ -36,6 +42,10 @@ public:
     virtual std::string Name() const = 0;
     virtual EntityType Type() const = 0;
 
+    void OnEnterAbility(const std::string& ability, std::shared_ptr<BasicEvent> event);
+    void OnExitAbility(const std::string& ability);
+    void OnUpdateAbility(const std::string& ability, float deltaTime);
+
     void Create(const PropertyData& data);
     void Destroy();
     void Init();
@@ -46,25 +56,33 @@ public:
     EntityId GetId() const { return id_; }
 
 protected:
+    PropertyManager propertyManager_;
+    EntityService entityService_;
+
+protected:
     virtual std::vector<MessageType> Messages() const { return {}; }
-    virtual void PostUpdate(EntityService& entityService) {}
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
+    void ChangeState(StateType stateType, std::shared_ptr<BasicEvent> event);
+    void RegisterAbility(const std::string& name, std::shared_ptr<BasicAbility> ability);
+    void RegisterAnimationSprite(const std::string& name, std::shared_ptr<AnimationSprite> sprite);
+    void RegisterImageSprite(const std::string& name, std::shared_ptr<ImageSprite> sprite);
+    std::shared_ptr<BasicState> RegisterState(StateType stateType, bool startState = false);
 
 private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
-    EntityService entityService_;
-    StateMachine stateMachine_;
+    std::unordered_map<std::string, std::shared_ptr<BasicAbility>> abilities_;
     bool enableInput_ = true;
+    Shape shape_;
+    StateMachine stateMachine_;
 
 private:
-    virtual void RegisterStates(StateMachine& stateMachine) {}
-    virtual void RegisterProperties(EntityService& entityService) {}
+    virtual void RegisterStates() {}
+    virtual void RegisterProperties() {}
+    virtual void RegisterShape(const PropertyData& data) {}
+    virtual void RegisterAbilities() {}
     virtual void Start(EntityService& entityService) {}
-    virtual void InitStates(const StateMachine& stateMachine, const EntityService& entityService,
-                            const PropertyData& data)
-    {}
     virtual void OnMessage(std::shared_ptr<Message> msg) {}
 
     void OnCreate(std::shared_ptr<BasicEvent> event);

@@ -15,20 +15,20 @@
 
 namespace FA {
 
-class Animation;
-class Image;
-
 namespace Entity {
 
 struct BasicEvent;
+class BasicEntity;
 class Shape;
-class EntityService;
 class StateMachine;
+class BasicAbility;
+class AnimationSprite;
+class ImageSprite;
 
 class BasicState
 {
 public:
-    BasicState(EntityService& entityService, StateMachine& stateMachine);
+    BasicState(StateType stateType, BasicEntity& entity, Shape& shape, StateMachine& stateMachine);
     virtual ~BasicState();
 
     BasicState(const BasicState&) = delete;
@@ -36,38 +36,43 @@ public:
     BasicState(BasicState&&) = delete;
     BasicState& operator=(BasicState&&) = delete;
 
-    virtual void Enter(std::shared_ptr<BasicEvent> event) {}
-    virtual void Exit() {}
-    virtual void Update(float deltaTime) {}
-    virtual void DrawTo(sf::RenderTarget& renderTarget);
-    virtual void HandleEvent(std::shared_ptr<BasicEvent> event);
-    virtual void Register() {}
+    void Enter(std::shared_ptr<BasicEvent> event);
+    void Exit();
+    void Update(float deltaTime);
+    void DrawTo(sf::RenderTarget& renderTarget);
+    void HandleEvent(std::shared_ptr<BasicEvent> event);
 
-    virtual StateType GetStateType() const = 0;
+    StateType GetStateType() const { return stateType_; }
 
     void BindAction(const Action& action, EventType eventType);
-    void BindActionDuringUpdate(const Action& action, std::function<bool(std::shared_ptr<Shape>)> condition);
-    void SetAnimationFn(std::function<Animation(const EntityService&)> fn) { animationFn_ = fn; }
-    void SetImageFn(std::function<Image(const EntityService&)> fn) { imageFn_ = fn; }
-
-protected:
-    EntityService& Service() const { return entityService_; }
-    Animation GetAnimation() const;
-    Image GetImage() const;
-    void BasicUpdate();
+    void AddAbility(const std::string& name);
+    void AddAnimation(const std::string& name, std::function<void(std::shared_ptr<AnimationSprite>)> stateFn);
+    void AddImage(const std::string& name, std::function<void(std::shared_ptr<ImageSprite>)> stateFn);
 
 private:
-    EntityService& entityService_;
+    struct AnimationEntry
+    {
+        std::string name_;
+        std::function<void(std::shared_ptr<AnimationSprite>)> stateFn_;
+    };
+
+    struct ImageEntry
+    {
+        std::string name_;
+        std::function<void(std::shared_ptr<ImageSprite>)> stateFn_;
+    };
+
+    BasicEntity& entity_;
     StateMachine& stateMachine_;
     std::unordered_map<EventType, Action> eventMap_;
-    std::function<bool(std::shared_ptr<Shape>)> actionCondition_ = [](std::shared_ptr<Shape>) { return false; };
-    Action nextAction_{};
-    std::function<Animation(const EntityService&)> animationFn_;
-    std::function<Image(const EntityService&)> imageFn_;
+    StateType stateType_ = StateType::Uninitialized;
+    std::vector<std::string> abilities_;
+    std::vector<AnimationEntry> animations_;
+    std::vector<ImageEntry> images_;
+    Shape& shape_;
 
 private:
     Action GetAction(EventType eventType) const;
-    Action PollAction() const;
     void DoAction(const Action& action, std::shared_ptr<BasicEvent> event = nullptr);
 };
 

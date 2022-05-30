@@ -105,9 +105,6 @@
     <ClCompile Include="Entity\Shape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\States\MoveState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\Entities\MoleEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -162,19 +159,7 @@
     <ClCompile Include="Resource\FrameHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\States\IdleState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\States\AttackState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\States\AttackWeaponState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Level\CameraManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\States\UninitializedState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\StateMachine.cpp">
@@ -211,6 +196,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\States\BasicState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\AnimationSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\ImageSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Abilities\BasicAbility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Abilities\MoveAbility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Abilities\ShootAbility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -338,9 +338,6 @@
     <ClInclude Include="Entity\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\States\MoveState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Enum\AnimationType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -419,19 +416,7 @@
     <ClInclude Include="Resource\FrameHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\States\AttackState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\States\AttackWeaponState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\States\IdleState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Level\CameraManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\States\UninitializedState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\StateMachine.h">
@@ -528,6 +513,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\StateType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\AnimationSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\ImageSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Abilities\BasicAbility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Abilities\MoveAbility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Abilities\ShootAbility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

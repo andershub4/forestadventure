@@ -8,8 +8,6 @@
 
 #include "BasicEntity.h"
 
-#include "Resource/Animation.h"
-
 namespace FA {
 
 namespace Entity {
@@ -25,19 +23,15 @@ public:
     virtual EntityType Type() const override { return EntityType::Mole; }
 
 private:
-    std::unordered_map<StateType, std::unordered_map<FaceDirection, Animation>> animations_;
+    virtual void RegisterStates() override;
+    virtual void RegisterProperties() override;
+    virtual void RegisterShape(const PropertyData& data) override;
+    virtual void RegisterAbilities() override;
 
-private:
-    virtual void RegisterStates(StateMachine& stateMachine) override;
-    virtual void RegisterProperties(EntityService& entityService) override;
-    virtual void InitStates(const StateMachine& stateMachine, const EntityService& entityService,
-                            const PropertyData& data) override;
-
-    void InitState(std::shared_ptr<BasicState> state, const std::vector<FaceDirection>& directions,
-                   const EntityService& entityService);
-
-    void BuildAnimations(const EntityService& entityService, StateType stateType);
-    Animation GetAnimation(const EntityService& entityService, StateType stateType) const;
+    void OnBeginMove(FaceDirection faceDirection);
+    void OnUpdateMove(const sf::Vector2f& delta);
+    void OnBeginAnimation(StateType stateType, AnimationSprite& sprite);
+    void OnUpdateAnimation(AnimationSprite& sprite);
 };
 
 }  // namespace Entity

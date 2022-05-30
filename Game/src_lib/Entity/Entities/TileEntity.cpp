@@ -6,11 +6,14 @@
 
 #include "TileEntity.h"
 
+#include <sstream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
+#include "Entity/AnimationSprite.h"
 #include "Entity/PropertyData.h"
-#include "Entity/States/IdleState.h"
+#include "Entity/States/BasicState.h"
 
 namespace FA {
 
@@ -23,28 +26,43 @@ TileEntity::TileEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 TileEntity::~TileEntity() = default;
 
-void TileEntity::RegisterStates(StateMachine& stateMachine)
+void TileEntity::RegisterStates()
 {
-    auto idleState = stateMachine.RegisterState<IdleState>(true);
+    auto idleState = RegisterState(StateType::Idle, true);
+    idleState->AddAnimation("Main", nullptr);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 }
 
-void TileEntity::RegisterProperties(EntityService& entityService)
+void TileEntity::RegisterProperties()
 {
-    entityService.RegisterProperty<float>("Rotation", 0.0);
-    entityService.RegisterProperty<float>("Scale", 1.0);
-    entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
-    entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);
+    propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
 }
 
-void TileEntity::InitStates(const StateMachine& stateMachine, const EntityService& entityService,
-                            const PropertyData& data)
+void TileEntity::OnBeginAnimation(StateType stateType, AnimationSprite& sprite)
 {
-    auto idleState = stateMachine.GetState(StateType::Idle);
+    std::stringstream ss;
+    ss << stateType;
+    sprite.SetAnimation(ss.str());
+}
+
+void TileEntity::OnUpdateAnimation(AnimationSprite& sprite)
+{
+    sprite.ApplyTo([this](sf::Sprite& animationSprite) {
+        animationSprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position"));
+    });
+}
+
+void TileEntity::RegisterShape(const PropertyData& data)
+{
+    auto sprite = std::make_shared<AnimationSprite>(
+        [this](StateType stateType, AnimationSprite& sprite) { OnBeginAnimation(stateType, sprite); },
+        [this](AnimationSprite& sprite) { OnUpdateAnimation(sprite); });
 
     float t = constant::Entity::stdSwitchTime;
-    animation_ = Animation(data.frames_, 0, t);
-    idleState->SetAnimationFn([this](const EntityService& entityService) { return animation_; });
+    auto a = Animation(data.frames_, 0, t);
+    sprite->RegisterAnimation("Idle", a);
+
+    RegisterAnimationSprite("Main", sprite);
 }
 
 }  // namespace Entity

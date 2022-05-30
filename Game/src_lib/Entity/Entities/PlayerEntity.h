@@ -8,11 +8,11 @@
 
 #include "BasicEntity.h"
 
-#include "Resource/Animation.h"
-
 namespace FA {
 
 namespace Entity {
+
+class AnimationSprite;
 
 class PlayerEntity : public BasicEntity
 {
@@ -28,21 +28,18 @@ protected:
     virtual std::vector<MessageType> Messages() const override;
 
 private:
-    std::unordered_map<StateType, std::unordered_map<FaceDirection, Animation>> animations_;
-
-private:
-    virtual void RegisterStates(StateMachine& stateMachine) override;
-    virtual void RegisterProperties(EntityService& entityService) override;
+    virtual void RegisterStates() override;
+    virtual void RegisterProperties() override;
+    virtual void RegisterShape(const PropertyData& data) override;
+    virtual void RegisterAbilities() override;
     virtual void Start(EntityService& entityService) override;
-    virtual void InitStates(const StateMachine& stateMachine, const EntityService& entityService,
-                            const PropertyData& data) override;
     virtual void OnMessage(std::shared_ptr<Message> msg) override;
 
-    void InitState(std::shared_ptr<BasicState> state, const std::vector<FaceDirection>& directions,
-                   const EntityService& entityService);
-
-    void BuildAnimations(const EntityService& entityService, StateType stateType);
-    Animation GetAnimation(const EntityService& entityService, StateType stateType) const;
+    void OnBeginMove(FaceDirection faceDirection);
+    void OnUpdateMove(const sf::Vector2f& delta);
+    void OnExitShoot();
+    void OnBeginAnimation(StateType stateType, AnimationSprite& sprite);
+    void OnAnimate(AnimationSprite& sprite);
 };
 
 }  // namespace Entity

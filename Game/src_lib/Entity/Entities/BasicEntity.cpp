@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/Abilities/BasicAbility.h"
 #include "Entity/Events/CreateEvent.h"
 #include "Entity/Events/DestroyEvent.h"
 #include "Entity/Events/InitEvent.h"
@@ -25,13 +26,31 @@ BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetM
     : id_(id)
     , messageBus_(messageBus)
     , entityService_(cameraManager, sheetManager, entityManager)
-    , stateMachine_(entityService_)
+    , stateMachine_(*this, shape_)
 {
     stateMachine_.RegisterCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });
     stateMachine_.RegisterDestroyCB([this](std::shared_ptr<BasicEvent> event) { OnDestroy(event); });
 }
 
 BasicEntity::~BasicEntity() = default;
+
+void BasicEntity::OnEnterAbility(const std::string& ability, std::shared_ptr<BasicEvent> event)
+{
+    auto a = abilities_[ability];
+    a->Enter(event);
+}
+
+void BasicEntity::OnExitAbility(const std::string& ability)
+{
+    auto a = abilities_[ability];
+    a->Exit();
+}
+
+void BasicEntity::OnUpdateAbility(const std::string& ability, float deltaTime)
+{
+    auto a = abilities_[ability];
+    a->Update(deltaTime);
+}
 
 void BasicEntity::Create(const PropertyData& data)
 {
@@ -52,8 +71,6 @@ void BasicEntity::Init()
 void BasicEntity::Update(float deltaTime)
 {
     stateMachine_.Update(deltaTime);
-
-    PostUpdate(entityService_);
 }
 
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
@@ -71,22 +88,48 @@ void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)
     stateMachine_.HandleEvent(event);
 }
 
+void BasicEntity::ChangeState(StateType stateType, std::shared_ptr<BasicEvent> event)
+{
+    stateMachine_.ChangeStateTo(stateType, event);
+}
+
+void BasicEntity::RegisterAbility(const std::string& name, std::shared_ptr<BasicAbility> ability)
+{
+    abilities_[name] = ability;
+}
+
+void BasicEntity::RegisterAnimationSprite(const std::string& name, std::shared_ptr<AnimationSprite> sprite)
+{
+    shape_.RegisterAnimationSprite(name, sprite);
+}
+
+void BasicEntity::RegisterImageSprite(const std::string& name, std::shared_ptr<ImageSprite> sprite)
+{
+    shape_.RegisterImageSprite(name, sprite);
+}
+
+std::shared_ptr<BasicState> BasicEntity::RegisterState(StateType stateType, bool startState)
+{
+    return stateMachine_.RegisterState(stateType, startState);
+}
+
 void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
 {
     auto c = std::dynamic_pointer_cast<CreateEvent>(event);
     auto data = c->data_;
 
-    RegisterProperties(entityService_);
-    RegisterStates(stateMachine_);
-    InitStates(stateMachine_, entityService_, data);
+    RegisterProperties();
+    RegisterStates();
 
-    entityService_.ReadObjectData(data.position_);
+    // ReadObjectData
+    propertyManager_.Set<sf::Vector2f>("Position", data.position_);
 
     for (const auto& p : data.properties_) {
-        entityService_.ReadCustomProperty(p.first, p.second);
+        propertyManager_.ReadCustomProperty(p.first, p.second);
     }
 
-    entityService_.GetShape()->Register();
+    RegisterShape(data);
+    RegisterAbilities();
     Subscribe(Messages());
     Start(entityService_);  // must do this after setting position
     messageBus_.SendMessage(std::make_shared<EntityCreatedMessage>());

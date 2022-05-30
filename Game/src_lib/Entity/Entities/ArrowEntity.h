@@ -8,8 +8,6 @@
 
 #include "BasicEntity.h"
 
-#include "Resource/Image.h"
-
 namespace FA {
 
 namespace Entity {
@@ -24,20 +22,15 @@ public:
     virtual std::string Name() const override { return "ArrowEntity"; }
     virtual EntityType Type() const override { return EntityType::Arrow; }
 
-protected:
-    virtual void PostUpdate(EntityService& entityService) override;
-
 private:
-    Image image_;
-
-private:
-    virtual void RegisterStates(StateMachine& stateMachine) override;
-    virtual void RegisterProperties(EntityService& entityService) override;
-    virtual void InitStates(const StateMachine& stateMachine, const EntityService& entityService,
-                            const PropertyData& data) override;
-
-    void BuildImages(const EntityService& entityService, StateType stateType);
-    Image GetImage(const EntityService& entityService, StateType stateType) const;
+    virtual void RegisterStates() override;
+    virtual void RegisterProperties() override;
+    virtual void RegisterShape(const PropertyData& data) override;
+    virtual void RegisterAbilities() override;
+    void OnBeginMove(FaceDirection faceDirection);
+    void OnUpdateMove(const sf::Vector2f& delta);
+    void OnBeginAnimation(StateType stateType, ImageSprite& sprite);
+    void OnUpdateAnimation(ImageSprite& sprite);
 };
 
 }  // namespace Entity

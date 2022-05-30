@@ -6,17 +6,28 @@
 
 #include "ArrowEntity.h"
 
+#include <sstream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
+#include "Entity/Abilities/MoveAbility.h"
+#include "Entity/ImageSprite.h"
 #include "Entity/PropertyData.h"
-#include "Entity/States/IdleState.h"
-#include "Entity/States/MoveState.h"
+#include "Entity/States/BasicState.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
 
 namespace Entity {
+
+namespace {
+
+const std::unordered_map<FaceDirection, float> arrowRotation = {{FaceDirection::Down, 180.0f},
+                                                                {FaceDirection::Left, 270.0f},
+                                                                {FaceDirection::Right, 90.0f},
+                                                                {FaceDirection::Up, 0.0f}};
+}  // namespace
 
 ArrowEntity::ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
                          EntityManager& entityManager, MessageBus& messageBus)
@@ -25,57 +36,79 @@ ArrowEntity::ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetM
 
 ArrowEntity::~ArrowEntity() = default;
 
-void ArrowEntity::RegisterStates(StateMachine& stateMachine)
+void ArrowEntity::OnBeginMove(FaceDirection faceDirection)
 {
-    auto idleState = stateMachine.RegisterState<IdleState>(true);
-    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
-    idleState->BindAction(Action::Ignore(), EventType::Collision);
-
-    auto moveState = stateMachine.RegisterState<MoveState>();
-    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
+    auto rotation = arrowRotation.at(faceDirection);
+    propertyManager_.Set("Rotation", rotation);
 }
 
-void ArrowEntity::RegisterProperties(EntityService& entityService)
+void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
-    entityService.RegisterProperty<float>("Rotation", 0.0);
-    entityService.RegisterProperty<float>("Scale", 1.0);
-    entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
-    entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity * 8.0f);
-    entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
-}
+    auto current = propertyManager_.Get<sf::Vector2f>("Position");
+    auto position = current + delta;
+    propertyManager_.Set("Position", position);
 
-void ArrowEntity::BuildImages(const EntityService& entityService, StateType stateType)
-{
-    image_ = entityService.MakeImage({SheetId::Arrow, {0, 0}});
-}
-
-Image ArrowEntity::GetImage(const EntityService& entityService, StateType stateType) const
-{
-    return image_;
-}
-
-void ArrowEntity::InitStates(const StateMachine& stateMachine, const EntityService& entityService,
-                             const PropertyData& data)
-{
-    auto moveState = stateMachine.GetState(StateType::Move);
-    auto stateType = moveState->GetStateType();
-
-    BuildImages(entityService, StateType::Idle);
-    moveState->SetImageFn(
-        [this, stateType](const EntityService& entityService) { return GetImage(entityService, stateType); });
-}
-
-void ArrowEntity::PostUpdate(EntityService& entityService)
-{
-    auto position = entityService.GetProperty<sf::Vector2f>("Position");
-    auto mapW = static_cast<float>(entityService.GetMapSize().x);
-    auto mapH = static_cast<float>(entityService.GetMapSize().y);
+    auto mapW = static_cast<float>(entityService_.GetMapSize().x);
+    auto mapH = static_cast<float>(entityService_.GetMapSize().y);
     auto mapRect = sf::FloatRect(0, 0, mapW, mapH);
     bool outsideMap = !mapRect.contains(position);
 
     if (outsideMap) {
-        entityService.DeleteEntity(GetId());
+        entityService_.DeleteEntity(GetId());
     }
+}
+
+void ArrowEntity::RegisterAbilities()
+{
+    auto move = std::make_shared<MoveAbility>(
+        constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
+        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
+
+    RegisterAbility(MoveAbility::Type(), move);
+}
+
+void ArrowEntity::RegisterStates()
+{
+    auto idleState = RegisterState(StateType::Idle, true);
+    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
+
+    auto moveState = RegisterState(StateType::Move);
+    moveState->AddImage("Main", nullptr);
+    moveState->AddAbility(MoveAbility::Type());
+    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
+}
+
+void ArrowEntity::RegisterProperties()
+{
+    propertyManager_.Register<float>("Rotation", 0.0);
+    propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
+}
+
+void ArrowEntity::OnBeginAnimation(StateType stateType, ImageSprite& sprite)
+{
+    std::stringstream ss;
+    ss << stateType;
+    sprite.SetImage(ss.str());
+
+    sprite.ApplyTo([this](sf::Sprite& sprite) { sprite.setRotation(propertyManager_.Get<float>("Rotation")); });
+}
+
+void ArrowEntity::OnUpdateAnimation(ImageSprite& sprite)
+{
+    sprite.ApplyTo([this](sf::Sprite& sprite) { sprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position")); });
+}
+
+void ArrowEntity::RegisterShape(const PropertyData& data)
+{
+    auto sprite = std::make_shared<ImageSprite>(
+        [this](StateType stateType, ImageSprite& sprite) { OnBeginAnimation(stateType, sprite); },
+        [this](ImageSprite& sprite) { OnUpdateAnimation(sprite); });
+
+    auto i = entityService_.MakeImage({SheetId::Arrow, {0, 0}});
+    sprite->RegisterImage("Move", i);
+
+    RegisterImageSprite("Main", sprite);
 }
 
 }  // namespace Entity

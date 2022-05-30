@@ -6,19 +6,20 @@
 
 #include "PlayerEntity.h"
 
+#include <sstream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
+#include "Entity/Abilities/MoveAbility.h"
+#include "Entity/Abilities/ShootAbility.h"
+#include "Entity/AnimationSprite.h"
 #include "Entity/Events/AttackEvent.h"
 #include "Entity/Events/AttackWeapon.h"
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Events/StopMoveEvent.h"
 #include "Entity/PropertyData.h"
-#include "Entity/Shape.h"
-#include "Entity/States/AttackState.h"
-#include "Entity/States/AttackWeaponState.h"
-#include "Entity/States/IdleState.h"
-#include "Entity/States/MoveState.h"
+#include "Entity/States/BasicState.h"
 #include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -36,11 +37,6 @@ const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirect
                                                                      {FaceDirection::Left, {-15.0, 5.0}},
                                                                      {FaceDirection::Right, {15.0, 5.0}},
                                                                      {FaceDirection::Up, {0.0, -15.0}}};
-
-const std::unordered_map<FaceDirection, float> arrowRotation = {{FaceDirection::Down, 180.0f},
-                                                                {FaceDirection::Left, 270.0f},
-                                                                {FaceDirection::Right, 90.0f},
-                                                                {FaceDirection::Up, 0.0f}};
 
 const std::unordered_map<StateType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
     {StateType::Move,
@@ -84,16 +80,16 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
         auto key = m->GetKey();
         if (key == Keyboard::Key::Right) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right, 0.0f));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right));
         }
         else if (key == Keyboard::Key::Left) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left, 0.0f));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left));
         }
         else if (key == Keyboard::Key::Down) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down, 0.0f));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down));
         }
         else if (key == Keyboard::Key::Up) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up, 0.0f));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up));
         }
     }
     else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
@@ -111,93 +107,124 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
             HandleEvent(std::make_shared<AttackEvent>());
         }
         else if (key == Keyboard::Key::Space) {
-            HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow, arrowOffset, arrowRotation));
+            HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow));
         }
     }
 }
 
-void PlayerEntity::RegisterStates(StateMachine& stateMachine)
+void PlayerEntity::OnBeginMove(FaceDirection faceDirection)
 {
-    auto idleState = stateMachine.RegisterState<IdleState>(true);
+    propertyManager_.Set("FaceDirection", faceDirection);
+}
+
+void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
+{
+    auto current = propertyManager_.Get<sf::Vector2f>("Position");
+    auto n = current + delta;
+    propertyManager_.Set<sf::Vector2f>("Position", n);
+}
+
+void PlayerEntity::OnExitShoot()
+{
+    auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
+    auto position = propertyManager_.Get<sf::Vector2f>("Position") + arrowOffset.at(dir);
+
+    entityService_.SpawnEntity(EntityType::Arrow, dir, position);
+}
+
+void PlayerEntity::RegisterAbilities()
+{
+    auto move = std::make_shared<MoveAbility>(
+        constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
+        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
+
+    RegisterAbility(MoveAbility::Type(), move);
+
+    auto shoot = std::make_shared<ShootAbility>(
+        nullptr, [this]() { OnExitShoot(); }, nullptr);
+
+    RegisterAbility(ShootAbility::Type(), shoot);
+}
+
+void PlayerEntity::RegisterStates()
+{
+    auto idleState = RegisterState(StateType::Idle, true);
+    idleState->AddAnimation("Main", nullptr);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     idleState->BindAction(Action::ChangeTo(StateType::Attack), EventType::Attack);
     idleState->BindAction(Action::ChangeTo(StateType::AttackWeapon), EventType::AttackWeapon);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
-    auto moveState = stateMachine.RegisterState<MoveState>();
+    auto moveState = RegisterState(StateType::Move);
+    moveState->AddAnimation("Main", nullptr);
+    moveState->AddAbility(MoveAbility::Type());
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
     moveState->BindAction(Action::Ignore(), EventType::StartMove);
     moveState->BindAction(Action::Ignore(), EventType::Attack);
     moveState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 
-    auto condition = [](std::shared_ptr<Shape> shape) { return shape->AnimationIsCompleted(); };
-
-    auto attackState = stateMachine.RegisterState<AttackState>();
+    auto attackState = RegisterState(StateType::Attack);
+    attackState->AddAnimation("Main", [this](std::shared_ptr<AnimationSprite> sprite) {
+        if (sprite->AnimationIsCompleted()) ChangeState(StateType::Idle, nullptr);
+    });
     attackState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     attackState->BindAction(Action::Ignore(), EventType::Attack);
     attackState->BindAction(Action::Ignore(), EventType::AttackWeapon);
-    attackState->BindActionDuringUpdate(Action::ChangeTo(StateType::Idle), condition);
 
-    auto attackWeaponState = stateMachine.RegisterState<AttackWeaponState>();
+    auto attackWeaponState = RegisterState(StateType::AttackWeapon);
+    attackWeaponState->AddAnimation("Main", [this](std::shared_ptr<AnimationSprite> sprite) {
+        if (sprite->AnimationIsCompleted()) ChangeState(StateType::Idle, nullptr);
+    });
+    attackWeaponState->AddAbility(ShootAbility::Type());
     attackWeaponState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     attackWeaponState->BindAction(Action::Ignore(), EventType::Attack);
     attackWeaponState->BindAction(Action::Ignore(), EventType::AttackWeapon);
-    attackWeaponState->BindActionDuringUpdate(Action::ChangeTo(StateType::Idle), condition);
 }
 
-void PlayerEntity::RegisterProperties(EntityService& entityService)
+void PlayerEntity::RegisterProperties()
 {
-    entityService.RegisterProperty<float>("Rotation", 0.0);
-    entityService.RegisterProperty<float>("Scale", 1.0);
-    entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
-    entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity);
-    entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
-    entityService.RegisterProperty<std::vector<FaceDirection>>(
-        "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
+    propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
+    propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
+}
+
+void PlayerEntity::OnBeginAnimation(StateType stateType, AnimationSprite& sprite)
+{
+    auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
+    std::stringstream ss;
+    ss << stateType << dir;
+    sprite.SetAnimation(ss.str());
+}
+
+void PlayerEntity::OnAnimate(AnimationSprite& sprite)
+{
+    sprite.ApplyTo([this](sf::Sprite& animationSprite) {
+        animationSprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position"));
+    });
+}
+
+void PlayerEntity::RegisterShape(const PropertyData& data)
+{
+    auto sprite = std::make_shared<AnimationSprite>(
+        [this](StateType stateType, AnimationSprite& sprite) { OnBeginAnimation(stateType, sprite); },
+        [this](AnimationSprite& sprite) { OnAnimate(sprite); });
+
+    for (const auto& stateData : animationDatas) {
+        auto stateType = stateData.first;
+        auto dirData = stateData.second;
+        for (const auto& dir : dirData) {
+            std::stringstream ss;
+            ss << stateType << dir.first;
+            auto a = entityService_.MakeAnimation(dir.second);
+            sprite->RegisterAnimation(ss.str(), a);
+        }
+    }
+
+    RegisterAnimationSprite("Main", sprite);
 }
 
 void PlayerEntity::Start(EntityService& entityService)
 {
-    entityService.AddCamera();
-}
-
-void PlayerEntity::BuildAnimations(const EntityService& entityService, StateType stateType)
-{
-    auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
-    auto stateData = animationDatas.at(stateType);
-    auto& m = animations_[stateType];
-
-    for (auto direction : directions) {
-        m[direction] = entityService.MakeAnimation(stateData.at(direction));
-    }
-}
-
-Animation PlayerEntity::GetAnimation(const EntityService& entityService, StateType stateType) const
-{
-    auto dir = entityService.GetProperty<FaceDirection>("FaceDirection");
-
-    return animations_.at(stateType).at(dir);
-}
-
-void PlayerEntity::InitState(std::shared_ptr<BasicState> state, const std::vector<FaceDirection>& directions,
-                             const EntityService& entityService)
-{
-    auto stateType = state->GetStateType();
-
-    BuildAnimations(entityService, stateType);
-    state->SetAnimationFn(
-        [this, stateType](const EntityService& entityService) { return GetAnimation(entityService, stateType); });
-}
-
-void PlayerEntity::InitStates(const StateMachine& stateMachine, const EntityService& entityService,
-                              const PropertyData& data)
-{
-    auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
-
-    InitState(stateMachine.GetState(StateType::Idle), directions, entityService);
-    InitState(stateMachine.GetState(StateType::Move), directions, entityService);
-    InitState(stateMachine.GetState(StateType::Attack), directions, entityService);
-    InitState(stateMachine.GetState(StateType::AttackWeapon), directions, entityService);
+    entityService.AddCamera(propertyManager_.GetRef<sf::Vector2f>("Position"));
 }
 
 }  // namespace Entity

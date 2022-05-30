@@ -6,12 +6,15 @@
 
 #include "MoleEntity.h"
 
+#include <sstream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
+#include "Entity/Abilities/MoveAbility.h"
+#include "Entity/AnimationSprite.h"
 #include "Entity/PropertyData.h"
-#include "Entity/States/IdleState.h"
-#include "Entity/States/MoveState.h"
+#include "Entity/States/BasicState.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -41,62 +44,79 @@ MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::RegisterStates(StateMachine& stateMachine)
+void MoleEntity::OnBeginMove(FaceDirection faceDirection)
 {
-    auto idleState = stateMachine.RegisterState<IdleState>(true);
+    propertyManager_.Set("FaceDirection", faceDirection);
+}
+
+void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
+{
+    auto current = propertyManager_.Get<sf::Vector2f>("Position");
+    auto n = current + delta;
+    propertyManager_.Set<sf::Vector2f>("Position", n);
+}
+
+void MoleEntity::RegisterAbilities()
+{
+    auto move = std::make_shared<MoveAbility>(
+        constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
+        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
+
+    RegisterAbility(MoveAbility::Type(), move);
+}
+
+void MoleEntity::RegisterStates()
+{
+    auto idleState = RegisterState(StateType::Idle, true);
+    idleState->AddAnimation("Main", nullptr);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
-    auto moveState = stateMachine.RegisterState<MoveState>();
+    auto moveState = RegisterState(StateType::Move);
+    moveState->AddAnimation("Main", nullptr);
+    moveState->AddAbility(MoveAbility::Type());
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 
-void MoleEntity::RegisterProperties(EntityService& entityService)
+void MoleEntity::RegisterProperties()
 {
-    entityService.RegisterProperty<float>("Rotation", 0.0);
-    entityService.RegisterProperty<float>("Scale", 1.0);
-    entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
-    entityService.RegisterProperty<float>("Velocity", constant::Entity::stdVelocity);
-    entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Down);
-    entityService.RegisterProperty<std::vector<FaceDirection>>(
-        "FaceDirections", {FaceDirection::Down, FaceDirection::Up, FaceDirection::Left, FaceDirection::Right});
+    propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
+    propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
-void MoleEntity::BuildAnimations(const EntityService& entityService, StateType stateType)
+void MoleEntity::OnBeginAnimation(StateType stateType, AnimationSprite& sprite)
 {
-    auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
-    auto stateData = animationDatas.at(stateType);
-    auto& m = animations_[stateType];
+    auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
+    std::stringstream ss;
+    ss << stateType << dir;
+    sprite.SetAnimation(ss.str());
+}
 
-    for (auto direction : directions) {
-        m[direction] = entityService.MakeAnimation(stateData.at(direction));
+void MoleEntity::OnUpdateAnimation(AnimationSprite& sprite)
+{
+    sprite.ApplyTo([this](sf::Sprite& animationSprite) {
+        animationSprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position"));
+    });
+}
+
+void MoleEntity::RegisterShape(const PropertyData& data)
+{
+    auto sprite = std::make_shared<AnimationSprite>(
+        [this](StateType stateType, AnimationSprite& sprite) { OnBeginAnimation(stateType, sprite); },
+        [this](AnimationSprite& sprite) { OnUpdateAnimation(sprite); });
+
+    for (const auto& stateData : animationDatas) {
+        auto stateType = stateData.first;
+        auto dirData = stateData.second;
+        for (const auto& dir : dirData) {
+            std::stringstream ss;
+            ss << stateType << dir.first;
+            auto a = entityService_.MakeAnimation(dir.second);
+            sprite->RegisterAnimation(ss.str(), a);
+        }
     }
-}
 
-Animation MoleEntity::GetAnimation(const EntityService& entityService, StateType stateType) const
-{
-    auto dir = entityService.GetProperty<FaceDirection>("FaceDirection");
-
-    return animations_.at(stateType).at(dir);
-}
-
-void MoleEntity::InitState(std::shared_ptr<BasicState> state, const std::vector<FaceDirection>& directions,
-                           const EntityService& entityService)
-{
-    auto stateType = state->GetStateType();
-
-    BuildAnimations(entityService, stateType);
-    state->SetAnimationFn(
-        [this, stateType](const EntityService& entityService) { return GetAnimation(entityService, stateType); });
-}
-
-void MoleEntity::InitStates(const StateMachine& stateMachine, const EntityService& entityService,
-                            const PropertyData& data)
-{
-    auto directions = entityService.GetProperty<std::vector<FaceDirection>>("FaceDirections");
-
-    InitState(stateMachine.GetState(StateType::Idle), directions, entityService);
-    InitState(stateMachine.GetState(StateType::Move), directions, entityService);
+    RegisterAnimationSprite("Main", sprite);
 }
 
 }  // namespace Entity

@@ -209,8 +209,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constant\Entity.h" />
+    <ClInclude Include="Entity\Abilities\ShootAbility.h" />
+    <ClInclude Include="Entity\Abilities\BasicAbility.h" />
+    <ClInclude Include="Entity\Abilities\MoveAbility.h" />
+    <ClInclude Include="Entity\AnimationSprite.h" />
     <ClInclude Include="Entity\Entities\CoinEntity.h" />
     <ClInclude Include="Entity\Entities\TileEntity.h" />
+    <ClInclude Include="Entity\ImageSprite.h" />
     <ClInclude Include="Entity\Properties\BasicProperty.h" />
     <ClInclude Include="Entity\Properties\Property.h" />
     <ClInclude Include="Entity\PropertyManager.h" />
@@ -235,13 +240,9 @@
     <ClInclude Include="Entity\Events\StartMoveEvent.h" />
     <ClInclude Include="Entity\Events\StopMoveEvent.h" />
     <ClInclude Include="Entity\EventType.h" />
-    <ClInclude Include="Entity\States\UninitializedState.h" />
     <ClInclude Include="Entity\EntityService.h" />
     <ClInclude Include="Entity\StateType.h" />
-    <ClInclude Include="Entity\States\AttackState.h" />
-    <ClInclude Include="Entity\States\AttackWeaponState.h" />
     <ClInclude Include="Entity\States\BasicState.h" />
-    <ClInclude Include="Entity\States\IdleState.h" />
     <ClInclude Include="Entity\PropertyData.h" />
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
@@ -290,7 +291,6 @@
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Version.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h" />
-    <ClInclude Include="Entity\States\MoveState.h" />
     <ClInclude Include="Scene\Layers\IntroLayer.h" />
     <ClInclude Include="Scene\Layers\LevelLayer.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
@@ -315,8 +315,13 @@
     <ClInclude Include="Folder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\Abilities\ShootAbility.cpp" />
+    <ClCompile Include="Entity\Abilities\BasicAbility.cpp" />
+    <ClCompile Include="Entity\Abilities\MoveAbility.cpp" />
+    <ClCompile Include="Entity\AnimationSprite.cpp" />
     <ClCompile Include="Entity\Entities\CoinEntity.cpp" />
     <ClCompile Include="Entity\Entities\TileEntity.cpp" />
+    <ClCompile Include="Entity\ImageSprite.cpp" />
     <ClCompile Include="Entity\PropertyManager.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\Image.cpp" />
@@ -324,12 +329,8 @@
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />
     <ClCompile Include="Entity\Entities\ArrowEntity.cpp" />
-    <ClCompile Include="Entity\States\UninitializedState.cpp" />
     <ClCompile Include="Entity\EntityService.cpp" />
-    <ClCompile Include="Entity\States\AttackState.cpp" />
-    <ClCompile Include="Entity\States\AttackWeaponState.cpp" />
     <ClCompile Include="Entity\States\BasicState.cpp" />
-    <ClCompile Include="Entity\States\IdleState.cpp" />
     <ClCompile Include="Entity\Entities\MoleEntity.cpp" />
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />
@@ -361,7 +362,6 @@
     <ClCompile Include="Scene\Transitions\NullTransition.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp" />
-    <ClCompile Include="Entity\States\MoveState.cpp" />
     <ClCompile Include="Scene\Layers\IntroLayer.cpp" />
     <ClCompile Include="Scene\Layers\LevelLayer.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />

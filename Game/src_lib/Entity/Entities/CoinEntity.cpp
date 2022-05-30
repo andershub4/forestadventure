@@ -6,11 +6,14 @@
 
 #include "CoinEntity.h"
 
+#include <sstream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
+#include "Entity/AnimationSprite.h"
 #include "Entity/PropertyData.h"
-#include "Entity/States/IdleState.h"
+#include "Entity/States/BasicState.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -24,39 +27,42 @@ CoinEntity::CoinEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 CoinEntity::~CoinEntity() = default;
 
-void CoinEntity::RegisterStates(StateMachine& stateMachine)
+void CoinEntity::RegisterStates()
 {
-    auto idleState = stateMachine.RegisterState<IdleState>(true);
+    auto idleState = RegisterState(StateType::Idle, true);
+    idleState->AddAnimation("Main", nullptr);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 }
 
-void CoinEntity::RegisterProperties(EntityService& entityService)
+void CoinEntity::RegisterProperties()
 {
-    entityService.RegisterProperty<float>("Rotation", 0.0);
-    entityService.RegisterProperty<float>("Scale", 1.0);
-    entityService.RegisterProperty<sf::Vector2f>("Position", {0.0, 0.0});
-    entityService.RegisterProperty<FaceDirection>("FaceDirection", FaceDirection::Undefined);
+    propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
 }
 
-void CoinEntity::BuildAnimations(const EntityService& entityService, StateType stateType)
+void CoinEntity::OnBeginAnimation(StateType stateType, AnimationSprite& sprite)
 {
-    animation_ = entityService.MakeAnimation({SheetId::Coin, {{0, 0}, 4, 0}, false});
+    std::stringstream ss;
+    ss << stateType;
+    sprite.SetAnimation(ss.str());
 }
 
-Animation CoinEntity::GetAnimation(const EntityService& entityService, StateType stateType) const
+void CoinEntity::OnUpdateAnimation(AnimationSprite& sprite)
 {
-    return animation_;
+    sprite.ApplyTo([this](sf::Sprite& animationSprite) {
+        animationSprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position"));
+    });
 }
 
-void CoinEntity::InitStates(const StateMachine& stateMachine, const EntityService& entityService,
-                            const PropertyData& data)
+void CoinEntity::RegisterShape(const PropertyData& data)
 {
-    auto idleState = stateMachine.GetState(StateType::Idle);
-    auto stateType = idleState->GetStateType();
+    auto sprite = std::make_shared<AnimationSprite>(
+        [this](StateType stateType, AnimationSprite& sprite) { OnBeginAnimation(stateType, sprite); },
+        [this](AnimationSprite& sprite) { OnUpdateAnimation(sprite); });
 
-    BuildAnimations(entityService, StateType::Idle);
-    idleState->SetAnimationFn(
-        [this, stateType](const EntityService& entityService) { return GetAnimation(entityService, stateType); });
+    auto a = entityService_.MakeAnimation({SheetId::Coin, {{0, 0}, 4, 0}, false});
+    sprite->RegisterAnimation("Idle", a);
+
+    RegisterAnimationSprite("Main", sprite);
 }
 
 }  // namespace Entity

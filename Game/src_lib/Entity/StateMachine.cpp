@@ -6,29 +6,24 @@
 
 #include "StateMachine.h"
 
-#include "EntityService.h"
 #include "Events/BasicEvent.h"
-#include "States/UninitializedState.h"
+#include "States/BasicState.h"
 
 namespace FA {
 
 namespace Entity {
 
-StateMachine::StateMachine(EntityService& entityService)
-    : entityService_(entityService)
+StateMachine::StateMachine(BasicEntity& entity, Shape& shape)
+    : entity_(entity)
+    , shape_(shape)
 {
-    currentState_ = RegisterState<UninitializedState>();
+    currentState_ = RegisterState(StateType::Uninitialized);
     currentState_->Enter(nullptr);
 }
 
 StateMachine::~StateMachine()
 {
     currentState_->Exit();
-}
-
-std::shared_ptr<BasicState> StateMachine::GetState(StateType stateType) const
-{
-    return states_.at(stateType);
 }
 
 void StateMachine::HandleEvent(std::shared_ptr<BasicEvent> event)
@@ -59,13 +54,19 @@ void StateMachine::DrawTo(sf::RenderTarget& renderTarget)
     currentState_->DrawTo(renderTarget);
 }
 
-void StateMachine::RegisterState(std::shared_ptr<BasicState> state, bool startState)
+std::shared_ptr<BasicState> StateMachine::RegisterState(StateType stateType, bool startState)
+{
+    auto state = std::make_shared<BasicState>(stateType, entity_, shape_, *this);
+    InitState(state, startState);
+    return state;
+}
+
+void StateMachine::InitState(std::shared_ptr<BasicState> state, bool startState)
 {
     state->BindAction(Action::Call(onDestroy_), EventType::Destroy);
 
     auto stateType = state->GetStateType();
     states_[stateType] = state;
-    state->Register();
 
     if (startState) {
         auto u = states_.at(StateType::Uninitialized);

@@ -19,28 +19,21 @@ namespace Entity {
 
 struct BasicEvent;
 class BasicState;
-class EntityService;
 struct Action;
+class BasicEntity;
+class Shape;
 
 class StateMachine
 {
 public:
-    StateMachine(EntityService& entityService);
+    StateMachine(BasicEntity &entity, Shape &shape);
     ~StateMachine();
 
-    template <class T>
-    std::shared_ptr<T> RegisterState(bool startState = false)
-    {
-        auto state = std::make_shared<T>(entityService_, *this);
-        RegisterState(state, startState);
-        return state;
-    }
-
-    std::shared_ptr<BasicState> GetState(StateType stateType) const;
+    std::shared_ptr<BasicState> RegisterState(StateType stateType, bool startState = false);
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void Update(float deltaTime);
-    void DrawTo(sf::RenderTarget& renderTarget);
+    void DrawTo(sf::RenderTarget &renderTarget);
     void QueueInitEvents(std::shared_ptr<BasicEvent> event);
     void HandleQueuedInitEvents();
 
@@ -53,11 +46,13 @@ private:
     std::unordered_map<StateType, std::shared_ptr<BasicState>> states_;
     std::shared_ptr<BasicState> currentState_ = nullptr;
     std::function<void(std::shared_ptr<BasicEvent> event)> onDestroy_{};
-    EntityService& entityService_;
+
+    BasicEntity &entity_;
     std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
+    Shape &shape_;
 
 private:
-    void RegisterState(std::shared_ptr<BasicState> state, bool startState);
+    void InitState(std::shared_ptr<BasicState> state, bool startState);
 };
 
 }  // namespace Entity

@@ -6,7 +6,8 @@
 
 #include "BasicState.h"
 
-#include "Entity/EntityService.h"
+#include "Entity/Abilities/BasicAbility.h"
+#include "Entity/Entities/BasicEntity.h"
 #include "Entity/Events/BasicEvent.h"
 #include "Entity/Shape.h"
 #include "Entity/StateMachine.h"
@@ -16,16 +17,69 @@ namespace FA {
 
 namespace Entity {
 
-BasicState::BasicState(EntityService& entityService, StateMachine& stateMachine)
-    : entityService_(entityService)
-    , stateMachine_(stateMachine)
+BasicState::BasicState(StateType stateType, BasicEntity& entity, Shape& shape, StateMachine& stateMachine)
+    : stateMachine_(stateMachine)
+    , stateType_(stateType)
+    , entity_(entity)
+    , shape_(shape)
 {}
 
 BasicState::~BasicState() = default;
 
+void BasicState::Enter(std::shared_ptr<BasicEvent> event)
+{
+    for (auto ability : abilities_) {
+        entity_.OnEnterAbility(ability, event);
+    }
+
+    for (auto sprite : animations_) {
+        shape_.OnEnterAnimation(stateType_, sprite.name_);
+    }
+
+    for (auto sprite : images_) {
+        shape_.OnEnterImage(stateType_, sprite.name_);
+    }
+}
+
+void BasicState::Exit()
+{
+    for (auto ability : abilities_) {
+        entity_.OnExitAbility(ability);
+    }
+
+    for (auto sprite : animations_) {
+        shape_.OnExitAnimation(stateType_, sprite.name_);
+    }
+
+    for (auto sprite : images_) {
+        shape_.OnExitImage(stateType_, sprite.name_);
+    }
+}
+
+void BasicState::Update(float deltaTime)
+{
+    for (auto a : abilities_) {
+        entity_.OnUpdateAbility(a, deltaTime);
+    }
+
+    for (auto sprite : animations_) {
+        shape_.OnUpdateAnimation(sprite.name_, deltaTime, sprite.stateFn_);
+    }
+
+    for (auto sprite : images_) {
+        shape_.OnUpdateImage(sprite.name_, deltaTime, sprite.stateFn_);
+    }
+}
+
 void BasicState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    entityService_.GetShape()->DrawTo(renderTarget);
+    for (auto sprite : animations_) {
+        shape_.OnDrawAnimation(sprite.name_, renderTarget);
+    }
+
+    for (auto sprite : images_) {
+        shape_.OnDrawImage(sprite.name_, renderTarget);
+    }
 }
 
 void BasicState::HandleEvent(std::shared_ptr<BasicEvent> event)
@@ -39,10 +93,19 @@ void BasicState::BindAction(const Action& action, EventType eventType)
     eventMap_[eventType] = action;
 }
 
-void BasicState::BindActionDuringUpdate(const Action& action, std::function<bool(std::shared_ptr<Shape>)> condition)
+void BasicState::AddAbility(const std::string& name)
 {
-    actionCondition_ = condition;
-    nextAction_ = action;
+    abilities_.push_back(name);
+}
+
+void BasicState::AddAnimation(const std::string& name, std::function<void(std::shared_ptr<AnimationSprite>)> stateFn)
+{
+    animations_.push_back({name, stateFn});
+}
+
+void BasicState::AddImage(const std::string& name, std::function<void(std::shared_ptr<ImageSprite>)> stateFn)
+{
+    images_.push_back({name, stateFn});
 }
 
 Action BasicState::GetAction(EventType eventType) const
@@ -57,34 +120,6 @@ Action BasicState::GetAction(EventType eventType) const
     }
 }
 
-Action BasicState::PollAction() const
-{
-    if (actionCondition_(entityService_.GetShape())) {
-        return nextAction_;
-    }
-
-    return {};
-}
-
-Animation BasicState::GetAnimation() const
-{
-    if (animationFn_)
-        return animationFn_(entityService_);
-    else {
-        return Animation();
-    }
-}
-
-Image BasicState::GetImage() const
-{
-    if (imageFn_) {
-        return imageFn_(entityService_);
-    }
-    else {
-        return Image();
-    }
-}
-
 void BasicState::DoAction(const Action& action, std::shared_ptr<BasicEvent> event)
 {
     if (action.cb_) action.cb_(event);
@@ -93,12 +128,6 @@ void BasicState::DoAction(const Action& action, std::shared_ptr<BasicEvent> even
     if (nextStateType != StateType::None) {
         stateMachine_.ChangeStateTo(nextStateType, event);
     }
-}
-
-void BasicState::BasicUpdate()
-{
-    auto action = PollAction();
-    DoAction(action);
 }
 
 }  // namespace Entity

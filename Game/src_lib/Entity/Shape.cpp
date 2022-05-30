@@ -8,83 +8,80 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/EntityService.h"
+#include "AnimationSprite.h"
+#include "ImageSprite.h"
 
 namespace FA {
 
 namespace Entity {
 
-Shape::Shape(const EntityService *entityService)
-    : entityService_(entityService)
-{}
-
-Shape::~Shape() = default;
-
-void Shape::Register()
+Shape::Shape()
 {
 #ifdef _DEBUG
     rShape_.setSize({1.0, 1.0});
 #endif
 }
 
-void Shape::Update(float deltaTime)
+Shape::~Shape() = default;
+
+void Shape::OnEnterAnimation(StateType stateType, const std::string &name)
 {
-    if (currentAnimation_.IsValid()) {
-        currentAnimation_.Update(deltaTime);
-        currentAnimation_.ApplyTo(animationSprite_);
-        animationSprite_.setPosition(entityService_->GetProperty<sf::Vector2f>("Position"));
-        animationSprite_.setRotation(entityService_->GetProperty<float>("Rotation"));
-        animationSprite_.setScale(entityService_->GetProperty<float>("Scale"),
-                                  entityService_->GetProperty<float>("Scale"));
-    }
-
-    if (currentImage_.IsValid()) {
-        imageSprite_.setPosition(entityService_->GetProperty<sf::Vector2f>("Position"));
-        imageSprite_.setRotation(entityService_->GetProperty<float>("Rotation"));
-        imageSprite_.setScale(entityService_->GetProperty<float>("Scale"), entityService_->GetProperty<float>("Scale"));
-    }
-
-#ifdef _DEBUG
-    rShape_.setPosition(entityService_->GetProperty<sf::Vector2f>("Position"));
-    rShape_.setRotation(entityService_->GetProperty<float>("Rotation"));
-    rShape_.setScale(entityService_->GetProperty<float>("Scale"), entityService_->GetProperty<float>("Scale"));
-#endif
+    animations_.at(name)->Enter(stateType);
 }
 
-void Shape::DrawTo(sf::RenderTarget &renderTarget)
+void Shape::OnExitAnimation(StateType stateType, const std::string &name)
 {
-    if (currentAnimation_.IsValid()) {
-        renderTarget.draw(animationSprite_);
-    }
-    if (currentImage_.IsValid()) {
-        renderTarget.draw(imageSprite_);
-    }
-#ifdef _DEBUG
-    renderTarget.draw(rShape_);
-#endif
+    animations_.at(name)->Exit(stateType);
 }
 
-void Shape::SetAnimation(const Animation &animation)
+void Shape::OnUpdateAnimation(const std::string &animationStr, float deltaTime,
+                              std::function<void(std::shared_ptr<AnimationSprite>)> stateFn)
 {
-    if (animation.IsValid()) {
-        currentAnimation_ = animation;
-        currentAnimation_.ApplyTo(animationSprite_);
-        currentAnimation_.Start();
-    }
+    auto s = animations_.at(animationStr);
+    s->Update(deltaTime);
+    if (stateFn) stateFn(s);
 }
 
-void Shape::SetImage(const Image &image)
+void Shape::OnDrawAnimation(const std::string &name, sf::RenderTarget &renderTarget)
 {
-    if (image.IsValid()) {
-        currentImage_ = image;
-        currentImage_.ApplyTo(imageSprite_);
-        imageSprite_.setOrigin(imageSprite_.getLocalBounds().width / 2, imageSprite_.getLocalBounds().height / 2);
-    }
+    auto s = animations_.at(name);
+    s->DrawTo(renderTarget);
 }
 
-bool Shape::AnimationIsCompleted() const
+void Shape::OnEnterImage(StateType stateType, const std::string &name)
 {
-    return currentAnimation_.IsValid() ? currentAnimation_.IsCompleted() : true;
+    auto s = images_.at(name);
+    s->Enter(stateType);
+}
+
+void Shape::OnExitImage(StateType stateType, const std::string &name)
+{
+    auto s = images_.at(name);
+    s->Exit(stateType);
+}
+
+void Shape::OnUpdateImage(const std::string &name, float deltaTime,
+                          std::function<void(std::shared_ptr<ImageSprite>)> stateFn)
+{
+    auto s = images_.at(name);
+    s->Update(deltaTime);
+    if (stateFn) stateFn(s);
+}
+
+void Shape::OnDrawImage(const std::string &name, sf::RenderTarget &renderTarget)
+{
+    auto s = images_.at(name);
+    s->DrawTo(renderTarget);
+}
+
+void Shape::RegisterAnimationSprite(const std::string &name, std::shared_ptr<AnimationSprite> s)
+{
+    animations_[name] = s;
+}
+
+void Shape::RegisterImageSprite(const std::string &name, std::shared_ptr<ImageSprite> s)
+{
+    images_[name] = s;
 }
 
 }  // namespace Entity
