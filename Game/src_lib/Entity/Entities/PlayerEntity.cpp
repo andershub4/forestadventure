@@ -195,7 +195,7 @@ void PlayerEntity::OnBeginAnimation(StateType stateType, AnimationSprite& sprite
     sprite.SetAnimation(ss.str());
 }
 
-void PlayerEntity::OnAnimate(AnimationSprite& sprite)
+void PlayerEntity::OnUpdateAnimation(AnimationSprite& sprite)
 {
     sprite.ApplyTo([this](sf::Sprite& animationSprite) {
         animationSprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position"));
@@ -206,7 +206,7 @@ void PlayerEntity::RegisterShape(const PropertyData& data)
 {
     auto sprite = std::make_shared<AnimationSprite>(
         [this](StateType stateType, AnimationSprite& sprite) { OnBeginAnimation(stateType, sprite); },
-        [this](AnimationSprite& sprite) { OnAnimate(sprite); });
+        [this](AnimationSprite& sprite) { OnUpdateAnimation(sprite); });
 
     for (const auto& stateData : animationDatas) {
         auto stateType = stateData.first;

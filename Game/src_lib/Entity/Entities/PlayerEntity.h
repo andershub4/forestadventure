@@ -39,7 +39,7 @@ private:
     void OnUpdateMove(const sf::Vector2f& delta);
     void OnExitShoot();
     void OnBeginAnimation(StateType stateType, AnimationSprite& sprite);
-    void OnAnimate(AnimationSprite& sprite);
+    void OnUpdateAnimation(AnimationSprite& sprite);
 };
 
 }  // namespace Entity
