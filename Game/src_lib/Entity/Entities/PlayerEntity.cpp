@@ -149,14 +149,14 @@ void PlayerEntity::RegisterAbilities()
 void PlayerEntity::RegisterStates()
 {
     auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddAnimation("Main", nullptr);
+    idleState->AddShape("Main", nullptr);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     idleState->BindAction(Action::ChangeTo(StateType::Attack), EventType::Attack);
     idleState->BindAction(Action::ChangeTo(StateType::AttackWeapon), EventType::AttackWeapon);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
     auto moveState = RegisterState(StateType::Move);
-    moveState->AddAnimation("Main", nullptr);
+    moveState->AddShape("Main", nullptr);
     moveState->AddAbility(MoveAbility::Type());
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
     moveState->BindAction(Action::Ignore(), EventType::StartMove);
@@ -164,16 +164,22 @@ void PlayerEntity::RegisterStates()
     moveState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 
     auto attackState = RegisterState(StateType::Attack);
-    attackState->AddAnimation("Main", [this](std::shared_ptr<AnimationSprite> sprite) {
-        if (sprite->AnimationIsCompleted()) ChangeState(StateType::Idle, nullptr);
+    attackState->AddShape("Main", [this](std::shared_ptr<Shape> shape) {
+        auto sprite = shape->GetAnimationSprite("Main");
+        if (sprite->AnimationIsCompleted()) {
+            ChangeState(StateType::Idle, nullptr);
+        }
     });
     attackState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     attackState->BindAction(Action::Ignore(), EventType::Attack);
     attackState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
-    attackWeaponState->AddAnimation("Main", [this](std::shared_ptr<AnimationSprite> sprite) {
-        if (sprite->AnimationIsCompleted()) ChangeState(StateType::Idle, nullptr);
+    attackWeaponState->AddShape("Main", [this](std::shared_ptr<Shape> shape) {
+        auto sprite = shape->GetAnimationSprite("Main");
+        if (sprite->AnimationIsCompleted()) {
+            ChangeState(StateType::Idle, nullptr);
+        }
     });
     attackWeaponState->AddAbility(ShootAbility::Type());
     attackWeaponState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
@@ -187,26 +193,28 @@ void PlayerEntity::RegisterProperties()
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
-void PlayerEntity::OnBeginAnimation(StateType stateType, AnimationSprite& sprite)
+void PlayerEntity::OnBeginShape(Shape& shape, StateType stateType)
 {
+    auto sprite = shape.GetAnimationSprite("Main");
+
     auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
+
     std::stringstream ss;
     ss << stateType << dir;
-    sprite.SetAnimation(ss.str());
+    sprite->SetAnimation(ss.str());
 }
 
-void PlayerEntity::OnUpdateAnimation(AnimationSprite& sprite)
+void PlayerEntity::OnUpdateShape(Shape& shape)
 {
-    sprite.ApplyTo([this](sf::Sprite& animationSprite) {
-        animationSprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position"));
-    });
+    shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
 }
 
-void PlayerEntity::RegisterShape(const PropertyData& data)
+void PlayerEntity::RegisterShapes(const PropertyData& data)
 {
-    auto sprite = std::make_shared<AnimationSprite>(
-        [this](StateType stateType, AnimationSprite& sprite) { OnBeginAnimation(stateType, sprite); },
-        [this](AnimationSprite& sprite) { OnUpdateAnimation(sprite); });
+    auto shape = std::make_shared<Shape>([this](StateType stateType, Shape& shape) { OnBeginShape(shape, stateType); },
+                                         [this](Shape& shape) { OnUpdateShape(shape); });
+
+    auto sprite = std::make_shared<AnimationSprite>();
 
     for (const auto& stateData : animationDatas) {
         auto stateType = stateData.first;
@@ -219,7 +227,9 @@ void PlayerEntity::RegisterShape(const PropertyData& data)
         }
     }
 
-    RegisterAnimationSprite("Main", sprite);
+    shape->RegisterAnimationSprite("Main", sprite);
+
+    RegisterShape("Main", shape);
 }
 
 void PlayerEntity::Start(EntityService& entityService)

@@ -17,11 +17,10 @@ namespace FA {
 
 namespace Entity {
 
-BasicState::BasicState(StateType stateType, BasicEntity& entity, Shape& shape, StateMachine& stateMachine)
+BasicState::BasicState(StateType stateType, BasicEntity& entity, StateMachine& stateMachine)
     : stateMachine_(stateMachine)
     , stateType_(stateType)
     , entity_(entity)
-    , shape_(shape)
 {}
 
 BasicState::~BasicState() = default;
@@ -32,12 +31,8 @@ void BasicState::Enter(std::shared_ptr<BasicEvent> event)
         entity_.OnEnterAbility(ability, event);
     }
 
-    for (auto sprite : animations_) {
-        shape_.OnEnterAnimation(stateType_, sprite.name_);
-    }
-
-    for (auto sprite : images_) {
-        shape_.OnEnterImage(stateType_, sprite.name_);
+    for (auto shape : shapes_) {
+        entity_.OnEnterShape(stateType_, shape.name_);
     }
 }
 
@@ -47,12 +42,8 @@ void BasicState::Exit()
         entity_.OnExitAbility(ability);
     }
 
-    for (auto sprite : animations_) {
-        shape_.OnExitAnimation(stateType_, sprite.name_);
-    }
-
-    for (auto sprite : images_) {
-        shape_.OnExitImage(stateType_, sprite.name_);
+    for (auto shape : shapes_) {
+        entity_.OnExitShape(stateType_, shape.name_);
     }
 }
 
@@ -62,23 +53,15 @@ void BasicState::Update(float deltaTime)
         entity_.OnUpdateAbility(a, deltaTime);
     }
 
-    for (auto sprite : animations_) {
-        shape_.OnUpdateAnimation(sprite.name_, deltaTime, sprite.stateFn_);
-    }
-
-    for (auto sprite : images_) {
-        shape_.OnUpdateImage(sprite.name_, deltaTime, sprite.stateFn_);
+    for (auto shape : shapes_) {
+        entity_.OnUpdateShape(shape.name_, deltaTime, shape.stateFn_);
     }
 }
 
 void BasicState::DrawTo(sf::RenderTarget& renderTarget)
 {
-    for (auto sprite : animations_) {
-        shape_.OnDrawAnimation(sprite.name_, renderTarget);
-    }
-
-    for (auto sprite : images_) {
-        shape_.OnDrawImage(sprite.name_, renderTarget);
+    for (auto shape : shapes_) {
+        entity_.OnDrawShape(shape.name_, renderTarget);
     }
 }
 
@@ -98,14 +81,9 @@ void BasicState::AddAbility(const std::string& name)
     abilities_.push_back(name);
 }
 
-void BasicState::AddAnimation(const std::string& name, std::function<void(std::shared_ptr<AnimationSprite>)> stateFn)
+void BasicState::AddShape(const std::string& name, std::function<void(std::shared_ptr<Shape>)> stateFn)
 {
-    animations_.push_back({name, stateFn});
-}
-
-void BasicState::AddImage(const std::string& name, std::function<void(std::shared_ptr<ImageSprite>)> stateFn)
-{
-    images_.push_back({name, stateFn});
+    shapes_.push_back({name, stateFn});
 }
 
 Action BasicState::GetAction(EventType eventType) const

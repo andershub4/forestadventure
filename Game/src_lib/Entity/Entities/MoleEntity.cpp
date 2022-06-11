@@ -68,12 +68,12 @@ void MoleEntity::RegisterAbilities()
 void MoleEntity::RegisterStates()
 {
     auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddAnimation("Main", nullptr);
+    idleState->AddShape("Main", nullptr);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
     auto moveState = RegisterState(StateType::Move);
-    moveState->AddAnimation("Main", nullptr);
+    moveState->AddShape("Main", nullptr);
     moveState->AddAbility(MoveAbility::Type());
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
@@ -84,26 +84,28 @@ void MoleEntity::RegisterProperties()
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
-void MoleEntity::OnBeginAnimation(StateType stateType, AnimationSprite& sprite)
+void MoleEntity::OnBeginShape(Shape& shape, StateType stateType)
 {
+    auto sprite = shape.GetAnimationSprite("Main");
+
     auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
+
     std::stringstream ss;
     ss << stateType << dir;
-    sprite.SetAnimation(ss.str());
+    sprite->SetAnimation(ss.str());
 }
 
-void MoleEntity::OnUpdateAnimation(AnimationSprite& sprite)
+void MoleEntity::OnUpdateShape(Shape& shape)
 {
-    sprite.ApplyTo([this](sf::Sprite& animationSprite) {
-        animationSprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position"));
-    });
+    shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
 }
 
-void MoleEntity::RegisterShape(const PropertyData& data)
+void MoleEntity::RegisterShapes(const PropertyData& data)
 {
-    auto sprite = std::make_shared<AnimationSprite>(
-        [this](StateType stateType, AnimationSprite& sprite) { OnBeginAnimation(stateType, sprite); },
-        [this](AnimationSprite& sprite) { OnUpdateAnimation(sprite); });
+    auto shape = std::make_shared<Shape>([this](StateType stateType, Shape& shape) { OnBeginShape(shape, stateType); },
+                                         [this](Shape& shape) { OnUpdateShape(shape); });
+
+    auto sprite = std::make_shared<AnimationSprite>();
 
     for (const auto& stateData : animationDatas) {
         auto stateType = stateData.first;
@@ -116,7 +118,9 @@ void MoleEntity::RegisterShape(const PropertyData& data)
         }
     }
 
-    RegisterAnimationSprite("Main", sprite);
+    shape->RegisterAnimationSprite("Main", sprite);
+
+    RegisterShape("Main", shape);
 }
 
 }  // namespace Entity

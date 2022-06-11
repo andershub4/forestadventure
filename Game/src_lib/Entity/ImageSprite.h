@@ -7,14 +7,12 @@
 #pragma once
 
 #include <functional>
-#include <memory>
 #include <unordered_map>
 
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Fwd/SfmlFwd.h"
 #include "Resource/Image.h"
-#include "StateType.h"
 
 namespace FA {
 
@@ -23,12 +21,8 @@ namespace Entity {
 class ImageSprite
 {
 public:
-    ImageSprite(std::function<void(StateType, ImageSprite &)> beginImage,
-                std::function<void(ImageSprite &)> updateImage);
+    ImageSprite();
     virtual ~ImageSprite();
-
-    void Enter(StateType stateType);
-    void Exit(StateType stateType);
 
     void RegisterImage(const std::string &name, const Image &image);
     void Update(float deltaTime);
@@ -39,9 +33,6 @@ public:
     void SetImage(const std::string &key);
 
 private:
-    std::function<void(StateType, ImageSprite &)> beginImage_;
-    std::function<void(ImageSprite &)> updateImage_;
-
     std::unordered_map<std::string, Image> map_;
     sf::Sprite sprite_;
     Image currentImage_;

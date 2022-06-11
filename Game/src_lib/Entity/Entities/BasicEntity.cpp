@@ -26,7 +26,7 @@ BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetM
     : id_(id)
     , messageBus_(messageBus)
     , entityService_(cameraManager, sheetManager, entityManager)
-    , stateMachine_(*this, shape_)
+    , stateMachine_(*this)
 {
     stateMachine_.RegisterCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });
     stateMachine_.RegisterDestroyCB([this](std::shared_ptr<BasicEvent> event) { OnDestroy(event); });
@@ -50,6 +50,32 @@ void BasicEntity::OnUpdateAbility(const std::string& ability, float deltaTime)
 {
     auto a = abilities_[ability];
     a->Update(deltaTime);
+}
+
+void BasicEntity::OnEnterShape(StateType stateType, const std::string& name)
+{
+    auto s = shapes_[name];
+    s->OnEnterShape(stateType);
+}
+
+void BasicEntity::OnExitShape(StateType stateType, const std::string& name)
+{
+    auto s = shapes_[name];
+    s->OnExitShape(stateType);
+}
+
+void BasicEntity::OnUpdateShape(const std::string& name, float deltaTime,
+                                std::function<void(std::shared_ptr<Shape>)> stateFn)
+{
+    auto s = shapes_[name];
+    s->OnUpdateShape(deltaTime);
+    if (stateFn) stateFn(s);
+}
+
+void BasicEntity::OnDrawShape(const std::string& name, sf::RenderTarget& renderTarget)
+{
+    auto s = shapes_[name];
+    s->OnDrawShape(renderTarget);
 }
 
 void BasicEntity::Create(const PropertyData& data)
@@ -98,14 +124,9 @@ void BasicEntity::RegisterAbility(const std::string& name, std::shared_ptr<Basic
     abilities_[name] = ability;
 }
 
-void BasicEntity::RegisterAnimationSprite(const std::string& name, std::shared_ptr<AnimationSprite> sprite)
+void BasicEntity::RegisterShape(const std::string& name, std::shared_ptr<Shape> shape)
 {
-    shape_.RegisterAnimationSprite(name, sprite);
-}
-
-void BasicEntity::RegisterImageSprite(const std::string& name, std::shared_ptr<ImageSprite> sprite)
-{
-    shape_.RegisterImageSprite(name, sprite);
+    shapes_[name] = shape;
 }
 
 std::shared_ptr<BasicState> BasicEntity::RegisterState(StateType stateType, bool startState)
@@ -128,7 +149,7 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
         propertyManager_.ReadCustomProperty(p.first, p.second);
     }
 
-    RegisterShape(data);
+    RegisterShapes(data);
     RegisterAbilities();
     Subscribe(Messages());
     Start(entityService_);  // must do this after setting position

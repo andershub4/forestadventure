@@ -12,8 +12,6 @@ namespace FA {
 
 namespace Entity {
 
-class AnimationSprite;
-
 class PlayerEntity : public BasicEntity
 {
 public:
@@ -30,7 +28,7 @@ protected:
 private:
     virtual void RegisterStates() override;
     virtual void RegisterProperties() override;
-    virtual void RegisterShape(const PropertyData& data) override;
+    virtual void RegisterShapes(const PropertyData& data) override;
     virtual void RegisterAbilities() override;
     virtual void Start(EntityService& entityService) override;
     virtual void OnMessage(std::shared_ptr<Message> msg) override;
@@ -38,8 +36,9 @@ private:
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
     void OnExitShoot();
-    void OnBeginAnimation(StateType stateType, AnimationSprite& sprite);
-    void OnUpdateAnimation(AnimationSprite& sprite);
+
+    void OnBeginShape(Shape& shape, StateType stateType);
+    void OnUpdateShape(Shape& shape);
 };
 
 }  // namespace Entity

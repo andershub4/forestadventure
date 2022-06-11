@@ -25,12 +25,12 @@ public:
 private:
     virtual void RegisterStates() override;
     virtual void RegisterProperties() override;
-    virtual void RegisterShape(const PropertyData& data) override;
+    virtual void RegisterShapes(const PropertyData& data) override;
     virtual void RegisterAbilities() override;
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
-    void OnBeginAnimation(StateType stateType, ImageSprite& sprite);
-    void OnUpdateAnimation(ImageSprite& sprite);
+    void OnBeginShape(Shape& shape, StateType stateType);
+    void OnUpdateShape(Shape& shape);
 };
 
 }  // namespace Entity

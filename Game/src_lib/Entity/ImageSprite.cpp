@@ -12,21 +12,9 @@ namespace FA {
 
 namespace Entity {
 
-ImageSprite::ImageSprite(std::function<void(StateType, ImageSprite &)> beginImage,
-                         std::function<void(ImageSprite &)> updateImage)
-    : beginImage_(beginImage)
-    , updateImage_(updateImage)
-{}
+ImageSprite::ImageSprite() = default;
 
 ImageSprite::~ImageSprite() = default;
-
-void ImageSprite::Enter(StateType stateType)
-{
-    beginImage_(stateType, *this);
-}
-
-void ImageSprite::Exit(StateType stateType)
-{}
 
 void ImageSprite::RegisterImage(const std::string &name, const Image &image)
 {
@@ -39,7 +27,6 @@ void ImageSprite::Update(float deltaTime)
     if (currentImage_.IsValid()) {
         currentImage_.Update(deltaTime);
         currentImage_.ApplyTo(sprite_);
-        updateImage_(*this);
     }
 }
 

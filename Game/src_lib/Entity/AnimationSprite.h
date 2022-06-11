@@ -7,14 +7,12 @@
 #pragma once
 
 #include <functional>
-#include <memory>
 #include <unordered_map>
 
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Fwd/SfmlFwd.h"
 #include "Resource/Animation.h"
-#include "StateType.h"
 
 namespace FA {
 
@@ -23,12 +21,8 @@ namespace Entity {
 class AnimationSprite
 {
 public:
-    AnimationSprite(std::function<void(StateType, AnimationSprite &)> beginAnimation,
-                    std::function<void(AnimationSprite &)> updateAnimation);
+    AnimationSprite();
     virtual ~AnimationSprite();
-
-    void Enter(StateType stateType);
-    void Exit(StateType stateType);
 
     void RegisterAnimation(const std::string &name, const Animation &animation);
     void Update(float deltaTime);
@@ -40,9 +34,6 @@ public:
     void SetAnimation(const std::string &key);
 
 private:
-    std::function<void(StateType, AnimationSprite &)> beginAnimation_;
-    std::function<void(AnimationSprite &)> updateAnimation_;
-
     std::unordered_map<std::string, Animation> map_;
     sf::Sprite sprite_;
     Animation currentAnimation_;

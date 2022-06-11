@@ -29,8 +29,6 @@ struct PropertyData;
 class EntityManager;
 class BasicAbility;
 class Shape;
-class AnimationSprite;
-class ImageSprite;
 
 class BasicEntity
 {
@@ -45,6 +43,11 @@ public:
     void OnEnterAbility(const std::string& ability, std::shared_ptr<BasicEvent> event);
     void OnExitAbility(const std::string& ability);
     void OnUpdateAbility(const std::string& ability, float deltaTime);
+
+    void OnEnterShape(StateType stateType, const std::string& name);
+    void OnExitShape(StateType stateType, const std::string& name);
+    void OnUpdateShape(const std::string& name, float deltaTime, std::function<void(std::shared_ptr<Shape>)> stateFn);
+    void OnDrawShape(const std::string& name, sf::RenderTarget& renderTarget);
 
     void Create(const PropertyData& data);
     void Destroy();
@@ -65,22 +68,21 @@ protected:
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void ChangeState(StateType stateType, std::shared_ptr<BasicEvent> event);
     void RegisterAbility(const std::string& name, std::shared_ptr<BasicAbility> ability);
-    void RegisterAnimationSprite(const std::string& name, std::shared_ptr<AnimationSprite> sprite);
-    void RegisterImageSprite(const std::string& name, std::shared_ptr<ImageSprite> sprite);
+    void RegisterShape(const std::string& name, std::shared_ptr<Shape> shape);
     std::shared_ptr<BasicState> RegisterState(StateType stateType, bool startState = false);
 
 private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
     std::unordered_map<std::string, std::shared_ptr<BasicAbility>> abilities_;
+    std::unordered_map<std::string, std::shared_ptr<Shape>> shapes_;
     bool enableInput_ = true;
-    Shape shape_;
     StateMachine stateMachine_;
 
 private:
     virtual void RegisterStates() {}
     virtual void RegisterProperties() {}
-    virtual void RegisterShape(const PropertyData& data) {}
+    virtual void RegisterShapes(const PropertyData& data) {}
     virtual void RegisterAbilities() {}
     virtual void Start(EntityService& entityService) {}
     virtual void OnMessage(std::shared_ptr<Message> msg) {}

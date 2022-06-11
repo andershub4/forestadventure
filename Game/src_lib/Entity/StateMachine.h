@@ -21,12 +21,11 @@ struct BasicEvent;
 class BasicState;
 struct Action;
 class BasicEntity;
-class Shape;
 
 class StateMachine
 {
 public:
-    StateMachine(BasicEntity &entity, Shape &shape);
+    StateMachine(BasicEntity &entity);
     ~StateMachine();
 
     std::shared_ptr<BasicState> RegisterState(StateType stateType, bool startState = false);
@@ -49,7 +48,6 @@ private:
 
     BasicEntity &entity_;
     std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
-    Shape &shape_;
 
 private:
     void InitState(std::shared_ptr<BasicState> state, bool startState);

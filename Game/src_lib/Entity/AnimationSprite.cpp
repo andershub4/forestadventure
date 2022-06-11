@@ -12,21 +12,9 @@ namespace FA {
 
 namespace Entity {
 
-AnimationSprite::AnimationSprite(std::function<void(StateType, AnimationSprite &)> beginAnimation,
-                                 std::function<void(AnimationSprite &)> updateAnimation)
-    : beginAnimation_(beginAnimation)
-    , updateAnimation_(updateAnimation)
-{}
+AnimationSprite::AnimationSprite() = default;
 
 AnimationSprite::~AnimationSprite() = default;
-
-void AnimationSprite::Enter(StateType stateType)
-{
-    beginAnimation_(stateType, *this);
-}
-
-void AnimationSprite::Exit(StateType stateType)
-{}
 
 void AnimationSprite::RegisterAnimation(const std::string &name, const Animation &animation)
 {
@@ -39,7 +27,6 @@ void AnimationSprite::Update(float deltaTime)
     if (currentAnimation_.IsValid()) {
         currentAnimation_.Update(deltaTime);
         currentAnimation_.ApplyTo(sprite_);
-        updateAnimation_(*this);  // will call Player::Animate and AnimationSprite::ApplyTo
     }
 }
 

@@ -74,7 +74,7 @@ void ArrowEntity::RegisterStates()
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
     auto moveState = RegisterState(StateType::Move);
-    moveState->AddImage("Main", nullptr);
+    moveState->AddShape("Main", nullptr);
     moveState->AddAbility(MoveAbility::Type());
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
@@ -85,30 +85,35 @@ void ArrowEntity::RegisterProperties()
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
 }
 
-void ArrowEntity::OnBeginAnimation(StateType stateType, ImageSprite& sprite)
+void ArrowEntity::OnBeginShape(Shape& shape, StateType stateType)
 {
+    auto sprite = shape.GetImageSprite("Main");
+
     std::stringstream ss;
     ss << stateType;
-    sprite.SetImage(ss.str());
+    sprite->SetImage(ss.str());
 
-    sprite.ApplyTo([this](sf::Sprite& sprite) { sprite.setRotation(propertyManager_.Get<float>("Rotation")); });
+    sprite->ApplyTo([this](sf::Sprite& sprite) { sprite.setRotation(propertyManager_.Get<float>("Rotation")); });
 }
 
-void ArrowEntity::OnUpdateAnimation(ImageSprite& sprite)
+void ArrowEntity::OnUpdateShape(Shape& shape)
 {
-    sprite.ApplyTo([this](sf::Sprite& sprite) { sprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position")); });
+    shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
 }
 
-void ArrowEntity::RegisterShape(const PropertyData& data)
+void ArrowEntity::RegisterShapes(const PropertyData& data)
 {
-    auto sprite = std::make_shared<ImageSprite>(
-        [this](StateType stateType, ImageSprite& sprite) { OnBeginAnimation(stateType, sprite); },
-        [this](ImageSprite& sprite) { OnUpdateAnimation(sprite); });
+    auto shape = std::make_shared<Shape>([this](StateType stateType, Shape& shape) { OnBeginShape(shape, stateType); },
+                                         [this](Shape& shape) { OnUpdateShape(shape); });
+
+    auto sprite = std::make_shared<ImageSprite>();
 
     auto i = entityService_.MakeImage({SheetId::Arrow, {0, 0}});
     sprite->RegisterImage("Move", i);
 
-    RegisterImageSprite("Main", sprite);
+    shape->RegisterImageSprite("Main", sprite);
+
+    RegisterShape("Main", shape);
 }
 
 }  // namespace Entity

@@ -15,7 +15,9 @@ namespace FA {
 
 namespace Entity {
 
-Shape::Shape()
+Shape::Shape(std::function<void(StateType, Shape &)> beginShape, std::function<void(Shape &)> updateShape)
+    : beginShape_(beginShape)
+    , updateShape_(updateShape)
 {
 #ifdef _DEBUG
     rShape_.setSize({1.0, 1.0});
@@ -24,54 +26,65 @@ Shape::Shape()
 
 Shape::~Shape() = default;
 
-void Shape::OnEnterAnimation(StateType stateType, const std::string &name)
+void Shape::OnEnterShape(StateType stateType)
 {
-    animations_.at(name)->Enter(stateType);
+    beginShape_(stateType, *this);  // call entity's OnBeginShape method
 }
 
-void Shape::OnExitAnimation(StateType stateType, const std::string &name)
+void Shape::OnExitShape(StateType stateType)
+{}
+
+void Shape::OnUpdateShape(float deltaTime)
 {
-    animations_.at(name)->Exit(stateType);
+    for (auto a : animations_) {
+        a.second->Update(deltaTime);
+    }
+
+    for (auto i : images_) {
+        i.second->Update(deltaTime);
+    }
+
+    updateShape_(*this);  // call entity's OnUpdateShape method
 }
 
-void Shape::OnUpdateAnimation(const std::string &animationStr, float deltaTime,
-                              std::function<void(std::shared_ptr<AnimationSprite>)> stateFn)
+void Shape::OnDrawShape(sf::RenderTarget &renderTarget)
 {
-    auto s = animations_.at(animationStr);
-    s->Update(deltaTime);
-    if (stateFn) stateFn(s);
+    for (auto a : animations_) {
+        a.second->DrawTo(renderTarget);
+    }
+
+    for (auto i : images_) {
+        i.second->DrawTo(renderTarget);
+    }
+
+#ifdef _DEBUG
+    renderTarget.draw(rShape_);
+#endif
 }
 
-void Shape::OnDrawAnimation(const std::string &name, sf::RenderTarget &renderTarget)
+void Shape::SetPosition(const sf::Vector2f &pos)
 {
-    auto s = animations_.at(name);
-    s->DrawTo(renderTarget);
+    for (auto sprite : animations_) {
+        sprite.second->ApplyTo([pos](sf::Sprite &sprite) { sprite.setPosition(pos); });
+    }
+
+    for (auto sprite : images_) {
+        sprite.second->ApplyTo([pos](sf::Sprite &sprite) { sprite.setPosition(pos); });
+    }
+
+#ifdef _DEBUG
+    rShape_.setPosition(pos);
+#endif
 }
 
-void Shape::OnEnterImage(StateType stateType, const std::string &name)
+std::shared_ptr<AnimationSprite> Shape::GetAnimationSprite(const std::string &name)
 {
-    auto s = images_.at(name);
-    s->Enter(stateType);
+    return animations_.at(name);
 }
 
-void Shape::OnExitImage(StateType stateType, const std::string &name)
+std::shared_ptr<ImageSprite> Shape::GetImageSprite(const std::string &name)
 {
-    auto s = images_.at(name);
-    s->Exit(stateType);
-}
-
-void Shape::OnUpdateImage(const std::string &name, float deltaTime,
-                          std::function<void(std::shared_ptr<ImageSprite>)> stateFn)
-{
-    auto s = images_.at(name);
-    s->Update(deltaTime);
-    if (stateFn) stateFn(s);
-}
-
-void Shape::OnDrawImage(const std::string &name, sf::RenderTarget &renderTarget)
-{
-    auto s = images_.at(name);
-    s->DrawTo(renderTarget);
+    return images_.at(name);
 }
 
 void Shape::RegisterAnimationSprite(const std::string &name, std::shared_ptr<AnimationSprite> s)

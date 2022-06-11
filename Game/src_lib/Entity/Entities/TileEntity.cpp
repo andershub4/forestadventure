@@ -29,7 +29,7 @@ TileEntity::~TileEntity() = default;
 void TileEntity::RegisterStates()
 {
     auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddAnimation("Main", nullptr);
+    idleState->AddShape("Main", nullptr);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 }
 
@@ -38,31 +38,34 @@ void TileEntity::RegisterProperties()
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
 }
 
-void TileEntity::OnBeginAnimation(StateType stateType, AnimationSprite& sprite)
+void TileEntity::OnBeginShape(Shape& shape, StateType stateType)
 {
+    auto sprite = shape.GetAnimationSprite("Main");
+
     std::stringstream ss;
     ss << stateType;
-    sprite.SetAnimation(ss.str());
+    sprite->SetAnimation(ss.str());
 }
 
-void TileEntity::OnUpdateAnimation(AnimationSprite& sprite)
+void TileEntity::OnUpdateShape(Shape& shape)
 {
-    sprite.ApplyTo([this](sf::Sprite& animationSprite) {
-        animationSprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position"));
-    });
+    shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
 }
 
-void TileEntity::RegisterShape(const PropertyData& data)
+void TileEntity::RegisterShapes(const PropertyData& data)
 {
-    auto sprite = std::make_shared<AnimationSprite>(
-        [this](StateType stateType, AnimationSprite& sprite) { OnBeginAnimation(stateType, sprite); },
-        [this](AnimationSprite& sprite) { OnUpdateAnimation(sprite); });
+    auto shape = std::make_shared<Shape>([this](StateType stateType, Shape& shape) { OnBeginShape(shape, stateType); },
+                                         [this](Shape& shape) { OnUpdateShape(shape); });
+
+    auto sprite = std::make_shared<AnimationSprite>();
 
     float t = constant::Entity::stdSwitchTime;
     auto a = Animation(data.frames_, 0, t);
     sprite->RegisterAnimation("Idle", a);
 
-    RegisterAnimationSprite("Main", sprite);
+    shape->RegisterAnimationSprite("Main", sprite);
+
+    RegisterShape("Main", shape);
 }
 
 }  // namespace Entity

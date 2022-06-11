@@ -22,13 +22,11 @@ class BasicEntity;
 class Shape;
 class StateMachine;
 class BasicAbility;
-class AnimationSprite;
-class ImageSprite;
 
 class BasicState
 {
 public:
-    BasicState(StateType stateType, BasicEntity& entity, Shape& shape, StateMachine& stateMachine);
+    BasicState(StateType stateType, BasicEntity& entity, StateMachine & stateMachine);
     virtual ~BasicState();
 
     BasicState(const BasicState&) = delete;
@@ -46,20 +44,13 @@ public:
 
     void BindAction(const Action& action, EventType eventType);
     void AddAbility(const std::string& name);
-    void AddAnimation(const std::string& name, std::function<void(std::shared_ptr<AnimationSprite>)> stateFn);
-    void AddImage(const std::string& name, std::function<void(std::shared_ptr<ImageSprite>)> stateFn);
+    void AddShape(const std::string& name, std::function<void(std::shared_ptr<Shape>)> stateFn);
 
 private:
-    struct AnimationEntry
+    struct ShapeEntry
     {
         std::string name_;
-        std::function<void(std::shared_ptr<AnimationSprite>)> stateFn_;
-    };
-
-    struct ImageEntry
-    {
-        std::string name_;
-        std::function<void(std::shared_ptr<ImageSprite>)> stateFn_;
+        std::function<void(std::shared_ptr<Shape>)> stateFn_;
     };
 
     BasicEntity& entity_;
@@ -67,9 +58,7 @@ private:
     std::unordered_map<EventType, Action> eventMap_;
     StateType stateType_ = StateType::Uninitialized;
     std::vector<std::string> abilities_;
-    std::vector<AnimationEntry> animations_;
-    std::vector<ImageEntry> images_;
-    Shape& shape_;
+    std::vector<ShapeEntry> shapes_;
 
 private:
     Action GetAction(EventType eventType) const;

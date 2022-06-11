@@ -25,10 +25,10 @@ public:
 private:
     virtual void RegisterStates() override;
     virtual void RegisterProperties() override;
-    virtual void RegisterShape(const PropertyData& data) override;
+    virtual void RegisterShapes(const PropertyData& data) override;
 
-    void OnBeginAnimation(StateType stateType, AnimationSprite& sprite);
-    void OnUpdateAnimation(AnimationSprite& sprite);
+    void OnBeginShape(Shape& shape, StateType stateType);
+    void OnUpdateShape(Shape& shape);
 };
 
 }  // namespace Entity

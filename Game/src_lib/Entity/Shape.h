@@ -28,23 +28,21 @@ class ImageSprite;
 class Shape
 {
 public:
-    Shape();
+    Shape(std::function<void(StateType, Shape &)> beginShape, std::function<void(Shape &)> updateShape);
     virtual ~Shape();
 
-    void OnEnterAnimation(StateType stateType, const std::string &name);
-    void OnExitAnimation(StateType stateType, const std::string &name);
-    void OnUpdateAnimation(const std::string &name, float deltaTime,
-                           std::function<void(std::shared_ptr<AnimationSprite>)> stateFn);
-    void OnDrawAnimation(const std::string &name, sf::RenderTarget &renderTarget);
+    void OnEnterShape(StateType stateType);
+    void OnExitShape(StateType stateType);
+    void OnUpdateShape(float deltaTime);
+    void OnDrawShape(sf::RenderTarget &renderTarget);
 
-    void OnEnterImage(StateType stateType, const std::string &name);
-    void OnExitImage(StateType stateType, const std::string &name);
-    void OnUpdateImage(const std::string &name, float deltaTime,
-                       std::function<void(std::shared_ptr<ImageSprite>)> stateFn);
-    void OnDrawImage(const std::string &name, sf::RenderTarget &renderTarget);
+    std::shared_ptr<AnimationSprite> GetAnimationSprite(const std::string &name);
+    std::shared_ptr<ImageSprite> GetImageSprite(const std::string &name);
 
     void RegisterAnimationSprite(const std::string &name, std::shared_ptr<AnimationSprite> sprite);
     void RegisterImageSprite(const std::string &name, std::shared_ptr<ImageSprite> sprite);
+
+    void SetPosition(const sf::Vector2f &pos);
 
 private:
 #ifdef _DEBUG
@@ -52,6 +50,9 @@ private:
 #endif
     std::unordered_map<std::string, std::shared_ptr<AnimationSprite>> animations_;
     std::unordered_map<std::string, std::shared_ptr<ImageSprite>> images_;
+
+    std::function<void(StateType, Shape &)> beginShape_;
+    std::function<void(Shape &)> updateShape_;
 };
 
 }  // namespace Entity
