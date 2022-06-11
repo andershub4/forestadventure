@@ -26,13 +26,6 @@ TileEntity::TileEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 TileEntity::~TileEntity() = default;
 
-void TileEntity::RegisterStates()
-{
-    auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddShape("Main", nullptr);
-    idleState->BindAction(Action::Ignore(), EventType::Collision);
-}
-
 void TileEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
@@ -66,6 +59,13 @@ void TileEntity::RegisterShapes(const PropertyData& data)
     shape->RegisterAnimationSprite("Main", sprite);
 
     RegisterShape("Main", shape);
+}
+
+void TileEntity::RegisterStates()
+{
+    auto idleState = RegisterState(StateType::Idle, true);
+    idleState->AddShape("Main", nullptr);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
 }
 
 }  // namespace Entity

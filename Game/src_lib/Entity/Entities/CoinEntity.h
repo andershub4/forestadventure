@@ -23,9 +23,9 @@ public:
     virtual EntityType Type() const override { return EntityType::Coin; }
 
 private:
-    virtual void RegisterStates() override;
     virtual void RegisterProperties() override;
     virtual void RegisterShapes(const PropertyData& data) override;
+    virtual void RegisterStates() override;
 
     void OnBeginShape(Shape& shape, StateType stateType);
     void OnUpdateShape(Shape& shape);

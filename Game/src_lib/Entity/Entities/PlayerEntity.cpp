@@ -146,47 +146,6 @@ void PlayerEntity::RegisterAbilities()
     RegisterAbility(ShootAbility::Type(), shoot);
 }
 
-void PlayerEntity::RegisterStates()
-{
-    auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddShape("Main", nullptr);
-    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
-    idleState->BindAction(Action::ChangeTo(StateType::Attack), EventType::Attack);
-    idleState->BindAction(Action::ChangeTo(StateType::AttackWeapon), EventType::AttackWeapon);
-    idleState->BindAction(Action::Ignore(), EventType::Collision);
-
-    auto moveState = RegisterState(StateType::Move);
-    moveState->AddShape("Main", nullptr);
-    moveState->AddAbility(MoveAbility::Type());
-    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
-    moveState->BindAction(Action::Ignore(), EventType::StartMove);
-    moveState->BindAction(Action::Ignore(), EventType::Attack);
-    moveState->BindAction(Action::Ignore(), EventType::AttackWeapon);
-
-    auto attackState = RegisterState(StateType::Attack);
-    attackState->AddShape("Main", [this](std::shared_ptr<Shape> shape) {
-        auto sprite = shape->GetAnimationSprite("Main");
-        if (sprite->AnimationIsCompleted()) {
-            ChangeState(StateType::Idle, nullptr);
-        }
-    });
-    attackState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
-    attackState->BindAction(Action::Ignore(), EventType::Attack);
-    attackState->BindAction(Action::Ignore(), EventType::AttackWeapon);
-
-    auto attackWeaponState = RegisterState(StateType::AttackWeapon);
-    attackWeaponState->AddShape("Main", [this](std::shared_ptr<Shape> shape) {
-        auto sprite = shape->GetAnimationSprite("Main");
-        if (sprite->AnimationIsCompleted()) {
-            ChangeState(StateType::Idle, nullptr);
-        }
-    });
-    attackWeaponState->AddAbility(ShootAbility::Type());
-    attackWeaponState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
-    attackWeaponState->BindAction(Action::Ignore(), EventType::Attack);
-    attackWeaponState->BindAction(Action::Ignore(), EventType::AttackWeapon);
-}
-
 void PlayerEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
@@ -230,6 +189,47 @@ void PlayerEntity::RegisterShapes(const PropertyData& data)
     shape->RegisterAnimationSprite("Main", sprite);
 
     RegisterShape("Main", shape);
+}
+
+void PlayerEntity::RegisterStates()
+{
+    auto idleState = RegisterState(StateType::Idle, true);
+    idleState->AddShape("Main", nullptr);
+    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    idleState->BindAction(Action::ChangeTo(StateType::Attack), EventType::Attack);
+    idleState->BindAction(Action::ChangeTo(StateType::AttackWeapon), EventType::AttackWeapon);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
+
+    auto moveState = RegisterState(StateType::Move);
+    moveState->AddShape("Main", nullptr);
+    moveState->AddAbility(MoveAbility::Type());
+    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
+    moveState->BindAction(Action::Ignore(), EventType::StartMove);
+    moveState->BindAction(Action::Ignore(), EventType::Attack);
+    moveState->BindAction(Action::Ignore(), EventType::AttackWeapon);
+
+    auto attackState = RegisterState(StateType::Attack);
+    attackState->AddShape("Main", [this](std::shared_ptr<Shape> shape) {
+        auto sprite = shape->GetAnimationSprite("Main");
+        if (sprite->AnimationIsCompleted()) {
+            ChangeState(StateType::Idle, nullptr);
+        }
+    });
+    attackState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    attackState->BindAction(Action::Ignore(), EventType::Attack);
+    attackState->BindAction(Action::Ignore(), EventType::AttackWeapon);
+
+    auto attackWeaponState = RegisterState(StateType::AttackWeapon);
+    attackWeaponState->AddShape("Main", [this](std::shared_ptr<Shape> shape) {
+        auto sprite = shape->GetAnimationSprite("Main");
+        if (sprite->AnimationIsCompleted()) {
+            ChangeState(StateType::Idle, nullptr);
+        }
+    });
+    attackWeaponState->AddAbility(ShootAbility::Type());
+    attackWeaponState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    attackWeaponState->BindAction(Action::Ignore(), EventType::Attack);
+    attackWeaponState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 }
 
 void PlayerEntity::Start(EntityService& entityService)

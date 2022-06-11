@@ -23,10 +23,10 @@ public:
     virtual EntityType Type() const override { return EntityType::Mole; }
 
 private:
-    virtual void RegisterStates() override;
     virtual void RegisterProperties() override;
     virtual void RegisterShapes(const PropertyData& data) override;
     virtual void RegisterAbilities() override;
+    virtual void RegisterStates() override;
 
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);

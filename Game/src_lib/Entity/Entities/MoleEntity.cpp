@@ -65,19 +65,6 @@ void MoleEntity::RegisterAbilities()
     RegisterAbility(MoveAbility::Type(), move);
 }
 
-void MoleEntity::RegisterStates()
-{
-    auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddShape("Main", nullptr);
-    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
-    idleState->BindAction(Action::Ignore(), EventType::Collision);
-
-    auto moveState = RegisterState(StateType::Move);
-    moveState->AddShape("Main", nullptr);
-    moveState->AddAbility(MoveAbility::Type());
-    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
-}
-
 void MoleEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
@@ -121,6 +108,19 @@ void MoleEntity::RegisterShapes(const PropertyData& data)
     shape->RegisterAnimationSprite("Main", sprite);
 
     RegisterShape("Main", shape);
+}
+
+void MoleEntity::RegisterStates()
+{
+    auto idleState = RegisterState(StateType::Idle, true);
+    idleState->AddShape("Main", nullptr);
+    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
+
+    auto moveState = RegisterState(StateType::Move);
+    moveState->AddShape("Main", nullptr);
+    moveState->AddAbility(MoveAbility::Type());
+    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 
 }  // namespace Entity

@@ -67,18 +67,6 @@ void ArrowEntity::RegisterAbilities()
     RegisterAbility(MoveAbility::Type(), move);
 }
 
-void ArrowEntity::RegisterStates()
-{
-    auto idleState = RegisterState(StateType::Idle, true);
-    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
-    idleState->BindAction(Action::Ignore(), EventType::Collision);
-
-    auto moveState = RegisterState(StateType::Move);
-    moveState->AddShape("Main", nullptr);
-    moveState->AddAbility(MoveAbility::Type());
-    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
-}
-
 void ArrowEntity::RegisterProperties()
 {
     propertyManager_.Register<float>("Rotation", 0.0);
@@ -114,6 +102,18 @@ void ArrowEntity::RegisterShapes(const PropertyData& data)
     shape->RegisterImageSprite("Main", sprite);
 
     RegisterShape("Main", shape);
+}
+
+void ArrowEntity::RegisterStates()
+{
+    auto idleState = RegisterState(StateType::Idle, true);
+    idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
+
+    auto moveState = RegisterState(StateType::Move);
+    moveState->AddShape("Main", nullptr);
+    moveState->AddAbility(MoveAbility::Type());
+    moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 
 }  // namespace Entity

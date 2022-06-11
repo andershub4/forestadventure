@@ -27,13 +27,6 @@ CoinEntity::CoinEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 CoinEntity::~CoinEntity() = default;
 
-void CoinEntity::RegisterStates()
-{
-    auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddShape("Main", nullptr);
-    idleState->BindAction(Action::Ignore(), EventType::Collision);
-}
-
 void CoinEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
@@ -66,6 +59,13 @@ void CoinEntity::RegisterShapes(const PropertyData& data)
     shape->RegisterAnimationSprite("Main", sprite);
 
     RegisterShape("Main", shape);
+}
+
+void CoinEntity::RegisterStates()
+{
+    auto idleState = RegisterState(StateType::Idle, true);
+    idleState->AddShape("Main", nullptr);
+    idleState->BindAction(Action::Ignore(), EventType::Collision);
 }
 
 }  // namespace Entity

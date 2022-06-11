@@ -26,10 +26,10 @@ protected:
     virtual std::vector<MessageType> Messages() const override;
 
 private:
-    virtual void RegisterStates() override;
     virtual void RegisterProperties() override;
     virtual void RegisterShapes(const PropertyData& data) override;
     virtual void RegisterAbilities() override;
+    virtual void RegisterStates() override;
     virtual void Start(EntityService& entityService) override;
     virtual void OnMessage(std::shared_ptr<Message> msg) override;
 
