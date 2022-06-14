@@ -28,7 +28,7 @@ class ImageSprite;
 class Shape
 {
 public:
-    Shape(std::function<void(StateType, Shape &)> beginShape, std::function<void(Shape &)> updateShape);
+    Shape(std::function<void(Shape &)> updateShape);
     virtual ~Shape();
 
     void OnEnterShape(StateType stateType);
@@ -51,7 +51,6 @@ private:
     std::unordered_map<std::string, std::shared_ptr<AnimationSprite>> animations_;
     std::unordered_map<std::string, std::shared_ptr<ImageSprite>> images_;
 
-    std::function<void(StateType, Shape &)> beginShape_;
     std::function<void(Shape &)> updateShape_;
 };
 

@@ -32,15 +32,6 @@ void CoinEntity::RegisterProperties()
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
 }
 
-void CoinEntity::OnBeginShape(Shape& shape, StateType stateType)
-{
-    auto sprite = shape.GetAnimationSprite("Main");
-
-    std::stringstream ss;
-    ss << stateType;
-    sprite->SetAnimation(ss.str());
-}
-
 void CoinEntity::OnUpdateShape(Shape& shape)
 {
     shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
@@ -48,10 +39,15 @@ void CoinEntity::OnUpdateShape(Shape& shape)
 
 void CoinEntity::RegisterShapes(const PropertyData& data)
 {
-    auto shape = std::make_shared<Shape>([this](StateType stateType, Shape& shape) { OnBeginShape(shape, stateType); },
-                                         [this](Shape& shape) { OnUpdateShape(shape); });
+    auto shape = std::make_shared<Shape>([this](Shape& shape) { OnUpdateShape(shape); });
 
-    auto sprite = std::make_shared<AnimationSprite>();
+    auto getKey = [this](StateType stateType) {
+        std::stringstream ss;
+        ss << stateType;
+        return ss.str();
+    };
+
+    auto sprite = std::make_shared<AnimationSprite>(getKey);
 
     auto a = entityService_.MakeAnimation({SheetId::Coin, {{0, 0}, 4, 0}, false});
     sprite->RegisterAnimation("Idle", a);

@@ -15,9 +15,8 @@ namespace FA {
 
 namespace Entity {
 
-Shape::Shape(std::function<void(StateType, Shape &)> beginShape, std::function<void(Shape &)> updateShape)
-    : beginShape_(beginShape)
-    , updateShape_(updateShape)
+Shape::Shape(std::function<void(Shape &)> updateShape)
+    : updateShape_(updateShape)
 {
 #ifdef _DEBUG
     rShape_.setSize({1.0, 1.0});
@@ -28,7 +27,13 @@ Shape::~Shape() = default;
 
 void Shape::OnEnterShape(StateType stateType)
 {
-    beginShape_(stateType, *this);  // call entity's OnBeginShape method
+    for (auto a : animations_) {
+        a.second->Enter(stateType);
+    }
+
+    for (auto i : images_) {
+        i.second->Enter(stateType);
+    }
 }
 
 void Shape::OnExitShape(StateType stateType)
@@ -44,7 +49,7 @@ void Shape::OnUpdateShape(float deltaTime)
         i.second->Update(deltaTime);
     }
 
-    updateShape_(*this);  // call entity's OnUpdateShape method
+    updateShape_(*this);
 }
 
 void Shape::OnDrawShape(sf::RenderTarget &renderTarget)

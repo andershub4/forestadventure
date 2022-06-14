@@ -12,9 +12,24 @@ namespace FA {
 
 namespace Entity {
 
-ImageSprite::ImageSprite() = default;
+ImageSprite::ImageSprite(std::function<std::string(StateType stateType)> getKey,
+                         std::function<void(ImageSprite &imageSprite)> beginImage)
+    : getKey_(getKey)
+    , beginImage_(beginImage)
+{}
 
 ImageSprite::~ImageSprite() = default;
+
+void ImageSprite::Enter(StateType stateType)
+{
+    auto key = getKey_(stateType);
+    // if key is in map_
+    currentImage_ = map_.at(key);
+    currentImage_.ApplyTo(sprite_);
+    sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
+
+    beginImage_(*this);
+}
 
 void ImageSprite::RegisterImage(const std::string &name, const Image &image)
 {
@@ -35,14 +50,6 @@ void ImageSprite::DrawTo(sf::RenderTarget &renderTarget)
     if (currentImage_.IsValid()) {
         renderTarget.draw(sprite_);
     }
-}
-
-void ImageSprite::SetImage(const std::string &key)
-{
-    // if key is in map_
-    currentImage_ = map_.at(key);
-    currentImage_.ApplyTo(sprite_);
-    sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
 void ImageSprite::ApplyTo(std::function<void(sf::Sprite &sprite)> applyFn)

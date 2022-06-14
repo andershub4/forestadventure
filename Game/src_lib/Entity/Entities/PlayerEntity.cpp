@@ -152,17 +152,6 @@ void PlayerEntity::RegisterProperties()
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
-void PlayerEntity::OnBeginShape(Shape& shape, StateType stateType)
-{
-    auto sprite = shape.GetAnimationSprite("Main");
-
-    auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
-
-    std::stringstream ss;
-    ss << stateType << dir;
-    sprite->SetAnimation(ss.str());
-}
-
 void PlayerEntity::OnUpdateShape(Shape& shape)
 {
     shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
@@ -170,10 +159,16 @@ void PlayerEntity::OnUpdateShape(Shape& shape)
 
 void PlayerEntity::RegisterShapes(const PropertyData& data)
 {
-    auto shape = std::make_shared<Shape>([this](StateType stateType, Shape& shape) { OnBeginShape(shape, stateType); },
-                                         [this](Shape& shape) { OnUpdateShape(shape); });
+    auto shape = std::make_shared<Shape>([this](Shape& shape) { OnUpdateShape(shape); });
 
-    auto sprite = std::make_shared<AnimationSprite>();
+    auto getKey = [this](StateType stateType) {
+        std::stringstream ss;
+        auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
+        ss << stateType << dir;
+        return ss.str();
+    };
+
+    auto sprite = std::make_shared<AnimationSprite>(getKey);
 
     for (const auto& stateData : animationDatas) {
         auto stateType = stateData.first;

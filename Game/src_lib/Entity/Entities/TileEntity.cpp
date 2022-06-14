@@ -31,15 +31,6 @@ void TileEntity::RegisterProperties()
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
 }
 
-void TileEntity::OnBeginShape(Shape& shape, StateType stateType)
-{
-    auto sprite = shape.GetAnimationSprite("Main");
-
-    std::stringstream ss;
-    ss << stateType;
-    sprite->SetAnimation(ss.str());
-}
-
 void TileEntity::OnUpdateShape(Shape& shape)
 {
     shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
@@ -47,10 +38,15 @@ void TileEntity::OnUpdateShape(Shape& shape)
 
 void TileEntity::RegisterShapes(const PropertyData& data)
 {
-    auto shape = std::make_shared<Shape>([this](StateType stateType, Shape& shape) { OnBeginShape(shape, stateType); },
-                                         [this](Shape& shape) { OnUpdateShape(shape); });
+    auto shape = std::make_shared<Shape>([this](Shape& shape) { OnUpdateShape(shape); });
 
-    auto sprite = std::make_shared<AnimationSprite>();
+    auto getKey = [this](StateType stateType) {
+        std::stringstream ss;
+        ss << stateType;
+        return ss.str();
+    };
+
+    auto sprite = std::make_shared<AnimationSprite>(getKey);
 
     float t = constant::Entity::stdSwitchTime;
     auto a = Animation(data.frames_, 0, t);

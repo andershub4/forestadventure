@@ -12,9 +12,20 @@ namespace FA {
 
 namespace Entity {
 
-AnimationSprite::AnimationSprite() = default;
+AnimationSprite::AnimationSprite(std::function<std::string(StateType stateType)> getKey)
+    : getKey_(getKey)
+{}
 
 AnimationSprite::~AnimationSprite() = default;
+
+void AnimationSprite::Enter(StateType stateType)
+{
+    auto key = getKey_(stateType);
+    // if key is in map_
+    currentAnimation_ = map_.at(key);
+    currentAnimation_.ApplyTo(sprite_);
+    currentAnimation_.Start();
+}
 
 void AnimationSprite::RegisterAnimation(const std::string &name, const Animation &animation)
 {
@@ -35,14 +46,6 @@ void AnimationSprite::DrawTo(sf::RenderTarget &renderTarget)
     if (currentAnimation_.IsValid()) {
         renderTarget.draw(sprite_);
     }
-}
-
-void AnimationSprite::SetAnimation(const std::string &key)
-{
-    // if key is in map_
-    currentAnimation_ = map_.at(key);
-    currentAnimation_.ApplyTo(sprite_);
-    currentAnimation_.Start();
 }
 
 bool AnimationSprite::AnimationIsCompleted() const

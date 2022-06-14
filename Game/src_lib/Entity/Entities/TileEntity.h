@@ -27,7 +27,6 @@ private:
     virtual void RegisterShapes(const PropertyData& data) override;
     virtual void RegisterStates() override;
 
-    void OnBeginShape(Shape& shape, StateType stateType);
     void OnUpdateShape(Shape& shape);
 };
 

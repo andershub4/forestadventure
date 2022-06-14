@@ -73,17 +73,6 @@ void ArrowEntity::RegisterProperties()
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
 }
 
-void ArrowEntity::OnBeginShape(Shape& shape, StateType stateType)
-{
-    auto sprite = shape.GetImageSprite("Main");
-
-    std::stringstream ss;
-    ss << stateType;
-    sprite->SetImage(ss.str());
-
-    sprite->ApplyTo([this](sf::Sprite& sprite) { sprite.setRotation(propertyManager_.Get<float>("Rotation")); });
-}
-
 void ArrowEntity::OnUpdateShape(Shape& shape)
 {
     shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
@@ -91,10 +80,25 @@ void ArrowEntity::OnUpdateShape(Shape& shape)
 
 void ArrowEntity::RegisterShapes(const PropertyData& data)
 {
-    auto shape = std::make_shared<Shape>([this](StateType stateType, Shape& shape) { OnBeginShape(shape, stateType); },
-                                         [this](Shape& shape) { OnUpdateShape(shape); });
+    auto shape = std::make_shared<Shape>([this](Shape& shape) { OnUpdateShape(shape); });
 
-    auto sprite = std::make_shared<ImageSprite>();
+    auto getKey = [this](StateType stateType) {
+        std::stringstream ss;
+        ss << stateType;
+        return ss.str();
+    };
+
+    auto beginImage = [this](ImageSprite& imageSprite) {
+        imageSprite.ApplyTo(
+            [this](sf::Sprite& sprite) { sprite.setRotation(propertyManager_.Get<float>("Rotation")); });
+    };
+
+    auto updateImage = [this](ImageSprite& imageSprite) {
+        imageSprite.ApplyTo(
+            [this](sf::Sprite& sprite) { sprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position")); });
+    };
+
+    auto sprite = std::make_shared<ImageSprite>(getKey, beginImage);
 
     auto i = entityService_.MakeImage({SheetId::Arrow, {0, 0}});
     sprite->RegisterImage("Move", i);

@@ -36,8 +36,6 @@ private:
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
     void OnExitShoot();
-
-    void OnBeginShape(Shape& shape, StateType stateType);
     void OnUpdateShape(Shape& shape);
 };
 
