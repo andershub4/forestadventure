@@ -44,14 +44,12 @@ void ArrowEntity::OnBeginMove(FaceDirection faceDirection)
 
 void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
-    auto current = propertyManager_.Get<sf::Vector2f>("Position");
-    auto position = current + delta;
-    propertyManager_.Set("Position", position);
+    propertyManager_.GetRef<sf::Vector2f>("Position") += delta;
 
     auto mapW = static_cast<float>(entityService_.GetMapSize().x);
     auto mapH = static_cast<float>(entityService_.GetMapSize().y);
     auto mapRect = sf::FloatRect(0, 0, mapW, mapH);
-    bool outsideMap = !mapRect.contains(position);
+    bool outsideMap = !mapRect.contains(propertyManager_.Get<sf::Vector2f>("Position"));
 
     if (outsideMap) {
         entityService_.DeleteEntity(GetId());

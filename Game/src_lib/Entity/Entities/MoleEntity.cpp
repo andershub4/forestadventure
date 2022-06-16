@@ -51,9 +51,7 @@ void MoleEntity::OnBeginMove(FaceDirection faceDirection)
 
 void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
-    auto current = propertyManager_.Get<sf::Vector2f>("Position");
-    auto n = current + delta;
-    propertyManager_.Set<sf::Vector2f>("Position", n);
+    propertyManager_.GetRef<sf::Vector2f>("Position") += delta;
 }
 
 void MoleEntity::RegisterAbilities()
