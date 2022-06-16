@@ -204,8 +204,8 @@ void PlayerEntity::RegisterStates()
     moveState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 
     auto attackState = RegisterState(StateType::Attack);
-    attackState->AddShape("Main", [this](std::shared_ptr<Shape> shape) {
-        auto sprite = shape->GetAnimationSprite("Main");
+    attackState->AddShape("Main", [this](Shape& shape) {
+        auto sprite = shape.GetAnimationSprite("Main");
         if (sprite->AnimationIsCompleted()) {
             ChangeState(StateType::Idle, nullptr);
         }
@@ -215,8 +215,8 @@ void PlayerEntity::RegisterStates()
     attackState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
-    attackWeaponState->AddShape("Main", [this](std::shared_ptr<Shape> shape) {
-        auto sprite = shape->GetAnimationSprite("Main");
+    attackWeaponState->AddShape("Main", [this](Shape& shape) {
+        auto sprite = shape.GetAnimationSprite("Main");
         if (sprite->AnimationIsCompleted()) {
             ChangeState(StateType::Idle, nullptr);
         }

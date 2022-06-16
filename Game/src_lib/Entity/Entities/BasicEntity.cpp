@@ -64,12 +64,11 @@ void BasicEntity::OnExitShape(StateType stateType, const std::string& name)
     s->OnExitShape(stateType);
 }
 
-void BasicEntity::OnUpdateShape(const std::string& name, float deltaTime,
-                                std::function<void(std::shared_ptr<Shape>)> stateFn)
+void BasicEntity::OnUpdateShape(const std::string& name, float deltaTime, std::function<void(Shape&)> stateFn)
 {
     auto s = shapes_[name];
     s->OnUpdateShape(deltaTime);
-    if (stateFn) stateFn(s);
+    if (stateFn) stateFn(*s);
 }
 
 void BasicEntity::OnDrawShape(const std::string& name, sf::RenderTarget& renderTarget)

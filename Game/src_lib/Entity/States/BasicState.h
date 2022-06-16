@@ -26,7 +26,7 @@ class BasicAbility;
 class BasicState
 {
 public:
-    BasicState(StateType stateType, BasicEntity& entity, StateMachine & stateMachine);
+    BasicState(StateType stateType, BasicEntity& entity, StateMachine& stateMachine);
     virtual ~BasicState();
 
     BasicState(const BasicState&) = delete;
@@ -44,13 +44,13 @@ public:
 
     void BindAction(const Action& action, EventType eventType);
     void AddAbility(const std::string& name);
-    void AddShape(const std::string& name, std::function<void(std::shared_ptr<Shape>)> stateFn);
+    void AddShape(const std::string& name, std::function<void(Shape&)> stateFn);
 
 private:
     struct ShapeEntry
     {
         std::string name_;
-        std::function<void(std::shared_ptr<Shape>)> stateFn_;
+        std::function<void(Shape&)> stateFn_;
     };
 
     BasicEntity& entity_;

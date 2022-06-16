@@ -81,7 +81,7 @@ void BasicState::AddAbility(const std::string& name)
     abilities_.push_back(name);
 }
 
-void BasicState::AddShape(const std::string& name, std::function<void(std::shared_ptr<Shape>)> stateFn)
+void BasicState::AddShape(const std::string& name, std::function<void(Shape&)> stateFn)
 {
     shapes_.push_back({name, stateFn});
 }

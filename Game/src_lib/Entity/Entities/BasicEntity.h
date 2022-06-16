@@ -46,7 +46,7 @@ public:
 
     void OnEnterShape(StateType stateType, const std::string& name);
     void OnExitShape(StateType stateType, const std::string& name);
-    void OnUpdateShape(const std::string& name, float deltaTime, std::function<void(std::shared_ptr<Shape>)> stateFn);
+    void OnUpdateShape(const std::string& name, float deltaTime, std::function<void(Shape&)> stateFn);
     void OnDrawShape(const std::string& name, sf::RenderTarget& renderTarget);
 
     void Create(const PropertyData& data);
