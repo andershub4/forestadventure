@@ -56,15 +56,6 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
     }
 }
 
-void ArrowEntity::RegisterAbilities()
-{
-    auto move = std::make_shared<MoveAbility>(
-        constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
-        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-
-    RegisterAbility(MoveAbility::Type(), move);
-}
-
 void ArrowEntity::RegisterProperties()
 {
     propertyManager_.Register<float>("Rotation", 0.0);
@@ -108,13 +99,17 @@ void ArrowEntity::RegisterShapes(const PropertyData& data)
 
 void ArrowEntity::RegisterStates()
 {
+    auto move = std::make_shared<MoveAbility>(
+        constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
+        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
+
     auto idleState = RegisterState(StateType::Idle, true);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
     auto moveState = RegisterState(StateType::Move);
     moveState->AddShape("Main", nullptr);
-    moveState->AddAbility(MoveAbility::Type());
+    moveState->RegisterAbility(move);
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 

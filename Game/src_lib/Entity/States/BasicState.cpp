@@ -27,8 +27,8 @@ BasicState::~BasicState() = default;
 
 void BasicState::Enter(std::shared_ptr<BasicEvent> event)
 {
-    for (auto ability : abilities_) {
-        entity_.OnEnterAbility(ability, event);
+    for (auto a : abilities_) {
+        a->Enter(event);
     }
 
     for (auto shape : shapes_) {
@@ -38,8 +38,8 @@ void BasicState::Enter(std::shared_ptr<BasicEvent> event)
 
 void BasicState::Exit()
 {
-    for (auto ability : abilities_) {
-        entity_.OnExitAbility(ability);
+    for (auto a : abilities_) {
+        a->Exit();
     }
 
     for (auto shape : shapes_) {
@@ -50,7 +50,7 @@ void BasicState::Exit()
 void BasicState::Update(float deltaTime)
 {
     for (auto a : abilities_) {
-        entity_.OnUpdateAbility(a, deltaTime);
+        a->Update(deltaTime);
     }
 
     for (auto shape : shapes_) {
@@ -76,14 +76,14 @@ void BasicState::BindAction(const Action& action, EventType eventType)
     eventMap_[eventType] = action;
 }
 
-void BasicState::AddAbility(const std::string& name)
-{
-    abilities_.push_back(name);
-}
-
 void BasicState::AddShape(const std::string& name, std::function<void(Shape&)> stateFn)
 {
     shapes_.push_back({name, stateFn});
+}
+
+void BasicState::RegisterAbility(std::shared_ptr<BasicAbility> ability)
+{
+    abilities_.push_back(ability);
 }
 
 Action BasicState::GetAction(EventType eventType) const

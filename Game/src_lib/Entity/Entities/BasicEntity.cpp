@@ -34,24 +34,6 @@ BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetM
 
 BasicEntity::~BasicEntity() = default;
 
-void BasicEntity::OnEnterAbility(const std::string& ability, std::shared_ptr<BasicEvent> event)
-{
-    auto a = abilities_[ability];
-    a->Enter(event);
-}
-
-void BasicEntity::OnExitAbility(const std::string& ability)
-{
-    auto a = abilities_[ability];
-    a->Exit();
-}
-
-void BasicEntity::OnUpdateAbility(const std::string& ability, float deltaTime)
-{
-    auto a = abilities_[ability];
-    a->Update(deltaTime);
-}
-
 void BasicEntity::OnEnterShape(StateType stateType, const std::string& name)
 {
     auto s = shapes_[name];
@@ -118,11 +100,6 @@ void BasicEntity::ChangeState(StateType stateType, std::shared_ptr<BasicEvent> e
     stateMachine_.ChangeStateTo(stateType, event);
 }
 
-void BasicEntity::RegisterAbility(const std::string& name, std::shared_ptr<BasicAbility> ability)
-{
-    abilities_[name] = ability;
-}
-
 void BasicEntity::RegisterShape(const std::string& name, std::shared_ptr<Shape> shape)
 {
     shapes_[name] = shape;
@@ -149,7 +126,6 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
     }
 
     RegisterShapes(data);
-    RegisterAbilities();
     Subscribe(Messages());
     Start(entityService_);  // must do this after setting position
     messageBus_.SendMessage(std::make_shared<EntityCreatedMessage>());

@@ -24,8 +24,6 @@ public:
                  std::function<void(const sf::Vector2f&)> updateFn);
     virtual ~ShootAbility();
 
-    static const std::string Type() { return "ShootAbility"; }
-
     virtual void Exit();
 
 private:

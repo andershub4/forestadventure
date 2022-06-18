@@ -26,8 +26,6 @@ public:
                 std::function<void(const sf::Vector2f&)> updateFn);
     virtual ~MoveAbility();
 
-    static const std::string Type() { return "MoveAbility"; }
-
     virtual void Enter(std::shared_ptr<BasicEvent> event);
     virtual void Update(float deltaTime);
 

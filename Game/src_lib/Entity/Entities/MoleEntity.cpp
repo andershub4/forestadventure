@@ -54,15 +54,6 @@ void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
     propertyManager_.GetRef<sf::Vector2f>("Position") += delta;
 }
 
-void MoleEntity::RegisterAbilities()
-{
-    auto move = std::make_shared<MoveAbility>(
-        constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
-        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-
-    RegisterAbility(MoveAbility::Type(), move);
-}
-
 void MoleEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
@@ -105,6 +96,10 @@ void MoleEntity::RegisterShapes(const PropertyData& data)
 
 void MoleEntity::RegisterStates()
 {
+    auto move = std::make_shared<MoveAbility>(
+        constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
+        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
+
     auto idleState = RegisterState(StateType::Idle, true);
     idleState->AddShape("Main", nullptr);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
@@ -112,7 +107,7 @@ void MoleEntity::RegisterStates()
 
     auto moveState = RegisterState(StateType::Move);
     moveState->AddShape("Main", nullptr);
-    moveState->AddAbility(MoveAbility::Type());
+    moveState->RegisterAbility(move);
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 

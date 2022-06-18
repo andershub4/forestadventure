@@ -43,8 +43,8 @@ public:
     StateType GetStateType() const { return stateType_; }
 
     void BindAction(const Action& action, EventType eventType);
-    void AddAbility(const std::string& name);
     void AddShape(const std::string& name, std::function<void(Shape&)> stateFn);
+    void RegisterAbility(std::shared_ptr<BasicAbility> ability);
 
 private:
     struct ShapeEntry
@@ -57,8 +57,8 @@ private:
     StateMachine& stateMachine_;
     std::unordered_map<EventType, Action> eventMap_;
     StateType stateType_ = StateType::Uninitialized;
-    std::vector<std::string> abilities_;
     std::vector<ShapeEntry> shapes_;
+    std::vector<std::shared_ptr<BasicAbility>> abilities_;
 
 private:
     Action GetAction(EventType eventType) const;

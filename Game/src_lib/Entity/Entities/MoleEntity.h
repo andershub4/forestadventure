@@ -25,7 +25,6 @@ public:
 private:
     virtual void RegisterProperties() override;
     virtual void RegisterShapes(const PropertyData& data) override;
-    virtual void RegisterAbilities() override;
     virtual void RegisterStates() override;
 
     void OnBeginMove(FaceDirection faceDirection);

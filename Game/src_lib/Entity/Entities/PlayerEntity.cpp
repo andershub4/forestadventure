@@ -130,20 +130,6 @@ void PlayerEntity::OnExitShoot()
     entityService_.SpawnEntity(EntityType::Arrow, dir, position);
 }
 
-void PlayerEntity::RegisterAbilities()
-{
-    auto move = std::make_shared<MoveAbility>(
-        constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
-        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-
-    RegisterAbility(MoveAbility::Type(), move);
-
-    auto shoot = std::make_shared<ShootAbility>(
-        nullptr, [this]() { OnExitShoot(); }, nullptr);
-
-    RegisterAbility(ShootAbility::Type(), shoot);
-}
-
 void PlayerEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
@@ -186,6 +172,13 @@ void PlayerEntity::RegisterShapes(const PropertyData& data)
 
 void PlayerEntity::RegisterStates()
 {
+    auto move = std::make_shared<MoveAbility>(
+        constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
+        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
+
+    auto shoot = std::make_shared<ShootAbility>(
+        nullptr, [this]() { OnExitShoot(); }, nullptr);
+
     auto idleState = RegisterState(StateType::Idle, true);
     idleState->AddShape("Main", nullptr);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
@@ -195,7 +188,7 @@ void PlayerEntity::RegisterStates()
 
     auto moveState = RegisterState(StateType::Move);
     moveState->AddShape("Main", nullptr);
-    moveState->AddAbility(MoveAbility::Type());
+    moveState->RegisterAbility(move);
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
     moveState->BindAction(Action::Ignore(), EventType::StartMove);
     moveState->BindAction(Action::Ignore(), EventType::Attack);
@@ -219,7 +212,7 @@ void PlayerEntity::RegisterStates()
             ChangeState(StateType::Idle, nullptr);
         }
     });
-    attackWeaponState->AddAbility(ShootAbility::Type());
+    attackWeaponState->RegisterAbility(shoot);
     attackWeaponState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     attackWeaponState->BindAction(Action::Ignore(), EventType::Attack);
     attackWeaponState->BindAction(Action::Ignore(), EventType::AttackWeapon);
