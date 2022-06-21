@@ -54,16 +54,16 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
     }
 }
 
+void ArrowEntity::OnUpdateAnimation(const Animation& animation)
+{
+    auto& sprite = shape_.GetSprite("Main");
+    animation.ApplyTo(sprite);
+}
+
 void ArrowEntity::RegisterProperties()
 {
     propertyManager_.Register<float>("Rotation", 0.0);
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
-}
-
-void ArrowEntity::UpdateAnimation(const Animation& animation)
-{
-    auto& sprite = shape_.GetSprite("Main");
-    animation.ApplyTo(sprite);
 }
 
 void ArrowEntity::RegisterShape()
@@ -75,7 +75,7 @@ void ArrowEntity::RegisterShape()
 void ArrowEntity::RegisterStates(const PropertyData& data)
 {
     auto getKey = [this]() { return "Move"; };
-    auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
+    auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
 
     auto idleState = RegisterState(StateType::Idle, true);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);

@@ -54,17 +54,17 @@ void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
     propertyManager_.GetRef<sf::Vector2f>("Position") += delta;
 }
 
+void MoleEntity::OnUpdateAnimation(const Animation& animation)
+{
+    auto& sprite = shape_.GetSprite("Main");
+    animation.ApplyTo(sprite);
+}
+
 void MoleEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
     propertyManager_.Register<float>("Rotation", 0.0);
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
-}
-
-void MoleEntity::UpdateAnimation(const Animation& animation)
-{
-    auto& sprite = shape_.GetSprite("Main");
-    animation.ApplyTo(sprite);
 }
 
 void MoleEntity::RegisterShape()
@@ -81,7 +81,7 @@ void MoleEntity::RegisterStates(const PropertyData& data)
         ss << dir;
         return ss.str();
     };
-    auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
+    auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
 
     auto idleState = RegisterState(StateType::Idle, true);
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);

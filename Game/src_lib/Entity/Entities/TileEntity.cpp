@@ -24,16 +24,16 @@ TileEntity::TileEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 TileEntity::~TileEntity() = default;
 
+void TileEntity::OnUpdateAnimation(const Animation& animation)
+{
+    auto& sprite = shape_.GetSprite("Main");
+    animation.ApplyTo(sprite);
+}
+
 void TileEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
     propertyManager_.Register<float>("Rotation", 0.0);
-}
-
-void TileEntity::UpdateAnimation(const Animation& animation)
-{
-    auto& sprite = shape_.GetSprite("Main");
-    animation.ApplyTo(sprite);
 }
 
 void TileEntity::RegisterShape()
@@ -45,7 +45,7 @@ void TileEntity::RegisterShape()
 void TileEntity::RegisterStates(const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
-    auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
+    auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
 
     auto idleState = RegisterState(StateType::Idle, true);
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);

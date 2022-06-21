@@ -25,6 +25,12 @@ CoinEntity::CoinEntity(EntityId id, CameraManager& cameraManager, const SheetMan
 
 CoinEntity::~CoinEntity() = default;
 
+void CoinEntity::OnUpdateAnimation(const Animation& animation)
+{
+    auto& sprite = shape_.GetSprite("Main");
+    animation.ApplyTo(sprite);
+}
+
 void CoinEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
@@ -37,16 +43,10 @@ void CoinEntity::RegisterShape()
     shape_.AddSprite("Main");
 }
 
-void CoinEntity::UpdateAnimation(const Animation& animation)
-{
-    auto& sprite = shape_.GetSprite("Main");
-    animation.ApplyTo(sprite);
-}
-
 void CoinEntity::RegisterStates(const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
-    auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
+    auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
 
     auto idleState = RegisterState(StateType::Idle, true);
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);

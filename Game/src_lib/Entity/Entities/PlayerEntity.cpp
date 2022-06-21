@@ -130,6 +130,12 @@ void PlayerEntity::OnExitShoot()
     entityService_.SpawnEntity(EntityType::Arrow, dir, position);
 }
 
+void PlayerEntity::OnUpdateAnimation(const Animation& animation)
+{
+    auto& sprite = shape_.GetSprite("Main");
+    animation.ApplyTo(sprite);
+}
+
 void PlayerEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
@@ -143,12 +149,6 @@ void PlayerEntity::RegisterShape()
     shape_.AddSprite("Main");
 }
 
-void PlayerEntity::UpdateAnimation(const Animation& animation)
-{
-    auto& sprite = shape_.GetSprite("Main");
-    animation.ApplyTo(sprite);
-}
-
 void PlayerEntity::RegisterStates(const PropertyData& data)
 {
     auto getKey = [this]() {
@@ -157,9 +157,9 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
         ss << dir;
         return ss.str();
     };
-    auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
+    auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
     auto updateAnimationAndComplete = [this](const Animation& animation) {
-        UpdateAnimation(animation);
+        OnUpdateAnimation(animation);
         if (animation.IsCompleted()) {
             ChangeState(StateType::Idle, nullptr);
         }

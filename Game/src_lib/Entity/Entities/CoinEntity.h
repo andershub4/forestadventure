@@ -27,7 +27,7 @@ private:
     virtual void RegisterShape() override;
     virtual void RegisterStates(const PropertyData& data) override;
 
-    void UpdateAnimation(const Animation& animation);
+    void OnUpdateAnimation(const Animation& animation);
 };
 
 }  // namespace Entity
