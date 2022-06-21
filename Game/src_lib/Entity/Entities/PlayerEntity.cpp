@@ -157,9 +157,7 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
         ss << dir;
         return ss.str();
     };
-
     auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
-
     auto updateAnimationAndComplete = [this](const Animation& animation) {
         UpdateAnimation(animation);
         if (animation.IsCompleted()) {
@@ -167,23 +165,14 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
         }
     };
 
+    auto idleState = RegisterState(StateType::Idle, true);
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
-
     for (const auto& dir : animationDatas.at(StateType::Idle)) {
         std::stringstream ss;
         ss << dir.first;
         auto a = entityService_.MakeAnimation(dir.second);
         idleAnimation->RegisterAnimation(ss.str(), a);
     }
-
-    auto move = std::make_shared<MoveAbility>(
-        constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
-        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-
-    auto shoot = std::make_shared<ShootAbility>(
-        nullptr, [this]() { OnExitShoot(); }, nullptr);
-
-    auto idleState = RegisterState(StateType::Idle, true);
     idleState->RegisterAbility(idleAnimation);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     idleState->BindAction(Action::ChangeTo(StateType::Attack), EventType::Attack);
@@ -191,7 +180,9 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
     auto moveState = RegisterState(StateType::Move);
-
+    auto move = std::make_shared<MoveAbility>(
+        constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
+        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
     auto moveAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     for (const auto& dir : animationDatas.at(StateType::Move)) {
         std::stringstream ss;
@@ -199,7 +190,6 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
         auto a = entityService_.MakeAnimation(dir.second);
         moveAnimation->RegisterAnimation(ss.str(), a);
     }
-
     moveState->RegisterAbility(move);
     moveState->RegisterAbility(moveAnimation);
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
@@ -209,7 +199,6 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
 
     auto attackState = RegisterState(StateType::Attack);
     auto attackAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndComplete);
-
     for (const auto& dir : animationDatas.at(StateType::Attack)) {
         std::stringstream ss;
         ss << dir.first;
@@ -222,8 +211,9 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
     attackState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
+    auto shoot = std::make_shared<ShootAbility>(
+        nullptr, [this]() { OnExitShoot(); }, nullptr);
     auto attackWeaponAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndComplete);
-
     for (const auto& dir : animationDatas.at(StateType::AttackWeapon)) {
         std::stringstream ss;
         ss << dir.first;

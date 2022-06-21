@@ -45,17 +45,14 @@ void TileEntity::RegisterShape()
 void TileEntity::RegisterStates(const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
-
     auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
-    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
 
+    auto idleState = RegisterState(StateType::Idle, true);
+    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     float t = constant::Entity::stdSwitchTime;
     auto a = Animation(data.frames_, 0, t);
     idleAnimation->RegisterAnimation("Idle", a);
-
-    auto idleState = RegisterState(StateType::Idle, true);
     idleState->RegisterAbility(idleAnimation);
-
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 }
 

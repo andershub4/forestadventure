@@ -75,23 +75,19 @@ void ArrowEntity::RegisterShape()
 void ArrowEntity::RegisterStates(const PropertyData& data)
 {
     auto getKey = [this]() { return "Move"; };
-
     auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
-
-    auto move = std::make_shared<MoveAbility>(
-        constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
-        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
 
     auto idleState = RegisterState(StateType::Idle, true);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
     auto moveState = RegisterState(StateType::Move);
-
+    auto move = std::make_shared<MoveAbility>(
+        constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
+        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
     auto moveAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     auto a = entityService_.MakeAnimation({SheetId::Arrow, {{0, 0}, 1, 0}, false});
     moveAnimation->RegisterAnimation("Move", a);
-
     moveState->RegisterAbility(move);
     moveState->RegisterAbility(moveAnimation);
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
