@@ -27,7 +27,6 @@ namespace Entity {
 
 struct PropertyData;
 class EntityManager;
-class BasicAbility;
 class Shape;
 
 class BasicEntity

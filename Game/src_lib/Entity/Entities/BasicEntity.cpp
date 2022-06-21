@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Abilities/BasicAbility.h"
 #include "Entity/Events/CreateEvent.h"
 #include "Entity/Events/DestroyEvent.h"
 #include "Entity/Events/InitEvent.h"
