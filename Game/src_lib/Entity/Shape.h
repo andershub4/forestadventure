@@ -7,13 +7,13 @@
 #pragma once
 
 #include <functional>
-#include <memory>
 #include <string>
 #include <unordered_map>
 
 #ifdef _DEBUG
 #include <SFML/Graphics/RectangleShape.hpp>
 #endif
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "Fwd/SfmlFwd.h"
 #include "StateType.h"
@@ -22,36 +22,27 @@ namespace FA {
 
 namespace Entity {
 
-class AnimationSprite;
-class ImageSprite;
-
 class Shape
 {
 public:
-    Shape(std::function<void(Shape &)> updateShape);
-    virtual ~Shape();
+    Shape();
+    Shape(std::function<void()> updateShape);
 
-    void OnEnterShape(StateType stateType);
-    void OnExitShape(StateType stateType);
-    void OnUpdateShape(float deltaTime);
-    void OnDrawShape(sf::RenderTarget &renderTarget);
+    void AddSprite(const std::string &name);
+    sf::Sprite &GetSprite(const std::string &name);
 
-    std::shared_ptr<AnimationSprite> GetAnimationSprite(const std::string &name);
-    std::shared_ptr<ImageSprite> GetImageSprite(const std::string &name);
+    void Update();
+    void Draw(sf::RenderTarget &renderTarget);
 
-    void RegisterAnimationSprite(const std::string &name, std::shared_ptr<AnimationSprite> sprite);
-    void RegisterImageSprite(const std::string &name, std::shared_ptr<ImageSprite> sprite);
-
-    void SetPosition(const sf::Vector2f &pos);
+    void SetPosition(const sf::Vector2f &position);
+    void SetRotation(float rotation);
 
 private:
+    std::function<void()> updateShape_;
+    std::unordered_map<std::string, sf::Sprite> sprites_;
 #ifdef _DEBUG
     sf::RectangleShape rShape_;
 #endif
-    std::unordered_map<std::string, std::shared_ptr<AnimationSprite>> animations_;
-    std::unordered_map<std::string, std::shared_ptr<ImageSprite>> images_;
-
-    std::function<void(Shape &)> updateShape_;
 };
 
 }  // namespace Entity

@@ -22,7 +22,7 @@ public:
               std::function<void(sf::Sprite&)> alignFn = nullptr);
 
     void Update(float deltaTime);  // delta time; time since previous time to current frame
-    void ApplyTo(sf::Sprite& sprite);
+    void ApplyTo(sf::Sprite& sprite) const;
     void Start();
     void Stop();
     bool IsCompleted() const;

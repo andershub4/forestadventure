@@ -209,13 +209,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constant\Entity.h" />
+    <ClInclude Include="Entity\Abilities\AnimationAbility.h" />
     <ClInclude Include="Entity\Abilities\ShootAbility.h" />
     <ClInclude Include="Entity\Abilities\BasicAbility.h" />
     <ClInclude Include="Entity\Abilities\MoveAbility.h" />
-    <ClInclude Include="Entity\AnimationSprite.h" />
     <ClInclude Include="Entity\Entities\CoinEntity.h" />
     <ClInclude Include="Entity\Entities\TileEntity.h" />
-    <ClInclude Include="Entity\ImageSprite.h" />
     <ClInclude Include="Entity\Properties\BasicProperty.h" />
     <ClInclude Include="Entity\Properties\Property.h" />
     <ClInclude Include="Entity\PropertyManager.h" />
@@ -315,13 +314,12 @@
     <ClInclude Include="Folder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\Abilities\AnimationAbility.cpp" />
     <ClCompile Include="Entity\Abilities\ShootAbility.cpp" />
     <ClCompile Include="Entity\Abilities\BasicAbility.cpp" />
     <ClCompile Include="Entity\Abilities\MoveAbility.cpp" />
-    <ClCompile Include="Entity\AnimationSprite.cpp" />
     <ClCompile Include="Entity\Entities\CoinEntity.cpp" />
     <ClCompile Include="Entity\Entities\TileEntity.cpp" />
-    <ClCompile Include="Entity\ImageSprite.cpp" />
     <ClCompile Include="Entity\PropertyManager.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\Image.cpp" />

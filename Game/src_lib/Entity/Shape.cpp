@@ -8,14 +8,13 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "AnimationSprite.h"
-#include "ImageSprite.h"
-
 namespace FA {
 
 namespace Entity {
 
-Shape::Shape(std::function<void(Shape &)> updateShape)
+Shape::Shape() = default;
+
+Shape::Shape(std::function<void()> updateShape)
     : updateShape_(updateShape)
 {
 #ifdef _DEBUG
@@ -23,83 +22,46 @@ Shape::Shape(std::function<void(Shape &)> updateShape)
 #endif
 }
 
-Shape::~Shape() = default;
-
-void Shape::OnEnterShape(StateType stateType)
+void Shape::Update()
 {
-    for (auto a : animations_) {
-        a.second->Enter(stateType);
-    }
-
-    for (auto i : images_) {
-        i.second->Enter(stateType);
-    }
+    updateShape_();
 }
 
-void Shape::OnExitShape(StateType stateType)
-{}
-
-void Shape::OnUpdateShape(float deltaTime)
+void Shape::AddSprite(const std::string& name)
 {
-    for (auto a : animations_) {
-        a.second->Update(deltaTime);
-    }
-
-    for (auto i : images_) {
-        i.second->Update(deltaTime);
-    }
-
-    updateShape_(*this);
+    // check if not exist
+    sprites_[name] = sf::Sprite();
 }
 
-void Shape::OnDrawShape(sf::RenderTarget &renderTarget)
+sf::Sprite& Shape::GetSprite(const std::string& name)
 {
-    for (auto a : animations_) {
-        a.second->DrawTo(renderTarget);
-    }
+    return sprites_.at(name);
+}
 
-    for (auto i : images_) {
-        i.second->DrawTo(renderTarget);
+void Shape::Draw(sf::RenderTarget& renderTarget)
+{
+    for (auto& sprite : sprites_) {
+        renderTarget.draw(sprite.second);
     }
-
 #ifdef _DEBUG
     renderTarget.draw(rShape_);
 #endif
 }
 
-void Shape::SetPosition(const sf::Vector2f &pos)
+void Shape::SetPosition(const sf::Vector2f& position)
 {
-    for (auto sprite : animations_) {
-        sprite.second->ApplyTo([pos](sf::Sprite &sprite) { sprite.setPosition(pos); });
+    for (auto& sprite : sprites_) {
+        sprite.second.setPosition(position);
     }
+    rShape_.setPosition(position);
+}
 
-    for (auto sprite : images_) {
-        sprite.second->ApplyTo([pos](sf::Sprite &sprite) { sprite.setPosition(pos); });
+void Shape::SetRotation(float rotation)
+{
+    for (auto& sprite : sprites_) {
+        sprite.second.setRotation(rotation);
     }
-
-#ifdef _DEBUG
-    rShape_.setPosition(pos);
-#endif
-}
-
-std::shared_ptr<AnimationSprite> Shape::GetAnimationSprite(const std::string &name)
-{
-    return animations_.at(name);
-}
-
-std::shared_ptr<ImageSprite> Shape::GetImageSprite(const std::string &name)
-{
-    return images_.at(name);
-}
-
-void Shape::RegisterAnimationSprite(const std::string &name, std::shared_ptr<AnimationSprite> s)
-{
-    animations_[name] = s;
-}
-
-void Shape::RegisterImageSprite(const std::string &name, std::shared_ptr<ImageSprite> s)
-{
-    images_[name] = s;
+    rShape_.setRotation(rotation);
 }
 
 }  // namespace Entity

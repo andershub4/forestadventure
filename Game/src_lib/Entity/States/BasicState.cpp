@@ -7,9 +7,7 @@
 #include "BasicState.h"
 
 #include "Entity/Abilities/BasicAbility.h"
-#include "Entity/Entities/BasicEntity.h"
 #include "Entity/Events/BasicEvent.h"
-#include "Entity/Shape.h"
 #include "Entity/StateMachine.h"
 #include "Logging.h"
 
@@ -17,10 +15,9 @@ namespace FA {
 
 namespace Entity {
 
-BasicState::BasicState(StateType stateType, BasicEntity& entity, StateMachine& stateMachine)
+BasicState::BasicState(StateType stateType, StateMachine& stateMachine)
     : stateMachine_(stateMachine)
     , stateType_(stateType)
-    , entity_(entity)
 {}
 
 BasicState::~BasicState() = default;
@@ -30,10 +27,6 @@ void BasicState::Enter(std::shared_ptr<BasicEvent> event)
     for (auto a : abilities_) {
         a->Enter(event);
     }
-
-    for (auto shape : shapes_) {
-        entity_.OnEnterShape(stateType_, shape.name_);
-    }
 }
 
 void BasicState::Exit()
@@ -41,27 +34,12 @@ void BasicState::Exit()
     for (auto a : abilities_) {
         a->Exit();
     }
-
-    for (auto shape : shapes_) {
-        entity_.OnExitShape(stateType_, shape.name_);
-    }
 }
 
 void BasicState::Update(float deltaTime)
 {
     for (auto a : abilities_) {
         a->Update(deltaTime);
-    }
-
-    for (auto shape : shapes_) {
-        entity_.OnUpdateShape(shape.name_, deltaTime, shape.stateFn_);
-    }
-}
-
-void BasicState::DrawTo(sf::RenderTarget& renderTarget)
-{
-    for (auto shape : shapes_) {
-        entity_.OnDrawShape(shape.name_, renderTarget);
     }
 }
 
@@ -74,11 +52,6 @@ void BasicState::HandleEvent(std::shared_ptr<BasicEvent> event)
 void BasicState::BindAction(const Action& action, EventType eventType)
 {
     eventMap_[eventType] = action;
-}
-
-void BasicState::AddShape(const std::string& name, std::function<void(Shape&)> stateFn)
-{
-    shapes_.push_back({name, stateFn});
 }
 
 void BasicState::RegisterAbility(std::shared_ptr<BasicAbility> ability)

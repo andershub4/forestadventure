@@ -20,19 +20,17 @@ namespace Entity {
 struct BasicEvent;
 class BasicState;
 struct Action;
-class BasicEntity;
 
 class StateMachine
 {
 public:
-    StateMachine(BasicEntity &entity);
+    StateMachine();
     ~StateMachine();
 
     std::shared_ptr<BasicState> RegisterState(StateType stateType, bool startState = false);
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void Update(float deltaTime);
-    void DrawTo(sf::RenderTarget &renderTarget);
     void QueueInitEvents(std::shared_ptr<BasicEvent> event);
     void HandleQueuedInitEvents();
 
@@ -45,8 +43,6 @@ private:
     std::unordered_map<StateType, std::shared_ptr<BasicState>> states_;
     std::shared_ptr<BasicState> currentState_ = nullptr;
     std::function<void(std::shared_ptr<BasicEvent> event)> onDestroy_{};
-
-    BasicEntity &entity_;
     std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
 
 private:

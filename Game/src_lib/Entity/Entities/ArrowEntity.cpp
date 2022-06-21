@@ -6,13 +6,11 @@
 
 #include "ArrowEntity.h"
 
-#include <sstream>
-
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
+#include "Entity/Abilities/AnimationAbility.h"
 #include "Entity/Abilities/MoveAbility.h"
-#include "Entity/ImageSprite.h"
 #include "Entity/PropertyData.h"
 #include "Entity/States/BasicState.h"
 #include "Resource/SheetId.h"
@@ -62,43 +60,24 @@ void ArrowEntity::RegisterProperties()
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
 }
 
-void ArrowEntity::OnUpdateShape(Shape& shape)
+void ArrowEntity::UpdateAnimation(const Animation& animation)
 {
-    shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
+    auto& sprite = shape_.GetSprite("Main");
+    animation.ApplyTo(sprite);
 }
 
-void ArrowEntity::RegisterShapes(const PropertyData& data)
+void ArrowEntity::RegisterShape()
 {
-    auto shape = std::make_shared<Shape>([this](Shape& shape) { OnUpdateShape(shape); });
-
-    auto getKey = [this](StateType stateType) {
-        std::stringstream ss;
-        ss << stateType;
-        return ss.str();
-    };
-
-    auto beginImage = [this](ImageSprite& imageSprite) {
-        imageSprite.ApplyTo(
-            [this](sf::Sprite& sprite) { sprite.setRotation(propertyManager_.Get<float>("Rotation")); });
-    };
-
-    auto updateImage = [this](ImageSprite& imageSprite) {
-        imageSprite.ApplyTo(
-            [this](sf::Sprite& sprite) { sprite.setPosition(propertyManager_.Get<sf::Vector2f>("Position")); });
-    };
-
-    auto sprite = std::make_shared<ImageSprite>(getKey, beginImage);
-
-    auto i = entityService_.MakeImage({SheetId::Arrow, {0, 0}});
-    sprite->RegisterImage("Move", i);
-
-    shape->RegisterImageSprite("Main", sprite);
-
-    RegisterShape("Main", shape);
+    shape_ = CreateShape();
+    shape_.AddSprite("Main");
 }
 
-void ArrowEntity::RegisterStates()
+void ArrowEntity::RegisterStates(const PropertyData& data)
 {
+    auto getKey = [this]() { return "Move"; };
+
+    auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
+
     auto move = std::make_shared<MoveAbility>(
         constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
@@ -108,8 +87,13 @@ void ArrowEntity::RegisterStates()
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
     auto moveState = RegisterState(StateType::Move);
-    moveState->AddShape("Main", nullptr);
+
+    auto moveAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+    auto a = entityService_.MakeAnimation({SheetId::Arrow, {{0, 0}, 1, 0}, false});
+    moveAnimation->RegisterAnimation("Move", a);
+
     moveState->RegisterAbility(move);
+    moveState->RegisterAbility(moveAnimation);
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 

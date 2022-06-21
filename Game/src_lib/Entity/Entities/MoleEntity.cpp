@@ -11,8 +11,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
+#include "Entity/Abilities/AnimationAbility.h"
 #include "Entity/Abilities/MoveAbility.h"
-#include "Entity/AnimationSprite.h"
 #include "Entity/PropertyData.h"
 #include "Entity/States/BasicState.h"
 #include "Resource/SheetId.h"
@@ -57,57 +57,60 @@ void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
 void MoleEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
+    propertyManager_.Register<float>("Rotation", 0.0);
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
-void MoleEntity::OnUpdateShape(Shape& shape)
+void MoleEntity::UpdateAnimation(const Animation& animation)
 {
-    shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
+    auto& sprite = shape_.GetSprite("Main");
+    animation.ApplyTo(sprite);
 }
 
-void MoleEntity::RegisterShapes(const PropertyData& data)
+void MoleEntity::RegisterShape()
 {
-    auto shape = std::make_shared<Shape>([this](Shape& shape) { OnUpdateShape(shape); });
+    shape_ = CreateShape();
+    shape_.AddSprite("Main");
+}
 
-    auto getKey = [this](StateType stateType) {
+void MoleEntity::RegisterStates(const PropertyData& data)
+{
+    auto getKey = [this]() {
         std::stringstream ss;
         auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
-        ss << stateType << dir;
+        ss << dir;
         return ss.str();
     };
 
-    auto sprite = std::make_shared<AnimationSprite>(getKey);
+    auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
 
-    for (const auto& stateData : animationDatas) {
-        auto stateType = stateData.first;
-        auto dirData = stateData.second;
-        for (const auto& dir : dirData) {
-            std::stringstream ss;
-            ss << stateType << dir.first;
-            auto a = entityService_.MakeAnimation(dir.second);
-            sprite->RegisterAnimation(ss.str(), a);
-        }
-    }
-
-    shape->RegisterAnimationSprite("Main", sprite);
-
-    RegisterShape("Main", shape);
-}
-
-void MoleEntity::RegisterStates()
-{
     auto move = std::make_shared<MoveAbility>(
         constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
 
+    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+    for (const auto& dir : animationDatas.at(StateType::Idle)) {
+        std::stringstream ss;
+        ss << dir.first;
+        auto a = entityService_.MakeAnimation(dir.second);
+        idleAnimation->RegisterAnimation(ss.str(), a);
+    }
+
     auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddShape("Main", nullptr);
+    idleState->RegisterAbility(idleAnimation);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
     auto moveState = RegisterState(StateType::Move);
-    moveState->AddShape("Main", nullptr);
+    auto moveAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+    for (const auto& dir : animationDatas.at(StateType::Move)) {
+        std::stringstream ss;
+        ss << dir.first;
+        auto a = entityService_.MakeAnimation(dir.second);
+        moveAnimation->RegisterAnimation(ss.str(), a);
+    }
     moveState->RegisterAbility(move);
+    moveState->RegisterAbility(moveAnimation);
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 

@@ -6,12 +6,10 @@
 
 #include "TileEntity.h"
 
-#include <sstream>
-
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/AnimationSprite.h"
+#include "Entity/Abilities/AnimationAbility.h"
 #include "Entity/PropertyData.h"
 #include "Entity/States/BasicState.h"
 
@@ -29,38 +27,35 @@ TileEntity::~TileEntity() = default;
 void TileEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
+    propertyManager_.Register<float>("Rotation", 0.0);
 }
 
-void TileEntity::OnUpdateShape(Shape& shape)
+void TileEntity::UpdateAnimation(const Animation& animation)
 {
-    shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
+    auto& sprite = shape_.GetSprite("Main");
+    animation.ApplyTo(sprite);
 }
 
-void TileEntity::RegisterShapes(const PropertyData& data)
+void TileEntity::RegisterShape()
 {
-    auto shape = std::make_shared<Shape>([this](Shape& shape) { OnUpdateShape(shape); });
+    shape_ = CreateShape();
+    shape_.AddSprite("Main");
+}
 
-    auto getKey = [this](StateType stateType) {
-        std::stringstream ss;
-        ss << stateType;
-        return ss.str();
-    };
+void TileEntity::RegisterStates(const PropertyData& data)
+{
+    auto getKey = [this]() { return "Idle"; };
 
-    auto sprite = std::make_shared<AnimationSprite>(getKey);
+    auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
+    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
 
     float t = constant::Entity::stdSwitchTime;
     auto a = Animation(data.frames_, 0, t);
-    sprite->RegisterAnimation("Idle", a);
+    idleAnimation->RegisterAnimation("Idle", a);
 
-    shape->RegisterAnimationSprite("Main", sprite);
-
-    RegisterShape("Main", shape);
-}
-
-void TileEntity::RegisterStates()
-{
     auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddShape("Main", nullptr);
+    idleState->RegisterAbility(idleAnimation);
+
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 }
 

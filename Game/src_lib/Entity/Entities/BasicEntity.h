@@ -40,11 +40,6 @@ public:
     virtual std::string Name() const = 0;
     virtual EntityType Type() const = 0;
 
-    void OnEnterShape(StateType stateType, const std::string& name);
-    void OnExitShape(StateType stateType, const std::string& name);
-    void OnUpdateShape(const std::string& name, float deltaTime, std::function<void(Shape&)> stateFn);
-    void OnDrawShape(const std::string& name, sf::RenderTarget& renderTarget);
-
     void Create(const PropertyData& data);
     void Destroy();
     void Init();
@@ -57,26 +52,28 @@ public:
 protected:
     PropertyManager propertyManager_;
     EntityService entityService_;
+    Shape shape_;
 
 protected:
     virtual std::vector<MessageType> Messages() const { return {}; }
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void ChangeState(StateType stateType, std::shared_ptr<BasicEvent> event);
-    void RegisterShape(const std::string& name, std::shared_ptr<Shape> shape);
+    void OnUpdateShape();
+    Shape CreateShape();
+
     std::shared_ptr<BasicState> RegisterState(StateType stateType, bool startState = false);
 
 private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
-    std::unordered_map<std::string, std::shared_ptr<Shape>> shapes_;
     bool enableInput_ = true;
     StateMachine stateMachine_;
 
 private:
-    virtual void RegisterStates() {}
+    virtual void RegisterStates(const PropertyData& data) {}
     virtual void RegisterProperties() {}
-    virtual void RegisterShapes(const PropertyData& data) {}
+    virtual void RegisterShape() {}
     virtual void Start(EntityService& entityService) {}
     virtual void OnMessage(std::shared_ptr<Message> msg) {}
 

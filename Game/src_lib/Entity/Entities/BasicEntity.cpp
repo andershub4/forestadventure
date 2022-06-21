@@ -26,38 +26,12 @@ BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetM
     : id_(id)
     , messageBus_(messageBus)
     , entityService_(cameraManager, sheetManager, entityManager)
-    , stateMachine_(*this)
 {
     stateMachine_.RegisterCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });
     stateMachine_.RegisterDestroyCB([this](std::shared_ptr<BasicEvent> event) { OnDestroy(event); });
 }
 
 BasicEntity::~BasicEntity() = default;
-
-void BasicEntity::OnEnterShape(StateType stateType, const std::string& name)
-{
-    auto s = shapes_[name];
-    s->OnEnterShape(stateType);
-}
-
-void BasicEntity::OnExitShape(StateType stateType, const std::string& name)
-{
-    auto s = shapes_[name];
-    s->OnExitShape(stateType);
-}
-
-void BasicEntity::OnUpdateShape(const std::string& name, float deltaTime, std::function<void(Shape&)> stateFn)
-{
-    auto s = shapes_[name];
-    s->OnUpdateShape(deltaTime);
-    if (stateFn) stateFn(*s);
-}
-
-void BasicEntity::OnDrawShape(const std::string& name, sf::RenderTarget& renderTarget)
-{
-    auto s = shapes_[name];
-    s->OnDrawShape(renderTarget);
-}
 
 void BasicEntity::Create(const PropertyData& data)
 {
@@ -78,11 +52,12 @@ void BasicEntity::Init()
 void BasicEntity::Update(float deltaTime)
 {
     stateMachine_.Update(deltaTime);
+    shape_.Update();
 }
 
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
-    stateMachine_.DrawTo(renderTarget);
+    shape_.Draw(renderTarget);
 }
 
 void BasicEntity::QueueInitEvents(std::shared_ptr<BasicEvent> event)
@@ -100,9 +75,15 @@ void BasicEntity::ChangeState(StateType stateType, std::shared_ptr<BasicEvent> e
     stateMachine_.ChangeStateTo(stateType, event);
 }
 
-void BasicEntity::RegisterShape(const std::string& name, std::shared_ptr<Shape> shape)
+void BasicEntity::OnUpdateShape()
 {
-    shapes_[name] = shape;
+    shape_.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
+    shape_.SetRotation(propertyManager_.Get<float>("Rotation"));
+}
+
+Shape BasicEntity::CreateShape()
+{
+    return Shape([this]() { OnUpdateShape(); });
 }
 
 std::shared_ptr<BasicState> BasicEntity::RegisterState(StateType stateType, bool startState)
@@ -116,7 +97,7 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
     auto data = c->data_;
 
     RegisterProperties();
-    RegisterStates();
+    RegisterStates(data);
 
     // ReadObjectData
     propertyManager_.Set<sf::Vector2f>("Position", data.position_);
@@ -125,7 +106,7 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
         propertyManager_.ReadCustomProperty(p.first, p.second);
     }
 
-    RegisterShapes(data);
+    RegisterShape();
     Subscribe(Messages());
     Start(entityService_);  // must do this after setting position
     messageBus_.SendMessage(std::make_shared<EntityCreatedMessage>());

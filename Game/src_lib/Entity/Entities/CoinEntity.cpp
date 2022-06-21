@@ -6,12 +6,10 @@
 
 #include "CoinEntity.h"
 
-#include <sstream>
-
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/AnimationSprite.h"
+#include "Entity/Abilities/AnimationAbility.h"
 #include "Entity/PropertyData.h"
 #include "Entity/States/BasicState.h"
 #include "Resource/SheetId.h"
@@ -30,37 +28,32 @@ CoinEntity::~CoinEntity() = default;
 void CoinEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
+    propertyManager_.Register<float>("Rotation", 0.0);
 }
 
-void CoinEntity::OnUpdateShape(Shape& shape)
+void CoinEntity::RegisterShape()
 {
-    shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
+    shape_ = CreateShape();
+    shape_.AddSprite("Main");
 }
 
-void CoinEntity::RegisterShapes(const PropertyData& data)
+void CoinEntity::UpdateAnimation(const Animation& animation)
 {
-    auto shape = std::make_shared<Shape>([this](Shape& shape) { OnUpdateShape(shape); });
+    auto& sprite = shape_.GetSprite("Main");
+    animation.ApplyTo(sprite);
+}
 
-    auto getKey = [this](StateType stateType) {
-        std::stringstream ss;
-        ss << stateType;
-        return ss.str();
-    };
+void CoinEntity::RegisterStates(const PropertyData& data)
+{
+    auto getKey = [this]() { return "Idle"; };
 
-    auto sprite = std::make_shared<AnimationSprite>(getKey);
-
+    auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
+    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     auto a = entityService_.MakeAnimation({SheetId::Coin, {{0, 0}, 4, 0}, false});
-    sprite->RegisterAnimation("Idle", a);
+    idleAnimation->RegisterAnimation("Idle", a);
 
-    shape->RegisterAnimationSprite("Main", sprite);
-
-    RegisterShape("Main", shape);
-}
-
-void CoinEntity::RegisterStates()
-{
     auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddShape("Main", nullptr);
+    idleState->RegisterAbility(idleAnimation);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 }
 

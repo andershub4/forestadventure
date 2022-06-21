@@ -24,10 +24,10 @@ public:
 
 private:
     virtual void RegisterProperties() override;
-    virtual void RegisterShapes(const PropertyData& data) override;
-    virtual void RegisterStates() override;
+    virtual void RegisterShape() override;
+    virtual void RegisterStates(const PropertyData& data) override;
 
-    void OnUpdateShape(Shape& shape);
+    void UpdateAnimation(const Animation& animation);
 };
 
 }  // namespace Entity

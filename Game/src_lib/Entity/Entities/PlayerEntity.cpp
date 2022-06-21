@@ -11,9 +11,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
+#include "Entity/Abilities/AnimationAbility.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/Abilities/ShootAbility.h"
-#include "Entity/AnimationSprite.h"
 #include "Entity/Events/AttackEvent.h"
 #include "Entity/Events/AttackWeapon.h"
 #include "Entity/Events/StartMoveEvent.h"
@@ -133,45 +133,49 @@ void PlayerEntity::OnExitShoot()
 void PlayerEntity::RegisterProperties()
 {
     propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
+    propertyManager_.Register<float>("Rotation", 0.0);
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
-void PlayerEntity::OnUpdateShape(Shape& shape)
+void PlayerEntity::RegisterShape()
 {
-    shape.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
+    shape_ = CreateShape();
+    shape_.AddSprite("Main");
 }
 
-void PlayerEntity::RegisterShapes(const PropertyData& data)
+void PlayerEntity::UpdateAnimation(const Animation& animation)
 {
-    auto shape = std::make_shared<Shape>([this](Shape& shape) { OnUpdateShape(shape); });
+    auto& sprite = shape_.GetSprite("Main");
+    animation.ApplyTo(sprite);
+}
 
-    auto getKey = [this](StateType stateType) {
+void PlayerEntity::RegisterStates(const PropertyData& data)
+{
+    auto getKey = [this]() {
         std::stringstream ss;
         auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
-        ss << stateType << dir;
+        ss << dir;
         return ss.str();
     };
 
-    auto sprite = std::make_shared<AnimationSprite>(getKey);
+    auto updateAnimation = [this](const Animation& animation) { UpdateAnimation(animation); };
 
-    for (const auto& stateData : animationDatas) {
-        auto stateType = stateData.first;
-        auto dirData = stateData.second;
-        for (const auto& dir : dirData) {
-            std::stringstream ss;
-            ss << stateType << dir.first;
-            auto a = entityService_.MakeAnimation(dir.second);
-            sprite->RegisterAnimation(ss.str(), a);
+    auto updateAnimationAndComplete = [this](const Animation& animation) {
+        UpdateAnimation(animation);
+        if (animation.IsCompleted()) {
+            ChangeState(StateType::Idle, nullptr);
         }
+    };
+
+    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+
+    for (const auto& dir : animationDatas.at(StateType::Idle)) {
+        std::stringstream ss;
+        ss << dir.first;
+        auto a = entityService_.MakeAnimation(dir.second);
+        idleAnimation->RegisterAnimation(ss.str(), a);
     }
 
-    shape->RegisterAnimationSprite("Main", sprite);
-
-    RegisterShape("Main", shape);
-}
-
-void PlayerEntity::RegisterStates()
-{
     auto move = std::make_shared<MoveAbility>(
         constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
@@ -180,38 +184,53 @@ void PlayerEntity::RegisterStates()
         nullptr, [this]() { OnExitShoot(); }, nullptr);
 
     auto idleState = RegisterState(StateType::Idle, true);
-    idleState->AddShape("Main", nullptr);
+    idleState->RegisterAbility(idleAnimation);
     idleState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     idleState->BindAction(Action::ChangeTo(StateType::Attack), EventType::Attack);
     idleState->BindAction(Action::ChangeTo(StateType::AttackWeapon), EventType::AttackWeapon);
     idleState->BindAction(Action::Ignore(), EventType::Collision);
 
     auto moveState = RegisterState(StateType::Move);
-    moveState->AddShape("Main", nullptr);
+
+    auto moveAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+    for (const auto& dir : animationDatas.at(StateType::Move)) {
+        std::stringstream ss;
+        ss << dir.first;
+        auto a = entityService_.MakeAnimation(dir.second);
+        moveAnimation->RegisterAnimation(ss.str(), a);
+    }
+
     moveState->RegisterAbility(move);
+    moveState->RegisterAbility(moveAnimation);
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
     moveState->BindAction(Action::Ignore(), EventType::StartMove);
     moveState->BindAction(Action::Ignore(), EventType::Attack);
     moveState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 
     auto attackState = RegisterState(StateType::Attack);
-    attackState->AddShape("Main", [this](Shape& shape) {
-        auto sprite = shape.GetAnimationSprite("Main");
-        if (sprite->AnimationIsCompleted()) {
-            ChangeState(StateType::Idle, nullptr);
-        }
-    });
+    auto attackAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndComplete);
+
+    for (const auto& dir : animationDatas.at(StateType::Attack)) {
+        std::stringstream ss;
+        ss << dir.first;
+        auto a = entityService_.MakeAnimation(dir.second);
+        attackAnimation->RegisterAnimation(ss.str(), a);
+    }
+    attackState->RegisterAbility(attackAnimation);
     attackState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     attackState->BindAction(Action::Ignore(), EventType::Attack);
     attackState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
-    attackWeaponState->AddShape("Main", [this](Shape& shape) {
-        auto sprite = shape.GetAnimationSprite("Main");
-        if (sprite->AnimationIsCompleted()) {
-            ChangeState(StateType::Idle, nullptr);
-        }
-    });
+    auto attackWeaponAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndComplete);
+
+    for (const auto& dir : animationDatas.at(StateType::AttackWeapon)) {
+        std::stringstream ss;
+        ss << dir.first;
+        auto a = entityService_.MakeAnimation(dir.second);
+        attackWeaponAnimation->RegisterAnimation(ss.str(), a);
+    }
+    attackWeaponState->RegisterAbility(attackWeaponAnimation);
     attackWeaponState->RegisterAbility(shoot);
     attackWeaponState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     attackWeaponState->BindAction(Action::Ignore(), EventType::Attack);

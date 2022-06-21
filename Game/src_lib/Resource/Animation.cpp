@@ -23,7 +23,7 @@ Animation::Animation(const std::vector<Frame>& frames, unsigned int defaultIndex
     nFrames_ = frames.size();
 }
 
-void Animation::ApplyTo(sf::Sprite& sprite)
+void Animation::ApplyTo(sf::Sprite& sprite) const
 {
     sprite.setTexture(*frames_[iFrame_].texture_);
     sprite.setTextureRect(frames_[iFrame_].rect_);

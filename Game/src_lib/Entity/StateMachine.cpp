@@ -13,8 +13,7 @@ namespace FA {
 
 namespace Entity {
 
-StateMachine::StateMachine(BasicEntity& entity)
-    : entity_(entity)
+StateMachine::StateMachine()
 {
     currentState_ = RegisterState(StateType::Uninitialized);
     currentState_->Enter(nullptr);
@@ -48,14 +47,9 @@ void StateMachine::Update(float deltaTime)
     currentState_->Update(deltaTime);
 }
 
-void StateMachine::DrawTo(sf::RenderTarget& renderTarget)
-{
-    currentState_->DrawTo(renderTarget);
-}
-
 std::shared_ptr<BasicState> StateMachine::RegisterState(StateType stateType, bool startState)
 {
-    auto state = std::make_shared<BasicState>(stateType, entity_, *this);
+    auto state = std::make_shared<BasicState>(stateType, *this);
     InitState(state, startState);
     return state;
 }
