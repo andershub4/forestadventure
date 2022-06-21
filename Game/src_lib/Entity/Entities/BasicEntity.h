@@ -27,7 +27,6 @@ namespace Entity {
 
 struct PropertyData;
 class EntityManager;
-class Shape;
 
 class BasicEntity
 {
@@ -58,9 +57,7 @@ protected:
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void ChangeState(StateType stateType, std::shared_ptr<BasicEvent> event);
-    void OnUpdateShape();
     Shape CreateShape();
-
     std::shared_ptr<BasicState> RegisterState(StateType stateType, bool startState = false);
 
 private:
@@ -78,6 +75,7 @@ private:
 
     void OnCreate(std::shared_ptr<BasicEvent> event);
     void OnDestroy(std::shared_ptr<BasicEvent> event);
+    void OnUpdateShape();
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
 };
