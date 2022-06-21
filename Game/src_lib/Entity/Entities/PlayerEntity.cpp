@@ -227,9 +227,9 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
     attackWeaponState->BindAction(Action::Ignore(), EventType::AttackWeapon);
 }
 
-void PlayerEntity::Start(EntityService& entityService)
+void PlayerEntity::Start()
 {
-    entityService.AddCamera(propertyManager_.GetRef<sf::Vector2f>("Position"));
+    entityService_.AddCamera(propertyManager_.GetRef<sf::Vector2f>("Position"));
 }
 
 }  // namespace Entity

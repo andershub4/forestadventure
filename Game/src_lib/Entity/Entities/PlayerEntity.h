@@ -29,7 +29,7 @@ private:
     virtual void RegisterProperties() override;
     virtual void RegisterShape() override;
     virtual void RegisterStates(const PropertyData& data) override;
-    virtual void Start(EntityService& entityService) override;
+    virtual void Start() override;
     virtual void OnMessage(std::shared_ptr<Message> msg) override;
 
     void OnBeginMove(FaceDirection faceDirection);

@@ -70,7 +70,7 @@ private:
     virtual void RegisterStates(const PropertyData& data) {}
     virtual void RegisterProperties() {}
     virtual void RegisterShape() {}
-    virtual void Start(EntityService& entityService) {}
+    virtual void Start() {}
     virtual void OnMessage(std::shared_ptr<Message> msg) {}
 
     void OnCreate(std::shared_ptr<BasicEvent> event);

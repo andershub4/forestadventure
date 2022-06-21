@@ -107,7 +107,7 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
 
     RegisterShape();
     Subscribe(Messages());
-    Start(entityService_);  // must do this after setting position
+    Start();  // must do this after setting position
     messageBus_.SendMessage(std::make_shared<EntityCreatedMessage>());
 }
 
