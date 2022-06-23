@@ -6,26 +6,25 @@
 
 #pragma once
 
+#include <functional>
 #include <memory>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
-#include "Entity/Action.h"
 #include "Entity/EventType.h"
-#include "Fwd/SfmlFwd.h"
+#include "Entity/StateType.h"
 
 namespace FA {
 
 namespace Entity {
 
 struct BasicEvent;
-class StateMachine;
 class BasicAbility;
 
 class State
 {
 public:
-    State(StateType stateType, StateMachine& stateMachine);
+    State(StateType stateType);
     virtual ~State();
 
     State(const State&) = delete;
@@ -37,21 +36,14 @@ public:
     void Exit();
     void Update(float deltaTime);
     void HandleEvent(std::shared_ptr<BasicEvent> event);
-
     StateType GetStateType() const { return stateType_; }
-
-    void BindAction(const Action& action, EventType eventType);
     void RegisterAbility(std::shared_ptr<BasicAbility> ability);
+    void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
 
 private:
-    StateMachine& stateMachine_;
-    std::unordered_map<EventType, Action> eventMap_;
     StateType stateType_ = StateType::Uninitialized;
     std::vector<std::shared_ptr<BasicAbility>> abilities_;
-
-private:
-    Action GetAction(EventType eventType) const;
-    void DoAction(const Action& action, std::shared_ptr<BasicEvent> event = nullptr);
+    std::unordered_map<EventType, std::function<void(std::shared_ptr<BasicEvent>)>> eventCBs_;
 };
 
 }  // namespace Entity

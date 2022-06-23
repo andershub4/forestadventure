@@ -53,7 +53,7 @@ void CoinEntity::RegisterStates(const PropertyData& data)
     auto a = entityService_.MakeAnimation({SheetId::Coin, {{0, 0}, 4, 0}, false});
     idleAnimation->RegisterAnimation("Idle", a);
     idleState->RegisterAbility(idleAnimation);
-    idleState->BindAction(Action::Ignore(), EventType::Collision);
+    idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {});
 }
 
 }  // namespace Entity

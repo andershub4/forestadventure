@@ -8,16 +8,14 @@
 
 #include "Entity/Abilities/BasicAbility.h"
 #include "Entity/Events/BasicEvent.h"
-#include "Entity/StateMachine.h"
 #include "Logging.h"
 
 namespace FA {
 
 namespace Entity {
 
-State::State(StateType stateType, StateMachine& stateMachine)
-    : stateMachine_(stateMachine)
-    , stateType_(stateType)
+State::State(StateType stateType)
+    : stateType_(stateType)
 {}
 
 State::~State() = default;
@@ -45,13 +43,8 @@ void State::Update(float deltaTime)
 
 void State::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
-    auto action = GetAction(event->GetEventType());
-    DoAction(action, event);
-}
-
-void State::BindAction(const Action& action, EventType eventType)
-{
-    eventMap_[eventType] = action;
+    auto handler = eventCBs_.at(event->GetEventType());
+    handler(event);
 }
 
 void State::RegisterAbility(std::shared_ptr<BasicAbility> ability)
@@ -59,26 +52,10 @@ void State::RegisterAbility(std::shared_ptr<BasicAbility> ability)
     abilities_.emplace_back(ability);
 }
 
-Action State::GetAction(EventType eventType) const
+void State::RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)> event)
 {
-    auto it = eventMap_.find(eventType);
-    if (it != eventMap_.end()) {
-        return eventMap_.at(eventType);
-    }
-    else {
-        LOG_ERROR("stateType ", GetStateType(), " can't handle ", eventType);
-        return {};
-    }
-}
-
-void State::DoAction(const Action& action, std::shared_ptr<BasicEvent> event)
-{
-    if (action.cb_) action.cb_(event);
-
-    auto nextStateType = action.stateType_;
-    if (nextStateType != StateType::None) {
-        stateMachine_.ChangeStateTo(nextStateType, event);
-    }
+    // Check if already exist
+    eventCBs_[eventType] = event;
 }
 
 }  // namespace Entity

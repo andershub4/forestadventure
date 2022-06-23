@@ -53,7 +53,7 @@ void TileEntity::RegisterStates(const PropertyData& data)
     auto a = Animation(data.frames_, 0, t);
     idleAnimation->RegisterAnimation("Idle", a);
     idleState->RegisterAbility(idleAnimation);
-    idleState->BindAction(Action::Ignore(), EventType::Collision);
+    idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {});
 }
 
 }  // namespace Entity

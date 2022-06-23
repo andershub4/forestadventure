@@ -49,28 +49,29 @@ void StateMachine::Update(float deltaTime)
 
 std::shared_ptr<State> StateMachine::RegisterState(StateType stateType, bool startState)
 {
-    auto state = std::make_shared<State>(stateType, *this);
+    auto state = std::make_shared<State>(stateType);
     InitState(state, startState);
     return state;
 }
 
 void StateMachine::InitState(std::shared_ptr<State> state, bool startState)
 {
-    state->BindAction(Action::Call(onDestroy_), EventType::Destroy);
+    state->RegisterEventCB(EventType::Destroy, onDestroy_);
 
     auto stateType = state->GetStateType();
     states_[stateType] = state;
 
     if (startState) {
         auto u = states_.at(StateType::Uninitialized);
-        u->BindAction(Action::ChangeTo(stateType), EventType::Init);
+        u->RegisterEventCB(EventType::Init,
+                           [this, stateType](std::shared_ptr<BasicEvent> event) { ChangeStateTo(stateType, event); });
     }
 }
 
 void StateMachine::RegisterCreateCB(std::function<void(std::shared_ptr<BasicEvent>)> onCreate)
 {
     auto u = states_.at(StateType::Uninitialized);
-    u->BindAction(Action::Call(onCreate), EventType::Create);
+    u->RegisterEventCB(EventType::Create, onCreate);
 }
 
 void StateMachine::RegisterDestroyCB(std::function<void(std::shared_ptr<BasicEvent>)> onDestroy)

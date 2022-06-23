@@ -10,7 +10,6 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Fwd/SfmlFwd.h"
 #include "StateType.h"
 
 namespace FA {
@@ -19,7 +18,6 @@ namespace Entity {
 
 struct BasicEvent;
 class State;
-struct Action;
 
 class StateMachine
 {
