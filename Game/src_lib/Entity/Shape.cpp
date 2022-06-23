@@ -53,7 +53,9 @@ void Shape::SetPosition(const sf::Vector2f& position)
     for (auto& sprite : sprites_) {
         sprite.second.setPosition(position);
     }
+#ifdef _DEBUG
     rShape_.setPosition(position);
+#endif
 }
 
 void Shape::SetRotation(float rotation)
@@ -61,7 +63,9 @@ void Shape::SetRotation(float rotation)
     for (auto& sprite : sprites_) {
         sprite.second.setRotation(rotation);
     }
+#ifdef _DEBUG
     rShape_.setRotation(rotation);
+#endif
 }
 
 }  // namespace Entity
