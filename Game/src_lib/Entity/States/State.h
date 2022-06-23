@@ -22,16 +22,16 @@ struct BasicEvent;
 class StateMachine;
 class BasicAbility;
 
-class BasicState
+class State
 {
 public:
-    BasicState(StateType stateType, StateMachine& stateMachine);
-    virtual ~BasicState();
+    State(StateType stateType, StateMachine& stateMachine);
+    virtual ~State();
 
-    BasicState(const BasicState&) = delete;
-    BasicState& operator=(const BasicState&) = delete;
-    BasicState(BasicState&&) = delete;
-    BasicState& operator=(BasicState&&) = delete;
+    State(const State&) = delete;
+    State& operator=(const State&) = delete;
+    State(State&&) = delete;
+    State& operator=(State&&) = delete;
 
     void Enter(std::shared_ptr<BasicEvent> event);
     void Exit();

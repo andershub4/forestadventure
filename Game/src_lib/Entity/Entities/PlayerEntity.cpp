@@ -19,7 +19,7 @@
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Events/StopMoveEvent.h"
 #include "Entity/PropertyData.h"
-#include "Entity/States/BasicState.h"
+#include "Entity/States/State.h"
 #include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -191,7 +191,7 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
         moveAnimation->RegisterAnimation(ss.str(), a);
     }
     moveState->RegisterAbility(move);
-    moveState->RegisterAbility(moveAnimation); //register animation after move
+    moveState->RegisterAbility(moveAnimation);  // register animation after move
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
     moveState->BindAction(Action::Ignore(), EventType::StartMove);
     moveState->BindAction(Action::Ignore(), EventType::Attack);
@@ -221,7 +221,7 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
         attackWeaponAnimation->RegisterAnimation(ss.str(), a);
     }
     attackWeaponState->RegisterAbility(shoot);
-    attackWeaponState->RegisterAbility(attackWeaponAnimation);//register animation after shoot
+    attackWeaponState->RegisterAbility(attackWeaponAnimation);  // register animation after shoot
     attackWeaponState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     attackWeaponState->BindAction(Action::Ignore(), EventType::Attack);
     attackWeaponState->BindAction(Action::Ignore(), EventType::AttackWeapon);

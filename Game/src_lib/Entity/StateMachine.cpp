@@ -7,7 +7,7 @@
 #include "StateMachine.h"
 
 #include "Events/BasicEvent.h"
-#include "States/BasicState.h"
+#include "States/State.h"
 
 namespace FA {
 
@@ -47,14 +47,14 @@ void StateMachine::Update(float deltaTime)
     currentState_->Update(deltaTime);
 }
 
-std::shared_ptr<BasicState> StateMachine::RegisterState(StateType stateType, bool startState)
+std::shared_ptr<State> StateMachine::RegisterState(StateType stateType, bool startState)
 {
-    auto state = std::make_shared<BasicState>(stateType, *this);
+    auto state = std::make_shared<State>(stateType, *this);
     InitState(state, startState);
     return state;
 }
 
-void StateMachine::InitState(std::shared_ptr<BasicState> state, bool startState)
+void StateMachine::InitState(std::shared_ptr<State> state, bool startState)
 {
     state->BindAction(Action::Call(onDestroy_), EventType::Destroy);
 

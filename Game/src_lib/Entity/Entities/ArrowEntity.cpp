@@ -12,7 +12,7 @@
 #include "Entity/Abilities/AnimationAbility.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/PropertyData.h"
-#include "Entity/States/BasicState.h"
+#include "Entity/States/State.h"
 #include "Resource/SheetId.h"
 
 namespace FA {

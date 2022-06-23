@@ -11,7 +11,7 @@
 #include "Constant/Entity.h"
 #include "Entity/Abilities/AnimationAbility.h"
 #include "Entity/PropertyData.h"
-#include "Entity/States/BasicState.h"
+#include "Entity/States/State.h"
 
 namespace FA {
 

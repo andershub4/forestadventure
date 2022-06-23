@@ -14,7 +14,7 @@
 #include "Entity/Abilities/AnimationAbility.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/PropertyData.h"
-#include "Entity/States/BasicState.h"
+#include "Entity/States/State.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -107,7 +107,7 @@ void MoleEntity::RegisterStates(const PropertyData& data)
         moveAnimation->RegisterAnimation(ss.str(), a);
     }
     moveState->RegisterAbility(move);
-    moveState->RegisterAbility(moveAnimation); //register animation after move
+    moveState->RegisterAbility(moveAnimation);  // register animation after move
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 

@@ -58,7 +58,7 @@ protected:
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void ChangeState(StateType stateType, std::shared_ptr<BasicEvent> event);
     Shape CreateShape();
-    std::shared_ptr<BasicState> RegisterState(StateType stateType, bool startState = false);
+    std::shared_ptr<State> RegisterState(StateType stateType, bool startState = false);
 
 private:
     EntityId id_ = InvalidEntityId;

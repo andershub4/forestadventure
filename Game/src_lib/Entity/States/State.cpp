@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "BasicState.h"
+#include "State.h"
 
 #include "Entity/Abilities/BasicAbility.h"
 #include "Entity/Events/BasicEvent.h"
@@ -15,51 +15,51 @@ namespace FA {
 
 namespace Entity {
 
-BasicState::BasicState(StateType stateType, StateMachine& stateMachine)
+State::State(StateType stateType, StateMachine& stateMachine)
     : stateMachine_(stateMachine)
     , stateType_(stateType)
 {}
 
-BasicState::~BasicState() = default;
+State::~State() = default;
 
-void BasicState::Enter(std::shared_ptr<BasicEvent> event)
+void State::Enter(std::shared_ptr<BasicEvent> event)
 {
     for (auto a : abilities_) {
         a->Enter(event);
     }
 }
 
-void BasicState::Exit()
+void State::Exit()
 {
     for (auto a : abilities_) {
         a->Exit();
     }
 }
 
-void BasicState::Update(float deltaTime)
+void State::Update(float deltaTime)
 {
     for (auto a : abilities_) {
         a->Update(deltaTime);
     }
 }
 
-void BasicState::HandleEvent(std::shared_ptr<BasicEvent> event)
+void State::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
     auto action = GetAction(event->GetEventType());
     DoAction(action, event);
 }
 
-void BasicState::BindAction(const Action& action, EventType eventType)
+void State::BindAction(const Action& action, EventType eventType)
 {
     eventMap_[eventType] = action;
 }
 
-void BasicState::RegisterAbility(std::shared_ptr<BasicAbility> ability)
+void State::RegisterAbility(std::shared_ptr<BasicAbility> ability)
 {
     abilities_.emplace_back(ability);
 }
 
-Action BasicState::GetAction(EventType eventType) const
+Action State::GetAction(EventType eventType) const
 {
     auto it = eventMap_.find(eventType);
     if (it != eventMap_.end()) {
@@ -71,7 +71,7 @@ Action BasicState::GetAction(EventType eventType) const
     }
 }
 
-void BasicState::DoAction(const Action& action, std::shared_ptr<BasicEvent> event)
+void State::DoAction(const Action& action, std::shared_ptr<BasicEvent> event)
 {
     if (action.cb_) action.cb_(event);
 

@@ -195,7 +195,7 @@
     <ClCompile Include="Entity\PropertyManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\States\BasicState.cpp">
+    <ClCompile Include="Entity\States\State.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Abilities\BasicAbility.cpp">
@@ -506,7 +506,7 @@
     <ClInclude Include="Entity\PropertyManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\States\BasicState.h">
+    <ClInclude Include="Entity\States\State.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\StateType.h">

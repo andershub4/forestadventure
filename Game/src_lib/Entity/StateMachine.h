@@ -18,7 +18,7 @@ namespace FA {
 namespace Entity {
 
 struct BasicEvent;
-class BasicState;
+class State;
 struct Action;
 
 class StateMachine
@@ -27,7 +27,7 @@ public:
     StateMachine();
     ~StateMachine();
 
-    std::shared_ptr<BasicState> RegisterState(StateType stateType, bool startState = false);
+    std::shared_ptr<State> RegisterState(StateType stateType, bool startState = false);
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void Update(float deltaTime);
@@ -40,13 +40,13 @@ public:
     void ChangeStateTo(StateType nextStateType, std::shared_ptr<BasicEvent> event);
 
 private:
-    std::unordered_map<StateType, std::shared_ptr<BasicState>> states_;
-    std::shared_ptr<BasicState> currentState_ = nullptr;
+    std::unordered_map<StateType, std::shared_ptr<State>> states_;
+    std::shared_ptr<State> currentState_ = nullptr;
     std::function<void(std::shared_ptr<BasicEvent> event)> onDestroy_{};
     std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
 
 private:
-    void InitState(std::shared_ptr<BasicState> state, bool startState);
+    void InitState(std::shared_ptr<State> state, bool startState);
 };
 
 }  // namespace Entity

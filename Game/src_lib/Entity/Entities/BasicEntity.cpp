@@ -85,7 +85,7 @@ Shape BasicEntity::CreateShape()
     return Shape([this]() { OnUpdateShape(); });
 }
 
-std::shared_ptr<BasicState> BasicEntity::RegisterState(StateType stateType, bool startState)
+std::shared_ptr<State> BasicEntity::RegisterState(StateType stateType, bool startState)
 {
     return stateMachine_.RegisterState(stateType, startState);
 }
