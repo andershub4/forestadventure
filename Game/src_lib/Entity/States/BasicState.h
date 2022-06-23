@@ -7,7 +7,7 @@
 #pragma once
 
 #include <memory>
-#include <set>
+#include <vector>
 #include <unordered_map>
 
 #include "Entity/Action.h"
@@ -47,7 +47,7 @@ private:
     StateMachine& stateMachine_;
     std::unordered_map<EventType, Action> eventMap_;
     StateType stateType_ = StateType::Uninitialized;
-    std::set<std::shared_ptr<BasicAbility>> abilities_;
+    std::vector<std::shared_ptr<BasicAbility>> abilities_;
 
 private:
     Action GetAction(EventType eventType) const;

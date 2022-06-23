@@ -107,7 +107,7 @@ void MoleEntity::RegisterStates(const PropertyData& data)
         moveAnimation->RegisterAnimation(ss.str(), a);
     }
     moveState->RegisterAbility(move);
-    moveState->RegisterAbility(moveAnimation);
+    moveState->RegisterAbility(moveAnimation); //register animation after move
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
 }
 

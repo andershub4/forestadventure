@@ -191,7 +191,7 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
         moveAnimation->RegisterAnimation(ss.str(), a);
     }
     moveState->RegisterAbility(move);
-    moveState->RegisterAbility(moveAnimation);
+    moveState->RegisterAbility(moveAnimation); //register animation after move
     moveState->BindAction(Action::ChangeTo(StateType::Idle), EventType::StopMove);
     moveState->BindAction(Action::Ignore(), EventType::StartMove);
     moveState->BindAction(Action::Ignore(), EventType::Attack);
@@ -220,8 +220,8 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
         auto a = entityService_.MakeAnimation(dir.second);
         attackWeaponAnimation->RegisterAnimation(ss.str(), a);
     }
-    attackWeaponState->RegisterAbility(attackWeaponAnimation);
     attackWeaponState->RegisterAbility(shoot);
+    attackWeaponState->RegisterAbility(attackWeaponAnimation);//register animation after shoot
     attackWeaponState->BindAction(Action::ChangeTo(StateType::Move), EventType::StartMove);
     attackWeaponState->BindAction(Action::Ignore(), EventType::Attack);
     attackWeaponState->BindAction(Action::Ignore(), EventType::AttackWeapon);

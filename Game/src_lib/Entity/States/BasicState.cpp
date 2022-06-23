@@ -56,7 +56,7 @@ void BasicState::BindAction(const Action& action, EventType eventType)
 
 void BasicState::RegisterAbility(std::shared_ptr<BasicAbility> ability)
 {
-    abilities_.emplace(ability);
+    abilities_.emplace_back(ability);
 }
 
 Action BasicState::GetAction(EventType eventType) const
