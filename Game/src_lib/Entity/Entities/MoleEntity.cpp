@@ -51,7 +51,7 @@ void MoleEntity::OnBeginMove(FaceDirection faceDirection)
 
 void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
-    propertyManager_.GetRef<sf::Vector2f>("Position") += delta;
+    position_ += delta;
 }
 
 void MoleEntity::OnUpdateAnimation(const Animation& animation)
@@ -62,8 +62,6 @@ void MoleEntity::OnUpdateAnimation(const Animation& animation)
 
 void MoleEntity::RegisterProperties()
 {
-    propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
-    propertyManager_.Register<float>("Rotation", 0.0);
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 

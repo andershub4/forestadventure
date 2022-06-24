@@ -30,12 +30,6 @@ void TileEntity::OnUpdateAnimation(const Animation& animation)
     animation.ApplyTo(sprite);
 }
 
-void TileEntity::RegisterProperties()
-{
-    propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
-    propertyManager_.Register<float>("Rotation", 0.0);
-}
-
 void TileEntity::RegisterShape()
 {
     shape_ = CreateShape();

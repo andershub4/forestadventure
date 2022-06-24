@@ -76,8 +76,8 @@ void BasicEntity::ChangeState(StateType stateType, std::shared_ptr<BasicEvent> e
 
 void BasicEntity::OnUpdateShape()
 {
-    shape_.SetPosition(propertyManager_.Get<sf::Vector2f>("Position"));
-    shape_.SetRotation(propertyManager_.Get<float>("Rotation"));
+    shape_.SetPosition(position_);
+    shape_.SetRotation(rotation_);
 }
 
 Shape BasicEntity::CreateShape()
@@ -99,7 +99,7 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
     RegisterStates(data);
 
     // ReadObjectData
-    propertyManager_.Set<sf::Vector2f>("Position", data.position_);
+    position_ = data.position_;
 
     for (const auto& p : data.properties_) {
         propertyManager_.ReadCustomProperty(p.first, p.second);

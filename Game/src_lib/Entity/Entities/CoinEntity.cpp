@@ -31,12 +31,6 @@ void CoinEntity::OnUpdateAnimation(const Animation& animation)
     animation.ApplyTo(sprite);
 }
 
-void CoinEntity::RegisterProperties()
-{
-    propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
-    propertyManager_.Register<float>("Rotation", 0.0);
-}
-
 void CoinEntity::RegisterShape()
 {
     shape_ = CreateShape();

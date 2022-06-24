@@ -119,13 +119,13 @@ void PlayerEntity::OnBeginMove(FaceDirection faceDirection)
 
 void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
-    propertyManager_.GetRef<sf::Vector2f>("Position") += delta;
+    position_ += delta;
 }
 
 void PlayerEntity::OnExitShoot()
 {
     auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
-    auto position = propertyManager_.Get<sf::Vector2f>("Position") + arrowOffset.at(dir);
+    auto position = position_ + arrowOffset.at(dir);
 
     entityService_.SpawnEntity(EntityType::Arrow, dir, position);
 }
@@ -138,8 +138,6 @@ void PlayerEntity::OnUpdateAnimation(const Animation& animation)
 
 void PlayerEntity::RegisterProperties()
 {
-    propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
-    propertyManager_.Register<float>("Rotation", 0.0);
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
@@ -236,7 +234,7 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
 
 void PlayerEntity::Start()
 {
-    entityService_.AddCamera(propertyManager_.GetRef<sf::Vector2f>("Position"));
+    entityService_.AddCamera(position_);
 }
 
 }  // namespace Entity

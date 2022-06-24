@@ -51,6 +51,8 @@ protected:
     PropertyManager propertyManager_;
     EntityService entityService_;
     Shape shape_;
+    sf::Vector2f position_;
+    float rotation_{0.0};
 
 protected:
     virtual std::vector<MessageType> Messages() const { return {}; }

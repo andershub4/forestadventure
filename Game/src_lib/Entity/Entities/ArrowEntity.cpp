@@ -36,18 +36,17 @@ ArrowEntity::~ArrowEntity() = default;
 
 void ArrowEntity::OnBeginMove(FaceDirection faceDirection)
 {
-    auto rotation = arrowRotation.at(faceDirection);
-    propertyManager_.Set("Rotation", rotation);
+    rotation_ = arrowRotation.at(faceDirection);
 }
 
 void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
-    propertyManager_.GetRef<sf::Vector2f>("Position") += delta;
+    position_ += delta;
 
     auto mapW = static_cast<float>(entityService_.GetMapSize().x);
     auto mapH = static_cast<float>(entityService_.GetMapSize().y);
     auto mapRect = sf::FloatRect(0, 0, mapW, mapH);
-    bool outsideMap = !mapRect.contains(propertyManager_.Get<sf::Vector2f>("Position"));
+    bool outsideMap = !mapRect.contains(position_);
 
     if (outsideMap) {
         entityService_.DeleteEntity(GetId());
@@ -58,12 +57,6 @@ void ArrowEntity::OnUpdateAnimation(const Animation& animation)
 {
     auto& sprite = shape_.GetSprite("Main");
     animation.ApplyTo(sprite);
-}
-
-void ArrowEntity::RegisterProperties()
-{
-    propertyManager_.Register<float>("Rotation", 0.0);
-    propertyManager_.Register<sf::Vector2f>("Position", {0.0, 0.0});
 }
 
 void ArrowEntity::RegisterShape()

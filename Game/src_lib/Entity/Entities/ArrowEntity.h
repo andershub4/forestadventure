@@ -23,7 +23,6 @@ public:
     virtual EntityType Type() const override { return EntityType::Arrow; }
 
 private:
-    virtual void RegisterProperties() override;
     virtual void RegisterShape() override;
     virtual void RegisterStates(const PropertyData& data) override;
 
