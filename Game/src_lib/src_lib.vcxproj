@@ -240,7 +240,7 @@
     <ClInclude Include="Entity\EventType.h" />
     <ClInclude Include="Entity\EntityService.h" />
     <ClInclude Include="Entity\StateType.h" />
-    <ClInclude Include="Entity\States\State.h" />
+    <ClInclude Include="Entity\State.h" />
     <ClInclude Include="Entity\PropertyData.h" />
     <ClInclude Include="Entity\Entities\MoleEntity.h" />
     <ClInclude Include="Entity\Entities\PlayerEntity.h" />
@@ -327,7 +327,7 @@
     <ClCompile Include="Effect\NullEffect.cpp" />
     <ClCompile Include="Entity\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Entity\EntityService.cpp" />
-    <ClCompile Include="Entity\States\State.cpp" />
+    <ClCompile Include="Entity\State.cpp" />
     <ClCompile Include="Entity\Entities\MoleEntity.cpp" />
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Entity\Entities\StaticEntity.cpp" />

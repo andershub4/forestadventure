@@ -7,7 +7,7 @@
 #include "StateMachine.h"
 
 #include "Events/BasicEvent.h"
-#include "States/State.h"
+#include "State.h"
 
 namespace FA {
 

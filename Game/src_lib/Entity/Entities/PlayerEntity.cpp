@@ -19,7 +19,7 @@
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Events/StopMoveEvent.h"
 #include "Entity/PropertyData.h"
-#include "Entity/States/State.h"
+#include "Entity/State.h"
 #include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
