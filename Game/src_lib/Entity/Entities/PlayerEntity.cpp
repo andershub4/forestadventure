@@ -174,6 +174,7 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
     idleState->RegisterAbility(idleAnimation);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Move, event); });
+    idleState->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
     idleState->RegisterEventCB(EventType::Attack,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Attack, event); });
     idleState->RegisterEventCB(EventType::AttackWeapon, [this](std::shared_ptr<BasicEvent> event) {
