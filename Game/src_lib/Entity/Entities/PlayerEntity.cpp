@@ -124,10 +124,13 @@ void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
 
 void PlayerEntity::OnExitShoot()
 {
-    auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
-    auto position = position_ + arrowOffset.at(dir);
-
-    entityService_.SpawnEntity(EntityType::Arrow, dir, position);
+    bool shot = propertyManager_.Get<bool>("Fire");
+    if (shot) {
+        propertyManager_.Set<bool>("Fire", false);
+        auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
+        auto position = position_ + arrowOffset.at(dir);
+        entityService_.SpawnEntity(EntityType::Arrow, dir, position);
+    }
 }
 
 void PlayerEntity::OnUpdateAnimation(const Animation& animation)
@@ -139,6 +142,7 @@ void PlayerEntity::OnUpdateAnimation(const Animation& animation)
 void PlayerEntity::RegisterProperties()
 {
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
+    propertyManager_.Register<bool>("Fire", false);
 }
 
 void PlayerEntity::RegisterShape()
@@ -159,6 +163,13 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
     auto updateAnimationAndComplete = [this](const Animation& animation) {
         OnUpdateAnimation(animation);
         if (animation.IsCompleted()) {
+            ChangeState(StateType::Idle, nullptr);
+        }
+    };
+    auto updateAnimationAndShot = [this](const Animation& animation) {
+        OnUpdateAnimation(animation);
+        if (animation.IsCompleted()) {
+            propertyManager_.Set<bool>("Fire", true);
             ChangeState(StateType::Idle, nullptr);
         }
     };
@@ -218,7 +229,7 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
     auto shoot = std::make_shared<ShootAbility>(
         nullptr, [this]() { OnExitShoot(); }, nullptr);
-    auto attackWeaponAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndComplete);
+    auto attackWeaponAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndShot);
     for (const auto& dir : animationDatas.at(StateType::AttackWeapon)) {
         std::stringstream ss;
         ss << dir.first;
