@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <functional>
 #include <vector>
 
 #include "Frame.h"
@@ -18,8 +17,7 @@ class Animation
 {
 public:
     Animation() = default;
-    Animation(const std::vector<Frame>& frames, unsigned int defaultFrame, float switchTime,
-              std::function<void(sf::Sprite&)> alignFn = nullptr);
+    Animation(const std::vector<Frame>& frames, unsigned int defaultFrame, float switchTime);
 
     void Update(float deltaTime);  // delta time; time since previous time to current frame
     void ApplyTo(sf::Sprite& sprite) const;
@@ -38,7 +36,6 @@ private:
     unsigned int defaultIndex_{};
     bool isCompleted_ = false;
     bool isValid_ = false;
-    std::function<void(sf::Sprite&)> alignFn_ = nullptr;
 };
 
 }  // namespace FA

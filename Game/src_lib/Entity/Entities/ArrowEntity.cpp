@@ -57,6 +57,7 @@ void ArrowEntity::OnUpdateAnimation(const Animation& animation)
 {
     auto& sprite = shape_.GetSprite("Main");
     animation.ApplyTo(sprite);
+    sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 }
 
 void ArrowEntity::RegisterShape()

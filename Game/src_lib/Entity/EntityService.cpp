@@ -6,8 +6,6 @@
 
 #include "EntityService.h"
 
-#include <SFML/Graphics/Sprite.hpp>
-
 #include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Level/CameraManager.h"
@@ -43,10 +41,7 @@ Animation EntityService::MakeAnimation(const AnimationData& data) const
 {
     float t = constant::Entity::stdSwitchTime;
     auto frames = frameHandler_.MakeFrames(sheetManager_, data);
-    auto alignFn = [](sf::Sprite& sprite) {
-        sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
-    };
-    return Animation(frames, data.locationData_.defaultIndex_, t, alignFn);
+    return Animation(frames, data.locationData_.defaultIndex_, t);
 }
 
 Image EntityService::MakeImage(const ImageData& data) const
