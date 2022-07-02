@@ -32,7 +32,6 @@ public:
 
     void Load();
     void Setup();
-    void EnableInput(bool enable);
     sf::Vector2u GetMapSize() const;
 
 private:

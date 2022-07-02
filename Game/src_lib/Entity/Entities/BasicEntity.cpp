@@ -130,9 +130,7 @@ void BasicEntity::OnDestroy(std::shared_ptr<BasicEvent> event)
 
 void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
 {
-    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) {
-        if (enableInput_) OnMessage(message);
-    });
+    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
 }
 
 void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)

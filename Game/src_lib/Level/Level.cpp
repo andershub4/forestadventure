@@ -130,11 +130,6 @@ void Level::Draw(sf::RenderTarget &renderTarget)
     }
 }
 
-void Level::EnableInput(bool enable)
-{
-    entityManager_.EnableInput(enable);
-}
-
 sf::Vector2u Level::GetMapSize() const
 {
     return tileMap_.GetSize();

@@ -44,7 +44,6 @@ public:
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget& renderTarget);
     void QueueInitEvents(std::shared_ptr<BasicEvent> event);
-    void EnableInput(bool enable) { enableInput_ = enable; }
     EntityId GetId() const { return id_; }
 
 protected:
@@ -66,7 +65,6 @@ protected:
 private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
-    bool enableInput_ = true;
     StateMachine stateMachine_;
 
 private:

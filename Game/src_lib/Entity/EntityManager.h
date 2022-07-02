@@ -32,7 +32,6 @@ public:
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
-    void EnableInput(bool enable);
     BasicEntity &CreateEntity(EntityType type, const PropertyData &data);
     void DeleteEntity(EntityId id);
     void HandleCreatedEntities();

@@ -30,7 +30,7 @@ public:
     virtual LayerId GetId() const override { return LayerId::Level; }
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
-    virtual void EnableInput(bool enable) override;
+    virtual void EnableInput(bool enable) override {}
     virtual void EnterTransition(const BasicTransition& transition) override;
     virtual void ExitTransition(const BasicTransition& transition) override;
     virtual void OnCreate() override;

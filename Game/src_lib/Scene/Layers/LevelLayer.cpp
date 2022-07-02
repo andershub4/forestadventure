@@ -46,11 +46,6 @@ void LevelLayer::Update(float deltaTime)
     if (effect_) effect_->Update(deltaTime);
 }
 
-void LevelLayer::EnableInput(bool enable)
-{
-    level_->EnableInput(enable);
-}
-
 void LevelLayer::EnterTransition(const BasicTransition& transition)
 {
     sf::Vector2f layerPos = layerTexture_.mapPixelToCoords({0, 0});

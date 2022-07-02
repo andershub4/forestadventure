@@ -91,13 +91,6 @@ void EntityManager::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)
     }
 }
 
-void EntityManager::EnableInput(bool enable)
-{
-    for (const auto& entry : entityMap_) {
-        entry.second->EnableInput(enable);
-    }
-}
-
 }  // namespace Entity
 
 }  // namespace FA
