@@ -26,8 +26,8 @@ public:
                 std::function<void(const sf::Vector2f&)> updateFn);
     virtual ~MoveAbility();
 
-    virtual void Enter(std::shared_ptr<BasicEvent> event);
-    virtual void Update(float deltaTime);
+    virtual void Enter(std::shared_ptr<BasicEvent> event) override;
+    virtual void Update(float deltaTime) override;
 
 private:
     sf::Vector2f movementVector_{};

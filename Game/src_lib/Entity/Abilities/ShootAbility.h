@@ -24,7 +24,7 @@ public:
                  std::function<void(const sf::Vector2f&)> updateFn);
     virtual ~ShootAbility();
 
-    virtual void Exit();
+    virtual void Exit() override;
 
 private:
     std::function<void(FaceDirection)> enterFn_;

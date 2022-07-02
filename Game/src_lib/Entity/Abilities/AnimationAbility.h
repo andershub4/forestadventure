@@ -25,8 +25,8 @@ public:
     AnimationAbility(std::function<std::string()> getKey, std::function<void(const Animation &)>);
     virtual ~AnimationAbility();
 
-    virtual void Enter(std::shared_ptr<BasicEvent> event);
-    virtual void Update(float deltaTime);
+    virtual void Enter(std::shared_ptr<BasicEvent> event) override;
+    virtual void Update(float deltaTime) override;
 
     void RegisterAnimation(const std::string &name, const Animation &animation);
     bool AnimationIsCompleted() const;
