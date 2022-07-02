@@ -39,7 +39,7 @@ void PlayScene::Enter()
     layers_[LayerId::PreAlpha] = std::make_unique<PreAlphaLayer>(messageBus_, rect);
 
     // subscribe layer message before entity is created (so layer can receive EntityCreatedMessage)
-    Subscribe({MessageType::CloseWindow, MessageType::KeyPressed});
+    Subscribe({MessageType::CloseWindow, MessageType::KeyPressed, MessageType::GameOver});
     for (const auto& entry : layers_) {
         auto& layer = entry.second;
         layer->SubscribeMessages();
@@ -53,7 +53,7 @@ void PlayScene::Enter()
 
 void PlayScene::Exit()
 {
-    Unsubscribe({MessageType::CloseWindow, MessageType::KeyPressed});
+    Unsubscribe({MessageType::CloseWindow, MessageType::KeyPressed, MessageType::GameOver});
     for (const auto& entry : layers_) {
         auto& layer = entry.second;
         layer->UnsubscribeMessages();
@@ -90,11 +90,9 @@ void PlayScene::OnMessage(std::shared_ptr<Message> msg)
         if (key == Keyboard::Key::Escape) {
             OnCloseWindow();
         }
-        else if (key == Keyboard::Key::Return) {
-            // TODO: If player press Return, while pressing an arrow key, Transition scene is shown.
-            // However, player is still moving (and input is disabled).
-            SwitchScene<IntroScene, FadeTransition>();
-        }
+    }
+    else if (msg->GetMessageType() == MessageType::GameOver) {
+        SwitchScene<IntroScene, FadeTransition>();
     }
 }
 

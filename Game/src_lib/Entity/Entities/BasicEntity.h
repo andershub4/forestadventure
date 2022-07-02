@@ -61,6 +61,7 @@ protected:
     void ChangeState(StateType stateType, std::shared_ptr<BasicEvent> event);
     Shape CreateShape();
     std::shared_ptr<State> RegisterState(StateType stateType, bool startState = false);
+    void SendMessage(std::shared_ptr<Message> message);
 
 private:
     EntityId id_ = InvalidEntityId;
@@ -74,12 +75,14 @@ private:
     virtual void RegisterShape() {}
     virtual void Start() {}
     virtual void OnMessage(std::shared_ptr<Message> msg) {}
+    virtual void OnDying() {}
 
     void OnCreate(std::shared_ptr<BasicEvent> event);
     void OnDestroy(std::shared_ptr<BasicEvent> event);
     void OnUpdateShape();
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
+    void RegisterDeadState();
 };
 
 }  // namespace Entity

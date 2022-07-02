@@ -31,6 +31,7 @@ private:
     virtual void RegisterStates(const PropertyData& data) override;
     virtual void Start() override;
     virtual void OnMessage(std::shared_ptr<Message> msg) override;
+    virtual void OnDying() override;
 
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);

@@ -210,17 +210,20 @@
   <ItemGroup>
     <ClInclude Include="Constant\Entity.h" />
     <ClInclude Include="Entity\Abilities\AnimationAbility.h" />
+    <ClInclude Include="Entity\Abilities\DieAbility.h" />
     <ClInclude Include="Entity\Abilities\ShootAbility.h" />
     <ClInclude Include="Entity\Abilities\BasicAbility.h" />
     <ClInclude Include="Entity\Abilities\MoveAbility.h" />
     <ClInclude Include="Entity\Entities\CoinEntity.h" />
     <ClInclude Include="Entity\Entities\TileEntity.h" />
+    <ClInclude Include="Entity\Events\DeadEvent.h" />
     <ClInclude Include="Entity\Properties\BasicProperty.h" />
     <ClInclude Include="Entity\Properties\Property.h" />
     <ClInclude Include="Entity\PropertyManager.h" />
     <ClInclude Include="Entity\PropertyStore.h" />
     <ClInclude Include="Message\BroadcastMessage\EntityCreatedMessage.h" />
     <ClInclude Include="Message\BroadcastMessage\EntityDestroyedMessage.h" />
+    <ClInclude Include="Message\BroadcastMessage\GameOverMessage.h" />
     <ClInclude Include="Resource\Animation.h" />
     <ClInclude Include="Resource\Frame.h" />
     <ClInclude Include="Resource\Image.h" />
@@ -314,6 +317,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity\Abilities\AnimationAbility.cpp" />
+    <ClCompile Include="Entity\Abilities\DieAbility.cpp" />
     <ClCompile Include="Entity\Abilities\ShootAbility.cpp" />
     <ClCompile Include="Entity\Abilities\BasicAbility.cpp" />
     <ClCompile Include="Entity\Abilities\MoveAbility.cpp" />

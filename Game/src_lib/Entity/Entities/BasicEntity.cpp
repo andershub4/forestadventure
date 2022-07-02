@@ -8,10 +8,12 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/Abilities/DieAbility.h"
 #include "Entity/Events/CreateEvent.h"
 #include "Entity/Events/DestroyEvent.h"
 #include "Entity/Events/InitEvent.h"
 #include "Entity/Shape.h"
+#include "Entity/State.h"
 #include "Message/BroadcastMessage/EntityCreatedMessage.h"
 #include "Message/BroadcastMessage/EntityDestroyedMessage.h"
 #include "Message/MessageBus.h"
@@ -87,7 +89,15 @@ Shape BasicEntity::CreateShape()
 
 std::shared_ptr<State> BasicEntity::RegisterState(StateType stateType, bool startState)
 {
-    return stateMachine_.RegisterState(stateType, startState);
+    auto state = stateMachine_.RegisterState(stateType, startState);
+    state->RegisterEventCB(EventType::Dead,
+                           [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Dead, event); });
+    return state;
+}
+
+void BasicEntity::SendMessage(std::shared_ptr<Message> message)
+{
+    messageBus_.SendMessage(message);
 }
 
 void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
@@ -96,6 +106,7 @@ void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
     auto data = c->data_;
 
     RegisterProperties();
+    RegisterDeadState();
     RegisterStates(data);
 
     // ReadObjectData
@@ -127,6 +138,14 @@ void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
 void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)
 {
     messageBus_.RemoveSubscriber(Name(), messageTypes);
+}
+
+void BasicEntity::RegisterDeadState()
+{
+    auto deadState = RegisterState(StateType::Dead);
+    auto die = std::make_shared<DieAbility>([this]() { OnDying(); });
+    deadState->RegisterAbility(die);
+    deadState->IgnoreAllEvents();
 }
 
 }  // namespace Entity

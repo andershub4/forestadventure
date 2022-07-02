@@ -210,6 +210,9 @@
     <ClCompile Include="Entity\Abilities\AnimationAbility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\Abilities\DieAbility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -519,6 +522,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Abilities\AnimationAbility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Events\DeadEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Message\BroadcastMessage\GameOverMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Abilities\DieAbility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

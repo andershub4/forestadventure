@@ -39,11 +39,13 @@ public:
     StateType GetStateType() const { return stateType_; }
     void RegisterAbility(std::shared_ptr<BasicAbility> ability);
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
+    void IgnoreAllEvents();
 
 private:
     StateType stateType_ = StateType::Uninitialized;
     std::vector<std::shared_ptr<BasicAbility>> abilities_;
     std::unordered_map<EventType, std::function<void(std::shared_ptr<BasicEvent>)>> eventCBs_;
+    bool ignoreAllEvents_ = false;
 };
 
 }  // namespace Entity

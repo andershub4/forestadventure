@@ -16,12 +16,14 @@
 #include "Entity/Abilities/ShootAbility.h"
 #include "Entity/Events/AttackEvent.h"
 #include "Entity/Events/AttackWeapon.h"
+#include "Entity/Events/DeadEvent.h"
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Events/StopMoveEvent.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
 #include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
+#include "Message/BroadcastMessage/GameOverMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -109,6 +111,9 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
         else if (key == Keyboard::Key::Space) {
             HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow));
         }
+        else if (key == Keyboard::Key::Num1) {
+            HandleEvent(std::make_shared<DeadEvent>());
+        }
     }
 }
 
@@ -137,6 +142,11 @@ void PlayerEntity::OnUpdateAnimation(const Animation& animation)
 {
     auto& sprite = shape_.GetSprite("Main");
     animation.ApplyTo(sprite);
+}
+
+void PlayerEntity::OnDying()
+{
+    SendMessage(std::make_shared<GameOverMessage>());
 }
 
 void PlayerEntity::RegisterProperties()

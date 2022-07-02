@@ -6,18 +6,17 @@
 
 #pragma once
 
+#include "BasicEvent.h"
+
 namespace FA {
 
-enum class MessageType {
-    Undefined,
-    KeyPressed,
-    KeyReleased,
-    IsKeyPressed,
-    IsKeyReleased,
-    CloseWindow,
-    EntityCreated,
-    EntityDestroyed,
-    GameOver
+namespace Entity {
+
+struct DeadEvent : public BasicEvent
+{
+    virtual EventType GetEventType() const { return EventType::Dead; }
 };
+
+}  // namespace Entity
 
 }  // namespace FA

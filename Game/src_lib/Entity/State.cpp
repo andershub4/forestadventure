@@ -43,8 +43,18 @@ void State::Update(float deltaTime)
 
 void State::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
-    auto handler = eventCBs_.at(event->GetEventType());
-    handler(event);
+    auto t = event->GetEventType();
+
+    if (t == EventType::Destroy) {
+        auto handler = eventCBs_.at(t);
+        handler(event);
+        return;
+    }
+
+    if (!ignoreAllEvents_) {
+        auto handler = eventCBs_.at(t);
+        handler(event);
+    }
 }
 
 void State::RegisterAbility(std::shared_ptr<BasicAbility> ability)
@@ -56,6 +66,11 @@ void State::RegisterEventCB(EventType eventType, std::function<void(std::shared_
 {
     // Check if already exist
     eventCBs_[eventType] = event;
+}
+
+void State::IgnoreAllEvents()
+{
+    ignoreAllEvents_ = true;
 }
 
 }  // namespace Entity
