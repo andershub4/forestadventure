@@ -10,6 +10,7 @@
 
 #include "Entity/EntityService.h"
 #include "Entity/Id.h"
+#include "Entity/LayerId.h"
 #include "Entity/PropertyManager.h"
 #include "Entity/Shape.h"
 #include "Entity/StateMachine.h"
@@ -37,6 +38,7 @@ public:
 
     virtual std::string Name() const = 0;
     virtual EntityType Type() const = 0;
+    virtual LayerType GetLayer() const = 0;
 
     void Create(const PropertyData& data);
     void Destroy();

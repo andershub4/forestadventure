@@ -21,6 +21,7 @@ public:
 
     virtual std::string Name() const override { return "TileEntity"; }
     virtual EntityType Type() const override { return EntityType::Tile; }
+    virtual LayerType GetLayer() const override { return LayerType::Waterfall; }
 
 private:
     virtual void RegisterShape() override;

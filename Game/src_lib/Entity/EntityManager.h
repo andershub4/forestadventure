@@ -6,10 +6,12 @@
 
 #pragma once
 
+#include <map>
 #include <memory>
 #include <unordered_map>
 
 #include "Entity/Id.h"
+#include "Entity/LayerId.h"
 #include "Enum/EntityType.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -39,15 +41,24 @@ public:
     void Init();
 
 private:
+    struct DrawableInfo
+    {
+        LayerType layer_{};
+        EntityId id_{};
+    };
+
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
     const Factory &factory_;
     CameraManager &cameraManager_;
     const SheetManager &sheetManager_;
     std::vector<std::unique_ptr<BasicEntity>> createdEntities_;
     std::vector<EntityId> deletedEntities_;
+    std::map<std::string, DrawableInfo> drawables_;
 
 private:
     void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);
+    void AddDrawable(EntityId id, LayerType layerId);
+    void RemoveDrawable(EntityId id);
 };
 
 }  // namespace Entity

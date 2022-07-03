@@ -21,6 +21,7 @@ public:
 
     virtual std::string Name() const override { return "StaticEntity"; }
     virtual EntityType Type() const override { return EntityType::Static; }
+    virtual LayerType GetLayer() const override { return LayerType::Ground; }
 };
 
 }  // namespace Entity

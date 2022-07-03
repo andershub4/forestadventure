@@ -217,6 +217,7 @@
     <ClInclude Include="Entity\Entities\CoinEntity.h" />
     <ClInclude Include="Entity\Entities\TileEntity.h" />
     <ClInclude Include="Entity\Events\DeadEvent.h" />
+    <ClInclude Include="Entity\LayerId.h" />
     <ClInclude Include="Entity\Properties\BasicProperty.h" />
     <ClInclude Include="Entity\Properties\Property.h" />
     <ClInclude Include="Entity\PropertyManager.h" />

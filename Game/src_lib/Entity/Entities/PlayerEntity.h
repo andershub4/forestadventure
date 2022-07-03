@@ -21,6 +21,7 @@ public:
 
     virtual std::string Name() const override { return "PlayerEntity"; }
     virtual EntityType Type() const override { return EntityType::Player; }
+    virtual LayerType GetLayer() const override { return LayerType::Ground; }
 
 protected:
     virtual std::vector<MessageType> Messages() const override;

@@ -533,5 +533,8 @@
     <ClInclude Include="Entity\Abilities\DieAbility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\LayerId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,6 +4,8 @@
  *	See file LICENSE for full license details.
  */
 
+#include <sstream>
+
 #include "EntityManager.h"
 
 #include "Entity/Entities/BasicEntity.h"
@@ -29,8 +31,9 @@ EntityManager::~EntityManager()
 
 void EntityManager::DrawTo(sf::RenderTarget& renderTarget) const
 {
-    for (const auto& entry : entityMap_) {
-        entry.second->DrawTo(renderTarget);
+    for (auto p : drawables_) {
+        auto id = p.second.id_;
+        entityMap_.at(id)->DrawTo(renderTarget);
     }
 }
 
@@ -59,6 +62,7 @@ void EntityManager::HandleCreatedEntities()
 {
     for (auto& entity : createdEntities_) {
         entity->Init();
+        AddDrawable(entity->GetId(), entity->GetLayer());
         AddEntity(std::move(entity));
     }
     createdEntities_.clear();
@@ -69,6 +73,7 @@ void EntityManager::HandleDeletedEntities()
     for (auto id : deletedEntities_) {
         entityMap_[id]->Destroy();
         entityMap_.erase(id);
+        RemoveDrawable(id);
     }
     deletedEntities_.clear();
 }
@@ -88,6 +93,22 @@ void EntityManager::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)
     }
     else {
         LOG_ERROR("id: ", id, " already exist");
+    }
+}
+
+void EntityManager::AddDrawable(EntityId id, LayerType layer)
+{
+    std::stringstream ss;
+    int l = static_cast<int>(layer);
+    ss << l << "_" << id;
+    drawables_[ss.str()] = {layer, id};
+}
+
+void EntityManager::RemoveDrawable(EntityId id)
+{
+    auto it = std::find_if(drawables_.begin(), drawables_.end(), [id](const auto& p) { return p.second.id_ == id; });
+    if (it != drawables_.end()) {
+        drawables_.erase(it);
     }
 }
 

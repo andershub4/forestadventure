@@ -21,6 +21,7 @@ public:
 
     virtual std::string Name() const override { return "ArrowEntity"; }
     virtual EntityType Type() const override { return EntityType::Arrow; }
+    virtual LayerType GetLayer() const override { return LayerType::Ground; }
 
 private:
     virtual void RegisterShape() override;

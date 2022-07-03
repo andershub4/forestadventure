@@ -21,6 +21,7 @@ public:
 
     virtual std::string Name() const override { return "MoleEntity"; }
     virtual EntityType Type() const override { return EntityType::Mole; }
+    virtual LayerType GetLayer() const override { return LayerType::Ground; }
 
 private:
     virtual void RegisterProperties() override;
