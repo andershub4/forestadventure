@@ -35,9 +35,4 @@ void CameraManager::SetMapSize(const sf::Vector2u& mapSize)
     mapSize_ = mapSize;
 }
 
-sf::Vector2u CameraManager::GetMapSize() const
-{
-    return mapSize_;
-}
-
 }  // namespace FA

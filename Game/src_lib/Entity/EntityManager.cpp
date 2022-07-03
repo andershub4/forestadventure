@@ -16,10 +16,8 @@ namespace FA {
 
 namespace Entity {
 
-EntityManager::EntityManager(const Factory& factory, CameraManager& cameraManager, const SheetManager& sheetManager)
+EntityManager::EntityManager(const Factory& factory)
     : factory_(factory)
-    , cameraManager_(cameraManager)
-    , sheetManager_(sheetManager)
 {}
 
 EntityManager::~EntityManager()
@@ -46,7 +44,7 @@ void EntityManager::Update(float deltaTime)
 
 BasicEntity& EntityManager::CreateEntity(EntityType type, const PropertyData& data)
 {
-    auto entity = factory_.Create(type, cameraManager_, sheetManager_, *this);
+    auto entity = factory_.Create(type, *this);
     entity->Create(data);
     createdEntities_.push_back(std::move(entity));
 

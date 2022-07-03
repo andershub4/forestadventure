@@ -65,8 +65,8 @@ const std::unordered_map<StateType, std::unordered_map<FaceDirection, AnimationD
 }  // namespace
 
 PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                           EntityManager& entityManager, MessageBus& messageBus)
-    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus)
+                           EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize)
+    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus, mapSize)
 {}
 
 PlayerEntity::~PlayerEntity() = default;

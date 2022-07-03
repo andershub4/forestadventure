@@ -19,8 +19,8 @@ namespace FA {
 namespace Entity {
 
 CoinEntity::CoinEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                       EntityManager& entityManager, MessageBus& messageBus)
-    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus)
+                       EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize)
+    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus, mapSize)
 {}
 
 CoinEntity::~CoinEntity() = default;

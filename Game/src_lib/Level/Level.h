@@ -12,8 +12,6 @@
 #include "Entity/EntityManager.h"
 #include "Entity/Factory.h"
 #include "Fwd/SfmlFwd.h"
-#include "Resource/SheetManager.h"
-#include "Resource/TextureManager.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
@@ -24,23 +22,21 @@ class CameraManager;
 class Level
 {
 public:
-    Level(MessageBus& messageBus, TextureManager& textureManager, CameraManager& cameraManager);
+    Level(MessageBus& messageBus, const Tile::TileMap& tileMap, const SheetManager& sheetManager,
+          CameraManager& cameraManager);
     ~Level();
 
     void Update(float deltaTime);
     void Draw(sf::RenderTarget& renderTarget);
 
-    void Load();
-    void Setup();
-    sf::Vector2u GetMapSize() const;
+    void Create();
 
 private:
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
     Entity::Factory factory_;
-    SheetManager sheetManager_;
-    Tile::TileMap tileMap_;
+    const Tile::TileMap& tileMap_;
     Entity::EntityManager entityManager_;
 
 private:

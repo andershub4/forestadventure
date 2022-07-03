@@ -16,7 +16,7 @@ class ArrowEntity : public BasicEntity
 {
 public:
     ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                EntityManager& entityManager, MessageBus& messageBus);
+                EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize);
     virtual ~ArrowEntity();
 
     virtual std::string Name() const override { return "ArrowEntity"; }

@@ -13,37 +13,12 @@
 #include "Constant/Entity.h"
 #include "Entity/PropertyData.h"
 #include "Enum/FaceDirection.h"
-#include "Folder.h"
 #include "Logging.h"
 #include "Resource/Image.h"
-#include "Resource/SheetData.h"
-#include "Resource/SheetId.h"
 
 namespace FA {
 
 namespace {
-
-const std::vector<SheetData> textureSheets = {
-    {SheetId::HeroWalkSide, "spritesheets/hero/walk/hero-walk-side.png", {6, 1}},
-    {SheetId::HeroWalkFront, "spritesheets/hero/walk/hero-walk-front.png", {6, 1}},
-    {SheetId::HeroWalkBack, "spritesheets/hero/walk/hero-back-walk.png", {6, 1}},
-    {SheetId::HeroAttackSide, "spritesheets/hero/attack/hero-attack-side.png", {3, 1}},
-    {SheetId::HeroAttackFront, "spritesheets/hero/attack/hero-attack-front.png", {3, 1}},
-    {SheetId::HeroAttackBack, "spritesheets/hero/attack/hero-attack-back.png", {3, 1}},
-    {SheetId::HeroAttackWeaponSide, "spritesheets/hero/attack-weapon/hero-attack-side-weapon.png", {3, 1}},
-    {SheetId::HeroAttackWeaponFront, "spritesheets/hero/attack-weapon/hero-attack-front-weapon.png", {3, 1}},
-    {SheetId::HeroAttackWeaponBack, "spritesheets/hero/attack-weapon/hero-attack-back-weapon.png", {3, 1}},
-    {SheetId::HeroIdleSide, "spritesheets/hero/idle/hero-idle-side.png", {1, 1}},
-    {SheetId::HeroIdleFront, "spritesheets/hero/idle/hero-idle-front.png", {1, 1}},
-    {SheetId::HeroIdleBack, "spritesheets/hero/idle/hero-idle-back.png", {1, 1}},
-    {SheetId::MoleWalkSide, "spritesheets/mole/walk/mole-walk-side.png", {4, 1}},
-    {SheetId::MoleWalkFront, "spritesheets/mole/walk/mole-walk-front.png", {4, 1}},
-    {SheetId::MoleWalkBack, "spritesheets/mole/walk/mole-walk-back.png", {4, 1}},
-    {SheetId::MoleIdleSide, "spritesheets/mole/idle/mole-idle-side.png", {1, 1}},
-    {SheetId::MoleIdleFront, "spritesheets/mole/idle/mole-idle-front.png", {1, 1}},
-    {SheetId::MoleIdleBack, "spritesheets/mole/idle/mole-idle-back.png", {1, 1}},
-    {SheetId::Arrow, "sprites/misc/arrow.png", {1, 1}},
-    {SheetId::Coin, "spritesheets/misc/coin.png", {4, 1}}};
 
 EntityType ObjTypeStrToEnum(const std::string &typeStr)
 {
@@ -84,30 +59,18 @@ FaceDirection FaceDirStrToEnum(const std::string &faceDirStr)
 
 }  // namespace
 
-Level::Level(MessageBus &messageBus, TextureManager &textureManager, CameraManager &cameraManager)
-    : factory_(messageBus)
-    , sheetManager_(textureManager)
-    , tileMap_(sheetManager_)
-    , entityManager_(factory_, cameraManager, sheetManager_)
+Level::Level(MessageBus &messageBus, const Tile::TileMap &tileMap, const SheetManager &sheetManager,
+             CameraManager &cameraManager)
+    : factory_(messageBus, sheetManager, cameraManager, tileMap.GetSize())
+    , tileMap_(tileMap)
+    , entityManager_(factory_)
 {}
 
 Level::~Level() = default;
 
-void Level::Load()
-{
-    auto path = GetAssetsPath() + "/map/simpletest.tmx";
-    tileMap_.Load(path);
-    auto sheetPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
-
-    for (const auto &sheetData : textureSheets) {
-        sheetManager_.LoadSheet(sheetPath, sheetData);
-    }
-}
-
-void Level::Setup()
+void Level::Create()
 {
     LOG_INFO_ENTER_FUNC();
-    tileMap_.Setup();
     CreateBackground();
     CreateEntities();
     CreateFringe();
@@ -128,11 +91,6 @@ void Level::Draw(sf::RenderTarget &renderTarget)
     for (const auto &tile : fringeLayer_) {
         renderTarget.draw(tile);
     }
-}
-
-sf::Vector2u Level::GetMapSize() const
-{
-    return tileMap_.GetSize();
 }
 
 void Level::CreateBackground()

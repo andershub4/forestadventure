@@ -28,8 +28,8 @@ const std::unordered_map<FaceDirection, float> arrowRotation = {{FaceDirection::
 }  // namespace
 
 ArrowEntity::ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                         EntityManager& entityManager, MessageBus& messageBus)
-    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus)
+                         EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize)
+    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus, mapSize)
 {}
 
 ArrowEntity::~ArrowEntity() = default;
@@ -43,9 +43,10 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
     position_ += delta;
 
-    auto mapW = static_cast<float>(entityService_.GetMapSize().x);
-    auto mapH = static_cast<float>(entityService_.GetMapSize().y);
-    auto mapRect = sf::FloatRect(0, 0, mapW, mapH);
+    // auto mapW = static_cast<float>(entityService_.GetMapSize().x);
+    // auto mapH = static_cast<float>(entityService_.GetMapSize().y);
+    // auto mapRect = sf::FloatRect(0, 0, mapW, mapH);
+    auto mapRect = sf::FloatRect({0.0f, 0.0f}, entityService_.GetMapSize());
     bool outsideMap = !mapRect.contains(position_);
 
     if (outsideMap) {

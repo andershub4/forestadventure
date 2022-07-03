@@ -17,9 +17,6 @@
 
 namespace FA {
 
-class CameraManager;
-class SheetManager;
-
 namespace Entity {
 
 class BasicEntity;
@@ -29,7 +26,7 @@ struct PropertyData;
 class EntityManager
 {
 public:
-    EntityManager(const Factory &factory, CameraManager &cameraManager, const SheetManager &sheetManager);
+    EntityManager(const Factory &factory);
     ~EntityManager();
 
     void Update(float deltaTime);
@@ -49,8 +46,6 @@ private:
 
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
     const Factory &factory_;
-    CameraManager &cameraManager_;
-    const SheetManager &sheetManager_;
     std::vector<std::unique_ptr<BasicEntity>> createdEntities_;
     std::vector<EntityId> deletedEntities_;
     std::map<std::string, DrawableInfo> drawables_;

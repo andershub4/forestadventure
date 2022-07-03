@@ -18,12 +18,14 @@ namespace FA {
 namespace Entity {
 
 EntityService::EntityService(CameraManager& cameraManager, const SheetManager& sheetManager,
-                             EntityManager& entityManager)
+                             EntityManager& entityManager, const sf::Vector2u& mapSize)
     : cameraManager_(cameraManager)
     , sheetManager_(sheetManager)
     , entityManager_(entityManager)
     , spawnManager_(entityManager)
-{}
+{
+    mapSize_ = static_cast<sf::Vector2f>(mapSize);
+}
 
 EntityService::~EntityService() = default;
 
@@ -32,9 +34,9 @@ void EntityService::AddCamera(sf::Vector2f& pos)
     cameraManager_.Track(pos);
 }
 
-sf::Vector2u EntityService::GetMapSize() const
+sf::Vector2f EntityService::GetMapSize() const
 {
-    return cameraManager_.GetMapSize();
+    return mapSize_;
 }
 
 Animation EntityService::MakeAnimation(const AnimationData& data) const

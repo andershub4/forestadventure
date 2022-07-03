@@ -16,7 +16,7 @@ class StaticEntity : public BasicEntity
 {
 public:
     StaticEntity(EntityId id, CameraManager& cameraManager, const SheetManager& textureManager,
-                 EntityManager& entityManager, MessageBus& messageBus);
+                 EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize);
     virtual ~StaticEntity();
 
     virtual std::string Name() const override { return "StaticEntity"; }

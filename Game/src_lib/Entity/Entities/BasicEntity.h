@@ -33,7 +33,7 @@ class BasicEntity
 {
 public:
     BasicEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                EntityManager& entityManager, MessageBus& messageBus);
+                EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;

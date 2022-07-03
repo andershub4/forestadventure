@@ -28,12 +28,13 @@ class EntityManager;
 class EntityService
 {
 public:
-    EntityService(CameraManager &cameraManager, const SheetManager &sheetManager, EntityManager &entityManager);
+    EntityService(CameraManager &cameraManager, const SheetManager &sheetManager, EntityManager &entityManager,
+                  const sf::Vector2u &mapSize);
     ~EntityService();
 
     void AddCamera(sf::Vector2f &pos);
 
-    sf::Vector2u GetMapSize() const;
+    sf::Vector2f GetMapSize() const;
 
     Animation MakeAnimation(const AnimationData &data) const;
     Image MakeImage(const ImageData &data) const;
@@ -47,6 +48,7 @@ private:
     const SheetManager &sheetManager_;
     EntityManager &entityManager_;
     SpawnManager spawnManager_;
+    sf::Vector2f mapSize_{};
 };
 
 }  // namespace Entity

@@ -8,6 +8,8 @@
 
 #include <memory>
 
+#include <SFML/System/Vector2.hpp>
+
 #include "Enum/EntityType.h"
 #include "Id.h"
 
@@ -25,15 +27,18 @@ class EntityManager;
 class Factory
 {
 public:
-    Factory(MessageBus& messageBus);
+    Factory(MessageBus& messageBus, const SheetManager& sheetManager, CameraManager& cameraManager,
+            const sf::Vector2u& mapSize);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, CameraManager& cameraManager, const SheetManager& sheetManager,
-                                        EntityManager& entityManager) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, EntityManager& entityManager) const;
 
 private:
     mutable Entity::EntityId id_{0};
     MessageBus& messageBus_;
+    const SheetManager& sheetManager_;
+    CameraManager& cameraManager_;
+    sf::Vector2u mapSize_{};
 };
 
 }  // namespace Entity

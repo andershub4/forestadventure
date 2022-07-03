@@ -23,10 +23,10 @@ namespace FA {
 namespace Entity {
 
 BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                         EntityManager& entityManager, MessageBus& messageBus)
+                         EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize)
     : id_(id)
     , messageBus_(messageBus)
-    , entityService_(cameraManager, sheetManager, entityManager)
+    , entityService_(cameraManager, sheetManager, entityManager, mapSize)
 {
     stateMachine_.RegisterCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });
     stateMachine_.RegisterDestroyCB([this](std::shared_ptr<BasicEvent> event) { OnDestroy(event); });
