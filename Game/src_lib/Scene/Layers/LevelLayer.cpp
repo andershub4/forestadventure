@@ -53,9 +53,8 @@ LevelLayer::LevelLayer(MessageBus& messageBus, const sf::IntRect& rect, TextureM
 
 LevelLayer::~LevelLayer() = default;
 
-void LevelLayer::OnCreate()
+void LevelLayer::OnLoad()
 {
-    /* LOAD */
     auto path = GetAssetsPath() + "/map/simpletest.tmx";
     tileMap_.Load(path);
     tileMap_.Setup();
@@ -64,8 +63,10 @@ void LevelLayer::OnCreate()
     for (const auto& sheetData : textureSheets) {
         sheetManager_.LoadSheet(sheetPath, sheetData);
     }
+}
 
-    /* CREATE */
+void LevelLayer::OnCreate()
+{
     auto viewSize = layerTexture_.getSize();
     level_ = std::make_unique<Level>(messageBus_, tileMap_, sheetManager_, viewSize);
     level_->Create();

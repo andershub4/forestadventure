@@ -27,6 +27,7 @@ public:
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void EnableInput(bool enable) override {}
+    virtual void OnLoad() override;
     virtual void OnCreate() override;
     virtual void SubscribeMessages() override;
     virtual void UnsubscribeMessages() override;

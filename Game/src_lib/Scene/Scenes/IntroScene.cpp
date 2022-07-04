@@ -37,15 +37,20 @@ void IntroScene::Enter()
 #endif
     layers_[LayerId::PreAlpha] = std::make_unique<PreAlphaLayer>(messageBus_, rect);
 
-    for (const auto& entry : layers_) {
-        auto& layer = entry.second;
-        layer->OnCreate();
-    }
-
     Subscribe({MessageType::CloseWindow, MessageType::KeyPressed});
     for (const auto& entry : layers_) {
         auto& layer = entry.second;
         layer->SubscribeMessages();
+    }
+
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->OnLoad();
+    }
+
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
+        layer->OnCreate();
     }
 }
 

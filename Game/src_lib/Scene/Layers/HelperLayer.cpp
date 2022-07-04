@@ -28,13 +28,16 @@ HelperLayer::HelperLayer(MessageBus& messageBus, const sf::IntRect& rect, const 
 
 HelperLayer::~HelperLayer() = default;
 
-void HelperLayer::OnCreate()
+void HelperLayer::OnLoad()
 {
     std::string path = GetAssetsPath() + "/font/cello-sans/hinted-CelloSans-Medium.ttf";
     if (!font_.loadFromFile(path)) {
         LOG_ERROR("Could not load ", path);
     }
+}
 
+void HelperLayer::OnCreate()
+{
     sceneText_.setFont(font_);
     sceneText_.setString(sceneName_);
     sceneText_.setCharacterSize(24);

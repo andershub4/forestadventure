@@ -47,6 +47,11 @@ void PlayScene::Enter()
 
     for (const auto& entry : layers_) {
         auto& layer = entry.second;
+        layer->OnLoad();
+    }
+
+    for (const auto& entry : layers_) {
+        auto& layer = entry.second;
         layer->OnCreate();
     }
 }

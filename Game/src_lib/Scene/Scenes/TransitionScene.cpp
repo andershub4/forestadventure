@@ -28,6 +28,7 @@ void TransitionScene::Enter()
     sf::IntRect rect(0, 0, constant::Screen::width, constant::Screen::height);
 #ifdef _DEBUG
     layers_[LayerId::Helper] = std::make_unique<HelperLayer>(messageBus_, rect, Name());
+    layers_[LayerId::Helper]->OnLoad();
     layers_[LayerId::Helper]->OnCreate();
 #endif
     for (const auto& entry : layers_) {

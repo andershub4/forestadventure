@@ -22,13 +22,16 @@ PreAlphaLayer::PreAlphaLayer(MessageBus& messageBus, const sf::IntRect& rect)
 
 PreAlphaLayer::~PreAlphaLayer() = default;
 
-void PreAlphaLayer::OnCreate()
+void PreAlphaLayer::OnLoad()
 {
     std::string path = GetAssetsPath() + "/font/intuitive/intuitive.ttf";
     if (!font_.loadFromFile(path)) {
         LOG_ERROR("Could not load ", path);
     }
+}
 
+void PreAlphaLayer::OnCreate()
+{
     versionText_.setFont(font_);
     versionText_.setString("Pre-alpha version [Press <ESC> to Exit]");
     versionText_.setCharacterSize(24);

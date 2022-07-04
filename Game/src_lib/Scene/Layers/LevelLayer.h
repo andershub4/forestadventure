@@ -35,6 +35,7 @@ public:
     virtual void EnableInput(bool enable) override {}
     virtual void EnterTransition(const BasicTransition& transition) override;
     virtual void ExitTransition(const BasicTransition& transition) override;
+    virtual void OnLoad() override;
     virtual void OnCreate() override;
 
 private:
