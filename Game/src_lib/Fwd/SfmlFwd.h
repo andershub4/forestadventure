@@ -20,5 +20,6 @@ class RenderWindow;
 class RenderTarget;
 class Event;
 class Sprite;
+class View;
 
 }  // namespace sf

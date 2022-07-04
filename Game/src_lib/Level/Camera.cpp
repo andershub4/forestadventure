@@ -10,8 +10,6 @@
 
 #include <algorithm>
 
-#include <SFML/Graphics/RenderTexture.hpp>
-
 namespace FA {
 
 Camera::Camera(const sf::Vector2f& trackingPoint, const sf::Vector2u& viewSize, const sf::Vector2u& mapSize)
@@ -28,11 +26,15 @@ Camera::Camera(const sf::Vector2f& trackingPoint, const sf::Vector2u& viewSize, 
 
 Camera::~Camera() = default;
 
-void Camera::UpdatePosition(sf::RenderTarget& renderTarget)
+void Camera::UpdatePosition()
 {
     auto viewPosition = CalcViewPosition();
     view_.setCenter(viewPosition);
-    renderTarget.setView(view_);
+}
+
+sf::View Camera::GetView() const
+{
+    return view_;
 }
 
 sf::Vector2f Camera::CalcViewPosition() const

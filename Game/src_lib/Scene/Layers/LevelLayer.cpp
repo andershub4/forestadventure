@@ -46,7 +46,6 @@ const std::vector<SheetData> textureSheets = {
 
 LevelLayer::LevelLayer(MessageBus& messageBus, const sf::IntRect& rect, TextureManager& textureManager)
     : BasicLayer(messageBus, rect)
-    , cameraManager_(layerTexture_.getSize())
     , sheetManager_(textureManager)
     , messageBus_(messageBus)
     , tileMap_(sheetManager_)
@@ -66,11 +65,9 @@ void LevelLayer::OnCreate()
         sheetManager_.LoadSheet(sheetPath, sheetData);
     }
 
-    auto s = tileMap_.GetSize();
-    cameraManager_.SetMapSize(s);
-
     /* CREATE */
-    level_ = std::make_unique<Level>(messageBus_, tileMap_, sheetManager_, cameraManager_);
+    auto viewSize = layerTexture_.getSize();
+    level_ = std::make_unique<Level>(messageBus_, tileMap_, sheetManager_, viewSize);
     level_->Create();
 }
 
@@ -83,7 +80,8 @@ void LevelLayer::Draw()
 void LevelLayer::Update(float deltaTime)
 {
     level_->Update(deltaTime);
-    cameraManager_.Update(layerTexture_);
+    auto view = level_->GetView();
+    layerTexture_.setView(view);
     if (effect_) effect_->Update(deltaTime);
 }
 

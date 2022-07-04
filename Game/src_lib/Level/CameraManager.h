@@ -19,12 +19,12 @@ class Camera;
 class CameraManager
 {
 public:
-    CameraManager(const sf::Vector2u& renderTargetSize);
+    CameraManager(const sf::Vector2u& renderTargetSize, const sf::Vector2u& mapSize);
     ~CameraManager();
 
     void Track(const sf::Vector2f& trackingPoint);
-    void Update(sf::RenderTarget& renderTarget);
-    void SetMapSize(const sf::Vector2u& mapSize);
+    void Update();
+    sf::View GetView() const;
 
 private:
     sf::Vector2u renderTargetSize_{};

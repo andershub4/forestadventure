@@ -60,9 +60,10 @@ FaceDirection FaceDirStrToEnum(const std::string &faceDirStr)
 }  // namespace
 
 Level::Level(MessageBus &messageBus, const Tile::TileMap &tileMap, const SheetManager &sheetManager,
-             CameraManager &cameraManager)
-    : factory_(messageBus, sheetManager, cameraManager, tileMap.GetSize())
-    , tileMap_(tileMap)
+             const sf::Vector2u &viewSize)
+    : tileMap_(tileMap)
+    , cameraManager_(viewSize, tileMap_.GetSize())
+    , factory_(messageBus, sheetManager, cameraManager_, tileMap.GetSize())
     , entityManager_(factory_)
 {}
 
@@ -77,9 +78,15 @@ void Level::Create()
     LOG_INFO_EXIT_FUNC();
 }
 
+sf::View Level::GetView()
+{
+    return cameraManager_.GetView();
+}
+
 void Level::Update(float deltaTime)
 {
     entityManager_.HandleCreatedEntities();
+    cameraManager_.Update();
     entityManager_.Update(deltaTime);
     entityManager_.HandleDeletedEntities();
 }

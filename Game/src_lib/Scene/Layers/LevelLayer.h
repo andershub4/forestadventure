@@ -10,7 +10,6 @@
 
 #include "BasicLayer.h"
 
-#include "Level/CameraManager.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
 #include "Tile/TileMap.h"
@@ -43,7 +42,6 @@ private:
     Tile::TileMap tileMap_;
     std::unique_ptr<Level> level_ = nullptr;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
-    CameraManager cameraManager_;
     SheetManager sheetManager_;
 };
 
