@@ -129,9 +129,9 @@ void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
 
 void PlayerEntity::OnExitShoot()
 {
-    bool shot = propertyManager_.Get<bool>("Fire");
-    if (shot) {
-        propertyManager_.Set<bool>("Fire", false);
+    bool shoot = propertyManager_.Get<bool>("Shoot");
+    if (shoot) {
+        propertyManager_.Set<bool>("Shoot", false);
         auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
         auto position = position_ + arrowOffset.at(dir);
         entityService_.SpawnEntity(EntityType::Arrow, dir, position);
@@ -153,7 +153,7 @@ void PlayerEntity::OnDying()
 void PlayerEntity::RegisterProperties()
 {
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
-    propertyManager_.Register<bool>("Fire", false);
+    propertyManager_.Register<bool>("Shoot", false);
 }
 
 void PlayerEntity::RegisterShape()
@@ -177,15 +177,14 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
             ChangeState(StateType::Idle, nullptr);
         }
     };
-    auto updateAnimationAndShot = [this](const Animation& animation) {
+    auto updateAnimationAndShoot = [this](const Animation& animation) {
         OnUpdateAnimation(animation);
         if (animation.IsCompleted()) {
-            propertyManager_.Set<bool>("Fire", true);
+            propertyManager_.Set<bool>("Shoot", true);
             ChangeState(StateType::Idle, nullptr);
         }
     };
 
-    // auto idleState = RegisterState(StateType::Idle, true);
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     for (const auto& dir : animationDatas.at(StateType::Idle)) {
         std::stringstream ss;
@@ -240,7 +239,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
     auto shoot = std::make_shared<ShootAbility>(
         nullptr, [this]() { OnExitShoot(); }, nullptr);
-    auto attackWeaponAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndShot);
+    auto attackWeaponAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndShoot);
     for (const auto& dir : animationDatas.at(StateType::AttackWeapon)) {
         std::stringstream ss;
         ss << dir.first;
