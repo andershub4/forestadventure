@@ -64,8 +64,12 @@ void State::RegisterAbility(std::shared_ptr<BasicAbility> ability)
 
 void State::RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)> event)
 {
-    // Check if already exist
-    eventCBs_[eventType] = event;
+    if (eventCBs_.find(eventType) == eventCBs_.end()) {
+        eventCBs_[eventType] = event;
+    }
+    else {
+        LOG_ERROR("eventType: ", eventType, " already exist");
+    }
 }
 
 void State::IgnoreAllEvents()

@@ -6,6 +6,8 @@
 
 #include "AnimationAbility.h"
 
+#include "Logging.h"
+
 namespace FA {
 
 namespace Entity {
@@ -20,9 +22,13 @@ AnimationAbility::~AnimationAbility() = default;
 void AnimationAbility::Enter(std::shared_ptr<BasicEvent> event)
 {
     auto key = getKey_();
-    // if key is in map_
-    currentAnimation_ = map_.at(key);
-    currentAnimation_.Start();
+    if (map_.find(key) != map_.end()) {
+        currentAnimation_ = map_.at(key);
+        currentAnimation_.Start();
+    }
+    else {
+        LOG_ERROR("Could not find key: ", key);
+    }
 }
 
 void AnimationAbility::Update(float deltaTime)
@@ -35,8 +41,12 @@ void AnimationAbility::Update(float deltaTime)
 
 void AnimationAbility::RegisterAnimation(const std::string &name, const Animation &animation)
 {
-    // check for already registered name
-    map_[name] = animation;
+    if (map_.find(name) == map_.end()) {
+        map_[name] = animation;
+    }
+    else {
+        LOG_ERROR("name: ", name, " already exist");
+    }
 }
 
 bool AnimationAbility::AnimationIsCompleted() const
