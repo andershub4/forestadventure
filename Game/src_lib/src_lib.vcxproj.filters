@@ -440,13 +440,7 @@
     <ClInclude Include="Entity\Events\AttackWeapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Events\CreateEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Events\InitEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\Events\DestroyEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\TextureManager.h">

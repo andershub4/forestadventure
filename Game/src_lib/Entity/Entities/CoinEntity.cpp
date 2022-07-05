@@ -38,12 +38,11 @@ void CoinEntity::RegisterShape()
     shape_.AddSprite("Main");
 }
 
-void CoinEntity::RegisterStates(const PropertyData& data)
+void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
     auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
 
-    auto idleState = RegisterState(StateType::Idle, true);
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     auto a = entityService_.MakeAnimation({SheetId::Coin, {{0, 0}, 4, 0}, false});
     idleAnimation->RegisterAnimation("Idle", a);

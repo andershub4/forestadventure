@@ -162,7 +162,7 @@ void PlayerEntity::RegisterShape()
     shape_.AddSprite("Main");
 }
 
-void PlayerEntity::RegisterStates(const PropertyData& data)
+void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() {
         std::stringstream ss;
@@ -185,7 +185,7 @@ void PlayerEntity::RegisterStates(const PropertyData& data)
         }
     };
 
-    auto idleState = RegisterState(StateType::Idle, true);
+    // auto idleState = RegisterState(StateType::Idle, true);
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     for (const auto& dir : animationDatas.at(StateType::Idle)) {
         std::stringstream ss;

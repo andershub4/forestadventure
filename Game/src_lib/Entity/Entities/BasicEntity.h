@@ -61,7 +61,7 @@ protected:
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void ChangeState(StateType stateType, std::shared_ptr<BasicEvent> event);
     Shape CreateShape();
-    std::shared_ptr<State> RegisterState(StateType stateType, bool startState = false);
+    std::shared_ptr<State> RegisterState(StateType stateType /*, bool startState = false*/);
     void SendMessage(std::shared_ptr<Message> message);
 
 private:
@@ -70,18 +70,17 @@ private:
     StateMachine stateMachine_;
 
 private:
-    virtual void RegisterStates(const PropertyData& data) {}
+    virtual void RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data) {}
     virtual void RegisterProperties() {}
     virtual void RegisterShape() {}
     virtual void Start() {}
     virtual void OnMessage(std::shared_ptr<Message> msg) {}
     virtual void OnDying() {}
 
-    void OnCreate(std::shared_ptr<BasicEvent> event);
-    void OnDestroy(std::shared_ptr<BasicEvent> event);
     void OnUpdateShape();
     void Subscribe(const std::vector<MessageType>& messageTypes);
     void Unsubscribe(const std::vector<MessageType>& messageTypes);
+    void RegisterUninitializedState();
     void RegisterDeadState();
 };
 

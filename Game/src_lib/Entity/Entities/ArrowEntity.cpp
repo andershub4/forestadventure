@@ -64,12 +64,11 @@ void ArrowEntity::RegisterShape()
     shape_.AddSprite("Main");
 }
 
-void ArrowEntity::RegisterStates(const PropertyData& data)
+void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Move"; };
     auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
 
-    auto idleState = RegisterState(StateType::Idle, true);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Move, event); });
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {});

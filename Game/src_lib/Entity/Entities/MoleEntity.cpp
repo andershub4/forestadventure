@@ -72,7 +72,7 @@ void MoleEntity::RegisterShape()
     shape_.AddSprite("Main");
 }
 
-void MoleEntity::RegisterStates(const PropertyData& data)
+void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() {
         std::stringstream ss;
@@ -82,7 +82,6 @@ void MoleEntity::RegisterStates(const PropertyData& data)
     };
     auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
 
-    auto idleState = RegisterState(StateType::Idle, true);
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     for (const auto& dir : animationDatas.at(StateType::Idle)) {
         std::stringstream ss;

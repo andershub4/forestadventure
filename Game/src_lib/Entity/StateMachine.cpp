@@ -13,15 +13,17 @@ namespace FA {
 
 namespace Entity {
 
-StateMachine::StateMachine()
-{
-    currentState_ = RegisterState(StateType::Uninitialized);
-    currentState_->Enter(nullptr);
-}
+StateMachine::StateMachine() = default;
 
 StateMachine::~StateMachine()
 {
     currentState_->Exit();
+}
+
+void StateMachine::SetStartState(std::shared_ptr<State> state)
+{
+    currentState_ = state;
+    currentState_->Enter(nullptr);
 }
 
 void StateMachine::HandleEvent(std::shared_ptr<BasicEvent> event)
@@ -47,36 +49,11 @@ void StateMachine::Update(float deltaTime)
     currentState_->Update(deltaTime);
 }
 
-std::shared_ptr<State> StateMachine::RegisterState(StateType stateType, bool startState)
+std::shared_ptr<State> StateMachine::RegisterState(StateType stateType /*, bool startState*/)
 {
     auto state = std::make_shared<State>(stateType);
-    InitState(state, startState);
-    return state;
-}
-
-void StateMachine::InitState(std::shared_ptr<State> state, bool startState)
-{
-    state->RegisterEventCB(EventType::Destroy, onDestroy_);
-
-    auto stateType = state->GetStateType();
     states_[stateType] = state;
-
-    if (startState) {
-        auto u = states_.at(StateType::Uninitialized);
-        u->RegisterEventCB(EventType::Init,
-                           [this, stateType](std::shared_ptr<BasicEvent> event) { ChangeStateTo(stateType, event); });
-    }
-}
-
-void StateMachine::RegisterCreateCB(std::function<void(std::shared_ptr<BasicEvent>)> onCreate)
-{
-    auto u = states_.at(StateType::Uninitialized);
-    u->RegisterEventCB(EventType::Create, onCreate);
-}
-
-void StateMachine::RegisterDestroyCB(std::function<void(std::shared_ptr<BasicEvent>)> onDestroy)
-{
-    onDestroy_ = onDestroy;
+    return state;
 }
 
 void StateMachine::ChangeStateTo(StateType nextStateType, std::shared_ptr<BasicEvent> event)

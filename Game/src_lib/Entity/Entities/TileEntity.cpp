@@ -36,12 +36,11 @@ void TileEntity::RegisterShape()
     shape_.AddSprite("Main");
 }
 
-void TileEntity::RegisterStates(const PropertyData& data)
+void TileEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
     auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
 
-    auto idleState = RegisterState(StateType::Idle, true);
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     float t = constant::Entity::stdSwitchTime;
     auto a = Animation(data.frames_, 0, t);

@@ -236,8 +236,6 @@
     <ClInclude Include="Entity\Events\AttackEvent.h" />
     <ClInclude Include="Entity\Events\AttackWeapon.h" />
     <ClInclude Include="Entity\Events\BasicEvent.h" />
-    <ClInclude Include="Entity\Events\CreateEvent.h" />
-    <ClInclude Include="Entity\Events\DestroyEvent.h" />
     <ClInclude Include="Entity\Events\InitEvent.h" />
     <ClInclude Include="Entity\Events\StartMoveEvent.h" />
     <ClInclude Include="Entity\Events\StopMoveEvent.h" />

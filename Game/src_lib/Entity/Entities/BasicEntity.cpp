@@ -9,9 +9,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/Abilities/DieAbility.h"
-#include "Entity/Events/CreateEvent.h"
-#include "Entity/Events/DestroyEvent.h"
 #include "Entity/Events/InitEvent.h"
+#include "Entity/PropertyData.h"
 #include "Entity/Shape.h"
 #include "Entity/State.h"
 #include "Message/BroadcastMessage/EntityCreatedMessage.h"
@@ -27,21 +26,36 @@ BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetM
     : id_(id)
     , messageBus_(messageBus)
     , entityService_(cameraManager, sheetManager, entityManager, mapSize)
-{
-    stateMachine_.RegisterCreateCB([this](std::shared_ptr<BasicEvent> event) { OnCreate(event); });
-    stateMachine_.RegisterDestroyCB([this](std::shared_ptr<BasicEvent> event) { OnDestroy(event); });
-}
+{}
 
 BasicEntity::~BasicEntity() = default;
 
 void BasicEntity::Create(const PropertyData& data)
 {
-    HandleEvent(std::make_shared<CreateEvent>(data));
+    RegisterProperties();
+
+    RegisterUninitializedState();
+    RegisterDeadState();
+    auto idleState = RegisterState(StateType::Idle);
+    RegisterStates(idleState, data);
+
+    // ReadObjectData
+    position_ = data.position_;
+
+    for (const auto& p : data.properties_) {
+        propertyManager_.ReadCustomProperty(p.first, p.second);
+    }
+
+    RegisterShape();
+    Subscribe(Messages());
+    Start();  // must do this after setting position
+    messageBus_.SendMessage(std::make_shared<EntityCreatedMessage>());
 }
 
 void BasicEntity::Destroy()
 {
-    HandleEvent(std::make_shared<DestroyEvent>());
+    Unsubscribe(Messages());
+    messageBus_.SendMessage(std::make_shared<EntityDestroyedMessage>());
 }
 
 void BasicEntity::Init()
@@ -87,9 +101,9 @@ Shape BasicEntity::CreateShape()
     return Shape([this]() { OnUpdateShape(); });
 }
 
-std::shared_ptr<State> BasicEntity::RegisterState(StateType stateType, bool startState)
+std::shared_ptr<State> BasicEntity::RegisterState(StateType stateType)
 {
-    auto state = stateMachine_.RegisterState(stateType, startState);
+    auto state = stateMachine_.RegisterState(stateType);
     state->RegisterEventCB(EventType::Dead,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Dead, event); });
     return state;
@@ -100,34 +114,6 @@ void BasicEntity::SendMessage(std::shared_ptr<Message> message)
     messageBus_.SendMessage(message);
 }
 
-void BasicEntity::OnCreate(std::shared_ptr<BasicEvent> event)
-{
-    auto c = std::dynamic_pointer_cast<CreateEvent>(event);
-    auto data = c->data_;
-
-    RegisterProperties();
-    RegisterDeadState();
-    RegisterStates(data);
-
-    // ReadObjectData
-    position_ = data.position_;
-
-    for (const auto& p : data.properties_) {
-        propertyManager_.ReadCustomProperty(p.first, p.second);
-    }
-
-    RegisterShape();
-    Subscribe(Messages());
-    Start();  // must do this after setting position
-    messageBus_.SendMessage(std::make_shared<EntityCreatedMessage>());
-}
-
-void BasicEntity::OnDestroy(std::shared_ptr<BasicEvent> event)
-{
-    Unsubscribe(Messages());
-    messageBus_.SendMessage(std::make_shared<EntityDestroyedMessage>());
-}
-
 void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
 {
     messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
@@ -136,6 +122,14 @@ void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
 void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)
 {
     messageBus_.RemoveSubscriber(Name(), messageTypes);
+}
+
+void BasicEntity::RegisterUninitializedState()
+{
+    auto uninitializedState = RegisterState(StateType::Uninitialized);
+    uninitializedState->RegisterEventCB(
+        EventType::Init, [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Idle, event); });
+    stateMachine_.SetStartState(uninitializedState);
 }
 
 void BasicEntity::RegisterDeadState()
