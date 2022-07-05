@@ -75,14 +75,14 @@ void LevelLayer::OnCreate()
 void LevelLayer::Draw()
 {
     level_->Draw(layerTexture_);
+    auto view = level_->GetView();
+    layerTexture_.setView(view);
     if (effect_) effect_->DrawTo(layerTexture_);
 }
 
 void LevelLayer::Update(float deltaTime)
 {
     level_->Update(deltaTime);
-    auto view = level_->GetView();
-    layerTexture_.setView(view);
     if (effect_) effect_->Update(deltaTime);
 }
 
