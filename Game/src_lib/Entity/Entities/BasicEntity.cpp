@@ -61,7 +61,10 @@ void BasicEntity::Destroy()
 void BasicEntity::Init()
 {
     HandleEvent(std::make_shared<InitEvent>());
-    stateMachine_.HandleQueuedInitEvents();
+    for (auto event : queuedInitEvents_) {
+        HandleEvent(event);
+    }
+    queuedInitEvents_.clear();
 }
 
 void BasicEntity::Update(float deltaTime)
@@ -77,7 +80,7 @@ void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 
 void BasicEntity::QueueInitEvents(std::shared_ptr<BasicEvent> event)
 {
-    stateMachine_.QueueInitEvents(event);
+    queuedInitEvents_.push_back(event);
 }
 
 void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)

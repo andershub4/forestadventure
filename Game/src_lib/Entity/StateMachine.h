@@ -29,15 +29,12 @@ public:
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void Update(float deltaTime);
-    void QueueInitEvents(std::shared_ptr<BasicEvent> event);
-    void HandleQueuedInitEvents();
 
     void ChangeStateTo(StateType nextStateType, std::shared_ptr<BasicEvent> event);
 
 private:
     std::unordered_map<StateType, std::shared_ptr<State>> states_;
     std::shared_ptr<State> currentState_ = nullptr;
-    std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
 };
 
 }  // namespace Entity

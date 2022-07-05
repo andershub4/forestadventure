@@ -31,19 +31,6 @@ void StateMachine::HandleEvent(std::shared_ptr<BasicEvent> event)
     currentState_->HandleEvent(event);
 }
 
-void StateMachine::QueueInitEvents(std::shared_ptr<BasicEvent> event)
-{
-    queuedInitEvents_.push_back(event);
-}
-
-void StateMachine::HandleQueuedInitEvents()
-{
-    for (auto event : queuedInitEvents_) {
-        HandleEvent(event);
-    }
-    queuedInitEvents_.clear();
-}
-
 void StateMachine::Update(float deltaTime)
 {
     currentState_->Update(deltaTime);

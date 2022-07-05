@@ -68,6 +68,7 @@ private:
     EntityId id_ = InvalidEntityId;
     MessageBus& messageBus_;
     StateMachine stateMachine_;
+    std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
 
 private:
     virtual void RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data) {}
