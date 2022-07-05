@@ -61,7 +61,7 @@ protected:
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void ChangeState(StateType stateType, std::shared_ptr<BasicEvent> event);
     Shape CreateShape();
-    std::shared_ptr<State> RegisterState(StateType stateType /*, bool startState = false*/);
+    std::shared_ptr<State> RegisterState(StateType stateType);
     void SendMessage(std::shared_ptr<Message> message);
 
 private:
