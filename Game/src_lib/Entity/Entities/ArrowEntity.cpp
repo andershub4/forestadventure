@@ -43,10 +43,7 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
     position_ += delta;
 
-    // auto mapW = static_cast<float>(entityService_.GetMapSize().x);
-    // auto mapH = static_cast<float>(entityService_.GetMapSize().y);
-    // auto mapRect = sf::FloatRect(0, 0, mapW, mapH);
-    auto mapRect = sf::FloatRect({0.0f, 0.0f}, entityService_.GetMapSize());
+    auto mapRect = entityService_.GetMapRect();
     bool outsideMap = !mapRect.contains(position_);
 
     if (outsideMap) {

@@ -8,6 +8,8 @@
 
 #include <memory>
 
+#include <SFML/Graphics/Rect.hpp>
+
 #include "Enum/FaceDirection.h"
 #include "Id.h"
 #include "Logging.h"
@@ -34,7 +36,7 @@ public:
 
     void AddCamera(sf::Vector2f &pos);
 
-    sf::Vector2f GetMapSize() const;
+    sf::FloatRect GetMapRect() const;
 
     Animation MakeAnimation(const AnimationData &data) const;
     Image MakeImage(const ImageData &data) const;
@@ -48,7 +50,7 @@ private:
     const SheetManager &sheetManager_;
     EntityManager &entityManager_;
     SpawnManager spawnManager_;
-    sf::Vector2f mapSize_{};
+    sf::FloatRect mapRect_{};
 };
 
 }  // namespace Entity

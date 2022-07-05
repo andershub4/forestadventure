@@ -24,7 +24,7 @@ EntityService::EntityService(CameraManager& cameraManager, const SheetManager& s
     , entityManager_(entityManager)
     , spawnManager_(entityManager)
 {
-    mapSize_ = static_cast<sf::Vector2f>(mapSize);
+    mapRect_ = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(mapSize));
 }
 
 EntityService::~EntityService() = default;
@@ -34,9 +34,9 @@ void EntityService::AddCamera(sf::Vector2f& pos)
     cameraManager_.Track(pos);
 }
 
-sf::Vector2f EntityService::GetMapSize() const
+sf::FloatRect EntityService::GetMapRect() const
 {
-    return mapSize_;
+    return mapRect_;
 }
 
 Animation EntityService::MakeAnimation(const AnimationData& data) const
