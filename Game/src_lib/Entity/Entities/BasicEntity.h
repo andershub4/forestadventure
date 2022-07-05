@@ -10,7 +10,7 @@
 
 #include "Entity/EntityService.h"
 #include "Entity/Id.h"
-#include "Entity/LayerId.h"
+#include "Entity/LayerType.h"
 #include "Entity/PropertyManager.h"
 #include "Entity/Shape.h"
 #include "Entity/StateMachine.h"

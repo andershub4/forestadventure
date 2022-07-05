@@ -11,7 +11,7 @@
 #include <unordered_map>
 
 #include "Entity/Id.h"
-#include "Entity/LayerId.h"
+#include "Entity/LayerType.h"
 #include "Enum/EntityType.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -52,7 +52,7 @@ private:
 
 private:
     void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);
-    void AddDrawable(EntityId id, LayerType layerId);
+    void AddDrawable(EntityId id, LayerType layer);
     void RemoveDrawable(EntityId id);
 };
 
