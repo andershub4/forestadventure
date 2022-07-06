@@ -6,6 +6,10 @@
 
 #pragma once
 
+#include <unordered_set>
+
+#include <SFML/Window/Keyboard.hpp>
+
 #include "Enum/KeyboardKey.h"
 #include "Fwd/SfmlFwd.h"
 
@@ -23,12 +27,12 @@ public:
 private:
     sf::RenderWindow& window_;
     MessageBus& messageBus_;
-    Keyboard::Key activeKey_ = Keyboard::Key::Undefined;
+    std::unordered_set<Keyboard::Key> pressedKeys_;
 
 private:
     void ProcessEvent(const sf::Event& event);
-    void IsKeyPressed(Keyboard::Key& pressedKey, Keyboard::Key& releasedKey) const;
     void ProcessIsKeyPressed();
+    void ReleaseKeys();
 };
 
 }  // namespace FA

@@ -25,8 +25,8 @@
 #include "Enum/MessageType.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
-#include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
+#include "Message/BroadcastMessage/KeyReleasedMessage.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -73,7 +73,7 @@ PlayerEntity::~PlayerEntity() = default;
 
 std::vector<MessageType> PlayerEntity::Messages() const
 {
-    return {MessageType::IsKeyPressed, MessageType::IsKeyReleased, MessageType::KeyPressed};
+    return {MessageType::IsKeyPressed, MessageType::KeyReleased, MessageType::KeyPressed};
 }
 
 void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
@@ -94,8 +94,8 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
             HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up));
         }
     }
-    else if (msg->GetMessageType() == MessageType::IsKeyReleased) {
-        auto m = std::dynamic_pointer_cast<IsKeyReleasedMessage>(msg);
+    else if (msg->GetMessageType() == MessageType::KeyReleased) {
+        auto m = std::dynamic_pointer_cast<KeyReleasedMessage>(msg);
         auto key = m->GetKey();
         if (key == Keyboard::Key::Right || key == Keyboard::Key::Left || key == Keyboard::Key::Down ||
             key == Keyboard::Key::Up) {

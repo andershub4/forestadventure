@@ -62,6 +62,7 @@ void InputSystem::ProcessEvent(const sf::Event& event)
             auto it = supportedKeys.find(event.key.code);
             auto key = (it != supportedKeys.end()) ? it->second : Keyboard::Key::Undefined;
             auto msg = std::make_shared<KeyPressedMessage>(key);
+            pressedKeys_.emplace(key);
             messageBus_.SendMessage(msg);
             break;
         }
@@ -69,6 +70,7 @@ void InputSystem::ProcessEvent(const sf::Event& event)
             auto it = supportedKeys.find(event.key.code);
             auto key = (it != supportedKeys.end()) ? it->second : Keyboard::Key::Undefined;
             auto msg = std::make_shared<KeyReleasedMessage>(key);
+            pressedKeys_.erase(key);
             messageBus_.SendMessage(msg);
             break;
         }
@@ -78,52 +80,26 @@ void InputSystem::ProcessEvent(const sf::Event& event)
             break;
         }
         case sf::Event::LostFocus: {
-            if (activeKey_ != Keyboard::Key::Undefined) {
-                auto msg = std::make_shared<IsKeyReleasedMessage>(activeKey_);
-                messageBus_.SendMessage(msg);
-            }
-        }
-    }
-}
-
-void InputSystem::IsKeyPressed(Keyboard::Key& pressedKey, Keyboard::Key& releasedKey) const
-{
-    std::vector<Keyboard::Key> pressedKeys;
-    for (auto key : supportedInstantKeys) {
-        if (sf::Keyboard::isKeyPressed(key.first)) {
-            pressedKeys.push_back(key.second);
-        }
-    }
-
-    if (pressedKey == Keyboard::Key::Undefined) {
-        if (!pressedKeys.empty()) pressedKey = pressedKeys.front();
-    }
-    else {
-        if (std::find(pressedKeys.begin(), pressedKeys.end(), pressedKey) == pressedKeys.end()) {
-            releasedKey = pressedKey;
-            pressedKey = Keyboard::Key::Undefined;
-            if (!pressedKeys.empty()) pressedKey = pressedKeys.front();
+            ReleaseKeys();
         }
     }
 }
 
 void InputSystem::ProcessIsKeyPressed()
 {
-    if (window_.hasFocus()) {
-        Keyboard::Key pressedKey = activeKey_;
-        Keyboard::Key releasedKey = Keyboard::Key::Undefined;
-        IsKeyPressed(pressedKey, releasedKey);
-        activeKey_ = pressedKey;
-
-        if (pressedKey != Keyboard::Key::Undefined) {
-            auto msg = std::make_shared<IsKeyPressedMessage>(pressedKey);
-            messageBus_.SendMessage(msg);
-        }
-        if (releasedKey != Keyboard::Key::Undefined) {
-            auto msg = std::make_shared<IsKeyReleasedMessage>(releasedKey);
-            messageBus_.SendMessage(msg);
-        }
+    for (auto k : pressedKeys_) {
+        auto msg = std::make_shared<IsKeyPressedMessage>(k);
+        messageBus_.SendMessage(msg);
     }
+}
+
+void InputSystem::ReleaseKeys()
+{
+    for (auto k : pressedKeys_) {
+        auto msg = std::make_shared<KeyReleasedMessage>(k);
+        messageBus_.SendMessage(msg);
+    }
+    pressedKeys_.clear();
 }
 
 }  // namespace FA
