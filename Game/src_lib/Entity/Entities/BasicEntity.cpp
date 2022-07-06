@@ -88,7 +88,7 @@ void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)
     stateMachine_.HandleEvent(event);
 }
 
-void BasicEntity::ChangeState(StateType stateType, std::shared_ptr<BasicEvent> event)
+void BasicEntity::ChangeStateTo(StateType stateType, std::shared_ptr<BasicEvent> event)
 {
     stateMachine_.ChangeStateTo(stateType, event);
 }
@@ -108,7 +108,7 @@ std::shared_ptr<State> BasicEntity::RegisterState(StateType stateType)
 {
     auto state = stateMachine_.RegisterState(stateType);
     state->RegisterEventCB(EventType::Dead,
-                           [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Dead, event); });
+                           [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Dead, event); });
     return state;
 }
 
@@ -131,7 +131,7 @@ void BasicEntity::RegisterUninitializedState()
 {
     auto uninitializedState = RegisterState(StateType::Uninitialized);
     uninitializedState->RegisterEventCB(
-        EventType::Init, [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Idle, event); });
+        EventType::Init, [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     stateMachine_.SetStartState(uninitializedState);
 }
 

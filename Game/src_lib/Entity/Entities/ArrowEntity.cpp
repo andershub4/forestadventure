@@ -70,7 +70,7 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const Propert
     auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
 
     idleState->RegisterEventCB(EventType::StartMove,
-                               [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Move, event); });
+                               [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {});
 
     auto moveState = RegisterState(StateType::Move);
@@ -83,7 +83,7 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const Propert
     moveState->RegisterAbility(move);
     moveState->RegisterAbility(moveAnimation);
     moveState->RegisterEventCB(EventType::StopMove,
-                               [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Idle, event); });
+                               [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }
 
 }  // namespace Entity

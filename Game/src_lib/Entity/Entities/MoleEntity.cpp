@@ -91,7 +91,7 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const Property
     }
     idleState->RegisterAbility(idleAnimation);
     idleState->RegisterEventCB(EventType::StartMove,
-                               [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Move, event); });
+                               [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {});
 
@@ -109,7 +109,7 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const Property
     moveState->RegisterAbility(move);
     moveState->RegisterAbility(moveAnimation);  // register animation after move
     moveState->RegisterEventCB(EventType::StopMove,
-                               [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Idle, event); });
+                               [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }
 
 }  // namespace Entity

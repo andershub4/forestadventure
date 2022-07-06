@@ -174,14 +174,14 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     auto updateAnimationAndComplete = [this](const Animation& animation) {
         OnUpdateAnimation(animation);
         if (animation.IsCompleted()) {
-            ChangeState(StateType::Idle, nullptr);
+            ChangeStateTo(StateType::Idle, nullptr);
         }
     };
     auto updateAnimationAndShoot = [this](const Animation& animation) {
         OnUpdateAnimation(animation);
         if (animation.IsCompleted()) {
             propertyManager_.Set<bool>("Shoot", true);
-            ChangeState(StateType::Idle, nullptr);
+            ChangeStateTo(StateType::Idle, nullptr);
         }
     };
 
@@ -194,12 +194,12 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     }
     idleState->RegisterAbility(idleAnimation);
     idleState->RegisterEventCB(EventType::StartMove,
-                               [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Move, event); });
+                               [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
     idleState->RegisterEventCB(EventType::Attack,
-                               [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Attack, event); });
+                               [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Attack, event); });
     idleState->RegisterEventCB(EventType::AttackWeapon, [this](std::shared_ptr<BasicEvent> event) {
-        ChangeState(StateType::AttackWeapon, event);
+        ChangeStateTo(StateType::AttackWeapon, event);
     });
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {});
 
@@ -217,7 +217,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     moveState->RegisterAbility(move);
     moveState->RegisterAbility(moveAnimation);  // register animation after move
     moveState->RegisterEventCB(EventType::StopMove,
-                               [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Idle, event); });
+                               [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     moveState->RegisterEventCB(EventType::StartMove, [this](std::shared_ptr<BasicEvent> event) {});
     moveState->RegisterEventCB(EventType::Attack, [this](std::shared_ptr<BasicEvent> event) {});
     moveState->RegisterEventCB(EventType::AttackWeapon, [this](std::shared_ptr<BasicEvent> event) {});
@@ -232,7 +232,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     }
     attackState->RegisterAbility(attackAnimation);
     attackState->RegisterEventCB(EventType::StartMove,
-                                 [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Move, event); });
+                                 [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     attackState->RegisterEventCB(EventType::Attack, [this](std::shared_ptr<BasicEvent> event) {});
     attackState->RegisterEventCB(EventType::AttackWeapon, [this](std::shared_ptr<BasicEvent> event) {});
 
@@ -249,7 +249,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     attackWeaponState->RegisterAbility(shoot);
     attackWeaponState->RegisterAbility(attackWeaponAnimation);  // register animation after shoot
     attackWeaponState->RegisterEventCB(
-        EventType::StartMove, [this](std::shared_ptr<BasicEvent> event) { ChangeState(StateType::Move, event); });
+        EventType::StartMove, [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     attackWeaponState->RegisterEventCB(EventType::Attack, [this](std::shared_ptr<BasicEvent> event) {});
     attackWeaponState->RegisterEventCB(EventType::AttackWeapon, [this](std::shared_ptr<BasicEvent> event) {});
 }
