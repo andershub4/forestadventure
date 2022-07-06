@@ -93,6 +93,12 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
         else if (key == Keyboard::Key::Up) {
             HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up));
         }
+        else if (key == Keyboard::Key::RControl) {
+            HandleEvent(std::make_shared<AttackEvent>());
+        }
+        else if (key == Keyboard::Key::Space) {
+            HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow));
+        }
     }
     else if (msg->GetMessageType() == MessageType::KeyReleased) {
         auto m = std::dynamic_pointer_cast<KeyReleasedMessage>(msg);
@@ -105,13 +111,7 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
     else if (msg->GetMessageType() == MessageType::KeyPressed) {
         auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
         auto key = m->GetKey();
-        if (key == Keyboard::Key::RControl) {
-            HandleEvent(std::make_shared<AttackEvent>());
-        }
-        else if (key == Keyboard::Key::Space) {
-            HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow));
-        }
-        else if (key == Keyboard::Key::Num1) {
+        if (key == Keyboard::Key::Num1) {
             HandleEvent(std::make_shared<DeadEvent>());
         }
     }
