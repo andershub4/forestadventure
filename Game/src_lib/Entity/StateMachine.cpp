@@ -36,7 +36,7 @@ void StateMachine::Update(float deltaTime)
     currentState_->Update(deltaTime);
 }
 
-std::shared_ptr<State> StateMachine::RegisterState(StateType stateType /*, bool startState*/)
+std::shared_ptr<State> StateMachine::RegisterState(StateType stateType)
 {
     auto state = std::make_shared<State>(stateType);
     states_[stateType] = state;
