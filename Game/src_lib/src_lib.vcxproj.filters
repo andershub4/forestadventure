@@ -33,9 +33,6 @@
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Message\BroadcastMessage\KeyPressedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -249,9 +246,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Constant\Screen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Version.h">

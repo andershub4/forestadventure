@@ -13,7 +13,6 @@ enum class MessageType {
     KeyPressed,
     KeyReleased,
     IsKeyPressed,
-    IsKeyReleased,
     CloseWindow,
     EntityCreated,
     EntityDestroyed,

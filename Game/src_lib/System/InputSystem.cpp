@@ -14,7 +14,6 @@
 #include "Logging.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
-#include "Message/BroadcastMessage/IsKeyReleasedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyReleasedMessage.h"
 #include "Message/MessageBus.h"

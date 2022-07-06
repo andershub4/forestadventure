@@ -290,7 +290,6 @@
     <ClInclude Include="Scene\Transitions\NullTransition.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Version.h" />
-    <ClInclude Include="Message\BroadcastMessage\IsKeyReleasedMessage.h" />
     <ClInclude Include="Scene\Layers\IntroLayer.h" />
     <ClInclude Include="Scene\Layers\LevelLayer.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
@@ -361,7 +360,6 @@
     <ClCompile Include="Scene\Transitions\FadeTransition.cpp" />
     <ClCompile Include="Scene\Transitions\NullTransition.cpp" />
     <ClCompile Include="Game\Game.cpp" />
-    <ClCompile Include="Message\BroadcastMessage\IsKeyReleasedMessage.cpp" />
     <ClCompile Include="Scene\Layers\IntroLayer.cpp" />
     <ClCompile Include="Scene\Layers\LevelLayer.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />
