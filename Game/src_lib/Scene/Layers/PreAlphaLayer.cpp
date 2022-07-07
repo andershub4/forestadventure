@@ -11,6 +11,7 @@
 #include "Folder.h"
 #include "Logging.h"
 #include "Message/MessageBus.h"
+#include "Version.h"
 
 namespace FA {
 
@@ -33,7 +34,8 @@ void PreAlphaLayer::OnLoad()
 void PreAlphaLayer::OnCreate()
 {
     versionText_.setFont(font_);
-    versionText_.setString("Pre-alpha version [Press <ESC> to Exit]");
+    std::string s = "Pre-alpha version " + std::string(FA_APP_VERSION) + " [Press<ESC> to Exit]";
+    versionText_.setString(s);
     versionText_.setCharacterSize(24);
     versionText_.setFillColor(sf::Color::White);
     auto bounds1 = versionText_.getGlobalBounds();
