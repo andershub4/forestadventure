@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Entity {
 
-enum class EventType { None, Create, Destroy, Init, StartMove, StopMove, Attack, AttackWeapon, Collision, Dead };
+enum class EventType { None, Init, StartMove, StopMove, Attack, AttackWeapon, Collision, Dead };
 
 inline std::ostream& operator<<(std::ostream& os, const EventType& e)
 {
@@ -26,12 +26,6 @@ inline std::ostream& operator<<(std::ostream& os, const EventType& e)
             break;
         case EventType::Collision:
             str = "Collision";
-            break;
-        case EventType::Create:
-            str = "Create";
-            break;
-        case EventType::Destroy:
-            str = "Destroy";
             break;
         case EventType::Init:
             str = "Init";

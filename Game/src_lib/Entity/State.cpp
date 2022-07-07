@@ -43,15 +43,8 @@ void State::Update(float deltaTime)
 
 void State::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
-    auto t = event->GetEventType();
-
-    if (t == EventType::Destroy) {
-        auto handler = eventCBs_.at(t);
-        handler(event);
-        return;
-    }
-
     if (!ignoreAllEvents_) {
+        auto t = event->GetEventType();
         auto handler = eventCBs_.at(t);
         handler(event);
     }
