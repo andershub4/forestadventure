@@ -37,6 +37,12 @@ sf::View Camera::GetView() const
     return view_;
 }
 
+void Camera::Reset()
+{
+    auto viewPosition = CalcViewPosition();
+    view_.setCenter(viewPosition);
+}
+
 sf::Vector2f Camera::CalcViewPosition() const
 {
     sf::Vector2f viewPosition;

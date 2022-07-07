@@ -74,9 +74,9 @@ void LevelLayer::OnCreate()
 
 void LevelLayer::Draw()
 {
-    level_->Draw(layerTexture_);
     auto view = level_->GetView();
     layerTexture_.setView(view);
+    level_->Draw(layerTexture_);  // When drawing, the view must already have been set
     if (effect_) effect_->DrawTo(layerTexture_);
 }
 

@@ -20,6 +20,7 @@ public:
 
     void UpdatePosition(float deltaTime);
     sf::View GetView() const;
+    void Reset();
 
 private:
     sf::View view_;

@@ -25,6 +25,7 @@ public:
     void Track(const sf::Vector2f& trackingPoint);
     void Update(float deltaTime);
     sf::View GetView() const;
+    void Reset();
 
 private:
     sf::Vector2u renderTargetSize_{};

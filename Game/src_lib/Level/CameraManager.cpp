@@ -36,4 +36,9 @@ sf::View CameraManager::GetView() const
     return {};
 }
 
+void CameraManager::Reset()
+{
+    if (camera_) camera_->Reset();
+}
+
 }  // namespace FA

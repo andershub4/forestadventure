@@ -74,6 +74,7 @@ void Level::Create()
     LOG_INFO_ENTER_FUNC();
     CreateBackground();
     CreateEntities();
+    cameraManager_.Reset();  // Reset camera after player created the camera
     CreateFringe();
     LOG_INFO_EXIT_FUNC();
 }
