@@ -428,7 +428,7 @@
     <ClInclude Include="Entity\Events\AttackEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Events\AttackWeapon.h">
+    <ClInclude Include="Entity\Events\AttackWeaponEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Events\InitEvent.h">

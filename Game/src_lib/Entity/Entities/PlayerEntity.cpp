@@ -15,7 +15,7 @@
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/Abilities/ShootAbility.h"
 #include "Entity/Events/AttackEvent.h"
-#include "Entity/Events/AttackWeapon.h"
+#include "Entity/Events/AttackWeaponEvent.h"
 #include "Entity/Events/DeadEvent.h"
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Events/StopMoveEvent.h"

@@ -234,7 +234,7 @@
     <ClInclude Include="Effect\NullEffect.h" />
     <ClInclude Include="Entity\Entities\ArrowEntity.h" />
     <ClInclude Include="Entity\Events\AttackEvent.h" />
-    <ClInclude Include="Entity\Events\AttackWeapon.h" />
+    <ClInclude Include="Entity\Events\AttackWeaponEvent.h" />
     <ClInclude Include="Entity\Events\BasicEvent.h" />
     <ClInclude Include="Entity\Events\InitEvent.h" />
     <ClInclude Include="Entity\Events\StartMoveEvent.h" />
