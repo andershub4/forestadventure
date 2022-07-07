@@ -23,7 +23,7 @@ public:
     ~CameraManager();
 
     void Track(const sf::Vector2f& trackingPoint);
-    void Update();
+    void Update(float deltaTime);
     sf::View GetView() const;
 
 private:

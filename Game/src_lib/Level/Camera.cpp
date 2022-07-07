@@ -26,7 +26,7 @@ Camera::Camera(const sf::Vector2f& trackingPoint, const sf::Vector2u& viewSize, 
 
 Camera::~Camera() = default;
 
-void Camera::UpdatePosition()
+void Camera::UpdatePosition(float deltaTime)
 {
     auto viewPosition = CalcViewPosition();
     view_.setCenter(viewPosition);

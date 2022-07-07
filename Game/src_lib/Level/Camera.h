@@ -18,7 +18,7 @@ public:
     Camera(const sf::Vector2f& trackingPoint, const sf::Vector2u& renderTargetSize, const sf::Vector2u& mapSize);
     ~Camera();
 
-    void UpdatePosition();
+    void UpdatePosition(float deltaTime);
     sf::View GetView() const;
 
 private:

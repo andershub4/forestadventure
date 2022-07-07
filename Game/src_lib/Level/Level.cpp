@@ -86,7 +86,7 @@ sf::View Level::GetView()
 void Level::Update(float deltaTime)
 {
     entityManager_.HandleCreatedEntities();
-    cameraManager_.Update();
+    cameraManager_.Update(deltaTime);
     entityManager_.Update(deltaTime);
     entityManager_.HandleDeletedEntities();
 }

@@ -24,9 +24,9 @@ void CameraManager::Track(const sf::Vector2f& trackingPoint)
     camera_ = std::make_unique<Camera>(trackingPoint, renderTargetSize_, mapSize_);
 }
 
-void CameraManager::Update()
+void CameraManager::Update(float deltaTime)
 {
-    if (camera_) camera_->UpdatePosition();
+    if (camera_) camera_->UpdatePosition(deltaTime);
 }
 
 sf::View CameraManager::GetView() const
