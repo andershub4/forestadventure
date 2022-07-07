@@ -10,7 +10,6 @@
 
 #include <SFML/Window/Keyboard.hpp>
 
-#include "Enum/KeyboardKey.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -27,7 +26,7 @@ public:
 private:
     sf::RenderWindow& window_;
     MessageBus& messageBus_;
-    std::unordered_set<Keyboard::Key> pressedKeys_;
+    std::unordered_set<sf::Keyboard::Key> pressedKeys_;
 
 private:
     void ProcessEvent(const sf::Event& event);

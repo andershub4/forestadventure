@@ -21,7 +21,6 @@
 #include "Entity/Events/StopMoveEvent.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
-#include "Enum/KeyboardKey.h"
 #include "Enum/MessageType.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -81,37 +80,37 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
     if (msg->GetMessageType() == MessageType::IsKeyPressed) {
         auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
         auto key = m->GetKey();
-        if (key == Keyboard::Key::Right) {
+        if (key == sf::Keyboard::Key::Right) {
             HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right));
         }
-        else if (key == Keyboard::Key::Left) {
+        else if (key == sf::Keyboard::Key::Left) {
             HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left));
         }
-        else if (key == Keyboard::Key::Down) {
+        else if (key == sf::Keyboard::Key::Down) {
             HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down));
         }
-        else if (key == Keyboard::Key::Up) {
+        else if (key == sf::Keyboard::Key::Up) {
             HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up));
         }
-        else if (key == Keyboard::Key::RControl) {
+        else if (key == sf::Keyboard::Key::RControl) {
             HandleEvent(std::make_shared<AttackEvent>());
         }
-        else if (key == Keyboard::Key::Space) {
+        else if (key == sf::Keyboard::Key::Space) {
             HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow));
         }
     }
     else if (msg->GetMessageType() == MessageType::KeyReleased) {
         auto m = std::dynamic_pointer_cast<KeyReleasedMessage>(msg);
         auto key = m->GetKey();
-        if (key == Keyboard::Key::Right || key == Keyboard::Key::Left || key == Keyboard::Key::Down ||
-            key == Keyboard::Key::Up) {
+        if (key == sf::Keyboard::Key::Right || key == sf::Keyboard::Key::Left || key == sf::Keyboard::Key::Down ||
+            key == sf::Keyboard::Key::Up) {
             HandleEvent(std::make_shared<StopMoveEvent>());
         }
     }
     else if (msg->GetMessageType() == MessageType::KeyPressed) {
         auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
         auto key = m->GetKey();
-        if (key == Keyboard::Key::Num1) {
+        if (key == sf::Keyboard::Key::Num1) {
             HandleEvent(std::make_shared<DeadEvent>());
         }
     }

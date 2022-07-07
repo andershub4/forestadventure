@@ -8,22 +8,22 @@
 
 #include "Message/Message.h"
 
-#include "Enum/KeyboardKey.h"
+#include <SFML/Window/Keyboard.hpp>
 
 namespace FA {
 
 class KeyReleasedMessage : public Message
 {
 public:
-    KeyReleasedMessage(Keyboard::Key key);
+    KeyReleasedMessage(sf::Keyboard::Key key);
 
     virtual MessageType GetMessageType() const override { return MessageType::KeyReleased; }
     virtual std::string Name() const override { return "KeyReleased"; }
 
-    Keyboard::Key GetKey() const { return key_; }
+    sf::Keyboard::Key GetKey() const { return key_; }
 
 private:
-    Keyboard::Key key_ = Keyboard::Key::Undefined;
+    sf::Keyboard::Key key_ = sf::Keyboard::Key::Unknown;
 };
 
 }  // namespace FA

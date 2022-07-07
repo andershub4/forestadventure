@@ -8,7 +8,7 @@
 
 namespace FA {
 
-KeyReleasedMessage::KeyReleasedMessage(Keyboard::Key key)
+KeyReleasedMessage::KeyReleasedMessage(sf::Keyboard::Key key)
     : key_(key)
 {}
 

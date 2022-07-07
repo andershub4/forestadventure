@@ -6,24 +6,24 @@
 
 #pragma once
 
-#include "Message/Message.h"
+#include <SFML/Window/Keyboard.hpp>
 
-#include "Enum/KeyboardKey.h"
+#include "Message/Message.h"
 
 namespace FA {
 
 class KeyPressedMessage : public Message
 {
 public:
-    KeyPressedMessage(Keyboard::Key key);
+    KeyPressedMessage(sf::Keyboard::Key key);
 
     virtual MessageType GetMessageType() const override { return MessageType::KeyPressed; }
     virtual std::string Name() const override { return "KeyPressed"; }
 
-    Keyboard::Key GetKey() const { return key_; }
+    sf::Keyboard::Key GetKey() const { return key_; }
 
 private:
-    Keyboard::Key key_ = Keyboard::Key::Undefined;
+    sf::Keyboard::Key key_ = sf::Keyboard::Key::Unknown;
 };
 
 }  // namespace FA

@@ -92,7 +92,7 @@ void PlayScene::OnMessage(std::shared_ptr<Message> msg)
     else if (msg->GetMessageType() == MessageType::KeyPressed) {
         auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
         auto key = m->GetKey();
-        if (key == Keyboard::Key::Escape) {
+        if (key == sf::Keyboard::Key::Escape) {
             OnCloseWindow();
         }
     }

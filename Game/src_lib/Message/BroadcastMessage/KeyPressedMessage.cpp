@@ -8,7 +8,7 @@
 
 namespace FA {
 
-KeyPressedMessage::KeyPressedMessage(Keyboard::Key key)
+KeyPressedMessage::KeyPressedMessage(sf::Keyboard::Key key)
     : key_(key)
 {}
 

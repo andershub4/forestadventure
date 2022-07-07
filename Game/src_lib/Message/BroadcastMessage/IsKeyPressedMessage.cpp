@@ -8,7 +8,7 @@
 
 namespace FA {
 
-IsKeyPressedMessage::IsKeyPressedMessage(Keyboard::Key key)
+IsKeyPressedMessage::IsKeyPressedMessage(sf::Keyboard::Key key)
     : key_(key)
 {}
 
