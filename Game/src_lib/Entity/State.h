@@ -39,6 +39,7 @@ public:
     StateType GetStateType() const { return stateType_; }
     void RegisterAbility(std::shared_ptr<BasicAbility> ability);
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
+    void RegisterIgnoreEvents(const std::vector<EventType>& eventTypes);
     void IgnoreAllEvents();
 
 private:

@@ -71,7 +71,7 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const Propert
 
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
-    idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {});
+    idleState->RegisterIgnoreEvents({EventType::Collision});
 
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(

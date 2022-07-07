@@ -92,8 +92,7 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const Property
     idleState->RegisterAbility(idleAnimation);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
-    idleState->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
-    idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {});
+    idleState->RegisterIgnoreEvents({EventType::StopMove, EventType::Collision});
 
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(

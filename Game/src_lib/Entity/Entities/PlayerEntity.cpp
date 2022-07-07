@@ -200,7 +200,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     idleState->RegisterEventCB(EventType::AttackWeapon, [this](std::shared_ptr<BasicEvent> event) {
         ChangeStateTo(StateType::AttackWeapon, event);
     });
-    idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {});
+    idleState->RegisterIgnoreEvents({EventType::Collision});
 
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(
@@ -217,9 +217,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     moveState->RegisterAbility(moveAnimation);  // register animation after move
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
-    moveState->RegisterEventCB(EventType::StartMove, [this](std::shared_ptr<BasicEvent> event) {});
-    moveState->RegisterEventCB(EventType::Attack, [this](std::shared_ptr<BasicEvent> event) {});
-    moveState->RegisterEventCB(EventType::AttackWeapon, [this](std::shared_ptr<BasicEvent> event) {});
+    moveState->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
 
     auto attackState = RegisterState(StateType::Attack);
     auto attackAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndComplete);
@@ -232,8 +230,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     attackState->RegisterAbility(attackAnimation);
     attackState->RegisterEventCB(EventType::StartMove,
                                  [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
-    attackState->RegisterEventCB(EventType::Attack, [this](std::shared_ptr<BasicEvent> event) {});
-    attackState->RegisterEventCB(EventType::AttackWeapon, [this](std::shared_ptr<BasicEvent> event) {});
+    attackState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
     auto shoot = std::make_shared<ShootAbility>(
@@ -249,8 +246,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     attackWeaponState->RegisterAbility(attackWeaponAnimation);  // register animation after shoot
     attackWeaponState->RegisterEventCB(
         EventType::StartMove, [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
-    attackWeaponState->RegisterEventCB(EventType::Attack, [this](std::shared_ptr<BasicEvent> event) {});
-    attackWeaponState->RegisterEventCB(EventType::AttackWeapon, [this](std::shared_ptr<BasicEvent> event) {});
+    attackWeaponState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 }
 
 void PlayerEntity::Start()

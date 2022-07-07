@@ -72,6 +72,13 @@ void State::RegisterEventCB(EventType eventType, std::function<void(std::shared_
     }
 }
 
+void State::RegisterIgnoreEvents(const std::vector<EventType> &eventTypes)
+{
+    for (const auto &e : eventTypes) {
+        RegisterEventCB(e, [](std::shared_ptr<BasicEvent>) {});
+    }
+}
+
 void State::IgnoreAllEvents()
 {
     ignoreAllEvents_ = true;
