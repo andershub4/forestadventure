@@ -55,7 +55,7 @@ LevelLayer::~LevelLayer() = default;
 
 void LevelLayer::OnLoad()
 {
-    auto path = GetAssetsPath() + "/map/simpletest.tmx";
+    auto path = GetAssetsPath() + "/map/level.tmx";
     tileMap_.Load(path);
     tileMap_.Setup();
 
