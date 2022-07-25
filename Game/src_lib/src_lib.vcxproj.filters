@@ -153,9 +153,6 @@
     <ClCompile Include="Entity\EntityService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\FrameHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Level\CameraManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -404,9 +401,6 @@
     <ClInclude Include="Entity\EntityService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\FrameHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Level\CameraManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -519,6 +513,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\LayerType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\AnimationData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\ImageData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

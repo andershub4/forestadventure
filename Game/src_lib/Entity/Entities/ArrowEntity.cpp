@@ -13,6 +13,7 @@
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
+#include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
 
 namespace FA {

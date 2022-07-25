@@ -10,7 +10,10 @@
 #include "EntityManager.h"
 #include "Level/CameraManager.h"
 #include "Resource/Animation.h"
+#include "Resource/AnimationData.h"
 #include "Resource/Image.h"
+#include "Resource/ImageData.h"
+#include "Resource/SheetManager.h"
 #include "SpawnManager.h"
 
 namespace FA {
@@ -42,13 +45,13 @@ sf::FloatRect EntityService::GetMapRect() const
 Animation EntityService::MakeAnimation(const AnimationData& data) const
 {
     float t = constant::Entity::stdSwitchTime;
-    auto frames = frameHandler_.MakeFrames(sheetManager_, data);
+    auto frames = sheetManager_.MakeFrames(data);
     return Animation(frames, data.locationData_.defaultIndex_, t);
 }
 
 Image EntityService::MakeImage(const ImageData& data) const
 {
-    auto frame = frameHandler_.MakeFrame(sheetManager_, data);
+    auto frame = sheetManager_.MakeFrame(data);
     return Image(frame);
 }
 

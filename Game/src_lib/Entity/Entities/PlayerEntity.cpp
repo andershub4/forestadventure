@@ -26,6 +26,7 @@
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyReleasedMessage.h"
+#include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
 
 namespace FA {

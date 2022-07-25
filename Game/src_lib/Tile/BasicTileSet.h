@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include <string>
+
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 
 #include "Fwd/SfmlFwd.h"
-#include "Resource/FrameHandler.h"
 
 namespace FA {
 
@@ -36,7 +37,6 @@ protected:
 
 private:
     SheetManager &sheetManager_;
-    const FrameHandler frameHandler_;
     std::string name_;
 };
 

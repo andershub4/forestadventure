@@ -13,7 +13,6 @@
 #include "Enum/FaceDirection.h"
 #include "Id.h"
 #include "Logging.h"
-#include "Resource/FrameHandler.h"
 #include "SpawnManager.h"
 
 namespace FA {
@@ -22,6 +21,8 @@ class CameraManager;
 class Animation;
 class Image;
 class SheetManager;
+struct AnimationData;
+struct ImageData;
 
 namespace Entity {
 
@@ -46,7 +47,6 @@ public:
 
 private:
     CameraManager &cameraManager_;
-    const FrameHandler frameHandler_;
     const SheetManager &sheetManager_;
     EntityManager &entityManager_;
     SpawnManager spawnManager_;
