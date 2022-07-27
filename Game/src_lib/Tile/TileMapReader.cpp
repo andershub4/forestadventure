@@ -90,6 +90,8 @@ std::vector<TileMapData::Tile> TileMapReader::GetTiles(const std::string& tsxDir
     for (const auto& parsedTile : parsedTiles) {
         TileMapData::Tile tile;
         tile.image_.textureFilePath_ = GetFilePath(tsxDir, parsedTile.image_.source_);
+        tile.image_.width_ = parsedTile.image_.width_;
+        tile.image_.height_ = parsedTile.image_.height_;
         tile.id_ = parsedTile.id_;
         auto animation = parsedTile.animation_;
         for (const auto& frame : animation.frames_) {

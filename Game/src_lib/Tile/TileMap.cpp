@@ -10,6 +10,8 @@
 #include "GridTileSet.h"
 #include "ImageTileSet.h"
 #include "Logging.h"
+#include "Resource/ImageData.h"
+#include "Resource/SheetManager.h"
 #include "TileMapData.h"
 #include "TileMapReader.h"
 
@@ -19,13 +21,13 @@ namespace Tile {
 
 namespace {
 
-std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet& tileSet, SheetManager& sheetManager)
+std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet& tileSet)
 {
     if (!tileSet.tiles_.empty()) {
-        return std::make_unique<ImageTileSet>(tileSet, sheetManager);
+        return std::make_unique<ImageTileSet>(tileSet);
     }
     else {
-        return std::make_unique<GridTileSet>(tileSet, sheetManager);
+        return std::make_unique<GridTileSet>(tileSet);
     }
 }
 
@@ -42,6 +44,7 @@ TileMap::~TileMap() = default;
 void TileMap::Load(const std::string& fileName)
 {
     tileMapData_ = std::make_unique<TileMapData>(tileMapReader_->Parse(fileName));
+    CreateTileSets();
     LoadTileSets();
 }
 
@@ -52,13 +55,23 @@ void TileMap::Setup()
     SetupObjectGroups();
 }
 
-void TileMap::LoadTileSets()
+void TileMap::CreateTileSets()
 {
     for (const auto& tileSet : tileMapData_->tileSets_) {
-        auto s = CreateTileSet(tileSet, sheetManager_);
-        s->Load();
+        auto s = CreateTileSet(tileSet);
+        s->Create();
         auto firstGid = tileSet.firstGid_;
         tileSets_[firstGid] = std::move(s);
+    }
+}
+
+void TileMap::LoadTileSets()
+{
+    for (auto& s : tileSets_) {
+        auto images = s.second->GetImages();
+        for (const auto& image : images) {
+            sheetManager_.LoadSheet(image.path_, image.path_, sf::Vector2u(image.width_, image.height_));
+        }
     }
 }
 
@@ -78,13 +91,37 @@ void TileMap::SetupLayers()
             TileMap::TileData tileData;
             unsigned int x = (inx % nCols) * tileWidth;
             unsigned int y = (inx / nCols) * tileHeight;
-            if (frameData.frame_.rect_.height > tileHeight) {
+
+            if (frameData.Front().height_ > tileHeight) {
                 y += tileHeight;
-                y -= frameData.frame_.rect_.height;
+                y -= frameData.Front().height_;
             }
+
             tileData.x_ = x;
             tileData.y_ = y;
-            tileData.frameData_ = frameData;
+
+            // set frame on tileData
+            auto p = frameData.Front().texturePath_;
+            unsigned int u = frameData.Front().u_;
+            unsigned int v = frameData.Front().v_;
+            ImageData data{p, {u, v}};
+            auto frame = sheetManager_.MakeFrame(data);
+            tileData.frame_ = frame;
+
+            // set frames on tileData
+            if (frameData.IsAnimation()) {
+                std::vector<FA::Frame> frames;
+                for (auto f : frameData.GetFrames()) {
+                    auto p = f.texturePath_;
+                    unsigned int u = f.u_;
+                    unsigned int v = f.v_;
+                    ImageData data{p, {u, v}};
+                    auto frame = sheetManager_.MakeFrame(data);
+                    frames.push_back(frame);
+                }
+                tileData.frames_ = frames;
+            }
+
             layers_[layerName].push_back(tileData);
         }
     }

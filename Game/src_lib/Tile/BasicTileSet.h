@@ -7,16 +7,9 @@
 #pragma once
 
 #include <string>
-
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/System/Vector2.hpp>
-
-#include "Fwd/SfmlFwd.h"
+#include <vector>
 
 namespace FA {
-
-struct Frame;
-class SheetManager;
 
 namespace Tile {
 
@@ -25,18 +18,21 @@ struct FrameData;
 class BasicTileSet
 {
 public:
-    BasicTileSet(SheetManager &sheetManager);
+    struct Image
+    {
+        std::string path_;
+        int width_{};
+        int height_{};
+    };
+
+    BasicTileSet();
     virtual ~BasicTileSet();
 
-    virtual void Load() = 0;
+    virtual void Create() = 0;
+    virtual std::vector<Image> GetImages() const = 0;
     virtual FrameData GetFrameData(int id) const = 0;
 
-protected:
-    void LoadSheet(const std::string &filePath, const sf::Vector2u &size);
-    Frame GetFrame(const std::string &filePath, const sf::Vector2u &uvCoord) const;
-
 private:
-    SheetManager &sheetManager_;
     std::string name_;
 };
 

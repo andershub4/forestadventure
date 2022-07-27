@@ -13,6 +13,8 @@
 #include <vector>
 
 #include "FrameData.h"
+#include "Fwd/SfmlFwd.h"
+#include "Resource/Frame.h"
 
 namespace FA {
 
@@ -31,7 +33,8 @@ public:
     {
         unsigned int x_{};
         unsigned int y_{};
-        FrameData frameData_{};
+        FA::Frame frame_;
+        std::vector<FA::Frame> frames_;
     };
 
     struct ObjectData
@@ -60,6 +63,7 @@ private:
     std::map<std::string, std::vector<ObjectData>> objectGroups_;
 
 private:
+    void CreateTileSets();
     void LoadTileSets();
     void SetupLayers();
     void SetupObjectGroups();

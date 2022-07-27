@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <unordered_map>
-
 #include "BasicTileSet.h"
 
 #include "TileMapData.h"
@@ -19,10 +17,11 @@ namespace Tile {
 class GridTileSet : public BasicTileSet
 {
 public:
-    GridTileSet(const TileMapData::TileSet &tileSet, SheetManager &sheetManager);
+    GridTileSet(const TileMapData::TileSet &tileSet);
     virtual ~GridTileSet();
 
-    virtual void Load() override;
+    virtual void Create() override {}
+    virtual std::vector<Image> GetImages() const override;
     virtual FrameData GetFrameData(int id) const override;
 
 private:

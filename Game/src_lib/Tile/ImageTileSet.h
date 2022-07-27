@@ -19,10 +19,11 @@ namespace Tile {
 class ImageTileSet : public BasicTileSet
 {
 public:
-    ImageTileSet(const TileMapData::TileSet &tileSet, SheetManager &sheetManager);
+    ImageTileSet(const TileMapData::TileSet &tileSet);
     virtual ~ImageTileSet();
 
-    virtual void Load();
+    virtual void Create() override;
+    virtual std::vector<Image> GetImages() const override;
     virtual FrameData GetFrameData(int id) const override;
 
 private:
