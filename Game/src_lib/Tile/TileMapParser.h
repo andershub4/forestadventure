@@ -17,13 +17,13 @@ namespace Tile {
 class TmxParser;
 class TsxParser;
 
-class TileMapReader
+class TileMapParser
 {
 public:
-    TileMapReader();
-    ~TileMapReader();
+    TileMapParser();
+    ~TileMapParser();
 
-    TileMapData Parse(const std::string& fileName);
+    TileMapData Run(const std::string& fileName);
 
 private:
     TileMapData tileMapData_;

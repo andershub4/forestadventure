@@ -123,7 +123,7 @@
     <ClCompile Include="Tile\TsxParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tile\TileMapReader.cpp">
+    <ClCompile Include="Tile\TileMapParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Factory.cpp">
@@ -359,7 +359,7 @@
     <ClInclude Include="Tile\TsxParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tile\TileMapReader.h">
+    <ClInclude Include="Tile\TileMapParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tile\TileMapData.h">

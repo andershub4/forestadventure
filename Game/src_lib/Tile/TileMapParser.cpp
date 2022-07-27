@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "TileMapReader.h"
+#include "TileMapParser.h"
 
 #include "Folder.h"
 #include "Logging.h"
@@ -15,11 +15,11 @@ namespace FA {
 
 namespace Tile {
 
-TileMapReader::TileMapReader() = default;
+TileMapParser::TileMapParser() = default;
 
-TileMapReader::~TileMapReader() = default;
+TileMapParser::~TileMapParser() = default;
 
-TileMapData TileMapReader::Parse(const std::string& fileName)
+TileMapData TileMapParser::Run(const std::string& fileName)
 {
     LOG_INFO("Parse ", fileName);
     LOG_TMXINFO("Start parse fileName ", fileName);
@@ -41,7 +41,7 @@ TileMapData TileMapReader::Parse(const std::string& fileName)
     return tileMapData_;
 }
 
-void TileMapReader::ReadMapProperties(const TmxParser& tmxParser)
+void TileMapParser::ReadMapProperties(const TmxParser& tmxParser)
 {
     tileMapData_.mapProperties_.width_ = tmxParser.map_.width_;
     tileMapData_.mapProperties_.height_ = tmxParser.map_.height_;
@@ -49,7 +49,7 @@ void TileMapReader::ReadMapProperties(const TmxParser& tmxParser)
     tileMapData_.mapProperties_.tileHeight_ = tmxParser.map_.tileHeight_;
 }
 
-void TileMapReader::ReadTileSets(const TmxParser& tmxParser, const std::string& tmxDir)
+void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& tmxDir)
 {
     if (tmxParser.tileSets_.empty()) {
         LOG_ERROR("No tilesets found");
@@ -77,13 +77,13 @@ void TileMapReader::ReadTileSets(const TmxParser& tmxParser, const std::string& 
     }
 }
 
-TileMapData::Image TileMapReader::GetImage(const std::string& tsxDir, const TsxParser& tsxParser) const
+TileMapData::Image TileMapParser::GetImage(const std::string& tsxDir, const TsxParser& tsxParser) const
 {
     auto textureFilePath = GetFilePath(tsxDir, tsxParser.image_.source_);
     return {tsxParser.image_.width_, tsxParser.image_.height_, textureFilePath};
 }
 
-std::vector<TileMapData::Tile> TileMapReader::GetTiles(const std::string& tsxDir, const TsxParser& tsxParser) const
+std::vector<TileMapData::Tile> TileMapParser::GetTiles(const std::string& tsxDir, const TsxParser& tsxParser) const
 {
     std::vector<TileMapData::Tile> tiles;
     auto parsedTiles = tsxParser.tiles_;
@@ -106,7 +106,7 @@ std::vector<TileMapData::Tile> TileMapReader::GetTiles(const std::string& tsxDir
     return tiles;
 }
 
-void TileMapReader::ReadLayers(const TmxParser& tmxParser)
+void TileMapParser::ReadLayers(const TmxParser& tmxParser)
 {
     for (const auto& parsedLayer : tmxParser.layers_) {
         TileMapData::Layer layer;
@@ -116,7 +116,7 @@ void TileMapReader::ReadLayers(const TmxParser& tmxParser)
     }
 }
 
-void TileMapReader::ReadObjectGroups(const TmxParser& tmxParser)
+void TileMapParser::ReadObjectGroups(const TmxParser& tmxParser)
 {
     for (const auto& parsedObjectGroup : tmxParser.objectGroups_) {
         TileMapData::ObjectGroup group;
@@ -137,7 +137,7 @@ void TileMapReader::ReadObjectGroups(const TmxParser& tmxParser)
     }
 }
 
-std::string TileMapReader::GetFilePath(const std::string& baseDir, const std::string& source) const
+std::string TileMapParser::GetFilePath(const std::string& baseDir, const std::string& source) const
 {
     auto head = baseDir;
     auto tail = source;

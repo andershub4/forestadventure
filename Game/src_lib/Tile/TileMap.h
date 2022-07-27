@@ -23,7 +23,7 @@ class SheetManager;
 namespace Tile {
 
 class BasicTileSet;
-class TileMapReader;
+class TileMapParser;
 struct TileMapData;
 
 class TileMap
@@ -57,7 +57,7 @@ public:
 private:
     SheetManager &sheetManager_;
     std::unique_ptr<TileMapData> tileMapData_ = nullptr;
-    std::unique_ptr<TileMapReader> tileMapReader_ = nullptr;
+    std::unique_ptr<TileMapParser> tileMapParser_ = nullptr;
     std::map<std::string, std::vector<TileData>> layers_;
     std::map<int, std::unique_ptr<BasicTileSet>, std::greater<int>> tileSets_;
     std::map<std::string, std::vector<ObjectData>> objectGroups_;

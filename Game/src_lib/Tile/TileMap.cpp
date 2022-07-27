@@ -13,7 +13,7 @@
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
 #include "TileMapData.h"
-#include "TileMapReader.h"
+#include "TileMapParser.h"
 
 namespace FA {
 
@@ -36,14 +36,14 @@ std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet& tileSet)
 TileMap::TileMap(SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {
-    tileMapReader_ = std::make_unique<TileMapReader>();
+    tileMapParser_ = std::make_unique<TileMapParser>();
 }
 
 TileMap::~TileMap() = default;
 
 void TileMap::Load(const std::string& fileName)
 {
-    tileMapData_ = std::make_unique<TileMapData>(tileMapReader_->Parse(fileName));
+    tileMapData_ = std::make_unique<TileMapData>(tileMapParser_->Run(fileName));
     CreateTileSets();
     LoadTileSets();
 }
