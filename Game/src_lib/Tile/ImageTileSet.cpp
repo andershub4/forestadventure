@@ -49,8 +49,8 @@ void ImageTileSet::Create()
     }
 
     for (const auto &tile : tiles_) {
-            if (!tile.frames_.empty()) {
-                auto id = tile.id_;
+        if (!tile.frames_.empty()) {
+            auto id = tile.id_;
             std::vector<Frame> frames;
             for (auto frame : tile.frames_) {
                 auto id = frame.tiledId_;

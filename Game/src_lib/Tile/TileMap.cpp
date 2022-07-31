@@ -6,9 +6,9 @@
 
 #include "TileMap.h"
 
+#include "BasicTileSet.h"
 #include "FrameData.h"
 #include "Image.h"
-#include "BasicTileSet.h"
 #include "Logging.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
@@ -42,7 +42,7 @@ void TileMap::Setup()
 
 void TileMap::LoadTileSets()
 {
-    for (auto& entry: tileMapData_->tileSets_) {
+    for (auto& entry : tileMapData_->tileSets_) {
         auto images = entry.second->GetImages();
         for (const auto& image : images) {
             sheetManager_.LoadSheet(image.path_, image.path_, sf::Vector2u(image.width_, image.height_));
@@ -87,7 +87,7 @@ void TileMap::SetupLayers()
             if (frameData.IsAnimation()) {
                 std::vector<FA::Frame> frames;
                 for (auto f : frameData.GetFrames()) {
-                   auto p = f.texturePath_;
+                    auto p = f.texturePath_;
                     unsigned int u = f.u_;
                     unsigned int v = f.v_;
                     ImageData data{p, {u, v}};

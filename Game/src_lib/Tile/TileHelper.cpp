@@ -26,7 +26,6 @@ std::string GetFilePath(const std::string& baseDir, const std::string& source)
     return head + '/' + tail;
 }
 
-
 }  // namespace Tile
 
 }  // namespace FA
