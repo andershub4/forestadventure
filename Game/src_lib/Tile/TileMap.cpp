@@ -73,21 +73,14 @@ void TileMap::SetupLayers()
             tileData.y_ = y;
 
             // set frame on tileData
-            auto p = frameData.Front().texturePath_;
-            unsigned int u = frameData.Front().u_;
-            unsigned int v = frameData.Front().v_;
-            ImageData data{p, {u, v}};
-            auto frame = sheetManager_.MakeFrame(data);
-            tileData.frame_ = frame;
+            ImageData data{frameData.Front().texturePath_, {frameData.Front().u_, frameData.Front().v_}};
+            tileData.frame_ = sheetManager_.MakeFrame(data);
 
             // set frames on tileData
             if (frameData.IsAnimation()) {
                 std::vector<FA::Frame> frames;
                 for (auto f : frameData.GetFrames()) {
-                    auto p = f.texturePath_;
-                    unsigned int u = f.u_;
-                    unsigned int v = f.v_;
-                    ImageData data{p, {u, v}};
+                    ImageData data{f.texturePath_, {f.u_, f.v_}};
                     auto frame = sheetManager_.MakeFrame(data);
                     frames.push_back(frame);
                 }

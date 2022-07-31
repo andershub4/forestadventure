@@ -31,7 +31,7 @@ void GridTileSet::Create()
     auto w = dimensions_.tileWidth_;
     auto h = dimensions_.tileHeight_;
 
-    for (int id = 0; id < dimensions_.tileCount_; id++) {
+    for (unsigned int id = 0; id < dimensions_.tileCount_; id++) {
         auto column = id % nCols;
         auto row = id / nCols;
         Frame frame = {p_, column, row, w, h};

@@ -20,10 +20,10 @@ class GridTileSet : public BasicTileSet
 public:
     struct Dimensions
     {
-        int tileWidth_{};
-        int tileHeight_{};
-        int columns_{};
-        int tileCount_{};
+        unsigned int tileWidth_{};
+        unsigned int tileHeight_{};
+        unsigned int columns_{};
+        unsigned int tileCount_{};
     };
 
     GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const Dimensions &dimensions);

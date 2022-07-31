@@ -16,10 +16,10 @@ namespace Tile {
 struct Frame
 {
     std::string texturePath_;
-    int u_{};
-    int v_{};
-    int width_{};
-    int height_{};
+    unsigned int u_{};
+    unsigned int v_{};
+    unsigned int width_{};
+    unsigned int height_{};
 };
 
 struct FrameData

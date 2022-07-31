@@ -23,10 +23,10 @@ struct TileMapData
 {
     struct MapProperties
     {
-        int width_{};
-        int height_{};
-        int tileWidth_{};
-        int tileHeight_{};
+        unsigned int width_{};
+        unsigned int height_{};
+        unsigned int tileWidth_{};
+        unsigned int tileHeight_{};
     };
 
     struct TileSet

@@ -15,8 +15,8 @@ namespace Tile {
 struct Image
 {
     std::string path_;
-    int width_{};
-    int height_{};
+    unsigned int width_{};
+    unsigned int height_{};
 };
 
 }  // namespace Tile
