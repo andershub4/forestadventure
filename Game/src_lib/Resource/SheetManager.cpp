@@ -78,8 +78,10 @@ SpriteSheet SheetManager::GetSheet(const std::string& name) const
     if (it != sheetMap_.end()) {
         return sheetMap_.at(name);
     }
-
-    return SpriteSheet();
+    else {
+        LOG_ERROR("name ", name, " not found");
+        return SpriteSheet();
+    }
 }
 
 }  // namespace FA
