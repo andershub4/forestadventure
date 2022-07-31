@@ -90,10 +90,11 @@ void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& 
             auto tsxDir = GetHead(tsxFilePath);
             TsxParser tsxParser;
             if (tsxParser.Parse(tsxFilePath)) {
-                auto tiles = tsxParser.tiles_;
                 auto set = CreateTileSet(tsxDir, tsxParser);
                 auto firstGid = parsedSet.firstGid_;
-                tileMapData_.tileSets_[firstGid] = std::move(set);
+                auto images = set->GetImages();
+                auto frameDatas = set->GetFrameDatas();
+                tileMapData_.tileSets_[firstGid] = {images, frameDatas};
             }
             else {
                 LOG_ERROR("Can not load: ", parsedSet.tsxSource_);

@@ -26,6 +26,17 @@ GridTileSet::~GridTileSet() = default;
 void GridTileSet::Create()
 {
     p_ = GetFilePath(tsxDir_, textureFilePath_);
+
+    auto nCols = dimensions_.columns_;
+    auto w = dimensions_.tileWidth_;
+    auto h = dimensions_.tileHeight_;
+
+    for (int id = 0; id < dimensions_.tileCount_; id++) {
+        auto column = id % nCols;
+        auto row = id / nCols;
+        Frame frame = {p_, column, row, w, h};
+        frameData_[id] = FrameData({frame});
+    }
 }
 
 std::vector<Image> GridTileSet::GetImages() const
@@ -38,17 +49,9 @@ std::vector<Image> GridTileSet::GetImages() const
     return images;
 }
 
-FrameData GridTileSet::GetFrameData(int id) const
+std::unordered_map<int, FrameData> GridTileSet::GetFrameDatas() const
 {
-    auto nCols = dimensions_.columns_;
-    auto w = dimensions_.tileWidth_;
-    auto h = dimensions_.tileHeight_;
-    auto column = id % nCols;
-    auto row = id / nCols;
-    Frame frame = {p_, column, row, w, h};
-    std::vector<Frame> frames = {frame};
-
-    return FrameData(frames);
+    return frameData_;
 }
 
 }  // namespace Tile

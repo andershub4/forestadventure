@@ -7,6 +7,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 
 #include "BasicTileSet.h"
 
@@ -30,13 +31,14 @@ public:
 
     virtual void Create() override;
     virtual std::vector<Image> GetImages() const override;
-    virtual FrameData GetFrameData(int id) const override;
+    virtual std::unordered_map<int, FrameData> GetFrameDatas() const override;
 
 private:
     std::string tsxDir_{};
     std::string textureFilePath_{};
     Dimensions dimensions_;
     std::string p_{};
+    std::unordered_map<int, FrameData> frameData_;
 };
 
 }  // namespace Tile

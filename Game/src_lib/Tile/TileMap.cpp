@@ -6,9 +6,6 @@
 
 #include "TileMap.h"
 
-#include "BasicTileSet.h"
-#include "FrameData.h"
-#include "Image.h"
 #include "Logging.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
@@ -43,7 +40,7 @@ void TileMap::Setup()
 void TileMap::LoadTileSets()
 {
     for (auto& entry : tileMapData_->tileSets_) {
-        auto images = entry.second->GetImages();
+        auto images = entry.second.images_;
         for (const auto& image : images) {
             sheetManager_.LoadSheet(image.path_, image.path_, sf::Vector2u(image.width_, image.height_));
         }
@@ -146,7 +143,7 @@ FrameData TileMap::GetFrameData(int id)
 
     if (it != tileMapData_->tileSets_.end()) {
         auto firstGid = it->first;
-        return it->second->GetFrameData(id - firstGid);
+        return it->second.frameDatas_[id - firstGid];
     }
     else {
         LOG_ERROR("Id ", id, " not found");

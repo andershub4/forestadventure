@@ -62,9 +62,9 @@ void ImageTileSet::Create()
     }
 }
 
-FrameData ImageTileSet::GetFrameData(int id) const
+std::unordered_map<int, FrameData> ImageTileSet::GetFrameDatas() const
 {
-    return frameData_.at(id);
+    return frameData_;
 }
 
 }  // namespace Tile

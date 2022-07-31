@@ -12,11 +12,12 @@
 #include <unordered_map>
 #include <vector>
 
+#include "FrameData.h"
+#include "Image.h"
+
 namespace FA {
 
 namespace Tile {
-
-class BasicTileSet;
 
 struct TileMapData
 {
@@ -26,6 +27,12 @@ struct TileMapData
         int height_{};
         int tileWidth_{};
         int tileHeight_{};
+    };
+
+    struct TileSet
+    {
+        std::vector<Image> images_;
+        std::unordered_map<int, FrameData> frameDatas_;
     };
 
     struct Layer
@@ -49,7 +56,7 @@ struct TileMapData
     };
 
     MapProperties mapProperties_;
-    std::map<int, std::shared_ptr<BasicTileSet>, std::greater<int>> tileSets_;
+    std::map<int, TileSet, std::greater<int>> tileSets_;
     std::vector<Layer> layers_;
     std::vector<ObjectGroup> objectGroups_;
 };

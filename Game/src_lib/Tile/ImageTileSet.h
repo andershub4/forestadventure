@@ -24,7 +24,7 @@ public:
 
     virtual void Create() override;
     virtual std::vector<Image> GetImages() const override;
-    virtual FrameData GetFrameData(int id) const override;
+    virtual std::unordered_map<int, FrameData> GetFrameDatas() const override;
 
 private:
     std::unordered_map<int, FrameData> frameData_;

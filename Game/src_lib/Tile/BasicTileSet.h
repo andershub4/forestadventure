@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <unordered_map>
 #include <vector>
 
 namespace FA {
@@ -23,7 +24,7 @@ public:
 
     virtual void Create() = 0;
     virtual std::vector<Image> GetImages() const = 0;
-    virtual FrameData GetFrameData(int id) const = 0;
+    virtual std::unordered_map<int, FrameData> GetFrameDatas() const = 0;
 };
 
 }  // namespace Tile
