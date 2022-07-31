@@ -7,13 +7,43 @@
 #include "TileMapParser.h"
 
 #include "Folder.h"
+#include "TileHelper.h"
 #include "Logging.h"
 #include "TmxParser.h"
 #include "TsxParser.h"
+#include "GridTileSet.h"
+#include "ImageTileSet.h"
+#include "Image.h"
 
 namespace FA {
 
 namespace Tile {
+
+namespace {
+
+std::unique_ptr<BasicTileSet> CreateTileSet(const std::string tsxDir, const TsxParser& tsxParser)
+{
+    auto tiles = tsxParser.tiles_;
+    std::unique_ptr<BasicTileSet> s = nullptr;
+
+    if (!tiles.empty()) {
+        s = std::make_unique<ImageTileSet>(tsxDir, tiles);
+    }
+    else {
+        GridTileSet::Dimensions dim;
+        dim.tileWidth_ = tsxParser.tileSet_.tileWidth_;
+        dim.tileHeight_ = tsxParser.tileSet_.tileHeight_;
+        dim.columns_ = tsxParser.tileSet_.columns_;
+        dim.tileCount_ = tsxParser.tileSet_.tileCount_;
+        s = std::make_unique<GridTileSet>(tsxDir, tsxParser.image_.path_, dim);
+    }
+
+    s->Create();
+
+    return s;
+}
+
+}  // namespace
 
 TileMapParser::TileMapParser() = default;
 
@@ -60,50 +90,16 @@ void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& 
             auto tsxDir = GetHead(tsxFilePath);
             TsxParser tsxParser;
             if (tsxParser.Parse(tsxFilePath)) {
-                TileMapData::TileSet set;
-                set.firstGid_ = parsedSet.firstGid_;
-                set.dimensions_.tileWidth_ = tsxParser.tileSet_.tileWidth_;
-                set.dimensions_.tileHeight_ = tsxParser.tileSet_.tileHeight_;
-                set.dimensions_.columns_ = tsxParser.tileSet_.columns_;
-                set.dimensions_.tileCount_ = tsxParser.tileSet_.tileCount_;
-                set.image_ = GetImage(tsxDir, tsxParser);
-                set.tiles_ = GetTiles(tsxDir, tsxParser);
-                tileMapData_.tileSets_.push_back(set);
+                auto tiles = tsxParser.tiles_;
+                auto set = CreateTileSet(tsxDir, tsxParser);
+                auto firstGid = parsedSet.firstGid_;
+                tileMapData_.tileSets_[firstGid] = std::move(set);
             }
             else {
                 LOG_ERROR("Can not load: ", parsedSet.tsxSource_);
             }
         }
     }
-}
-
-TileMapData::Image TileMapParser::GetImage(const std::string& tsxDir, const TsxParser& tsxParser) const
-{
-    auto textureFilePath = GetFilePath(tsxDir, tsxParser.image_.source_);
-    return {tsxParser.image_.width_, tsxParser.image_.height_, textureFilePath};
-}
-
-std::vector<TileMapData::Tile> TileMapParser::GetTiles(const std::string& tsxDir, const TsxParser& tsxParser) const
-{
-    std::vector<TileMapData::Tile> tiles;
-    auto parsedTiles = tsxParser.tiles_;
-    for (const auto& parsedTile : parsedTiles) {
-        TileMapData::Tile tile;
-        tile.image_.textureFilePath_ = GetFilePath(tsxDir, parsedTile.image_.source_);
-        tile.image_.width_ = parsedTile.image_.width_;
-        tile.image_.height_ = parsedTile.image_.height_;
-        tile.id_ = parsedTile.id_;
-        auto animation = parsedTile.animation_;
-        for (const auto& frame : animation.frames_) {
-            TileMapData::Animation::Frame f;
-            f.tileId_ = frame.tiledId_;
-            f.duration_ = frame.duration_;
-            tile.animation_.frames_.push_back(f);
-        }
-        tiles.push_back(tile);
-    }
-
-    return tiles;
 }
 
 void TileMapParser::ReadLayers(const TmxParser& tmxParser)
@@ -135,22 +131,6 @@ void TileMapParser::ReadObjectGroups(const TmxParser& tmxParser)
         }
         tileMapData_.objectGroups_.push_back(group);
     }
-}
-
-std::string TileMapParser::GetFilePath(const std::string& baseDir, const std::string& source) const
-{
-    auto head = baseDir;
-    auto tail = source;
-
-    const std::string moveBackMatch = "../";
-    auto index = tail.find(moveBackMatch);
-    while (index != std::string::npos) {
-        head = GetHead(head);
-        tail = tail.substr(index + moveBackMatch.size());
-        index = tail.find(moveBackMatch);
-    }
-
-    return head + '/' + tail;
 }
 
 }  // namespace Tile

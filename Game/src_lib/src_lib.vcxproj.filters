@@ -207,6 +207,9 @@
     <ClCompile Include="Entity\Abilities\DieAbility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tile\TileHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -519,6 +522,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\ImageData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile\TileHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile\Image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile\ParsedFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile\Tile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

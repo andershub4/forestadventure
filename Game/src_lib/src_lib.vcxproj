@@ -270,9 +270,13 @@
     <ClInclude Include="Resource\TextureManager.h" />
     <ClInclude Include="Scene\Layers\PreAlphaLayer.h" />
     <ClInclude Include="Tile\BasicTileSet.h" />
+    <ClInclude Include="Tile\ParsedFrame.h" />
     <ClInclude Include="Tile\FrameData.h" />
     <ClInclude Include="Tile\GridTileSet.h" />
+    <ClInclude Include="Tile\Image.h" />
     <ClInclude Include="Tile\ImageTileSet.h" />
+    <ClInclude Include="Tile\Tile.h" />
+    <ClInclude Include="Tile\TileHelper.h" />
     <ClInclude Include="UI\Title.h" />
     <ClInclude Include="Util\Random.h" />
     <ClInclude Include="Platform\Path.h" />
@@ -346,6 +350,7 @@
     <ClCompile Include="Tile\BasicTileSet.cpp" />
     <ClCompile Include="Tile\GridTileSet.cpp" />
     <ClCompile Include="Tile\ImageTileSet.cpp" />
+    <ClCompile Include="Tile\TileHelper.cpp" />
     <ClCompile Include="UI\Title.cpp" />
     <ClCompile Include="Util\Random.cpp" />
     <ClCompile Include="Platform\Path.cpp" />

@@ -7,8 +7,8 @@
 #include "TileMap.h"
 
 #include "FrameData.h"
-#include "GridTileSet.h"
-#include "ImageTileSet.h"
+#include "Image.h"
+#include "BasicTileSet.h"
 #include "Logging.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
@@ -18,20 +18,6 @@
 namespace FA {
 
 namespace Tile {
-
-namespace {
-
-std::unique_ptr<BasicTileSet> CreateTileSet(const TileMapData::TileSet& tileSet)
-{
-    if (!tileSet.tiles_.empty()) {
-        return std::make_unique<ImageTileSet>(tileSet);
-    }
-    else {
-        return std::make_unique<GridTileSet>(tileSet);
-    }
-}
-
-}  // namespace
 
 TileMap::TileMap(SheetManager& sheetManager)
     : sheetManager_(sheetManager)
@@ -44,7 +30,6 @@ TileMap::~TileMap() = default;
 void TileMap::Load(const std::string& fileName)
 {
     tileMapData_ = std::make_unique<TileMapData>(tileMapParser_->Run(fileName));
-    CreateTileSets();
     LoadTileSets();
 }
 
@@ -55,20 +40,10 @@ void TileMap::Setup()
     SetupObjectGroups();
 }
 
-void TileMap::CreateTileSets()
-{
-    for (const auto& tileSet : tileMapData_->tileSets_) {
-        auto s = CreateTileSet(tileSet);
-        s->Create();
-        auto firstGid = tileSet.firstGid_;
-        tileSets_[firstGid] = std::move(s);
-    }
-}
-
 void TileMap::LoadTileSets()
 {
-    for (auto& s : tileSets_) {
-        auto images = s.second->GetImages();
+    for (auto& entry: tileMapData_->tileSets_) {
+        auto images = entry.second->GetImages();
         for (const auto& image : images) {
             sheetManager_.LoadSheet(image.path_, image.path_, sf::Vector2u(image.width_, image.height_));
         }
@@ -112,7 +87,7 @@ void TileMap::SetupLayers()
             if (frameData.IsAnimation()) {
                 std::vector<FA::Frame> frames;
                 for (auto f : frameData.GetFrames()) {
-                    auto p = f.texturePath_;
+                   auto p = f.texturePath_;
                     unsigned int u = f.u_;
                     unsigned int v = f.v_;
                     ImageData data{p, {u, v}};
@@ -167,14 +142,14 @@ sf::Vector2u TileMap::GetSize() const
 
 FrameData TileMap::GetFrameData(int id)
 {
-    auto it = tileSets_.lower_bound(id);
+    auto it = tileMapData_->tileSets_.lower_bound(id);
 
-    if (it != tileSets_.end()) {
+    if (it != tileMapData_->tileSets_.end()) {
         auto firstGid = it->first;
         return it->second->GetFrameData(id - firstGid);
     }
     else {
-        LOG_ERROR("Id ", id, "not found");
+        LOG_ERROR("Id ", id, " not found");
         return {};
     }
 }

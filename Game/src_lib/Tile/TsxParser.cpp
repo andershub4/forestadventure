@@ -70,15 +70,15 @@ void TsxParser::ParseTileElement(tinyxml2::XMLElement* tileElement, Tile& tile)
         tinyxml2::XMLElement* frameElement = animationElement->FirstChildElement("frame");
 
         while (frameElement != nullptr) {
-            Tile::Animation::Frame frame;
+            ParsedFrame frame;
             ParseFrameElement(frameElement, frame);
-            tile.animation_.frames_.push_back(frame);
+            tile.frames_.push_back(frame);
             frameElement = frameElement->NextSiblingElement("frame");
         }
     }
 }
 
-void TsxParser::ParseFrameElement(tinyxml2::XMLElement* frameElement, Tile::Animation::Frame& frame)
+void TsxParser::ParseFrameElement(tinyxml2::XMLElement* frameElement, ParsedFrame& frame)
 {
     frameElement->QueryAttribute("tileid", &frame.tiledId_);
     frameElement->QueryAttribute("duration", &frame.duration_);
@@ -88,10 +88,10 @@ void TsxParser::ParseFrameElement(tinyxml2::XMLElement* frameElement, Tile::Anim
 
 void TsxParser::ParseImageElement(tinyxml2::XMLElement* imageElement, Image& image)
 {
-    image.source_ = imageElement->Attribute("source");
+    image.path_ = imageElement->Attribute("source");
     imageElement->QueryAttribute("width", &image.width_);
     imageElement->QueryAttribute("height", &image.height_);
-    LOG_TMXINFO("source: ", image.source_);
+    LOG_TMXINFO("source: ", image.path_);
     LOG_TMXINFO("width: ", image.width_, " height: ", image.height_);
 }
 

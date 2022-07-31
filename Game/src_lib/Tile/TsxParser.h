@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "Tile.h"
+
 namespace tinyxml2 {
 
 class XMLElement;
@@ -31,29 +33,6 @@ public:
         int columns_{};
     };
 
-    struct Image
-    {
-        std::string source_{};
-        int width_{};
-        int height_{};
-    };
-
-    struct Tile
-    {
-        int id_{};
-        Image image_;
-        struct Animation
-        {
-            struct Frame
-            {
-                int tiledId_{};
-                int duration_{};
-            };
-            std::vector<Frame> frames_;
-        };
-        Animation animation_;
-    };
-
 public:
     TsxParser();
     ~TsxParser();
@@ -67,7 +46,7 @@ private:
     void ParseTileSetElement(tinyxml2::XMLElement* tileSetElement);
     void ParseImageElement(tinyxml2::XMLElement* imageElement, Image& image);
     void ParseTileElement(tinyxml2::XMLElement* tileElement, Tile& tile);
-    void ParseFrameElement(tinyxml2::XMLElement* frameElement, Tile::Animation::Frame& frame);
+    void ParseFrameElement(tinyxml2::XMLElement* frameElement, ParsedFrame& frame);
 };
 
 }  // namespace Tile

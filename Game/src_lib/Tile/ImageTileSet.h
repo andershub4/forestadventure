@@ -10,7 +10,7 @@
 
 #include "BasicTileSet.h"
 
-#include "TileMapData.h"
+#include "Tile.h"
 
 namespace FA {
 
@@ -19,7 +19,7 @@ namespace Tile {
 class ImageTileSet : public BasicTileSet
 {
 public:
-    ImageTileSet(const TileMapData::TileSet &tileSet);
+    ImageTileSet(const std::string &tsxDir, const std::vector<Tile> tiles);
     virtual ~ImageTileSet();
 
     virtual void Create() override;
@@ -27,8 +27,9 @@ public:
     virtual FrameData GetFrameData(int id) const override;
 
 private:
-    TileMapData::TileSet tileSet_;
     std::unordered_map<int, FrameData> frameData_;
+    std::vector<Tile> tiles_;
+    std::string tsxDir_{};
 };
 
 }  // namespace Tile

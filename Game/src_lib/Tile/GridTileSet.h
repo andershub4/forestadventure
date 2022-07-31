@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include "BasicTileSet.h"
+#include <string>
 
-#include "TileMapData.h"
+#include "BasicTileSet.h"
 
 namespace FA {
 
@@ -17,15 +17,26 @@ namespace Tile {
 class GridTileSet : public BasicTileSet
 {
 public:
-    GridTileSet(const TileMapData::TileSet &tileSet);
+    struct Dimensions
+    {
+        int tileWidth_{};
+        int tileHeight_{};
+        int columns_{};
+        int tileCount_{};
+    };
+
+    GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const Dimensions &dimensions);
     virtual ~GridTileSet();
 
-    virtual void Create() override {}
+    virtual void Create() override;
     virtual std::vector<Image> GetImages() const override;
     virtual FrameData GetFrameData(int id) const override;
 
 private:
-    TileMapData::TileSet tileSet_;
+    std::string tsxDir_{};
+    std::string textureFilePath_{};
+    Dimensions dimensions_;
+    std::string p_{};
 };
 
 }  // namespace Tile

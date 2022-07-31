@@ -12,7 +12,6 @@
 #include <unordered_map>
 #include <vector>
 
-#include "FrameData.h"
 #include "Fwd/SfmlFwd.h"
 #include "Resource/Frame.h"
 
@@ -22,9 +21,9 @@ class SheetManager;
 
 namespace Tile {
 
-class BasicTileSet;
 class TileMapParser;
 struct TileMapData;
+struct FrameData;
 
 class TileMap
 {
@@ -59,11 +58,9 @@ private:
     std::unique_ptr<TileMapData> tileMapData_ = nullptr;
     std::unique_ptr<TileMapParser> tileMapParser_ = nullptr;
     std::map<std::string, std::vector<TileData>> layers_;
-    std::map<int, std::unique_ptr<BasicTileSet>, std::greater<int>> tileSets_;
     std::map<std::string, std::vector<ObjectData>> objectGroups_;
 
 private:
-    void CreateTileSets();
     void LoadTileSets();
     void SetupLayers();
     void SetupObjectGroups();

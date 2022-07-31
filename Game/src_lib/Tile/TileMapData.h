@@ -9,10 +9,14 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <map>
+#include <memory>
 
 namespace FA {
 
 namespace Tile {
+
+class BasicTileSet;
 
 struct TileMapData
 {
@@ -22,45 +26,6 @@ struct TileMapData
         int height_{};
         int tileWidth_{};
         int tileHeight_{};
-    };
-
-    struct Image
-    {
-        int width_{};
-        int height_{};
-        std::string textureFilePath_;
-    };
-
-    struct Animation
-    {
-        struct Frame
-        {
-            int tileId_{};
-            int duration_{};
-        };
-        std::vector<Frame> frames_;
-    };
-
-    struct Tile
-    {
-        int id_{};
-        Image image_;
-        Animation animation_;
-    };
-    
-    struct TileSet
-    {
-        struct Dimensions
-        {
-            int tileWidth_{};
-            int tileHeight_{};
-            int columns_{};
-            int tileCount_{};
-        };
-        Dimensions dimensions_;
-        Image image_{};
-        std::vector<Tile> tiles_;
-        int firstGid_{};
     };
 
     struct Layer
@@ -84,7 +49,7 @@ struct TileMapData
     };
 
     MapProperties mapProperties_;
-    std::vector<TileSet> tileSets_;
+    std::map<int, std::shared_ptr<BasicTileSet>, std::greater<int>> tileSets_;
     std::vector<Layer> layers_;
     std::vector<ObjectGroup> objectGroups_;
 };

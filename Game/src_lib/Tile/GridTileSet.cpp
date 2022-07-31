@@ -7,38 +7,45 @@
 #include "GridTileSet.h"
 
 #include "FrameData.h"
+#include "Image.h"
+#include "TileHelper.h"
 
 namespace FA {
 
 namespace Tile {
 
-GridTileSet::GridTileSet(const TileMapData::TileSet &tileSet)
+GridTileSet::GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const Dimensions &dimensions)
     : BasicTileSet()
-    , tileSet_(tileSet)
+    , tsxDir_(tsxDir)
+    , textureFilePath_(textureFilePath)
+    , dimensions_(dimensions)
 {}
 
 GridTileSet::~GridTileSet() = default;
 
-std::vector<BasicTileSet::Image> GridTileSet::GetImages() const
+void GridTileSet::Create()
 {
-    auto p = tileSet_.image_.textureFilePath_;
-    auto nCols = tileSet_.dimensions_.columns_;
-    auto nRows = tileSet_.dimensions_.tileCount_ / tileSet_.dimensions_.columns_;
-    std::vector<BasicTileSet::Image> images;
-    images.push_back({p, nCols, nRows});
+    p_ = GetFilePath(tsxDir_, textureFilePath_);
+}
+
+std::vector<Image> GridTileSet::GetImages() const
+{
+    auto nCols = dimensions_.columns_;
+    auto nRows = dimensions_.tileCount_ / dimensions_.columns_;
+    std::vector<Image> images;
+    images.push_back({p_, nCols, nRows});
 
     return images;
 }
 
 FrameData GridTileSet::GetFrameData(int id) const
 {
-    auto nCols = tileSet_.dimensions_.columns_;
-    auto w = tileSet_.dimensions_.tileWidth_;
-    auto h = tileSet_.dimensions_.tileHeight_;
+    auto nCols = dimensions_.columns_;
+    auto w = dimensions_.tileWidth_;
+    auto h = dimensions_.tileHeight_;
     auto column = id % nCols;
     auto row = id / nCols;
-    auto p = tileSet_.image_.textureFilePath_;
-    Frame frame = {p, column, row, w, h};
+    Frame frame = {p_, column, row, w, h};
     std::vector<Frame> frames = {frame};
 
     return FrameData(frames);
