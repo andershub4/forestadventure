@@ -44,6 +44,10 @@ private:
     std::unique_ptr<Level> level_ = nullptr;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
     SheetManager sheetManager_;
+
+private:
+    void LoadEntitySheets();
+    void LoadTileMap();
 };
 
 }  // namespace Scene

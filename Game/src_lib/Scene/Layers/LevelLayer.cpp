@@ -55,14 +55,8 @@ LevelLayer::~LevelLayer() = default;
 
 void LevelLayer::OnLoad()
 {
-    auto path = GetAssetsPath() + "/map/level.tmx";
-    tileMap_.Load(path);
-    tileMap_.Setup();
-
-    auto sheetPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
-    for (const auto& sheetData : textureSheets) {
-        sheetManager_.LoadSheet(sheetPath, sheetData);
-    }
+    LoadTileMap();
+    LoadEntitySheets();
 }
 
 void LevelLayer::OnCreate()
@@ -96,6 +90,21 @@ void LevelLayer::EnterTransition(const BasicTransition& transition)
 void LevelLayer::ExitTransition(const BasicTransition& transition)
 {
     effect_.reset();
+}
+
+void LevelLayer::LoadEntitySheets()
+{
+    auto sheetPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
+    for (const auto& sheetData : textureSheets) {
+        sheetManager_.LoadSheet(sheetPath, sheetData);
+    }
+}
+
+void LevelLayer::LoadTileMap()
+{
+    auto path = GetAssetsPath() + "/map/level.tmx";
+    tileMap_.Load(path);
+    tileMap_.Setup();
 }
 
 }  // namespace Scene
