@@ -10,7 +10,7 @@
 #include "GridTileSet.h"
 #include "Image.h"
 #include "ImageTileSet.h"
-#include "Logging.h"
+#include "TmxLogging.h"
 #include "TileHelper.h"
 #include "TmxParser.h"
 #include "TsxParser.h"
@@ -51,7 +51,7 @@ TileMapParser::~TileMapParser() = default;
 
 TileMapData TileMapParser::Run(const std::string& fileName)
 {
-    LOG_INFO("Parse ", fileName);
+    LOG_TMXINFO("Parse ", fileName);
     LOG_TMXINFO("Start parse fileName ", fileName);
     TmxParser tmxParser;
 
@@ -63,7 +63,7 @@ TileMapData TileMapParser::Run(const std::string& fileName)
         ReadObjectGroups(tmxParser);
     }
     else {
-        LOG_ERROR("Could not load ", fileName);
+        LOG_TMXERROR("Could not load ", fileName);
     }
 
     LOG_TMXINFO("End parse fileName ", fileName);
@@ -82,7 +82,7 @@ void TileMapParser::ReadMapProperties(const TmxParser& tmxParser)
 void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& tmxDir)
 {
     if (tmxParser.tileSets_.empty()) {
-        LOG_ERROR("No tilesets found");
+        LOG_TMXERROR("No tilesets found");
     }
     else {
         for (const auto& parsedSet : tmxParser.tileSets_) {
@@ -97,7 +97,7 @@ void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& 
                 tileMapData_.tileSets_[firstGid] = {images, frameDatas};
             }
             else {
-                LOG_ERROR("Can not load: ", parsedSet.tsxSource_);
+                LOG_TMXERROR("Can not load: ", parsedSet.tsxSource_);
             }
         }
     }

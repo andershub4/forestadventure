@@ -210,6 +210,9 @@
     <ClCompile Include="Tile\TileHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tile\TmxLogging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Game.h">
@@ -534,6 +537,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tile\Tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile\TmxLogging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
