@@ -95,9 +95,9 @@ Level::Level(MessageBus &messageBus, TextureManager &textureManager, const sf::V
 
 Level::~Level() = default;
 
-void Level::Load()
+void Level::Load(const std::string &levelName)
 {
-    LoadTileMap();
+    LoadTileMap(levelName);
     LoadEntitySheets();
 }
 
@@ -161,9 +161,9 @@ void Level::LoadEntitySheets()
     }
 }
 
-void Level::LoadTileMap()
+void Level::LoadTileMap(const std::string &levelName)
 {
-    auto path = GetAssetsPath() + "/map/level.tmx";
+    auto path = GetAssetsPath() + "/map/" + levelName;
     tileMap_.Load(path);
     tileMap_.Setup();
     mapRect_ = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));

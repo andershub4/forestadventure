@@ -29,7 +29,7 @@ public:
     Level(MessageBus& messageBus, TextureManager& textureManager, const sf::Vector2u& viewSize);
     ~Level();
 
-    void Load();
+    void Load(const std::string& levelName);
     void Update(float deltaTime);
     void Draw(sf::RenderTarget& renderTarget);
 
@@ -54,7 +54,7 @@ private:
 
 private:
     void LoadEntitySheets();
-    void LoadTileMap();
+    void LoadTileMap(const std::string& levelName);
 
     void CreateBackground();
     void CreateEntities();

@@ -29,7 +29,7 @@ LevelLayer::~LevelLayer() = default;
 
 void LevelLayer::OnLoad()
 {
-    level_->Load();
+    level_->Load("level.tmx");
 }
 
 void LevelLayer::OnCreate()
