@@ -12,7 +12,6 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Fwd/SfmlFwd.h"
 #include "Resource/Frame.h"
 
 namespace FA {
