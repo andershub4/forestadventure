@@ -7,14 +7,11 @@
 #include "EntityService.h"
 
 #include "Constant/Entity.h"
-#include "EntityManager.h"
-#include "Level/CameraManager.h"
 #include "Resource/Animation.h"
 #include "Resource/AnimationData.h"
 #include "Resource/Image.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
-#include "SpawnManager.h"
 
 namespace FA {
 
