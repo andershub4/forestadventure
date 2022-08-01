@@ -10,9 +10,7 @@
 
 #include "BasicLayer.h"
 
-#include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
-#include "Tile/TileMap.h"
 
 namespace FA {
 
@@ -40,14 +38,9 @@ public:
 
 private:
     MessageBus& messageBus_;
-    Tile::TileMap tileMap_;
     std::unique_ptr<Level> level_ = nullptr;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
-    SheetManager sheetManager_;
-
-private:
-    void LoadEntitySheets();
-    void LoadTileMap();
+    TextureManager& textureManager_;
 };
 
 }  // namespace Scene

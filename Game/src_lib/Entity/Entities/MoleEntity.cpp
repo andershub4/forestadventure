@@ -38,9 +38,8 @@ const std::unordered_map<StateType, std::unordered_map<FaceDirection, AnimationD
 
 }  // namespace
 
-MoleEntity::MoleEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                       EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize)
-    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus, mapSize)
+MoleEntity::MoleEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+    : BasicEntity(id, level, sheetManager, messageBus)
 {}
 
 MoleEntity::~MoleEntity() = default;

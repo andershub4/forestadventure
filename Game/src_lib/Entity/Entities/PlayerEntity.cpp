@@ -22,6 +22,7 @@
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
 #include "Enum/MessageType.h"
+#include "Level/Level.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -64,9 +65,8 @@ const std::unordered_map<StateType, std::unordered_map<FaceDirection, AnimationD
 
 }  // namespace
 
-PlayerEntity::PlayerEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                           EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize)
-    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus, mapSize)
+PlayerEntity::PlayerEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+    : BasicEntity(id, level, sheetManager, messageBus)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
@@ -134,7 +134,7 @@ void PlayerEntity::OnExitShoot()
         propertyManager_.Set<bool>("Shoot", false);
         auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
         auto position = position_ + arrowOffset.at(dir);
-        entityService_.SpawnEntity(EntityType::Arrow, dir, position);
+        level_.SpawnEntity(EntityType::Arrow, dir, position);
     }
 }
 
@@ -252,7 +252,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
 
 void PlayerEntity::Start()
 {
-    entityService_.AddCamera(position_);
+    level_.AddCamera(position_);
 }
 
 }  // namespace Entity

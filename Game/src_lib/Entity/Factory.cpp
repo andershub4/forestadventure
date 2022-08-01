@@ -17,38 +17,31 @@ namespace FA {
 
 namespace Entity {
 
-Factory::Factory(MessageBus& messageBus, const SheetManager& sheetManager, CameraManager& cameraManager,
-                 const sf::Vector2u& mapSize)
+Factory::Factory(MessageBus& messageBus, const SheetManager& sheetManager, Level& level)
     : messageBus_(messageBus)
     , sheetManager_(sheetManager)
-    , cameraManager_(cameraManager)
-    , mapSize_(mapSize)
+    , level_(level)
 {}
 
 Factory::~Factory() = default;
 
-std::unique_ptr<BasicEntity> Factory::Create(EntityType type, EntityManager& entityManager) const
+std::unique_ptr<BasicEntity> Factory::Create(EntityType type) const
 {
     switch (type) {
         case EntityType::Mole:
-            return std::make_unique<MoleEntity>(id_++, cameraManager_, sheetManager_, entityManager, messageBus_,
-                                                mapSize_);
+            return std::make_unique<MoleEntity>(id_++, level_, sheetManager_, messageBus_);
             break;
         case EntityType::Player:
-            return std::make_unique<PlayerEntity>(id_++, cameraManager_, sheetManager_, entityManager, messageBus_,
-                                                  mapSize_);
+            return std::make_unique<PlayerEntity>(id_++, level_, sheetManager_, messageBus_);
             break;
         case EntityType::Arrow:
-            return std::make_unique<ArrowEntity>(id_++, cameraManager_, sheetManager_, entityManager, messageBus_,
-                                                 mapSize_);
+            return std::make_unique<ArrowEntity>(id_++, level_, sheetManager_, messageBus_);
             break;
         case EntityType::Tile:
-            return std::make_unique<TileEntity>(id_++, cameraManager_, sheetManager_, entityManager, messageBus_,
-                                                mapSize_);
+            return std::make_unique<TileEntity>(id_++, level_, sheetManager_, messageBus_);
             break;
         case EntityType::Coin:
-            return std::make_unique<CoinEntity>(id_++, cameraManager_, sheetManager_, entityManager, messageBus_,
-                                                mapSize_);
+            return std::make_unique<CoinEntity>(id_++, level_, sheetManager_, messageBus_);
             break;
         default:
             auto t = static_cast<int>(type);

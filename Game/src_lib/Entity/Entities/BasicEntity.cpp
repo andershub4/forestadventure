@@ -21,11 +21,11 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                         EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize)
+BasicEntity::BasicEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
     : id_(id)
+    , level_(level)
     , messageBus_(messageBus)
-    , entityService_(cameraManager, sheetManager, entityManager, mapSize)
+    , entityService_(sheetManager)
 {}
 
 BasicEntity::~BasicEntity() = default;

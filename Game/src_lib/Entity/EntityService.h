@@ -6,18 +6,8 @@
 
 #pragma once
 
-#include <memory>
-
-#include <SFML/Graphics/Rect.hpp>
-
-#include "Enum/FaceDirection.h"
-#include "Id.h"
-#include "Logging.h"
-#include "SpawnManager.h"
-
 namespace FA {
 
-class CameraManager;
 class Animation;
 class Image;
 class SheetManager;
@@ -26,31 +16,17 @@ struct ImageData;
 
 namespace Entity {
 
-class EntityManager;
-
 class EntityService
 {
 public:
-    EntityService(CameraManager &cameraManager, const SheetManager &sheetManager, EntityManager &entityManager,
-                  const sf::Vector2u &mapSize);
+    EntityService(const SheetManager &sheetManager);
     ~EntityService();
-
-    void AddCamera(sf::Vector2f &pos);
-
-    sf::FloatRect GetMapRect() const;
 
     Animation MakeAnimation(const AnimationData &data) const;
     Image MakeImage(const ImageData &data) const;
 
-    void SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f &position);
-    void DeleteEntity(EntityId id);
-
 private:
-    CameraManager &cameraManager_;
     const SheetManager &sheetManager_;
-    EntityManager &entityManager_;
-    SpawnManager spawnManager_;
-    sf::FloatRect mapRect_{};
 };
 
 }  // namespace Entity

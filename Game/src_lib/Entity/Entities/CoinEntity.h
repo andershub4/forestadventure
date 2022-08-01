@@ -15,8 +15,7 @@ namespace Entity {
 class CoinEntity : public BasicEntity
 {
 public:
-    CoinEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-               EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize);
+    CoinEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus);
     virtual ~CoinEntity();
 
     virtual std::string Name() const override { return "CoinEntity"; }

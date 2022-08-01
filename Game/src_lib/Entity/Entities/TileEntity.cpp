@@ -17,9 +17,8 @@ namespace FA {
 
 namespace Entity {
 
-TileEntity::TileEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                       EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize)
-    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus, mapSize)
+TileEntity::TileEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+    : BasicEntity(id, level, sheetManager, messageBus)
 {}
 
 TileEntity::~TileEntity() = default;

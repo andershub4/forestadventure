@@ -8,6 +8,8 @@
 
 #include "BasicEntity.h"
 
+#include "Enum/FaceDirection.h"
+
 namespace FA {
 
 namespace Entity {
@@ -15,8 +17,7 @@ namespace Entity {
 class PlayerEntity : public BasicEntity
 {
 public:
-    PlayerEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                 EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize);
+    PlayerEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus);
     virtual ~PlayerEntity();
 
     virtual std::string Name() const override { return "PlayerEntity"; }

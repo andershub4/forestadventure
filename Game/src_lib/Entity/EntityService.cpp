@@ -20,27 +20,11 @@ namespace FA {
 
 namespace Entity {
 
-EntityService::EntityService(CameraManager& cameraManager, const SheetManager& sheetManager,
-                             EntityManager& entityManager, const sf::Vector2u& mapSize)
-    : cameraManager_(cameraManager)
-    , sheetManager_(sheetManager)
-    , entityManager_(entityManager)
-    , spawnManager_(entityManager)
-{
-    mapRect_ = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(mapSize));
-}
+EntityService::EntityService(const SheetManager& sheetManager)
+    : sheetManager_(sheetManager)
+{}
 
 EntityService::~EntityService() = default;
-
-void EntityService::AddCamera(sf::Vector2f& pos)
-{
-    cameraManager_.Track(pos);
-}
-
-sf::FloatRect EntityService::GetMapRect() const
-{
-    return mapRect_;
-}
 
 Animation EntityService::MakeAnimation(const AnimationData& data) const
 {
@@ -53,16 +37,6 @@ Image EntityService::MakeImage(const ImageData& data) const
 {
     auto frame = sheetManager_.MakeFrame(data);
     return Image(frame);
-}
-
-void EntityService::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position)
-{
-    spawnManager_.Spawn(entityType, position, faceDirection);
-}
-
-void EntityService::DeleteEntity(EntityId id)
-{
-    entityManager_.DeleteEntity(id);
 }
 
 }  // namespace Entity

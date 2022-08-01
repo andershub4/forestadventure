@@ -12,7 +12,11 @@
 #include "CameraManager.h"
 #include "Entity/EntityManager.h"
 #include "Entity/Factory.h"
+#include "Entity/Id.h"
+#include "Entity/SpawnManager.h"
 #include "Fwd/SfmlFwd.h"
+#include "Resource/SheetManager.h"
+#include "Resource/TextureManager.h"
 #include "Tile/TileMap.h"
 
 namespace FA {
@@ -22,26 +26,36 @@ class MessageBus;
 class Level
 {
 public:
-    Level(MessageBus& messageBus, const Tile::TileMap& tileMap, const SheetManager& sheetManager,
-          const sf::Vector2u& viewSize);
+    Level(MessageBus& messageBus, TextureManager& textureManager, const sf::Vector2u& viewSize);
     ~Level();
 
+    void Load();
     void Update(float deltaTime);
     void Draw(sf::RenderTarget& renderTarget);
 
     void Create();
     sf::View GetView();
+    void SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position);
+    void DeleteEntity(Entity::EntityId id);
+    sf::FloatRect GetMapRect() const;
+    void AddCamera(const sf::Vector2f& trackingPoint);
 
 private:
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
-    const Tile::TileMap& tileMap_;
+    SheetManager sheetManager_;
+    Tile::TileMap tileMap_;
     CameraManager cameraManager_;
     Entity::Factory factory_;
     Entity::EntityManager entityManager_;
+    sf::FloatRect mapRect_{};
+    Entity::SpawnManager spawnManager_;
 
 private:
+    void LoadEntitySheets();
+    void LoadTileMap();
+
     void CreateBackground();
     void CreateEntities();
     void CreateFringe();

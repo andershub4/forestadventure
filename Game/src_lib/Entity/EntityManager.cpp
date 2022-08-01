@@ -44,7 +44,7 @@ void EntityManager::Update(float deltaTime)
 
 BasicEntity& EntityManager::CreateEntity(EntityType type, const PropertyData& data)
 {
-    auto entity = factory_.Create(type, *this);
+    auto entity = factory_.Create(type);
     entity->Create(data);
     createdEntities_.push_back(std::move(entity));
 

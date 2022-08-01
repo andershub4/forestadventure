@@ -8,6 +8,8 @@
 
 #include "BasicEntity.h"
 
+#include "Enum/FaceDirection.h"
+
 namespace FA {
 
 namespace Entity {
@@ -15,8 +17,7 @@ namespace Entity {
 class ArrowEntity : public BasicEntity
 {
 public:
-    ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize);
+    ArrowEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus);
     virtual ~ArrowEntity();
 
     virtual std::string Name() const override { return "ArrowEntity"; }

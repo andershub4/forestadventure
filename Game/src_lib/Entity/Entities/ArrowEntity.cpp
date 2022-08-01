@@ -13,6 +13,7 @@
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
+#include "Level/Level.h"
 #include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
 
@@ -28,9 +29,8 @@ const std::unordered_map<FaceDirection, float> arrowRotation = {{FaceDirection::
                                                                 {FaceDirection::Up, 0.0f}};
 }  // namespace
 
-ArrowEntity::ArrowEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                         EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize)
-    : BasicEntity(id, cameraManager, sheetManager, entityManager, messageBus, mapSize)
+ArrowEntity::ArrowEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+    : BasicEntity(id, level, sheetManager, messageBus)
 {}
 
 ArrowEntity::~ArrowEntity() = default;
@@ -44,11 +44,11 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
     position_ += delta;
 
-    auto mapRect = entityService_.GetMapRect();
+    auto mapRect = level_.GetMapRect();
     bool outsideMap = !mapRect.contains(position_);
 
     if (outsideMap) {
-        entityService_.DeleteEntity(GetId());
+        level_.DeleteEntity(GetId());
     }
 }
 

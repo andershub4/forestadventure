@@ -14,6 +14,7 @@
 #include "Entity/PropertyManager.h"
 #include "Entity/Shape.h"
 #include "Entity/StateMachine.h"
+#include "Enum/EntityType.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -21,19 +22,17 @@ namespace FA {
 class MessageBus;
 class Message;
 enum class MessageType;
-class CameraManager;
 class SheetManager;
+class Level;
 
 namespace Entity {
 
 struct PropertyData;
-class EntityManager;
 
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, CameraManager& cameraManager, const SheetManager& sheetManager,
-                EntityManager& entityManager, MessageBus& messageBus, const sf::Vector2u& mapSize);
+    BasicEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
@@ -51,6 +50,7 @@ public:
 protected:
     PropertyManager propertyManager_;
     EntityService entityService_;
+    Level& level_;
     Shape shape_;
     sf::Vector2f position_;
     float rotation_{0.0};
