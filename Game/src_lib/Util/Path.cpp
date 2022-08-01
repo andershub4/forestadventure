@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <iterator>
 
-#include "Util/Error.h"
+#include "Error.h"
 
 namespace FA {
 
