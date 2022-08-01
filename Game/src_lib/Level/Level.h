@@ -17,7 +17,7 @@
 #include "Fwd/SfmlFwd.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
-#include "Tile/TileMap.h"
+#include "TileMap.h"
 
 namespace FA {
 

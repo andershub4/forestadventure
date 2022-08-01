@@ -78,7 +78,7 @@
     <ClCompile Include="Scene\Transitions\NullTransition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tile\TileMap.cpp">
+    <ClCompile Include="Level\TileMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Util\Random.cpp">
@@ -305,7 +305,7 @@
     <ClInclude Include="Scene\LayerId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tile\TileMap.h">
+    <ClInclude Include="Level\TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Util\Random.h">
