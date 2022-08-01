@@ -6,9 +6,8 @@
 
 #include "Folder.h"
 
-#include "Logging.h"
-#include "Platform/Path.h"
-#include "Platform/SpecialFolder.h"
+#include "Path.h"
+#include "SpecialFolder.h"
 #include "Version.h"
 
 namespace FA {
@@ -23,11 +22,6 @@ std::string GetSpecialPath(Platform::SpecialFolder specialFolder)
 
     if (result.IsOk()) {
         auto result = Platform::GetShortPathNameA(specialPathW, specialPath);
-
-        if (!result.IsOk()) LOG_ERROR("Result: ", result.errorMessage_);
-    }
-    else {
-        LOG_ERROR("Result: ", result.errorMessage_);
     }
 
     return specialPath;

@@ -11,11 +11,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Enum/MessageType.h"
-#include "Folder.h"
 #include "Logging.h"
 #include "Message/BroadcastMessage/EntityCreatedMessage.h"
 #include "Message/BroadcastMessage/EntityDestroyedMessage.h"
 #include "Message/MessageBus.h"
+#include "Util/Folder.h"
 
 namespace FA {
 

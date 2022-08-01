@@ -6,11 +6,11 @@
 
 #include <SFML/Config.hpp>
 
-#include "Folder.h"
 #include "Game/Game.h"
 #include "Logging.h"
 #include "SfmlLog.h"
-#include "Version.h"
+#include "Util/Folder.h"
+#include "Util/Version.h"
 
 int main()
 {

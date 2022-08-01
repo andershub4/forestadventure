@@ -129,16 +129,16 @@
     <ClCompile Include="Entity\Factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Platform\Error.cpp">
+    <ClCompile Include="Util\Error.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Platform\SpecialFolder.cpp">
+    <ClCompile Include="Util\SpecialFolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Platform\Path.cpp">
+    <ClCompile Include="Util\Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Folder.cpp">
+    <ClCompile Include="Util\Folder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Title.cpp">
@@ -248,7 +248,7 @@
     <ClInclude Include="Constant\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Version.h">
+    <ClInclude Include="Util\Version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Message\BroadcastMessage\KeyPressedMessage.h">
@@ -374,19 +374,19 @@
     <ClInclude Include="Entity\Factory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\Error.h">
+    <ClInclude Include="Util\Error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\SpecialFolder.h">
+    <ClInclude Include="Util\SpecialFolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\Path.h">
+    <ClInclude Include="Util\Path.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Folder.h">
+    <ClInclude Include="Util\Folder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\Result.h">
+    <ClInclude Include="Util\Result.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Title.h">

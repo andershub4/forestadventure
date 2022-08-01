@@ -6,26 +6,11 @@
 
 #include "TileHelper.h"
 
+#include "Util/Folder.h"
+
 namespace FA {
 
 namespace Tile {
-
-namespace {
-
-// TODO: Consider to use fn from folder.h instead when util unit is created
-std::string GetHead(const std::string& filePath)
-{
-    std::string result;
-    const size_t index = filePath.find_last_of("\\/");
-
-    if (index != std::string::npos) {
-        result = filePath.substr(0, index);
-    }
-
-    return result;
-}
-
-}  // namespace
 
 std::string GetFilePath(const std::string& baseDir, const std::string& source)
 {

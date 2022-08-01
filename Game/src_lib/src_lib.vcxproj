@@ -280,9 +280,9 @@
     <ClInclude Include="Tile\TileHelper.h" />
     <ClInclude Include="UI\Title.h" />
     <ClInclude Include="Util\Random.h" />
-    <ClInclude Include="Platform\Path.h" />
-    <ClInclude Include="Platform\Result.h" />
-    <ClInclude Include="Platform\SpecialFolder.h" />
+    <ClInclude Include="Util\Path.h" />
+    <ClInclude Include="Util\Result.h" />
+    <ClInclude Include="Util\SpecialFolder.h" />
     <ClInclude Include="Scene\LayerId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Scene\Manager.h" />
@@ -294,7 +294,7 @@
     <ClInclude Include="Scene\Transitions\FadeTransition.h" />
     <ClInclude Include="Scene\Transitions\NullTransition.h" />
     <ClInclude Include="Game\Game.h" />
-    <ClInclude Include="Version.h" />
+    <ClInclude Include="Util\Version.h" />
     <ClInclude Include="Scene\Layers\IntroLayer.h" />
     <ClInclude Include="Scene\Layers\LevelLayer.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
@@ -315,8 +315,8 @@
     <ClInclude Include="Tile\TileMapParser.h" />
     <ClInclude Include="Tile\TmxParser.h" />
     <ClInclude Include="Tile\TsxParser.h" />
-    <ClInclude Include="Platform\Error.h" />
-    <ClInclude Include="Folder.h" />
+    <ClInclude Include="Util\Error.h" />
+    <ClInclude Include="Util\Folder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity\Abilities\AnimationAbility.cpp" />
@@ -355,8 +355,8 @@
     <ClCompile Include="Tile\TileHelper.cpp" />
     <ClCompile Include="UI\Title.cpp" />
     <ClCompile Include="Util\Random.cpp" />
-    <ClCompile Include="Platform\Path.cpp" />
-    <ClCompile Include="Platform\SpecialFolder.cpp" />
+    <ClCompile Include="Util\Path.cpp" />
+    <ClCompile Include="Util\SpecialFolder.cpp" />
     <ClCompile Include="Scene\Manager.cpp" />
     <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
     <ClCompile Include="Scene\Scenes\IntroScene.cpp" />
@@ -383,8 +383,8 @@
     <ClCompile Include="Tile\TileMapParser.cpp" />
     <ClCompile Include="Tile\TmxParser.cpp" />
     <ClCompile Include="Tile\TsxParser.cpp" />
-    <ClCompile Include="Platform\Error.cpp" />
-    <ClCompile Include="Folder.cpp" />
+    <ClCompile Include="Util\Error.cpp" />
+    <ClCompile Include="Util\Folder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\3rdparty\submodules\tinyxml2\tinyxml2\tinyxml2.vcxproj">

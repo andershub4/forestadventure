@@ -6,14 +6,14 @@
 
 #include "TileMapParser.h"
 
-#include "Folder.h"
 #include "GridTileSet.h"
 #include "Image.h"
 #include "ImageTileSet.h"
-#include "TmxLogging.h"
 #include "TileHelper.h"
+#include "TmxLogging.h"
 #include "TmxParser.h"
 #include "TsxParser.h"
+#include "Util/Folder.h"
 
 namespace FA {
 
