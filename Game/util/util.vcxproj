@@ -21,19 +21,19 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7202064e-bc20-477c-9d41-c76527c4756b}</ProjectGuid>
-    <RootNamespace>App</RootNamespace>
+    <ProjectGuid>{fc8641f9-67f5-474b-9296-f5cf069d6f6d}</ProjectGuid>
+    <RootNamespace>util</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -72,11 +72,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>FA-Pre-alpha</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>FA-Pre-alpha</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -90,24 +88,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)3rdparty\sfml\include;$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdparty\sfml\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-system-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy /Y "$(SolutionDir)3rdparty\sfml\dll\openal32.dll" "$(TargetDir)openal32.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-audio-d-2.dll" "$(TargetDir)sfml-audio-d-2.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-graphics-d-2.dll" "$(TargetDir)sfml-graphics-d-2.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-network-d-2.dll" "$(TargetDir)sfml-network-d-2.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-system-d-2.dll" "$(TargetDir)sfml-system-d-2.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-window-d-2.dll" "$(TargetDir)sfml-window-d-2.dll"
-copy /Y "$(SolutionDir)Debug-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"
-</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -117,25 +103,14 @@ copy /Y "$(SolutionDir)Debug-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)3rdparty\sfml\include;$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rdparty\sfml\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-system.lib;sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;sfml-window.lib;sfml-main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy /Y "$(SolutionDir)3rdparty\sfml\dll\openal32.dll" "$(TargetDir)openal32.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-audio-2.dll" "$(TargetDir)sfml-audio-2.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-graphics-2.dll" "$(TargetDir)sfml-graphics-2.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-network-2.dll" "$(TargetDir)sfml-network-2.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-system-2.dll" "$(TargetDir)sfml-system-2.dll"
-copy /Y "$(SolutionDir)3rdparty\sfml\dll\sfml-window-2.dll" "$(TargetDir)sfml-window-2.dll"
-copy /Y "$(SolutionDir)Release-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -166,29 +141,20 @@ copy /Y "$(SolutionDir)Release-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"</Com
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="SfmlLog.cpp" />
+    <ClCompile Include="Src\Error.cpp" />
+    <ClCompile Include="Src\Folder.cpp" />
+    <ClCompile Include="Src\Path.cpp" />
+    <ClCompile Include="Src\Random.cpp" />
+    <ClCompile Include="Src\SpecialFolder.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\logging\logging.vcxproj">
-      <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\src_lib\src_lib.vcxproj">
-      <Project>{ca08c938-2967-40a8-9834-359d5b8009e7}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\util\util.vcxproj">
-      <Project>{fc8641f9-67f5-474b-9296-f5cf069d6f6d}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="SfmlLog.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="App.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\icon\fa.ico" />
+    <ClInclude Include="Include\Error.h" />
+    <ClInclude Include="Include\Folder.h" />
+    <ClInclude Include="Include\Path.h" />
+    <ClInclude Include="Include\Random.h" />
+    <ClInclude Include="Include\Result.h" />
+    <ClInclude Include="Include\SpecialFolder.h" />
+    <ClInclude Include="Include\Version.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,7 +5,7 @@
  */
 
 #include "TmxLogging.h"
-#include "Util/Folder.h"
+#include "Folder.h"
 
 namespace FA {
 

@@ -6,11 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "App", "App\App.vcxproj", "{7202064E-BC20-477C-9D41-C76527C4756B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{28493CC5-4774-40E3-8E2B-973209705419} = {28493CC5-4774-40E3-8E2B-973209705419}
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D} = {FC8641F9-67F5-474B-9296-F5CF069D6F6D}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "src_lib", "src_lib\src_lib.vcxproj", "{CA08C938-2967-40A8-9834-359D5B8009E7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{28493CC5-4774-40E3-8E2B-973209705419} = {28493CC5-4774-40E3-8E2B-973209705419}
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D} = {FC8641F9-67F5-474B-9296-F5CF069D6F6D}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{A9B2C5AF-0538-46D3-AC75-473353E7FE6A}"
@@ -18,6 +20,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tinyxml2", "3rdparty\submodules\tinyxml2\tinyxml2\tinyxml2.vcxproj", "{D1C528B6-AA02-4D29-9D61-DC08E317A70D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logging", "logging\logging.vcxproj", "{28493CC5-4774-40E3-8E2B-973209705419}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "util", "util\util.vcxproj", "{FC8641F9-67F5-474B-9296-F5CF069D6F6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -177,6 +181,34 @@ Global
 		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Lib|x64.Build.0 = Release|x64
 		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Lib|x86.ActiveCfg = Release|Win32
 		{28493CC5-4774-40E3-8E2B-973209705419}.Release-Lib|x86.Build.0 = Release|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug|x64.ActiveCfg = Debug|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug|x64.Build.0 = Debug|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug|x86.ActiveCfg = Debug|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug|x86.Build.0 = Debug|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug-Dll|x64.ActiveCfg = Debug|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug-Dll|x64.Build.0 = Debug|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug-Dll|x86.ActiveCfg = Debug|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug-Dll|x86.Build.0 = Debug|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug-Lib|x64.ActiveCfg = Debug|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug-Lib|x64.Build.0 = Debug|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug-Lib|x86.ActiveCfg = Debug|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Debug-Lib|x86.Build.0 = Debug|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release|x64.ActiveCfg = Release|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release|x64.Build.0 = Release|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release|x86.ActiveCfg = Release|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release|x86.Build.0 = Release|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Dll|x64.ActiveCfg = Release|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Dll|x64.Build.0 = Release|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Dll|x86.ActiveCfg = Release|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Dll|x86.Build.0 = Release|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Install|x64.ActiveCfg = Release|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Install|x64.Build.0 = Release|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Install|x86.ActiveCfg = Release|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Install|x86.Build.0 = Release|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Lib|x64.ActiveCfg = Release|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Lib|x64.Build.0 = Release|x64
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Lib|x86.ActiveCfg = Release|Win32
+		{FC8641F9-67F5-474B-9296-F5CF069D6F6D}.Release-Lib|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,11 +13,11 @@
 #include "Constant/Entity.h"
 #include "Entity/PropertyData.h"
 #include "Enum/FaceDirection.h"
+#include "Folder.h"
 #include "Logging.h"
 #include "Resource/Image.h"
 #include "Resource/SheetData.h"
 #include "Resource/SheetId.h"
-#include "Util/Folder.h"
 
 namespace FA {
 

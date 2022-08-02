@@ -8,10 +8,10 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Folder.h"
 #include "Logging.h"
 #include "Message/MessageBus.h"
-#include "Util/Folder.h"
-#include "Util/Version.h"
+#include "Version.h"
 
 namespace FA {
 

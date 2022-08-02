@@ -81,9 +81,6 @@
     <ClCompile Include="Level\TileMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Util\Random.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Effect\NullEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -127,18 +124,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Factory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Util\Error.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Util\SpecialFolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Util\Path.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Util\Folder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Title.cpp">
@@ -248,9 +233,6 @@
     <ClInclude Include="Constant\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Util\Version.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Message\BroadcastMessage\KeyPressedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -311,9 +293,6 @@
     <ClInclude Include="Level\TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Util\Random.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Effect\NullEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -372,21 +351,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Factory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Error.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\SpecialFolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Path.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Folder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Result.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Title.h">

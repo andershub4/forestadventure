@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)logging;$(SolutionDir)3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,7 +137,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)logging;$(SolutionDir)3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,7 +154,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;INSTALL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)logging;$(SolutionDir)3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -279,10 +279,6 @@
     <ClInclude Include="Tile\Tile.h" />
     <ClInclude Include="Tile\TileHelper.h" />
     <ClInclude Include="UI\Title.h" />
-    <ClInclude Include="Util\Random.h" />
-    <ClInclude Include="Util\Path.h" />
-    <ClInclude Include="Util\Result.h" />
-    <ClInclude Include="Util\SpecialFolder.h" />
     <ClInclude Include="Scene\LayerId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Scene\Manager.h" />
@@ -294,7 +290,6 @@
     <ClInclude Include="Scene\Transitions\FadeTransition.h" />
     <ClInclude Include="Scene\Transitions\NullTransition.h" />
     <ClInclude Include="Game\Game.h" />
-    <ClInclude Include="Util\Version.h" />
     <ClInclude Include="Scene\Layers\IntroLayer.h" />
     <ClInclude Include="Scene\Layers\LevelLayer.h" />
     <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h" />
@@ -315,8 +310,6 @@
     <ClInclude Include="Tile\TileMapParser.h" />
     <ClInclude Include="Tile\TmxParser.h" />
     <ClInclude Include="Tile\TsxParser.h" />
-    <ClInclude Include="Util\Error.h" />
-    <ClInclude Include="Util\Folder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity\Abilities\AnimationAbility.cpp" />
@@ -354,9 +347,6 @@
     <ClCompile Include="Tile\TmxLogging.cpp" />
     <ClCompile Include="Tile\TileHelper.cpp" />
     <ClCompile Include="UI\Title.cpp" />
-    <ClCompile Include="Util\Random.cpp" />
-    <ClCompile Include="Util\Path.cpp" />
-    <ClCompile Include="Util\SpecialFolder.cpp" />
     <ClCompile Include="Scene\Manager.cpp" />
     <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
     <ClCompile Include="Scene\Scenes\IntroScene.cpp" />
@@ -383,8 +373,6 @@
     <ClCompile Include="Tile\TileMapParser.cpp" />
     <ClCompile Include="Tile\TmxParser.cpp" />
     <ClCompile Include="Tile\TsxParser.cpp" />
-    <ClCompile Include="Util\Error.cpp" />
-    <ClCompile Include="Util\Folder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\3rdparty\submodules\tinyxml2\tinyxml2\tinyxml2.vcxproj">
@@ -392,6 +380,9 @@
     </ProjectReference>
     <ProjectReference Include="..\logging\logging.vcxproj">
       <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\util\util.vcxproj">
+      <Project>{fc8641f9-67f5-474b-9296-f5cf069d6f6d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
