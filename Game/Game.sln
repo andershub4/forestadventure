@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "util", "util\util.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tile", "tile\tile.vcxproj", "{B998D8BA-9C74-429F-A576-5EE6C6E8CCB6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tile_test", "tile_test\tile_test.vcxproj", "{D73AC684-AA40-42CB-825F-7CA3045AA023}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -239,6 +241,34 @@ Global
 		{B998D8BA-9C74-429F-A576-5EE6C6E8CCB6}.Release-Lib|x64.Build.0 = Release|x64
 		{B998D8BA-9C74-429F-A576-5EE6C6E8CCB6}.Release-Lib|x86.ActiveCfg = Release|Win32
 		{B998D8BA-9C74-429F-A576-5EE6C6E8CCB6}.Release-Lib|x86.Build.0 = Release|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug|x64.ActiveCfg = Debug|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug|x64.Build.0 = Debug|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug|x86.ActiveCfg = Debug|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug|x86.Build.0 = Debug|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug-Dll|x64.ActiveCfg = Debug|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug-Dll|x64.Build.0 = Debug|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug-Dll|x86.ActiveCfg = Debug|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug-Dll|x86.Build.0 = Debug|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug-Lib|x64.ActiveCfg = Debug|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug-Lib|x64.Build.0 = Debug|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug-Lib|x86.ActiveCfg = Debug|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Debug-Lib|x86.Build.0 = Debug|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release|x64.ActiveCfg = Release|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release|x64.Build.0 = Release|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release|x86.ActiveCfg = Release|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release|x86.Build.0 = Release|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Dll|x64.ActiveCfg = Release|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Dll|x64.Build.0 = Release|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Dll|x86.ActiveCfg = Release|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Dll|x86.Build.0 = Release|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Install|x64.ActiveCfg = Release|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Install|x64.Build.0 = Release|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Install|x86.ActiveCfg = Release|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Install|x86.Build.0 = Release|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Lib|x64.ActiveCfg = Release|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Lib|x64.Build.0 = Release|x64
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Lib|x86.ActiveCfg = Release|Win32
+		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Lib|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
