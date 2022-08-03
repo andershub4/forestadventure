@@ -9,8 +9,8 @@
 #include "Logging.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
-#include "Tile/TileMapData.h"
-#include "Tile/TileMapParser.h"
+#include "TileMapData.h"
+#include "TileMapParser.h"
 
 namespace FA {
 

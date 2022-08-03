@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)tile\Include;$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,7 +137,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)tile\Include;$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,7 +154,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;INSTALL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)3rdparty\submodules;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)tile\Include;$(SolutionDir)util\Include;$(SolutionDir)logging;$(SolutionDir)src_lib;$(SolutionDir)3rdparty\sfml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -269,15 +269,6 @@
     <ClInclude Include="Resource\SheetManager.h" />
     <ClInclude Include="Resource\TextureManager.h" />
     <ClInclude Include="Scene\Layers\PreAlphaLayer.h" />
-    <ClInclude Include="Tile\BasicTileSet.h" />
-    <ClInclude Include="Tile\TmxLogging.h" />
-    <ClInclude Include="Tile\ParsedFrame.h" />
-    <ClInclude Include="Tile\FrameData.h" />
-    <ClInclude Include="Tile\GridTileSet.h" />
-    <ClInclude Include="Tile\Image.h" />
-    <ClInclude Include="Tile\ImageTileSet.h" />
-    <ClInclude Include="Tile\Tile.h" />
-    <ClInclude Include="Tile\TileHelper.h" />
     <ClInclude Include="UI\Title.h" />
     <ClInclude Include="Scene\LayerId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
@@ -305,11 +296,7 @@
     <ClInclude Include="Entity\Shape.h" />
     <ClInclude Include="Entity\EntityManager.h" />
     <ClInclude Include="System\InputSystem.h" />
-    <ClInclude Include="Tile\TileMapData.h" />
     <ClInclude Include="Level\TileMap.h" />
-    <ClInclude Include="Tile\TileMapParser.h" />
-    <ClInclude Include="Tile\TmxParser.h" />
-    <ClInclude Include="Tile\TsxParser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity\Abilities\AnimationAbility.cpp" />
@@ -341,11 +328,6 @@
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Resource\SheetManager.cpp" />
     <ClCompile Include="Scene\Layers\PreAlphaLayer.cpp" />
-    <ClCompile Include="Tile\BasicTileSet.cpp" />
-    <ClCompile Include="Tile\GridTileSet.cpp" />
-    <ClCompile Include="Tile\ImageTileSet.cpp" />
-    <ClCompile Include="Tile\TmxLogging.cpp" />
-    <ClCompile Include="Tile\TileHelper.cpp" />
     <ClCompile Include="UI\Title.cpp" />
     <ClCompile Include="Scene\Manager.cpp" />
     <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
@@ -370,16 +352,13 @@
     <ClCompile Include="Entity\EntityManager.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
     <ClCompile Include="Level\TileMap.cpp" />
-    <ClCompile Include="Tile\TileMapParser.cpp" />
-    <ClCompile Include="Tile\TmxParser.cpp" />
-    <ClCompile Include="Tile\TsxParser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\3rdparty\submodules\tinyxml2\tinyxml2\tinyxml2.vcxproj">
-      <Project>{d1c528b6-aa02-4d29-9d61-dc08e317a70d}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\logging\logging.vcxproj">
       <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\tile\tile.vcxproj">
+      <Project>{b998d8ba-9c74-429f-a576-5ee6c6e8ccb6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\util\util.vcxproj">
       <Project>{fc8641f9-67f5-474b-9296-f5cf069d6f6d}</Project>
