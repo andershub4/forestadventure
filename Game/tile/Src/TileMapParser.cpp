@@ -6,6 +6,8 @@
 
 #include "TileMapParser.h"
 
+#include <tinyxml2/tinyxml2.h>
+
 #include "Folder.h"
 #include "GridTileSet.h"
 #include "Image.h"
@@ -88,7 +90,7 @@ void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& 
         for (const auto& parsedSet : tmxParser.tileSets_) {
             auto tsxFilePath = GetFilePath(tmxDir, parsedSet.tsxSource_);
             auto tsxDir = GetHead(tsxFilePath);
-            TsxParser tsxParser;
+            TsxParser tsxParser(std::make_unique<tinyxml2::XMLDocument>());
             if (tsxParser.Parse(tsxFilePath)) {
                 auto set = CreateTileSet(tsxDir, tsxParser);
                 auto firstGid = parsedSet.firstGid_;

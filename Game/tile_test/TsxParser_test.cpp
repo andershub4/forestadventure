@@ -10,5 +10,5 @@
 
 TEST(TestTsxParser, TestParse)
 {
-    FA::Tile::TsxParser p;
+    //FA::Tile::TsxParser p;
 }

@@ -14,20 +14,21 @@ namespace FA {
 
 namespace Tile {
 
-TsxParser::TsxParser() = default;
+TsxParser::TsxParser(std::unique_ptr<tinyxml2::XMLDocument> xmlDocument)
+    : xmlDocument_(std::move(xmlDocument))
+{}
 
 TsxParser::~TsxParser() = default;
 
 bool TsxParser::Parse(const std::string& fileName)
 {
-    tinyxml2::XMLDocument xmlDoc;
-    xmlDoc.LoadFile(fileName.c_str());
+    xmlDocument_->LoadFile(fileName.c_str());
 
-    if (xmlDoc.Error()) {
+    if (xmlDocument_->Error()) {
         return false;
     }
     else {
-        tinyxml2::XMLElement* tileSetElement = xmlDoc.FirstChildElement("tileset");
+        tinyxml2::XMLElement* tileSetElement = xmlDocument_->FirstChildElement("tileset");
         ParseTileSetElement(tileSetElement);
         return true;
     }

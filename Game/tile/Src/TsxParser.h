@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -14,6 +15,7 @@
 namespace tinyxml2 {
 
 class XMLElement;
+class XMLDocument;
 
 }  // namespace tinyxml2
 
@@ -34,13 +36,14 @@ public:
     };
 
 public:
-    TsxParser();
+    TsxParser(std::unique_ptr<tinyxml2::XMLDocument> xmlDocument);
     ~TsxParser();
     bool Parse(const std::string& fileName);
 
     TileSet tileSet_;
     Image image_;
     std::vector<Tile> tiles_;  // or unordered_map?
+    std::unique_ptr<tinyxml2::XMLDocument> xmlDocument_ = nullptr;
 
 private:
     void ParseTileSetElement(tinyxml2::XMLElement* tileSetElement);
