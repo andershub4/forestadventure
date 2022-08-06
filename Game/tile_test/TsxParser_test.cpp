@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "pch.h"
+#include <gtest/gtest.h>
 
 #include "TsxParser.h"
 
