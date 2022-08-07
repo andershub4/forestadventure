@@ -23,7 +23,8 @@ namespace Tile {
 
 namespace {
 
-std::unique_ptr<BasicTileSet> CreateTileSet(const std::string tsxDir, const TsxParser& tsxParser)
+std::unique_ptr<BasicTileSet> CreateTileSet(const std::string tsxDir,
+                                            const TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement>& tsxParser)
 {
     auto tiles = tsxParser.tiles_;
     std::unique_ptr<BasicTileSet> s = nullptr;
@@ -90,8 +91,9 @@ void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& 
         for (const auto& parsedSet : tmxParser.tileSets_) {
             auto tsxFilePath = GetFilePath(tmxDir, parsedSet.tsxSource_);
             auto tsxDir = GetHead(tsxFilePath);
-            TsxParser tsxParser(std::make_unique<tinyxml2::XMLDocument>());
-            if (tsxParser.Parse(tsxFilePath)) {
+            tinyxml2::XMLDocument doc;
+            TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement> tsxParser;
+            if (tsxParser.Parse(tsxFilePath, &doc)) {
                 auto set = CreateTileSet(tsxDir, tsxParser);
                 auto firstGid = parsedSet.firstGid_;
                 auto images = set->GetImages();
