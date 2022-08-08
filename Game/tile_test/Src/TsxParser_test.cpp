@@ -10,7 +10,11 @@
 
 #include "TsxParser.h"
 
-using namespace ::testing;
+using namespace testing;
+
+namespace FA {
+
+namespace Tile {
 
 TEST(TestTsxParser, ParseShouldFailDueToError)
 {
@@ -57,3 +61,7 @@ TEST(TestTsxParser, ParseShouldSucceed)
 
     EXPECT_EQ(true, (p.Parse("t", &docMock)));
 }
+
+}  // namespace Tile
+
+}  // namespace FA

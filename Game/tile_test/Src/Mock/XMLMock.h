@@ -8,6 +8,10 @@
 
 #include <gmock/gmock.h>
 
+namespace FA {
+
+namespace Tile {
+
 enum XMLError {
     XML_SUCCESS = 0,
     XML_NO_ATTRIBUTE,
@@ -52,3 +56,7 @@ public:
     MOCK_METHOD(const XMLElementMock*, FirstChildElement, (const char* name), (const));
     MOCK_METHOD(XMLElementMock*, FirstChildElement, (const char* name));
 };
+
+}  // namespace Tile
+
+}  // namespace FA
