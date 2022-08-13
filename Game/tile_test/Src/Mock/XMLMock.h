@@ -44,6 +44,7 @@ public:
     MOCK_METHOD(const XMLElementMock*, FirstChildElement, (const char* name), (const));
     MOCK_METHOD(XMLElementMock*, NextSiblingElement, (const char* name));
     MOCK_METHOD(const XMLElementMock*, NextSiblingElement, (const char* name), (const));
+    MOCK_METHOD(XMLError, QueryStringAttribute, (const char* name, const char** value), (const));
     MOCK_METHOD(XMLError, QueryAttribute, (const char* name, int* value), (const));
     MOCK_METHOD(XMLError, QueryAttribute, (const char* name, unsigned int* value), (const));
 };

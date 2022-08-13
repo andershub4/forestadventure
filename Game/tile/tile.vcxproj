@@ -151,12 +151,15 @@
     <ClCompile Include="Src\TsxParser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\BasicParseHelper.h" />
     <ClInclude Include="Src\BasicTileSet.h" />
     <ClInclude Include="Include\FrameData.h" />
     <ClInclude Include="Src\GridTileSet.h" />
     <ClInclude Include="Include\Image.h" />
     <ClInclude Include="Src\ImageTileSet.h" />
     <ClInclude Include="Src\ParsedFrame.h" />
+    <ClInclude Include="Src\ParsedTileSetData.h" />
+    <ClInclude Include="Src\ParseHelper.h" />
     <ClInclude Include="Src\Tile.h" />
     <ClInclude Include="Src\TileHelper.h" />
     <ClInclude Include="Include\TileMapData.h" />

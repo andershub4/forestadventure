@@ -5,11 +5,13 @@
     <ClCompile Include="Src\TsxParser_test.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc" />
+    <ClCompile Include="Src\ParseHelper_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Mock\XMLMock.h" />
+    <ClInclude Include="Src\Mock\ParseHelperMock.h" />
   </ItemGroup>
 </Project>

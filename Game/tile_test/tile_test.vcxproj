@@ -34,6 +34,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc" />
+    <ClCompile Include="Src\ParseHelper_test.cpp" />
     <ClCompile Include="Src\TsxParser_test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +46,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Mock\ParseHelperMock.h" />
     <ClInclude Include="Src\Mock\XMLMock.h" />
   </ItemGroup>
   <ItemDefinitionGroup />

@@ -80,5 +80,14 @@
     <ClInclude Include="Src\TsxParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Src\ParseHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ParsedTileSetData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\BasicParseHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
