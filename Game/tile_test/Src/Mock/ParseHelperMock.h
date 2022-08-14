@@ -14,10 +14,6 @@ namespace FA {
 
 namespace Tile {
 
-struct ParsedTileSetData;
-struct ParsedImage;
-struct ParsedTile;
-
 template <class ElementT, class ErrorT>
 class ParseHelperMock : BasicParseHelper<ElementT, ErrorT>
 {
