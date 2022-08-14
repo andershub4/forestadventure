@@ -21,7 +21,7 @@ template <class ElementT, class ErrorT>
 class ParseHelper : BasicParseHelper<ElementT, ErrorT>
 {
 public:
-    virtual bool ParseTileSet(ElementT* element, TileSetData& data) const override
+    virtual bool ParseTileSet(ElementT* element, ParsedTileSetData& data) const override
     {
         const char* name = nullptr;
         auto r0 = element->QueryStringAttribute("name", &name);

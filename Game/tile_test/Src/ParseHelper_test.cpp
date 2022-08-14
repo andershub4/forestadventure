@@ -21,7 +21,7 @@ namespace Tile {
 TEST(ParseHelper, ParseTileSetShouldSucceed)
 {
     ParseHelper<XMLElementMock, XMLError> h;
-    TileSetData expected{"tsname", 16, 80, 3, 0};
+    ParsedTileSetData expected{"tsname", 16, 80, 3, 0};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char**>()))
@@ -35,7 +35,7 @@ TEST(ParseHelper, ParseTileSetShouldSucceed)
     EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int*>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
 
-    TileSetData result;
+    ParsedTileSetData result;
     EXPECT_EQ(true, (h.ParseTileSet(&mock, result)));
     EXPECT_EQ(expected, result);
 }
@@ -43,7 +43,7 @@ TEST(ParseHelper, ParseTileSetShouldSucceed)
 TEST(ParseHelper, ParseTileSetShouldFailDueToWrongAttributeName)
 {
     ParseHelper<XMLElementMock, XMLError> h;
-    TileSetData expected{"tsname", 16, {}, 3, 0};
+    ParsedTileSetData expected{"tsname", 16, {}, 3, 0};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char**>()))
@@ -57,7 +57,7 @@ TEST(ParseHelper, ParseTileSetShouldFailDueToWrongAttributeName)
     EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int*>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
 
-    TileSetData result;
+    ParsedTileSetData result;
     EXPECT_EQ(false, (h.ParseTileSet(&mock, result)));
     EXPECT_EQ(expected, result);
 }
@@ -65,7 +65,7 @@ TEST(ParseHelper, ParseTileSetShouldFailDueToWrongAttributeName)
 TEST(ParseHelper, ParseTileSetShouldFailDueToNoAttribute)
 {
     ParseHelper<XMLElementMock, XMLError> h;
-    TileSetData expected{{}, 16, 0, 3, 0};
+    ParsedTileSetData expected{{}, 16, 0, 3, 0};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char**>())).WillOnce(Return(XML_NO_ATTRIBUTE));
@@ -78,7 +78,7 @@ TEST(ParseHelper, ParseTileSetShouldFailDueToNoAttribute)
     EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int*>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
 
-    TileSetData result;
+    ParsedTileSetData result;
     EXPECT_EQ(false, (h.ParseTileSet(&mock, result)));
     EXPECT_EQ(expected, result);
 }

@@ -10,13 +10,13 @@ namespace FA {
 
 namespace Tile {
 
-struct TileSetData;
+struct ParsedTileSetData;
 
 template <class ElementT, class ErrorT>
 class BasicParseHelper
 {
 public:
-    virtual bool ParseTileSet(ElementT* element, TileSetData& data) const = 0;
+    virtual bool ParseTileSet(ElementT* element, ParsedTileSetData& data) const = 0;
 };
 
 }  // namespace Tile

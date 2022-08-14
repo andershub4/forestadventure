@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Tile {
 
-struct TileSetData
+struct ParsedTileSetData
 {
     std::string name_{};
     unsigned int tileWidth_{};
@@ -21,7 +21,7 @@ struct TileSetData
     unsigned int columns_{};
 };
 
-inline bool operator==(const TileSetData& lhs, const TileSetData& rhs)
+inline bool operator==(const ParsedTileSetData& lhs, const ParsedTileSetData& rhs)
 {
     return lhs.name_ == rhs.name_ && lhs.tileWidth_ == rhs.tileWidth_ && lhs.tileHeight_ == rhs.tileHeight_ &&
            lhs.tileCount_ == rhs.tileCount_ && lhs.columns_ == rhs.columns_;
