@@ -125,6 +125,67 @@ TEST(ParseHelper, ParseTileWithImageShouldSucceed)
     EXPECT_EQ(expected, result);
 }
 
+TEST(ParseHelper, ParseThreeTilesShouldSucceed)
+{
+    ParseHelper<XMLElementMock, XMLError> h;
+    ParsedImage expectedImage1{"myImage1.png", 16, 16};
+    ParsedImage expectedImage2{"myImage2.png", 32, 32};
+    ParsedImage expectedImage3{"myImage3.png", 64, 32};
+    ParsedTile expected1{110, expectedImage1};
+    ParsedTile expected2{111, expectedImage2};
+    ParsedTile expected3{112, expectedImage3};
+    std::vector<ParsedTile> expected{expected1, expected2, expected3};
+
+    XMLElementMock mock1, mock2, mock3;
+    XMLElementMock imageMock1, imageMock2, imageMock3;
+
+    // first
+    EXPECT_CALL(mock1, QueryAttribute(StrEq("id"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected1.id_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock1, FirstChildElement(StrEq("image"))).WillOnce(Return(&imageMock1));
+
+    EXPECT_CALL(imageMock1, QueryStringAttribute(StrEq("source"), An<const char**>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage1.source_.c_str()), Return(XML_SUCCESS)));
+    EXPECT_CALL(imageMock1, QueryAttribute(StrEq("width"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage1.width_), Return(XML_SUCCESS)));
+    EXPECT_CALL(imageMock1, QueryAttribute(StrEq("height"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage1.height_), Return(XML_SUCCESS)));
+
+    EXPECT_CALL(mock1, NextSiblingElement(StrEq("tile"))).WillOnce(Return(&mock2));
+
+    // second
+    EXPECT_CALL(mock2, QueryAttribute(StrEq("id"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected2.id_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock2, FirstChildElement(StrEq("image"))).WillOnce(Return(&imageMock2));
+
+    EXPECT_CALL(imageMock2, QueryStringAttribute(StrEq("source"), An<const char**>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage2.source_.c_str()), Return(XML_SUCCESS)));
+    EXPECT_CALL(imageMock2, QueryAttribute(StrEq("width"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage2.width_), Return(XML_SUCCESS)));
+    EXPECT_CALL(imageMock2, QueryAttribute(StrEq("height"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage2.height_), Return(XML_SUCCESS)));
+
+    EXPECT_CALL(mock2, NextSiblingElement(StrEq("tile"))).WillOnce(Return(&mock3));
+
+    // third
+    EXPECT_CALL(mock3, QueryAttribute(StrEq("id"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected3.id_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock3, FirstChildElement(StrEq("image"))).WillOnce(Return(&imageMock3));
+
+    EXPECT_CALL(imageMock3, QueryStringAttribute(StrEq("source"), An<const char**>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage3.source_.c_str()), Return(XML_SUCCESS)));
+    EXPECT_CALL(imageMock3, QueryAttribute(StrEq("width"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage3.width_), Return(XML_SUCCESS)));
+    EXPECT_CALL(imageMock3, QueryAttribute(StrEq("height"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage3.height_), Return(XML_SUCCESS)));
+
+    EXPECT_CALL(mock3, NextSiblingElement(StrEq("tile"))).WillOnce(Return(nullptr));
+
+    std::vector<ParsedTile> result;
+    EXPECT_EQ(true, (h.ParseTiles(&mock1, result)));
+    EXPECT_EQ(expected, result);
+}
+
 }  // namespace Tile
 
 }  // namespace FA

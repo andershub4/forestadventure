@@ -58,6 +58,22 @@ public:
         return ((r0 == ErrorT::XML_SUCCESS) && i);
     }
 
+    virtual bool ParseTiles(ElementT* element, std::vector<ParsedTile>& tiles) const override
+    {
+        ElementT* e = element;
+        bool result = true;
+
+        while (e != nullptr) {
+            ParsedTile tile;
+            auto r = ParseTile(e, tile);
+            result &= r;
+            tiles.push_back(tile);
+            e = e->NextSiblingElement("tile");
+        }
+
+        return result;
+    }
+
 private:
     bool Result(const std::vector<ErrorT>& results) const
     {
