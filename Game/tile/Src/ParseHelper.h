@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "BasicParseHelper.h"
+#include "ParsedImage.h"
 #include "ParsedTileSetData.h"
 
 namespace FA {
@@ -32,6 +33,21 @@ public:
         auto r4 = element->QueryAttribute("columns", &data.columns_);
 
         std::vector<ErrorT> results{r0, r1, r2, r3, r4};
+        bool result =
+            std::all_of(results.begin(), results.end(), [](const ErrorT& e) { return e == ErrorT::XML_SUCCESS; });
+
+        return result;
+    }
+
+    virtual bool ParseImage(ElementT* element, ParsedImage& image) const override
+    {
+        const char* source = nullptr;
+        auto r0 = element->QueryStringAttribute("source", &source);
+        if (source) image.source_ = source;
+        auto r1 = element->QueryAttribute("width", &image.width_);
+        auto r2 = element->QueryAttribute("height", &image.height_);
+
+        std::vector<ErrorT> results{r0, r1, r2};
         bool result =
             std::all_of(results.begin(), results.end(), [](const ErrorT& e) { return e == ErrorT::XML_SUCCESS; });
 

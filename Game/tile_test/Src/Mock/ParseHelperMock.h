@@ -15,12 +15,14 @@ namespace FA {
 namespace Tile {
 
 struct ParsedTileSetData;
+struct ParsedImage;
 
 template <class ElementT, class ErrorT>
 class ParseHelperMock : BasicParseHelper<ElementT, ErrorT>
 {
 public:
     MOCK_METHOD(bool, ParseTileSet, (ElementT * element, ParsedTileSetData& data), (const, override));
+    MOCK_METHOD(bool, ParseImage, (ElementT * element, ParsedImage& image), (const, override));
 };
 
 }  // namespace Tile

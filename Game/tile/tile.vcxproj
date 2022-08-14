@@ -158,6 +158,7 @@
     <ClInclude Include="Include\Image.h" />
     <ClInclude Include="Src\ImageTileSet.h" />
     <ClInclude Include="Src\ParsedFrame.h" />
+    <ClInclude Include="Src\ParsedImage.h" />
     <ClInclude Include="Src\ParsedTileSetData.h" />
     <ClInclude Include="Src\ParseHelper.h" />
     <ClInclude Include="Src\Tile.h" />
