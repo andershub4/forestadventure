@@ -12,6 +12,7 @@ namespace Tile {
 
 struct ParsedTileSetData;
 struct ParsedImage;
+struct ParsedTile;
 
 template <class ElementT, class ErrorT>
 class BasicParseHelper
@@ -19,6 +20,7 @@ class BasicParseHelper
 public:
     virtual bool ParseTileSet(ElementT* element, ParsedTileSetData& data) const = 0;
     virtual bool ParseImage(ElementT* element, ParsedImage& data) const = 0;
+    virtual bool ParseTile(ElementT* element, ParsedTile& data) const = 0;
 };
 
 }  // namespace Tile

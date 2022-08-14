@@ -92,5 +92,8 @@
     <ClInclude Include="Src\ParsedImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Src\ParsedTile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

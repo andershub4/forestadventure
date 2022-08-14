@@ -101,6 +101,30 @@ TEST(ParseHelper, ParseImageShouldSucceed)
     EXPECT_EQ(expected, result);
 }
 
+TEST(ParseHelper, ParseTileWithImageShouldSucceed)
+{
+    ParseHelper<XMLElementMock, XMLError> h;
+    ParsedImage expectedImage{"myImage.png", 16, 16};
+    ParsedTile expected{110, expectedImage};
+    XMLElementMock mock;
+    XMLElementMock imageMock;
+
+    EXPECT_CALL(mock, QueryAttribute(StrEq("id"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.id_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, FirstChildElement(StrEq("image"))).WillOnce(Return(&imageMock));
+
+    EXPECT_CALL(imageMock, QueryStringAttribute(StrEq("source"), An<const char**>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage.source_.c_str()), Return(XML_SUCCESS)));
+    EXPECT_CALL(imageMock, QueryAttribute(StrEq("width"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage.width_), Return(XML_SUCCESS)));
+    EXPECT_CALL(imageMock, QueryAttribute(StrEq("height"), An<unsigned int*>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedImage.height_), Return(XML_SUCCESS)));
+
+    ParsedTile result;
+    EXPECT_EQ(true, (h.ParseTile(&mock, result)));
+    EXPECT_EQ(expected, result);
+}
+
 }  // namespace Tile
 
 }  // namespace FA

@@ -12,6 +12,7 @@
 
 #include "BasicParseHelper.h"
 #include "ParsedImage.h"
+#include "ParsedTile.h"
 #include "ParsedTileSetData.h"
 
 namespace FA {
@@ -46,6 +47,15 @@ public:
 
         std::vector<ErrorT> results{r0, r1, r2};
         return Result(results);
+    }
+
+    virtual bool ParseTile(ElementT* element, ParsedTile& tile) const override
+    {
+        auto r0 = element->QueryAttribute("id", &tile.id_);
+        ElementT* imageElement = element->FirstChildElement("image");
+        auto i = ParseImage(imageElement, tile.image_);
+
+        return ((r0 == ErrorT::XML_SUCCESS) && i);
     }
 
 private:
