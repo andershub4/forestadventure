@@ -33,10 +33,7 @@ public:
         auto r4 = element->QueryAttribute("columns", &data.columns_);
 
         std::vector<ErrorT> results{r0, r1, r2, r3, r4};
-        bool result =
-            std::all_of(results.begin(), results.end(), [](const ErrorT& e) { return e == ErrorT::XML_SUCCESS; });
-
-        return result;
+        return Result(results);
     }
 
     virtual bool ParseImage(ElementT* element, ParsedImage& image) const override
@@ -48,10 +45,13 @@ public:
         auto r2 = element->QueryAttribute("height", &image.height_);
 
         std::vector<ErrorT> results{r0, r1, r2};
-        bool result =
-            std::all_of(results.begin(), results.end(), [](const ErrorT& e) { return e == ErrorT::XML_SUCCESS; });
+        return Result(results);
+    }
 
-        return result;
+private:
+    bool Result(const std::vector<ErrorT>& results) const
+    {
+        return std::all_of(results.begin(), results.end(), [](const ErrorT& e) { return e == ErrorT::XML_SUCCESS; });
     }
 };
 
