@@ -16,12 +16,13 @@ namespace FA {
 
 namespace Tile {
 
-template <class ElementT, class ErrorT>
-class ParseHelper : BasicParseHelper<ElementT, ErrorT>
+template <class DocumentT, class ElementT, class ErrorT>
+class ParseHelper : BasicParseHelper<DocumentT, ElementT, ErrorT>
 {
 public:
-    virtual bool ParseTileSet(ElementT* element, ParsedTileSetData& data) const override
+    virtual bool ParseTileSet(DocumentT* document, ParsedTileSetData& data) const override
     {
+        auto element = document->FirstChildElement("tileset");
         const char* name = nullptr;
         auto r0 = element->QueryStringAttribute("name", &name);
         if (name) data.name_ = name;
@@ -34,8 +35,9 @@ public:
         return Result(results);
     }
 
-    virtual bool ParseImage(ElementT* element, ParsedImage& image) const override
+    virtual bool ParseImage(ElementT* parentElement, ParsedImage& image) const override
     {
+        auto element = parentElement->FirstChildElement("image");
         const char* source = nullptr;
         auto r0 = element->QueryStringAttribute("source", &source);
         if (source) image.source_ = source;
@@ -49,23 +51,22 @@ public:
     virtual bool ParseTile(ElementT* element, ParsedTile& tile) const override
     {
         auto r0 = element->QueryAttribute("id", &tile.id_);
-        ElementT* imageElement = element->FirstChildElement("image");
-        auto i = ParseImage(imageElement, tile.image_);
+        auto i = ParseImage(element, tile.image_);
 
         return ((r0 == ErrorT::XML_SUCCESS) && i);
     }
 
-    virtual bool ParseTiles(ElementT* element, std::vector<ParsedTile>& tiles) const override
+    virtual bool ParseTiles(ElementT* parentElement, std::vector<ParsedTile>& tiles) const override
     {
-        ElementT* e = element;
+        auto element = parentElement->FirstChildElement("tile");
         bool result = true;
 
-        while (e != nullptr) {
+        while (element != nullptr) {
             ParsedTile tile;
-            auto r = ParseTile(e, tile);
+            auto r = ParseTile(element, tile);
             result &= r;
             tiles.push_back(tile);
-            e = e->NextSiblingElement("tile");
+            element = element->NextSiblingElement("tile");
         }
 
         return result;
