@@ -11,9 +11,6 @@
 #include <vector>
 
 #include "BasicParseHelper.h"
-#include "ParsedImage.h"
-#include "ParsedTile.h"
-#include "ParsedTileSetData.h"
 
 namespace FA {
 

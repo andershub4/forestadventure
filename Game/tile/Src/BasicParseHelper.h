@@ -12,9 +12,43 @@ namespace FA {
 
 namespace Tile {
 
-struct ParsedTileSetData;
-struct ParsedImage;
-struct ParsedTile;
+struct ParsedTileSetData
+{
+    std::string name_{};
+    unsigned int tileWidth_{};
+    unsigned int tileHeight_{};
+    unsigned int tileCount_{};
+    unsigned int columns_{};
+};
+
+inline bool operator==(const ParsedTileSetData& lhs, const ParsedTileSetData& rhs)
+{
+    return lhs.name_ == rhs.name_ && lhs.tileWidth_ == rhs.tileWidth_ && lhs.tileHeight_ == rhs.tileHeight_ &&
+           lhs.tileCount_ == rhs.tileCount_ && lhs.columns_ == rhs.columns_;
+}
+
+struct ParsedImage
+{
+    std::string source_;
+    unsigned int width_{};
+    unsigned int height_{};
+};
+
+inline bool operator==(const ParsedImage& lhs, const ParsedImage& rhs)
+{
+    return lhs.source_ == rhs.source_ && lhs.width_ == rhs.width_ && lhs.height_ == rhs.height_;
+}
+
+struct ParsedTile
+{
+    unsigned int id_{};
+    ParsedImage image_;
+};
+
+inline bool operator==(const ParsedTile& lhs, const ParsedTile& rhs)
+{
+    return lhs.id_ == rhs.id_ && lhs.image_ == rhs.image_;
+}
 
 template <class ElementT, class ErrorT>
 class BasicParseHelper
