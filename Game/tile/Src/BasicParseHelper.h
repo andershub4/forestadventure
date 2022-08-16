@@ -54,6 +54,8 @@ template <class DocumentT, class ElementT, class ErrorT>
 class BasicParseHelper
 {
 public:
+    virtual ~BasicParseHelper() = default;
+
     virtual bool ParseTileSet(DocumentT* document, ParsedTileSetData& data) const = 0;
     virtual bool ParseImage(ElementT* parentElement, ParsedImage& data) const = 0;
     virtual bool ParseTile(ElementT* element, ParsedTile& data) const = 0;

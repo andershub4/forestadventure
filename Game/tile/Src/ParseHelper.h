@@ -20,6 +20,8 @@ template <class DocumentT, class ElementT, class ErrorT>
 class ParseHelper : BasicParseHelper<DocumentT, ElementT, ErrorT>
 {
 public:
+    virtual ~ParseHelper() = default;
+
     virtual bool ParseTileSet(DocumentT* document, ParsedTileSetData& data) const override
     {
         auto element = document->FirstChildElement("tileset");
