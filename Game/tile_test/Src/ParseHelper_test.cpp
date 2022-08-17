@@ -18,128 +18,112 @@ namespace FA {
 
 namespace Tile {
 
-TEST(ParseHelper, ParseTileSetShouldSucceed)
+class ParseHelperTest : public testing::Test
 {
-    ParseHelper<XMLDocumentMock, XMLElementMock, XMLError> h;
-    ParsedTileSetData expected{"tsname", 16, 80, 3, 0};
-    XMLDocumentMock docMock;
-    XMLElementMock mock;
+protected:
+    XMLDocumentMock docMock_;
+    XMLElementMock tileSetMock_;
+    ParseHelper<XMLDocumentMock, XMLElementMock, XMLError> helper_;
 
-    EXPECT_CALL(docMock, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&mock));
+protected:
+    void ExpectParseImage(XMLElementMock *parentMock, XMLElementMock *mock, const ParsedImage &expected) const;
+};
 
-    EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char**>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.name_.c_str()), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("tilewidth"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.tileWidth_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("tileheight"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.tileHeight_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("tilecount"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.tileCount_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
-
-    ParsedTileSetData result;
-    EXPECT_EQ(true, (h.ParseTileSet(&docMock, result)));
-    EXPECT_EQ(expected, result);
-}
-
-TEST(ParseHelper, ParseTileSetShouldFailDueToWrongAttributeName)
+void ParseHelperTest::ExpectParseImage(XMLElementMock *parentMock, XMLElementMock *mock,
+                                       const ParsedImage &expected) const
 {
-    ParseHelper<XMLDocumentMock, XMLElementMock, XMLError> h;
-    ParsedTileSetData expected{"tsname", 16, {}, 3, 0};
-    XMLDocumentMock docMock;
-    XMLElementMock mock;
+    EXPECT_CALL(*parentMock, FirstChildElement(StrEq("image"))).WillOnce(Return(mock));
 
-    EXPECT_CALL(docMock, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&mock));
-
-    EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char**>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.name_.c_str()), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("tilewidth"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.tileWidth_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("tileheight"), An<unsigned int*>()))
-        .WillOnce(Return(XML_WRONG_ATTRIBUTE_TYPE));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("tilecount"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.tileCount_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
-
-    ParsedTileSetData result;
-    EXPECT_EQ(false, (h.ParseTileSet(&docMock, result)));
-    EXPECT_EQ(expected, result);
-}
-
-TEST(ParseHelper, ParseTileSetShouldFailDueToNoAttribute)
-{
-    ParseHelper<XMLDocumentMock, XMLElementMock, XMLError> h;
-    ParsedTileSetData expected{{}, 16, 0, 3, 0};
-    XMLDocumentMock docMock;
-    XMLElementMock mock;
-
-    EXPECT_CALL(docMock, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&mock));
-
-    EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char**>())).WillOnce(Return(XML_NO_ATTRIBUTE));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("tilewidth"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.tileWidth_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("tileheight"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.tileHeight_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("tilecount"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.tileCount_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
-
-    ParsedTileSetData result;
-    EXPECT_EQ(false, (h.ParseTileSet(&docMock, result)));
-    EXPECT_EQ(expected, result);
-}
-
-TEST(ParseHelper, ParseImageShouldSucceed)
-{
-    ParseHelper<XMLDocumentMock, XMLElementMock, XMLError> h;
-    ParsedImage expected{"myImage.png", 16, 16};
-    XMLElementMock parentMock;
-    XMLElementMock mock;
-
-    EXPECT_CALL(parentMock, FirstChildElement(StrEq("image"))).WillOnce(Return(&mock));
-
-    EXPECT_CALL(mock, QueryStringAttribute(StrEq("source"), An<const char**>()))
+    EXPECT_CALL(*mock, QueryStringAttribute(StrEq("source"), An<const char **>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.source_.c_str()), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("width"), An<unsigned int*>()))
+    EXPECT_CALL(*mock, QueryAttribute(StrEq("width"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.width_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, QueryAttribute(StrEq("height"), An<unsigned int*>()))
+    EXPECT_CALL(*mock, QueryAttribute(StrEq("height"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.height_), Return(XML_SUCCESS)));
+}
+
+TEST_F(ParseHelperTest, ParseTileSetShouldSucceed)
+{
+    ParsedTileSetData expected{"tsname", 16, 80, 3, 0};
+    XMLElementMock mock;
+
+    EXPECT_CALL(docMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&mock));
+
+    EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.name_.c_str()), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("tilewidth"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.tileWidth_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("tileheight"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.tileHeight_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("tilecount"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.tileCount_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
+
+    ParsedTileSetData result;
+    EXPECT_EQ(true, (helper_.ParseTileSet(&docMock_, result)));
+    EXPECT_EQ(expected, result);
+}
+
+TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToWrongAttributeName)
+{
+    ParsedTileSetData expected{"tsname", 16, {}, 3, 0};
+    XMLElementMock mock;
+
+    EXPECT_CALL(docMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&mock));
+
+    EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.name_.c_str()), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("tilewidth"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.tileWidth_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("tileheight"), An<unsigned int *>()))
+        .WillOnce(Return(XML_WRONG_ATTRIBUTE_TYPE));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("tilecount"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.tileCount_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
+
+    ParsedTileSetData result;
+    EXPECT_EQ(false, (helper_.ParseTileSet(&docMock_, result)));
+    EXPECT_EQ(expected, result);
+}
+
+TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToNoAttribute)
+{
+    ParsedTileSetData expected{{}, 16, 0, 3, 0};
+    XMLElementMock mock;
+
+    EXPECT_CALL(docMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&mock));
+
+    EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>())).WillOnce(Return(XML_NO_ATTRIBUTE));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("tilewidth"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.tileWidth_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("tileheight"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.tileHeight_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("tilecount"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.tileCount_), Return(XML_SUCCESS)));
+    EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
+
+    ParsedTileSetData result;
+    EXPECT_EQ(false, (helper_.ParseTileSet(&docMock_, result)));
+    EXPECT_EQ(expected, result);
+}
+
+TEST_F(ParseHelperTest, ParseImageShouldSucceed)
+{
+    XMLElementMock parentMock;
+    ParsedImage expected{"myImage.png", 16, 16};
+    XMLElementMock mock;
+    ExpectParseImage(&parentMock, &mock, expected);
 
     ParsedImage result;
-    EXPECT_EQ(true, (h.ParseImage(&parentMock, result)));
+    EXPECT_EQ(true, (helper_.ParseImage(&parentMock, result)));
     EXPECT_EQ(expected, result);
 }
 
-TEST(ParseHelper, ParseTileElementWithImageShouldSucceed)
+TEST_F(ParseHelperTest, ParseThreeTilesShouldSucceed)
 {
-    ParseHelper<XMLDocumentMock, XMLElementMock, XMLError> h;
-    ParsedImage expectedImage{"myImage.png", 16, 16};
-    ParsedTile expected{110, expectedImage};
-    XMLElementMock mock;
-    XMLElementMock imageMock;
-
-    EXPECT_CALL(mock, QueryAttribute(StrEq("id"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expected.id_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock, FirstChildElement(StrEq("image"))).WillOnce(Return(&imageMock));
-
-    EXPECT_CALL(imageMock, QueryStringAttribute(StrEq("source"), An<const char**>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage.source_.c_str()), Return(XML_SUCCESS)));
-    EXPECT_CALL(imageMock, QueryAttribute(StrEq("width"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage.width_), Return(XML_SUCCESS)));
-    EXPECT_CALL(imageMock, QueryAttribute(StrEq("height"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage.height_), Return(XML_SUCCESS)));
-
-    ParsedTile result;
-    EXPECT_EQ(true, (h.ParseTile(&mock, result)));
-    EXPECT_EQ(expected, result);
-}
-
-TEST(ParseHelper, ParseThreeTilesShouldSucceed)
-{
-    ParseHelper<XMLDocumentMock, XMLElementMock, XMLError> h;
     ParsedImage expectedImage1{"myImage1.png", 16, 16};
     ParsedImage expectedImage2{"myImage2.png", 32, 32};
     ParsedImage expectedImage3{"myImage3.png", 64, 32};
@@ -155,49 +139,28 @@ TEST(ParseHelper, ParseThreeTilesShouldSucceed)
     EXPECT_CALL(parentMock, FirstChildElement(StrEq("tile"))).WillOnce(Return(&mock1));
 
     // first
-    EXPECT_CALL(mock1, QueryAttribute(StrEq("id"), An<unsigned int*>()))
+    EXPECT_CALL(mock1, QueryAttribute(StrEq("id"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected1.id_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock1, FirstChildElement(StrEq("image"))).WillOnce(Return(&imageMock1));
-
-    EXPECT_CALL(imageMock1, QueryStringAttribute(StrEq("source"), An<const char**>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage1.source_.c_str()), Return(XML_SUCCESS)));
-    EXPECT_CALL(imageMock1, QueryAttribute(StrEq("width"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage1.width_), Return(XML_SUCCESS)));
-    EXPECT_CALL(imageMock1, QueryAttribute(StrEq("height"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage1.height_), Return(XML_SUCCESS)));
+    ExpectParseImage(&mock1, &imageMock1, expectedImage1);
 
     EXPECT_CALL(mock1, NextSiblingElement(StrEq("tile"))).WillOnce(Return(&mock2));
 
     // second
-    EXPECT_CALL(mock2, QueryAttribute(StrEq("id"), An<unsigned int*>()))
+    EXPECT_CALL(mock2, QueryAttribute(StrEq("id"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected2.id_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock2, FirstChildElement(StrEq("image"))).WillOnce(Return(&imageMock2));
-
-    EXPECT_CALL(imageMock2, QueryStringAttribute(StrEq("source"), An<const char**>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage2.source_.c_str()), Return(XML_SUCCESS)));
-    EXPECT_CALL(imageMock2, QueryAttribute(StrEq("width"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage2.width_), Return(XML_SUCCESS)));
-    EXPECT_CALL(imageMock2, QueryAttribute(StrEq("height"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage2.height_), Return(XML_SUCCESS)));
+    ExpectParseImage(&mock2, &imageMock2, expectedImage2);
 
     EXPECT_CALL(mock2, NextSiblingElement(StrEq("tile"))).WillOnce(Return(&mock3));
 
     // third
-    EXPECT_CALL(mock3, QueryAttribute(StrEq("id"), An<unsigned int*>()))
+    EXPECT_CALL(mock3, QueryAttribute(StrEq("id"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected3.id_), Return(XML_SUCCESS)));
-    EXPECT_CALL(mock3, FirstChildElement(StrEq("image"))).WillOnce(Return(&imageMock3));
-
-    EXPECT_CALL(imageMock3, QueryStringAttribute(StrEq("source"), An<const char**>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage3.source_.c_str()), Return(XML_SUCCESS)));
-    EXPECT_CALL(imageMock3, QueryAttribute(StrEq("width"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage3.width_), Return(XML_SUCCESS)));
-    EXPECT_CALL(imageMock3, QueryAttribute(StrEq("height"), An<unsigned int*>()))
-        .WillOnce(DoAll(SetArgPointee<1>(expectedImage3.height_), Return(XML_SUCCESS)));
+    ExpectParseImage(&mock3, &imageMock3, expectedImage3);
 
     EXPECT_CALL(mock3, NextSiblingElement(StrEq("tile"))).WillOnce(Return(nullptr));
 
     std::vector<ParsedTile> result;
-    EXPECT_EQ(true, (h.ParseTiles(&parentMock, result)));
+    EXPECT_EQ(true, (helper_.ParseTiles(&parentMock, result)));
     EXPECT_EQ(expected, result);
 }
 

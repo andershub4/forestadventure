@@ -58,7 +58,6 @@ public:
 
     virtual bool ParseTileSet(DocumentT* document, ParsedTileSetData& data) const = 0;
     virtual bool ParseImage(ElementT* parentElement, ParsedImage& data) const = 0;
-    virtual bool ParseTile(ElementT* element, ParsedTile& data) const = 0;
     virtual bool ParseTiles(ElementT* parentElement, std::vector<ParsedTile>& tiles) const = 0;
 };
 

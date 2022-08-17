@@ -50,14 +50,6 @@ public:
         return Result(results);
     }
 
-    virtual bool ParseTile(ElementT* element, ParsedTile& tile) const override
-    {
-        auto r0 = element->QueryAttribute("id", &tile.id_);
-        auto i = ParseImage(element, tile.image_);
-
-        return ((r0 == ErrorT::XML_SUCCESS) && i);
-    }
-
     virtual bool ParseTiles(ElementT* parentElement, std::vector<ParsedTile>& tiles) const override
     {
         auto element = parentElement->FirstChildElement("tile");
@@ -75,6 +67,14 @@ public:
     }
 
 private:
+    bool ParseTile(ElementT* element, ParsedTile& tile) const
+    {
+        auto r0 = element->QueryAttribute("id", &tile.id_);
+        auto i = ParseImage(element, tile.image_);
+
+        return ((r0 == ErrorT::XML_SUCCESS) && i);
+    }
+
     bool Result(const std::vector<ErrorT>& results) const
     {
         return std::all_of(results.begin(), results.end(), [](const ErrorT& e) { return e == ErrorT::XML_SUCCESS; });
