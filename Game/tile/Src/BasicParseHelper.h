@@ -39,15 +39,37 @@ inline bool operator==(const ParsedImage& lhs, const ParsedImage& rhs)
     return lhs.source_ == rhs.source_ && lhs.width_ == rhs.width_ && lhs.height_ == rhs.height_;
 }
 
+struct ParsedFrame
+{
+    unsigned int id_{};
+    unsigned int duration_{};
+};
+
+inline bool operator==(const ParsedFrame& lhs, const ParsedFrame& rhs)
+{
+    return lhs.id_ == rhs.id_ && lhs.duration_ == rhs.duration_;
+}
+
+struct ParsedAnimation
+{
+    std::vector<ParsedFrame> frames_;
+};
+
+inline bool operator==(const ParsedAnimation& lhs, const ParsedAnimation& rhs)
+{
+    return lhs.frames_ == rhs.frames_;
+}
+
 struct ParsedTile
 {
     unsigned int id_{};
     ParsedImage image_;
+    ParsedAnimation animation_;
 };
 
 inline bool operator==(const ParsedTile& lhs, const ParsedTile& rhs)
 {
-    return lhs.id_ == rhs.id_ && lhs.image_ == rhs.image_;
+    return lhs.id_ == rhs.id_ && lhs.image_ == rhs.image_ && lhs.animation_ == rhs.animation_;
 }
 
 template <class DocumentT, class ElementT, class ErrorT>

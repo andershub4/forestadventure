@@ -67,12 +67,45 @@ public:
     }
 
 private:
+    bool ParseFrame(ElementT* element, ParsedFrame& frame) const
+    {
+        auto r1 = element->QueryAttribute("tileid", &frame.id_);
+        auto r2 = element->QueryAttribute("duration", &frame.duration_);
+
+        std::vector<ErrorT> results{r1, r2};
+        return Result(results);
+    }
+
+    bool ParseFrames(ElementT* parentElement, std::vector<ParsedFrame>& frames) const
+    {
+        auto element = parentElement->FirstChildElement("frame");
+        bool result = true;
+
+        while (element != nullptr) {
+            ParsedFrame frame;
+            auto r = ParseFrame(element, frame);
+            result &= r;
+            frames.push_back(frame);
+            element = element->NextSiblingElement("frame");
+        }
+
+        return result;
+    }
+
+    bool ParseAnimation(ElementT* parentElement, ParsedAnimation& animation) const
+    {
+        auto element = parentElement->FirstChildElement("animation");
+
+        return element != nullptr && ParseFrames(element, animation.frames_);
+    }
+
     bool ParseTile(ElementT* element, ParsedTile& tile) const
     {
         auto r0 = element->QueryAttribute("id", &tile.id_);
         auto i = ParseImage(element, tile.image_);
+        auto a = ParseAnimation(element, tile.animation_);
 
-        return ((r0 == ErrorT::XML_SUCCESS) && i);
+        return ((r0 == ErrorT::XML_SUCCESS) && i && a);
     }
 
     bool Result(const std::vector<ErrorT>& results) const
