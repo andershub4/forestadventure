@@ -74,6 +74,54 @@ void ParseHelperTest::ExpectParseAnimation(XMLElementMock *parentMock, XMLElemen
     EXPECT_CALL(frameMock3, NextSiblingElement(StrEq("frame"))).WillOnce(Return(nullptr));
 }
 
+TEST_F(ParseHelperTest, TestParsedTileSetDataEqualToOperator)
+{
+    ParsedTileSetData d1{"tsname", 16, 80, 3, 0};
+    ParsedTileSetData d2 = d1;
+    EXPECT_TRUE(d1 == d2);
+    d1.name_ = "myname";
+    EXPECT_FALSE(d1 == d2);
+}
+
+TEST_F(ParseHelperTest, TestParsedImageEqualToOperator)
+{
+    ParsedImage d1{"myImage.png", 16, 16};
+    ParsedImage d2 = d1;
+    EXPECT_TRUE(d1 == d2);
+    d1.source_ = "myOtherImage.png";
+    EXPECT_FALSE(d1 == d2);
+}
+
+TEST_F(ParseHelperTest, TestParsedFrameEqualToOperator)
+{
+    ParsedFrame d1{0, 10};
+    ParsedFrame d2 = d1;
+    EXPECT_TRUE(d1 == d2);
+    d1.duration_ = 30;
+    EXPECT_FALSE(d1 == d2);
+}
+
+TEST_F(ParseHelperTest, TestParsedAnimationEqualToOperator)
+{
+    ParsedAnimation d1{{{0, 10}, {1, 10}, {2, 10}}};
+    ParsedAnimation d2 = d1;
+    EXPECT_TRUE(d1 == d2);
+    d1.frames_.erase(d1.frames_.begin() + 1);
+    EXPECT_FALSE(d1 == d2);
+}
+
+TEST_F(ParseHelperTest, TestParsedTileEqualToOperator)
+{
+    ParsedImage i{"myImage1.png", 16, 16};
+    ParsedAnimation a1{{{0, 20}, {1, 20}, {1, 20}}};
+    ParsedTile d1{110, i, a1};
+    ParsedTile d2 = d1;
+    EXPECT_TRUE(d1 == d2);
+    ParsedAnimation a2{{{1, 20}, {1, 20}, {1, 20}}};
+    d1.animation_ = a2;
+    EXPECT_FALSE(d1 == d2);
+}
+
 TEST_F(ParseHelperTest, ParseTileSetShouldSucceed)
 {
     ParsedTileSetData expected{"tsname", 16, 80, 3, 0};
