@@ -96,7 +96,11 @@ private:
     {
         auto element = parentElement->FirstChildElement("animation");
 
-        return element != nullptr && ParseFrames(element, animation.frames_);
+        if (element != nullptr) {
+            return ParseFrames(element, animation.frames_);
+        }
+
+        return true;
     }
 
     bool ParseTile(ElementT* element, ParsedTile& tile) const

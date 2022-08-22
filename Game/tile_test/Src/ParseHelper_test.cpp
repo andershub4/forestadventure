@@ -202,7 +202,30 @@ TEST_F(ParseHelperTest, ParseImageShouldSucceed)
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(ParseHelperTest, ParseThreeTilesShouldSucceed)
+TEST_F(ParseHelperTest, ParseSingleTileWithOnlyImageShouldSucceed)
+{
+    ParsedImage expectedImage{"myImage1.png", 16, 16};
+    ParsedTile expectedTile{110, expectedImage, {}};
+    std::vector<ParsedTile> expected{expectedTile};
+    XMLElementMock parentMock;
+    XMLElementMock mock1;
+    XMLElementMock imageMock1;
+
+    EXPECT_CALL(parentMock, FirstChildElement(StrEq("tile"))).WillOnce(Return(&mock1));
+
+    EXPECT_CALL(mock1, QueryAttribute(StrEq("id"), An<unsigned int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expectedTile.id_), Return(XML_SUCCESS)));
+    ExpectParseImage(&mock1, &imageMock1, expectedImage);
+    EXPECT_CALL(mock1, FirstChildElement(StrEq("animation"))).WillOnce(Return(nullptr));
+
+    EXPECT_CALL(mock1, NextSiblingElement(StrEq("tile"))).WillOnce(Return(nullptr));
+
+    std::vector<ParsedTile> result;
+    EXPECT_EQ(true, (helper_.ParseTiles(&parentMock, result)));
+    EXPECT_EQ(expected, result);
+}
+
+TEST_F(ParseHelperTest, ParseThreeTilesWithBothImageAndAnimationShouldSucceed)
 {
     ParsedImage expectedImage1{"myImage1.png", 16, 16};
     ParsedImage expectedImage2{"myImage2.png", 32, 32};
