@@ -16,15 +16,14 @@ namespace FA {
 
 namespace Tile {
 
-template <class DocumentT, class ElementT, class ErrorT>
-class ParseHelper : BasicParseHelper<DocumentT, ElementT, ErrorT>
+template <class ElementT, class ErrorT>
+class ParseHelper : BasicParseHelper<ElementT, ErrorT>
 {
 public:
     virtual ~ParseHelper() = default;
 
-    virtual bool ParseTileSet(DocumentT* document, ParsedTileSetData& data) const override
+    virtual bool ParseTileSet(ElementT* element, ParsedTileSetData& data) const override
     {
-        auto element = document->FirstChildElement("tileset");
         const char* name = nullptr;
         auto r0 = element->QueryStringAttribute("name", &name);
         if (name) data.name_ = name;
@@ -37,9 +36,8 @@ public:
         return Result(results);
     }
 
-    virtual bool ParseImage(ElementT* parentElement, ParsedImage& image) const override
+    virtual bool ParseImage(ElementT* element, ParsedImage& image) const override
     {
-        auto element = parentElement->FirstChildElement("image");
         const char* source = nullptr;
         auto r0 = element->QueryStringAttribute("source", &source);
         if (source) image.source_ = source;
@@ -50,20 +48,15 @@ public:
         return Result(results);
     }
 
-    virtual bool ParseTiles(ElementT* parentElement, std::vector<ParsedTile>& tiles) const override
+    bool ParseTile(ElementT* element, ParsedTile& tile) const
     {
-        auto element = parentElement->FirstChildElement("tile");
-        bool result = true;
+        auto r0 = element->QueryAttribute("id", &tile.id_);
+        auto imageElement = element->FirstChildElement("image");
+        auto i = ParseImage(imageElement, tile.image_);
+        auto animationElement = element->FirstChildElement("animation");
+        auto a = ParseAnimation(animationElement, tile.animation_);
 
-        while (element != nullptr) {
-            ParsedTile tile;
-            auto r = ParseTile(element, tile);
-            result &= r;
-            tiles.push_back(tile);
-            element = element->NextSiblingElement("tile");
-        }
-
-        return result;
+        return ((r0 == ErrorT::XML_SUCCESS) && i && a);
     }
 
 private:
@@ -92,24 +85,13 @@ private:
         return result;
     }
 
-    bool ParseAnimation(ElementT* parentElement, ParsedAnimation& animation) const
+    bool ParseAnimation(ElementT* element, ParsedAnimation& animation) const
     {
-        auto element = parentElement->FirstChildElement("animation");
-
         if (element != nullptr) {
             return ParseFrames(element, animation.frames_);
         }
 
         return true;
-    }
-
-    bool ParseTile(ElementT* element, ParsedTile& tile) const
-    {
-        auto r0 = element->QueryAttribute("id", &tile.id_);
-        auto i = ParseImage(element, tile.image_);
-        auto a = ParseAnimation(element, tile.animation_);
-
-        return ((r0 == ErrorT::XML_SUCCESS) && i && a);
     }
 
     bool Result(const std::vector<ErrorT>& results) const

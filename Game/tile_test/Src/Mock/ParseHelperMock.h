@@ -14,13 +14,13 @@ namespace FA {
 
 namespace Tile {
 
-template <class DocumentT, class ElementT, class ErrorT>
-class ParseHelperMock : BasicParseHelper<DocumentT, ElementT, ErrorT>
+template <class ElementT, class ErrorT>
+class ParseHelperMock : BasicParseHelper<ElementT, ErrorT>
 {
 public:
-    MOCK_METHOD(bool, ParseTileSet, (DocumentT * document, ParsedTileSetData& data), (const, override));
-    MOCK_METHOD(bool, ParseImage, (ElementT * parentEelement, ParsedImage& image), (const, override));
-    MOCK_METHOD(bool, ParseTiles(ElementT* parentElement, std::vector<ParsedTile>& tiles)(const, override));
+    MOCK_METHOD(bool, ParseTileSet, (ElementT * element, ParsedTileSetData& data), (const, override));
+    MOCK_METHOD(bool, ParseImage, (ElementT * element, ParsedImage& image), (const, override));
+    MOCK_METHOD(bool, ParseTile(ElementT* element, ParsedTile& tile)(const, override));
 };
 
 }  // namespace Tile
