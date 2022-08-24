@@ -48,7 +48,7 @@ public:
         return Result(results);
     }
 
-    bool ParseTile(ElementT* element, ParsedTile& tile) const
+    bool ParseTile(ElementT* element, ParsedTile& tile) const override
     {
         auto r0 = element->QueryAttribute("id", &tile.id_);
         auto imageElement = element->FirstChildElement("image");
