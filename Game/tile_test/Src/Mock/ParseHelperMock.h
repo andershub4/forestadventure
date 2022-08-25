@@ -20,7 +20,7 @@ class ParseHelperMock : BasicParseHelper<ElementT, ErrorT>
 public:
     MOCK_METHOD(bool, ParseTileSet, (ElementT * element, ParsedTileSetData& data), (const, override));
     MOCK_METHOD(bool, ParseImage, (ElementT * element, ParsedImage& image), (const, override));
-    MOCK_METHOD(bool, ParseTile(ElementT* element, ParsedTile& tile)(const, override));
+    MOCK_METHOD(bool, ParseTile, (ElementT * element, ParsedTile& tile), (const, override));
 };
 
 }  // namespace Tile
