@@ -6,6 +6,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc" />
     <ClCompile Include="Src\ParseHelper_test.cpp" />
+    <ClCompile Include="Src\ParsedElements_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
