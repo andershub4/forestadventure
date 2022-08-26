@@ -17,7 +17,7 @@ namespace FA {
 namespace Tile {
 
 template <class ElementT, class ErrorT>
-class ParseHelper : BasicParseHelper<ElementT, ErrorT>
+class ParseHelper : public BasicParseHelper<ElementT, ErrorT>
 {
 public:
     virtual ~ParseHelper() = default;

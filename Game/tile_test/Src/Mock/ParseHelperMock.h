@@ -15,7 +15,7 @@ namespace FA {
 namespace Tile {
 
 template <class ElementT, class ErrorT>
-class ParseHelperMock : BasicParseHelper<ElementT, ErrorT>
+class ParseHelperMock : public BasicParseHelper<ElementT, ErrorT>
 {
 public:
     MOCK_METHOD(bool, ParseTileSet, (ElementT * element, ParsedTileSetData& data), (const, override));
