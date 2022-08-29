@@ -10,7 +10,7 @@
 
 #include "BasicTileSet.h"
 
-#include "Tile.h"
+#include "ParsedElements.h"
 
 namespace FA {
 
@@ -19,7 +19,7 @@ namespace Tile {
 class ImageTileSet : public BasicTileSet
 {
 public:
-    ImageTileSet(const std::string &tsxDir, const std::vector<Tile> tiles);
+    ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTile> tiles);
     virtual ~ImageTileSet();
 
     virtual void Create() override;
@@ -28,7 +28,7 @@ public:
 
 private:
     std::unordered_map<int, FrameData> frameData_;
-    std::vector<Tile> tiles_;
+    std::vector<ParsedTile> tiles_;
     std::string tsxDir_{};
 };
 

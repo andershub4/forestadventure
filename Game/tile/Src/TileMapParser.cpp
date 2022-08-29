@@ -12,6 +12,7 @@
 #include "GridTileSet.h"
 #include "Image.h"
 #include "ImageTileSet.h"
+#include "ParseHelper.h"
 #include "TileHelper.h"
 #include "TmxLogging.h"
 #include "TmxParser.h"
@@ -23,8 +24,9 @@ namespace Tile {
 
 namespace {
 
-std::unique_ptr<BasicTileSet> CreateTileSet(const std::string tsxDir,
-                                            const TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement>& tsxParser)
+std::unique_ptr<BasicTileSet> CreateTileSet(
+    const std::string tsxDir,
+    const TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>& tsxParser)
 {
     auto tiles = tsxParser.tiles_;
     std::unique_ptr<BasicTileSet> s = nullptr;
@@ -38,7 +40,7 @@ std::unique_ptr<BasicTileSet> CreateTileSet(const std::string tsxDir,
         dim.tileHeight_ = tsxParser.tileSet_.tileHeight_;
         dim.columns_ = tsxParser.tileSet_.columns_;
         dim.tileCount_ = tsxParser.tileSet_.tileCount_;
-        s = std::make_unique<GridTileSet>(tsxDir, tsxParser.image_.path_, dim);
+        s = std::make_unique<GridTileSet>(tsxDir, tsxParser.image_.source_, dim);
     }
 
     s->Create();
@@ -92,7 +94,8 @@ void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& 
             auto tsxFilePath = GetFilePath(tmxDir, parsedSet.tsxSource_);
             auto tsxDir = GetHead(tsxFilePath);
             tinyxml2::XMLDocument doc;
-            TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement> tsxParser;
+            ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError> helper;
+            TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> tsxParser(helper);
             if (tsxParser.Parse(tsxFilePath, &doc)) {
                 auto set = CreateTileSet(tsxDir, tsxParser);
                 auto firstGid = parsedSet.firstGid_;

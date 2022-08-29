@@ -14,7 +14,7 @@ namespace FA {
 
 namespace Tile {
 
-ImageTileSet::ImageTileSet(const std::string &tsxDir, const std::vector<Tile> tiles)
+ImageTileSet::ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTile> tiles)
     : BasicTileSet()
     , tsxDir_(tsxDir)
     , tiles_(tiles)
@@ -28,7 +28,7 @@ std::vector<Image> ImageTileSet::GetImages() const
 
     for (const auto &tile : tiles_) {
         auto id = tile.id_;
-        auto p = GetFilePath(tsxDir_, tile.image_.path_);
+        auto p = GetFilePath(tsxDir_, tile.image_.source_);
         images.push_back({p, 1, 1});
     }
 
@@ -41,7 +41,7 @@ void ImageTileSet::Create()
     std::unordered_map<int, Frame> frameMap;
     for (const auto &tile : tiles_) {
         auto id = tile.id_;
-        auto p = GetFilePath(tsxDir_, tile.image_.path_);
+        auto p = GetFilePath(tsxDir_, tile.image_.source_);
         auto w = tile.image_.width_;
         auto h = tile.image_.height_;
         Frame frame = {p, 0, 0, w, h};
@@ -49,11 +49,11 @@ void ImageTileSet::Create()
     }
 
     for (const auto &tile : tiles_) {
-        if (!tile.frames_.empty()) {
+        if (!tile.animation_.frames_.empty()) {
             auto id = tile.id_;
             std::vector<Frame> frames;
-            for (auto frame : tile.frames_) {
-                auto id = frame.tiledId_;
+            for (auto frame : tile.animation_.frames_) {
+                auto id = frame.id_;
                 auto f = frameMap.at(id);
                 frames.push_back(f);
             }

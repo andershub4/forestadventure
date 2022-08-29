@@ -10,28 +10,26 @@
 #include <string>
 #include <vector>
 
-#include "Tile.h"
+#include "ParsedElements.h"
 #include "TmxLogging.h"
 
 namespace FA {
 
 namespace Tile {
 
-template <class D, class E>
+template <class ElementT, class Error>
+class BasicParseHelper;
+
+template <class DocumentT, class ElementT, class Error>
 class TsxParser
 {
 public:
-    struct TileSet
-    {
-        std::string name_{};
-        int tileWidth_{};
-        int tileHeight_{};
-        int tileCount_{};
-        int columns_{};
-    };
+    TsxParser(BasicParseHelper<ElementT, Error>& helper)
+        : helper_(helper)
+    {}
 
 public:
-    bool Parse(const std::string& fileName, D* xmlDocument)
+    bool Parse(const std::string& fileName, DocumentT* xmlDocument)
     {
         xmlDocument->LoadFile(fileName.c_str());
 
@@ -39,77 +37,45 @@ public:
             return false;
         }
         else {
-            E* tileSetElement = xmlDocument->FirstChildElement("tileset");
+            ElementT* tileSetElement = xmlDocument->FirstChildElement("tileset");
             ParseTileSetElement(tileSetElement);
             return true;
         }
     }
 
-    TileSet tileSet_;
-    Image image_;
-    std::vector<Tile> tiles_;  // or unordered_map?
+    ParsedTileSetData tileSet_;
+    ParsedImage image_;
+    std::vector<ParsedTile> tiles_;  // or unordered_map?
+    BasicParseHelper<ElementT, Error>& helper_;
 
 private:
-    void ParseTileSetElement(E* tileSetElement)
+    void ParseTileSetElement(ElementT* tileSetElement)
     {
-        tileSet_.name_ = tileSetElement->Attribute("name");
-        tileSetElement->QueryAttribute("tilewidth", &tileSet_.tileWidth_);
-        tileSetElement->QueryAttribute("tileheight", &tileSet_.tileHeight_);
-        tileSetElement->QueryAttribute("tilecount", &tileSet_.tileCount_);
-        tileSetElement->QueryAttribute("columns", &tileSet_.columns_);
+        helper_.ParseTileSet(tileSetElement, tileSet_);
         LOG_TMXINFO("name: ", tileSet_.name_);
         LOG_TMXINFO("tileWidth: ", tileSet_.tileWidth_, " tileHeight: ", tileSet_.tileHeight_);
         LOG_TMXINFO("tileCount: ", tileSet_.tileCount_, " columns: ", tileSet_.columns_);
 
-        E* tileElement = tileSetElement->FirstChildElement("tile");
-        if (tileElement) {  // Collection of images
-            while (tileElement != nullptr) {
-                Tile tile;
-                ParseTileElement(tileElement, tile);
-                tiles_.push_back(tile);
-                tileElement = tileElement->NextSiblingElement("tile");
+        auto tileElement = tileSetElement->FirstChildElement("tile");
+        while (tileElement != nullptr) {
+            ParsedTile tile;
+            helper_.ParseTile(tileElement, tile);
+            LOG_TMXINFO("source: ", tile.image_.source_);
+            LOG_TMXINFO("width: ", tile.image_.width_, " height: ", tile.image_.height_);
+            for (const auto& frame : tile.animation_.frames_) {
+                LOG_TMXINFO("tileId: ", frame.id_);
+                LOG_TMXINFO("duration: ", frame.duration_);
             }
+            tiles_.push_back(tile);
+            tileElement = tileElement->NextSiblingElement("tile");
         }
-        else {  // Based on grid image
-            E* imageElement = tileSetElement->FirstChildElement("image");
-            ParseImageElement(imageElement, image_);
+
+        auto imageElement = tileSetElement->FirstChildElement("image");
+        if (imageElement != nullptr) {
+            helper_.ParseImage(imageElement, image_);
+            LOG_TMXINFO("source: ", image_.source_);
+            LOG_TMXINFO("width: ", image_.width_, " height: ", image_.height_);
         }
-    }
-
-    void ParseTileElement(E* tileElement, Tile& tile)
-    {
-        tileElement->QueryAttribute("id", &tile.id_);
-        E* imageElement = tileElement->FirstChildElement("image");
-        ParseImageElement(imageElement, tile.image_);
-        E* animationElement = tileElement->FirstChildElement("animation");
-
-        if (animationElement) {
-            E* frameElement = animationElement->FirstChildElement("frame");
-
-            while (frameElement != nullptr) {
-                ParsedFrame frame;
-                ParseFrameElement(frameElement, frame);
-                tile.frames_.push_back(frame);
-                frameElement = frameElement->NextSiblingElement("frame");
-            }
-        }
-    }
-
-    void ParseFrameElement(E* frameElement, ParsedFrame& frame)
-    {
-        frameElement->QueryAttribute("tileid", &frame.tiledId_);
-        frameElement->QueryAttribute("duration", &frame.duration_);
-        LOG_TMXINFO("tileId: ", frame.tiledId_);
-        LOG_TMXINFO("duration: ", frame.duration_);
-    }
-
-    void ParseImageElement(E* imageElement, Image& image)
-    {
-        image.path_ = imageElement->Attribute("source");
-        imageElement->QueryAttribute("width", &image.width_);
-        imageElement->QueryAttribute("height", &image.height_);
-        LOG_TMXINFO("source: ", image.path_);
-        LOG_TMXINFO("width: ", image.width_, " height: ", image.height_);
     }
 };
 

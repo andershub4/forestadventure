@@ -56,12 +56,6 @@
     <ClInclude Include="Src\ImageTileSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ParsedFrame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\TileHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
