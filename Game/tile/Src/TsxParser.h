@@ -52,20 +52,13 @@ private:
     void ParseTileSetElement(ElementT* tileSetElement)
     {
         helper_.ParseTileSet(tileSetElement, tileSet_);
-        LOG_TMXINFO("name: ", tileSet_.name_);
-        LOG_TMXINFO("tileWidth: ", tileSet_.tileWidth_, " tileHeight: ", tileSet_.tileHeight_);
-        LOG_TMXINFO("tileCount: ", tileSet_.tileCount_, " columns: ", tileSet_.columns_);
+        LOG_TMXINFO("tileSet: ", tileSet_);
 
         auto tileElement = tileSetElement->FirstChildElement("tile");
         while (tileElement != nullptr) {
             ParsedTile tile;
             helper_.ParseTile(tileElement, tile);
-            LOG_TMXINFO("source: ", tile.image_.source_);
-            LOG_TMXINFO("width: ", tile.image_.width_, " height: ", tile.image_.height_);
-            for (const auto& frame : tile.animation_.frames_) {
-                LOG_TMXINFO("tileId: ", frame.id_);
-                LOG_TMXINFO("duration: ", frame.duration_);
-            }
+            LOG_TMXINFO("tile: ", tile);
             tiles_.push_back(tile);
             tileElement = tileElement->NextSiblingElement("tile");
         }
@@ -73,8 +66,7 @@ private:
         auto imageElement = tileSetElement->FirstChildElement("image");
         if (imageElement != nullptr) {
             helper_.ParseImage(imageElement, image_);
-            LOG_TMXINFO("source: ", image_.source_);
-            LOG_TMXINFO("width: ", image_.width_, " height: ", image_.height_);
+            LOG_TMXINFO("image: ", image_);
         }
     }
 };

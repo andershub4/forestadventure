@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <ostream>
 #include <string>
 #include <vector>
 
@@ -28,6 +29,14 @@ inline bool operator==(const ParsedTileSetData& lhs, const ParsedTileSetData& rh
            lhs.tileCount_ == rhs.tileCount_ && lhs.columns_ == rhs.columns_;
 }
 
+inline std::ostream& operator<<(std::ostream& os, const ParsedTileSetData& p)
+{
+    os << "name: " << p.name_ << " tileWidth: " << p.tileWidth_ << " tileHeight: " << p.tileHeight_
+       << " tileCount: " << p.tileCount_ << " columns: " << p.columns_;
+
+    return os;
+}
+
 struct ParsedImage
 {
     std::string source_;
@@ -38,6 +47,13 @@ struct ParsedImage
 inline bool operator==(const ParsedImage& lhs, const ParsedImage& rhs)
 {
     return lhs.source_ == rhs.source_ && lhs.width_ == rhs.width_ && lhs.height_ == rhs.height_;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const ParsedImage& p)
+{
+    os << "source: " << p.source_ << " width: " << p.width_ << " height: " << p.height_;
+
+    return os;
 }
 
 struct ParsedFrame
@@ -51,6 +67,13 @@ inline bool operator==(const ParsedFrame& lhs, const ParsedFrame& rhs)
     return lhs.id_ == rhs.id_ && lhs.duration_ == rhs.duration_;
 }
 
+inline std::ostream& operator<<(std::ostream& os, const ParsedFrame& p)
+{
+    os << "id: " << p.id_ << " duration: " << p.duration_;
+
+    return os;
+}
+
 struct ParsedAnimation
 {
     std::vector<ParsedFrame> frames_;
@@ -59,6 +82,17 @@ struct ParsedAnimation
 inline bool operator==(const ParsedAnimation& lhs, const ParsedAnimation& rhs)
 {
     return lhs.frames_ == rhs.frames_;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const ParsedAnimation& p)
+{
+    os << "frames: { ";
+    for (const auto& frame : p.frames_) {
+        os << frame << " ";
+    }
+    os << "}";
+
+    return os;
 }
 
 struct ParsedTile
@@ -71,6 +105,13 @@ struct ParsedTile
 inline bool operator==(const ParsedTile& lhs, const ParsedTile& rhs)
 {
     return lhs.id_ == rhs.id_ && lhs.image_ == rhs.image_ && lhs.animation_ == rhs.animation_;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const ParsedTile& p)
+{
+    os << "id: " << p.id_ << " image: " << p.image_ << " animation: " << p.animation_;
+
+    return os;
 }
 
 }  // namespace Tile
