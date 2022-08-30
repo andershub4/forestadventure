@@ -45,7 +45,7 @@ public:
 
     ParsedTileSetData tileSet_;
     ParsedImage image_;
-    std::vector<ParsedTile> tiles_;  // or unordered_map?
+    std::vector<ParsedTile> tiles_;
     BasicParseHelper<ElementT, Error>& helper_;
 
 private:
