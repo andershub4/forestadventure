@@ -14,5 +14,6 @@
   <ItemGroup>
     <ClInclude Include="Src\Mock\XMLMock.h" />
     <ClInclude Include="Src\Mock\ParseHelperMock.h" />
+    <ClInclude Include="Src\Mock\TsxParserMock.h" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,8 @@
 #include <string>
 #include <vector>
 
-#include "ParsedElements.h"
+#include "BasicTsxParser.h"
+
 #include "TmxLogging.h"
 
 namespace FA {
@@ -20,41 +21,17 @@ namespace Tile {
 template <class ElementT, class Error>
 class BasicParseHelper;
 
-struct ParsedTsx
-{
-    ParsedTileSet tileSet_;
-    ParsedImage image_;
-    std::vector<ParsedTile> tiles_;
-};
-
-inline bool operator==(const ParsedTsx& lhs, const ParsedTsx& rhs)
-{
-    return lhs.image_ == rhs.image_ && lhs.tileSet_ == rhs.tileSet_ && lhs.tiles_ == rhs.tiles_;
-}
-
-inline std::ostream& operator<<(std::ostream& os, const ParsedTsx& p)
-{
-    os << "tileSet: " << p.tileSet_ << " image: " << p.image_;
-
-    os << " tiles: { ";
-    for (const auto& tile : p.tiles_) {
-        os << tile << " ";
-    }
-    os << "}";
-
-    return os;
-}
-
 template <class DocumentT, class ElementT, class Error>
-class TsxParser
+class TsxParser : public BasicTsxParser<DocumentT, ElementT, Error>
 {
 public:
     TsxParser(BasicParseHelper<ElementT, Error>& helper)
         : helper_(helper)
     {}
 
-public:
-    bool Parse(const std::string& fileName, DocumentT* xmlDocument, ParsedTsx& parsedTsx)
+    virtual ~TsxParser() = default;
+
+    virtual bool Parse(const std::string& fileName, DocumentT* xmlDocument, ParsedTsx& parsedTsx) const override
     {
         xmlDocument->LoadFile(fileName.c_str());
 
@@ -71,7 +48,7 @@ public:
     BasicParseHelper<ElementT, Error>& helper_;
 
 private:
-    void ParseTileSetElement(ElementT* tileSetElement, ParsedTsx& parsedTsx)
+    void ParseTileSetElement(ElementT* tileSetElement, ParsedTsx& parsedTsx) const
     {
         helper_.ParseTileSet(tileSetElement, parsedTsx.tileSet_);
         LOG_TMXINFO("tileSet: ", parsedTsx.tileSet_);
