@@ -24,11 +24,9 @@ namespace Tile {
 
 namespace {
 
-std::unique_ptr<BasicTileSet> CreateTileSet(
-    const std::string tsxDir,
-    const TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>& tsxParser)
+std::unique_ptr<BasicTileSet> CreateTileSet(const std::string tsxDir, const ParsedTsx& parsedTsx)
 {
-    auto tiles = tsxParser.tiles_;
+    auto tiles = parsedTsx.tiles_;
     std::unique_ptr<BasicTileSet> s = nullptr;
 
     if (!tiles.empty()) {
@@ -36,11 +34,11 @@ std::unique_ptr<BasicTileSet> CreateTileSet(
     }
     else {
         GridTileSet::Dimensions dim;
-        dim.tileWidth_ = tsxParser.tileSet_.tileWidth_;
-        dim.tileHeight_ = tsxParser.tileSet_.tileHeight_;
-        dim.columns_ = tsxParser.tileSet_.columns_;
-        dim.tileCount_ = tsxParser.tileSet_.tileCount_;
-        s = std::make_unique<GridTileSet>(tsxDir, tsxParser.image_.source_, dim);
+        dim.tileWidth_ = parsedTsx.tileSet_.tileWidth_;
+        dim.tileHeight_ = parsedTsx.tileSet_.tileHeight_;
+        dim.columns_ = parsedTsx.tileSet_.columns_;
+        dim.tileCount_ = parsedTsx.tileSet_.tileCount_;
+        s = std::make_unique<GridTileSet>(tsxDir, parsedTsx.image_.source_, dim);
     }
 
     s->Create();
@@ -96,8 +94,9 @@ void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& 
             tinyxml2::XMLDocument doc;
             ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError> helper;
             TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> tsxParser(helper);
-            if (tsxParser.Parse(tsxFilePath, &doc)) {
-                auto set = CreateTileSet(tsxDir, tsxParser);
+            ParsedTsx parsedTsx;
+            if (tsxParser.Parse(tsxFilePath, &doc, parsedTsx)) {
+                auto set = CreateTileSet(tsxDir, parsedTsx);
                 auto firstGid = parsedSet.firstGid_;
                 auto images = set->GetImages();
                 auto frameDatas = set->GetFrameDatas();
