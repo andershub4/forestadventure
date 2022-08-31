@@ -24,7 +24,7 @@ class TsxParserTest : public Test
 protected:
     const std::string fileName_ = "test.txt";
 
-    const ParsedTileSetData tileSet_{"tsname", 16, 80, 3, 0};
+    const ParsedTileSet tileSet_{"tsname", 16, 80, 3, 0};
     const ParsedImage image_{"myImage1.png", 16, 16};
     const ParsedAnimation animation1_{{{0, 20}, {1, 20}, {1, 20}}};
     const ParsedAnimation animation2_{{{0, 20}, {1, 20}, {1, 20}}};
@@ -95,7 +95,7 @@ TEST_F(TsxParserTest, ParseValidGridDataShouldSucceed)
     EXPECT_CALL(docMock_, LoadFile(StrEq(fileName_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(false));
     EXPECT_CALL(docMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&tileSetElementMock_));
-    ParsedTileSetData tileSet;
+    ParsedTileSet tileSet;
     EXPECT_CALL(helperMock_, ParseTileSet(&tileSetElementMock_, _))
         .WillOnce(DoAll(SetArgReferee<1>(tileSet_), Return(true)));
 

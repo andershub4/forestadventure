@@ -14,7 +14,7 @@ namespace FA {
 
 namespace Tile {
 
-struct ParsedTileSetData
+struct ParsedTileSet
 {
     std::string name_{};
     unsigned int tileWidth_{};
@@ -23,13 +23,13 @@ struct ParsedTileSetData
     unsigned int columns_{};
 };
 
-inline bool operator==(const ParsedTileSetData& lhs, const ParsedTileSetData& rhs)
+inline bool operator==(const ParsedTileSet& lhs, const ParsedTileSet& rhs)
 {
     return lhs.name_ == rhs.name_ && lhs.tileWidth_ == rhs.tileWidth_ && lhs.tileHeight_ == rhs.tileHeight_ &&
            lhs.tileCount_ == rhs.tileCount_ && lhs.columns_ == rhs.columns_;
 }
 
-inline std::ostream& operator<<(std::ostream& os, const ParsedTileSetData& p)
+inline std::ostream& operator<<(std::ostream& os, const ParsedTileSet& p)
 {
     os << "name: " << p.name_ << " tileWidth: " << p.tileWidth_ << " tileHeight: " << p.tileHeight_
        << " tileCount: " << p.tileCount_ << " columns: " << p.columns_;

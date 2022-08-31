@@ -16,8 +16,8 @@ namespace Tile {
 
 TEST(ParsedElementsTest, TestParsedTileSetDataEqualToOperator)
 {
-    ParsedTileSetData d1{"tsname", 16, 80, 3, 0};
-    ParsedTileSetData d2 = d1;
+    ParsedTileSet d1{"tsname", 16, 80, 3, 0};
+    ParsedTileSet d2 = d1;
     EXPECT_TRUE(d1 == d2);
     d1.name_ = "myname";
     EXPECT_FALSE(d1 == d2);

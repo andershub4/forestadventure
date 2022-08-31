@@ -72,7 +72,7 @@ void ParseHelperTest::ExpectParseAnimation(XMLElementMock *parentMock, XMLElemen
 
 TEST_F(ParseHelperTest, ParseTileSetShouldSucceed)
 {
-    ParsedTileSetData expected{"tsname", 16, 80, 3, 0};
+    ParsedTileSet expected{"tsname", 16, 80, 3, 0};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>()))
@@ -86,14 +86,14 @@ TEST_F(ParseHelperTest, ParseTileSetShouldSucceed)
     EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
 
-    ParsedTileSetData result;
+    ParsedTileSet result;
     EXPECT_EQ(true, (helper_.ParseTileSet(&mock, result)));
     EXPECT_EQ(expected, result);
 }
 
 TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToWrongAttributeName)
 {
-    ParsedTileSetData expected{"tsname", 16, {}, 3, 0};
+    ParsedTileSet expected{"tsname", 16, {}, 3, 0};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>()))
@@ -107,14 +107,14 @@ TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToWrongAttributeName)
     EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
 
-    ParsedTileSetData result;
+    ParsedTileSet result;
     EXPECT_EQ(false, (helper_.ParseTileSet(&mock, result)));
     EXPECT_EQ(expected, result);
 }
 
 TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToNoAttribute)
 {
-    ParsedTileSetData expected{{}, 16, 0, 3, 0};
+    ParsedTileSet expected{{}, 16, 0, 3, 0};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>())).WillOnce(Return(XML_NO_ATTRIBUTE));
@@ -127,7 +127,7 @@ TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToNoAttribute)
     EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
 
-    ParsedTileSetData result;
+    ParsedTileSet result;
     EXPECT_EQ(false, (helper_.ParseTileSet(&mock, result)));
     EXPECT_EQ(expected, result);
 }

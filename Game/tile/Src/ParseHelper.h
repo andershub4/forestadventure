@@ -22,15 +22,15 @@ class ParseHelper : public BasicParseHelper<ElementT, ErrorT>
 public:
     virtual ~ParseHelper() = default;
 
-    virtual bool ParseTileSet(ElementT* element, ParsedTileSetData& data) const override
+    virtual bool ParseTileSet(ElementT* element, ParsedTileSet& tileSet) const override
     {
         const char* name = nullptr;
         auto r0 = element->QueryStringAttribute("name", &name);
-        if (name) data.name_ = name;
-        auto r1 = element->QueryAttribute("tilewidth", &data.tileWidth_);
-        auto r2 = element->QueryAttribute("tileheight", &data.tileHeight_);
-        auto r3 = element->QueryAttribute("tilecount", &data.tileCount_);
-        auto r4 = element->QueryAttribute("columns", &data.columns_);
+        if (name) tileSet.name_ = name;
+        auto r1 = element->QueryAttribute("tilewidth", &tileSet.tileWidth_);
+        auto r2 = element->QueryAttribute("tileheight", &tileSet.tileHeight_);
+        auto r3 = element->QueryAttribute("tilecount", &tileSet.tileCount_);
+        auto r4 = element->QueryAttribute("columns", &tileSet.columns_);
 
         std::vector<ErrorT> results{r0, r1, r2, r3, r4};
         return Result(results);

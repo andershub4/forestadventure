@@ -18,7 +18,7 @@ template <class ElementT, class ErrorT>
 class ParseHelperMock : public BasicParseHelper<ElementT, ErrorT>
 {
 public:
-    MOCK_METHOD(bool, ParseTileSet, (ElementT * element, ParsedTileSetData& data), (const, override));
+    MOCK_METHOD(bool, ParseTileSet, (ElementT * element, ParsedTileSet& tileSet), (const, override));
     MOCK_METHOD(bool, ParseImage, (ElementT * element, ParsedImage& image), (const, override));
     MOCK_METHOD(bool, ParseTile, (ElementT * element, ParsedTile& tile), (const, override));
 };

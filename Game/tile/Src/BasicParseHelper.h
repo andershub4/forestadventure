@@ -18,9 +18,9 @@ class BasicParseHelper
 public:
     virtual ~BasicParseHelper() = default;
 
-    virtual bool ParseTileSet(ElementT* element, ParsedTileSetData& data) const = 0;
-    virtual bool ParseImage(ElementT* element, ParsedImage& data) const = 0;
-    virtual bool ParseTile(ElementT* element, ParsedTile& data) const = 0;
+    virtual bool ParseTileSet(ElementT* element, ParsedTileSet& tileSet) const = 0;
+    virtual bool ParseImage(ElementT* element, ParsedImage& image) const = 0;
+    virtual bool ParseTile(ElementT* element, ParsedTile& tile) const = 0;
 };
 
 }  // namespace Tile

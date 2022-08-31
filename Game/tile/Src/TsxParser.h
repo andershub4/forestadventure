@@ -22,7 +22,7 @@ class BasicParseHelper;
 
 struct ParsedTsx
 {
-    ParsedTileSetData tileSet_;
+    ParsedTileSet tileSet_;
     ParsedImage image_;
     std::vector<ParsedTile> tiles_;
 };
