@@ -24,6 +24,15 @@ class TsxParserTest : public Test
 protected:
     const std::string fileName_ = "test.txt";
 
+    const ParsedTileSetData tileSet_{"tsname", 16, 80, 3, 0};
+    const ParsedImage image_{"myImage1.png", 16, 16};
+    const ParsedAnimation animation1_{{{0, 20}, {1, 20}, {1, 20}}};
+    const ParsedAnimation animation2_{{{0, 20}, {1, 20}, {1, 20}}};
+    const ParsedAnimation animation3_{{}};
+    const ParsedTile tile1_{110, image_, animation1_};
+    const ParsedTile tile2_{111, image_, animation2_};
+    const ParsedTile tile3_{111, image_, animation3_};
+
     XMLDocumentMock docMock_;
     XMLElementMock tileSetElementMock_;
 
@@ -33,13 +42,7 @@ protected:
 
 TEST_F(TsxParserTest, TestParsedTsxDataEqualToOperator)
 {
-    ParsedTileSetData tsd{"tsname", 16, 80, 3, 0};
-    ParsedImage i{"myImage1.png", 16, 16};
-    ParsedAnimation a1{{{0, 20}, {1, 20}, {1, 20}}};
-    ParsedTile t1{110, i, a1};
-    ParsedTile t2{111, i, a1};
-
-    ParsedTsx d1{{"tsname", 16, 80, 3, 0}, {}, {t1, t2}};
+    ParsedTsx d1{tileSet_, image_, {tile1_, tile2_, tile3_}};
     ParsedTsx d2 = d1;
     EXPECT_TRUE(d1 == d2);
     d1.tileSet_.name_ = "newname";
@@ -53,6 +56,8 @@ TEST_F(TsxParserTest, ParseShouldFailDueToError)
 
     ParsedTsx result;
     EXPECT_EQ(false, (parser_.Parse(fileName_, &docMock_, result)));
+    ParsedTsx expected{{}, {}, {}};
+    EXPECT_EQ(expected, result);
 }
 
 TEST_F(TsxParserTest, ParseValidImageDataShouldSucceed)
@@ -60,24 +65,20 @@ TEST_F(TsxParserTest, ParseValidImageDataShouldSucceed)
     EXPECT_CALL(docMock_, LoadFile(StrEq(fileName_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(false));
     EXPECT_CALL(docMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&tileSetElementMock_));
-    ParsedTileSetData tileSet;
     EXPECT_CALL(helperMock_, ParseTileSet(&tileSetElementMock_, _))
-        .WillOnce(DoAll(SetArgReferee<1>(tileSet), Return(true)));
+        .WillOnce(DoAll(SetArgReferee<1>(tileSet_), Return(true)));
 
     XMLElementMock tileMock1;
-    ParsedTile tile1;
     EXPECT_CALL(tileSetElementMock_, FirstChildElement(StrEq("tile"))).WillOnce(Return(&tileMock1));
-    EXPECT_CALL(helperMock_, ParseTile(&tileMock1, _)).WillOnce(DoAll(SetArgReferee<1>(tile1), Return(true)));
+    EXPECT_CALL(helperMock_, ParseTile(&tileMock1, _)).WillOnce(DoAll(SetArgReferee<1>(tile1_), Return(true)));
 
     XMLElementMock tileMock2;
-    ParsedTile tile2;
     EXPECT_CALL(tileMock1, NextSiblingElement(StrEq("tile"))).WillOnce(Return(&tileMock2));
-    EXPECT_CALL(helperMock_, ParseTile(&tileMock2, _)).WillOnce(DoAll(SetArgReferee<1>(tile2), Return(true)));
+    EXPECT_CALL(helperMock_, ParseTile(&tileMock2, _)).WillOnce(DoAll(SetArgReferee<1>(tile2_), Return(true)));
 
     XMLElementMock tileMock3;
-    ParsedTile tile3;
     EXPECT_CALL(tileMock2, NextSiblingElement(StrEq("tile"))).WillOnce(Return(&tileMock3));
-    EXPECT_CALL(helperMock_, ParseTile(&tileMock3, _)).WillOnce(DoAll(SetArgReferee<1>(tile3), Return(true)));
+    EXPECT_CALL(helperMock_, ParseTile(&tileMock3, _)).WillOnce(DoAll(SetArgReferee<1>(tile3_), Return(true)));
 
     EXPECT_CALL(tileMock3, NextSiblingElement(StrEq("tile"))).WillOnce(Return(nullptr));
 
@@ -85,6 +86,8 @@ TEST_F(TsxParserTest, ParseValidImageDataShouldSucceed)
 
     ParsedTsx result;
     EXPECT_EQ(true, (parser_.Parse(fileName_, &docMock_, result)));
+    ParsedTsx expected{tileSet_, {}, {tile1_, tile2_, tile3_}};
+    EXPECT_EQ(expected, result);
 }
 
 TEST_F(TsxParserTest, ParseValidGridDataShouldSucceed)
@@ -94,17 +97,18 @@ TEST_F(TsxParserTest, ParseValidGridDataShouldSucceed)
     EXPECT_CALL(docMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&tileSetElementMock_));
     ParsedTileSetData tileSet;
     EXPECT_CALL(helperMock_, ParseTileSet(&tileSetElementMock_, _))
-        .WillOnce(DoAll(SetArgReferee<1>(tileSet), Return(true)));
+        .WillOnce(DoAll(SetArgReferee<1>(tileSet_), Return(true)));
 
     EXPECT_CALL(tileSetElementMock_, FirstChildElement(StrEq("tile"))).WillOnce(Return(nullptr));
 
     XMLElementMock imageElementMock;
     EXPECT_CALL(tileSetElementMock_, FirstChildElement(StrEq("image"))).WillOnce(Return(&imageElementMock));
-    ParsedImage image;
-    EXPECT_CALL(helperMock_, ParseImage(&imageElementMock, _)).WillOnce(DoAll(SetArgReferee<1>(image), Return(true)));
+    EXPECT_CALL(helperMock_, ParseImage(&imageElementMock, _)).WillOnce(DoAll(SetArgReferee<1>(image_), Return(true)));
 
     ParsedTsx result;
     EXPECT_EQ(true, (parser_.Parse(fileName_, &docMock_, result)));
+    ParsedTsx expected{tileSet_, image_, {}};
+    EXPECT_EQ(expected, result);
 }
 
 }  // namespace Tile
