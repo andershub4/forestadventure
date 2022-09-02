@@ -10,7 +10,6 @@
 
 #include "Folder.h"
 #include "GridTileSet.h"
-#include "Image.h"
 #include "ImageTileSet.h"
 #include "ParseHelper.h"
 #include "TileHelper.h"
@@ -40,8 +39,6 @@ std::unique_ptr<BasicTileSet> CreateTileSet(const std::string tsxDir, const Pars
         dim.tileCount_ = parsedTsx.tileSet_.tileCount_;
         s = std::make_unique<GridTileSet>(tsxDir, parsedTsx.image_.source_, dim);
     }
-
-    s->Create();
 
     return s;
 }

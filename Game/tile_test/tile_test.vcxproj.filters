@@ -7,6 +7,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc" />
     <ClCompile Include="Src\ParseHelper_test.cpp" />
     <ClCompile Include="Src\ParsedElements_test.cpp" />
+    <ClCompile Include="Src\ImageTileSet_test.cpp" />
+    <ClCompile Include="Src\GridTileSet_test.cpp" />
+    <ClCompile Include="Src\TileMapData_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

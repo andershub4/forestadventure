@@ -6,8 +6,6 @@
 
 #include "ImageTileSet.h"
 
-#include "FrameData.h"
-#include "Image.h"
 #include "TileHelper.h"
 
 namespace FA {
@@ -18,26 +16,7 @@ ImageTileSet::ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTi
     : BasicTileSet()
     , tsxDir_(tsxDir)
     , tiles_(tiles)
-{}
-
-ImageTileSet::~ImageTileSet() = default;
-
-std::vector<Image> ImageTileSet::GetImages() const
 {
-    std::vector<Image> images;
-
-    for (const auto &tile : tiles_) {
-        auto id = tile.id_;
-        auto p = GetFilePath(tsxDir_, tile.image_.source_);
-        images.push_back({p, 1, 1});
-    }
-
-    return images;
-}
-
-void ImageTileSet::Create()
-{
-    // Create map to be able to fill up frames below
     std::unordered_map<int, Frame> frameMap;
     for (const auto &tile : tiles_) {
         auto id = tile.id_;
@@ -60,6 +39,22 @@ void ImageTileSet::Create()
             frameData_[id] = FrameData(frames);
         }
     }
+}
+
+ImageTileSet::~ImageTileSet() = default;
+
+std::vector<Image> ImageTileSet::GetImages() const
+{
+    std::vector<Image> images;
+
+    for (const auto &tile : tiles_) {
+        if (!tile.image_.source_.empty()) {
+            auto p = GetFilePath(tsxDir_, tile.image_.source_);
+            images.push_back(Image(p));
+        }
+    }
+
+    return images;
 }
 
 std::unordered_map<int, FrameData> ImageTileSet::GetFrameDatas() const

@@ -42,7 +42,7 @@ void TileMap::LoadTileSets()
     for (auto& entry : tileMapData_->tileSets_) {
         auto images = entry.second.images_;
         for (const auto& image : images) {
-            sheetManager_.LoadSheet(image.path_, image.path_, sf::Vector2u(image.width_, image.height_));
+            sheetManager_.LoadSheet(image.path_, image.path_, sf::Vector2u(image.nCols_, image.nRows_));
         }
     }
 }

@@ -44,13 +44,7 @@
     <ClInclude Include="Src\BasicTileSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\FrameData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\GridTileSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\ImageTileSet.h">

@@ -9,12 +9,11 @@
 #include <unordered_map>
 #include <vector>
 
+#include "TileMapData.h"
+
 namespace FA {
 
 namespace Tile {
-
-struct FrameData;
-struct Image;
 
 class BasicTileSet
 {
@@ -22,7 +21,6 @@ public:
     BasicTileSet();
     virtual ~BasicTileSet();
 
-    virtual void Create() = 0;
     virtual std::vector<Image> GetImages() const = 0;
     virtual std::unordered_map<int, FrameData> GetFrameDatas() const = 0;
 };

@@ -29,7 +29,6 @@ public:
     GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const Dimensions &dimensions);
     virtual ~GridTileSet();
 
-    virtual void Create() override;
     virtual std::vector<Image> GetImages() const override;
     virtual std::unordered_map<int, FrameData> GetFrameDatas() const override;
 

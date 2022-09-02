@@ -6,8 +6,6 @@
 
 #include "GridTileSet.h"
 
-#include "FrameData.h"
-#include "Image.h"
 #include "TileHelper.h"
 
 namespace FA {
@@ -19,11 +17,6 @@ GridTileSet::GridTileSet(const std::string &tsxDir, const std::string &textureFi
     , tsxDir_(tsxDir)
     , textureFilePath_(textureFilePath)
     , dimensions_(dimensions)
-{}
-
-GridTileSet::~GridTileSet() = default;
-
-void GridTileSet::Create()
 {
     p_ = GetFilePath(tsxDir_, textureFilePath_);
 
@@ -38,6 +31,8 @@ void GridTileSet::Create()
         frameData_[id] = FrameData({frame});
     }
 }
+
+GridTileSet::~GridTileSet() = default;
 
 std::vector<Image> GridTileSet::GetImages() const
 {

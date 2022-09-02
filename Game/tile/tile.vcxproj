@@ -153,10 +153,8 @@
   <ItemGroup>
     <ClInclude Include="Src\BasicParseHelper.h" />
     <ClInclude Include="Src\BasicTileSet.h" />
-    <ClInclude Include="Include\FrameData.h" />
     <ClInclude Include="Src\BasicTsxParser.h" />
     <ClInclude Include="Src\GridTileSet.h" />
-    <ClInclude Include="Include\Image.h" />
     <ClInclude Include="Src\ImageTileSet.h" />
     <ClInclude Include="Src\ParsedElements.h" />
     <ClInclude Include="Src\ParseHelper.h" />
