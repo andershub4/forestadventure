@@ -45,6 +45,7 @@ public:
         }
     }
 
+private:
     BasicParseHelper<ElementT, Error>& helper_;
 
 private:
