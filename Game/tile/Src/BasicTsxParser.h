@@ -7,6 +7,7 @@
 #pragma once
 
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "ParsedElements.h"
@@ -27,7 +28,7 @@ struct ParsedTsx
 
 inline bool operator==(const ParsedTsx& lhs, const ParsedTsx& rhs)
 {
-    return lhs.image_ == rhs.image_ && lhs.tileSet_ == rhs.tileSet_ && lhs.tiles_ == rhs.tiles_;
+    return std::tie(lhs.image_, lhs.tileSet_, lhs.tiles_) == std::tie(rhs.image_, rhs.tileSet_, rhs.tiles_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const ParsedTsx& p)

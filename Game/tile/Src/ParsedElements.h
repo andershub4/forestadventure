@@ -25,8 +25,8 @@ struct ParsedTileSet
 
 inline bool operator==(const ParsedTileSet& lhs, const ParsedTileSet& rhs)
 {
-    return lhs.name_ == rhs.name_ && lhs.tileWidth_ == rhs.tileWidth_ && lhs.tileHeight_ == rhs.tileHeight_ &&
-           lhs.tileCount_ == rhs.tileCount_ && lhs.columns_ == rhs.columns_;
+    return std::tie(lhs.name_, lhs.tileWidth_, lhs.tileHeight_, lhs.tileCount_, lhs.columns_) ==
+           std::tie(rhs.name_, rhs.tileWidth_, rhs.tileHeight_, rhs.tileCount_, rhs.columns_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const ParsedTileSet& p)
@@ -46,7 +46,7 @@ struct ParsedImage
 
 inline bool operator==(const ParsedImage& lhs, const ParsedImage& rhs)
 {
-    return lhs.source_ == rhs.source_ && lhs.width_ == rhs.width_ && lhs.height_ == rhs.height_;
+    return std::tie(lhs.source_, lhs.width_, lhs.height_) == std::tie(rhs.source_, rhs.width_, rhs.height_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const ParsedImage& p)
@@ -64,7 +64,7 @@ struct ParsedFrame
 
 inline bool operator==(const ParsedFrame& lhs, const ParsedFrame& rhs)
 {
-    return lhs.id_ == rhs.id_ && lhs.duration_ == rhs.duration_;
+    return std::tie(lhs.id_, lhs.duration_) == std::tie(rhs.id_, rhs.duration_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const ParsedFrame& p)
@@ -104,7 +104,7 @@ struct ParsedTile
 
 inline bool operator==(const ParsedTile& lhs, const ParsedTile& rhs)
 {
-    return lhs.id_ == rhs.id_ && lhs.image_ == rhs.image_ && lhs.animation_ == rhs.animation_;
+    return std::tie(lhs.id_, lhs.image_, lhs.animation_) == std::tie(rhs.id_, rhs.image_, rhs.animation_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const ParsedTile& p)
