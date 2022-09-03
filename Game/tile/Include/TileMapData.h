@@ -51,21 +51,21 @@ inline std::ostream& operator<<(std::ostream& os, const Image& p)
 struct Frame
 {
     std::string texturePath_;
-    unsigned int u_{};
-    unsigned int v_{};
+    unsigned int column_{};
+    unsigned int row_{};
     unsigned int width_{};
     unsigned int height_{};
 };
 
 inline bool operator==(const Frame& lhs, const Frame& rhs)
 {
-    return std::tie(lhs.texturePath_, lhs.u_, lhs.v_, lhs.width_, lhs.height_) ==
-           std::tie(rhs.texturePath_, rhs.u_, rhs.v_, rhs.width_, rhs.height_);
+    return std::tie(lhs.texturePath_, lhs.column_, lhs.row_, lhs.width_, lhs.height_) ==
+           std::tie(rhs.texturePath_, rhs.column_, rhs.row_, rhs.width_, rhs.height_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Frame& p)
 {
-    os << "texturePath: " << p.texturePath_ << " u: " << p.u_ << " v: " << p.v_ << " width: " << p.width_
+    os << "texturePath: " << p.texturePath_ << " column: " << p.column_ << " row: " << p.row_ << " width: " << p.width_
        << " height: " << p.height_;
 
     return os;
