@@ -30,42 +30,41 @@ protected:
     const ParsedTile tile4_{113, {}, {}};
 };
 
-TEST_F(ImageTileSetTest, NoTilesShouldReturnNoImages)
+TEST_F(ImageTileSetTest, NoTilesShouldReturnEmptySet)
 {
     ImageTileSet imageTileSet{dirStr_, {}};
-    auto images = imageTileSet.GetImages();
+    auto tileSetData = imageTileSet.CreateTileSetData();
 
-    EXPECT_TRUE(images.empty());
+    TileSetData expected{};
+
+    EXPECT_EQ(expected, tileSetData);
 }
 
-TEST_F(ImageTileSetTest, TwoTilesWithImageShouldReturnTwoImages)
+TEST_F(ImageTileSetTest, TwoTilesWithImageAndAnimationShouldReturnTwoImagesAndLookupTable)
 {
     ImageTileSet imageTileSet{dirStr_, {tile1_, tile2_}};
-    auto images = imageTileSet.GetImages();
+    auto tileSetData = imageTileSet.CreateTileSetData();
+
     Image i1("dev/myImage1.png");
     Image i2("dev/myImage2.png");
-    std::vector<Image> expected{i1, i2};
-
-    EXPECT_EQ(expected, images);
-}
-
-TEST_F(ImageTileSetTest, TwoTilesWithoutImageShouldReturnNoImages)
-{
-    ImageTileSet imageTileSet{dirStr_, {tile3_, tile4_}};
-    auto images = imageTileSet.GetImages();
-
-    EXPECT_TRUE(images.empty());
-}
-
-TEST_F(ImageTileSetTest, TileWithTwoAnimationFramesShouldReturnTwoFrames)
-{
-    ImageTileSet imageTileSet{dirStr_, {tile1_, tile2_}};
-    auto frameDatas = imageTileSet.GetFrameDatas();
+    std::vector<Image> expectedImages{i1, i2};
     Frame f1{"dev/myImage1.png", 0, 0, 16, 16};
     Frame f2{"dev/myImage2.png", 0, 0, 16, 16};
-    std::unordered_map<int, FrameData> expected{{110, FrameData({f1, f2})}};
+    std::unordered_map<int, FrameData> expectedLookup{{110, FrameData({f1, f2})}};
 
-    EXPECT_EQ(expected, frameDatas);
+    TileSetData expected{expectedImages, expectedLookup};
+
+    EXPECT_EQ(expected, tileSetData);
+}
+
+TEST_F(ImageTileSetTest, TwoTilesWithoutImageShouldReturnEmptySet)
+{
+    ImageTileSet imageTileSet{dirStr_, {tile3_, tile4_}};
+    auto tileSetData = imageTileSet.CreateTileSetData();
+
+    TileSetData expected{};
+
+    EXPECT_EQ(expected, tileSetData);
 }
 
 }  // namespace Tile

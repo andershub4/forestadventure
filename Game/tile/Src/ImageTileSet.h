@@ -22,11 +22,9 @@ public:
     ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTile> tiles);
     virtual ~ImageTileSet();
 
-    virtual std::vector<Image> GetImages() const override;
-    virtual std::unordered_map<int, FrameData> GetFrameDatas() const override;
+    virtual TileSetData CreateTileSetData() const override;
 
 private:
-    std::unordered_map<int, FrameData> frameData_;
     std::vector<ParsedTile> tiles_;
     std::string tsxDir_{};
 };

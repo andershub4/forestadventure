@@ -21,8 +21,7 @@ public:
     BasicTileSet();
     virtual ~BasicTileSet();
 
-    virtual std::vector<Image> GetImages() const = 0;
-    virtual std::unordered_map<int, FrameData> GetFrameDatas() const = 0;
+    virtual TileSetData CreateTileSetData() const = 0;
 };
 
 }  // namespace Tile

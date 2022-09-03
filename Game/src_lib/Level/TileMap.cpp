@@ -136,7 +136,7 @@ FrameData TileMap::GetFrameData(int id)
 
     if (it != tileMapData_->tileSets_.end()) {
         auto firstGid = it->first;
-        return it->second.frameDatas_[id - firstGid];
+        return it->second.lookupTable_[id - firstGid];
     }
     else {
         LOG_ERROR("Id ", id, " not found");

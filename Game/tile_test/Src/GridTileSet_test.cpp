@@ -22,36 +22,37 @@ class GridTileSetTest : public Test
 protected:
     const std::string dirStr_ = "dev/tsxDir";
     const std::string path_ = "../myImage1.png";
-    const GridTileSet::Dimensions dim100Tiles_{16, 16, 20, 100};
+    const GridTileSet::Dimensions dimFourTiles_{16, 16, 2, 4};
 };
 
-TEST_F(GridTileSetTest, TileSetShouldReturnSingleImage)
+TEST_F(GridTileSetTest, TileSetShouldCreateFourEntries)
 {
-    GridTileSet imageTileSet{dirStr_, path_, dim100Tiles_};
-    auto images = imageTileSet.GetImages();
+    GridTileSet imageTileSet{dirStr_, path_, dimFourTiles_};
+    auto tileSetData = imageTileSet.CreateTileSetData();
 
-    std::vector<Image> expected{{"dev/myImage1.png", 20, 5}};
-    EXPECT_EQ(expected, images);
-}
+    std::vector<Image> expectedImage{{"dev/myImage1.png", 2, 2}};
 
-TEST_F(GridTileSetTest, TileSetShouldReturnOneFramePerTile)
-{
-    GridTileSet imageTileSet{dirStr_, path_, dim100Tiles_};
-    auto frameDatas = imageTileSet.GetFrameDatas();
+    Frame expectedFrame1{"dev/myImage1.png", 0, 0, 16, 16};
+    std::vector<Frame> expectedVec1{expectedFrame1};
+    FrameData expected1(expectedVec1);
 
-    EXPECT_EQ(100, frameDatas.size());
+    Frame expectedFrame2{"dev/myImage1.png", 1, 0, 16, 16};
+    std::vector<Frame> expectedVec2{expectedFrame2};
+    FrameData expected2(expectedVec2);
 
-    auto firstFrameData = frameDatas[0];
-    Frame firstExpectedFrame{"dev/myImage1.png", 0, 0, 16, 16};
-    std::vector<Frame> firstExpectedVec{firstExpectedFrame};
-    FrameData firstExpected(firstExpectedVec);
-    EXPECT_EQ(firstExpected, firstFrameData);
+    Frame expectedFrame3{"dev/myImage1.png", 0, 1, 16, 16};
+    std::vector<Frame> expectedVec3{expectedFrame3};
+    FrameData expected3(expectedVec3);
 
-    auto lastFrameData = frameDatas[99];
-    Frame lastExpectedFrame{"dev/myImage1.png", 19, 4, 16, 16};
-    std::vector<Frame> lastExpectedVec{lastExpectedFrame};
-    FrameData lastExpected(lastExpectedVec);
-    EXPECT_EQ(lastExpected, lastFrameData);
+    Frame expectedFrame4{"dev/myImage1.png", 1, 1, 16, 16};
+    std::vector<Frame> expectedVec4{expectedFrame4};
+    FrameData expected4(expectedVec4);
+
+    std::unordered_map<int, FrameData> expectedLookupTable{
+        {0, expected1}, {1, expected2}, {2, expected3}, {3, expected4}};
+    TileSetData expected{expectedImage, expectedLookupTable};
+
+    EXPECT_EQ(expected, tileSetData);
 }
 
 }  // namespace Tile

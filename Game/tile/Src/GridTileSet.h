@@ -29,15 +29,11 @@ public:
     GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const Dimensions &dimensions);
     virtual ~GridTileSet();
 
-    virtual std::vector<Image> GetImages() const override;
-    virtual std::unordered_map<int, FrameData> GetFrameDatas() const override;
+    virtual TileSetData CreateTileSetData() const override;
 
 private:
-    std::string tsxDir_{};
-    std::string textureFilePath_{};
     Dimensions dimensions_;
     std::string p_{};
-    std::unordered_map<int, FrameData> frameData_;
 };
 
 }  // namespace Tile

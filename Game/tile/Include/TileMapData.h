@@ -90,6 +90,17 @@ inline bool operator==(const FrameData& lhs, const FrameData& rhs)
     return lhs.GetFrames() == rhs.GetFrames();
 }
 
+struct TileSetData
+{
+    std::vector<Image> images_;
+    std::unordered_map<int, FrameData> lookupTable_;
+};
+
+inline bool operator==(const TileSetData& lhs, const TileSetData& rhs)
+{
+    return std::tie(lhs.images_, lhs.lookupTable_) == std::tie(rhs.images_, rhs.lookupTable_);
+}
+
 struct TileMapData
 {
     struct MapProperties
@@ -98,12 +109,6 @@ struct TileMapData
         unsigned int height_{};
         unsigned int tileWidth_{};
         unsigned int tileHeight_{};
-    };
-
-    struct TileSet
-    {
-        std::vector<Image> images_;
-        std::unordered_map<int, FrameData> frameDatas_;
     };
 
     struct Layer
@@ -127,7 +132,7 @@ struct TileMapData
     };
 
     MapProperties mapProperties_;
-    std::map<int, TileSet, std::greater<int>> tileSets_;
+    std::map<int, TileSetData, std::greater<int>> tileSets_;
     std::vector<Layer> layers_;
     std::vector<ObjectGroup> objectGroups_;
 };

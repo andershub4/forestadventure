@@ -14,13 +14,22 @@ namespace Tile {
 
 GridTileSet::GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const Dimensions &dimensions)
     : BasicTileSet()
-    , tsxDir_(tsxDir)
-    , textureFilePath_(textureFilePath)
     , dimensions_(dimensions)
 {
-    p_ = GetFilePath(tsxDir_, textureFilePath_);
+    p_ = GetFilePath(tsxDir, textureFilePath);
+}
 
+GridTileSet::~GridTileSet() = default;
+
+TileSetData GridTileSet::CreateTileSetData() const
+{
     auto nCols = dimensions_.columns_;
+    auto nRows = dimensions_.tileCount_ / dimensions_.columns_;
+    std::vector<Image> images;
+    images.push_back({p_, nCols, nRows});
+
+    std::unordered_map<int, FrameData> lookupTable;
+
     auto w = dimensions_.tileWidth_;
     auto h = dimensions_.tileHeight_;
 
@@ -28,25 +37,10 @@ GridTileSet::GridTileSet(const std::string &tsxDir, const std::string &textureFi
         auto column = id % nCols;
         auto row = id / nCols;
         Frame frame = {p_, column, row, w, h};
-        frameData_[id] = FrameData({frame});
+        lookupTable[id] = FrameData({frame});
     }
-}
 
-GridTileSet::~GridTileSet() = default;
-
-std::vector<Image> GridTileSet::GetImages() const
-{
-    auto nCols = dimensions_.columns_;
-    auto nRows = dimensions_.tileCount_ / dimensions_.columns_;
-    std::vector<Image> images;
-    images.push_back({p_, nCols, nRows});
-
-    return images;
-}
-
-std::unordered_map<int, FrameData> GridTileSet::GetFrameDatas() const
-{
-    return frameData_;
+    return {images, lookupTable};
 }
 
 }  // namespace Tile
