@@ -37,7 +37,7 @@ TileSetData GridTileSet::CreateTileSetData() const
         auto column = id % nCols;
         auto row = id / nCols;
         Frame frame = {p_, column, row, w, h};
-        lookupTable[id] = FrameData({frame});
+        lookupTable[id] = FrameData{frame, {}};
     }
 
     return {images, lookupTable};

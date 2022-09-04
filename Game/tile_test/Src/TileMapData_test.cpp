@@ -39,9 +39,9 @@ TEST(TileMapDataTest, TestFrameDataEqualToOperator)
     Frame d2{"dev/dir", 2, 4, 16, 16};
     Frame d3{"dev/dir", 3, 4, 16, 16};
 
-    FrameData f1{{d1, d2}};
+    FrameData f1{{}, {d1, d2}};
     FrameData f2 = f1;
-    FrameData f3{{d3}};
+    FrameData f3{{}, {d3}};
 
     EXPECT_TRUE(f1 == f2);
     EXPECT_FALSE(f1 == f3);

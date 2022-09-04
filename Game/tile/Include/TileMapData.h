@@ -73,21 +73,13 @@ inline std::ostream& operator<<(std::ostream& os, const Frame& p)
 
 struct FrameData
 {
-    FrameData() = default;
-    FrameData(const std::vector<Frame>& frames)
-        : frames_(frames)
-    {}
-    bool IsAnimation() { return frames_.size() > 1; }
-    Frame Front() { return frames_.front(); }
-    std::vector<Frame> GetFrames() const { return frames_; }
-
-private:
+    Frame frame_{};
     std::vector<Frame> frames_;
 };
 
 inline bool operator==(const FrameData& lhs, const FrameData& rhs)
 {
-    return lhs.GetFrames() == rhs.GetFrames();
+    return std::tie(lhs.frame_, lhs.frames_) == std::tie(rhs.frame_, rhs.frames_);
 }
 
 struct TileSetData

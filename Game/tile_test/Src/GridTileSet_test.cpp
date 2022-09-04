@@ -31,25 +31,14 @@ TEST_F(GridTileSetTest, TileSetShouldCreateFourEntries)
     auto tileSetData = imageTileSet.CreateTileSetData();
 
     std::vector<Image> expectedImage{{"dev/myImage1.png", 2, 2}};
-
     Frame expectedFrame1{"dev/myImage1.png", 0, 0, 16, 16};
-    std::vector<Frame> expectedVec1{expectedFrame1};
-    FrameData expected1(expectedVec1);
-
     Frame expectedFrame2{"dev/myImage1.png", 1, 0, 16, 16};
-    std::vector<Frame> expectedVec2{expectedFrame2};
-    FrameData expected2(expectedVec2);
-
     Frame expectedFrame3{"dev/myImage1.png", 0, 1, 16, 16};
-    std::vector<Frame> expectedVec3{expectedFrame3};
-    FrameData expected3(expectedVec3);
-
     Frame expectedFrame4{"dev/myImage1.png", 1, 1, 16, 16};
-    std::vector<Frame> expectedVec4{expectedFrame4};
-    FrameData expected4(expectedVec4);
-
-    std::unordered_map<int, FrameData> expectedLookupTable{
-        {0, expected1}, {1, expected2}, {2, expected3}, {3, expected4}};
+    std::unordered_map<int, FrameData> expectedLookupTable{{0, FrameData{expectedFrame1, {}}},
+                                                           {1, FrameData{expectedFrame2, {}}},
+                                                           {2, FrameData{expectedFrame3, {}}},
+                                                           {3, FrameData{expectedFrame4, {}}}};
     TileSetData expected{expectedImage, expectedLookupTable};
 
     EXPECT_EQ(expected, tileSetData);

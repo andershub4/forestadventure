@@ -27,30 +27,29 @@ TileSetData ImageTileSet::CreateTileSetData() const
     std::unordered_map<int, Frame> frameMap;
 
     for (const auto &tile : tiles_) {
-        auto id = tile.id_;
-        auto p = GetFilePath(tsxDir_, tile.image_.source_);
-        auto w = tile.image_.width_;
-        auto h = tile.image_.height_;
-        Frame frame = {p, 0, 0, w, h};
-        frameMap[id] = frame;
-
         if (!tile.image_.source_.empty()) {
+            auto id = tile.id_;
             auto p = GetFilePath(tsxDir_, tile.image_.source_);
+            auto w = tile.image_.width_;
+            auto h = tile.image_.height_;
+            Frame frame = {p, 0, 0, w, h};
+            frameMap[id] = frame;
             images.push_back(Image(p));
         }
     }
 
     for (const auto &tile : tiles_) {
+        auto id = tile.id_;
+        std::vector<Frame> frames;
         if (!tile.animation_.frames_.empty()) {
-            auto id = tile.id_;
-            std::vector<Frame> frames;
             for (auto frame : tile.animation_.frames_) {
                 auto id = frame.id_;
                 auto f = frameMap.at(id);
                 frames.push_back(f);
             }
-            lookupTable[id] = FrameData(frames);
         }
+        Frame frame = frameMap[id];
+        lookupTable[id] = FrameData{frame, frames};
     }
 
     return {images, lookupTable};

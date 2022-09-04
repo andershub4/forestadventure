@@ -60,32 +60,35 @@ void TileMap::SetupLayers()
             auto tileId = *it;
             if (tileId == 0) continue;
             auto frameData = GetFrameData(tileId);
+            auto frame = frameData.frame_;
+            auto frames = frameData.frames_;
             TileMap::TileData tileData;
             unsigned int x = (inx % nCols) * tileWidth;
             unsigned int y = (inx / nCols) * tileHeight;
 
-            if (frameData.Front().height_ > tileHeight) {
-                y += tileHeight;
-                y -= frameData.Front().height_;
+            if (!frames.empty()) {
+                auto first = frames.at(0);
+                if (first.height_ > tileHeight) {
+                    y += tileHeight;
+                    y -= first.height_;
+                }
             }
 
             tileData.x_ = x;
             tileData.y_ = y;
 
-            // set frame on tileData
-            ImageData data{frameData.Front().texturePath_, {frameData.Front().column_, frameData.Front().row_}};
-            tileData.frame_ = sheetManager_.MakeFrame(data);
-
-            // set frames on tileData
-            if (frameData.IsAnimation()) {
-                std::vector<FA::Frame> frames;
-                for (auto f : frameData.GetFrames()) {
+            if (!frames.empty()) {
+                std::vector<FA::Frame> outFrames;
+                for (auto f : frames) {
                     ImageData data{f.texturePath_, {f.column_, f.row_}};
                     auto frame = sheetManager_.MakeFrame(data);
-                    frames.push_back(frame);
+                    outFrames.push_back(frame);
                 }
-                tileData.frames_ = frames;
+                tileData.frames_ = outFrames;
             }
+
+            ImageData data{frame.texturePath_, {frame.column_, frame.row_}};
+            tileData.frame_ = sheetManager_.MakeFrame(data);
 
             layers_[layerName].push_back(tileData);
         }
