@@ -33,13 +33,7 @@ inline bool operator==(const ParsedTsx& lhs, const ParsedTsx& rhs)
 
 inline std::ostream& operator<<(std::ostream& os, const ParsedTsx& p)
 {
-    os << "tileSet: " << p.tileSet_ << " image: " << p.image_;
-
-    os << " tiles: { ";
-    for (const auto& tile : p.tiles_) {
-        os << tile << " ";
-    }
-    os << "}";
+    os << "tileSet: " << p.tileSet_ << " image: " << p.image_ << " tiles: " << p.tiles_;
 
     return os;
 }

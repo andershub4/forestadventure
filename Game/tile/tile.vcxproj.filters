@@ -39,6 +39,9 @@
     <ClCompile Include="Src\TsxParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\TileMapData.cc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\BasicTileSet.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\BasicTsxParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Print.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

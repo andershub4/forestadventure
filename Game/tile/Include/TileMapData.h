@@ -6,9 +6,8 @@
 
 #pragma once
 
+#include <iosfwd>
 #include <map>
-#include <memory>
-#include <ostream>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -36,17 +35,8 @@ struct Image
     unsigned int nRows_{};
 };
 
-inline bool operator==(const Image& lhs, const Image& rhs)
-{
-    return std::tie(lhs.path_, lhs.nCols_, lhs.nRows_) == std::tie(rhs.path_, rhs.nCols_, rhs.nRows_);
-}
-
-inline std::ostream& operator<<(std::ostream& os, const Image& p)
-{
-    os << "path: " << p.path_ << " nCols: " << p.nCols_ << " nRows: " << p.nRows_;
-
-    return os;
-}
+bool operator==(const Image& lhs, const Image& rhs);
+std::ostream& operator<<(std::ostream& os, const Image& p);
 
 struct Frame
 {
@@ -57,19 +47,8 @@ struct Frame
     unsigned int height_{};
 };
 
-inline bool operator==(const Frame& lhs, const Frame& rhs)
-{
-    return std::tie(lhs.texturePath_, lhs.column_, lhs.row_, lhs.width_, lhs.height_) ==
-           std::tie(rhs.texturePath_, rhs.column_, rhs.row_, rhs.width_, rhs.height_);
-}
-
-inline std::ostream& operator<<(std::ostream& os, const Frame& p)
-{
-    os << "texturePath: " << p.texturePath_ << " column: " << p.column_ << " row: " << p.row_ << " width: " << p.width_
-       << " height: " << p.height_;
-
-    return os;
-}
+bool operator==(const Frame& lhs, const Frame& rhs);
+std::ostream& operator<<(std::ostream& os, const Frame& p);
 
 struct FrameData
 {
@@ -77,10 +56,8 @@ struct FrameData
     std::vector<Frame> frames_;
 };
 
-inline bool operator==(const FrameData& lhs, const FrameData& rhs)
-{
-    return std::tie(lhs.frame_, lhs.frames_) == std::tie(rhs.frame_, rhs.frames_);
-}
+bool operator==(const FrameData& lhs, const FrameData& rhs);
+std::ostream& operator<<(std::ostream& os, const FrameData& p);
 
 struct TileSetData
 {
@@ -88,10 +65,8 @@ struct TileSetData
     std::unordered_map<int, FrameData> lookupTable_;
 };
 
-inline bool operator==(const TileSetData& lhs, const TileSetData& rhs)
-{
-    return std::tie(lhs.images_, lhs.lookupTable_) == std::tie(rhs.images_, rhs.lookupTable_);
-}
+bool operator==(const TileSetData& lhs, const TileSetData& rhs);
+std::ostream& operator<<(std::ostream& os, const TileSetData& p);
 
 struct TileMapData
 {
@@ -128,6 +103,21 @@ struct TileMapData
     std::vector<Layer> layers_;
     std::vector<ObjectGroup> objectGroups_;
 };
+
+bool operator==(const TileMapData::MapProperties& lhs, const TileMapData::MapProperties& rhs);
+std::ostream& operator<<(std::ostream& os, const TileMapData::MapProperties& p);
+
+bool operator==(const TileMapData::Layer& lhs, const TileMapData::Layer& rhs);
+std::ostream& operator<<(std::ostream& os, const TileMapData::Layer& p);
+
+bool operator==(const TileMapData::Object& lhs, const TileMapData::Object& rhs);
+std::ostream& operator<<(std::ostream& os, const TileMapData::Object& p);
+
+bool operator==(const TileMapData::ObjectGroup& lhs, const TileMapData::ObjectGroup& rhs);
+std::ostream& operator<<(std::ostream& os, const TileMapData::ObjectGroup& p);
+
+bool operator==(const TileMapData& lhs, const TileMapData& rhs);
+std::ostream& operator<<(std::ostream& os, const TileMapData& p);
 
 }  // namespace Tile
 

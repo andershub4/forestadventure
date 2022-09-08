@@ -6,9 +6,12 @@
 
 #pragma once
 
+#include <map>
 #include <ostream>
 #include <string>
 #include <vector>
+
+#include "Print.h"
 
 namespace FA {
 
@@ -86,11 +89,7 @@ inline bool operator==(const ParsedAnimation& lhs, const ParsedAnimation& rhs)
 
 inline std::ostream& operator<<(std::ostream& os, const ParsedAnimation& p)
 {
-    os << "frames: { ";
-    for (const auto& frame : p.frames_) {
-        os << frame << " ";
-    }
-    os << "}";
+    os << "frames: " << p.frames_;
 
     return os;
 }
