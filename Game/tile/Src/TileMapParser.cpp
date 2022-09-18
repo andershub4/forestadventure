@@ -92,11 +92,11 @@ void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& 
             auto tsxDir = GetHead(tsxFilePath);
             tinyxml2::XMLDocument doc;
             ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError> helper;
-            TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> tsxParser(helper);
+            TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> tsxParser(doc, helper);
             ParsedTsx parsedTsx;
             auto xmlBuffer = GetXmlBuffer(tsxFilePath);
 
-            if (tsxParser.Parse(xmlBuffer, &doc, parsedTsx)) {
+            if (tsxParser.Parse(xmlBuffer, parsedTsx)) {
                 auto set = CreateTileSet(tsxDir, parsedTsx);
                 auto firstGid = parsedSet.firstGid_;
                 auto tileSetData = set->CreateTileSetData();

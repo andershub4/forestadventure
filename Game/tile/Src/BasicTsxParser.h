@@ -44,7 +44,7 @@ class BasicTsxParser
 public:
     virtual ~BasicTsxParser() = default;
 
-    virtual bool Parse(const std::string& xmlBuffer, DocumentT* xmlDocument, ParsedTsx& parsedTsx) const = 0;
+    virtual bool Parse(const std::string& xmlBuffer, ParsedTsx& parsedTsx) const = 0;
 };
 
 }  // namespace Tile
