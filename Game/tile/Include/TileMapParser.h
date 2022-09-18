@@ -32,6 +32,7 @@ private:
     void ReadTileSets(const TmxParser& tmxParser, const std::string& tmxDir);
     void ReadLayers(const TmxParser& tmxParser);
     void ReadObjectGroups(const TmxParser& tmxParser);
+    std::string GetXmlBuffer(const std::string& fileName) const;
 };
 
 }  // namespace Tile

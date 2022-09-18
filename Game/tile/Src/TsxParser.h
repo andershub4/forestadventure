@@ -31,9 +31,9 @@ public:
 
     virtual ~TsxParser() = default;
 
-    virtual bool Parse(const std::string& fileName, DocumentT* xmlDocument, ParsedTsx& parsedTsx) const override
+    virtual bool Parse(const std::string& xmlBuffer, DocumentT* xmlDocument, ParsedTsx& parsedTsx) const override
     {
-        xmlDocument->LoadFile(fileName.c_str());
+        xmlDocument->Parse(xmlBuffer.c_str());
 
         if (xmlDocument->Error()) {
             return false;

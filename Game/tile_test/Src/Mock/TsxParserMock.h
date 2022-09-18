@@ -18,7 +18,7 @@ template <class DocumentT, class ElementT, class ErrorT>
 class TsxParserMock : public BasicTsxParser<DocumentT, ElementT, ErrorT>
 {
 public:
-    MOCK_METHOD(bool, Parse, (const std::string& fileName, DocumentT* xmlDocument, ParsedTsx& parsedTsx),
+    MOCK_METHOD(bool, Parse, (const std::string& xmlBuffer, DocumentT* xmlDocument, ParsedTsx& parsedTsx),
                 (const, override));
 };
 

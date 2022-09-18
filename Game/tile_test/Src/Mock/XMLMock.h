@@ -53,6 +53,7 @@ class XMLDocumentMock
 {
 public:
     MOCK_METHOD(XMLError, LoadFile, (const char* filename));
+    MOCK_METHOD(XMLError, Parse, (const char* xml));
     MOCK_METHOD(bool, Error, (), (const));
     MOCK_METHOD(const XMLElementMock*, FirstChildElement, (const char* name), (const));
     MOCK_METHOD(XMLElementMock*, FirstChildElement, (const char* name));

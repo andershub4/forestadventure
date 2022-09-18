@@ -6,6 +6,8 @@
 
 #include "TileMapParser.h"
 
+#include <fstream>
+
 #include <tinyxml2/tinyxml2.h>
 
 #include "Folder.h"
@@ -92,7 +94,9 @@ void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& 
             ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError> helper;
             TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> tsxParser(helper);
             ParsedTsx parsedTsx;
-            if (tsxParser.Parse(tsxFilePath, &doc, parsedTsx)) {
+            auto xmlBuffer = GetXmlBuffer(tsxFilePath);
+
+            if (tsxParser.Parse(xmlBuffer, &doc, parsedTsx)) {
                 auto set = CreateTileSet(tsxDir, parsedTsx);
                 auto firstGid = parsedSet.firstGid_;
                 auto tileSetData = set->CreateTileSetData();
@@ -134,6 +138,22 @@ void TileMapParser::ReadObjectGroups(const TmxParser& tmxParser)
         }
         tileMapData_.objectGroups_.push_back(group);
     }
+}
+
+std::string TileMapParser::GetXmlBuffer(const std::string& fileName) const
+{
+    std::ifstream ifd(fileName, std::ios::binary | std::ios::ate);
+    if (ifd.good()) {
+        auto size = static_cast<unsigned long>(ifd.tellg());
+        ifd.seekg(0, std::ios::beg);
+        std::vector<char> buffer;
+        buffer.resize(size);
+        ifd.read(buffer.data(), size);
+        std::string xmlBuffer(buffer.begin(), buffer.end());
+        return xmlBuffer;
+    }
+
+    return {};
 }
 
 }  // namespace Tile
