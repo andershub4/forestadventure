@@ -18,9 +18,9 @@ class BasicParseHelper
 public:
     virtual ~BasicParseHelper() = default;
 
-    virtual bool ParseTileSet(ElementT* element, ParsedTileSet& tileSet) const = 0;
-    virtual bool ParseImage(ElementT* element, ParsedImage& image) const = 0;
-    virtual bool ParseTile(ElementT* element, ParsedTile& tile) const = 0;
+    virtual std::vector<ParseResult<ErrorT>> ParseTileSet(ElementT* element, ParsedTileSet& tileSet) const = 0;
+    virtual std::vector<ParseResult<ErrorT>> ParseImage(ElementT* element, ParsedImage& image) const = 0;
+    virtual std::vector<ParseResult<ErrorT>> ParseTile(ElementT* element, ParsedTile& tile) const = 0;
 };
 
 }  // namespace Tile

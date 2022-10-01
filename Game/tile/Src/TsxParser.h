@@ -18,14 +18,14 @@ namespace FA {
 
 namespace Tile {
 
-template <class ElementT, class Error>
+template <class ElementT, class ErrorT>
 class BasicParseHelper;
 
-template <class DocumentT, class ElementT, class Error>
-class TsxParser : public BasicTsxParser<DocumentT, ElementT, Error>
+template <class DocumentT, class ElementT, class ErrorT>
+class TsxParser : public BasicTsxParser<DocumentT, ElementT, ErrorT>
 {
 public:
-    TsxParser(DocumentT& xmlDocument, BasicParseHelper<ElementT, Error>& helper)
+    TsxParser(DocumentT& xmlDocument, BasicParseHelper<ElementT, ErrorT>& helper)
         : xmlDocument_(xmlDocument)
         , helper_(helper)
     {}
@@ -47,7 +47,7 @@ public:
     }
 
 private:
-    BasicParseHelper<ElementT, Error>& helper_;
+    BasicParseHelper<ElementT, ErrorT>& helper_;
     DocumentT& xmlDocument_;
 
 private:

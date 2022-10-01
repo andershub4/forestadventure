@@ -9,6 +9,7 @@
 #include <map>
 #include <ostream>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "Print.h"
@@ -16,6 +17,9 @@
 namespace FA {
 
 namespace Tile {
+
+template <class ErrorT>
+using ParseResult = std::tuple<std::string, ErrorT>;
 
 struct ParsedTileSet
 {

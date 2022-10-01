@@ -73,6 +73,11 @@ void ParseHelperTest::ExpectParseAnimation(XMLElementMock *parentMock, XMLElemen
 TEST_F(ParseHelperTest, ParseTileSetShouldSucceed)
 {
     ParsedTileSet expected{"tsname", 16, 80, 3, 0};
+    std::vector<ParseResult<XMLError>> expectedResult{{"name", XMLError::XML_SUCCESS},
+                                                      {"tilewidth", XMLError::XML_SUCCESS},
+                                                      {"tileheight", XMLError::XML_SUCCESS},
+                                                      {"tilecount", XMLError::XML_SUCCESS},
+                                                      {"columns", XMLError::XML_SUCCESS}};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>()))
@@ -86,14 +91,20 @@ TEST_F(ParseHelperTest, ParseTileSetShouldSucceed)
     EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
 
-    ParsedTileSet result;
-    EXPECT_EQ(true, (helper_.ParseTileSet(&mock, result)));
-    EXPECT_EQ(expected, result);
+    ParsedTileSet tileSet;
+    auto result = helper_.ParseTileSet(&mock, tileSet);
+    EXPECT_EQ(expectedResult, result);
+    EXPECT_EQ(expected, tileSet);
 }
 
 TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToWrongAttributeName)
 {
     ParsedTileSet expected{"tsname", 16, {}, 3, 0};
+    std::vector<ParseResult<XMLError>> expectedResult{{"name", XMLError::XML_SUCCESS},
+                                                      {"tilewidth", XMLError::XML_SUCCESS},
+                                                      {"tileheight", XMLError::XML_WRONG_ATTRIBUTE_TYPE},
+                                                      {"tilecount", XMLError::XML_SUCCESS},
+                                                      {"columns", XMLError::XML_SUCCESS}};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>()))
@@ -107,14 +118,20 @@ TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToWrongAttributeName)
     EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
 
-    ParsedTileSet result;
-    EXPECT_EQ(false, (helper_.ParseTileSet(&mock, result)));
-    EXPECT_EQ(expected, result);
+    ParsedTileSet tileSet;
+    auto result = helper_.ParseTileSet(&mock, tileSet);
+    EXPECT_EQ(expectedResult, result);
+    EXPECT_EQ(expected, tileSet);
 }
 
 TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToNoAttribute)
 {
     ParsedTileSet expected{{}, 16, 0, 3, 0};
+    std::vector<ParseResult<XMLError>> expectedResult{{"name", XMLError::XML_NO_ATTRIBUTE},
+                                                      {"tilewidth", XMLError::XML_SUCCESS},
+                                                      {"tileheight", XMLError::XML_SUCCESS},
+                                                      {"tilecount", XMLError::XML_SUCCESS},
+                                                      {"columns", XMLError::XML_SUCCESS}};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>())).WillOnce(Return(XML_NO_ATTRIBUTE));
@@ -127,26 +144,34 @@ TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToNoAttribute)
     EXPECT_CALL(mock, QueryAttribute(StrEq("columns"), An<unsigned int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.columns_), Return(XML_SUCCESS)));
 
-    ParsedTileSet result;
-    EXPECT_EQ(false, (helper_.ParseTileSet(&mock, result)));
-    EXPECT_EQ(expected, result);
+    ParsedTileSet tileSet;
+    auto result = helper_.ParseTileSet(&mock, tileSet);
+    EXPECT_EQ(expectedResult, result);
+    EXPECT_EQ(expected, tileSet);
 }
 
 TEST_F(ParseHelperTest, ParseImageShouldSucceed)
 {
     ParsedImage expected{"myImage.png", 16, 16};
+    std::vector<ParseResult<XMLError>> expectedResult{
+        {"source", XMLError::XML_SUCCESS}, {"width", XMLError::XML_SUCCESS}, {"height", XMLError::XML_SUCCESS}};
     XMLElementMock mock;
     ExpectParseImage(&mock, expected);
 
-    ParsedImage result;
-    EXPECT_EQ(true, (helper_.ParseImage(&mock, result)));
-    EXPECT_EQ(expected, result);
+    ParsedImage image;
+    auto result = helper_.ParseImage(&mock, image);
+    EXPECT_EQ(expectedResult, result);
+    EXPECT_EQ(expected, image);
 }
 
 TEST_F(ParseHelperTest, ParseTileWithOnlyImageShouldSucceed)
 {
     ParsedImage expectedImage{"myImage1.png", 16, 16};
     ParsedTile expected{110, expectedImage, {}};
+    std::vector<ParseResult<XMLError>> expectedResult{{"id", XMLError::XML_SUCCESS},
+                                                      {"source", XMLError::XML_SUCCESS},
+                                                      {"width", XMLError::XML_SUCCESS},
+                                                      {"height", XMLError::XML_SUCCESS}};
     XMLElementMock mock;
     XMLElementMock imageMock;
 
@@ -156,9 +181,10 @@ TEST_F(ParseHelperTest, ParseTileWithOnlyImageShouldSucceed)
     ExpectParseImage(&imageMock, expectedImage);
     EXPECT_CALL(mock, FirstChildElement(StrEq("animation"))).WillOnce(Return(nullptr));
 
-    ParsedTile result;
-    EXPECT_EQ(true, (helper_.ParseTile(&mock, result)));
-    EXPECT_EQ(expected, result);
+    ParsedTile tile;
+    auto result = helper_.ParseTile(&mock, tile);
+    EXPECT_EQ(expectedResult, result);
+    EXPECT_EQ(expected, tile);
 }
 
 }  // namespace Tile

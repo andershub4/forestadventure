@@ -16,9 +16,6 @@ namespace FA {
 
 namespace Tile {
 
-template <class ElementT, class Error>
-class BasicParseHelper;
-
 struct ParsedTsx
 {
     ParsedTileSet tileSet_;

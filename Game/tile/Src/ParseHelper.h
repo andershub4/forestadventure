@@ -22,81 +22,91 @@ class ParseHelper : public BasicParseHelper<ElementT, ErrorT>
 public:
     virtual ~ParseHelper() = default;
 
-    virtual bool ParseTileSet(ElementT* element, ParsedTileSet& tileSet) const override
+    virtual std::vector<ParseResult<ErrorT>> ParseTileSet(ElementT* element, ParsedTileSet& tileSet) const override
     {
-        const char* name = nullptr;
-        auto r0 = element->QueryStringAttribute("name", &name);
-        if (name) tileSet.name_ = name;
-        auto r1 = element->QueryAttribute("tilewidth", &tileSet.tileWidth_);
-        auto r2 = element->QueryAttribute("tileheight", &tileSet.tileHeight_);
-        auto r3 = element->QueryAttribute("tilecount", &tileSet.tileCount_);
-        auto r4 = element->QueryAttribute("columns", &tileSet.columns_);
+        std::vector<ParseResult<ErrorT>> results{
+            {ParseElement<ElementT, ErrorT>(element, "name", tileSet.name_)},
+            {ParseElement<ElementT, ErrorT>(element, "tilewidth", tileSet.tileWidth_)},
+            {ParseElement<ElementT, ErrorT>(element, "tileheight", tileSet.tileHeight_)},
+            {ParseElement<ElementT, ErrorT>(element, "tilecount", tileSet.tileCount_)},
+            {ParseElement<ElementT, ErrorT>(element, "columns", tileSet.columns_)}};
 
-        std::vector<ErrorT> results{r0, r1, r2, r3, r4};
-        return Result(results);
+        return results;
     }
 
-    virtual bool ParseImage(ElementT* element, ParsedImage& image) const override
+    virtual std::vector<ParseResult<ErrorT>> ParseImage(ElementT* element, ParsedImage& image) const override
     {
-        const char* source = nullptr;
-        auto r0 = element->QueryStringAttribute("source", &source);
-        if (source) image.source_ = source;
-        auto r1 = element->QueryAttribute("width", &image.width_);
-        auto r2 = element->QueryAttribute("height", &image.height_);
+        std::vector<ParseResult<ErrorT>> results{{ParseElement<ElementT, ErrorT>(element, "source", image.source_)},
+                                                 {ParseElement<ElementT, ErrorT>(element, "width", image.width_)},
+                                                 {ParseElement<ElementT, ErrorT>(element, "height", image.height_)}};
 
-        std::vector<ErrorT> results{r0, r1, r2};
-        return Result(results);
+        return results;
     }
 
-    bool ParseTile(ElementT* element, ParsedTile& tile) const override
+    virtual std::vector<ParseResult<ErrorT>> ParseTile(ElementT* element, ParsedTile& tile) const override
     {
-        auto r0 = element->QueryAttribute("id", &tile.id_);
+        std::vector<ParseResult<ErrorT>> results;
+        auto r1 = ParseElement<ElementT, ErrorT>(element, "id", tile.id_);
+        results.push_back(r1);
         auto imageElement = element->FirstChildElement("image");
-        auto i = ParseImage(imageElement, tile.image_);
+        auto r2 = ParseImage(imageElement, tile.image_);
+        results.insert(results.end(), r2.begin(), r2.end());
         auto animationElement = element->FirstChildElement("animation");
-        auto a = ParseAnimation(animationElement, tile.animation_);
+        auto r3 = ParseAnimation(animationElement, tile.animation_);
+        results.insert(results.end(), r3.begin(), r3.end());
 
-        return ((r0 == ErrorT::XML_SUCCESS) && i && a);
+        return results;
     }
 
 private:
-    bool ParseFrame(ElementT* element, ParsedFrame& frame) const
+    template <class ElementT, class ErrorT, class ValueT>
+    auto ParseElement(ElementT* element, const std::string& attrName, ValueT& attrValue) const
     {
-        auto r1 = element->QueryAttribute("tileid", &frame.id_);
-        auto r2 = element->QueryAttribute("duration", &frame.duration_);
-
-        std::vector<ErrorT> results{r1, r2};
-        return Result(results);
+        auto r = element->QueryAttribute(attrName.c_str(), &attrValue);
+        return std::make_tuple(attrName, r);
     }
 
-    bool ParseFrames(ElementT* parentElement, std::vector<ParsedFrame>& frames) const
+    template <class ElementT, class ErrorT>
+    auto ParseElement(ElementT* element, const std::string& attrName, std::string& attrValue) const
     {
+        const char* charPtr = nullptr;
+        auto r = element->QueryStringAttribute(attrName.c_str(), &charPtr);
+        if (charPtr) attrValue = charPtr;
+        return std::make_tuple(attrName, r);
+    }
+
+    std::vector<ParseResult<ErrorT>> ParseFrame(ElementT* element, ParsedFrame& frame) const
+    {
+        std::vector<ParseResult<ErrorT>> results{
+            {ParseElement<ElementT, ErrorT>(element, "tileid", frame.id_)},
+            {ParseElement<ElementT, ErrorT>(element, "duration", frame.duration_)}};
+
+        return results;
+    }
+
+    std::vector<ParseResult<ErrorT>> ParseFrames(ElementT* parentElement, std::vector<ParsedFrame>& frames) const
+    {
+        std::vector<ParseResult<ErrorT>> results;
         auto element = parentElement->FirstChildElement("frame");
-        bool result = true;
 
         while (element != nullptr) {
             ParsedFrame frame;
             auto r = ParseFrame(element, frame);
-            result &= r;
             frames.push_back(frame);
+            results.insert(results.end(), r.begin(), r.end());
             element = element->NextSiblingElement("frame");
         }
 
-        return result;
+        return results;
     }
 
-    bool ParseAnimation(ElementT* element, ParsedAnimation& animation) const
+    std::vector<ParseResult<ErrorT>> ParseAnimation(ElementT* element, ParsedAnimation& animation) const
     {
         if (element != nullptr) {
             return ParseFrames(element, animation.frames_);
         }
 
-        return true;
-    }
-
-    bool Result(const std::vector<ErrorT>& results) const
-    {
-        return std::all_of(results.begin(), results.end(), [](const ErrorT& e) { return e == ErrorT::XML_SUCCESS; });
+        return {};
     }
 };
 
