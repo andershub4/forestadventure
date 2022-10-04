@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Src\BasicParseHelper.h" />
     <ClInclude Include="Src\BasicTileSet.h" />
+    <ClInclude Include="Src\BasicTmxParser.h" />
     <ClInclude Include="Src\BasicTsxParser.h" />
     <ClInclude Include="Src\GridTileSet.h" />
     <ClInclude Include="Src\ImageTileSet.h" />

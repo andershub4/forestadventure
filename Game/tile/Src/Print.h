@@ -15,6 +15,14 @@ namespace FA {
 
 namespace Tile {
 
+template <class K, class V>
+inline std::ostream& operator<<(std::ostream& os, const std::pair<K, V>& p)
+{
+    os << "{" << p.first << ", " << p.second << "}";
+
+    return os;
+}
+
 template <class T>
 inline std::ostream& operator<<(std::ostream& os, const std::vector<T>& v)
 {
@@ -49,7 +57,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::unordered_map<K, V>
     os << "[";
     std::string separator;
     for (const auto& entry : m) {
-        os << separator << "{" << entry.first << ", " << entry.second << "}";
+        os << separator << entry;
         separator = ", ";
     }
     os << "]";

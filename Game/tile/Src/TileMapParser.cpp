@@ -55,14 +55,17 @@ TileMapData TileMapParser::Run(const std::string& fileName)
 {
     LOG_TMXINFO("Parse ", fileName);
     LOG_TMXINFO("Start parse fileName ", fileName);
-    TmxParser tmxParser;
+    tinyxml2::XMLDocument doc;
+    ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError> helper;
+    TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> tmxParser(doc, helper);
+    ParsedTmx parsedTmx;
 
-    if (tmxParser.Parse(fileName)) {
-        ReadMapProperties(tmxParser);
+    if (tmxParser.Parse(fileName, parsedTmx)) {
+        ReadMapProperties(parsedTmx);
         auto tmxDir = GetHead(fileName);
-        ReadTileSets(tmxParser, tmxDir);
-        ReadLayers(tmxParser);
-        ReadObjectGroups(tmxParser);
+        ReadTileSets(parsedTmx, tmxDir);
+        ReadLayers(parsedTmx);
+        ReadObjectGroups(parsedTmx);
     }
     else {
         LOG_TMXERROR("Could not load ", fileName);
@@ -73,21 +76,21 @@ TileMapData TileMapParser::Run(const std::string& fileName)
     return tileMapData_;
 }
 
-void TileMapParser::ReadMapProperties(const TmxParser& tmxParser)
+void TileMapParser::ReadMapProperties(const ParsedTmx& parsedTmx)
 {
-    tileMapData_.mapProperties_.width_ = tmxParser.map_.width_;
-    tileMapData_.mapProperties_.height_ = tmxParser.map_.height_;
-    tileMapData_.mapProperties_.tileWidth_ = tmxParser.map_.tileWidth_;
-    tileMapData_.mapProperties_.tileHeight_ = tmxParser.map_.tileHeight_;
+    tileMapData_.mapProperties_.width_ = parsedTmx.map_.width_;
+    tileMapData_.mapProperties_.height_ = parsedTmx.map_.height_;
+    tileMapData_.mapProperties_.tileWidth_ = parsedTmx.map_.tileWidth_;
+    tileMapData_.mapProperties_.tileHeight_ = parsedTmx.map_.tileHeight_;
 }
 
-void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& tmxDir)
+void TileMapParser::ReadTileSets(const ParsedTmx& parsedTmx, const std::string& tmxDir)
 {
-    if (tmxParser.tileSets_.empty()) {
+    if (parsedTmx.tileSets_.empty()) {
         LOG_TMXERROR("No tilesets found");
     }
     else {
-        for (const auto& parsedSet : tmxParser.tileSets_) {
+        for (const auto& parsedSet : parsedTmx.tileSets_) {
             auto tsxFilePath = GetFilePath(tmxDir, parsedSet.tsxSource_);
             auto tsxDir = GetHead(tsxFilePath);
             tinyxml2::XMLDocument doc;
@@ -109,19 +112,20 @@ void TileMapParser::ReadTileSets(const TmxParser& tmxParser, const std::string& 
     }
 }
 
-void TileMapParser::ReadLayers(const TmxParser& tmxParser)
+void TileMapParser::ReadLayers(const ParsedTmx& parsedTmx)
 {
-    for (const auto& parsedLayer : tmxParser.layers_) {
+    for (const auto& parsedLayer : parsedTmx.layers_) {
         TileMapData::Layer layer;
         layer.name_ = parsedLayer.name_;
-        layer.tileIds_ = parsedLayer.tileIds_;
+        auto tileIds = ParseData(parsedLayer.data_);
+        layer.tileIds_ = tileIds;
         tileMapData_.layers_.push_back(layer);
     }
 }
 
-void TileMapParser::ReadObjectGroups(const TmxParser& tmxParser)
+void TileMapParser::ReadObjectGroups(const ParsedTmx& parsedTmx)
 {
-    for (const auto& parsedObjectGroup : tmxParser.objectGroups_) {
+    for (const auto& parsedObjectGroup : parsedTmx.objectGroups_) {
         TileMapData::ObjectGroup group;
         group.name_ = parsedObjectGroup.name_;
         for (const auto& parsedObject : parsedObjectGroup.objects_) {
@@ -154,6 +158,22 @@ std::string TileMapParser::GetXmlBuffer(const std::string& fileName) const
     }
 
     return {};
+}
+
+std::vector<int> TileMapParser::ParseData(const std::string& dataStr) const
+{
+    std::string text = dataStr;
+    std::vector<int> ids;
+    std::size_t pos = 0;
+    while ((pos = text.find(",")) != std::string::npos) {
+        auto id = text.substr(0, pos);
+        ids.push_back(std::stoi(id));
+        text.erase(0, pos + 1);
+    }
+
+    ids.push_back(std::stoi(text));
+
+    return ids;
 }
 
 }  // namespace Tile

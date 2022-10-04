@@ -47,6 +47,7 @@ public:
     MOCK_METHOD(XMLError, QueryStringAttribute, (const char* name, const char** value), (const));
     MOCK_METHOD(XMLError, QueryAttribute, (const char* name, int* value), (const));
     MOCK_METHOD(XMLError, QueryAttribute, (const char* name, unsigned int* value), (const));
+    MOCK_METHOD(const char*, GetText, (), (const));
 };
 
 class XMLDocumentMock

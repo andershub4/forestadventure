@@ -7,82 +7,80 @@
 #pragma once
 
 #include <string>
-#include <utility>
 #include <vector>
 
-namespace tinyxml2 {
+#include "BasicTmxParser.h"
 
-class XMLElement;
-
-}  // namespace tinyxml2
+#include "TmxLogging.h"
 
 namespace FA {
 
 namespace Tile {
 
-class TmxParser
+template <class ElementT, class ErrorT>
+class BasicParseHelper;
+
+template <class DocumentT, class ElementT, class ErrorT>
+class TmxParser : public BasicTmxParser<DocumentT, ElementT, ErrorT>
 {
 public:
-    struct Map
+    TmxParser(DocumentT& xmlDocument, BasicParseHelper<ElementT, ErrorT>& helper)
+        : xmlDocument_(xmlDocument)
+        , helper_(helper)
+    {}
+    virtual ~TmxParser() = default;
+
+    virtual bool Parse(const std::string& fileName, ParsedTmx& parsedTmx) const override
     {
-        std::string renderOrder_{};
-        int width_{};
-        int height_{};
-        int tileWidth_{};
-        int tileHeight_{};
-    };
+        xmlDocument_.LoadFile(fileName.c_str());
 
-    struct TileSet
-    {
-        int firstGid_{};
-        std::string tsxSource_{};
-    };
-
-    struct Layer
-    {
-        int id_{};
-        std::string name_{};
-        int width_{};
-        int height_{};
-        std::vector<int> tileIds_{};
-    };
-
-    struct Object
-    {
-        using Property = std::pair<std::string, std::string>;
-
-        int id_{};
-        std::string type_{};
-        int x_{};
-        int y_{};
-        std::vector<Property> properties_;
-    };
-
-    struct Group
-    {
-        int id_{};
-        std::string name_{};
-        std::vector<Object> objects_{};
-    };
-
-    Map map_;
-    std::vector<TileSet> tileSets_;
-    std::vector<Layer> layers_;
-    std::vector<Group> objectGroups_;
-
-public:
-    TmxParser();
-    ~TmxParser();
-    bool Parse(const std::string& fileName);
+        if (xmlDocument_.Error()) {
+            return false;
+        }
+        else {
+            ElementT* map = xmlDocument_.FirstChildElement("map");
+            ParseMapElement(map, parsedTmx);
+            return true;
+        }
+    }
 
 private:
-    void ParseMapElement(tinyxml2::XMLElement* mapElement);
-    void ParseTileSetElement(tinyxml2::XMLElement* tileSetElement, TileSet& tileSet);
-    void ParseLayerElement(tinyxml2::XMLElement* layerElement, Layer& layer);
-    void ParseDataElement(tinyxml2::XMLElement* dataElement, std::vector<int>& ids);
-    void ParseObjectGroupElement(tinyxml2::XMLElement* layerElement, Group& group);
-    void ParseObjectElement(tinyxml2::XMLElement* objectElement, Object& object);
-    void ParsePropertyElement(tinyxml2::XMLElement* objectElement, TmxParser::Object::Property& prop);
+    BasicParseHelper<ElementT, ErrorT>& helper_;
+    DocumentT& xmlDocument_;
+
+private:
+    void ParseMapElement(ElementT* mapElement, ParsedTmx& parsedTmx) const
+    {
+        helper_.ParseMap(mapElement, parsedTmx.map_);
+        LOG_TMXINFO("map: ", parsedTmx.map_);
+
+        auto tileSetElement = mapElement->FirstChildElement("tileset");
+        while (tileSetElement != nullptr) {
+            ParsedTmxTileSet set;
+            helper_.ParseTmxTileSet(tileSetElement, set);
+            LOG_TMXINFO("set: ", set);
+            parsedTmx.tileSets_.push_back(set);
+            tileSetElement = tileSetElement->NextSiblingElement("tileset");
+        }
+
+        auto layerElement = mapElement->FirstChildElement("layer");
+        while (layerElement != nullptr) {
+            ParsedLayer layer;
+            helper_.ParseLayer(layerElement, layer);
+            LOG_TMXINFO("layer: ", layer);
+            parsedTmx.layers_.push_back(layer);
+            layerElement = layerElement->NextSiblingElement("layer");
+        }
+
+        auto objectGroupElement = mapElement->FirstChildElement("objectgroup");
+        while (objectGroupElement != nullptr) {
+            ParsedObjectGroup group;
+            helper_.ParseObjectGroup(objectGroupElement, group);
+            LOG_TMXINFO("group: ", group);
+            parsedTmx.objectGroups_.push_back(group);
+            objectGroupElement = objectGroupElement->NextSiblingElement("objectgroup");
+        }
+    }
 };
 
 }  // namespace Tile

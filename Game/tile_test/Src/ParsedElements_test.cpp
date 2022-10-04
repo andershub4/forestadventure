@@ -23,6 +23,53 @@ TEST(ParsedElementsTest, TestParsedTileSetDataEqualToOperator)
     EXPECT_FALSE(d1 == d2);
 }
 
+TEST(ParsedElementsTest, TestParsedMapEqualToOperator)
+{
+    ParsedMap d1{"order", 160, 160, 16, 16};
+    ParsedMap d2 = d1;
+    EXPECT_TRUE(d1 == d2);
+    d1.renderOrder_ = "other";
+    EXPECT_FALSE(d1 == d2);
+}
+
+TEST(ParsedElementsTest, TestParsedTmxTileSetEqualToOperator)
+{
+    ParsedTmxTileSet d1{1, "source"};
+    ParsedTmxTileSet d2 = d1;
+    EXPECT_TRUE(d1 == d2);
+    d1.firstGid_ = 11;
+    EXPECT_FALSE(d1 == d2);
+}
+
+TEST(ParsedElementsTest, TestParsedLayerEqualToOperator)
+{
+    ParsedLayer d1{1, "name", 100, 100, "data"};
+    ParsedLayer d2 = d1;
+    EXPECT_TRUE(d1 == d2);
+    d1.data_ = "newdata";
+    EXPECT_FALSE(d1 == d2);
+}
+
+TEST(ParsedElementsTest, TestParsedObjectEqualToOperator)
+{
+    ParsedObject d1{1, "type", 143, 1, {{"aialgo", "astar"}}};
+    ParsedObject d2 = d1;
+    EXPECT_TRUE(d1 == d2);
+    d1.type_ = "newtype";
+    EXPECT_FALSE(d1 == d2);
+}
+
+TEST(ParsedElementsTest, TestParsedObjectGroupEqualToOperator)
+{
+    ParsedObject o1{1, "type", 143, 1, {{"aialgo", "astar"}}};
+    ParsedObject o2{2, "type", 1, 32, {{"aialgo", "astar"}}};
+    ParsedObjectGroup d1{1, "name", {o1, o2}};
+    ParsedObjectGroup d2 = d1;
+    EXPECT_TRUE(d1 == d2);
+    d1.name_ = "newname";
+    EXPECT_FALSE(d1 == d2);
+}
+
 TEST(ParsedElementsTest, TestParsedImageEqualToOperator)
 {
     ParsedImage d1{"myImage.png", 16, 16};

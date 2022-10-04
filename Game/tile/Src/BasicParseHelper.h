@@ -18,6 +18,10 @@ class BasicParseHelper
 public:
     virtual ~BasicParseHelper() = default;
 
+    virtual std::vector<ParseResult<ErrorT>> ParseMap(ElementT* element, ParsedMap& map) const = 0;
+    virtual std::vector<ParseResult<ErrorT>> ParseTmxTileSet(ElementT* element, ParsedTmxTileSet& tileSet) const = 0;
+    virtual std::vector<ParseResult<ErrorT>> ParseLayer(ElementT* element, ParsedLayer& layer) const = 0;
+    virtual std::vector<ParseResult<ErrorT>> ParseObjectGroup(ElementT* element, ParsedObjectGroup& group) const = 0;
     virtual std::vector<ParseResult<ErrorT>> ParseTileSet(ElementT* element, ParsedTileSet& tileSet) const = 0;
     virtual std::vector<ParseResult<ErrorT>> ParseImage(ElementT* element, ParsedImage& image) const = 0;
     virtual std::vector<ParseResult<ErrorT>> ParseTile(ElementT* element, ParsedTile& tile) const = 0;

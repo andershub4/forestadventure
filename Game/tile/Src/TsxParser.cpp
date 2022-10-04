@@ -11,7 +11,7 @@ namespace FA {
 namespace Tile {
 
 /*
- * Class implemenation moved to header tile.
+ * Class implemenation moved to header file.
  * This was required since the class became a template class.
  * It became a template class to be able to handle dependency injection.
  * Dependency injection with templates is needed to be able to handle testing.
