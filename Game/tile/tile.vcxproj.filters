@@ -39,7 +39,7 @@
     <ClCompile Include="Src\TsxParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\TileMapData.cc.cpp">
+    <ClCompile Include="Src\TileMapData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
