@@ -21,7 +21,7 @@ GridTileSet::GridTileSet(const std::string &tsxDir, const std::string &textureFi
 
 GridTileSet::~GridTileSet() = default;
 
-TileSetData GridTileSet::CreateTileSetData() const
+TileSetData GridTileSet::GenerateTileData() const
 {
     auto nCols = dimensions_.columns_;
     auto nRows = dimensions_.tileCount_ / dimensions_.columns_;

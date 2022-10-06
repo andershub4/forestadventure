@@ -21,7 +21,7 @@ public:
     BasicTileSet();
     virtual ~BasicTileSet();
 
-    virtual TileSetData CreateTileSetData() const = 0;
+    virtual TileSetData GenerateTileData() const = 0;
 };
 
 }  // namespace Tile

@@ -28,7 +28,7 @@ protected:
 TEST_F(GridTileSetTest, TileSetShouldCreateFourEntries)
 {
     GridTileSet imageTileSet{dirStr_, path_, dimFourTiles_};
-    auto tileSetData = imageTileSet.CreateTileSetData();
+    auto tileSetData = imageTileSet.GenerateTileData();
 
     std::vector<Image> expectedImage{{"dev/myImage1.png", 2, 2}};
     Frame expectedFrame1{"dev/myImage1.png", 0, 0, 16, 16};

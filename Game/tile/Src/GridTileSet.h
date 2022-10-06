@@ -29,7 +29,7 @@ public:
     GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const Dimensions &dimensions);
     virtual ~GridTileSet();
 
-    virtual TileSetData CreateTileSetData() const override;
+    virtual TileSetData GenerateTileData() const override;
 
 private:
     Dimensions dimensions_;

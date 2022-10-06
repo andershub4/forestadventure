@@ -20,7 +20,7 @@ ImageTileSet::ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTi
 
 ImageTileSet::~ImageTileSet() = default;
 
-TileSetData ImageTileSet::CreateTileSetData() const
+TileSetData ImageTileSet::GenerateTileData() const
 {
     std::vector<Image> images;
     std::unordered_map<int, FrameData> lookupTable;

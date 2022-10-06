@@ -22,7 +22,7 @@ public:
     ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTile> tiles);
     virtual ~ImageTileSet();
 
-    virtual TileSetData CreateTileSetData() const override;
+    virtual TileSetData GenerateTileData() const override;
 
 private:
     std::vector<ParsedTile> tiles_;

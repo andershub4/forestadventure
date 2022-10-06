@@ -33,7 +33,7 @@ protected:
 TEST_F(ImageTileSetTest, NoTilesShouldReturnEmptySet)
 {
     ImageTileSet imageTileSet{dirStr_, {}};
-    auto tileSetData = imageTileSet.CreateTileSetData();
+    auto tileSetData = imageTileSet.GenerateTileData();
 
     TileSetData expected{};
 
@@ -43,7 +43,7 @@ TEST_F(ImageTileSetTest, NoTilesShouldReturnEmptySet)
 TEST_F(ImageTileSetTest, TwoTilesWithImageAndAnimationShouldReturnTwoImagesAndTwoEntries)
 {
     ImageTileSet imageTileSet{dirStr_, {tile1_, tile2_}};
-    auto tileSetData = imageTileSet.CreateTileSetData();
+    auto tileSetData = imageTileSet.GenerateTileData();
 
     Image i1("dev/myImage1.png");
     Image i2("dev/myImage2.png");
@@ -60,7 +60,7 @@ TEST_F(ImageTileSetTest, TwoTilesWithImageAndAnimationShouldReturnTwoImagesAndTw
 TEST_F(ImageTileSetTest, TwoTilesWithoutImageShouldReturnNoImageAndTwoEmptyEntries)
 {
     ImageTileSet imageTileSet{dirStr_, {tile3_, tile4_}};
-    auto tileSetData = imageTileSet.CreateTileSetData();
+    auto tileSetData = imageTileSet.GenerateTileData();
 
     TileSetData expected{{}, {{112, {}}, {113, {}}}};
 

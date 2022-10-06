@@ -102,7 +102,7 @@ void TileMapParser::ReadTileSets(const ParsedTmx& parsedTmx, const std::string& 
             if (tsxParser.Parse(xmlBuffer, parsedTsx)) {
                 auto set = CreateTileSet(tsxDir, parsedTsx);
                 auto firstGid = parsedSet.firstGid_;
-                auto tileSetData = set->CreateTileSetData();
+                auto tileSetData = set->GenerateTileData();
                 tileMapData_.tileSets_[firstGid] = tileSetData;
             }
             else {
