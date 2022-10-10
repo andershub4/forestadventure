@@ -147,6 +147,7 @@
     <ClCompile Include="Src\TileHelper.cpp" />
     <ClCompile Include="Src\TileMapData.cpp" />
     <ClCompile Include="Src\TileMapParser.cpp" />
+    <ClCompile Include="Src\TileSetFactory.cpp" />
     <ClCompile Include="Src\TmxLogging.cpp" />
     <ClCompile Include="Src\TmxParser.cpp" />
     <ClCompile Include="Src\TsxParser.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Src\TileHelper.h" />
     <ClInclude Include="Include\TileMapData.h" />
     <ClInclude Include="Include\TileMapParser.h" />
+    <ClInclude Include="Src\TileSetFactory.h" />
     <ClInclude Include="Src\TmxLogging.h" />
     <ClInclude Include="Src\TmxParser.h" />
     <ClInclude Include="Src\TsxParser.h" />

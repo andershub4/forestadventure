@@ -15,6 +15,7 @@
 #include "ImageTileSet.h"
 #include "ParseHelper.h"
 #include "TileHelper.h"
+#include "TileSetFactory.h"
 #include "TmxLogging.h"
 #include "TmxParser.h"
 #include "TsxParser.h"
@@ -23,31 +24,9 @@ namespace FA {
 
 namespace Tile {
 
-namespace {
-
-std::unique_ptr<BasicTileSet> CreateTileSet(const std::string tsxDir, const ParsedTsx& parsedTsx)
-{
-    auto tiles = parsedTsx.tiles_;
-    std::unique_ptr<BasicTileSet> s = nullptr;
-
-    if (!tiles.empty()) {
-        s = std::make_unique<ImageTileSet>(tsxDir, tiles);
-    }
-    else {
-        GridTileSet::Dimensions dim;
-        dim.tileWidth_ = parsedTsx.tileSet_.tileWidth_;
-        dim.tileHeight_ = parsedTsx.tileSet_.tileHeight_;
-        dim.columns_ = parsedTsx.tileSet_.columns_;
-        dim.tileCount_ = parsedTsx.tileSet_.tileCount_;
-        s = std::make_unique<GridTileSet>(tsxDir, parsedTsx.image_.source_, dim);
-    }
-
-    return s;
-}
-
-}  // namespace
-
-TileMapParser::TileMapParser() = default;
+TileMapParser::TileMapParser()
+    : tileSetFactory_(std::make_unique<TileSetFactory>())
+{}
 
 TileMapParser::~TileMapParser() = default;
 
@@ -100,7 +79,8 @@ void TileMapParser::ReadTileSets(const ParsedTmx& parsedTmx, const std::string& 
             auto xmlBuffer = GetXmlBuffer(tsxFilePath);
 
             if (tsxParser.Parse(xmlBuffer, parsedTsx)) {
-                auto set = CreateTileSet(tsxDir, parsedTsx);
+                auto set =
+                    tileSetFactory_->Create(tsxDir, parsedTsx.tiles_, parsedTsx.tileSet_, parsedTsx.image_.source_);
                 auto firstGid = parsedSet.firstGid_;
                 auto tileSetData = set->GenerateTileData();
                 tileMapData_.tileSets_[firstGid] = tileSetData;

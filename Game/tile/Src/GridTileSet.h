@@ -11,6 +11,8 @@
 
 #include "BasicTileSet.h"
 
+#include "ParsedElements.h"
+
 namespace FA {
 
 namespace Tile {
@@ -18,21 +20,13 @@ namespace Tile {
 class GridTileSet : public BasicTileSet
 {
 public:
-    struct Dimensions
-    {
-        unsigned int tileWidth_{};
-        unsigned int tileHeight_{};
-        unsigned int columns_{};
-        unsigned int tileCount_{};
-    };
-
-    GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const Dimensions &dimensions);
+    GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const ParsedTileSet &parsedTileSet);
     virtual ~GridTileSet();
 
     virtual TileSetData GenerateTileData() const override;
 
 private:
-    Dimensions dimensions_;
+    ParsedTileSet parsedTileSet_;
     std::string p_{};
 };
 

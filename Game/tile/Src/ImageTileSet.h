@@ -19,13 +19,13 @@ namespace Tile {
 class ImageTileSet : public BasicTileSet
 {
 public:
-    ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTile> tiles);
+    ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTile> &parsedTiles);
     virtual ~ImageTileSet();
 
     virtual TileSetData GenerateTileData() const override;
 
 private:
-    std::vector<ParsedTile> tiles_;
+    std::vector<ParsedTile> parsedTiles_;
     std::string tsxDir_{};
 };
 

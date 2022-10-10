@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -16,6 +17,7 @@ namespace FA {
 namespace Tile {
 
 struct ParsedTmx;
+class TileSetFactory;
 
 class TileMapParser
 {
@@ -27,6 +29,7 @@ public:
 
 private:
     TileMapData tileMapData_;
+    std::unique_ptr<TileSetFactory> tileSetFactory_{};
 
 private:
     void ReadMapProperties(const ParsedTmx& parsedTmx);

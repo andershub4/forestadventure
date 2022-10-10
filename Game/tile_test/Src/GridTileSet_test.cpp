@@ -22,13 +22,13 @@ class GridTileSetTest : public Test
 protected:
     const std::string dirStr_ = "dev/tsxDir";
     const std::string path_ = "../myImage1.png";
-    const GridTileSet::Dimensions dimFourTiles_{16, 16, 2, 4};
+    const ParsedTileSet tileSet4Tiles_{"name", 16, 16, 4, 2};
 };
 
 TEST_F(GridTileSetTest, TileSetShouldCreateFourEntries)
 {
-    GridTileSet imageTileSet{dirStr_, path_, dimFourTiles_};
-    auto tileSetData = imageTileSet.GenerateTileData();
+    GridTileSet gridTileSet{dirStr_, path_, tileSet4Tiles_};
+    auto tileSetData = gridTileSet.GenerateTileData();
 
     std::vector<Image> expectedImage{{"dev/myImage1.png", 2, 2}};
     Frame expectedFrame1{"dev/myImage1.png", 0, 0, 16, 16};
