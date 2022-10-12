@@ -43,7 +43,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::map<K, V, P>& m)
     os << "[";
     std::string separator;
     for (const auto& entry : m) {
-        os << separator << "{" << entry.first << ", " << entry.second << "}";
+        os << separator << entry;
         separator = ", ";
     }
     os << "]";
