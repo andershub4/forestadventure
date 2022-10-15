@@ -30,9 +30,9 @@ public:
     {}
     virtual ~TmxParser() = default;
 
-    virtual bool Parse(const std::string& fileName, ParsedTmx& parsedTmx) const override
+    virtual bool Parse(const std::string& xmlBuffer, ParsedTmx& parsedTmx) const override
     {
-        xmlDocument_.LoadFile(fileName.c_str());
+        xmlDocument_.Parse(xmlBuffer.c_str());
 
         if (xmlDocument_.Error()) {
             return false;

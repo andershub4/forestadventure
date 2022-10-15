@@ -39,8 +39,9 @@ TileMapData TileMapParser::Run(const std::string& fileName)
     ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError> helper;
     TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> tmxParser(doc, helper);
     ParsedTmx parsedTmx;
+    auto xmlBuffer = GetFileBuffer(fileName);
 
-    if (tmxParser.Parse(fileName, parsedTmx)) {
+    if (tmxParser.Parse(xmlBuffer, parsedTmx)) {
         ReadMapProperties(parsedTmx);
         auto tmxDir = GetHead(fileName);
         ReadTileSets(parsedTmx, tmxDir);
