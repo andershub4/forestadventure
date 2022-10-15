@@ -30,9 +30,12 @@
     <ClCompile Include="Src\SpecialFolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\File.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Error.h">
+    <ClInclude Include="Src\Error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Folder.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

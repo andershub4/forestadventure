@@ -142,13 +142,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Src\Error.cpp" />
+    <ClCompile Include="Src\File.cpp" />
     <ClCompile Include="Src\Folder.cpp" />
     <ClCompile Include="Src\Path.cpp" />
     <ClCompile Include="Src\Random.cpp" />
     <ClCompile Include="Src\SpecialFolder.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Error.h" />
+    <ClInclude Include="Include\File.h" />
+    <ClInclude Include="Src\Error.h" />
     <ClInclude Include="Include\Folder.h" />
     <ClInclude Include="Include\Path.h" />
     <ClInclude Include="Include\Random.h" />

@@ -36,7 +36,6 @@ private:
     void ReadTileSets(const ParsedTmx& parsedTmx, const std::string& tmxDir);
     void ReadLayers(const ParsedTmx& parsedTmx);
     void ReadObjectGroups(const ParsedTmx& parsedTmx);
-    std::string GetXmlBuffer(const std::string& fileName) const;
     std::vector<int> ParseData(const std::string& dataStr) const;
 };
 

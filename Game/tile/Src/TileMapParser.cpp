@@ -10,6 +10,7 @@
 
 #include <tinyxml2/tinyxml2.h>
 
+#include "File.h"
 #include "Folder.h"
 #include "GridTileSet.h"
 #include "ImageTileSet.h"
@@ -76,7 +77,7 @@ void TileMapParser::ReadTileSets(const ParsedTmx& parsedTmx, const std::string& 
             ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError> helper;
             TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> tsxParser(doc, helper);
             ParsedTsx parsedTsx;
-            auto xmlBuffer = GetXmlBuffer(tsxFilePath);
+            auto xmlBuffer = GetFileBuffer(tsxFilePath);
 
             if (tsxParser.Parse(xmlBuffer, parsedTsx)) {
                 auto set =
@@ -122,22 +123,6 @@ void TileMapParser::ReadObjectGroups(const ParsedTmx& parsedTmx)
         }
         tileMapData_.objectGroups_.push_back(group);
     }
-}
-
-std::string TileMapParser::GetXmlBuffer(const std::string& fileName) const
-{
-    std::ifstream ifd(fileName, std::ios::binary | std::ios::ate);
-    if (ifd.good()) {
-        auto size = static_cast<unsigned long>(ifd.tellg());
-        ifd.seekg(0, std::ios::beg);
-        std::vector<char> buffer;
-        buffer.resize(size);
-        ifd.read(buffer.data(), size);
-        std::string xmlBuffer(buffer.begin(), buffer.end());
-        return xmlBuffer;
-    }
-
-    return {};
 }
 
 std::vector<int> TileMapParser::ParseData(const std::string& dataStr) const
