@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tile", "tile\tile.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tile_test", "tile_test\tile_test.vcxproj", "{D73AC684-AA40-42CB-825F-7CA3045AA023}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "util_test", "util_test\util_test.vcxproj", "{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -269,6 +271,34 @@ Global
 		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Lib|x64.Build.0 = Release|x64
 		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Lib|x86.ActiveCfg = Release|Win32
 		{D73AC684-AA40-42CB-825F-7CA3045AA023}.Release-Lib|x86.Build.0 = Release|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug|x64.ActiveCfg = Debug|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug|x64.Build.0 = Debug|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug|x86.ActiveCfg = Debug|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug|x86.Build.0 = Debug|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug-Dll|x64.ActiveCfg = Debug|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug-Dll|x64.Build.0 = Debug|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug-Dll|x86.ActiveCfg = Debug|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug-Dll|x86.Build.0 = Debug|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug-Lib|x64.ActiveCfg = Debug|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug-Lib|x64.Build.0 = Debug|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug-Lib|x86.ActiveCfg = Debug|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Debug-Lib|x86.Build.0 = Debug|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release|x64.ActiveCfg = Release|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release|x64.Build.0 = Release|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release|x86.ActiveCfg = Release|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release|x86.Build.0 = Release|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Dll|x64.ActiveCfg = Release|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Dll|x64.Build.0 = Release|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Dll|x86.ActiveCfg = Release|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Dll|x86.Build.0 = Release|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Install|x64.ActiveCfg = Release|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Install|x64.Build.0 = Release|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Install|x86.ActiveCfg = Release|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Install|x86.Build.0 = Release|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Lib|x64.ActiveCfg = Release|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Lib|x64.Build.0 = Release|x64
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Lib|x86.ActiveCfg = Release|Win32
+		{1FBB26B4-BE1D-4C0D-B271-85B1E97F3C3D}.Release-Lib|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

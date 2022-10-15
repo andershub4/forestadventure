@@ -11,14 +11,15 @@
 
 namespace FA {
 
-std::string GetBuffer(std::istream& ifd)
+std::string GetBuffer(std::istream& is)
 {
-    if (ifd.good()) {
-        auto size = static_cast<unsigned long>(ifd.tellg());
-        ifd.seekg(0, std::ios::beg);
+    if (is.good()) {
+        is.seekg(0, is.end);
+        int size = is.tellg();
+        is.seekg(0, is.beg);  
         std::vector<char> buffer;
         buffer.resize(size);
-        ifd.read(buffer.data(), size);
+        is.read(buffer.data(), size);
         std::string xmlBuffer(buffer.begin(), buffer.end());
         return xmlBuffer;
     }
@@ -28,7 +29,7 @@ std::string GetBuffer(std::istream& ifd)
 
 std::string GetFileBuffer(const std::string& fileName)
 {
-    std::ifstream ifd(fileName, std::ios::binary | std::ios::ate);
+    std::ifstream ifd(fileName, std::ios::binary);
     return GetBuffer(ifd);
 }
 
