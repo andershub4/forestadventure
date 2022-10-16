@@ -155,7 +155,7 @@
     <ClInclude Include="Include\Path.h" />
     <ClInclude Include="Include\Random.h" />
     <ClInclude Include="Include\Result.h" />
-    <ClInclude Include="Include\SpecialFolder.h" />
+    <ClInclude Include="Src\SpecialFolder.h" />
     <ClInclude Include="Include\Version.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

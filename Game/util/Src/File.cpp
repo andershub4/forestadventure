@@ -15,7 +15,7 @@ std::string GetBuffer(std::istream& is)
 {
     if (is.good()) {
         is.seekg(0, is.end);
-        int size = is.tellg();
+        int size = static_cast<unsigned long>(is.tellg());
         is.seekg(0, is.beg);  
         std::vector<char> buffer;
         buffer.resize(size);

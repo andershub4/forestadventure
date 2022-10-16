@@ -50,7 +50,7 @@
     <ClInclude Include="Include\Result.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\SpecialFolder.h">
+    <ClInclude Include="Src\SpecialFolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Version.h">
