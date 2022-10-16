@@ -40,6 +40,7 @@
     <ClCompile Include="Src\ParseHelper_test.cpp" />
     <ClCompile Include="Src\TileMapData_test.cpp" />
     <ClCompile Include="Src\TileSetFactory_test.cpp" />
+    <ClCompile Include="Src\TmxParser_test.cpp" />
     <ClCompile Include="Src\TsxParser_test.cpp" />
   </ItemGroup>
   <ItemGroup>

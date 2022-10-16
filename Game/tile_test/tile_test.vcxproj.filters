@@ -11,6 +11,7 @@
     <ClCompile Include="Src\GridTileSet_test.cpp" />
     <ClCompile Include="Src\TileMapData_test.cpp" />
     <ClCompile Include="Src\TileSetFactory_test.cpp" />
+    <ClCompile Include="Src\TmxParser_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
