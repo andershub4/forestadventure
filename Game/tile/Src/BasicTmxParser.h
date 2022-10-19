@@ -44,7 +44,7 @@ class BasicTmxParser
 public:
     virtual ~BasicTmxParser() = default;
 
-    virtual bool Parse(const std::string& xmlBuffer, ParsedTmx& parsedTmx) const = 0;
+    virtual bool Parse(DocumentT& xmlDocument, const std::string& xmlBuffer, ParsedTmx& parsedTmx) const = 0;
 };
 
 }  // namespace Tile

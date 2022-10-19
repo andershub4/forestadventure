@@ -27,6 +27,9 @@ namespace Tile {
 
 TileMapParser::TileMapParser()
     : tileSetFactory_(std::make_unique<TileSetFactory>())
+    , helper_(std::make_unique<ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>>())
+    , tmxParser_(std::make_unique<TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(*helper_))
+    , tsxParser_(std::make_unique<TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(*helper_))
 {}
 
 TileMapParser::~TileMapParser() = default;
@@ -36,12 +39,10 @@ TileMapData TileMapParser::Run(const std::string& fileName)
     LOG_TMXINFO("Parse ", fileName);
     LOG_TMXINFO("Start parse fileName ", fileName);
     tinyxml2::XMLDocument doc;
-    ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError> helper;
-    TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> tmxParser(doc, helper);
     ParsedTmx parsedTmx;
     auto xmlBuffer = GetFileBuffer(fileName);
 
-    if (tmxParser.Parse(xmlBuffer, parsedTmx)) {
+    if (tmxParser_->Parse(doc, xmlBuffer, parsedTmx)) {
         ReadMapProperties(parsedTmx);
         auto tmxDir = GetHead(fileName);
         ReadTileSets(parsedTmx, tmxDir);
@@ -75,12 +76,10 @@ void TileMapParser::ReadTileSets(const ParsedTmx& parsedTmx, const std::string& 
             auto tsxFilePath = GetFilePath(tmxDir, parsedSet.tsxSource_);
             auto tsxDir = GetHead(tsxFilePath);
             tinyxml2::XMLDocument doc;
-            ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError> helper;
-            TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> tsxParser(doc, helper);
             ParsedTsx parsedTsx;
             auto xmlBuffer = GetFileBuffer(tsxFilePath);
 
-            if (tsxParser.Parse(xmlBuffer, parsedTsx)) {
+            if (tsxParser_->Parse(doc, xmlBuffer, parsedTsx)) {
                 auto set =
                     tileSetFactory_->Create(tsxDir, parsedTsx.tiles_, parsedTsx.tileSet_, parsedTsx.image_.source_);
                 auto firstGid = parsedSet.firstGid_;

@@ -37,7 +37,7 @@ protected:
     XMLElementMock mapElementMock_;
 
     ParseHelperMock<XMLElementMock, XMLError> helperMock_;
-    TmxParser<XMLDocumentMock, XMLElementMock, XMLError> parser_{docMock_, helperMock_};
+    TmxParser<XMLDocumentMock, XMLElementMock, XMLError> parser_{helperMock_};
 };
 
 TEST_F(TmxParserTest, TestParsedTmxDataEqualToOperator)
@@ -55,7 +55,7 @@ TEST_F(TmxParserTest, ParseShouldFailDueToError)
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(true));
 
     ParsedTmx result;
-    EXPECT_FALSE(parser_.Parse(xmlBuffer_, result));
+    EXPECT_FALSE(parser_.Parse(docMock_, xmlBuffer_, result));
     ParsedTmx expected;
     EXPECT_EQ(expected, result);
 }
@@ -93,7 +93,7 @@ TEST_F(TmxParserTest, ParseValidMapShouldSucceed)
     EXPECT_CALL(groupMock, NextSiblingElement(StrEq("objectgroup"))).WillOnce(Return(nullptr));
 
     ParsedTmx result;
-    EXPECT_TRUE(parser_.Parse(xmlBuffer_, result));
+    EXPECT_TRUE(parser_.Parse(docMock_, xmlBuffer_, result));
     ParsedTmx expected{map_, {tmxTileSet_}, {layer1_, layer2_}, {group_}};
     EXPECT_EQ(expected, result);
 }

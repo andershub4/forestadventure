@@ -18,7 +18,8 @@ template <class DocumentT, class ElementT, class ErrorT>
 class TsxParserMock : public BasicTsxParser<DocumentT, ElementT, ErrorT>
 {
 public:
-    MOCK_METHOD(bool, Parse, (const std::string& xmlBuffer, ParsedTsx& parsedTsx), (const, override));
+    MOCK_METHOD(bool, Parse, (DocumentT & xmlDocument, const std::string& xmlBuffer, ParsedTsx& parsedTsx),
+                (const, override));
 };
 
 }  // namespace Tile

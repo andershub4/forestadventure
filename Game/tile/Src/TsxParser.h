@@ -25,22 +25,21 @@ template <class DocumentT, class ElementT, class ErrorT>
 class TsxParser : public BasicTsxParser<DocumentT, ElementT, ErrorT>
 {
 public:
-    TsxParser(DocumentT& xmlDocument, BasicParseHelper<ElementT, ErrorT>& helper)
-        : xmlDocument_(xmlDocument)
-        , helper_(helper)
+    TsxParser(BasicParseHelper<ElementT, ErrorT>& helper)
+        : helper_(helper)
     {}
 
     virtual ~TsxParser() = default;
 
-    virtual bool Parse(const std::string& xmlBuffer, ParsedTsx& parsedTsx) const override
+    virtual bool Parse(DocumentT& xmlDocument, const std::string& xmlBuffer, ParsedTsx& parsedTsx) const override
     {
-        xmlDocument_.Parse(xmlBuffer.c_str());
+        xmlDocument.Parse(xmlBuffer.c_str());
 
-        if (xmlDocument_.Error()) {
+        if (xmlDocument.Error()) {
             return false;
         }
         else {
-            ElementT* tileSetElement = xmlDocument_.FirstChildElement("tileset");
+            ElementT* tileSetElement = xmlDocument.FirstChildElement("tileset");
             ParseTileSetElement(tileSetElement, parsedTsx);
             return true;
         }
@@ -48,7 +47,6 @@ public:
 
 private:
     BasicParseHelper<ElementT, ErrorT>& helper_;
-    DocumentT& xmlDocument_;
 
 private:
     void ParseTileSetElement(ElementT* tileSetElement, ParsedTsx& parsedTsx) const

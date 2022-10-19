@@ -12,12 +12,29 @@
 
 #include "TileMapData.h"
 
+namespace tinyxml2 {
+
+class XMLElement;
+class XMLDocument;
+enum XMLError;
+
+}  // namespace tinyxml2
+
 namespace FA {
 
 namespace Tile {
 
 struct ParsedTmx;
 class TileSetFactory;
+
+template <class ElementT, class ErrorT>
+class ParseHelper;
+
+template <class DocumentT, class ElementT, class ErrorT>
+class TmxParser;
+
+template <class DocumentT, class ElementT, class ErrorT>
+class TsxParser;
 
 class TileMapParser
 {
@@ -30,6 +47,9 @@ public:
 private:
     TileMapData tileMapData_;
     std::unique_ptr<TileSetFactory> tileSetFactory_{};
+    std::unique_ptr<ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>> helper_{};
+    std::unique_ptr<TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>> tmxParser_{};
+    std::unique_ptr<TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>> tsxParser_{};
 
 private:
     void ReadMapProperties(const ParsedTmx& parsedTmx);

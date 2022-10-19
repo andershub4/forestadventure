@@ -24,21 +24,21 @@ template <class DocumentT, class ElementT, class ErrorT>
 class TmxParser : public BasicTmxParser<DocumentT, ElementT, ErrorT>
 {
 public:
-    TmxParser(DocumentT& xmlDocument, BasicParseHelper<ElementT, ErrorT>& helper)
-        : xmlDocument_(xmlDocument)
-        , helper_(helper)
+    TmxParser(BasicParseHelper<ElementT, ErrorT>& helper)
+        : helper_(helper)
     {}
+
     virtual ~TmxParser() = default;
 
-    virtual bool Parse(const std::string& xmlBuffer, ParsedTmx& parsedTmx) const override
+    virtual bool Parse(DocumentT& xmlDocument, const std::string& xmlBuffer, ParsedTmx& parsedTmx) const override
     {
-        xmlDocument_.Parse(xmlBuffer.c_str());
+        xmlDocument.Parse(xmlBuffer.c_str());
 
-        if (xmlDocument_.Error()) {
+        if (xmlDocument.Error()) {
             return false;
         }
         else {
-            ElementT* map = xmlDocument_.FirstChildElement("map");
+            ElementT* map = xmlDocument.FirstChildElement("map");
             ParseMapElement(map, parsedTmx);
             return true;
         }
@@ -46,7 +46,6 @@ public:
 
 private:
     BasicParseHelper<ElementT, ErrorT>& helper_;
-    DocumentT& xmlDocument_;
 
 private:
     void ParseMapElement(ElementT* mapElement, ParsedTmx& parsedTmx) const

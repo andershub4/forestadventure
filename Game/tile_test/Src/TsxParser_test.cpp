@@ -38,7 +38,7 @@ protected:
     XMLElementMock tileSetElementMock_;
 
     ParseHelperMock<XMLElementMock, XMLError> helperMock_;
-    TsxParser<XMLDocumentMock, XMLElementMock, XMLError> parser_{docMock_, helperMock_};
+    TsxParser<XMLDocumentMock, XMLElementMock, XMLError> parser_{helperMock_};
 };
 
 TEST_F(TsxParserTest, TestParsedTsxDataEqualToOperator)
@@ -56,7 +56,7 @@ TEST_F(TsxParserTest, ParseShouldFailDueToError)
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(true));
 
     ParsedTsx result;
-    EXPECT_FALSE(parser_.Parse(xmlBuffer_, result));
+    EXPECT_FALSE(parser_.Parse(docMock_, xmlBuffer_, result));
     ParsedTsx expected;
     EXPECT_EQ(expected, result);
 }
@@ -86,7 +86,7 @@ TEST_F(TsxParserTest, ParseValidImageDataShouldSucceed)
     EXPECT_CALL(tileSetElementMock_, FirstChildElement(StrEq("image"))).WillOnce(Return(nullptr));
 
     ParsedTsx result;
-    EXPECT_TRUE(parser_.Parse(xmlBuffer_, result));
+    EXPECT_TRUE(parser_.Parse(docMock_, xmlBuffer_, result));
     ParsedTsx expected{tileSet_, {}, {tile1_, tile2_, tile3_}};
     EXPECT_EQ(expected, result);
 }
@@ -107,7 +107,7 @@ TEST_F(TsxParserTest, ParseValidGridDataShouldSucceed)
         .WillOnce(DoAll(SetArgReferee<1>(image_), Return(parseResult_)));
 
     ParsedTsx result;
-    EXPECT_TRUE(parser_.Parse(xmlBuffer_, result));
+    EXPECT_TRUE(parser_.Parse(docMock_, xmlBuffer_, result));
     ParsedTsx expected{tileSet_, image_, {}};
     EXPECT_EQ(expected, result);
 }
