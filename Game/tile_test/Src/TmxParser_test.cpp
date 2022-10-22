@@ -21,6 +21,12 @@ namespace Tile {
 
 class TmxParserTest : public Test
 {
+public:
+    TmxParserTest()
+        : helperMock_(std::make_shared<ParseHelperMock<XMLElementMock, XMLError>>())
+        , parser_(helperMock_)
+    {}
+
 protected:
     const std::string xmlBuffer_ = "xml content";
 
@@ -36,8 +42,8 @@ protected:
     XMLDocumentMock docMock_;
     XMLElementMock mapElementMock_;
 
-    ParseHelperMock<XMLElementMock, XMLError> helperMock_;
-    TmxParser<XMLDocumentMock, XMLElementMock, XMLError> parser_{helperMock_};
+    std::shared_ptr<ParseHelperMock<XMLElementMock, XMLError>> helperMock_;
+    TmxParser<XMLDocumentMock, XMLElementMock, XMLError> parser_;
 };
 
 TEST_F(TmxParserTest, TestParsedTmxDataEqualToOperator)
@@ -65,30 +71,30 @@ TEST_F(TmxParserTest, ParseValidMapShouldSucceed)
     EXPECT_CALL(docMock_, Parse(StrEq(xmlBuffer_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(false));
     EXPECT_CALL(docMock_, FirstChildElement(StrEq("map"))).WillOnce(Return(&mapElementMock_));
-    EXPECT_CALL(helperMock_, ParseMap(&mapElementMock_, _))
+    EXPECT_CALL(*helperMock_, ParseMap(&mapElementMock_, _))
         .WillOnce(DoAll(SetArgReferee<1>(map_), Return(parseResult_)));
 
     XMLElementMock tileSetMock;
     EXPECT_CALL(mapElementMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&tileSetMock));
-    EXPECT_CALL(helperMock_, ParseTmxTileSet(&tileSetMock, _))
+    EXPECT_CALL(*helperMock_, ParseTmxTileSet(&tileSetMock, _))
         .WillOnce(DoAll(SetArgReferee<1>(tmxTileSet_), Return(parseResult_)));
     EXPECT_CALL(tileSetMock, NextSiblingElement(StrEq("tileset"))).WillOnce(Return(nullptr));
 
     XMLElementMock layerMock1;
     EXPECT_CALL(mapElementMock_, FirstChildElement(StrEq("layer"))).WillOnce(Return(&layerMock1));
-    EXPECT_CALL(helperMock_, ParseLayer(&layerMock1, _))
+    EXPECT_CALL(*helperMock_, ParseLayer(&layerMock1, _))
         .WillOnce(DoAll(SetArgReferee<1>(layer1_), Return(parseResult_)));
 
     XMLElementMock layerMock2;
     EXPECT_CALL(layerMock1, NextSiblingElement(StrEq("layer"))).WillOnce(Return(&layerMock2));
-    EXPECT_CALL(helperMock_, ParseLayer(&layerMock2, _))
+    EXPECT_CALL(*helperMock_, ParseLayer(&layerMock2, _))
         .WillOnce(DoAll(SetArgReferee<1>(layer2_), Return(parseResult_)));
 
     EXPECT_CALL(layerMock2, NextSiblingElement(StrEq("layer"))).WillOnce(Return(nullptr));
 
     XMLElementMock groupMock;
     EXPECT_CALL(mapElementMock_, FirstChildElement(StrEq("objectgroup"))).WillOnce(Return(&groupMock));
-    EXPECT_CALL(helperMock_, ParseObjectGroup(&groupMock, _))
+    EXPECT_CALL(*helperMock_, ParseObjectGroup(&groupMock, _))
         .WillOnce(DoAll(SetArgReferee<1>(group_), Return(parseResult_)));
     EXPECT_CALL(groupMock, NextSiblingElement(StrEq("objectgroup"))).WillOnce(Return(nullptr));
 

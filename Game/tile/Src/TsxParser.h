@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "BasicParseHelper.h"
 #include "BasicTsxParser.h"
 
 #include "TmxLogging.h"
@@ -18,14 +19,11 @@ namespace FA {
 
 namespace Tile {
 
-template <class ElementT, class ErrorT>
-class BasicParseHelper;
-
 template <class DocumentT, class ElementT, class ErrorT>
 class TsxParser : public BasicTsxParser<DocumentT, ElementT, ErrorT>
 {
 public:
-    TsxParser(BasicParseHelper<ElementT, ErrorT>& helper)
+    TsxParser(std::shared_ptr<BasicParseHelper<ElementT, ErrorT>> helper)
         : helper_(helper)
     {}
 
@@ -46,18 +44,18 @@ public:
     }
 
 private:
-    BasicParseHelper<ElementT, ErrorT>& helper_;
+    std::shared_ptr<BasicParseHelper<ElementT, ErrorT>> helper_;
 
 private:
     void ParseTileSetElement(ElementT* tileSetElement, ParsedTsx& parsedTsx) const
     {
-        helper_.ParseTileSet(tileSetElement, parsedTsx.tileSet_);
+        helper_->ParseTileSet(tileSetElement, parsedTsx.tileSet_);
         LOG_TMXINFO("tileSet: ", parsedTsx.tileSet_);
 
         auto tileElement = tileSetElement->FirstChildElement("tile");
         while (tileElement != nullptr) {
             ParsedTile tile;
-            helper_.ParseTile(tileElement, tile);
+            helper_->ParseTile(tileElement, tile);
             LOG_TMXINFO("tile: ", tile);
             parsedTsx.tiles_.push_back(tile);
             tileElement = tileElement->NextSiblingElement("tile");
@@ -65,7 +63,7 @@ private:
 
         auto imageElement = tileSetElement->FirstChildElement("image");
         if (imageElement != nullptr) {
-            helper_.ParseImage(imageElement, parsedTsx.image_);
+            helper_->ParseImage(imageElement, parsedTsx.image_);
             LOG_TMXINFO("image: ", parsedTsx.image_);
         }
     }

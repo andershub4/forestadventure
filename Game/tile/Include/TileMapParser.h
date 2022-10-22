@@ -8,9 +8,6 @@
 
 #include <memory>
 #include <string>
-#include <vector>
-
-#include "TileMapData.h"
 
 namespace tinyxml2 {
 
@@ -24,17 +21,13 @@ namespace FA {
 
 namespace Tile {
 
-struct ParsedTmx;
-class TileSetFactory;
+struct TileMapData;
 
 template <class ElementT, class ErrorT>
 class ParseHelper;
 
 template <class DocumentT, class ElementT, class ErrorT>
-class TmxParser;
-
-template <class DocumentT, class ElementT, class ErrorT>
-class TsxParser;
+class TileService;
 
 class TileMapParser
 {
@@ -45,18 +38,8 @@ public:
     TileMapData Run(const std::string& fileName);
 
 private:
-    TileMapData tileMapData_;
-    std::unique_ptr<TileSetFactory> tileSetFactory_{};
-    std::unique_ptr<ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>> helper_{};
-    std::unique_ptr<TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>> tmxParser_{};
-    std::unique_ptr<TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>> tsxParser_{};
-
-private:
-    void ReadMapProperties(const ParsedTmx& parsedTmx);
-    void ReadTileSets(const ParsedTmx& parsedTmx, const std::string& tmxDir);
-    void ReadLayers(const ParsedTmx& parsedTmx);
-    void ReadObjectGroups(const ParsedTmx& parsedTmx);
-    std::vector<int> ParseData(const std::string& dataStr) const;
+    std::shared_ptr<ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>> helper_;
+    std::unique_ptr<TileService<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>> tileService_;
 };
 
 }  // namespace Tile

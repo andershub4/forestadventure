@@ -39,6 +39,7 @@
     <ClCompile Include="Src\ParsedElements_test.cpp" />
     <ClCompile Include="Src\ParseHelper_test.cpp" />
     <ClCompile Include="Src\TileMapData_test.cpp" />
+    <ClCompile Include="Src\TileService_test.cpp" />
     <ClCompile Include="Src\TileSetFactory_test.cpp" />
     <ClCompile Include="Src\TmxParser_test.cpp" />
     <ClCompile Include="Src\TsxParser_test.cpp" />
@@ -53,6 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Mock\ParseHelperMock.h" />
+    <ClInclude Include="Src\Mock\TileSetFactoryMock.h" />
+    <ClInclude Include="Src\Mock\TileSetMock.h" />
+    <ClInclude Include="Src\Mock\TmxParserMock.h" />
     <ClInclude Include="Src\Mock\TsxParserMock.h" />
     <ClInclude Include="Src\Mock\XMLMock.h" />
   </ItemGroup>

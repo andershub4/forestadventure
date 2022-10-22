@@ -6,11 +6,7 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
-
-#include "ParsedElements.h"
+#include "BasicTileSetFactory.h"
 
 namespace FA {
 
@@ -18,7 +14,7 @@ namespace Tile {
 
 class BasicTileSet;
 
-class TileSetFactory
+class TileSetFactory : public BasicTileSetFactory
 {
 public:
     TileSetFactory();

@@ -19,7 +19,24 @@ class TsxParserMock : public BasicTsxParser<DocumentT, ElementT, ErrorT>
 {
 public:
     MOCK_METHOD(bool, Parse, (DocumentT & xmlDocument, const std::string& xmlBuffer, ParsedTsx& parsedTsx),
-                (const, override));
+                (const override));
+};
+
+template <class DocumentT, class ElementT, class ErrorT>
+class TsxParserMockProxy : public BasicTsxParser<DocumentT, ElementT, ErrorT>
+{
+public:
+    TsxParserMockProxy(TsxParserMock<DocumentT, ElementT, ErrorT>& mock)
+        : mock_(mock)
+    {}
+
+    bool Parse(DocumentT& xmlDocument, const std::string& xmlBuffer, ParsedTsx& parsedTsx) const override
+    {
+        return mock_.Parse(xmlDocument, xmlBuffer, parsedTsx);
+    }
+
+private:
+    TsxParserMock<DocumentT, ElementT, ErrorT>& mock_;
 };
 
 }  // namespace Tile

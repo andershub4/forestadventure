@@ -6,15 +6,19 @@
 
 #pragma once
 
-#include <string>
+#include <gmock/gmock.h>
+
+#include "BasicTileSet.h"
 
 namespace FA {
 
 namespace Tile {
 
-std::string GetFilePath(const std::string& baseDir, const std::string& source);
-std::string GetFileBuffer(const std::string& fileName);
-std::string GetHead(const std::string& filePath);
+class TileSetMock : public BasicTileSet
+{
+public:
+    MOCK_METHOD(TileSetData, GenerateTileData, (), (const, override));
+};
 
 }  // namespace Tile
 
