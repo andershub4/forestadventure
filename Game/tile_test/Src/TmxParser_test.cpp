@@ -28,6 +28,8 @@ public:
     {}
 
 protected:
+    using ParseResult = ParseResult<XMLErrorMock>;
+
     const std::string xmlBuffer_ = "xml content";
 
     const ParsedMap map_{"right-down", 100, 100, 16, 16};
@@ -37,7 +39,7 @@ protected:
     const ParsedObject object1_{4, "Player", 360, 296, {{"FaceDirection", "Down"}}};
     const ParsedObject object2_{5, "Enemy", 260, 196, {{"FaceDirection", "Down"}}};
     const ParsedObjectGroup group_{2, "ObjectGroup1", {object1_, object2_}};
-    const std::vector<ParseResult<XMLErrorMock>> parseResult_;
+    const std::vector<ParseResult> parseResult_;
 
     XMLDocumentMock docMock_;
     XMLElementMock mapElementMock_;

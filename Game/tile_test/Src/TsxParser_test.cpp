@@ -28,6 +28,8 @@ public:
     {}
 
 protected:
+    using ParseResult = ParseResult<XMLErrorMock>;
+
     const std::string xmlBuffer_ = "xml content";
 
     const ParsedTileSet tileSet_{"tsname", 16, 80, 3, 0};
@@ -38,7 +40,7 @@ protected:
     const ParsedTile tile1_{110, image_, animation1_};
     const ParsedTile tile2_{111, image_, animation2_};
     const ParsedTile tile3_{111, image_, animation3_};
-    const std::vector<ParseResult<XMLErrorMock>> parseResult_;
+    const std::vector<ParseResult> parseResult_;
 
     XMLDocumentMock docMock_;
     XMLElementMock tileSetElementMock_;
