@@ -21,14 +21,13 @@ namespace Tile {
 
 class TmxParserTest : public Test
 {
-public:
+protected:
+    using ParseResult = ParseResult<XMLErrorMock>;
+
     TmxParserTest()
         : helperMock_(std::make_shared<ParseHelperMock<XMLElementMock, XMLErrorMock>>())
         , parser_(helperMock_)
     {}
-
-protected:
-    using ParseResult = ParseResult<XMLErrorMock>;
 
     const std::string xmlBuffer_ = "xml content";
 
