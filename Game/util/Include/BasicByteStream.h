@@ -10,11 +10,12 @@
 
 namespace FA {
 
-namespace Tile {
+class BasicByteStream
+{
+public:
+    virtual ~BasicByteStream() = default;
 
-std::string GetFilePath(const std::string& baseDir, const std::string& source);
-std::string GetHead(const std::string& filePath);
-
-}  // namespace Tile
+    virtual std::string GetBuffer() const = 0;
+};
 
 }  // namespace FA

@@ -6,14 +6,19 @@
 
 #pragma once
 
-#include <string>
+#include <gmock/gmock.h>
+
+#include "BasicByteStream.h"
 
 namespace FA {
 
 namespace Tile {
 
-std::string GetFilePath(const std::string& baseDir, const std::string& source);
-std::string GetHead(const std::string& filePath);
+class ByteStreamMock : public BasicByteStream
+{
+public:
+    MOCK_METHOD(std::string, GetBuffer, (), (const override));
+};
 
 }  // namespace Tile
 

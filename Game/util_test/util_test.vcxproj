@@ -147,10 +147,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc" />
-    <ClCompile Include="Src\File_test.cpp" />
+    <ClCompile Include="Src\ByteStream_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\Mock\ByteStreamFactoryMock.h" />
+    <ClInclude Include="Include\Mock\ByteStreamMock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

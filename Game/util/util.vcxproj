@@ -141,15 +141,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\ByteStreamFactory.cpp" />
     <ClCompile Include="Src\Error.cpp" />
-    <ClCompile Include="Src\File.cpp" />
+    <ClCompile Include="Src\ByteStream.cpp" />
     <ClCompile Include="Src\Folder.cpp" />
     <ClCompile Include="Src\Path.cpp" />
     <ClCompile Include="Src\Random.cpp" />
     <ClCompile Include="Src\SpecialFolder.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\File.h" />
+    <ClInclude Include="Include\BasicByteStream.h" />
+    <ClInclude Include="Include\BasicByteStreamFactory.h" />
+    <ClInclude Include="Src\ByteStream.h" />
+    <ClInclude Include="Include\ByteStreamFactory.h" />
     <ClInclude Include="Src\Error.h" />
     <ClInclude Include="Include\Folder.h" />
     <ClInclude Include="Include\Path.h" />

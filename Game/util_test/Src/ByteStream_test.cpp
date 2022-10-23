@@ -6,17 +6,19 @@
 
 #include <gtest/gtest.h>
 
-#include "File.h"
+#include <fstream>
+
+#include "ByteStream.h"
 
 using namespace testing;
 
 namespace FA {
 
-TEST(FileTest, GetBufferShouldReturnStringContent)
+TEST(ByteStreamTest, GetBufferShouldReturnStringContent)
 {
     std::string expected{"Hello file!"};
-    std::istringstream ss(expected);
-    auto result = GetBuffer(ss);
+    ByteStream byteStream(std::make_unique<std::istringstream>(expected));
+    auto result = byteStream.GetBuffer();
 
     EXPECT_EQ(expected, result);
 }

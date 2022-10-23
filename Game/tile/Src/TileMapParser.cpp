@@ -8,6 +8,7 @@
 
 #include <tinyxml2/tinyxml2.h>
 
+#include "ByteStreamFactory.h"
 #include "Folder.h"
 #include "ParseHelper.h"
 #include "TileMapData.h"
@@ -26,7 +27,7 @@ TileMapParser::TileMapParser()
     , tileService_(std::make_unique<TileService<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(
           std::make_unique<TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(helper_),
           std::make_unique<TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(helper_),
-          std::make_unique<TileSetFactory>()))
+          std::make_unique<TileSetFactory>(), std::make_unique<ByteStreamFactory>()))
 {}
 
 TileMapParser::~TileMapParser() = default;

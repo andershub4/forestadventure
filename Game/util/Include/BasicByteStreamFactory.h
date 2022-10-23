@@ -6,11 +6,19 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 
 namespace FA {
 
-std::string GetBuffer(std::istream& ifd);
-std::string GetFileBuffer(const std::string& fileName);
+class BasicByteStream;
+
+class BasicByteStreamFactory
+{
+public:
+    virtual ~BasicByteStreamFactory() = default;
+
+    virtual std::unique_ptr<BasicByteStream> Create(const std::string& fileName) const = 0;
+};
 
 }  // namespace FA

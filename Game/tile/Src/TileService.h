@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 
+#include "BasicByteStream.h"
+#include "BasicByteStreamFactory.h"
 #include "BasicTileSetFactory.h"
 #include "BasicTmxParser.h"
 #include "BasicTsxParser.h"
@@ -30,10 +32,12 @@ class TileService
 public:
     TileService(std::unique_ptr<BasicTmxParser<DocumentT, ElementT, ErrorT>> tmxParser,
                 std::unique_ptr<BasicTsxParser<DocumentT, ElementT, ErrorT>> tsxParser,
-                std::unique_ptr<BasicTileSetFactory> tileSetFactory)
+                std::unique_ptr<BasicTileSetFactory> tileSetFactory,
+                std::unique_ptr<BasicByteStreamFactory> byteStreamFactory)
         : tmxParser_(std::move(tmxParser))
         , tsxParser_(std::move(tsxParser))
         , tileSetFactory_(std::move(tileSetFactory))
+        , byteStreamFactory_(std::move(byteStreamFactory))
     {}
 
     ~TileService() = default;
@@ -41,7 +45,8 @@ public:
     bool Parse(const std::string &fileName)
     {
         DocumentT doc;
-        auto xmlBuffer = GetFileBuffer(fileName);
+        auto byteStream = byteStreamFactory_->Create(fileName);
+        auto xmlBuffer = byteStream->GetBuffer();
         return tmxParser_->Parse(doc, xmlBuffer, parsedTmx_);
     }
 
@@ -69,7 +74,8 @@ public:
                 auto tsxDir = GetHead(tsxFilePath);
                 DocumentT doc;
                 ParsedTsx parsedTsx;
-                auto xmlBuffer = GetFileBuffer(tsxFilePath);
+                auto byteStream = byteStreamFactory_->Create(tsxFilePath);
+                auto xmlBuffer = byteStream->GetBuffer();
 
                 if (tsxParser_->Parse(doc, xmlBuffer, parsedTsx)) {
                     auto set =
@@ -131,6 +137,7 @@ private:
     std::unique_ptr<BasicTmxParser<DocumentT, ElementT, ErrorT>> tmxParser_;
     std::unique_ptr<BasicTsxParser<DocumentT, ElementT, ErrorT>> tsxParser_;
     std::unique_ptr<BasicTileSetFactory> tileSetFactory_;
+    std::unique_ptr<BasicByteStreamFactory> byteStreamFactory_;
 
     ParsedTmx parsedTmx_;
 

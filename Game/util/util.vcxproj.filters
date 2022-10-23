@@ -30,7 +30,10 @@
     <ClCompile Include="Src\SpecialFolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\File.cpp">
+    <ClCompile Include="Src\ByteStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ByteStreamFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +59,16 @@
     <ClInclude Include="Include\Version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\File.h">
+    <ClInclude Include="Src\ByteStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\BasicByteStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\BasicByteStreamFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ByteStreamFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

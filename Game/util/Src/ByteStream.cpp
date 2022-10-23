@@ -4,33 +4,31 @@
  *	See file LICENSE for full license details.
  */
 
-#include "File.h"
+#include "ByteStream.h"
 
-#include <fstream>
+#include <istream>
 #include <vector>
 
 namespace FA {
 
-std::string GetBuffer(std::istream& is)
+ByteStream::ByteStream(std::unique_ptr<std::istream> is)
+    : is_(std::move(is))
+{}
+
+std::string ByteStream::GetBuffer() const
 {
-    if (is.good()) {
-        is.seekg(0, is.end);
-        int size = static_cast<unsigned long>(is.tellg());
-        is.seekg(0, is.beg);  
+    if (is_->good()) {
+        is_->seekg(0, is_->end);
+        int size = static_cast<unsigned long>(is_->tellg());
+        is_->seekg(0, is_->beg);
         std::vector<char> buffer;
         buffer.resize(size);
-        is.read(buffer.data(), size);
+        is_->read(buffer.data(), size);
         std::string xmlBuffer(buffer.begin(), buffer.end());
         return xmlBuffer;
     }
 
     return {};
-}
-
-std::string GetFileBuffer(const std::string& fileName)
-{
-    std::ifstream ifd(fileName, std::ios::binary);
-    return GetBuffer(ifd);
 }
 
 }  // namespace FA

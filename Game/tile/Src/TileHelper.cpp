@@ -6,7 +6,6 @@
 
 #include "TileHelper.h"
 
-#include "File.h"
 #include "Folder.h"
 
 namespace FA {
@@ -27,11 +26,6 @@ std::string GetFilePath(const std::string& baseDir, const std::string& source)
     }
 
     return head + '/' + tail;
-}
-
-std::string GetFileBuffer(const std::string& fileName)
-{
-    return FA::GetFileBuffer(fileName);
 }
 
 std::string GetHead(const std::string& filePath)

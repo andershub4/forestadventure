@@ -8,6 +8,8 @@
 
 #include <gtest/gtest.h>
 
+#include "Mock/ByteStreamFactoryMock.h"
+#include "Mock/ByteStreamMock.h"
 #include "Mock/TileSetFactoryMock.h"
 #include "Mock/TileSetMock.h"
 #include "Mock/TmxParserMock.h"
@@ -19,11 +21,6 @@
 using namespace testing;
 
 namespace FA {
-
-std::string GetFileBuffer(const std::string &fileName)
-{
-    return "buffer";
-}
 
 namespace Tile {
 
@@ -46,6 +43,7 @@ protected:
     TmxParserMock<XMLDocumentMock, XMLElementMock, XMLError> tmxParserMock_;
     TsxParserMock<XMLDocumentMock, XMLElementMock, XMLError> tsxParserMock_;
     TileSetFactoryMock tileSetFactoryMock_;
+    ByteStreamFactoryMock byteStreamFactoryMock_;
 
     std::unique_ptr<TileService<XMLDocumentMock, XMLElementMock, XMLError>> service_;
 };
@@ -57,14 +55,20 @@ void TileServiceTest::SetUp()
     auto tsxParserMockProxy =
         std::make_unique<TsxParserMockProxy<XMLDocumentMock, XMLElementMock, XMLError>>(tsxParserMock_);
     auto tileSetFactoryMockProxy = std::make_unique<TileSetFactoryMockProxy>(tileSetFactoryMock_);
+    auto byteStreamFactoryMockProxy = std::make_unique<ByteStreamFactoryMockProxy>(byteStreamFactoryMock_);
     service_ = std::make_unique<TileService<XMLDocumentMock, XMLElementMock, XMLError>>(
-        std::move(tmxParserMockProxy), std::move(tsxParserMockProxy), std::move(tileSetFactoryMockProxy));
+        std::move(tmxParserMockProxy), std::move(tsxParserMockProxy), std::move(tileSetFactoryMockProxy),
+        std::move(byteStreamFactoryMockProxy));
 }
 
 TEST_F(TileServiceTest, ReadMapPropertiesShouldSucceed)
 {
     ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_}, {group_}};
-    EXPECT_CALL(tmxParserMock_, Parse(_, _, _)).WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
+    auto byteStreamMock = std::make_unique<ByteStreamMock>();
+    EXPECT_CALL(*byteStreamMock, GetBuffer()).WillOnce(Return("xmlbuffer"));
+    EXPECT_CALL(byteStreamFactoryMock_, Create(tmxPath_)).WillOnce(Return(ByMove(std::move(byteStreamMock))));
+    EXPECT_CALL(tmxParserMock_, Parse(_, StrEq("xmlbuffer"), _))
+        .WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
 
     EXPECT_TRUE(service_->Parse(tmxPath_));
 
@@ -76,7 +80,11 @@ TEST_F(TileServiceTest, ReadMapPropertiesShouldSucceed)
 TEST_F(TileServiceTest, ReadTileSetsShouldSucceed)
 {
     ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_}, {group_}};
-    EXPECT_CALL(tmxParserMock_, Parse(_, _, _)).WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
+    auto byteStreamMock = std::make_unique<ByteStreamMock>();
+    EXPECT_CALL(*byteStreamMock, GetBuffer()).WillOnce(Return("xmlbuffer"));
+    EXPECT_CALL(byteStreamFactoryMock_, Create(tmxPath_)).WillOnce(Return(ByMove(std::move(byteStreamMock))));
+    EXPECT_CALL(tmxParserMock_, Parse(_, StrEq("xmlbuffer"), _))
+        .WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
 
     EXPECT_TRUE(service_->Parse(tmxPath_));
 
@@ -91,6 +99,12 @@ TEST_F(TileServiceTest, ReadTileSetsShouldSucceed)
     FrameData frameData2{frame2, {}};
     FrameData frameData3{frame3, {}};
     TileSetData imageTileSetData{{image1, image2, image3}, {{0, frameData1}, {1, frameData2}, {2, frameData3}}};
+
+    auto byteStreamMock2 = std::make_unique<ByteStreamMock>();
+    EXPECT_CALL(*byteStreamMock2, GetBuffer()).WillOnce(Return("xmlbuffer"));
+    auto tsxPath = "assets/map/tileset.tsx";
+    EXPECT_CALL(byteStreamFactoryMock_, Create(StrEq(tsxPath))).WillOnce(Return(ByMove(std::move(byteStreamMock2))));
+
     auto tileSetMock = std::make_unique<TileSetMock>();
     EXPECT_CALL(tsxParserMock_, Parse(_, _, _)).WillOnce(DoAll(SetArgReferee<2>(parsedTsx), Return(true)));
     EXPECT_CALL(*tileSetMock, GenerateTileData()).WillOnce(Return(imageTileSetData));
@@ -104,7 +118,11 @@ TEST_F(TileServiceTest, ReadTileSetsShouldSucceed)
 TEST_F(TileServiceTest, ReadLayersShouldSucceed)
 {
     ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_, layer2_}, {group_}};
-    EXPECT_CALL(tmxParserMock_, Parse(_, _, _)).WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
+    auto byteStreamMock = std::make_unique<ByteStreamMock>();
+    EXPECT_CALL(*byteStreamMock, GetBuffer()).WillOnce(Return("xmlbuffer"));
+    EXPECT_CALL(byteStreamFactoryMock_, Create(tmxPath_)).WillOnce(Return(ByMove(std::move(byteStreamMock))));
+    EXPECT_CALL(tmxParserMock_, Parse(_, StrEq("xmlbuffer"), _))
+        .WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
 
     EXPECT_TRUE(service_->Parse(tmxPath_));
 
@@ -117,7 +135,11 @@ TEST_F(TileServiceTest, ReadLayersShouldSucceed)
 TEST_F(TileServiceTest, ReadObjectGroupsShouldSucceed)
 {
     ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_}, {group_}};
-    EXPECT_CALL(tmxParserMock_, Parse(_, _, _)).WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
+    auto byteStreamMock = std::make_unique<ByteStreamMock>();
+    EXPECT_CALL(*byteStreamMock, GetBuffer()).WillOnce(Return("xmlbuffer"));
+    EXPECT_CALL(byteStreamFactoryMock_, Create(tmxPath_)).WillOnce(Return(ByMove(std::move(byteStreamMock))));
+    EXPECT_CALL(tmxParserMock_, Parse(_, StrEq("xmlbuffer"), _))
+        .WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
 
     EXPECT_TRUE(service_->Parse(tmxPath_));
 
