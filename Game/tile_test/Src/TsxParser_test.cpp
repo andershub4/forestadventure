@@ -23,7 +23,7 @@ class TsxParserTest : public Test
 {
 public:
     TsxParserTest()
-        : helperMock_(std::make_shared<ParseHelperMock<XMLElementMock, XMLError>>())
+        : helperMock_(std::make_shared<ParseHelperMock<XMLElementMock, XMLErrorMock>>())
         , parser_(helperMock_)
     {}
 
@@ -38,13 +38,13 @@ protected:
     const ParsedTile tile1_{110, image_, animation1_};
     const ParsedTile tile2_{111, image_, animation2_};
     const ParsedTile tile3_{111, image_, animation3_};
-    const std::vector<ParseResult<XMLError>> parseResult_;
+    const std::vector<ParseResult<XMLErrorMock>> parseResult_;
 
     XMLDocumentMock docMock_;
     XMLElementMock tileSetElementMock_;
 
-    std::shared_ptr<ParseHelperMock<XMLElementMock, XMLError>> helperMock_;
-    TsxParser<XMLDocumentMock, XMLElementMock, XMLError> parser_;
+    std::shared_ptr<ParseHelperMock<XMLElementMock, XMLErrorMock>> helperMock_;
+    TsxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock> parser_;
 };
 
 TEST_F(TsxParserTest, TestParsedTsxDataEqualToOperator)

@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Tile {
 
-enum XMLError {
+enum XMLErrorMock {
     XML_SUCCESS = 0,
     XML_NO_ATTRIBUTE,
     XML_WRONG_ATTRIBUTE_TYPE,
@@ -44,17 +44,17 @@ public:
     MOCK_METHOD(const XMLElementMock*, FirstChildElement, (const char* name), (const));
     MOCK_METHOD(XMLElementMock*, NextSiblingElement, (const char* name));
     MOCK_METHOD(const XMLElementMock*, NextSiblingElement, (const char* name), (const));
-    MOCK_METHOD(XMLError, QueryStringAttribute, (const char* name, const char** value), (const));
-    MOCK_METHOD(XMLError, QueryAttribute, (const char* name, int* value), (const));
-    MOCK_METHOD(XMLError, QueryAttribute, (const char* name, unsigned int* value), (const));
+    MOCK_METHOD(XMLErrorMock, QueryStringAttribute, (const char* name, const char** value), (const));
+    MOCK_METHOD(XMLErrorMock, QueryAttribute, (const char* name, int* value), (const));
+    MOCK_METHOD(XMLErrorMock, QueryAttribute, (const char* name, unsigned int* value), (const));
     MOCK_METHOD(const char*, GetText, (), (const));
 };
 
 class XMLDocumentMock
 {
 public:
-    MOCK_METHOD(XMLError, LoadFile, (const char* filename));
-    MOCK_METHOD(XMLError, Parse, (const char* xml));
+    MOCK_METHOD(XMLErrorMock, LoadFile, (const char* filename));
+    MOCK_METHOD(XMLErrorMock, Parse, (const char* xml));
     MOCK_METHOD(bool, Error, (), (const));
     MOCK_METHOD(const XMLElementMock*, FirstChildElement, (const char* name), (const));
     MOCK_METHOD(XMLElementMock*, FirstChildElement, (const char* name));

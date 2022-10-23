@@ -23,7 +23,7 @@ class TmxParserTest : public Test
 {
 public:
     TmxParserTest()
-        : helperMock_(std::make_shared<ParseHelperMock<XMLElementMock, XMLError>>())
+        : helperMock_(std::make_shared<ParseHelperMock<XMLElementMock, XMLErrorMock>>())
         , parser_(helperMock_)
     {}
 
@@ -37,13 +37,13 @@ protected:
     const ParsedObject object1_{4, "Player", 360, 296, {{"FaceDirection", "Down"}}};
     const ParsedObject object2_{5, "Enemy", 260, 196, {{"FaceDirection", "Down"}}};
     const ParsedObjectGroup group_{2, "ObjectGroup1", {object1_, object2_}};
-    const std::vector<ParseResult<XMLError>> parseResult_;
+    const std::vector<ParseResult<XMLErrorMock>> parseResult_;
 
     XMLDocumentMock docMock_;
     XMLElementMock mapElementMock_;
 
-    std::shared_ptr<ParseHelperMock<XMLElementMock, XMLError>> helperMock_;
-    TmxParser<XMLDocumentMock, XMLElementMock, XMLError> parser_;
+    std::shared_ptr<ParseHelperMock<XMLElementMock, XMLErrorMock>> helperMock_;
+    TmxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock> parser_;
 };
 
 TEST_F(TmxParserTest, TestParsedTmxDataEqualToOperator)

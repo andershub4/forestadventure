@@ -22,7 +22,7 @@ class ParseHelperTest : public testing::Test
 {
 protected:
     XMLElementMock tileSetMock_;
-    ParseHelper<XMLElementMock, XMLError> helper_;
+    ParseHelper<XMLElementMock, XMLErrorMock> helper_;
 
 protected:
     void ExpectParseObject(XMLElementMock *mock, XMLElementMock *propertiesMock, std::vector<XMLElementMock> &propMocks,
@@ -108,11 +108,11 @@ void ParseHelperTest::ExpectParseAnimation(XMLElementMock *parentMock, XMLElemen
 TEST_F(ParseHelperTest, ParseMapShouldSucceed)
 {
     ParsedMap expected{"order", 1000, 1000, 10, 10};
-    std::vector<ParseResult<XMLError>> expectedResult{{"renderorder", XMLError::XML_SUCCESS},
-                                                      {"width", XMLError::XML_SUCCESS},
-                                                      {"height", XMLError::XML_SUCCESS},
-                                                      {"tilewidth", XMLError::XML_SUCCESS},
-                                                      {"tileheight", XMLError::XML_SUCCESS}};
+    std::vector<ParseResult<XMLErrorMock>> expectedResult{{"renderorder", XMLErrorMock::XML_SUCCESS},
+                                                          {"width", XMLErrorMock::XML_SUCCESS},
+                                                          {"height", XMLErrorMock::XML_SUCCESS},
+                                                          {"tilewidth", XMLErrorMock::XML_SUCCESS},
+                                                          {"tileheight", XMLErrorMock::XML_SUCCESS}};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("renderorder"), An<const char **>()))
@@ -135,8 +135,8 @@ TEST_F(ParseHelperTest, ParseMapShouldSucceed)
 TEST_F(ParseHelperTest, ParseTmxTileSetShouldSucceed)
 {
     ParsedTmxTileSet expected{100, "source"};
-    std::vector<ParseResult<XMLError>> expectedResult{{"firstgid", XMLError::XML_SUCCESS},
-                                                      {"source", XMLError::XML_SUCCESS}};
+    std::vector<ParseResult<XMLErrorMock>> expectedResult{{"firstgid", XMLErrorMock::XML_SUCCESS},
+                                                          {"source", XMLErrorMock::XML_SUCCESS}};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryAttribute(StrEq("firstgid"), An<int *>()))
@@ -153,10 +153,10 @@ TEST_F(ParseHelperTest, ParseTmxTileSetShouldSucceed)
 TEST_F(ParseHelperTest, ParseLayerShouldSucceed)
 {
     ParsedLayer expected{1122, "name", 100, 100, "data"};
-    std::vector<ParseResult<XMLError>> expectedResult{{"id", XMLError::XML_SUCCESS},
-                                                      {"name", XMLError::XML_SUCCESS},
-                                                      {"width", XMLError::XML_SUCCESS},
-                                                      {"height", XMLError::XML_SUCCESS}};
+    std::vector<ParseResult<XMLErrorMock>> expectedResult{{"id", XMLErrorMock::XML_SUCCESS},
+                                                          {"name", XMLErrorMock::XML_SUCCESS},
+                                                          {"width", XMLErrorMock::XML_SUCCESS},
+                                                          {"height", XMLErrorMock::XML_SUCCESS}};
     XMLElementMock mock;
     XMLElementMock dataMock;
 
@@ -184,16 +184,32 @@ TEST_F(ParseHelperTest, ParseObjectGroupShouldSucceed)
                                {{1, "enemy1", 120, 120, {{"prop1", "value1"}, {"prop2", "value2"}}},
                                 {2, "enemy2", 220, 220, {{"prop1", "value1"}, {"prop2", "value2"}}},
                                 {3, "enemy3", 1120, 1120, {{"prop1", "value1"}, {"prop2", "value2"}}}}};
-    std::vector<ParseResult<XMLError>> expectedResult{
-        {"id", XMLError::XML_SUCCESS},    {"name", XMLError::XML_SUCCESS},  {"id", XMLError::XML_SUCCESS},
-        {"type", XMLError::XML_SUCCESS},  {"x", XMLError::XML_SUCCESS},     {"y", XMLError::XML_SUCCESS},
-        {"name", XMLError::XML_SUCCESS},  {"value", XMLError::XML_SUCCESS}, {"name", XMLError::XML_SUCCESS},
-        {"value", XMLError::XML_SUCCESS}, {"id", XMLError::XML_SUCCESS},    {"type", XMLError::XML_SUCCESS},
-        {"x", XMLError::XML_SUCCESS},     {"y", XMLError::XML_SUCCESS},     {"name", XMLError::XML_SUCCESS},
-        {"value", XMLError::XML_SUCCESS}, {"name", XMLError::XML_SUCCESS},  {"value", XMLError::XML_SUCCESS},
-        {"id", XMLError::XML_SUCCESS},    {"type", XMLError::XML_SUCCESS},  {"x", XMLError::XML_SUCCESS},
-        {"y", XMLError::XML_SUCCESS},     {"name", XMLError::XML_SUCCESS},  {"value", XMLError::XML_SUCCESS},
-        {"name", XMLError::XML_SUCCESS},  {"value", XMLError::XML_SUCCESS}
+    std::vector<ParseResult<XMLErrorMock>> expectedResult{{"id", XMLErrorMock::XML_SUCCESS},
+                                                          {"name", XMLErrorMock::XML_SUCCESS},
+                                                          {"id", XMLErrorMock::XML_SUCCESS},
+                                                          {"type", XMLErrorMock::XML_SUCCESS},
+                                                          {"x", XMLErrorMock::XML_SUCCESS},
+                                                          {"y", XMLErrorMock::XML_SUCCESS},
+                                                          {"name", XMLErrorMock::XML_SUCCESS},
+                                                          {"value", XMLErrorMock::XML_SUCCESS},
+                                                          {"name", XMLErrorMock::XML_SUCCESS},
+                                                          {"value", XMLErrorMock::XML_SUCCESS},
+                                                          {"id", XMLErrorMock::XML_SUCCESS},
+                                                          {"type", XMLErrorMock::XML_SUCCESS},
+                                                          {"x", XMLErrorMock::XML_SUCCESS},
+                                                          {"y", XMLErrorMock::XML_SUCCESS},
+                                                          {"name", XMLErrorMock::XML_SUCCESS},
+                                                          {"value", XMLErrorMock::XML_SUCCESS},
+                                                          {"name", XMLErrorMock::XML_SUCCESS},
+                                                          {"value", XMLErrorMock::XML_SUCCESS},
+                                                          {"id", XMLErrorMock::XML_SUCCESS},
+                                                          {"type", XMLErrorMock::XML_SUCCESS},
+                                                          {"x", XMLErrorMock::XML_SUCCESS},
+                                                          {"y", XMLErrorMock::XML_SUCCESS},
+                                                          {"name", XMLErrorMock::XML_SUCCESS},
+                                                          {"value", XMLErrorMock::XML_SUCCESS},
+                                                          {"name", XMLErrorMock::XML_SUCCESS},
+                                                          {"value", XMLErrorMock::XML_SUCCESS}
 
     };
     XMLElementMock mock;
@@ -232,11 +248,11 @@ TEST_F(ParseHelperTest, ParseObjectGroupShouldSucceed)
 TEST_F(ParseHelperTest, ParseTileSetShouldSucceed)
 {
     ParsedTileSet expected{"tsname", 16, 80, 3, 0};
-    std::vector<ParseResult<XMLError>> expectedResult{{"name", XMLError::XML_SUCCESS},
-                                                      {"tilewidth", XMLError::XML_SUCCESS},
-                                                      {"tileheight", XMLError::XML_SUCCESS},
-                                                      {"tilecount", XMLError::XML_SUCCESS},
-                                                      {"columns", XMLError::XML_SUCCESS}};
+    std::vector<ParseResult<XMLErrorMock>> expectedResult{{"name", XMLErrorMock::XML_SUCCESS},
+                                                          {"tilewidth", XMLErrorMock::XML_SUCCESS},
+                                                          {"tileheight", XMLErrorMock::XML_SUCCESS},
+                                                          {"tilecount", XMLErrorMock::XML_SUCCESS},
+                                                          {"columns", XMLErrorMock::XML_SUCCESS}};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>()))
@@ -259,11 +275,11 @@ TEST_F(ParseHelperTest, ParseTileSetShouldSucceed)
 TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToWrongAttributeName)
 {
     ParsedTileSet expected{"tsname", 16, {}, 3, 0};
-    std::vector<ParseResult<XMLError>> expectedResult{{"name", XMLError::XML_SUCCESS},
-                                                      {"tilewidth", XMLError::XML_SUCCESS},
-                                                      {"tileheight", XMLError::XML_WRONG_ATTRIBUTE_TYPE},
-                                                      {"tilecount", XMLError::XML_SUCCESS},
-                                                      {"columns", XMLError::XML_SUCCESS}};
+    std::vector<ParseResult<XMLErrorMock>> expectedResult{{"name", XMLErrorMock::XML_SUCCESS},
+                                                          {"tilewidth", XMLErrorMock::XML_SUCCESS},
+                                                          {"tileheight", XMLErrorMock::XML_WRONG_ATTRIBUTE_TYPE},
+                                                          {"tilecount", XMLErrorMock::XML_SUCCESS},
+                                                          {"columns", XMLErrorMock::XML_SUCCESS}};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>()))
@@ -286,11 +302,11 @@ TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToWrongAttributeName)
 TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToNoAttribute)
 {
     ParsedTileSet expected{{}, 16, 0, 3, 0};
-    std::vector<ParseResult<XMLError>> expectedResult{{"name", XMLError::XML_NO_ATTRIBUTE},
-                                                      {"tilewidth", XMLError::XML_SUCCESS},
-                                                      {"tileheight", XMLError::XML_SUCCESS},
-                                                      {"tilecount", XMLError::XML_SUCCESS},
-                                                      {"columns", XMLError::XML_SUCCESS}};
+    std::vector<ParseResult<XMLErrorMock>> expectedResult{{"name", XMLErrorMock::XML_NO_ATTRIBUTE},
+                                                          {"tilewidth", XMLErrorMock::XML_SUCCESS},
+                                                          {"tileheight", XMLErrorMock::XML_SUCCESS},
+                                                          {"tilecount", XMLErrorMock::XML_SUCCESS},
+                                                          {"columns", XMLErrorMock::XML_SUCCESS}};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryStringAttribute(StrEq("name"), An<const char **>())).WillOnce(Return(XML_NO_ATTRIBUTE));
@@ -312,8 +328,9 @@ TEST_F(ParseHelperTest, ParseTileSetShouldFailDueToNoAttribute)
 TEST_F(ParseHelperTest, ParseImageShouldSucceed)
 {
     ParsedImage expected{"myImage.png", 16, 16};
-    std::vector<ParseResult<XMLError>> expectedResult{
-        {"source", XMLError::XML_SUCCESS}, {"width", XMLError::XML_SUCCESS}, {"height", XMLError::XML_SUCCESS}};
+    std::vector<ParseResult<XMLErrorMock>> expectedResult{{"source", XMLErrorMock::XML_SUCCESS},
+                                                          {"width", XMLErrorMock::XML_SUCCESS},
+                                                          {"height", XMLErrorMock::XML_SUCCESS}};
     XMLElementMock mock;
     ExpectParseImage(&mock, expected);
 
@@ -327,10 +344,10 @@ TEST_F(ParseHelperTest, ParseTileWithOnlyImageShouldSucceed)
 {
     ParsedImage expectedImage{"myImage1.png", 16, 16};
     ParsedTile expected{110, expectedImage, {}};
-    std::vector<ParseResult<XMLError>> expectedResult{{"id", XMLError::XML_SUCCESS},
-                                                      {"source", XMLError::XML_SUCCESS},
-                                                      {"width", XMLError::XML_SUCCESS},
-                                                      {"height", XMLError::XML_SUCCESS}};
+    std::vector<ParseResult<XMLErrorMock>> expectedResult{{"id", XMLErrorMock::XML_SUCCESS},
+                                                          {"source", XMLErrorMock::XML_SUCCESS},
+                                                          {"width", XMLErrorMock::XML_SUCCESS},
+                                                          {"height", XMLErrorMock::XML_SUCCESS}};
     XMLElementMock mock;
     XMLElementMock imageMock;
 

@@ -62,12 +62,12 @@ protected:
     FrameData frameData3{frame3, {}};
     TileSetData imageTileSetData_{{image1, image2, image3}, {{0, frameData1}, {1, frameData2}, {2, frameData3}}};
 
-    TmxParserMock<XMLDocumentMock, XMLElementMock, XMLError> tmxParserMock_;
-    TsxParserMock<XMLDocumentMock, XMLElementMock, XMLError> tsxParserMock_;
+    TmxParserMock<XMLDocumentMock, XMLElementMock, XMLErrorMock> tmxParserMock_;
+    TsxParserMock<XMLDocumentMock, XMLElementMock, XMLErrorMock> tsxParserMock_;
     TileSetFactoryMock tileSetFactoryMock_;
     ByteStreamFactoryMock byteStreamFactoryMock_;
 
-    std::unique_ptr<TileService<XMLDocumentMock, XMLElementMock, XMLError>> service_;
+    std::unique_ptr<TileService<XMLDocumentMock, XMLElementMock, XMLErrorMock>> service_;
 
 protected:
     void ExpectParseSucceed(const ParsedTmx &parsedTmx);
@@ -76,12 +76,12 @@ protected:
 void TileServiceTest::SetUp()
 {
     auto tmxParserMockProxy =
-        std::make_unique<TmxParserMockProxy<XMLDocumentMock, XMLElementMock, XMLError>>(tmxParserMock_);
+        std::make_unique<TmxParserMockProxy<XMLDocumentMock, XMLElementMock, XMLErrorMock>>(tmxParserMock_);
     auto tsxParserMockProxy =
-        std::make_unique<TsxParserMockProxy<XMLDocumentMock, XMLElementMock, XMLError>>(tsxParserMock_);
+        std::make_unique<TsxParserMockProxy<XMLDocumentMock, XMLElementMock, XMLErrorMock>>(tsxParserMock_);
     auto tileSetFactoryMockProxy = std::make_unique<TileSetFactoryMockProxy>(tileSetFactoryMock_);
     auto byteStreamFactoryMockProxy = std::make_unique<ByteStreamFactoryMockProxy>(byteStreamFactoryMock_);
-    service_ = std::make_unique<TileService<XMLDocumentMock, XMLElementMock, XMLError>>(
+    service_ = std::make_unique<TileService<XMLDocumentMock, XMLElementMock, XMLErrorMock>>(
         std::move(tmxParserMockProxy), std::move(tsxParserMockProxy), std::move(tileSetFactoryMockProxy),
         std::move(byteStreamFactoryMockProxy));
 }
