@@ -31,6 +31,7 @@ protected:
 
     const std::string tmxPath_ = "assets/map/test.tmx";
     const std::string tmxDir_ = "assets/map";
+    const std::string tsxDir_ = "assets/map";
 
     const ParsedMap map_{"right-down", 100, 100, 16, 16};
     const ParsedTmxTileSet tmxTileSet_{12, "tileset.tsx"};
@@ -40,12 +41,36 @@ protected:
     const ParsedObject object2_{5, "Enemy", 260, 196, {{"FaceDirection", "Down"}}};
     const ParsedObjectGroup group_{2, "ObjectGroup1", {object1_, object2_}};
 
+    const ParsedTileSet tileSet_{"tsname", 16, 80, 3, 0};
+    const ParsedImage image_{"myImage1.png", 16, 16};
+    const ParsedAnimation animation1_{{{0, 20}, {1, 20}, {1, 20}}};
+    const ParsedAnimation animation2_{{{0, 20}, {1, 20}, {1, 20}}};
+    const ParsedAnimation animation3_{{}};
+    const ParsedTile tile1_{110, image_, animation1_};
+    const ParsedTile tile2_{111, image_, animation2_};
+    const ParsedTile tile3_{111, image_, animation3_};
+    const std::vector<ParsedTile> parsedTiles_{tile1_, tile2_, tile3_};
+
+    Image image1{"assets/animation/spinning1.png"};
+    Image image2{"assets/animation/spinning2.png"};
+    Image image3{"assets/animation/spinning3.png"};
+    Frame frame1{"assets/animation/spinning1.png", 0, 0, 32, 80};
+    Frame frame2{"assets/animation/spinning2.png", 0, 0, 32, 80};
+    Frame frame3{"assets/animation/spinning3.png", 0, 0, 32, 80};
+    FrameData frameData1{frame1, {frame1, frame2, frame3}};
+    FrameData frameData2{frame2, {}};
+    FrameData frameData3{frame3, {}};
+    TileSetData imageTileSetData_{{image1, image2, image3}, {{0, frameData1}, {1, frameData2}, {2, frameData3}}};
+
     TmxParserMock<XMLDocumentMock, XMLElementMock, XMLError> tmxParserMock_;
     TsxParserMock<XMLDocumentMock, XMLElementMock, XMLError> tsxParserMock_;
     TileSetFactoryMock tileSetFactoryMock_;
     ByteStreamFactoryMock byteStreamFactoryMock_;
 
     std::unique_ptr<TileService<XMLDocumentMock, XMLElementMock, XMLError>> service_;
+
+protected:
+    void ExpectParseSucceed(const ParsedTmx &parsedTmx);
 };
 
 void TileServiceTest::SetUp()
@@ -61,9 +86,8 @@ void TileServiceTest::SetUp()
         std::move(byteStreamFactoryMockProxy));
 }
 
-TEST_F(TileServiceTest, ReadMapPropertiesShouldSucceed)
+void TileServiceTest::ExpectParseSucceed(const ParsedTmx &parsedTmx)
 {
-    ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_}, {group_}};
     auto byteStreamMock = std::make_unique<ByteStreamMock>();
     EXPECT_CALL(*byteStreamMock, GetBuffer()).WillOnce(Return("xmlbuffer"));
     EXPECT_CALL(byteStreamFactoryMock_, Create(tmxPath_)).WillOnce(Return(ByMove(std::move(byteStreamMock))));
@@ -71,77 +95,55 @@ TEST_F(TileServiceTest, ReadMapPropertiesShouldSucceed)
         .WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
 
     EXPECT_TRUE(service_->Parse(tmxPath_));
+}
+
+TEST_F(TileServiceTest, ReadMapPropertiesShouldSucceed)
+{
+    ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_, layer2_}, {group_}};
+    ExpectParseSucceed(parsedTmx);
 
     auto mapProperties = service_->ReadMapProperties();
-    TileMapData::MapProperties expectedMapProperties{100, 100, 16, 16};
+    TileMapData::MapProperties expectedMapProperties{map_.width_, map_.height_, map_.tileWidth_, map_.tileHeight_};
     EXPECT_THAT(mapProperties, Eq(expectedMapProperties));
 }
 
 TEST_F(TileServiceTest, ReadTileSetsShouldSucceed)
 {
-    ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_}, {group_}};
+    ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_, layer2_}, {group_}};
+    ExpectParseSucceed(parsedTmx);
+
+    ParsedTsx parsedTsx{tileSet_, image_, parsedTiles_};
     auto byteStreamMock = std::make_unique<ByteStreamMock>();
-    EXPECT_CALL(*byteStreamMock, GetBuffer()).WillOnce(Return("xmlbuffer"));
-    EXPECT_CALL(byteStreamFactoryMock_, Create(tmxPath_)).WillOnce(Return(ByMove(std::move(byteStreamMock))));
-    EXPECT_CALL(tmxParserMock_, Parse(_, StrEq("xmlbuffer"), _))
-        .WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
-
-    EXPECT_TRUE(service_->Parse(tmxPath_));
-
-    ParsedTsx parsedTsx;
-    Image image1("assets/animation/spinning1.png");
-    Image image2("assets/animation/spinning2.png");
-    Image image3("assets/animation/spinning3.png");
-    Frame frame1{"assets/animation/spinning1.png", 0, 0, 32, 80};
-    Frame frame2{"assets/animation/spinning2.png", 0, 0, 32, 80};
-    Frame frame3{"assets/animation/spinning3.png", 0, 0, 32, 80};
-    FrameData frameData1{frame1, {frame1, frame2, frame3}};
-    FrameData frameData2{frame2, {}};
-    FrameData frameData3{frame3, {}};
-    TileSetData imageTileSetData{{image1, image2, image3}, {{0, frameData1}, {1, frameData2}, {2, frameData3}}};
-
-    auto byteStreamMock2 = std::make_unique<ByteStreamMock>();
-    EXPECT_CALL(*byteStreamMock2, GetBuffer()).WillOnce(Return("xmlbuffer"));
-    auto tsxPath = "assets/map/tileset.tsx";
-    EXPECT_CALL(byteStreamFactoryMock_, Create(StrEq(tsxPath))).WillOnce(Return(ByMove(std::move(byteStreamMock2))));
+    EXPECT_CALL(*byteStreamMock, GetBuffer()).WillOnce(Return("xmlbufferTsx"));
+    auto tsxPath = tsxDir_ + "/" + tmxTileSet_.tsxSource_;
+    EXPECT_CALL(byteStreamFactoryMock_, Create(StrEq(tsxPath))).WillOnce(Return(ByMove(std::move(byteStreamMock))));
 
     auto tileSetMock = std::make_unique<TileSetMock>();
-    EXPECT_CALL(tsxParserMock_, Parse(_, _, _)).WillOnce(DoAll(SetArgReferee<2>(parsedTsx), Return(true)));
-    EXPECT_CALL(*tileSetMock, GenerateTileData()).WillOnce(Return(imageTileSetData));
-    EXPECT_CALL(tileSetFactoryMock_, Create(_, _, _, _)).WillOnce(Return(ByMove(std::move(tileSetMock))));
+    EXPECT_CALL(tsxParserMock_, Parse(_, StrEq("xmlbufferTsx"), _))
+        .WillOnce(DoAll(SetArgReferee<2>(parsedTsx), Return(true)));
+    EXPECT_CALL(*tileSetMock, GenerateTileData()).WillOnce(Return(imageTileSetData_));
+    EXPECT_CALL(tileSetFactoryMock_, Create(StrEq(tsxDir_), parsedTiles_, tileSet_, image_.source_))
+        .WillOnce(Return(ByMove(std::move(tileSetMock))));
 
     auto tileSets = service_->ReadTileSets(tmxDir_);
-    std::map<int, TileSetData, std::greater<int>> expectedTileSets{{12, imageTileSetData}};
+    std::map<int, TileSetData, std::greater<int>> expectedTileSets{{tmxTileSet_.firstGid_, imageTileSetData_}};
     EXPECT_THAT(tileSets, Eq(expectedTileSets));
 }
 
 TEST_F(TileServiceTest, ReadLayersShouldSucceed)
 {
     ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_, layer2_}, {group_}};
-    auto byteStreamMock = std::make_unique<ByteStreamMock>();
-    EXPECT_CALL(*byteStreamMock, GetBuffer()).WillOnce(Return("xmlbuffer"));
-    EXPECT_CALL(byteStreamFactoryMock_, Create(tmxPath_)).WillOnce(Return(ByMove(std::move(byteStreamMock))));
-    EXPECT_CALL(tmxParserMock_, Parse(_, StrEq("xmlbuffer"), _))
-        .WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
-
-    EXPECT_TRUE(service_->Parse(tmxPath_));
+    ExpectParseSucceed(parsedTmx);
 
     auto layers = service_->ReadLayers();
-    std::vector<TileMapData::Layer> expectedLayers{{"Ground Layer 1", {849, 849, 850}},
-                                                   {"Ground Layer 2", {149, 149, 150}}};
+    std::vector<TileMapData::Layer> expectedLayers{{layer1_.name_, {849, 849, 850}}, {layer2_.name_, {149, 149, 150}}};
     EXPECT_THAT(layers, Eq(expectedLayers));
 }
 
 TEST_F(TileServiceTest, ReadObjectGroupsShouldSucceed)
 {
-    ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_}, {group_}};
-    auto byteStreamMock = std::make_unique<ByteStreamMock>();
-    EXPECT_CALL(*byteStreamMock, GetBuffer()).WillOnce(Return("xmlbuffer"));
-    EXPECT_CALL(byteStreamFactoryMock_, Create(tmxPath_)).WillOnce(Return(ByMove(std::move(byteStreamMock))));
-    EXPECT_CALL(tmxParserMock_, Parse(_, StrEq("xmlbuffer"), _))
-        .WillOnce(DoAll(SetArgReferee<2>(parsedTmx), Return(true)));
-
-    EXPECT_TRUE(service_->Parse(tmxPath_));
+    ParsedTmx parsedTmx{map_, {tmxTileSet_}, {layer1_, layer2_}, {group_}};
+    ExpectParseSucceed(parsedTmx);
 
     auto objectGroups = service_->ReadObjectGroups();
     std::vector<TileMapData::ObjectGroup> expectedObjectGroups{
