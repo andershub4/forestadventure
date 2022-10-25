@@ -13,7 +13,6 @@ namespace FA {
 namespace Tile {
 
 std::string GetFilePath(const std::string& baseDir, const std::string& source);
-std::string GetHead(const std::string& filePath);
 
 }  // namespace Tile
 

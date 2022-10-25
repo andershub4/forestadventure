@@ -28,11 +28,6 @@ std::string GetFilePath(const std::string& baseDir, const std::string& source)
     return head + '/' + tail;
 }
 
-std::string GetHead(const std::string& filePath)
-{
-    return FA::GetHead(filePath);
-}
-
 }  // namespace Tile
 
 }  // namespace FA

@@ -15,6 +15,7 @@
 #include "BasicTileSetFactory.h"
 #include "BasicTmxParser.h"
 #include "BasicTsxParser.h"
+#include "Folder.h"
 #include "GridTileSet.h"
 #include "ImageTileSet.h"
 #include "TileHelper.h"
