@@ -9,6 +9,8 @@
 
 namespace FA {
 
+namespace Tile {
+
 LogLib::Logger& TmxLog()
 {
     static LogLib::Logger tmxLog;
@@ -20,5 +22,7 @@ LogLib::Logger& TmxLog()
 
     return tmxLog;
 }
+
+}  // namespace Tile
 
 }  // namespace FA

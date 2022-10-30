@@ -11,13 +11,17 @@
 
 namespace FA {
 
+namespace Tile {
+
 LogLib::Logger& TmxLog();
+
+}  // namespace Tile
 
 }  // namespace FA
 
-#define LOG_TMXINFO(...) FA::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)
-#define LOG_TMXWARN(...) FA::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Warning, __FUNCTION__, __VA_ARGS__)
-#define LOG_TMXERROR(...) FA::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Error, __FUNCTION__, __VA_ARGS__)
+#define LOG_TMXINFO(...) FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)
+#define LOG_TMXWARN(...) FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Warning, __FUNCTION__, __VA_ARGS__)
+#define LOG_TMXERROR(...) FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Error, __FUNCTION__, __VA_ARGS__)
 
 #else
 #define LOG_TMXINFO(...)
