@@ -19,6 +19,8 @@ namespace FA {
 
 namespace Tile {
 
+using FA::operator<<;
+
 /* first = attribute name, second = XMLError */
 template <class ErrorT>
 using ParseResult = std::tuple<std::string, ErrorT>;

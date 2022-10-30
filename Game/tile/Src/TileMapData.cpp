@@ -14,6 +14,8 @@ namespace FA {
 
 namespace Tile {
 
+using FA::operator<<;
+
 bool operator==(const Image& lhs, const Image& rhs)
 {
     return std::tie(lhs.path_, lhs.nCols_, lhs.nRows_) == std::tie(rhs.path_, rhs.nCols_, rhs.nRows_);

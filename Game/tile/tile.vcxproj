@@ -163,7 +163,6 @@
     <ClInclude Include="Src\ImageTileSet.h" />
     <ClInclude Include="Src\ParsedElements.h" />
     <ClInclude Include="Src\ParseHelper.h" />
-    <ClInclude Include="Src\Print.h" />
     <ClInclude Include="Src\TileHelper.h" />
     <ClInclude Include="Include\TileMapData.h" />
     <ClInclude Include="Include\TileMapParser.h" />

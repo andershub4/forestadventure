@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="Include\BasicByteStream.h" />
     <ClInclude Include="Include\BasicByteStreamFactory.h" />
+    <ClInclude Include="Include\Print.h" />
     <ClInclude Include="Src\ByteStream.h" />
     <ClInclude Include="Include\ByteStreamFactory.h" />
     <ClInclude Include="Src\Error.h" />

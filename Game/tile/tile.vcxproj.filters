@@ -89,9 +89,6 @@
     <ClInclude Include="Src\BasicTsxParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Print.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\BasicTmxParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
