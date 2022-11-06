@@ -49,13 +49,13 @@ private:
     void ParseMapElement(ElementT* mapElement, ParsedTmx& parsedTmx) const
     {
         helper_->ParseMap(mapElement, parsedTmx.map_);
-        LOG_TMXINFO("map: ", parsedTmx.map_);
+        LOG_TMXVARIABLE(parsedTmx.map_);
 
         auto tileSetElement = mapElement->FirstChildElement("tileset");
         while (tileSetElement != nullptr) {
             ParsedTmxTileSet set;
             helper_->ParseTmxTileSet(tileSetElement, set);
-            LOG_TMXINFO("set: ", set);
+            LOG_TMXVARIABLE(set);
             parsedTmx.tileSets_.push_back(set);
             tileSetElement = tileSetElement->NextSiblingElement("tileset");
         }
@@ -64,7 +64,7 @@ private:
         while (layerElement != nullptr) {
             ParsedLayer layer;
             helper_->ParseLayer(layerElement, layer);
-            LOG_TMXINFO("layer: ", layer);
+            LOG_TMXVARIABLE(layer);
             parsedTmx.layers_.push_back(layer);
             layerElement = layerElement->NextSiblingElement("layer");
         }
@@ -73,7 +73,7 @@ private:
         while (objectGroupElement != nullptr) {
             ParsedObjectGroup group;
             helper_->ParseObjectGroup(objectGroupElement, group);
-            LOG_TMXINFO("group: ", group);
+            LOG_TMXVARIABLE(group);
             parsedTmx.objectGroups_.push_back(group);
             objectGroupElement = objectGroupElement->NextSiblingElement("objectgroup");
         }

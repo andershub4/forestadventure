@@ -45,7 +45,7 @@ std::unique_ptr<BasicEntity> Factory::Create(EntityType type) const
             break;
         default:
             auto t = static_cast<int>(type);
-            LOG_ERROR("Could not create entity of type: ", t);
+            LOG_ERROR("Could not create entity of type: %u", t);
             return nullptr;
     }
 }

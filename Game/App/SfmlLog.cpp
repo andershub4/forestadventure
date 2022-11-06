@@ -20,7 +20,7 @@ void SfmlLog::Init()
     sfmlLogStream_.open(path);
 
     if (sfmlLogStream_.is_open()) {
-        LOG_INFO("Redirecting sfml log entries to ", path);
+        LOG_INFO("Redirecting sfml log entries to %s", path.c_str());
         sfmlLogStream_ << "SFML version " << SFML_VERSION_MAJOR << "." << SFML_VERSION_MINOR << std::endl;
         sf::err().rdbuf(sfmlLogStream_.rdbuf());
     }

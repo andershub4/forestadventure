@@ -7,6 +7,7 @@
 #pragma once
 
 #include <memory>
+#include <sstream>
 #include <string>
 #include <unordered_map>
 
@@ -26,7 +27,7 @@ public:
             resources_.emplace(key, std::move(resource));
         }
         else {
-            LOG_ERROR("Could not load ", path);
+            LOG_ERROR("Could not load %s", path.c_str());
         }
     }
 
@@ -36,7 +37,9 @@ public:
 
         if (it != resources_.end()) return it->second.get();
 
-        LOG_ERROR("Could not get ", key);
+        std::ostringstream oss;
+        oss << "Could not get " << key;
+        LOG_ERROR("%s", oss.str().c_str());
 
         return nullptr;
     }

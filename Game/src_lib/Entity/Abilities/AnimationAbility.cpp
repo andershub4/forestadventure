@@ -27,7 +27,7 @@ void AnimationAbility::Enter(std::shared_ptr<BasicEvent> event)
         currentAnimation_.Start();
     }
     else {
-        LOG_ERROR("Could not find key: ", key);
+        LOG_ERROR("Could not find key: %s", key.c_str());
     }
 }
 
@@ -45,7 +45,7 @@ void AnimationAbility::RegisterAnimation(const std::string &name, const Animatio
         map_[name] = animation;
     }
     else {
-        LOG_ERROR("name: ", name, " already exist");
+        LOG_ERROR("name: %s already exist", name.c_str());
     }
 }
 

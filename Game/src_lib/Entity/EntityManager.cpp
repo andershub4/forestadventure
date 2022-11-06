@@ -90,7 +90,7 @@ void EntityManager::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)
         entityMap_[id] = std::move(entity);
     }
     else {
-        LOG_ERROR("id: ", id, " already exist");
+        LOG_ERROR("id: %u already exist", id);
     }
 }
 

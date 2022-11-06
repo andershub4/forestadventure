@@ -142,7 +142,7 @@ FrameData TileMap::GetFrameData(int id)
         return it->second.lookupTable_[id - firstGid];
     }
     else {
-        LOG_ERROR("Id ", id, " not found");
+        LOG_ERROR("Id %u not found", id);
         return {};
     }
 }

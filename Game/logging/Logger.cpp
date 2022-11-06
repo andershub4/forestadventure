@@ -7,10 +7,32 @@
 #include "Logger.h"
 
 #include <sys/stat.h>
-#include <sstream>
 #include <chrono>
+#include <sstream>
+#ifdef _DEBUG
+#include <iostream>
+#endif
 
 namespace LogLib {
+
+std::string Logger::ToString(const char* format, ...)
+{
+    std::string result;
+
+    if (format != nullptr) {
+        va_list args;
+        va_start(args, format);
+        char buffer[maxLogEntrySize_];
+        memset(buffer, 0, maxLogEntrySize_ * sizeof(char));
+        vsnprintf(buffer, maxLogEntrySize_ - 1, format, args);
+        result = std::string(buffer);
+        va_end(args);
+    }
+
+    return result;
+}
+
+Logger::Logger() = default;
 
 Logger::~Logger()
 {
@@ -44,18 +66,49 @@ void Logger::CloseLog()
     }
 }
 
+void Logger::MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& func, const std::string& logStr)
+{
+    StartLine(logLevel, func);
+    Log(logStr);
+}
+
+void Logger::LogStr(const std::string& logStr)
+{
+    if (logStream_.is_open()) {
+        currSize_ = (logStream_ << logStr << std::flush).tellp();
+        if (currSize_ > maxSize_) {
+            logStream_ << std::endl << std::endl;
+            logStream_ << "Logfile closing - file too large - " << filePath_ << std::endl;
+#ifdef _DEBUG
+            std::cout << std::endl << std::endl;
+            std::cout << "Logfile closing - file too large - " << filePath_ << std::endl;
+#endif
+            logStream_.close();
+        }
+    }
+#ifdef _DEBUG
+    if (toConsole_) std::cout << logStr;
+#endif
+}
+
+void Logger::Log(const std::string& logStr)
+{
+    LogStr(logStr);
+    EndLine();
+}
+
 void Logger::StartLine(const LogLevel& logLevel, const std::string& funcName)
 {
     std::stringstream ss;
     ss << "[" << ToStr(logLevel) << " | " << funcName << "]: ";
-    LogData(ss.str());
+    LogStr(ss.str());
 }
 
 void Logger::EndLine()
 {
     std::stringstream ss;
     ss << std::endl;
-    LogData(ss.str());
+    LogStr(ss.str());
 }
 
 void Logger::OpeningLines()
@@ -64,7 +117,7 @@ void Logger::OpeningLines()
     ss << "Log file open - " << TimeStr();
     ss << "Log file path - " << filePath_ << std::endl;
     ss << std::endl << std::endl;
-    LogData(ss.str());
+    LogStr(ss.str());
 }
 
 void Logger::ClosingLines()
@@ -72,7 +125,7 @@ void Logger::ClosingLines()
     std::stringstream ss;
     ss << std::endl << std::endl;
     ss << "Log file close - " << TimeStr();
-    LogData(ss.str());
+    LogStr(ss.str());
 }
 
 std::string Logger::TimeStr()
@@ -83,7 +136,7 @@ std::string Logger::TimeStr()
     char timeStr[50] = {};
     auto e = ctime_s(timeStr, 50, &now_t);
     if (!e) str = timeStr;
-    
+
     return str;
 }
 

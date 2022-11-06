@@ -61,7 +61,7 @@ void State::RegisterEventCB(EventType eventType, std::function<void(std::shared_
         eventCBs_[eventType] = event;
     }
     else {
-        LOG_ERROR("eventType: ", eventType, " already exist");
+        LOG_ERROR("eventType: %u already exist", eventType);
     }
 }
 

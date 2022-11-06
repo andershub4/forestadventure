@@ -9,6 +9,8 @@
 #ifndef FA_UNITTEST
 #include "Logger.h"
 
+#include <sstream>
+
 namespace FA {
 
 namespace Tile {
@@ -19,12 +21,23 @@ LogLib::Logger& TmxLog();
 
 }  // namespace FA
 
-#define LOG_TMXINFO(...) FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, __VA_ARGS__)
-#define LOG_TMXWARN(...) FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Warning, __FUNCTION__, __VA_ARGS__)
-#define LOG_TMXERROR(...) FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Error, __FUNCTION__, __VA_ARGS__)
+#define LOG_TMXINFO(...) \
+    FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, LogLib::Logger::ToString(__VA_ARGS__))
+#define LOG_TMXWARN(...)                                                             \
+    FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Warning, __FUNCTION__, \
+                                    LogLib::Logger::ToString(__VA_ARGS__))
+#define LOG_TMXERROR(...)                                                          \
+    FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Error, __FUNCTION__, \
+                                    LogLib::Logger::ToString(__VA_ARGS__))
+
+#define LOG_TMXVARIABLE(variable)                       \
+    std::ostringstream oss;                             \
+    oss << "{" << #variable << ": " << variable << "}"; \
+    FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, oss.str())
 
 #else
 #define LOG_TMXINFO(...)
 #define LOG_TMXWARN(...)
 #define LOG_TMXERROR(...)
+#define LOG_TMXVARIABLE(attr)
 #endif

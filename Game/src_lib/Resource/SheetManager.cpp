@@ -79,7 +79,7 @@ SpriteSheet SheetManager::GetSheet(const std::string& name) const
         return sheetMap_.at(name);
     }
     else {
-        LOG_ERROR("name ", name, " not found");
+        LOG_ERROR("name %s not found", name.c_str());
         return SpriteSheet();
     }
 }

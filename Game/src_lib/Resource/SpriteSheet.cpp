@@ -61,7 +61,7 @@ sf::Vector2u SpriteSheet::CalcRectSize() const
     if (rectCount_.x > 0 && rectCount_.y > 0)
         return {textureSize.x / rectCount_.x, textureSize.y / rectCount_.y};
     else
-        LOG_ERROR("Can't calculate rectSize due to rectCount.x, rectCount.y  ", rectCount_.x, rectCount_.y);
+        LOG_ERROR("Can't calculate rectSize due to rectCount.x %u, rectCount.y  %u", rectCount_.x, rectCount_.y);
 
     return {};
 }

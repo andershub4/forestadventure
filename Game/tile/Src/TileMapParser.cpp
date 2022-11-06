@@ -34,8 +34,8 @@ TileMapParser::~TileMapParser() = default;
 
 TileMapData TileMapParser::Run(const std::string& fileName)
 {
-    LOG_TMXINFO("Parse ", fileName);
-    LOG_TMXINFO("Start parse fileName ", fileName);
+    LOG_TMXINFO("Parse %s", fileName.c_str());
+    LOG_TMXINFO("Start parse fileName %s", fileName.c_str());
     TileMapData tileMapData;
 
     if (tileService_->Parse(fileName)) {
@@ -46,10 +46,10 @@ TileMapData TileMapParser::Run(const std::string& fileName)
         tileMapData.objectGroups_ = tileService_->ReadObjectGroups();
     }
     else {
-        LOG_TMXERROR("Could not load ", fileName);
+        LOG_TMXERROR("Could not load %s", fileName.c_str());
     }
 
-    LOG_TMXINFO("End parse fileName ", fileName);
+    LOG_TMXINFO("End parse fileName %s", fileName.c_str());
 
     return tileMapData;
 }

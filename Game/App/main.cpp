@@ -15,8 +15,8 @@
 int main()
 {
     LOG_INFO_ENTER_FUNC();
-    LOG_INFO(FA_APP_NAME, " version ", FA_APP_VERSION);
-    LOG_INFO("SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR);
+    LOG_INFO("%s version %s", FA_APP_NAME, FA_APP_VERSION);
+    LOG_INFO("SFML version %u.%u", SFML_VERSION_MAJOR, SFML_VERSION_MINOR);
 
     try {
         FA::SfmlLog sfmlLog;
