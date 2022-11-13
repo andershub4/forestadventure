@@ -6,7 +6,6 @@
 
 #pragma once
 
-#ifndef FA_UNITTEST
 #include "Logger.h"
 
 #include <sstream>
@@ -15,7 +14,7 @@ namespace FA {
 
 namespace Tile {
 
-LogLib::Logger& TmxLog();
+LogLib::BasicLogger& TmxLog();
 
 }  // namespace Tile
 
@@ -34,10 +33,3 @@ LogLib::Logger& TmxLog();
     std::ostringstream oss;                             \
     oss << "{" << #variable << ": " << variable << "}"; \
     FA::Tile::TmxLog().MakeLogEntry(LogLib::Logger::LogLevel::Info, __FUNCTION__, oss.str())
-
-#else
-#define LOG_TMXINFO(...)
-#define LOG_TMXWARN(...)
-#define LOG_TMXERROR(...)
-#define LOG_TMXVARIABLE(attr)
-#endif

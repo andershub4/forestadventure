@@ -19,12 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{d73ac684-aa40-42cb-825f-7ca3045aa023}</ProjectGuid>
+    <ProjectGuid>{ad16eeeb-39eb-43db-a731-c034a908908d}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <ProjectName>logging_test</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -34,37 +35,23 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc" />
-    <ClCompile Include="Src\GridTileSet_test.cpp" />
-    <ClCompile Include="Src\ImageTileSet_test.cpp" />
-    <ClCompile Include="Src\ParsedElements_test.cpp" />
-    <ClCompile Include="Src\ParseHelper_test.cpp" />
-    <ClCompile Include="Src\TileMapData_test.cpp" />
-    <ClCompile Include="Src\TileService_test.cpp" />
-    <ClCompile Include="Src\TileSetFactory_test.cpp" />
-    <ClCompile Include="Src\TmxLogMock.cpp" />
-    <ClCompile Include="Src\TmxParser_test.cpp" />
-    <ClCompile Include="Src\TsxParser_test.cpp" />
+    <ClCompile Include="Src\Logger_test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\tile\tile.vcxproj">
-      <Project>{b998d8ba-9c74-429f-a576-5ee6c6e8ccb6}</Project>
+    <ProjectReference Include="..\logging\logging.vcxproj">
+      <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\Mock\ParseHelperMock.h" />
-    <ClInclude Include="Src\Mock\TileSetFactoryMock.h" />
-    <ClInclude Include="Src\Mock\TileSetMock.h" />
-    <ClInclude Include="Src\Mock\TmxLogMock.h" />
-    <ClInclude Include="Src\Mock\TmxParserMock.h" />
-    <ClInclude Include="Src\Mock\TsxParserMock.h" />
-    <ClInclude Include="Src\Mock\XMLMock.h" />
+    <ClInclude Include="Include\Mock\LoggerMock.h" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
     <Import Project="..\packages\gmock.1.11.0\build\native\gmock.targets" Condition="Exists('..\packages\gmock.1.11.0\build\native\gmock.targets')" />
   </ImportGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -77,7 +64,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(SolutionDir)logging\Include;$(SolutionDir)logging_test\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)util_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)logging\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>
@@ -105,11 +92,11 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;FA_UNITTEST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)logging\Include;$(SolutionDir)logging_test\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)util_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)logging\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>
@@ -139,6 +126,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets'))" />
     <Error Condition="!Exists('..\packages\gmock.1.11.0\build\native\gmock.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\gmock.1.11.0\build\native\gmock.targets'))" />
   </Target>
 </Project>

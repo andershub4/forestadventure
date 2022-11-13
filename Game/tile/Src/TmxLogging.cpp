@@ -11,7 +11,7 @@ namespace FA {
 
 namespace Tile {
 
-LogLib::Logger& TmxLog()
+LogLib::BasicLogger& TmxLog()
 {
     static LogLib::Logger tmxLog;
 

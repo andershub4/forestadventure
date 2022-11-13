@@ -15,23 +15,6 @@
 
 namespace LogLib {
 
-std::string Logger::ToString(const char* format, ...)
-{
-    std::string result;
-
-    if (format != nullptr) {
-        va_list args;
-        va_start(args, format);
-        char buffer[maxLogEntrySize_];
-        memset(buffer, 0, maxLogEntrySize_ * sizeof(char));
-        vsnprintf(buffer, maxLogEntrySize_ - 1, format, args);
-        result = std::string(buffer);
-        va_end(args);
-    }
-
-    return result;
-}
-
 Logger::Logger() = default;
 
 Logger::~Logger()

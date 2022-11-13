@@ -6,30 +6,27 @@
 
 #pragma once
 
-#include <cstdarg>
+#include "BasicLogger.h"
+
 #include <fstream>
 #include <string>
 
 namespace LogLib {
 
-class Logger
+class Logger : public BasicLogger
 {
 public:
-    enum class LogLevel { Error, Warning, Info };
-
-    static std::string ToString(const char* format, ...);
-
     Logger();
     ~Logger();
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
 
-    void OpenLog(const std::string& folder, const std::string& fileName, bool toConsole);
-    void CloseLog();
-    void MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& func, const std::string& logStr);
+    virtual void OpenLog(const std::string& folder, const std::string& fileName, bool toConsole) override;
+    virtual void CloseLog() override;
+    virtual void MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& func,
+                              const std::string& logStr) override;
 
 private:
-    static constexpr int maxLogEntrySize_{40000};  // arbitrary number
     std::ofstream logStream_;
     std::string filePath_;
     std::ofstream::pos_type currSize_;

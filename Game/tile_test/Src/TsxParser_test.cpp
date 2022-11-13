@@ -9,6 +9,7 @@
 #include <gtest/gtest.h>
 
 #include "Mock/ParseHelperMock.h"
+#include "Mock/TmxLogMock.h"
 #include "Mock/XMLMock.h"
 
 #include "TsxParser.h"
@@ -27,6 +28,7 @@ protected:
     TsxParserTest()
         : helperMock_(std::make_shared<ParseHelperMock<XMLElementMock, XMLErrorMock>>())
         , parser_(helperMock_)
+        , loggerMockProxy_(loggerMock_)
     {}
 
     const std::string xmlBuffer_ = "xml content";
@@ -43,9 +45,10 @@ protected:
 
     XMLDocumentMock docMock_;
     XMLElementMock tileSetElementMock_;
-
     std::shared_ptr<ParseHelperMock<XMLElementMock, XMLErrorMock>> helperMock_;
     TsxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock> parser_;
+    StrictMock<LogLib::LoggerMock> loggerMock_;
+    LoggerMockProxy loggerMockProxy_;
 };
 
 TEST_F(TsxParserTest, TestParsedTsxDataEqualToOperator)
@@ -70,6 +73,8 @@ TEST_F(TsxParserTest, ParseShouldFailDueToError)
 
 TEST_F(TsxParserTest, ParseValidImageDataShouldSucceed)
 {
+    EXPECT_CALL(loggerMock_, MakeLogEntry(_, _, _)).Times(4);
+
     EXPECT_CALL(docMock_, Parse(StrEq(xmlBuffer_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(false));
     EXPECT_CALL(docMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&tileSetElementMock_));
@@ -100,6 +105,8 @@ TEST_F(TsxParserTest, ParseValidImageDataShouldSucceed)
 
 TEST_F(TsxParserTest, ParseValidGridDataShouldSucceed)
 {
+    EXPECT_CALL(loggerMock_, MakeLogEntry(_, _, _)).Times(2);
+
     EXPECT_CALL(docMock_, Parse(StrEq(xmlBuffer_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(false));
     EXPECT_CALL(docMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&tileSetElementMock_));
