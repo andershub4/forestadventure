@@ -86,7 +86,7 @@ public:
                     tileSets[firstGid] = tileSetData;
                 }
                 else {
-                    LOG_TMXERROR("Can not load: %s", parsedSet.tsxSource_);
+                    LOG_TMXERROR("Can not parse: %s", parsedSet.tsxSource_.c_str());
                 }
             }
         }
