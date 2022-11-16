@@ -73,8 +73,6 @@ TEST_F(TmxParserTest, ParseShouldFailDueToError)
 
 TEST_F(TmxParserTest, ParseValidMapShouldSucceed)
 {
-    EXPECT_CALL(loggerMock_, MakeLogEntry(_, _)).Times(5);
-
     EXPECT_CALL(docMock_, Parse(StrEq(xmlBuffer_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(false));
     EXPECT_CALL(docMock_, FirstChildElement(StrEq("map"))).WillOnce(Return(&mapElementMock_));

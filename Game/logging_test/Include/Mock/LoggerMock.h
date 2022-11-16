@@ -17,7 +17,10 @@ class LoggerMock
 public:
     MOCK_METHOD(void, OpenLog, (const std::string& folder, const std::string& fileName, bool toConsole));
     MOCK_METHOD(void, CloseLog, ());
-    MOCK_METHOD(void, MakeLogEntry, (const LogLib::BasicLogger::LogLevel& logLevel, const std::string& logStr));
+    MOCK_METHOD(void, MakeDebugLogEntry, (const std::string& str));
+    MOCK_METHOD(void, MakeInfoLogEntry, (const std::string& str));
+    MOCK_METHOD(void, MakeWarnLogEntry, (const std::string& str));
+    MOCK_METHOD(void, MakeErrorLogEntry, (const std::string& str));
 };
 
 class LoggerMockProxy : public LogLib::BasicLogger
@@ -34,10 +37,22 @@ public:
 
     virtual void CloseLog() override { mock_.CloseLog(); }
 
-    virtual void MakeLogEntry(const BasicLogger::LogLevel& logLevel, const std::string& func,
-                              const std::string& logStr) override
+    virtual void MakeDebugLogEntry(const std::string& fn, const std::string& str) override
     {
-        mock_.MakeLogEntry(logLevel, logStr);
+        // No need to test DebugLogEntry
+    }
+
+    virtual void MakeInfoLogEntry(const std::string& fn, const std::string& str) override
+    {
+        mock_.MakeInfoLogEntry(str);
+    }
+    virtual void MakeWarnLogEntry(const std::string& fn, const std::string& str) override
+    {
+        mock_.MakeWarnLogEntry(str);
+    }
+    virtual void MakeErrorLogEntry(const std::string& fn, const std::string& str) override
+    {
+        mock_.MakeErrorLogEntry(str);
     }
 
 private:

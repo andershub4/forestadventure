@@ -49,10 +49,30 @@ void Logger::CloseLog()
     }
 }
 
-void Logger::MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& func, const std::string& logStr)
+void Logger::MakeDebugLogEntry(const std::string& fn, const std::string& logStr)
 {
-    StartLine(logLevel, func);
-    Log(logStr);
+    MakeLogEntry(Logger::LogLevel::Debug, fn, logStr);
+}
+
+void Logger::MakeInfoLogEntry(const std::string& fn, const std::string& logStr)
+{
+    MakeLogEntry(Logger::LogLevel::Info, fn, logStr);
+}
+
+void Logger::MakeWarnLogEntry(const std::string& fn, const std::string& logStr)
+{
+    MakeLogEntry(Logger::LogLevel::Warning, fn, logStr);
+}
+
+void Logger::MakeErrorLogEntry(const std::string& fn, const std::string& logStr)
+{
+    MakeLogEntry(Logger::LogLevel::Error, fn, logStr);
+}
+
+void Logger::MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& fn, const std::string& str)
+{
+    StartLine(logLevel, fn);
+    Log(str);
 }
 
 void Logger::LogStr(const std::string& logStr)

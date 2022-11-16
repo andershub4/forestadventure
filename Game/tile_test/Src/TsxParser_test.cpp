@@ -73,8 +73,6 @@ TEST_F(TsxParserTest, ParseShouldFailDueToError)
 
 TEST_F(TsxParserTest, ParseValidImageDataShouldSucceed)
 {
-    EXPECT_CALL(loggerMock_, MakeLogEntry(_, _)).Times(4);
-
     EXPECT_CALL(docMock_, Parse(StrEq(xmlBuffer_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(false));
     EXPECT_CALL(docMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&tileSetElementMock_));
@@ -105,8 +103,6 @@ TEST_F(TsxParserTest, ParseValidImageDataShouldSucceed)
 
 TEST_F(TsxParserTest, ParseValidGridDataShouldSucceed)
 {
-    EXPECT_CALL(loggerMock_, MakeLogEntry(_, _)).Times(2);
-
     EXPECT_CALL(docMock_, Parse(StrEq(xmlBuffer_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(false));
     EXPECT_CALL(docMock_, FirstChildElement(StrEq("tileset"))).WillOnce(Return(&tileSetElementMock_));

@@ -16,6 +16,8 @@ namespace LogLib {
 class Logger : public BasicLogger
 {
 public:
+    enum class LogLevel { Error, Warning, Info, Debug };
+
     Logger();
     ~Logger();
     Logger(const Logger&) = delete;
@@ -23,8 +25,10 @@ public:
 
     virtual void OpenLog(const std::string& folder, const std::string& fileName, bool toConsole) override;
     virtual void CloseLog() override;
-    virtual void MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& func,
-                              const std::string& logStr) override;
+    virtual void MakeDebugLogEntry(const std::string& fn, const std::string& str) override;
+    virtual void MakeInfoLogEntry(const std::string& fn, const std::string& str) override;
+    virtual void MakeWarnLogEntry(const std::string& fn, const std::string& str) override;
+    virtual void MakeErrorLogEntry(const std::string& fn, const std::string& str) override;
 
 private:
     std::ofstream logStream_;
@@ -34,6 +38,7 @@ private:
     bool toConsole_{false};
 
 private:
+    void MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& fn, const std::string& str);
     void LogStr(const std::string& logStr);
     void Log(const std::string& logStr);
     void StartLine(const LogLevel& logLevel, const std::string& funcName);
