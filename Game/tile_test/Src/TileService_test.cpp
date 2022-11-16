@@ -29,7 +29,7 @@ class TileServiceTest : public Test
 {
 protected:
     TileServiceTest()
-        : loggerMockProxy_(loggerMock_)
+        : staticLogMock_(loggerMock_)
     {}
 
     virtual void SetUp() override;
@@ -72,7 +72,7 @@ protected:
     TileSetFactoryMock tileSetFactoryMock_;
     ByteStreamFactoryMock byteStreamFactoryMock_;
     StrictMock<LogLib::LoggerMock> loggerMock_;
-    LoggerMockProxy loggerMockProxy_;
+    StaticLogMock staticLogMock_;
 
     std::unique_ptr<TileService<XMLDocumentMock, XMLElementMock, XMLErrorMock>> service_;
 
@@ -142,7 +142,7 @@ TEST_F(TileServiceTest, ReadTileSetsShouldFailDueToNoTileSets)
     ParsedTmx parsedTmx{map_, {}, {layer1_, layer2_}, {group_}};
     ExpectParseSucceed(parsedTmx);
 
-    EXPECT_CALL(loggerMock_, MakeLogEntry(LogLib::BasicLogger::LogLevel::Error, _, StrEq("No tilesets found")));
+    EXPECT_CALL(loggerMock_, MakeLogEntry(LogLib::BasicLogger::LogLevel::Error, StrEq("No tilesets found")));
 
     auto tileSets = service_->ReadTileSets(tmxDir_);
     EXPECT_THAT(tileSets, IsEmpty());
@@ -159,8 +159,7 @@ TEST_F(TileServiceTest, ReadTileSetsShouldFailDueToUnableToParseTileSet)
     EXPECT_CALL(byteStreamFactoryMock_, Create(StrEq(tsxPath))).WillOnce(Return(ByMove(std::move(byteStreamMock))));
 
     EXPECT_CALL(tsxParserMock_, Parse(_, StrEq("xmlbufferTsx"), _)).WillOnce(Return(false));
-    EXPECT_CALL(loggerMock_,
-                MakeLogEntry(LogLib::BasicLogger::LogLevel::Error, _, StrEq("Can not parse: tileset.tsx")));
+    EXPECT_CALL(loggerMock_, MakeLogEntry(LogLib::BasicLogger::LogLevel::Error, StrEq("Can not parse: tileset.tsx")));
 
     auto tileSets = service_->ReadTileSets(tmxDir_);
     EXPECT_THAT(tileSets, IsEmpty());

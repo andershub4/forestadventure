@@ -28,7 +28,7 @@ protected:
     TmxParserTest()
         : helperMock_(std::make_shared<ParseHelperMock<XMLElementMock, XMLErrorMock>>())
         , parser_(helperMock_)
-        , loggerMockProxy_(loggerMock_)
+        , staticLogMock_(loggerMock_)
     {}
 
     const std::string xmlBuffer_ = "xml content";
@@ -48,7 +48,7 @@ protected:
     std::shared_ptr<ParseHelperMock<XMLElementMock, XMLErrorMock>> helperMock_;
     TmxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock> parser_;
     StrictMock<LogLib::LoggerMock> loggerMock_;
-    LoggerMockProxy loggerMockProxy_;
+    StaticLogMock staticLogMock_;
 };
 
 TEST_F(TmxParserTest, TestParsedTmxDataEqualToOperator)
@@ -73,7 +73,7 @@ TEST_F(TmxParserTest, ParseShouldFailDueToError)
 
 TEST_F(TmxParserTest, ParseValidMapShouldSucceed)
 {
-    EXPECT_CALL(loggerMock_, MakeLogEntry(_, _, _)).Times(5);
+    EXPECT_CALL(loggerMock_, MakeLogEntry(_, _)).Times(5);
 
     EXPECT_CALL(docMock_, Parse(StrEq(xmlBuffer_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(false));

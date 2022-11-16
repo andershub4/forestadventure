@@ -12,16 +12,16 @@ namespace FA {
 
 namespace Tile {
 
-class LoggerMockProxy
+class StaticLogMock
 {
 public:
-    LoggerMockProxy(LogLib::LoggerMock& mock);
-    ~LoggerMockProxy();
+    StaticLogMock(LogLib::LoggerMock& mock);
+    ~StaticLogMock();
 
-    LogLib::BasicLogger& GetLog();
+    LogLib::LoggerMockProxy& GetLog();
 
 private:
-    LogLib::LoggerMock& mock_;
+    LogLib::LoggerMockProxy mockProxy_;
 };
 
 LogLib::BasicLogger& TmxLog();

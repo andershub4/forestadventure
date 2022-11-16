@@ -12,34 +12,29 @@ namespace Tile {
 
 namespace {
 
-LoggerMockProxy* gMock_ = nullptr;
+StaticLogMock* gMock_ = nullptr;
 
 }  // namespace
 
 LogLib::BasicLogger& TmxLog()
 {
-    if (gMock_) {
-        return gMock_->GetLog();
-    }
-
-    static LogLib::LoggerMock defaultMock;
-    return defaultMock;
+    return gMock_->GetLog();
 }
 
-LoggerMockProxy::LoggerMockProxy(LogLib::LoggerMock& mock)
-    : mock_(mock)
+StaticLogMock::StaticLogMock(LogLib::LoggerMock& mock)
+    : mockProxy_(mock)
 {
     gMock_ = this;
 }
 
-LoggerMockProxy::~LoggerMockProxy()
+StaticLogMock::~StaticLogMock()
 {
     gMock_ = nullptr;
 }
 
-LogLib::BasicLogger& LoggerMockProxy::GetLog()
+LogLib::LoggerMockProxy& StaticLogMock::GetLog()
 {
-    return mock_;
+    return mockProxy_;
 }
 
 }  // namespace Tile
