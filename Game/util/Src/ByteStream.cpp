@@ -24,8 +24,8 @@ std::string ByteStream::GetBuffer() const
         std::vector<char> buffer;
         buffer.resize(size);
         is_->read(buffer.data(), size);
-        std::string xmlBuffer(buffer.begin(), buffer.end());
-        return xmlBuffer;
+        std::string str(buffer.begin(), buffer.end());
+        return str;
     }
 
     return {};
