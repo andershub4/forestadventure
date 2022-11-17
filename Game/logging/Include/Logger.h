@@ -16,8 +16,6 @@ namespace LogLib {
 class Logger : public BasicLogger
 {
 public:
-    enum class LogLevel { Error, Warning, Info, Debug };
-
     Logger();
     ~Logger();
     Logger(const Logger&) = delete;
@@ -38,6 +36,8 @@ private:
     bool toConsole_{false};
 
 private:
+    enum class LogLevel { Error, Warning, Info, Debug };
+
     void MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& fn, const std::string& str);
     void LogStr(const std::string& logStr);
     void Log(const std::string& logStr);
