@@ -157,6 +157,9 @@ std::string Logger::ToStr(const LogLevel& logLevel) const
         case LogLevel::Info:
             str = "INFO";
             break;
+        case LogLevel::Debug:
+            str = "DEBUG";
+            break;
     }
 
     return str;
