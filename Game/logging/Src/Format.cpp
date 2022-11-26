@@ -1,14 +1,14 @@
 /*
- *	Copyright (C) 2021 Anders Wennmo
+ *	Copyright (C) 2022 Anders Wennmo
  *	This file is part of forestadventure which is released under MIT license.
  *	See file LICENSE for full license details.
  */
 
-#include "BasicLogger.h"
+#include "Format.h"
 
 namespace LogLib {
 
-std::string BasicLogger::ToString(const char* format, ...)
+std::string Format::ToString(const char* format, ...)
 {
     std::string result;
 
