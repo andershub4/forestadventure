@@ -16,6 +16,8 @@ class BasicLogger
 public:
     static std::string ToString(const char* format, ...);
 
+    virtual ~BasicLogger() = default;
+
     virtual void OpenLog(const std::string& folder, const std::string& fileName, bool toConsole) = 0;
     virtual void CloseLog() = 0;
     virtual void MakeDebugLogEntry(const std::string& fn, const std::string& str) = 0;

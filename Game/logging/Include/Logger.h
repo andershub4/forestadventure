@@ -17,7 +17,7 @@ class Logger : public BasicLogger
 {
 public:
     Logger();
-    ~Logger();
+    virtual ~Logger();
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
 
