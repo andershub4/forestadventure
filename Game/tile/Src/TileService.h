@@ -12,20 +12,18 @@
 
 #include "BasicByteStream.h"
 #include "BasicByteStreamFactory.h"
+#include "BasicTileSet.h"
 #include "BasicTileSetFactory.h"
 #include "BasicTmxParser.h"
 #include "BasicTsxParser.h"
+
 #include "Folder.h"
-#include "GridTileSet.h"
-#include "ImageTileSet.h"
 #include "TileHelper.h"
 #include "TmxLogging.h"
 
 namespace FA {
 
 namespace Tile {
-
-struct ParsedTmx;
 
 template <class DocumentT, class ElementT, class ErrorT>
 class TileService
