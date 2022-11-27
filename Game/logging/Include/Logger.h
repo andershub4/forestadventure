@@ -13,6 +13,9 @@
 
 namespace LogLib {
 
+enum class LogLevel;
+class Entry;
+
 class Logger : public BasicLogger
 {
 public:
@@ -36,17 +39,12 @@ private:
     bool toConsole_{false};
 
 private:
-    enum class LogLevel { Error, Warning, Info, Debug };
-
-    void MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& fn, const std::string& str);
     void LogStr(const std::string& logStr);
-    void Log(const std::string& logStr);
-    void StartLine(const LogLevel& logLevel, const std::string& funcName);
+    void LogEntry(const Entry& entry);
     void EndLine();
     void OpeningLines();
     void ClosingLines();
     std::string TimeStr();
-    std::string ToStr(const LogLevel& logLevel) const;
     bool FolderExists(const std::string& folder) const;
 };
 

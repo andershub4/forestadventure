@@ -13,6 +13,9 @@
 #include <iostream>
 #endif
 
+#include "Entry.h"
+#include "LogLevel.h"
+
 namespace LogLib {
 
 Logger::Logger() = default;
@@ -51,28 +54,22 @@ void Logger::CloseLog()
 
 void Logger::MakeDebugLogEntry(const std::string& fn, const std::string& logStr)
 {
-    MakeLogEntry(Logger::LogLevel::Debug, fn, logStr);
+    LogEntry({LogLevel::Debug, fn, logStr});
 }
 
 void Logger::MakeInfoLogEntry(const std::string& fn, const std::string& logStr)
 {
-    MakeLogEntry(Logger::LogLevel::Info, fn, logStr);
+    LogEntry({LogLevel::Info, fn, logStr});
 }
 
 void Logger::MakeWarnLogEntry(const std::string& fn, const std::string& logStr)
 {
-    MakeLogEntry(Logger::LogLevel::Warning, fn, logStr);
+    LogEntry({LogLevel::Warn, fn, logStr});
 }
 
 void Logger::MakeErrorLogEntry(const std::string& fn, const std::string& logStr)
 {
-    MakeLogEntry(Logger::LogLevel::Error, fn, logStr);
-}
-
-void Logger::MakeLogEntry(const Logger::LogLevel& logLevel, const std::string& fn, const std::string& str)
-{
-    StartLine(logLevel, fn);
-    Log(str);
+    LogEntry({LogLevel::Error, fn, logStr});
 }
 
 void Logger::LogStr(const std::string& logStr)
@@ -94,17 +91,10 @@ void Logger::LogStr(const std::string& logStr)
 #endif
 }
 
-void Logger::Log(const std::string& logStr)
+void Logger::LogEntry(const Entry& entry)
 {
-    LogStr(logStr);
+    LogStr(entry.Str());
     EndLine();
-}
-
-void Logger::StartLine(const LogLevel& logLevel, const std::string& funcName)
-{
-    std::stringstream ss;
-    ss << "[" << ToStr(logLevel) << " | " << funcName << "]: ";
-    LogStr(ss.str());
 }
 
 void Logger::EndLine()
@@ -139,28 +129,6 @@ std::string Logger::TimeStr()
     char timeStr[50] = {};
     auto e = ctime_s(timeStr, 50, &now_t);
     if (!e) str = timeStr;
-
-    return str;
-}
-
-std::string Logger::ToStr(const LogLevel& logLevel) const
-{
-    std::string str;
-
-    switch (logLevel) {
-        case LogLevel::Error:
-            str = "ERROR";
-            break;
-        case LogLevel::Warning:
-            str = "WARNING";
-            break;
-        case LogLevel::Info:
-            str = "INFO";
-            break;
-        case LogLevel::Debug:
-            str = "DEBUG";
-            break;
-    }
 
     return str;
 }

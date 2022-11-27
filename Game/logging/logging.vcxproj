@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Entry.cpp" />
     <ClCompile Include="Src\Format.cpp" />
     <ClCompile Include="Src\Logger.cpp" />
   </ItemGroup>
@@ -148,6 +149,8 @@
     <ClInclude Include="Include\BasicLogger.h" />
     <ClInclude Include="Include\Format.h" />
     <ClInclude Include="Include\Logger.h" />
+    <ClInclude Include="Src\Entry.h" />
+    <ClInclude Include="Src\LogLevel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
