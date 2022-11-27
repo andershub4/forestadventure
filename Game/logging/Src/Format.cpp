@@ -15,9 +15,9 @@ std::string Format::ToString(const char* format, ...)
     if (format != nullptr) {
         va_list args;
         va_start(args, format);
-        char buffer[maxLogEntrySize_];
+        char buffer[maxLogEntrySize_ + 1];
         memset(buffer, 0, maxLogEntrySize_ * sizeof(char));
-        vsnprintf(buffer, maxLogEntrySize_ - 1, format, args);
+        vsnprintf(buffer, sizeof(buffer), format, args);
         result = std::string(buffer);
         va_end(args);
     }

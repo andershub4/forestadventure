@@ -13,12 +13,27 @@ using namespace testing;
 
 namespace LogLib {
 
-TEST(FormatTest, FormatToStringShouldSucceed)
+TEST(FormatTest, ValidVaArgsShouldReturnString)
 {
     int nCount = 3;
-    auto str = Format::ToString("nCount: %d", nCount);
+    auto str = Format::ToString("%s: %d", "nCount", nCount);
 
     EXPECT_THAT(str, StrEq("nCount: 3"));
+}
+
+TEST(FormatTest, EmptyVaArgsShouldReturnEmptyString)
+{
+    auto str = Format::ToString(nullptr);
+
+    EXPECT_THAT(str, IsEmpty());
+}
+
+TEST(FormatTest, TooLongVaArgsShouldReturnTruncatedString)
+{
+    std::string longStr(40001, 'o');
+    auto str = Format::ToString("%s", longStr.c_str());
+
+    EXPECT_THAT(str, SizeIs(40000));
 }
 
 }  // namespace LogLib
