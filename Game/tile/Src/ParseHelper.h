@@ -120,6 +120,14 @@ private:
         return std::make_tuple(attrName, r);
     }
 
+    std::vector<ParseResult<ErrorT>> ParseProperty(ElementT* element, ParsedObject::Property& property) const
+    {
+        std::vector<ParseResult<ErrorT>> results{{ParseElement<ElementT, ErrorT>(element, "name", property.first)},
+                                                 {ParseElement<ElementT, ErrorT>(element, "value", property.second)}};
+
+        return results;
+    }
+
     std::vector<ParseResult<ErrorT>> ParseProperties(ElementT* parentElement,
                                                      std::vector<ParsedObject::Property>& properties) const
     {
@@ -130,11 +138,9 @@ private:
             auto element = propertiesElement->FirstChildElement("property");
             while (element != nullptr) {
                 ParsedObject::Property property;
-                auto r1 = ParseElement<ElementT, ErrorT>(element, "name", property.first);
-                auto r2 = ParseElement<ElementT, ErrorT>(element, "value", property.second);
+                auto r = ParseProperty(element, property);
                 properties.push_back(property);
-                results.push_back(r1);
-                results.push_back(r2);
+                results.insert(results.end(), r.begin(), r.end());
                 element = element->NextSiblingElement("property");
             }
         }
