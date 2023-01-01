@@ -30,14 +30,27 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logging_test", "logging_test\logging_test.vcxproj", "{AD16EEEB-39EB-43DB-A731-C034A908908D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfml-audio", "sfml\sfml-audio.vcxproj", "{6389DEAF-9349-36A9-93EC-153485B5DC78}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E9E56B71-455E-3047-BDE2-9A23331CC089} = {E9E56B71-455E-3047-BDE2-9A23331CC089}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfml-system", "sfml\sfml-system.vcxproj", "{E9E56B71-455E-3047-BDE2-9A23331CC089}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfml-graphics", "sfml\sfml-graphics.vcxproj", "{B9B79D8D-D896-33AA-99C4-BE1C78068A10}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E9E56B71-455E-3047-BDE2-9A23331CC089} = {E9E56B71-455E-3047-BDE2-9A23331CC089}
+		{3CFA437D-5C86-3417-B0B6-4C5850EC12DC} = {3CFA437D-5C86-3417-B0B6-4C5850EC12DC}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfml-window", "sfml\sfml-window.vcxproj", "{3CFA437D-5C86-3417-B0B6-4C5850EC12DC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E9E56B71-455E-3047-BDE2-9A23331CC089} = {E9E56B71-455E-3047-BDE2-9A23331CC089}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfml-network", "sfml\sfml-network.vcxproj", "{D437DDF5-09A0-3C13-AD30-2D5390962E9A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E9E56B71-455E-3047-BDE2-9A23331CC089} = {E9E56B71-455E-3047-BDE2-9A23331CC089}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfml-main", "sfml\sfml-main.vcxproj", "{67500813-239A-3DC5-A6A7-AA3247DFBFF7}"
 EndProject
