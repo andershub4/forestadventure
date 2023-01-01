@@ -1,3 +1,6 @@
 [submodule "Game/3rdparty/submodules/tinyxml2"]
 	path = Game/3rdparty/submodules/tinyxml2
 	url = https://github.com/leethomason/tinyxml2
+[submodule "Game/3rdparty/submodules/SFML"]
+	path = Game/3rdparty/submodules/SFML
+	url = https://github.com/SFML/SFML
