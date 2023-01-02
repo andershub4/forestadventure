@@ -6,30 +6,15 @@
 
 #pragma once
 
-#include <SFML/Graphics/RenderWindow.hpp>
-
-#include "Message/MessageBus.h"
-#include "Resource/TextureManager.h"
-#include "Scene/Manager.h"
-
 namespace FA {
 
 class Game
 {
 public:
-    Game();
-    ~Game();
+    int Run();
+
+private:
     void GameLoop();
-
-private:
-    MessageBus messageBus_;
-    sf::RenderWindow window_;
-    sf::View view_;
-    TextureManager textureManager_;
-    Scene::Manager sceneManager_;
-
-private:
-    void InitWindow();
 };
 
 }  // namespace FA

@@ -202,6 +202,7 @@
     <ClInclude Include="Resource\SheetManager.h" />
     <ClInclude Include="Resource\TextureManager.h" />
     <ClInclude Include="Scene\Layers\PreAlphaLayer.h" />
+    <ClInclude Include="SfmlLog.h" />
     <ClInclude Include="UI\Title.h" />
     <ClInclude Include="Scene\LayerId.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
@@ -261,6 +262,7 @@
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Resource\SheetManager.cpp" />
     <ClCompile Include="Scene\Layers\PreAlphaLayer.cpp" />
+    <ClCompile Include="SfmlLog.cpp" />
     <ClCompile Include="UI\Title.cpp" />
     <ClCompile Include="Scene\Manager.cpp" />
     <ClCompile Include="Scene\Scenes\BasicScene.cpp" />

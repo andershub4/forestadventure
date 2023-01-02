@@ -6,60 +6,75 @@
 
 #include "Game.h"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+
 #include "Constant/Screen.h"
 #include "Logging.h"
+#include "Message/MessageBus.h"
+#include "Resource/TextureManager.h"
+#include "Scene/Manager.h"
+#include "SfmlLog.h"
 #include "System/InputSystem.h"
 #include "UI/Title.h"
+#include "Version.h"
 
 namespace FA {
 
-Game::Game()
-    : sceneManager_(messageBus_, textureManager_)
+int Game::Run()
 {
     LOG_INFO_ENTER_FUNC();
-    InitWindow();
-    LOG_INFO_EXIT_FUNC();
-}
 
-Game::~Game() = default;
+    try {
+        GameLoop();
+    }
+    catch (const std::exception& e) {
+        LOG_ERROR("Exception catched: ", e.what());
+        return EXIT_FAILURE;
+    }
+
+    LOG_INFO_EXIT_FUNC();
+    return EXIT_SUCCESS;
+}
 
 void Game::GameLoop()
 {
-    LOG_INFO_ENTER_FUNC();
+    LOG_INFO("%s version %s", FA_APP_NAME, FA_APP_VERSION);
+    LOG_INFO("SFML version %u.%u.%u", SFML_VERSION_MAJOR, SFML_VERSION_MINOR, SFML_VERSION_PATCH);
 
-    sf::Clock clock;
-    InputSystem inputSystem(messageBus_, window_);
+    sf::RenderWindow window;
+    sf::View view;
 
-    while (sceneManager_.IsRunning()) {
-        sf::Time elapsed = clock.restart();
-        float deltaTime = elapsed.asSeconds();
-
-        inputSystem.Update(deltaTime);
-
-        sceneManager_.Update(deltaTime);
-
-        window_.clear();
-        sceneManager_.DrawTo(window_);
-        window_.display();
-    }
-
-    window_.close();
-
-    LOG_INFO_EXIT_FUNC();
-}
-
-void Game::InitWindow()
-{
     LOG_INFO("Create main window");
     const std::string title = UI::GetTitle();
 #ifdef _DEBUG
-    window_.create(sf::VideoMode(constant::Screen::width, constant::Screen::height), title);
+    window.create(sf::VideoMode(constant::Screen::width, constant::Screen::height), title);
 #else
-    window_.create(sf::VideoMode::getDesktopMode(), title, sf::Style::Fullscreen);
-    view_.reset(sf::FloatRect(0.0, 0.0, constant::Screen::width_f, constant::Screen::height_f));
-    window_.setView(view_);
+    window.create(sf::VideoMode::getDesktopMode(), title, sf::Style::Fullscreen);
+    view.reset(sf::FloatRect(0.0, 0.0, constant::Screen::width_f, constant::Screen::height_f));
+    window.setView(view);
 #endif
-    window_.setFramerateLimit(120);
+    window.setFramerateLimit(120);
+
+    MessageBus messageBus;
+    TextureManager textureManager;
+    Scene::Manager sceneManager(messageBus, textureManager);
+    SfmlLog sfmlLog;
+    sf::Clock clock;
+    InputSystem inputSystem(messageBus, window);
+
+    sfmlLog.Init();
+    LOG_INFO("Start main loop");
+    while (sceneManager.IsRunning()) {
+        sf::Time elapsed = clock.restart();
+        float deltaTime = elapsed.asSeconds();
+        inputSystem.Update(deltaTime);
+        sceneManager.Update(deltaTime);
+        window.clear();
+        sceneManager.DrawTo(window);
+        window.display();
+    }
+
+    window.close();
 }
 
 }  // namespace FA

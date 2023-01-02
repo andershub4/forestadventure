@@ -90,7 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -117,7 +117,7 @@ copy /Y "$(SolutionDir)Debug-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,7 +167,6 @@ copy /Y "$(SolutionDir)Release-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"</Com
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SfmlLog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\logging\logging.vcxproj">
@@ -182,7 +181,6 @@ copy /Y "$(SolutionDir)Release-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"</Com
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SfmlLog.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="App.rc" />
