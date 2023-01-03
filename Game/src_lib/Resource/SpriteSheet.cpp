@@ -42,7 +42,7 @@ Frame SpriteSheet::At(const sf::Vector2u& uvCoord) const
 {
     auto rectSize = CalcRectSize();
 
-    if (rectSize.x > 0 && rectSize.y) {
+    if (rectSize.x > 0 && rectSize.y > 0) {
         int left = static_cast<int>(uvCoord.x * rectSize.x);
         int top = static_cast<int>(uvCoord.y * rectSize.y);
         int width = static_cast<int>(rectSize.x);
