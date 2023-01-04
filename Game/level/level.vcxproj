@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ca08c938-2967-40a8-9834-359d5b8009e7}</ProjectGuid>
-    <RootNamespace>srclib</RootNamespace>
+    <ProjectGuid>{2e247490-8768-4a34-a04e-0f7551db0499}</ProjectGuid>
+    <RootNamespace>level</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)level;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)logging\Include;$(SolutionDir)level;$(SolutionDir)tile\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)level;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)logging\Include;$(SolutionDir)level;$(SolutionDir)tile\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,63 +141,84 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Constant\Screen.h" />
-    <ClInclude Include="Effect\BasicEffect.h" />
-    <ClInclude Include="Effect\FadeEffect.h" />
-    <ClInclude Include="Effect\NullEffect.h" />
-    <ClInclude Include="Scene\Layers\PreAlphaLayer.h" />
-    <ClInclude Include="SfmlLog.h" />
-    <ClInclude Include="UI\Title.h" />
-    <ClInclude Include="Scene\LayerId.h" />
-    <ClInclude Include="Scene\Manager.h" />
-    <ClInclude Include="Scene\Scenes\BasicScene.h" />
-    <ClInclude Include="Scene\Scenes\IntroScene.h" />
-    <ClInclude Include="Scene\Scenes\PlayScene.h" />
-    <ClInclude Include="Scene\Scenes\TransitionScene.h" />
-    <ClInclude Include="Scene\Transitions\BasicTransition.h" />
-    <ClInclude Include="Scene\Transitions\FadeTransition.h" />
-    <ClInclude Include="Scene\Transitions\NullTransition.h" />
-    <ClInclude Include="Game\Game.h" />
-    <ClInclude Include="Scene\Layers\IntroLayer.h" />
-    <ClInclude Include="Scene\Layers\LevelLayer.h" />
-    <ClInclude Include="Scene\Layers\BasicLayer.h" />
-    <ClInclude Include="Scene\Layers\HelperLayer.h" />
-    <ClInclude Include="System\InputSystem.h" />
+    <ClCompile Include="Entity\Abilities\AnimationAbility.cpp" />
+    <ClCompile Include="Entity\Abilities\BasicAbility.cpp" />
+    <ClCompile Include="Entity\Abilities\DieAbility.cpp" />
+    <ClCompile Include="Entity\Abilities\MoveAbility.cpp" />
+    <ClCompile Include="Entity\Abilities\ShootAbility.cpp" />
+    <ClCompile Include="Entity\Entities\ArrowEntity.cpp" />
+    <ClCompile Include="Entity\Entities\BasicEntity.cpp" />
+    <ClCompile Include="Entity\Entities\CoinEntity.cpp" />
+    <ClCompile Include="Entity\Entities\MoleEntity.cpp" />
+    <ClCompile Include="Entity\Entities\PlayerEntity.cpp" />
+    <ClCompile Include="Entity\Entities\StaticEntity.cpp" />
+    <ClCompile Include="Entity\Entities\TileEntity.cpp" />
+    <ClCompile Include="Entity\EntityManager.cpp" />
+    <ClCompile Include="Entity\EntityService.cpp" />
+    <ClCompile Include="Entity\Factory.cpp" />
+    <ClCompile Include="Entity\PropertyManager.cpp" />
+    <ClCompile Include="Entity\Shape.cpp" />
+    <ClCompile Include="Entity\SpawnManager.cpp" />
+    <ClCompile Include="Entity\State.cpp" />
+    <ClCompile Include="Entity\StateMachine.cpp" />
+    <ClCompile Include="Level\Camera.cpp" />
+    <ClCompile Include="Level\CameraManager.cpp" />
+    <ClCompile Include="Level\Level.cpp" />
+    <ClCompile Include="Level\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Effect\BasicEffect.cpp" />
-    <ClCompile Include="Effect\FadeEffect.cpp" />
-    <ClCompile Include="Effect\NullEffect.cpp" />
-    <ClCompile Include="Scene\Layers\PreAlphaLayer.cpp" />
-    <ClCompile Include="SfmlLog.cpp" />
-    <ClCompile Include="UI\Title.cpp" />
-    <ClCompile Include="Scene\Manager.cpp" />
-    <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
-    <ClCompile Include="Scene\Scenes\IntroScene.cpp" />
-    <ClCompile Include="Scene\Scenes\PlayScene.cpp" />
-    <ClCompile Include="Scene\Scenes\TransitionScene.cpp" />
-    <ClCompile Include="Scene\Transitions\BasicTransition.cpp" />
-    <ClCompile Include="Scene\Transitions\FadeTransition.cpp" />
-    <ClCompile Include="Scene\Transitions\NullTransition.cpp" />
-    <ClCompile Include="Game\Game.cpp" />
-    <ClCompile Include="Scene\Layers\IntroLayer.cpp" />
-    <ClCompile Include="Scene\Layers\LevelLayer.cpp" />
-    <ClCompile Include="Scene\Layers\BasicLayer.cpp" />
-    <ClCompile Include="Scene\Layers\HelperLayer.cpp" />
-    <ClCompile Include="System\InputSystem.cpp" />
+    <ClInclude Include="Entity\Abilities\AnimationAbility.h" />
+    <ClInclude Include="Entity\Abilities\BasicAbility.h" />
+    <ClInclude Include="Entity\Abilities\DieAbility.h" />
+    <ClInclude Include="Entity\Abilities\MoveAbility.h" />
+    <ClInclude Include="Entity\Abilities\ShootAbility.h" />
+    <ClInclude Include="Constant\Entity.h" />
+    <ClInclude Include="Entity\Entities\ArrowEntity.h" />
+    <ClInclude Include="Entity\Entities\BasicEntity.h" />
+    <ClInclude Include="Entity\Entities\CoinEntity.h" />
+    <ClInclude Include="Entity\Entities\MoleEntity.h" />
+    <ClInclude Include="Entity\Entities\PlayerEntity.h" />
+    <ClInclude Include="Entity\Entities\StaticEntity.h" />
+    <ClInclude Include="Entity\Entities\TileEntity.h" />
+    <ClInclude Include="Entity\EntityManager.h" />
+    <ClInclude Include="Entity\EntityService.h" />
+    <ClInclude Include="Entity\Events\AttackEvent.h" />
+    <ClInclude Include="Entity\Events\AttackWeaponEvent.h" />
+    <ClInclude Include="Entity\Events\BasicEvent.h" />
+    <ClInclude Include="Entity\Events\DeadEvent.h" />
+    <ClInclude Include="Entity\Events\InitEvent.h" />
+    <ClInclude Include="Entity\Events\StartMoveEvent.h" />
+    <ClInclude Include="Entity\Events\StopMoveEvent.h" />
+    <ClInclude Include="Entity\EventType.h" />
+    <ClInclude Include="Entity\Factory.h" />
+    <ClInclude Include="Entity\Id.h" />
+    <ClInclude Include="Entity\LayerType.h" />
+    <ClInclude Include="Entity\Properties\BasicProperty.h" />
+    <ClInclude Include="Entity\Properties\Property.h" />
+    <ClInclude Include="Entity\PropertyData.h" />
+    <ClInclude Include="Entity\PropertyManager.h" />
+    <ClInclude Include="Entity\PropertyStore.h" />
+    <ClInclude Include="Entity\Shape.h" />
+    <ClInclude Include="Entity\SpawnManager.h" />
+    <ClInclude Include="Entity\State.h" />
+    <ClInclude Include="Entity\StateMachine.h" />
+    <ClInclude Include="Entity\StateType.h" />
+    <ClInclude Include="Enum\AnimationType.h" />
+    <ClInclude Include="Enum\EntityType.h" />
+    <ClInclude Include="Enum\FaceDirection.h" />
+    <ClInclude Include="Enum\FrameType.h" />
+    <ClInclude Include="Enum\MoveDirection.h" />
+    <ClInclude Include="Level\Camera.h" />
+    <ClInclude Include="Level\CameraManager.h" />
+    <ClInclude Include="Level\Level.h" />
+    <ClInclude Include="Level\TileMap.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\level\level.vcxproj">
-      <Project>{2e247490-8768-4a34-a04e-0f7551db0499}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\logging\logging.vcxproj">
-      <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\shared\shared.vcxproj">
       <Project>{30c8aeea-9f9c-4d4c-9aec-9402e8961540}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\util\util.vcxproj">
-      <Project>{fc8641f9-67f5-474b-9296-f5cf069d6f6d}</Project>
+    <ProjectReference Include="..\tile\tile.vcxproj">
+      <Project>{b998d8ba-9c74-429f-a576-5ee6c6e8ccb6}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
