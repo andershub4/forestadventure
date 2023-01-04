@@ -8,7 +8,7 @@
 
 #include <string>
 
-#include "Enum/MessageType.h"
+#include "MessageType.h"
 
 namespace FA {
 

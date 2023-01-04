@@ -21,12 +21,12 @@
 #include "Entity/Events/StopMoveEvent.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
-#include "Enum/MessageType.h"
 #include "Level/Level.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyReleasedMessage.h"
+#include "Message/MessageType.h"
 #include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
 

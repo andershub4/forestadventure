@@ -18,25 +18,7 @@
     <ClCompile Include="Game\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Message\MessageBus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Message\Message.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="System\InputSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Message\BroadcastMessage\KeyPressedMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Message\BroadcastMessage\KeyReleasedMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Entities\BasicEntity.cpp">
@@ -93,9 +75,6 @@
     <ClCompile Include="Entity\Entities\PlayerEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\SpriteSheet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\Shape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,9 +102,6 @@
     <ClCompile Include="Scene\Layers\PreAlphaLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Logging.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\EntityService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -133,12 +109,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\StateMachine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\SheetManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\SpawnManager.cpp">
@@ -182,40 +152,10 @@
     <ClInclude Include="Game\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Fwd\SfmlFwd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="System\InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\MessageBus.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message\Message.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum\MessageType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\CloseWindowMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Constant\Screen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\KeyPressedMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\KeyReleasedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\MoveDirection.h">
@@ -284,9 +224,6 @@
     <ClInclude Include="Entity\Entities\PlayerEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\SpriteSheet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -326,15 +263,6 @@
     <ClInclude Include="Scene\Layers\PreAlphaLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logging.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\SheetId.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\SheetData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\EntityService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -365,15 +293,6 @@
     <ClInclude Include="Entity\Events\InitEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\TextureManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\SheetManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\SpawnManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -383,16 +302,7 @@
     <ClInclude Include="Constant\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\Frame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Entities\TileEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\EntityCreatedMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\EntityDestroyedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Entities\CoinEntity.h">
@@ -431,19 +341,10 @@
     <ClInclude Include="Entity\Events\DeadEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\GameOverMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Abilities\DieAbility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\LayerType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\AnimationData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\ImageData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SfmlLog.h">
