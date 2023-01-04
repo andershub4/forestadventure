@@ -9,12 +9,12 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Screen.h"
+#include "Layers/HelperLayer.h"
+#include "Layers/IntroLayer.h"
+#include "Layers/PreAlphaLayer.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
 #include "PlayScene.h"
-#include "Scene/Layers/HelperLayer.h"
-#include "Scene/Layers/IntroLayer.h"
-#include "Scene/Layers/PreAlphaLayer.h"
 
 namespace FA {
 

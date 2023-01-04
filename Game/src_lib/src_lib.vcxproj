@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)level;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)level;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,57 +141,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Constant\Screen.h" />
-    <ClInclude Include="Effect\BasicEffect.h" />
-    <ClInclude Include="Effect\FadeEffect.h" />
-    <ClInclude Include="Effect\NullEffect.h" />
-    <ClInclude Include="Scene\Layers\PreAlphaLayer.h" />
     <ClInclude Include="SfmlLog.h" />
     <ClInclude Include="UI\Title.h" />
-    <ClInclude Include="Scene\LayerId.h" />
-    <ClInclude Include="Scene\Manager.h" />
-    <ClInclude Include="Scene\Scenes\BasicScene.h" />
-    <ClInclude Include="Scene\Scenes\IntroScene.h" />
-    <ClInclude Include="Scene\Scenes\PlayScene.h" />
-    <ClInclude Include="Scene\Scenes\TransitionScene.h" />
-    <ClInclude Include="Scene\Transitions\BasicTransition.h" />
-    <ClInclude Include="Scene\Transitions\FadeTransition.h" />
-    <ClInclude Include="Scene\Transitions\NullTransition.h" />
     <ClInclude Include="Game\Game.h" />
-    <ClInclude Include="Scene\Layers\IntroLayer.h" />
-    <ClInclude Include="Scene\Layers\LevelLayer.h" />
-    <ClInclude Include="Scene\Layers\BasicLayer.h" />
-    <ClInclude Include="Scene\Layers\HelperLayer.h" />
     <ClInclude Include="System\InputSystem.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Effect\BasicEffect.cpp" />
-    <ClCompile Include="Effect\FadeEffect.cpp" />
-    <ClCompile Include="Effect\NullEffect.cpp" />
-    <ClCompile Include="Scene\Layers\PreAlphaLayer.cpp" />
     <ClCompile Include="SfmlLog.cpp" />
     <ClCompile Include="UI\Title.cpp" />
-    <ClCompile Include="Scene\Manager.cpp" />
-    <ClCompile Include="Scene\Scenes\BasicScene.cpp" />
-    <ClCompile Include="Scene\Scenes\IntroScene.cpp" />
-    <ClCompile Include="Scene\Scenes\PlayScene.cpp" />
-    <ClCompile Include="Scene\Scenes\TransitionScene.cpp" />
-    <ClCompile Include="Scene\Transitions\BasicTransition.cpp" />
-    <ClCompile Include="Scene\Transitions\FadeTransition.cpp" />
-    <ClCompile Include="Scene\Transitions\NullTransition.cpp" />
     <ClCompile Include="Game\Game.cpp" />
-    <ClCompile Include="Scene\Layers\IntroLayer.cpp" />
-    <ClCompile Include="Scene\Layers\LevelLayer.cpp" />
-    <ClCompile Include="Scene\Layers\BasicLayer.cpp" />
-    <ClCompile Include="Scene\Layers\HelperLayer.cpp" />
     <ClCompile Include="System\InputSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\level\level.vcxproj">
-      <Project>{2e247490-8768-4a34-a04e-0f7551db0499}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\logging\logging.vcxproj">
       <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\scene\scene.vcxproj">
+      <Project>{4094dfc5-e913-4b41-87b7-6dad48c48c58}</Project>
     </ProjectReference>
     <ProjectReference Include="..\shared\shared.vcxproj">
       <Project>{30c8aeea-9f9c-4d4c-9aec-9402e8961540}</Project>

@@ -7,9 +7,9 @@
 #pragma once
 
 #include "Fwd/SfmlFwd.h"
+#include "Manager.h"
 #include "Resource/TextureManager.h"
-#include "Scene/Manager.h"
-#include "Scene/Transitions/NullTransition.h"
+#include "Transitions/NullTransition.h"
 
 namespace FA {
 

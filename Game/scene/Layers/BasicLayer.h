@@ -11,7 +11,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Scene/LayerId.h"
+#include "LayerId.h"
 
 namespace FA {
 

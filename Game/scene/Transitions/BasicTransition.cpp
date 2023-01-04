@@ -6,7 +6,7 @@
 
 #include "BasicTransition.h"
 
-#include "Scene/Scenes/BasicScene.h"
+#include "Scenes/BasicScene.h"
 
 namespace FA {
 

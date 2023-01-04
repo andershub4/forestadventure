@@ -10,9 +10,9 @@
 
 #include "Constant/Screen.h"
 #include "Logging.h"
+#include "Manager.h"
 #include "Message/MessageBus.h"
 #include "Resource/TextureManager.h"
-#include "Scene/Manager.h"
 #include "SfmlLog.h"
 #include "System/InputSystem.h"
 #include "UI/Title.h"

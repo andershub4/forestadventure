@@ -10,12 +10,12 @@
 
 #include "Constant/Screen.h"
 #include "IntroScene.h"
+#include "Layers/HelperLayer.h"
+#include "Layers/LevelLayer.h"
+#include "Layers/PreAlphaLayer.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
-#include "Scene/Layers/HelperLayer.h"
-#include "Scene/Layers/LevelLayer.h"
-#include "Scene/Layers/PreAlphaLayer.h"
-#include "Scene/Transitions/FadeTransition.h"
+#include "Transitions/FadeTransition.h"
 
 namespace FA {
 

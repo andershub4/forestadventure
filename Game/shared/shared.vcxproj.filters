@@ -84,6 +84,9 @@
     <ClInclude Include="Logging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Constant\Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp">
