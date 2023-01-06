@@ -28,10 +28,6 @@ namespace Tile {
 class TileServiceTest : public Test
 {
 protected:
-    TileServiceTest()
-        : staticLogMock_(loggerMock_)
-    {}
-
     virtual void SetUp() override;
 
     const std::string tmxPath_ = "assets/map/test.tmx";
@@ -71,8 +67,7 @@ protected:
     TsxParserMock<XMLDocumentMock, XMLElementMock, XMLErrorMock> tsxParserMock_;
     TileSetFactoryMock tileSetFactoryMock_;
     ByteStreamFactoryMock byteStreamFactoryMock_;
-    StrictMock<LogLib::LoggerMock> loggerMock_;
-    StaticLogMock staticLogMock_;
+    StrictMock<LoggerMock> loggerMock_;
 
     std::unique_ptr<TileService<XMLDocumentMock, XMLElementMock, XMLErrorMock>> service_;
 

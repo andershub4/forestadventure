@@ -28,7 +28,6 @@ protected:
     TmxParserTest()
         : helperMock_(std::make_shared<ParseHelperMock<XMLElementMock, XMLErrorMock>>())
         , parser_(helperMock_)
-        , staticLogMock_(loggerMock_)
     {}
 
     const std::string xmlBuffer_ = "xml content";
@@ -47,8 +46,7 @@ protected:
 
     std::shared_ptr<ParseHelperMock<XMLElementMock, XMLErrorMock>> helperMock_;
     TmxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock> parser_;
-    StrictMock<LogLib::LoggerMock> loggerMock_;
-    StaticLogMock staticLogMock_;
+    StrictMock<LoggerMock> loggerMock_;
 };
 
 TEST_F(TmxParserTest, TestParsedTmxDataEqualToOperator)

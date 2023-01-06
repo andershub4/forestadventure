@@ -18,9 +18,6 @@
     <ClCompile Include="Src\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Format.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Entry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -30,9 +27,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\BasicLogger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Format.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Entry.h">

@@ -5,7 +5,9 @@
  */
 
 #include "Logging.h"
+
 #include "Folder.h"
+#include "Logger.h"
 
 namespace FA {
 
@@ -19,6 +21,26 @@ LogLib::Logger& MainLog()
     }();
 
     return mainLog;
+}
+
+void MakeDebugLogEntry(const std::string& fn, const std::string& str)
+{
+    MainLog().MakeDebugLogEntry(fn, str);
+}
+
+void MakeInfoLogEntry(const std::string& fn, const std::string& str)
+{
+    MainLog().MakeInfoLogEntry(fn, str);
+}
+
+void MakeWarnLogEntry(const std::string& fn, const std::string& str)
+{
+    MainLog().MakeWarnLogEntry(fn, str);
+}
+
+void MakeErrorLogEntry(const std::string& fn, const std::string& str)
+{
+    MainLog().MakeErrorLogEntry(fn, str);
 }
 
 }  // namespace FA

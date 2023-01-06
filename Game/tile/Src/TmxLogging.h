@@ -6,26 +6,30 @@
 
 #pragma once
 
-#include "Format.h"
-#include "Logger.h"
-
+#include <cstdarg>
 #include <sstream>
+#include <string>
+
+#include "Format.h"
 
 namespace FA {
 
 namespace Tile {
 
-LogLib::BasicLogger& TmxLog();
+void MakeDebugLogEntry(const std::string& fn, const std::string& str);
+void MakeInfoLogEntry(const std::string& fn, const std::string& str);
+void MakeWarnLogEntry(const std::string& fn, const std::string& str);
+void MakeErrorLogEntry(const std::string& fn, const std::string& str);
 
 }  // namespace Tile
 
 }  // namespace FA
 
-#define LOG_TMXINFO(...) FA::Tile::TmxLog().MakeInfoLogEntry(__FUNCTION__, LogLib::Format::ToString(__VA_ARGS__))
-#define LOG_TMXWARN(...) FA::Tile::TmxLog().MakeWarnLogEntry(__FUNCTION__, LogLib::Format::ToString(__VA_ARGS__))
-#define LOG_TMXERROR(...) FA::Tile::TmxLog().MakeErrorLogEntry(__FUNCTION__, LogLib::Format::ToString(__VA_ARGS__))
+#define LOG_TMXINFO(...) MakeInfoLogEntry(__FUNCTION__, ToString(__VA_ARGS__))
+#define LOG_TMXWARN(...) MakeWarnLogEntry(__FUNCTION__, ToString(__VA_ARGS__))
+#define LOG_TMXERROR(...) MakeErrorLogEntry(__FUNCTION__, ToString(__VA_ARGS__))
 
 #define LOG_TMXVARIABLE(variable)                       \
     std::ostringstream oss;                             \
     oss << "{" << #variable << ": " << variable << "}"; \
-    FA::Tile::TmxLog().MakeDebugLogEntry(__FUNCTION__, oss.str())
+    MakeDebugLogEntry(__FUNCTION__, oss.str())

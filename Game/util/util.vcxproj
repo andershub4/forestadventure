@@ -212,6 +212,7 @@
     <ClCompile Include="Src\Error.cpp" />
     <ClCompile Include="Src\ByteStream.cpp" />
     <ClCompile Include="Src\Folder.cpp" />
+    <ClCompile Include="Src\Format.cpp" />
     <ClCompile Include="Src\Path.cpp" />
     <ClCompile Include="Src\Random.cpp" />
     <ClCompile Include="Src\SpecialFolder.cpp" />
@@ -219,6 +220,7 @@
   <ItemGroup>
     <ClInclude Include="Include\BasicByteStream.h" />
     <ClInclude Include="Include\BasicByteStreamFactory.h" />
+    <ClInclude Include="Include\Format.h" />
     <ClInclude Include="Include\Print.h" />
     <ClInclude Include="Src\ByteStream.h" />
     <ClInclude Include="Include\ByteStreamFactory.h" />

@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

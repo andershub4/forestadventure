@@ -27,6 +27,9 @@
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Format_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

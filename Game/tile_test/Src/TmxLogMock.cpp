@@ -10,31 +10,26 @@ namespace FA {
 
 namespace Tile {
 
-namespace {
+LoggerMock* LoggerMock::instance_;
 
-StaticLogMock* gMock_ = nullptr;
-
-}  // namespace
-
-LogLib::BasicLogger& TmxLog()
+void MakeDebugLogEntry(const std::string& fn, const std::string& str)
 {
-    return gMock_->GetLog();
+    // No need to test DebugLogEntry
 }
 
-StaticLogMock::StaticLogMock(LogLib::LoggerMock& mock)
-    : mockProxy_(mock)
+void MakeInfoLogEntry(const std::string& fn, const std::string& str)
 {
-    gMock_ = this;
+    LoggerMock::Instance().MakeInfoLogEntry(str);
 }
 
-StaticLogMock::~StaticLogMock()
+void MakeWarnLogEntry(const std::string& fn, const std::string& str)
 {
-    gMock_ = nullptr;
+    LoggerMock::Instance().MakeWarnLogEntry(str);
 }
 
-LogLib::LoggerMockProxy& StaticLogMock::GetLog()
+void MakeErrorLogEntry(const std::string& fn, const std::string& str)
 {
-    return mockProxy_;
+    LoggerMock::Instance().MakeErrorLogEntry(str);
 }
 
 }  // namespace Tile

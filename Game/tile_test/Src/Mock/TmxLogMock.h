@@ -12,19 +12,22 @@ namespace FA {
 
 namespace Tile {
 
-class StaticLogMock
+class LoggerMock : public LogLib::LoggerMock
 {
 public:
-    StaticLogMock(LogLib::LoggerMock& mock);
-    ~StaticLogMock();
+    LoggerMock() { instance_ = this; }
+    ~LoggerMock() { instance_ = nullptr; }
 
-    LogLib::LoggerMockProxy& GetLog();
+    LoggerMock(const LoggerMock&) = delete;
+    LoggerMock& operator=(const LoggerMock&) = delete;
+    LoggerMock(LoggerMock&&) = delete;
+    LoggerMock& operator=(LoggerMock&&) = delete;
+
+    static LoggerMock& Instance() { return *instance_; }
 
 private:
-    LogLib::LoggerMockProxy mockProxy_;
+    static LoggerMock* instance_;
 };
-
-LogLib::BasicLogger& TmxLog();
 
 }  // namespace Tile
 

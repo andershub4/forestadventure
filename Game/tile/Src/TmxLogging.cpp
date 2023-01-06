@@ -5,7 +5,9 @@
  */
 
 #include "TmxLogging.h"
+
 #include "Folder.h"
+#include "Logger.h"
 
 namespace FA {
 
@@ -21,6 +23,26 @@ LogLib::BasicLogger& TmxLog()
     }();
 
     return tmxLog;
+}
+
+void MakeDebugLogEntry(const std::string& fn, const std::string& str)
+{
+    TmxLog().MakeDebugLogEntry(fn, str);
+}
+
+void MakeInfoLogEntry(const std::string& fn, const std::string& str)
+{
+    TmxLog().MakeInfoLogEntry(fn, str);
+}
+
+void MakeWarnLogEntry(const std::string& fn, const std::string& str)
+{
+    TmxLog().MakeWarnLogEntry(fn, str);
+}
+
+void MakeErrorLogEntry(const std::string& fn, const std::string& str)
+{
+    TmxLog().MakeErrorLogEntry(fn, str);
 }
 
 }  // namespace Tile

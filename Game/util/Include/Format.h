@@ -9,15 +9,8 @@
 #include <cstdarg>
 #include <string>
 
-namespace LogLib {
+namespace FA {
 
-class Format
-{
-public:
-    static std::string ToString(const char* format, ...);
+std::string ToString(const char* format, ...);
 
-private:
-    static constexpr int maxLogEntrySize_{40000};  // arbitrary number
-};
-
-}  // namespace LogLib
+}

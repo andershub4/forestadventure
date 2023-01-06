@@ -6,17 +6,19 @@
 
 #include "Format.h"
 
-namespace LogLib {
+namespace FA {
 
-std::string Format::ToString(const char* format, ...)
+static constexpr int maxLogEntrySize{40000};  // arbitrary number
+
+std::string ToString(const char* format, ...)
 {
     std::string result;
 
     if (format != nullptr) {
         va_list args;
         va_start(args, format);
-        char buffer[maxLogEntrySize_ + 1];
-        memset(buffer, 0, maxLogEntrySize_ * sizeof(char));
+        char buffer[maxLogEntrySize + 1];
+        memset(buffer, 0, maxLogEntrySize * sizeof(char));
         vsnprintf(buffer, sizeof(buffer), format, args);
         result = std::string(buffer);
         va_end(args);
@@ -25,4 +27,4 @@ std::string Format::ToString(const char* format, ...)
     return result;
 }
 
-}  // namespace LogLib
+}  // namespace FA
