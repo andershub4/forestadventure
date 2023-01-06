@@ -9,7 +9,6 @@
 #include <gtest/gtest.h>
 
 #include "Mock/ParseHelperMock.h"
-#include "Mock/TmxLogMock.h"
 #include "Mock/XMLMock.h"
 
 #include "TmxParser.h"
@@ -46,7 +45,6 @@ protected:
 
     std::shared_ptr<ParseHelperMock<XMLElementMock, XMLErrorMock>> helperMock_;
     TmxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock> parser_;
-    StrictMock<LoggerMock> loggerMock_;
 };
 
 TEST_F(TmxParserTest, TestParsedTmxDataEqualToOperator)
