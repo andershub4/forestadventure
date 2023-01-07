@@ -29,7 +29,8 @@ const std::unordered_map<FaceDirection, float> arrowRotation = {{FaceDirection::
                                                                 {FaceDirection::Up, 0.0f}};
 }  // namespace
 
-ArrowEntity::ArrowEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+ArrowEntity::ArrowEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
+                         Shared::MessageBus& messageBus)
     : BasicEntity(id, level, sheetManager, messageBus)
 {}
 
@@ -52,7 +53,7 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
     }
 }
 
-void ArrowEntity::OnUpdateAnimation(const Animation& animation)
+void ArrowEntity::OnUpdateAnimation(const Shared::Animation& animation)
 {
     auto& sprite = shape_.GetSprite("Main");
     animation.ApplyTo(sprite);
@@ -68,7 +69,7 @@ void ArrowEntity::RegisterShape()
 void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Move"; };
-    auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
+    auto updateAnimation = [this](const Shared::Animation& animation) { OnUpdateAnimation(animation); };
 
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -79,7 +80,7 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const Propert
         constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
     auto moveAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
-    auto a = entityService_.MakeAnimation({SheetId::Arrow, {{0, 0}, 1, 0}, false});
+    auto a = entityService_.MakeAnimation({Shared::SheetId::Arrow, {{0, 0}, 1, 0}, false});
     moveAnimation->RegisterAnimation("Move", a);
     moveState->RegisterAbility(move);
     moveState->RegisterAbility(moveAnimation);

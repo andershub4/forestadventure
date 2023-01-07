@@ -18,7 +18,7 @@ namespace Scene {
 class PreAlphaLayer : public BasicLayer
 {
 public:
-    PreAlphaLayer(MessageBus& messageBus, const sf::IntRect& rect);
+    PreAlphaLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect);
     virtual ~PreAlphaLayer();
 
     virtual std::string Name() const override { return "PreAlpha"; }

@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 void MessageBus::AddSubscriber(const std::string& subscriber, MessageType messageType, MessageCB onMessage)
 {
     auto& subscribers = subscribersMap_[messageType];
@@ -50,5 +52,7 @@ void MessageBus::SendMessage(std::shared_ptr<Message> msg)
         if (subscriber.onMessage_ != nullptr) subscriber.onMessage_(msg);
     }
 }
+
+}  // namespace Shared
 
 }  // namespace FA

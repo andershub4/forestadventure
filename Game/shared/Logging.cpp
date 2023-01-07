@@ -11,6 +11,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 LogLib::Logger& MainLog()
 {
     static LogLib::Logger mainLog;
@@ -42,5 +44,7 @@ void MakeErrorLogEntry(const std::string& fn, const std::string& str)
 {
     MainLog().MakeErrorLogEntry(fn, str);
 }
+
+}  // namespace Shared
 
 }  // namespace FA

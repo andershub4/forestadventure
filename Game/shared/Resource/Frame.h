@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 struct Frame
 {
     Frame(const sf::Texture* texture, const sf::IntRect& rect)
@@ -26,5 +28,7 @@ struct Frame
     sf::IntRect rect_;
     bool isValid_ = false;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

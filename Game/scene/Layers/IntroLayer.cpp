@@ -16,7 +16,7 @@ namespace FA {
 
 namespace Scene {
 
-IntroLayer::IntroLayer(MessageBus& messageBus, const sf::IntRect& rect)
+IntroLayer::IntroLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect)
     : BasicLayer(messageBus, rect)
 {}
 

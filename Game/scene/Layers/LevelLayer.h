@@ -14,16 +14,21 @@
 
 namespace FA {
 
+namespace Shared {
+
+class MessageBus;
+
+}  // namespace Shared
+
 class BasicEffect;
 class Level;
-class MessageBus;
 
 namespace Scene {
 
 class LevelLayer : public BasicLayer
 {
 public:
-    LevelLayer(MessageBus& messageBus, const sf::IntRect& rect, TextureManager& textureManager);
+    LevelLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect, Shared::TextureManager& textureManager);
     virtual ~LevelLayer();
 
     virtual std::string Name() const override { return "Level"; }
@@ -37,10 +42,10 @@ public:
     virtual void OnCreate() override;
 
 private:
-    MessageBus& messageBus_;
+    Shared::MessageBus& messageBus_;
     std::unique_ptr<Level> level_ = nullptr;
     std::unique_ptr<BasicEffect> effect_ = nullptr;
-    TextureManager& textureManager_;
+    Shared::TextureManager& textureManager_;
 };
 
 }  // namespace Scene

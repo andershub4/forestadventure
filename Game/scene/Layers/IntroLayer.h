@@ -18,7 +18,7 @@ namespace Scene {
 class IntroLayer : public BasicLayer
 {
 public:
-    IntroLayer(MessageBus& messageBus, const sf::IntRect& rect);
+    IntroLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect);
     virtual ~IntroLayer();
 
     virtual std::string Name() const override { return "Intro"; }

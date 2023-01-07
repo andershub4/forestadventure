@@ -10,11 +10,15 @@
 
 namespace FA {
 
+namespace Shared {
+
 class CloseWindowMessage : public Message
 {
 public:
     virtual MessageType GetMessageType() const override { return MessageType::CloseWindow; }
     virtual std::string Name() const override { return "CloseWindow"; }
 };
+
+}  // namespace Shared
 
 }  // namespace FA

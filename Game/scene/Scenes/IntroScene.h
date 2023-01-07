@@ -15,7 +15,7 @@ namespace Scene {
 class IntroScene : public BasicScene
 {
 public:
-    IntroScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
+    IntroScene(Manager& sceneManager, Shared::MessageBus& messageBus, Shared::TextureManager& textureManager,
                Manager::Layers& components, Manager::Data& data);
     virtual ~IntroScene();
 
@@ -27,7 +27,7 @@ public:
     virtual void Exit() override;
 
 private:
-    virtual void OnMessage(std::shared_ptr<Message> message) override;
+    virtual void OnMessage(std::shared_ptr<Shared::Message> message) override;
 };
 
 }  // namespace Scene

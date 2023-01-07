@@ -10,11 +10,15 @@
 
 namespace FA {
 
+namespace Shared {
+
 class GameOverMessage : public Message
 {
 public:
     virtual MessageType GetMessageType() const override { return MessageType::GameOver; }
     virtual std::string Name() const override { return "GameOver"; }
 };
+
+}  // namespace Shared
 
 }  // namespace FA

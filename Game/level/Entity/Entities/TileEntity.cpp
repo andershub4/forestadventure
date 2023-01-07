@@ -17,13 +17,14 @@ namespace FA {
 
 namespace Entity {
 
-TileEntity::TileEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+TileEntity::TileEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
+                       Shared::MessageBus& messageBus)
     : BasicEntity(id, level, sheetManager, messageBus)
 {}
 
 TileEntity::~TileEntity() = default;
 
-void TileEntity::OnUpdateAnimation(const Animation& animation)
+void TileEntity::OnUpdateAnimation(const Shared::Animation& animation)
 {
     auto& sprite = shape_.GetSprite("Main");
     animation.ApplyTo(sprite);
@@ -38,11 +39,11 @@ void TileEntity::RegisterShape()
 void TileEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
-    auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
+    auto updateAnimation = [this](const Shared::Animation& animation) { OnUpdateAnimation(animation); };
 
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     float t = constant::Entity::stdSwitchTime;
-    auto a = Animation(data.frames_, 0, t);
+    auto a = Shared::Animation(data.frames_, 0, t);
     idleAnimation->RegisterAnimation("Idle", a);
     idleState->RegisterAbility(idleAnimation);
     idleState->RegisterIgnoreEvents({EventType::Collision});

@@ -22,20 +22,20 @@ namespace Entity {
 class AnimationAbility : public BasicAbility
 {
 public:
-    AnimationAbility(std::function<std::string()> getKey, std::function<void(const Animation &)>);
+    AnimationAbility(std::function<std::string()> getKey, std::function<void(const Shared::Animation &)>);
     virtual ~AnimationAbility();
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
     virtual void Update(float deltaTime) override;
 
-    void RegisterAnimation(const std::string &name, const Animation &animation);
+    void RegisterAnimation(const std::string &name, const Shared::Animation &animation);
     bool AnimationIsCompleted() const;
 
 private:
-    std::unordered_map<std::string, Animation> map_;
-    Animation currentAnimation_;
+    std::unordered_map<std::string, Shared::Animation> map_;
+    Shared::Animation currentAnimation_;
     std::function<std::string()> getKey_;
-    std::function<void(const Animation &)> updateFn_;
+    std::function<void(const Shared::Animation &)> updateFn_;
 };
 
 }  // namespace Entity

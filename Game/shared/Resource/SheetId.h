@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 namespace SheetId {
 
 const std::string HeroWalkSide = "HeroWalkSide";
@@ -34,5 +36,7 @@ const std::string Arrow = "Arrow";
 const std::string Coin = "Coin";
 
 }  // namespace SheetId
+
+}  // namespace Shared
 
 }  // namespace FA

@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 Animation::Animation(const std::vector<Frame>& frames, unsigned int defaultIndex, float switchTime)
     : frames_(frames)
     , switchTime_(switchTime)
@@ -60,5 +62,7 @@ bool Animation::IsValid() const
 {
     return isValid_;
 }
+
+}  // namespace Shared
 
 }  // namespace FA

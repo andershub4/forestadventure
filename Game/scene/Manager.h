@@ -15,8 +15,12 @@
 
 namespace FA {
 
+namespace Shared {
+
 class MessageBus;
 class Message;
+
+}  // namespace Shared
 
 namespace Scene {
 
@@ -33,13 +37,13 @@ public:
         bool isRunning_ = true;
     };
 
-    Manager(MessageBus& messageBus, TextureManager& textureManager);
+    Manager(Shared::MessageBus& messageBus, Shared::TextureManager& textureManager);
     ~Manager();
 
     template <class SceneT, class TransitionT>
-    void SetScene(MessageBus& messageBus, TextureManager& textureManager)
+    void SetScene(Shared::MessageBus& messageBus, Shared::TextureManager& textureManager)
     {
-        auto createSceneFn = [this](MessageBus& messageBus, TextureManager& textureManager) {
+        auto createSceneFn = [this](Shared::MessageBus& messageBus, Shared::TextureManager& textureManager) {
             return std::make_unique<SceneT>(*this, messageBus, textureManager, layers_, data_);
         };
 
@@ -59,7 +63,7 @@ private:
     Data data_;
     Layers layers_;
 
-    void SetTransitionScene(MessageBus& messageBus, TextureManager& textureManager,
+    void SetTransitionScene(Shared::MessageBus& messageBus, Shared::TextureManager& textureManager,
                             std::unique_ptr<BasicTransition> transition);
 };
 

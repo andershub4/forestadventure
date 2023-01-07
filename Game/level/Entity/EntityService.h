@@ -8,25 +8,29 @@
 
 namespace FA {
 
+namespace Shared {
+
 class Animation;
 class Image;
 class SheetManager;
 struct AnimationData;
 struct ImageData;
 
+}  // namespace Shared
+
 namespace Entity {
 
 class EntityService
 {
 public:
-    EntityService(const SheetManager &sheetManager);
+    EntityService(const Shared::SheetManager &sheetManager);
     ~EntityService();
 
-    Animation MakeAnimation(const AnimationData &data) const;
-    Image MakeImage(const ImageData &data) const;
+    Shared::Animation MakeAnimation(const Shared::AnimationData &data) const;
+    Shared::Image MakeImage(const Shared::ImageData &data) const;
 
 private:
-    const SheetManager &sheetManager_;
+    const Shared::SheetManager &sheetManager_;
 };
 
 }  // namespace Entity

@@ -19,7 +19,7 @@ namespace Scene {
 class HelperLayer : public BasicLayer
 {
 public:
-    HelperLayer(MessageBus& messageBus, const sf::IntRect& rect, const std::string& sceneName);
+    HelperLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect, const std::string& sceneName);
     virtual ~HelperLayer();
 
     virtual std::string Name() const override { return "Helper"; }
@@ -44,7 +44,7 @@ private:
     unsigned int nEntities_ = 0;
 
 private:
-    virtual void OnMessage(std::shared_ptr<Message> message) override;
+    virtual void OnMessage(std::shared_ptr<Shared::Message> message) override;
 };
 
 }  // namespace Scene

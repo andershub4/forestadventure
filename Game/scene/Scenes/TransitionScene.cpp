@@ -14,8 +14,8 @@ namespace FA {
 
 namespace Scene {
 
-TransitionScene::TransitionScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
-                                 Manager::Layers& layers, Manager::Data& data,
+TransitionScene::TransitionScene(Manager& sceneManager, Shared::MessageBus& messageBus,
+                                 Shared::TextureManager& textureManager, Manager::Layers& layers, Manager::Data& data,
                                  std::unique_ptr<BasicTransition> transition)
     : BasicScene(sceneManager, messageBus, textureManager, layers, data)
     , transition_(std::move(transition))
@@ -25,7 +25,7 @@ TransitionScene::~TransitionScene() = default;
 
 void TransitionScene::Enter()
 {
-    sf::IntRect rect(0, 0, constant::Screen::width, constant::Screen::height);
+    sf::IntRect rect(0, 0, Shared::Screen::width, Shared::Screen::height);
 #ifdef _DEBUG
     layers_[LayerId::Helper] = std::make_unique<HelperLayer>(messageBus_, rect, Name());
     layers_[LayerId::Helper]->OnLoad();

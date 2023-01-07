@@ -16,7 +16,11 @@
 
 namespace FA {
 
+namespace Shared {
+
 class SheetManager;
+
+}  // namespace Shared
 
 namespace Tile {
 
@@ -31,8 +35,8 @@ public:
     {
         unsigned int x_{};
         unsigned int y_{};
-        FA::Frame frame_;
-        std::vector<FA::Frame> frames_;
+        Shared::Frame frame_;
+        std::vector<Shared::Frame> frames_;
     };
 
     struct ObjectData
@@ -44,7 +48,7 @@ public:
     };
 
 public:
-    TileMap(SheetManager &sheetManager);
+    TileMap(Shared::SheetManager &sheetManager);
     ~TileMap();
     void Load(const std::string &fileName);
     void Setup();
@@ -53,7 +57,7 @@ public:
     sf::Vector2u GetSize() const;
 
 private:
-    SheetManager &sheetManager_;
+    Shared::SheetManager &sheetManager_;
     std::unique_ptr<TileMapData> tileMapData_ = nullptr;
     std::unique_ptr<TileMapParser> tileMapParser_ = nullptr;
     std::map<std::string, std::vector<TileData>> layers_;

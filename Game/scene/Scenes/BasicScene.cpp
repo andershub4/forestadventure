@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Scene {
 
-BasicScene::BasicScene(Manager &sceneManager, MessageBus &messageBus, TextureManager &textureManager,
+BasicScene::BasicScene(Manager &sceneManager, Shared::MessageBus &messageBus, Shared::TextureManager &textureManager,
                        Manager::Layers &layers, Manager::Data &data)
     : sceneManager_(sceneManager)
     , messageBus_(messageBus)
@@ -40,12 +40,13 @@ bool BasicScene::IsRunning() const
     return data_.isRunning_;
 }
 
-void BasicScene::Subscribe(const std::vector<MessageType> &messageTypes)
+void BasicScene::Subscribe(const std::vector<Shared::MessageType> &messageTypes)
 {
-    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
+    messageBus_.AddSubscriber(Name(), messageTypes,
+                              [this](std::shared_ptr<Shared::Message> message) { OnMessage(message); });
 }
 
-void BasicScene::Unsubscribe(const std::vector<MessageType> &messageTypes)
+void BasicScene::Unsubscribe(const std::vector<Shared::MessageType> &messageTypes)
 {
     messageBus_.RemoveSubscriber(Name(), messageTypes);
 }

@@ -17,7 +17,7 @@ class BasicTransition;
 class TransitionScene : public BasicScene
 {
 public:
-    TransitionScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
+    TransitionScene(Manager& sceneManager, Shared::MessageBus& messageBus, Shared::TextureManager& textureManager,
                     Manager::Layers& layers, Manager::Data& Data, std::unique_ptr<BasicTransition> transition);
     virtual ~TransitionScene();
 

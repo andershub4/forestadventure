@@ -13,8 +13,13 @@
 
 namespace FA {
 
+namespace Shared {
+
 class MessageBus;
 class SheetManager;
+
+}  // namespace Shared
+
 class Level;
 
 namespace Entity {
@@ -24,15 +29,15 @@ class BasicEntity;
 class Factory
 {
 public:
-    Factory(MessageBus& messageBus, const SheetManager& sheetManager, Level& level);
+    Factory(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager, Level& level);
     ~Factory();
 
     std::unique_ptr<BasicEntity> Create(EntityType type) const;
 
 private:
     mutable Entity::EntityId id_{0};
-    MessageBus& messageBus_;
-    const SheetManager& sheetManager_;
+    Shared::MessageBus& messageBus_;
+    const Shared::SheetManager& sheetManager_;
     Level& level_;
 };
 

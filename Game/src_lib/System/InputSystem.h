@@ -14,18 +14,22 @@
 
 namespace FA {
 
+namespace Shared {
+
 class MessageBus;
+
+}  // namespace Shared
 
 class InputSystem
 {
 public:
-    InputSystem(MessageBus& messageBus, sf::RenderWindow& window);
+    InputSystem(Shared::MessageBus& messageBus, sf::RenderWindow& window);
 
     void Update(float deltaTime);
 
 private:
     sf::RenderWindow& window_;
-    MessageBus& messageBus_;
+    Shared::MessageBus& messageBus_;
     std::unordered_set<sf::Keyboard::Key> pressedKeys_;
 
 private:

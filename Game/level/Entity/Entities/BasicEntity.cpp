@@ -21,7 +21,8 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+BasicEntity::BasicEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
+                         Shared::MessageBus& messageBus)
     : id_(id)
     , level_(level)
     , messageBus_(messageBus)
@@ -49,13 +50,13 @@ void BasicEntity::Create(const PropertyData& data)
     RegisterShape();
     Subscribe(Messages());
     Start();  // must do this after setting position
-    messageBus_.SendMessage(std::make_shared<EntityCreatedMessage>());
+    messageBus_.SendMessage(std::make_shared<Shared::EntityCreatedMessage>());
 }
 
 void BasicEntity::Destroy()
 {
     Unsubscribe(Messages());
-    messageBus_.SendMessage(std::make_shared<EntityDestroyedMessage>());
+    messageBus_.SendMessage(std::make_shared<Shared::EntityDestroyedMessage>());
 }
 
 void BasicEntity::Init()
@@ -112,17 +113,18 @@ std::shared_ptr<State> BasicEntity::RegisterState(StateType stateType)
     return state;
 }
 
-void BasicEntity::SendMessage(std::shared_ptr<Message> message)
+void BasicEntity::SendMessage(std::shared_ptr<Shared::Message> message)
 {
     messageBus_.SendMessage(message);
 }
 
-void BasicEntity::Subscribe(const std::vector<MessageType>& messageTypes)
+void BasicEntity::Subscribe(const std::vector<Shared::MessageType>& messageTypes)
 {
-    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
+    messageBus_.AddSubscriber(Name(), messageTypes,
+                              [this](std::shared_ptr<Shared::Message> message) { OnMessage(message); });
 }
 
-void BasicEntity::Unsubscribe(const std::vector<MessageType>& messageTypes)
+void BasicEntity::Unsubscribe(const std::vector<Shared::MessageType>& messageTypes)
 {
     messageBus_.RemoveSubscriber(Name(), messageTypes);
 }

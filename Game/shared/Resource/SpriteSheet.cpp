@@ -13,6 +13,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 SpriteSheet::SpriteSheet(const sf::Texture* texture, const sf::Vector2u& rectCount)
     : texture_(texture)
     , rectCount_(rectCount)
@@ -82,5 +84,7 @@ std::vector<Frame> SpriteSheet::GenerateFrames(const sf::Vector2u& uvCoord, unsi
 
     return frames;
 }
+
+}  // namespace Shared
 
 }  // namespace FA

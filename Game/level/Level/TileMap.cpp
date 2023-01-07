@@ -16,7 +16,7 @@ namespace FA {
 
 namespace Tile {
 
-TileMap::TileMap(SheetManager& sheetManager)
+TileMap::TileMap(Shared::SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {
     tileMapParser_ = std::make_unique<TileMapParser>();
@@ -78,16 +78,16 @@ void TileMap::SetupLayers()
             tileData.y_ = y;
 
             if (!frames.empty()) {
-                std::vector<FA::Frame> outFrames;
+                std::vector<Shared::Frame> outFrames;
                 for (auto f : frames) {
-                    ImageData data{f.texturePath_, {f.column_, f.row_}};
+                    Shared::ImageData data{f.texturePath_, {f.column_, f.row_}};
                     auto frame = sheetManager_.MakeFrame(data);
                     outFrames.push_back(frame);
                 }
                 tileData.frames_ = outFrames;
             }
 
-            ImageData data{frame.texturePath_, {frame.column_, frame.row_}};
+            Shared::ImageData data{frame.texturePath_, {frame.column_, frame.row_}};
             tileData.frame_ = sheetManager_.MakeFrame(data);
 
             layers_[layerName].push_back(tileData);

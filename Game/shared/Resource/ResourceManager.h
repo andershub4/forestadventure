@@ -15,6 +15,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 template <class K, class R>
 class ResourceManager
 {
@@ -47,5 +49,7 @@ public:
 private:
     std::unordered_map<K, std::unique_ptr<R>> resources_;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

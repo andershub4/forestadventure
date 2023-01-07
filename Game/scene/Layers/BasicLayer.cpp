@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Scene {
 
-BasicLayer::BasicLayer(MessageBus& messageBus, const sf::IntRect& rect)
+BasicLayer::BasicLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect)
     : messageBus_(messageBus)
 {
     layerTexture_.create(rect.width, rect.height);
@@ -33,12 +33,13 @@ void BasicLayer::DrawTo(sf::RenderTarget& renderTarget)
     renderTarget.draw(sprite_);
 }
 
-void BasicLayer::Subscribe(const std::vector<MessageType>& messageTypes)
+void BasicLayer::Subscribe(const std::vector<Shared::MessageType>& messageTypes)
 {
-    messageBus_.AddSubscriber(Name(), messageTypes, [this](std::shared_ptr<Message> message) { OnMessage(message); });
+    messageBus_.AddSubscriber(Name(), messageTypes,
+                              [this](std::shared_ptr<Shared::Message> message) { OnMessage(message); });
 }
 
-void BasicLayer::Unsubscribe(const std::vector<MessageType>& messageTypes)
+void BasicLayer::Unsubscribe(const std::vector<Shared::MessageType>& messageTypes)
 {
     messageBus_.RemoveSubscriber(Name(), messageTypes);
 }

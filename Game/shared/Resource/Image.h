@@ -11,6 +11,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 class Image
 {
 public:
@@ -25,5 +27,7 @@ private:
     Frame frame_;
     bool isValid_ = false;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

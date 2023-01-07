@@ -15,10 +15,15 @@
 
 namespace FA {
 
+namespace Shared {
+
 class MessageBus;
 class Message;
-class BasicEffect;
 enum class MessageType;
+
+}  // namespace Shared
+
+class BasicEffect;
 
 namespace Scene {
 
@@ -27,7 +32,7 @@ class BasicTransition;
 class BasicLayer
 {
 public:
-    BasicLayer(MessageBus& messageBus, const sf::IntRect& rect);
+    BasicLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect);
     virtual ~BasicLayer();
 
     virtual std::string Name() const = 0;
@@ -49,15 +54,15 @@ protected:
     sf::RenderTexture layerTexture_;
 
 protected:
-    void Subscribe(const std::vector<MessageType>& messageTypes);
-    void Unsubscribe(const std::vector<MessageType>& messageTypes);
+    void Subscribe(const std::vector<Shared::MessageType>& messageTypes);
+    void Unsubscribe(const std::vector<Shared::MessageType>& messageTypes);
 
 private:
     sf::Sprite sprite_;
-    MessageBus& messageBus_;
+    Shared::MessageBus& messageBus_;
 
 private:
-    virtual void OnMessage(std::shared_ptr<Message> msg) {}
+    virtual void OnMessage(std::shared_ptr<Shared::Message> msg) {}
 };
 
 }  // namespace Scene

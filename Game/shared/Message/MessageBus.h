@@ -14,6 +14,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 class Message;
 enum class MessageType;
 
@@ -38,5 +40,7 @@ private:
 
     std::unordered_map<MessageType, std::vector<Subscriber>> subscribersMap_;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

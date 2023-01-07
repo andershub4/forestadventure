@@ -24,21 +24,22 @@ namespace Entity {
 
 namespace {
 
-const std::unordered_map<StateType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
+const std::unordered_map<StateType, std::unordered_map<FaceDirection, Shared::AnimationData>> animationDatas = {
     {StateType::Move,
-     {{FaceDirection::Left, {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true}},
-      {FaceDirection::Right, {SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false}},
-      {FaceDirection::Down, {SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false}},
-      {FaceDirection::Up, {SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false}}}},
+     {{FaceDirection::Left, {Shared::SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true}},
+      {FaceDirection::Right, {Shared::SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false}},
+      {FaceDirection::Down, {Shared::SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false}},
+      {FaceDirection::Up, {Shared::SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false}}}},
     {StateType::Idle,
-     {{FaceDirection::Left, {SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true}},
-      {FaceDirection::Right, {SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false}},
-      {FaceDirection::Down, {SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}},
-      {FaceDirection::Up, {SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}}}}};
+     {{FaceDirection::Left, {Shared::SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true}},
+      {FaceDirection::Right, {Shared::SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false}},
+      {FaceDirection::Down, {Shared::SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}},
+      {FaceDirection::Up, {Shared::SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}}}}};
 
 }  // namespace
 
-MoleEntity::MoleEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+MoleEntity::MoleEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
+                       Shared::MessageBus& messageBus)
     : BasicEntity(id, level, sheetManager, messageBus)
 {}
 
@@ -54,7 +55,7 @@ void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
     position_ += delta;
 }
 
-void MoleEntity::OnUpdateAnimation(const Animation& animation)
+void MoleEntity::OnUpdateAnimation(const Shared::Animation& animation)
 {
     auto& sprite = shape_.GetSprite("Main");
     animation.ApplyTo(sprite);
@@ -80,7 +81,7 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const Property
         ss << dir;
         return ss.str();
     };
-    auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
+    auto updateAnimation = [this](const Shared::Animation& animation) { OnUpdateAnimation(animation); };
 
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     for (const auto& dir : animationDatas.at(StateType::Idle)) {

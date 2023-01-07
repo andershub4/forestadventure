@@ -47,7 +47,7 @@ void Game::GameLoop()
     LOG_INFO("Create main window");
     const std::string title = UI::GetTitle();
 #ifdef _DEBUG
-    window.create(sf::VideoMode(constant::Screen::width, constant::Screen::height), title);
+    window.create(sf::VideoMode(Shared::Screen::width, Shared::Screen::height), title);
 #else
     window.create(sf::VideoMode::getDesktopMode(), title, sf::Style::Fullscreen);
     view.reset(sf::FloatRect(0.0, 0.0, constant::Screen::width_f, constant::Screen::height_f));
@@ -55,8 +55,8 @@ void Game::GameLoop()
 #endif
     window.setFramerateLimit(120);
 
-    MessageBus messageBus;
-    TextureManager textureManager;
+    Shared::MessageBus messageBus;
+    Shared::TextureManager textureManager;
     Scene::Manager sceneManager(messageBus, textureManager);
     SfmlLog sfmlLog;
     sf::Clock clock;

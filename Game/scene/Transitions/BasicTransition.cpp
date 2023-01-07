@@ -20,8 +20,8 @@ BasicTransition::BasicTransition(float seconds, CreateSceneFn nextSceneFn)
 
 BasicTransition::~BasicTransition() = default;
 
-std::unique_ptr<BasicScene> BasicTransition::CreateNextScene(MessageBus &messageBus,
-                                                             TextureManager &textureManager) const
+std::unique_ptr<BasicScene> BasicTransition::CreateNextScene(Shared::MessageBus &messageBus,
+                                                             Shared::TextureManager &textureManager) const
 {
     return nextSceneFn_(messageBus, textureManager);
 }

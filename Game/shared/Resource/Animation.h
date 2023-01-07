@@ -13,6 +13,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 class Animation
 {
 public:
@@ -37,5 +39,7 @@ private:
     bool isCompleted_ = false;
     bool isValid_ = false;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

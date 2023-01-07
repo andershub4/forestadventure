@@ -17,7 +17,7 @@ namespace Entity {
 class MoleEntity : public BasicEntity
 {
 public:
-    MoleEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus);
+    MoleEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager, Shared::MessageBus& messageBus);
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }
@@ -31,7 +31,7 @@ private:
 
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
-    void OnUpdateAnimation(const Animation& animation);
+    void OnUpdateAnimation(const Shared::Animation& animation);
 };
 
 }  // namespace Entity

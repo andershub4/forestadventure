@@ -12,11 +12,15 @@
 
 namespace FA {
 
+namespace Shared {
+
 struct SheetData
 {
     std::string name_;
     std::string path_;
     sf::Vector2u size_;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

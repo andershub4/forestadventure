@@ -21,12 +21,16 @@
 
 namespace FA {
 
+namespace Shared {
+
 class MessageBus;
+
+}  // namespace Shared
 
 class Level
 {
 public:
-    Level(MessageBus& messageBus, TextureManager& textureManager, const sf::Vector2u& viewSize);
+    Level(Shared::MessageBus& messageBus, Shared::TextureManager& textureManager, const sf::Vector2u& viewSize);
     ~Level();
 
     void Load(const std::string& levelName);
@@ -44,7 +48,7 @@ private:
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
-    SheetManager sheetManager_;
+    Shared::SheetManager sheetManager_;
     Tile::TileMap tileMap_;
     CameraManager cameraManager_;
     Entity::Factory factory_;

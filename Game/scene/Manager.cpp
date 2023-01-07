@@ -14,7 +14,7 @@ namespace FA {
 
 namespace Scene {
 
-Manager::Manager(MessageBus& messageBus, TextureManager& textureManager)
+Manager::Manager(Shared::MessageBus& messageBus, Shared::TextureManager& textureManager)
 {
     currentScene_ = std::make_unique<IntroScene>(*this, messageBus, textureManager, layers_, data_);
     // LOG_INFO("Enter ", currentScene_->Name());
@@ -36,7 +36,7 @@ void Manager::SetScene(std::unique_ptr<BasicScene> newScene)
     currentScene_->Enter();
 }
 
-void Manager::SetTransitionScene(MessageBus& messageBus, TextureManager& textureManager,
+void Manager::SetTransitionScene(Shared::MessageBus& messageBus, Shared::TextureManager& textureManager,
                                  std::unique_ptr<BasicTransition> transition)
 {
     SetScene(

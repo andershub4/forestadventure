@@ -14,6 +14,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 struct SheetData;
 struct AnimationData;
 struct ImageData;
@@ -36,5 +38,7 @@ private:
     Frame CreateFrame(const SpriteSheet &sheet, const sf::Vector2u position) const;
     std::vector<Frame> CreateFrames(const SpriteSheet &sheet, const sf::Vector2u start, unsigned int nRects) const;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

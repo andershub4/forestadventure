@@ -15,7 +15,7 @@ namespace Entity {
 class CoinEntity : public BasicEntity
 {
 public:
-    CoinEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus);
+    CoinEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager, Shared::MessageBus& messageBus);
     virtual ~CoinEntity();
 
     virtual std::string Name() const override { return "CoinEntity"; }
@@ -26,7 +26,7 @@ private:
     virtual void RegisterShape() override;
     virtual void RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data) override;
 
-    void OnUpdateAnimation(const Animation& animation);
+    void OnUpdateAnimation(const Shared::Animation& animation);
 };
 
 }  // namespace Entity

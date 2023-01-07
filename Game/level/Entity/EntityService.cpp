@@ -17,23 +17,23 @@ namespace FA {
 
 namespace Entity {
 
-EntityService::EntityService(const SheetManager& sheetManager)
+EntityService::EntityService(const Shared::SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {}
 
 EntityService::~EntityService() = default;
 
-Animation EntityService::MakeAnimation(const AnimationData& data) const
+Shared::Animation EntityService::MakeAnimation(const Shared::AnimationData& data) const
 {
     float t = constant::Entity::stdSwitchTime;
     auto frames = sheetManager_.MakeFrames(data);
-    return Animation(frames, data.locationData_.defaultIndex_, t);
+    return Shared::Animation(frames, data.locationData_.defaultIndex_, t);
 }
 
-Image EntityService::MakeImage(const ImageData& data) const
+Shared::Image EntityService::MakeImage(const Shared::ImageData& data) const
 {
     auto frame = sheetManager_.MakeFrame(data);
-    return Image(frame);
+    return Shared::Image(frame);
 }
 
 }  // namespace Entity

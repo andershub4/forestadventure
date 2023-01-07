@@ -8,8 +8,12 @@
 
 namespace FA {
 
+namespace Shared {
+
 KeyPressedMessage::KeyPressedMessage(sf::Keyboard::Key key)
     : key_(key)
 {}
+
+}  // namespace Shared
 
 }  // namespace FA

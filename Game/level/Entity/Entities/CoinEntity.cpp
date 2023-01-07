@@ -19,13 +19,14 @@ namespace FA {
 
 namespace Entity {
 
-CoinEntity::CoinEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+CoinEntity::CoinEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
+                       Shared::MessageBus& messageBus)
     : BasicEntity(id, level, sheetManager, messageBus)
 {}
 
 CoinEntity::~CoinEntity() = default;
 
-void CoinEntity::OnUpdateAnimation(const Animation& animation)
+void CoinEntity::OnUpdateAnimation(const Shared::Animation& animation)
 {
     auto& sprite = shape_.GetSprite("Main");
     animation.ApplyTo(sprite);
@@ -41,10 +42,10 @@ void CoinEntity::RegisterShape()
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
-    auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
+    auto updateAnimation = [this](const Shared::Animation& animation) { OnUpdateAnimation(animation); };
 
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
-    auto a = entityService_.MakeAnimation({SheetId::Coin, {{0, 0}, 4, 0}, false});
+    auto a = entityService_.MakeAnimation({Shared::SheetId::Coin, {{0, 0}, 4, 0}, false});
     idleAnimation->RegisterAnimation("Idle", a);
     idleState->RegisterAbility(idleAnimation);
     idleState->RegisterIgnoreEvents({EventType::Collision});

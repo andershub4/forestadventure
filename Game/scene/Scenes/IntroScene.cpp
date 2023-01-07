@@ -20,7 +20,7 @@ namespace FA {
 
 namespace Scene {
 
-IntroScene::IntroScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager,
+IntroScene::IntroScene(Manager& sceneManager, Shared::MessageBus& messageBus, Shared::TextureManager& textureManager,
                        Manager::Layers& layers, Manager::Data& data)
     : BasicScene(sceneManager, messageBus, textureManager, layers, data)
 {}
@@ -29,7 +29,7 @@ IntroScene::~IntroScene() = default;
 
 void IntroScene::Enter()
 {
-    sf::IntRect rect(0, 0, constant::Screen::width, constant::Screen::height);
+    sf::IntRect rect(0, 0, Shared::Screen::width, Shared::Screen::height);
     layers_.clear();
     layers_[LayerId::Intro] = std::make_unique<IntroLayer>(messageBus_, rect);
 #ifdef _DEBUG
@@ -37,7 +37,7 @@ void IntroScene::Enter()
 #endif
     layers_[LayerId::PreAlpha] = std::make_unique<PreAlphaLayer>(messageBus_, rect);
 
-    Subscribe({MessageType::CloseWindow, MessageType::KeyPressed});
+    Subscribe({Shared::MessageType::CloseWindow, Shared::MessageType::KeyPressed});
     for (const auto& entry : layers_) {
         auto& layer = entry.second;
         layer->SubscribeMessages();
@@ -56,7 +56,7 @@ void IntroScene::Enter()
 
 void IntroScene::Exit()
 {
-    Unsubscribe({MessageType::CloseWindow, MessageType::KeyPressed});
+    Unsubscribe({Shared::MessageType::CloseWindow, Shared::MessageType::KeyPressed});
     for (const auto& entry : layers_) {
         auto& layer = entry.second;
         layer->UnsubscribeMessages();
@@ -81,14 +81,14 @@ void IntroScene::Update(float deltaTime)
     }
 }
 
-void IntroScene::OnMessage(std::shared_ptr<Message> msg)
+void IntroScene::OnMessage(std::shared_ptr<Shared::Message> msg)
 {
-    if (msg->GetMessageType() == MessageType::CloseWindow) {
-        auto m = std::dynamic_pointer_cast<CloseWindowMessage>(msg);
+    if (msg->GetMessageType() == Shared::MessageType::CloseWindow) {
+        auto m = std::dynamic_pointer_cast<Shared::CloseWindowMessage>(msg);
         OnCloseWindow();
     }
-    else if (msg->GetMessageType() == MessageType::KeyPressed) {
-        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
+    else if (msg->GetMessageType() == Shared::MessageType::KeyPressed) {
+        auto m = std::dynamic_pointer_cast<Shared::KeyPressedMessage>(msg);
         auto key = m->GetKey();
         if (key == sf::Keyboard::Key::Escape) {
             OnCloseWindow();

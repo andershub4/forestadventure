@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 class Message
 {
 public:
@@ -21,5 +23,7 @@ public:
     virtual MessageType GetMessageType() const = 0;
     virtual std::string Name() const = 0;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

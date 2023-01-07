@@ -12,7 +12,8 @@ namespace FA {
 
 namespace Entity {
 
-AnimationAbility::AnimationAbility(std::function<std::string()> getKey, std::function<void(const Animation &)> updateFn)
+AnimationAbility::AnimationAbility(std::function<std::string()> getKey,
+                                   std::function<void(const Shared::Animation &)> updateFn)
     : getKey_(getKey)
     , updateFn_(updateFn)
 {}
@@ -39,7 +40,7 @@ void AnimationAbility::Update(float deltaTime)
     }
 }
 
-void AnimationAbility::RegisterAnimation(const std::string &name, const Animation &animation)
+void AnimationAbility::RegisterAnimation(const std::string &name, const Shared::Animation &animation)
 {
     if (map_.find(name) == map_.end()) {
         map_[name] = animation;

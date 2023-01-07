@@ -10,11 +10,15 @@
 
 namespace FA {
 
+namespace Shared {
+
 class EntityCreatedMessage : public Message
 {
 public:
     virtual MessageType GetMessageType() const override { return MessageType::EntityCreated; }
     virtual std::string Name() const override { return "EntityCreated"; }
 };
+
+}  // namespace Shared
 
 }  // namespace FA

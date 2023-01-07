@@ -41,45 +41,46 @@ const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirect
                                                                      {FaceDirection::Right, {15.0, 5.0}},
                                                                      {FaceDirection::Up, {0.0, -15.0}}};
 
-const std::unordered_map<StateType, std::unordered_map<FaceDirection, AnimationData>> animationDatas = {
+const std::unordered_map<StateType, std::unordered_map<FaceDirection, Shared::AnimationData>> animationDatas = {
     {StateType::Move,
-     {{FaceDirection::Left, {SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true}},
-      {FaceDirection::Right, {SheetId::HeroWalkSide, {{0, 0}, 6, 0}, false}},
-      {FaceDirection::Down, {SheetId::HeroWalkFront, {{0, 0}, 6, 0}, false}},
-      {FaceDirection::Up, {SheetId::HeroWalkBack, {{0, 0}, 6, 0}, false}}}},
+     {{FaceDirection::Left, {Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true}},
+      {FaceDirection::Right, {Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, false}},
+      {FaceDirection::Down, {Shared::SheetId::HeroWalkFront, {{0, 0}, 6, 0}, false}},
+      {FaceDirection::Up, {Shared::SheetId::HeroWalkBack, {{0, 0}, 6, 0}, false}}}},
     {StateType::Idle,
-     {{FaceDirection::Left, {SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true}},
-      {FaceDirection::Right, {SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false}},
-      {FaceDirection::Down, {SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}},
-      {FaceDirection::Up, {SheetId::HeroIdleBack, {{0, 0}, 1, 0}, false}}}},
+     {{FaceDirection::Left, {Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true}},
+      {FaceDirection::Right, {Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false}},
+      {FaceDirection::Down, {Shared::SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}},
+      {FaceDirection::Up, {Shared::SheetId::HeroIdleBack, {{0, 0}, 1, 0}, false}}}},
     {StateType::Attack,
-     {{FaceDirection::Left, {SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true}},
-      {FaceDirection::Right, {SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false}},
-      {FaceDirection::Down, {SheetId::HeroAttackFront, {{0, 0}, 3, 0}, false}},
-      {FaceDirection::Up, {SheetId::HeroAttackBack, {{0, 0}, 3, 0}, false}}}},
+     {{FaceDirection::Left, {Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true}},
+      {FaceDirection::Right, {Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false}},
+      {FaceDirection::Down, {Shared::SheetId::HeroAttackFront, {{0, 0}, 3, 0}, false}},
+      {FaceDirection::Up, {Shared::SheetId::HeroAttackBack, {{0, 0}, 3, 0}, false}}}},
     {StateType::AttackWeapon,
-     {{FaceDirection::Left, {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, true}},
-      {FaceDirection::Right, {SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, false}},
-      {FaceDirection::Down, {SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false}},
-      {FaceDirection::Up, {SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0}, false}}}}};
+     {{FaceDirection::Left, {Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, true}},
+      {FaceDirection::Right, {Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, false}},
+      {FaceDirection::Down, {Shared::SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false}},
+      {FaceDirection::Up, {Shared::SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0}, false}}}}};
 
 }  // namespace
 
-PlayerEntity::PlayerEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+PlayerEntity::PlayerEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
+                           Shared::MessageBus& messageBus)
     : BasicEntity(id, level, sheetManager, messageBus)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
 
-std::vector<MessageType> PlayerEntity::Messages() const
+std::vector<Shared::MessageType> PlayerEntity::Messages() const
 {
-    return {MessageType::IsKeyPressed, MessageType::KeyReleased, MessageType::KeyPressed};
+    return {Shared::MessageType::IsKeyPressed, Shared::MessageType::KeyReleased, Shared::MessageType::KeyPressed};
 }
 
-void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
+void PlayerEntity::OnMessage(std::shared_ptr<Shared::Message> msg)
 {
-    if (msg->GetMessageType() == MessageType::IsKeyPressed) {
-        auto m = std::dynamic_pointer_cast<IsKeyPressedMessage>(msg);
+    if (msg->GetMessageType() == Shared::MessageType::IsKeyPressed) {
+        auto m = std::dynamic_pointer_cast<Shared::IsKeyPressedMessage>(msg);
         auto key = m->GetKey();
         if (key == sf::Keyboard::Key::Right) {
             HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right));
@@ -100,16 +101,16 @@ void PlayerEntity::OnMessage(std::shared_ptr<Message> msg)
             HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow));
         }
     }
-    else if (msg->GetMessageType() == MessageType::KeyReleased) {
-        auto m = std::dynamic_pointer_cast<KeyReleasedMessage>(msg);
+    else if (msg->GetMessageType() == Shared::MessageType::KeyReleased) {
+        auto m = std::dynamic_pointer_cast<Shared::KeyReleasedMessage>(msg);
         auto key = m->GetKey();
         if (key == sf::Keyboard::Key::Right || key == sf::Keyboard::Key::Left || key == sf::Keyboard::Key::Down ||
             key == sf::Keyboard::Key::Up) {
             HandleEvent(std::make_shared<StopMoveEvent>());
         }
     }
-    else if (msg->GetMessageType() == MessageType::KeyPressed) {
-        auto m = std::dynamic_pointer_cast<KeyPressedMessage>(msg);
+    else if (msg->GetMessageType() == Shared::MessageType::KeyPressed) {
+        auto m = std::dynamic_pointer_cast<Shared::KeyPressedMessage>(msg);
         auto key = m->GetKey();
         if (key == sf::Keyboard::Key::Num1) {
             HandleEvent(std::make_shared<DeadEvent>());
@@ -138,7 +139,7 @@ void PlayerEntity::OnExitShoot()
     }
 }
 
-void PlayerEntity::OnUpdateAnimation(const Animation& animation)
+void PlayerEntity::OnUpdateAnimation(const Shared::Animation& animation)
 {
     auto& sprite = shape_.GetSprite("Main");
     animation.ApplyTo(sprite);
@@ -147,7 +148,7 @@ void PlayerEntity::OnUpdateAnimation(const Animation& animation)
 
 void PlayerEntity::OnDying()
 {
-    SendMessage(std::make_shared<GameOverMessage>());
+    SendMessage(std::make_shared<Shared::GameOverMessage>());
 }
 
 void PlayerEntity::RegisterProperties()
@@ -170,14 +171,14 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
         ss << dir;
         return ss.str();
     };
-    auto updateAnimation = [this](const Animation& animation) { OnUpdateAnimation(animation); };
-    auto updateAnimationAndComplete = [this](const Animation& animation) {
+    auto updateAnimation = [this](const Shared::Animation& animation) { OnUpdateAnimation(animation); };
+    auto updateAnimationAndComplete = [this](const Shared::Animation& animation) {
         OnUpdateAnimation(animation);
         if (animation.IsCompleted()) {
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto updateAnimationAndShoot = [this](const Animation& animation) {
+    auto updateAnimationAndShoot = [this](const Shared::Animation& animation) {
         OnUpdateAnimation(animation);
         if (animation.IsCompleted()) {
             propertyManager_.Set<bool>("Shoot", true);

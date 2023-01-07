@@ -20,7 +20,7 @@
 
 namespace FA {
 
-InputSystem::InputSystem(MessageBus& messageBus, sf::RenderWindow& window)
+InputSystem::InputSystem(Shared::MessageBus& messageBus, sf::RenderWindow& window)
     : messageBus_(messageBus)
     , window_(window)
 {}
@@ -41,20 +41,20 @@ void InputSystem::ProcessEvent(const sf::Event& event)
     switch (event.type) {
         case sf::Event::KeyPressed: {
             auto key = event.key.code;
-            auto msg = std::make_shared<KeyPressedMessage>(key);
+            auto msg = std::make_shared<Shared::KeyPressedMessage>(key);
             pressedKeys_.emplace(key);
             messageBus_.SendMessage(msg);
             break;
         }
         case sf::Event::KeyReleased: {
             auto key = event.key.code;
-            auto msg = std::make_shared<KeyReleasedMessage>(key);
+            auto msg = std::make_shared<Shared::KeyReleasedMessage>(key);
             pressedKeys_.erase(key);
             messageBus_.SendMessage(msg);
             break;
         }
         case sf::Event::Closed: {
-            auto msg = std::make_shared<CloseWindowMessage>();
+            auto msg = std::make_shared<Shared::CloseWindowMessage>();
             messageBus_.SendMessage(msg);
             break;
         }
@@ -67,7 +67,7 @@ void InputSystem::ProcessEvent(const sf::Event& event)
 void InputSystem::ProcessIsKeyPressed()
 {
     for (auto k : pressedKeys_) {
-        auto msg = std::make_shared<IsKeyPressedMessage>(k);
+        auto msg = std::make_shared<Shared::IsKeyPressedMessage>(k);
         messageBus_.SendMessage(msg);
     }
 }
@@ -75,7 +75,7 @@ void InputSystem::ProcessIsKeyPressed()
 void InputSystem::ReleaseKeys()
 {
     for (auto k : pressedKeys_) {
-        auto msg = std::make_shared<KeyReleasedMessage>(k);
+        auto msg = std::make_shared<Shared::KeyReleasedMessage>(k);
         messageBus_.SendMessage(msg);
     }
     pressedKeys_.clear();

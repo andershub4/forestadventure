@@ -8,7 +8,7 @@
 
 namespace FA {
 
-namespace constant {
+namespace Shared {
 
 class Screen
 {
@@ -24,6 +24,6 @@ public:
     static constexpr float centerY_f = height_f / 2.0;
 };
 
-}  // namespace constant
+}  // namespace Shared
 
 }  // namespace FA

@@ -19,10 +19,15 @@
 
 namespace FA {
 
+namespace Shared {
+
 class MessageBus;
 class Message;
 enum class MessageType;
 class SheetManager;
+
+}  // namespace Shared
+
 class Level;
 
 namespace Entity {
@@ -32,7 +37,7 @@ struct PropertyData;
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus);
+    BasicEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager, Shared::MessageBus& messageBus);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
@@ -56,17 +61,17 @@ protected:
     float rotation_{0.0};
 
 protected:
-    virtual std::vector<MessageType> Messages() const { return {}; }
+    virtual std::vector<Shared::MessageType> Messages() const { return {}; }
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void ChangeStateTo(StateType stateType, std::shared_ptr<BasicEvent> event);
     Shape CreateShape();
     std::shared_ptr<State> RegisterState(StateType stateType);
-    void SendMessage(std::shared_ptr<Message> message);
+    void SendMessage(std::shared_ptr<Shared::Message> message);
 
 private:
     EntityId id_ = InvalidEntityId;
-    MessageBus& messageBus_;
+    Shared::MessageBus& messageBus_;
     StateMachine stateMachine_;
     std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
 
@@ -75,12 +80,12 @@ private:
     virtual void RegisterProperties() {}
     virtual void RegisterShape() {}
     virtual void Start() {}
-    virtual void OnMessage(std::shared_ptr<Message> msg) {}
+    virtual void OnMessage(std::shared_ptr<Shared::Message> msg) {}
     virtual void OnDying() {}
 
     void OnUpdateShape();
-    void Subscribe(const std::vector<MessageType>& messageTypes);
-    void Unsubscribe(const std::vector<MessageType>& messageTypes);
+    void Subscribe(const std::vector<Shared::MessageType>& messageTypes);
+    void Unsubscribe(const std::vector<Shared::MessageType>& messageTypes);
     void RegisterUninitializedState();
     void RegisterDeadState();
 };

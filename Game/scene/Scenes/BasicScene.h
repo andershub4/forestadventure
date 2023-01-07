@@ -13,16 +13,20 @@
 
 namespace FA {
 
+namespace Shared {
+
 class MessageBus;
 enum class MessageType;
+
+}  // namespace Shared
 
 namespace Scene {
 
 class BasicScene
 {
 public:
-    BasicScene(Manager& sceneManager, MessageBus& messageBus, TextureManager& textureManager, Manager::Layers& layers,
-               Manager::Data& data);
+    BasicScene(Manager& sceneManager, Shared::MessageBus& messageBus, Shared::TextureManager& textureManager,
+               Manager::Layers& layers, Manager::Data& data);
     virtual ~BasicScene();
 
     virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
@@ -49,19 +53,19 @@ public:
 protected:
     Manager::Data& data_;
     Manager::Layers& layers_;
-    TextureManager& textureManager_;
-    MessageBus& messageBus_;
+    Shared::TextureManager& textureManager_;
+    Shared::MessageBus& messageBus_;
 
 protected:
-    void Subscribe(const std::vector<MessageType>& messageTypes);
-    void Unsubscribe(const std::vector<MessageType>& messageTypes);
+    void Subscribe(const std::vector<Shared::MessageType>& messageTypes);
+    void Unsubscribe(const std::vector<Shared::MessageType>& messageTypes);
     void OnCloseWindow();
 
 private:
     Manager& sceneManager_;
 
 private:
-    virtual void OnMessage(std::shared_ptr<Message> msg) {}
+    virtual void OnMessage(std::shared_ptr<Shared::Message> msg) {}
 };
 
 }  // namespace Scene

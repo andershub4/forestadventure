@@ -21,8 +21,8 @@ struct PropertyData
 {
     sf::Vector2f position_{};
     std::unordered_map<std::string, std::string> properties_;
-    std::vector<Frame> frames_;
-    Frame frame_;
+    std::vector<Shared::Frame> frames_;
+    Shared::Frame frame_;
 };
 
 }  // namespace Entity

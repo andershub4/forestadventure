@@ -17,7 +17,7 @@ namespace FA {
 
 namespace Scene {
 
-PreAlphaLayer::PreAlphaLayer(MessageBus& messageBus, const sf::IntRect& rect)
+PreAlphaLayer::PreAlphaLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect)
     : BasicLayer(messageBus, rect)
 {}
 

@@ -14,7 +14,8 @@ namespace FA {
 
 namespace Entity {
 
-StaticEntity::StaticEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus)
+StaticEntity::StaticEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
+                           Shared::MessageBus& messageBus)
     : BasicEntity(id, level, sheetManager, messageBus)
 {}
 

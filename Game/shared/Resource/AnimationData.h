@@ -13,6 +13,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 struct AnimationData
 {
     std::string sheetId_;
@@ -26,5 +28,7 @@ struct AnimationData
     LocationData locationData_;
     bool mirror_;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

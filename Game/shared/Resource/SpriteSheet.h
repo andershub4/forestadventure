@@ -16,6 +16,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 struct Frame;
 
 class SpriteSheet
@@ -39,5 +41,7 @@ private:
     sf::Vector2u CalcRectSize() const;
     std::vector<Frame> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

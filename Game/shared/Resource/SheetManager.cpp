@@ -13,6 +13,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 SheetManager::SheetManager(TextureManager& textureManager)
     : textureManager_(textureManager)
 {}
@@ -83,5 +85,7 @@ SpriteSheet SheetManager::GetSheet(const std::string& name) const
         return SpriteSheet();
     }
 }
+
+}  // namespace Shared
 
 }  // namespace FA

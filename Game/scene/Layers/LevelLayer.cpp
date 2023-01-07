@@ -16,7 +16,7 @@ namespace FA {
 
 namespace Scene {
 
-LevelLayer::LevelLayer(MessageBus& messageBus, const sf::IntRect& rect, TextureManager& textureManager)
+LevelLayer::LevelLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect, Shared::TextureManager& textureManager)
     : BasicLayer(messageBus, rect)
     , messageBus_(messageBus)
     , textureManager_(textureManager)

@@ -8,6 +8,10 @@
 
 namespace FA {
 
+namespace Shared {
+
 Message::~Message() = default;
+
+}  // namespace Shared
 
 }  // namespace FA

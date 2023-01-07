@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 Image::Image(const Frame& frame)
     : frame_(frame)
     , isValid_(true)
@@ -28,5 +30,7 @@ bool Image::IsValid() const
 {
     return isValid_;
 }
+
+}  // namespace Shared
 
 }  // namespace FA

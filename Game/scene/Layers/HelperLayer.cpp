@@ -21,7 +21,7 @@ namespace FA {
 
 namespace Scene {
 
-HelperLayer::HelperLayer(MessageBus& messageBus, const sf::IntRect& rect, const std::string& sceneName)
+HelperLayer::HelperLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect, const std::string& sceneName)
     : BasicLayer(messageBus, rect)
     , sceneName_(sceneName)
 {}
@@ -79,12 +79,12 @@ void HelperLayer::OnCreate()
 
 void HelperLayer::SubscribeMessages()
 {
-    Subscribe({MessageType::EntityCreated, MessageType::EntityDestroyed});
+    Subscribe({Shared::MessageType::EntityCreated, Shared::MessageType::EntityDestroyed});
 }
 
 void HelperLayer::UnsubscribeMessages()
 {
-    Unsubscribe({MessageType::EntityCreated, MessageType::EntityDestroyed});
+    Unsubscribe({Shared::MessageType::EntityCreated, Shared::MessageType::EntityDestroyed});
 }
 
 void HelperLayer::Draw()
@@ -104,12 +104,12 @@ void HelperLayer::Update(float deltaTime)
     nEntitiesCountText_.setString(std::to_string(nEntities_));
 }
 
-void HelperLayer::OnMessage(std::shared_ptr<Message> msg)
+void HelperLayer::OnMessage(std::shared_ptr<Shared::Message> msg)
 {
-    if (msg->GetMessageType() == MessageType::EntityCreated) {
+    if (msg->GetMessageType() == Shared::MessageType::EntityCreated) {
         nEntities_++;
     }
-    else if (msg->GetMessageType() == MessageType::EntityDestroyed) {
+    else if (msg->GetMessageType() == Shared::MessageType::EntityDestroyed) {
         nEntities_--;
     }
 }

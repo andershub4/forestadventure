@@ -17,7 +17,7 @@ namespace Entity {
 class ArrowEntity : public BasicEntity
 {
 public:
-    ArrowEntity(EntityId id, Level& level, const SheetManager& sheetManager, MessageBus& messageBus);
+    ArrowEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager, Shared::MessageBus& messageBus);
     virtual ~ArrowEntity();
 
     virtual std::string Name() const override { return "ArrowEntity"; }
@@ -30,7 +30,7 @@ private:
 
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
-    void OnUpdateAnimation(const Animation& animation);
+    void OnUpdateAnimation(const Shared::Animation& animation);
 };
 
 }  // namespace Entity

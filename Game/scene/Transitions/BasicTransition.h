@@ -17,7 +17,12 @@
 
 namespace FA {
 
+namespace Shared {
+
 class MessageBus;
+
+}  // namespace Shared
+
 class BasicEffect;
 
 namespace Scene {
@@ -28,7 +33,7 @@ class BasicLayer;
 class BasicTransition
 {
 public:
-    using CreateSceneFn = std::function<std::unique_ptr<BasicScene>(MessageBus&, TextureManager&)>;
+    using CreateSceneFn = std::function<std::unique_ptr<BasicScene>(Shared::MessageBus&, Shared::TextureManager&)>;
 
     BasicTransition() = default;
     BasicTransition(float seconds, CreateSceneFn nextSceneFn);
@@ -37,7 +42,8 @@ public:
     virtual void Update(float deltaTime) {}
     virtual std::unique_ptr<BasicEffect> CreateEffect(const sf::Vector2f& position, const sf::Vector2f& size) const = 0;
 
-    std::unique_ptr<BasicScene> CreateNextScene(MessageBus& messageBus, TextureManager& textureManager) const;
+    std::unique_ptr<BasicScene> CreateNextScene(Shared::MessageBus& messageBus,
+                                                Shared::TextureManager& textureManager) const;
     bool IsFinished() const;
 
 protected:

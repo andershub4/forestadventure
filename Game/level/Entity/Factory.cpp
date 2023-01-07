@@ -17,7 +17,7 @@ namespace FA {
 
 namespace Entity {
 
-Factory::Factory(MessageBus& messageBus, const SheetManager& sheetManager, Level& level)
+Factory::Factory(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager, Level& level)
     : messageBus_(messageBus)
     , sheetManager_(sheetManager)
     , level_(level)

@@ -12,10 +12,14 @@
 
 namespace FA {
 
+namespace Shared {
+
 struct ImageData
 {
     std::string sheetId_;
     sf::Vector2u position_;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

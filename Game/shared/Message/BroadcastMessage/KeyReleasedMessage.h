@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 class KeyReleasedMessage : public Message
 {
 public:
@@ -25,5 +27,7 @@ public:
 private:
     sf::Keyboard::Key key_ = sf::Keyboard::Key::Unknown;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

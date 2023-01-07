@@ -8,6 +8,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 enum class MessageType {
     Undefined,
     KeyPressed,
@@ -18,5 +20,7 @@ enum class MessageType {
     EntityDestroyed,
     GameOver
 };
+
+}  // namespace Shared
 
 }  // namespace FA

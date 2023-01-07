@@ -14,6 +14,10 @@
 
 namespace FA {
 
+namespace Shared {
+
 using TextureManager = ResourceManager<std::string, sf::Texture>;
+
+}  // namespace Shared
 
 }  // namespace FA
