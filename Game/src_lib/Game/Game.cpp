@@ -50,7 +50,7 @@ void Game::GameLoop()
     window.create(sf::VideoMode(Shared::Screen::width, Shared::Screen::height), title);
 #else
     window.create(sf::VideoMode::getDesktopMode(), title, sf::Style::Fullscreen);
-    view.reset(sf::FloatRect(0.0, 0.0, constant::Screen::width_f, constant::Screen::height_f));
+    view.reset(sf::FloatRect(0.0, 0.0, Shared::Screen::width_f, Shared::Screen::height_f));
     window.setView(view);
 #endif
     window.setFramerateLimit(120);
