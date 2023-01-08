@@ -45,41 +45,28 @@ const std::vector<Shared::SheetData> textureSheets = {
     {Shared::SheetId::Arrow, "sprites/misc/arrow.png", {1, 1}},
     {Shared::SheetId::Coin, "spritesheets/misc/coin.png", {4, 1}}};
 
-EntityType ObjTypeStrToEnum(const std::string &typeStr)
+EntityType ObjTypeStrToEnum(const std::string &str)
 {
-    auto result = EntityType::Unknown;
-
-    if (typeStr == "Mole") {
-        result = EntityType::Mole;
-    }
-    else if (typeStr == "Player") {
-        result = EntityType::Player;
-    }
-    else if (typeStr == "Coin") {
-        result = EntityType::Coin;
+    static std::unordered_map<std::string, EntityType> map{
+        {"Mole", EntityType::Mole}, {"Player", EntityType::Player}, {"Coin", EntityType::Coin}};
+    auto it = map.find(str);
+    if (it != map.end()) {
+        return map.at(str);
     }
 
-    return result;
+    return EntityType::Unknown;
 }
 
-FaceDirection FaceDirStrToEnum(const std::string &faceDirStr)
+FaceDirection FaceDirStrToEnum(const std::string &str)
 {
-    auto result = FaceDirection::Undefined;
-
-    if (faceDirStr == "Up") {
-        result = FaceDirection::Up;
-    }
-    else if (faceDirStr == "Down") {
-        result = FaceDirection::Down;
-    }
-    else if (faceDirStr == "Right") {
-        result = FaceDirection::Right;
-    }
-    else if (faceDirStr == "Left") {
-        result = FaceDirection::Left;
+    static std::unordered_map<std::string, FaceDirection> map{
+        {"Up", FaceDirection::Up}, {"Down", FaceDirection::Down}, {"Right", FaceDirection::Right}, {"Left", FaceDirection::Left}};
+    auto it = map.find(str);
+    if (it != map.end()) {
+        return map.at(str);
     }
 
-    return result;
+    return FaceDirection::Undefined;
 }
 
 }  // namespace
