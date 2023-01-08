@@ -7,7 +7,6 @@
 #pragma once
 
 #include "BasicTransition.h"
-#include "Effect/FadeEffect.h"
 
 namespace FA {
 
@@ -19,8 +18,8 @@ public:
     FadeTransition(CreateSceneFn nextSceneFn);
     virtual ~FadeTransition();
 
-    virtual std::unique_ptr<BasicEffect> CreateEffect(const sf::Vector2f& position,
-                                                      const sf::Vector2f& size) const override;
+    virtual std::unique_ptr<Shared::BasicEffect> CreateEffect(const sf::Vector2f& position,
+                                                              const sf::Vector2f& size) const override;
 };
 
 }  // namespace Scene

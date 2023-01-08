@@ -17,9 +17,10 @@ NullTransition::NullTransition(CreateSceneFn nextSceneFn)
 
 NullTransition::~NullTransition() = default;
 
-std::unique_ptr<BasicEffect> NullTransition::CreateEffect(const sf::Vector2f& position, const sf::Vector2f& size) const
+std::unique_ptr<Shared::BasicEffect> NullTransition::CreateEffect(const sf::Vector2f& position,
+                                                                  const sf::Vector2f& size) const
 {
-    return std::make_unique<NullEffect>();
+    return std::make_unique<Shared::NullEffect>();
 }
 
 }  // namespace Scene

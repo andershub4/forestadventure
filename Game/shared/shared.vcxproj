@@ -142,6 +142,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constant\Screen.h" />
+    <ClInclude Include="Effect\BasicEffect.h" />
+    <ClInclude Include="Effect\FadeEffect.h" />
+    <ClInclude Include="Effect\NullEffect.h" />
     <ClInclude Include="Fwd\SfmlFwd.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="Message\BroadcastMessage\CloseWindowMessage.h" />
@@ -168,6 +171,9 @@
     <ClInclude Include="Resource\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Effect\BasicEffect.cpp" />
+    <ClCompile Include="Effect\FadeEffect.cpp" />
+    <ClCompile Include="Effect\NullEffect.cpp" />
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp" />
     <ClCompile Include="Message\BroadcastMessage\KeyPressedMessage.cpp" />

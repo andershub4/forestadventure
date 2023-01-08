@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 class BasicEffect
 {
 public:
@@ -19,5 +21,7 @@ public:
     virtual void DrawTo(sf::RenderTarget& renderTarget) const = 0;
     virtual void Update(float deltaTime) = 0;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

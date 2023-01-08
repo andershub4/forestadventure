@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 class NullEffect : public BasicEffect
 {
 public:
@@ -18,5 +20,7 @@ public:
     virtual void DrawTo(sf::RenderTarget& renderTarget) const override;
     virtual void Update(float deltaTime) override;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

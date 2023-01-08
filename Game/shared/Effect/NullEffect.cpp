@@ -8,6 +8,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 NullEffect::NullEffect()
     : BasicEffect()
 {}
@@ -17,5 +19,7 @@ void NullEffect::DrawTo(sf::RenderTarget& renderTarget) const
 
 void NullEffect::Update(float deltaTime)
 {}
+
+}  // namespace Shared
 
 }  // namespace FA

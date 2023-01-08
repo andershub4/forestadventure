@@ -8,9 +8,13 @@
 
 namespace FA {
 
+namespace Shared {
+
 BasicEffect::BasicEffect()
 {}
 
 BasicEffect::~BasicEffect() = default;
+
+}  // namespace Shared
 
 }  // namespace FA

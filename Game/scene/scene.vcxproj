@@ -141,9 +141,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Effect\BasicEffect.cpp" />
-    <ClCompile Include="Effect\FadeEffect.cpp" />
-    <ClCompile Include="Effect\NullEffect.cpp" />
     <ClCompile Include="Layers\BasicLayer.cpp" />
     <ClCompile Include="Layers\HelperLayer.cpp" />
     <ClCompile Include="Layers\IntroLayer.cpp" />
@@ -159,9 +156,6 @@
     <ClCompile Include="Transitions\NullTransition.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Effect\BasicEffect.h" />
-    <ClInclude Include="Effect\FadeEffect.h" />
-    <ClInclude Include="Effect\NullEffect.h" />
     <ClInclude Include="LayerId.h" />
     <ClInclude Include="Layers\BasicLayer.h" />
     <ClInclude Include="Layers\HelperLayer.h" />

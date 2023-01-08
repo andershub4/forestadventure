@@ -14,6 +14,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 class FadeEffect : public BasicEffect
 {
 public:
@@ -30,5 +32,7 @@ private:
     sf::Time targetTime_;
     sf::Time currentTime_;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

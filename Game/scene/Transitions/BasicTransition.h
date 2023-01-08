@@ -20,10 +20,9 @@ namespace FA {
 namespace Shared {
 
 class MessageBus;
+class BasicEffect;
 
 }  // namespace Shared
-
-class BasicEffect;
 
 namespace Scene {
 
@@ -40,7 +39,8 @@ public:
     virtual ~BasicTransition();
 
     virtual void Update(float deltaTime) {}
-    virtual std::unique_ptr<BasicEffect> CreateEffect(const sf::Vector2f& position, const sf::Vector2f& size) const = 0;
+    virtual std::unique_ptr<Shared::BasicEffect> CreateEffect(const sf::Vector2f& position,
+                                                              const sf::Vector2f& size) const = 0;
 
     std::unique_ptr<BasicScene> CreateNextScene(Shared::MessageBus& messageBus,
                                                 Shared::TextureManager& textureManager) const;
