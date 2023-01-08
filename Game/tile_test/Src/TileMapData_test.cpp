@@ -39,9 +39,9 @@ TEST(TileMapDataTest, TestFrameDataEqualToOperator)
     Frame d2{"dev/dir", 2, 4, 16, 16};
     Frame d3{"dev/dir", 3, 4, 16, 16};
 
-    FrameData f1{{}, {d1, d2}};
-    FrameData f2 = f1;
-    FrameData f3{{}, {d3}};
+    TileData f1{{}, {d1, d2}};
+    TileData f2 = f1;
+    TileData f3{{}, {d3}};
 
     EXPECT_TRUE(f1 == f2);
     EXPECT_FALSE(f1 == f3);
@@ -52,7 +52,7 @@ TEST(TileMapDataTest, TestTileSetDataEqualToOperator)
     Image i1{"dev/dir", 10, 10};
     Frame f1{"dev/dir", 1, 4, 16, 16};
     Frame f2{"dev/dir", 2, 4, 16, 16};
-    FrameData fd1{{}, {f1, f2}};
+    TileData fd1{{}, {f1, f2}};
     TileSetData d1{{i1}, {{10, fd1}}};
     TileSetData d2 = d1;
 
@@ -104,8 +104,8 @@ TEST(TileMapDataTest, TestTileMapDataEqualToOperator)
     Image i1{"dev/dir", 10, 10};
     Frame f1{"dev/dir", 1, 4, 16, 16};
     Frame f2{"dev/dir", 2, 4, 16, 16};
-    FrameData fd1{{}, {f1, f2}};
-    TileSetData tsd{{i1}, {{10, fd1}}};
+    TileData td1{{}, {f1, f2}};
+    TileSetData tsd{{i1}, {{10, td1}}};
     TileMapData::MapProperties mp{100, 100, 16, 16};
     std::map<int, TileSetData, std::greater<int>> tileSets{{0, tsd}};
     std::vector<TileMapData::Layer> layers{{"ObjLayer1", {1, 2, 34}}, {"ObjLayer2", {2, 3, 4, 5, 6, 7}}};

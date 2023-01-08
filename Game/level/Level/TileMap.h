@@ -26,7 +26,7 @@ namespace Tile {
 
 class TileMapParser;
 struct TileMapData;
-struct FrameData;
+struct TileData;
 
 }  // namespace Tile
 
@@ -68,7 +68,7 @@ private:
     void LoadTileSets();
     void SetupLayers();
     void SetupObjectGroups();
-    Tile::FrameData GetFrameData(int id);
+    Tile::TileData GetTileData(int id);
 };
 
 }  // namespace FA

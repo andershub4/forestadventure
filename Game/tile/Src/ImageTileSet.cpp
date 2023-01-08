@@ -23,7 +23,7 @@ ImageTileSet::~ImageTileSet() = default;
 TileSetData ImageTileSet::GenerateTileData() const
 {
     std::vector<Image> images;
-    std::unordered_map<int, FrameData> lookupTable;
+    std::unordered_map<int, TileData> lookupTable;
     std::unordered_map<int, Frame> frameMap;
 
     for (const auto &tile : parsedTiles_) {
@@ -49,7 +49,7 @@ TileSetData ImageTileSet::GenerateTileData() const
             }
         }
         Frame frame = frameMap[id];
-        lookupTable[id] = FrameData{frame, frames};
+        lookupTable[id] = TileData{frame, frames};
     }
 
     return {images, lookupTable};

@@ -49,19 +49,19 @@ struct Frame
 bool operator==(const Frame& lhs, const Frame& rhs);
 std::ostream& operator<<(std::ostream& os, const Frame& p);
 
-struct FrameData
+struct TileData
 {
-    Frame frame_{};
-    std::vector<Frame> frames_;
+    Frame image_{};
+    std::vector<Frame> animation_;
 };
 
-bool operator==(const FrameData& lhs, const FrameData& rhs);
-std::ostream& operator<<(std::ostream& os, const FrameData& p);
+bool operator==(const TileData& lhs, const TileData& rhs);
+std::ostream& operator<<(std::ostream& os, const TileData& p);
 
 struct TileSetData
 {
     std::vector<Image> images_;
-    std::unordered_map<int, FrameData> lookupTable_;
+    std::unordered_map<int, TileData> lookupTable_;
 };
 
 bool operator==(const TileSetData& lhs, const TileSetData& rhs);

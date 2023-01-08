@@ -57,39 +57,38 @@ void TileMap::SetupLayers()
         for (auto it = layer.tileIds_.begin(); layer.tileIds_.end() != it; ++it, ++inx) {
             auto tileId = *it;
             if (tileId == 0) continue;
-            auto frameData = GetFrameData(tileId);
-            auto frame = frameData.frame_;
-            auto frames = frameData.frames_;
-            TileMap::TileData tileData;
+            auto tileData = GetTileData(tileId);
+            TileMap::TileData outData;
             unsigned int x = (inx % nCols) * tileWidth;
             unsigned int y = (inx / nCols) * tileHeight;
 
-            if (!frames.empty()) {
-                auto first = frames.at(0);
+            if (!tileData.animation_.empty()) {
+                auto first = tileData.animation_.at(0);
                 if (first.height_ > tileHeight) {
                     y += tileHeight;
                     y -= first.height_;
                 }
             }
 
-            tileData.x_ = x;
-            tileData.y_ = y;
+            outData.x_ = x;
+            outData.y_ = y;
 
-            if (!frames.empty()) {
-                std::vector<Shared::Frame> outFrames;
-                for (auto f : frames) {
-                    Shared::ImageData data{f.texturePath_, {f.column_, f.row_}};
-                    auto frame = sheetManager_.MakeFrame(data);
-                    outFrames.push_back(frame);
+            if (!tileData.animation_.empty()) {
+                std::vector<Shared::Frame> outAnimation;
+                for (auto frame : tileData.animation_) {
+                    Shared::ImageData data{frame.texturePath_, {frame.column_, frame.row_}};
+                    auto outFrame = sheetManager_.MakeFrame(data);
+                    outAnimation.push_back(outFrame);
                 }
 
-                tileData.graphic_.animation_ = outFrames;
+                outData.graphic_.animation_ = outAnimation;
             }
 
-            Shared::ImageData data{frame.texturePath_, {frame.column_, frame.row_}};
-            tileData.graphic_.image_ = sheetManager_.MakeFrame(data);
+            Shared::ImageData data{tileData.image_.texturePath_, {tileData.image_.column_, tileData.image_.row_}};
+            auto outFrame = sheetManager_.MakeFrame(data);
+            outData.graphic_.image_ = outFrame;
 
-            layers_[layerName].push_back(tileData);
+            layers_[layerName].push_back(outData);
         }
     }
 }
@@ -132,7 +131,7 @@ sf::Vector2u TileMap::GetSize() const
     return static_cast<sf::Vector2u>(size);
 }
 
-Tile::FrameData TileMap::GetFrameData(int id)
+Tile::TileData TileMap::GetTileData(int id)
 {
     auto it = tileMapData_->tileSets_.lower_bound(id);
 

@@ -58,10 +58,10 @@ protected:
     Frame frame1{"assets/animation/spinning1.png", 0, 0, 32, 80};
     Frame frame2{"assets/animation/spinning2.png", 0, 0, 32, 80};
     Frame frame3{"assets/animation/spinning3.png", 0, 0, 32, 80};
-    FrameData frameData1{frame1, {frame1, frame2, frame3}};
-    FrameData frameData2{frame2, {}};
-    FrameData frameData3{frame3, {}};
-    TileSetData imageTileSetData_{{image1, image2, image3}, {{0, frameData1}, {1, frameData2}, {2, frameData3}}};
+    TileData tileData1{frame1, {frame1, frame2, frame3}};
+    TileData tileData2{frame2, {}};
+    TileData tileData3{frame3, {}};
+    TileSetData imageTileSetData_{{image1, image2, image3}, {{0, tileData1}, {1, tileData2}, {2, tileData3}}};
 
     TmxParserMock<XMLDocumentMock, XMLElementMock, XMLErrorMock> tmxParserMock_;
     TsxParserMock<XMLDocumentMock, XMLElementMock, XMLErrorMock> tsxParserMock_;

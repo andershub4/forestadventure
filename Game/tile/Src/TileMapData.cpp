@@ -42,14 +42,14 @@ std::ostream& operator<<(std::ostream& os, const Frame& p)
     return os;
 }
 
-bool operator==(const FrameData& lhs, const FrameData& rhs)
+bool operator==(const TileData& lhs, const TileData& rhs)
 {
-    return std::tie(lhs.frame_, lhs.frames_) == std::tie(rhs.frame_, rhs.frames_);
+    return std::tie(lhs.image_, lhs.animation_) == std::tie(rhs.image_, rhs.animation_);
 }
 
-std::ostream& operator<<(std::ostream& os, const FrameData& p)
+std::ostream& operator<<(std::ostream& os, const TileData& p)
 {
-    os << "frame: " << p.frame_ << " frames: " << p.frames_;
+    os << "image: " << p.image_ << " animation: " << p.animation_;
 
     return os;
 }

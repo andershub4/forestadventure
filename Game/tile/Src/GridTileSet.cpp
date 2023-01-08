@@ -12,7 +12,8 @@ namespace FA {
 
 namespace Tile {
 
-GridTileSet::GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const ParsedTileSet &parsedTileSet)
+GridTileSet::GridTileSet(const std::string &tsxDir, const std::string &textureFilePath,
+                         const ParsedTileSet &parsedTileSet)
     : BasicTileSet()
     , parsedTileSet_(parsedTileSet)
 {
@@ -28,7 +29,7 @@ TileSetData GridTileSet::GenerateTileData() const
     std::vector<Image> images;
     images.push_back({p_, nCols, nRows});
 
-    std::unordered_map<int, FrameData> lookupTable;
+    std::unordered_map<int, TileData> lookupTable;
 
     auto w = parsedTileSet_.tileWidth_;
     auto h = parsedTileSet_.tileHeight_;
@@ -37,7 +38,7 @@ TileSetData GridTileSet::GenerateTileData() const
         auto column = id % nCols;
         auto row = id / nCols;
         Frame frame = {p_, column, row, w, h};
-        lookupTable[id] = FrameData{frame, {}};
+        lookupTable[id] = TileData{frame, {}};
     }
 
     return {images, lookupTable};

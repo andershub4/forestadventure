@@ -50,7 +50,7 @@ TEST_F(ImageTileSetTest, TwoTilesWithImageAndAnimationShouldReturnTwoImagesAndTw
     std::vector<Image> expectedImages{i1, i2};
     Frame f1{"dev/myImage1.png", 0, 0, 16, 16};
     Frame f2{"dev/myImage2.png", 0, 0, 16, 16};
-    std::unordered_map<int, FrameData> expectedLookup{{110, FrameData{f1, {f1, f2}}}, {111, FrameData{f2, {}}}};
+    std::unordered_map<int, TileData> expectedLookup{{110, TileData{f1, {f1, f2}}}, {111, TileData{f2, {}}}};
 
     TileSetData expected{expectedImages, expectedLookup};
 

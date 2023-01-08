@@ -35,10 +35,10 @@ TEST_F(GridTileSetTest, TileSetShouldCreateFourEntries)
     Frame expectedFrame2{"dev/myImage1.png", 1, 0, 16, 16};
     Frame expectedFrame3{"dev/myImage1.png", 0, 1, 16, 16};
     Frame expectedFrame4{"dev/myImage1.png", 1, 1, 16, 16};
-    std::unordered_map<int, FrameData> expectedLookupTable{{0, FrameData{expectedFrame1, {}}},
-                                                           {1, FrameData{expectedFrame2, {}}},
-                                                           {2, FrameData{expectedFrame3, {}}},
-                                                           {3, FrameData{expectedFrame4, {}}}};
+    std::unordered_map<int, TileData> expectedLookupTable{{0, TileData{expectedFrame1, {}}},
+                                                           {1, TileData{expectedFrame2, {}}},
+                                                           {2, TileData{expectedFrame3, {}}},
+                                                           {3, TileData{expectedFrame4, {}}}};
     TileSetData expected{expectedImage, expectedLookupTable};
 
     EXPECT_EQ(expected, tileSetData);
