@@ -11,7 +11,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "Resource/Frame.h"
+#include "Resource/Graphic.h"
 
 namespace FA {
 
@@ -21,8 +21,7 @@ struct PropertyData
 {
     sf::Vector2f position_{};
     std::unordered_map<std::string, std::string> properties_;
-    std::vector<Shared::Frame> frames_;
-    Shared::Frame frame_;
+    Shared::Graphic graphic_;
 };
 
 }  // namespace Entity

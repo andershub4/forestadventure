@@ -43,7 +43,7 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, const Property
 
     auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
     float t = constant::Entity::stdSwitchTime;
-    auto a = Shared::Animation(data.frames_, 0, t);
+    auto a = Shared::Animation(data.graphic_.animation_, 0, t);
     idleAnimation->RegisterAnimation("Idle", a);
     idleState->RegisterAbility(idleAnimation);
     idleState->RegisterIgnoreEvents({EventType::Collision});

@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Resource/Frame.h"
+#include "Resource/Graphic.h"
 
 namespace FA {
 
@@ -35,8 +35,7 @@ public:
     {
         unsigned int x_{};
         unsigned int y_{};
-        Shared::Frame frame_;
-        std::vector<Shared::Frame> frames_;
+        Shared::Graphic graphic_{};
     };
 
     struct ObjectData

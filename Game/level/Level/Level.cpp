@@ -205,7 +205,7 @@ void Level::CreateFringe()
 
 void Level::CreateBackgroundTile(const Tile::TileMap::TileData &data)
 {
-    Shared::Image image(data.frame_);
+    Shared::Image image(data.graphic_.image_);
     sf::Sprite tile;
     image.ApplyTo(tile);
     tile.setPosition(static_cast<float>(data.x_), static_cast<float>(data.y_));
@@ -224,14 +224,13 @@ void Level::CreateTileEntity(const Tile::TileMap::TileData &data)
 {
     Entity::PropertyData d;
     d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
-    d.frames_ = data.frames_;
-    d.frame_ = data.frame_;
+    d.graphic_ = data.graphic_;
     entityManager_.CreateEntity(EntityType::Tile, d);
 }
 
 void Level::CreateFringeTile(const Tile::TileMap::TileData &data)
 {
-    Shared::Image image(data.frame_);
+    Shared::Image image(data.graphic_.image_);
     sf::Sprite tile;
     image.ApplyTo(tile);
     tile.setPosition(static_cast<float>(data.x_), static_cast<float>(data.y_));

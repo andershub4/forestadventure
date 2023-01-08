@@ -84,11 +84,12 @@ void TileMap::SetupLayers()
                     auto frame = sheetManager_.MakeFrame(data);
                     outFrames.push_back(frame);
                 }
-                tileData.frames_ = outFrames;
+
+                tileData.graphic_.animation_ = outFrames;
             }
 
             Shared::ImageData data{frame.texturePath_, {frame.column_, frame.row_}};
-            tileData.frame_ = sheetManager_.MakeFrame(data);
+            tileData.graphic_.image_ = sheetManager_.MakeFrame(data);
 
             layers_[layerName].push_back(tileData);
         }

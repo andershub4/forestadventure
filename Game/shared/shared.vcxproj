@@ -157,6 +157,7 @@
     <ClInclude Include="Resource\Animation.h" />
     <ClInclude Include="Resource\AnimationData.h" />
     <ClInclude Include="Resource\Frame.h" />
+    <ClInclude Include="Resource\Graphic.h" />
     <ClInclude Include="Resource\Image.h" />
     <ClInclude Include="Resource\ImageData.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
