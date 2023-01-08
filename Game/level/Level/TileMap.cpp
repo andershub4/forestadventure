@@ -14,19 +14,17 @@
 
 namespace FA {
 
-namespace Tile {
-
 TileMap::TileMap(Shared::SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {
-    tileMapParser_ = std::make_unique<TileMapParser>();
+    tileMapParser_ = std::make_unique<Tile::TileMapParser>();
 }
 
 TileMap::~TileMap() = default;
 
 void TileMap::Load(const std::string& fileName)
 {
-    tileMapData_ = std::make_unique<TileMapData>(tileMapParser_->Run(fileName));
+    tileMapData_ = std::make_unique<Tile::TileMapData>(tileMapParser_->Run(fileName));
     LoadTileSets();
 }
 
@@ -134,7 +132,7 @@ sf::Vector2u TileMap::GetSize() const
     return static_cast<sf::Vector2u>(size);
 }
 
-FrameData TileMap::GetFrameData(int id)
+Tile::FrameData TileMap::GetFrameData(int id)
 {
     auto it = tileMapData_->tileSets_.lower_bound(id);
 
@@ -147,7 +145,5 @@ FrameData TileMap::GetFrameData(int id)
         return {};
     }
 }
-
-}  // namespace Tile
 
 }  // namespace FA

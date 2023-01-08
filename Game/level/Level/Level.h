@@ -49,7 +49,7 @@ private:
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
     Shared::SheetManager sheetManager_;
-    Tile::TileMap tileMap_;
+    TileMap tileMap_;
     CameraManager cameraManager_;
     Entity::Factory factory_;
     Entity::EntityManager entityManager_;
@@ -64,10 +64,10 @@ private:
     void CreateEntities();
     void CreateFringe();
 
-    void CreateBackgroundTile(const Tile::TileMap::TileData& data);
-    void CreateTileEntity(const Tile::TileMap::TileData& data);
-    void CreateFringeTile(const Tile::TileMap::TileData& data);
-    void CreateObjectEntity(const Tile::TileMap::ObjectData& data);
+    void CreateBackgroundTile(const TileMap::TileData& data);
+    void CreateTileEntity(const TileMap::TileData& data);
+    void CreateFringeTile(const TileMap::TileData& data);
+    void CreateObjectEntity(const TileMap::ObjectData& data);
 };
 
 }  // namespace FA

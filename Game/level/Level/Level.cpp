@@ -203,7 +203,7 @@ void Level::CreateFringe()
     }
 }
 
-void Level::CreateBackgroundTile(const Tile::TileMap::TileData &data)
+void Level::CreateBackgroundTile(const TileMap::TileData &data)
 {
     Shared::Image image(data.graphic_.image_);
     sf::Sprite tile;
@@ -212,7 +212,7 @@ void Level::CreateBackgroundTile(const Tile::TileMap::TileData &data)
     backgroundTexture_.draw(tile);
 }
 
-void Level::CreateObjectEntity(const Tile::TileMap::ObjectData &data)
+void Level::CreateObjectEntity(const TileMap::ObjectData &data)
 {
     Entity::PropertyData d;
     d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
@@ -220,7 +220,7 @@ void Level::CreateObjectEntity(const Tile::TileMap::ObjectData &data)
     entityManager_.CreateEntity(ObjTypeStrToEnum(data.typeStr_), d);
 }
 
-void Level::CreateTileEntity(const Tile::TileMap::TileData &data)
+void Level::CreateTileEntity(const TileMap::TileData &data)
 {
     Entity::PropertyData d;
     d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
@@ -228,7 +228,7 @@ void Level::CreateTileEntity(const Tile::TileMap::TileData &data)
     entityManager_.CreateEntity(EntityType::Tile, d);
 }
 
-void Level::CreateFringeTile(const Tile::TileMap::TileData &data)
+void Level::CreateFringeTile(const TileMap::TileData &data)
 {
     Shared::Image image(data.graphic_.image_);
     sf::Sprite tile;

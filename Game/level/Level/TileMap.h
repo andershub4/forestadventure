@@ -28,6 +28,8 @@ class TileMapParser;
 struct TileMapData;
 struct FrameData;
 
+}  // namespace Tile
+
 class TileMap
 {
 public:
@@ -57,8 +59,8 @@ public:
 
 private:
     Shared::SheetManager &sheetManager_;
-    std::unique_ptr<TileMapData> tileMapData_ = nullptr;
-    std::unique_ptr<TileMapParser> tileMapParser_ = nullptr;
+    std::unique_ptr<Tile::TileMapData> tileMapData_ = nullptr;
+    std::unique_ptr<Tile::TileMapParser> tileMapParser_ = nullptr;
     std::map<std::string, std::vector<TileData>> layers_;
     std::map<std::string, std::vector<ObjectData>> objectGroups_;
 
@@ -66,9 +68,7 @@ private:
     void LoadTileSets();
     void SetupLayers();
     void SetupObjectGroups();
-    FrameData GetFrameData(int id);
+    Tile::FrameData GetFrameData(int id);
 };
-
-}  // namespace Tile
 
 }  // namespace FA
