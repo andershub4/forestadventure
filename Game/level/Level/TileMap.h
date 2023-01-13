@@ -68,7 +68,7 @@ private:
     void LoadTileSets();
     void SetupLayers();
     void SetupObjectGroups();
-    Tile::TileData GetTileData(int id);
+    Tile::TileData LookupTileData(int id);
 };
 
 }  // namespace FA

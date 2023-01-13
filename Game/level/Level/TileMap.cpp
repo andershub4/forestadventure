@@ -57,7 +57,7 @@ void TileMap::SetupLayers()
         for (auto it = layer.tileIds_.begin(); layer.tileIds_.end() != it; ++it, ++inx) {
             auto tileId = *it;
             if (tileId == 0) continue;
-            auto tileData = GetTileData(tileId);
+            auto tileData = LookupTileData(tileId);
             TileMap::TileData outData;
             unsigned int x = (inx % nCols) * tileWidth;
             unsigned int y = (inx / nCols) * tileHeight;
@@ -131,7 +131,7 @@ sf::Vector2u TileMap::GetSize() const
     return static_cast<sf::Vector2u>(size);
 }
 
-Tile::TileData TileMap::GetTileData(int id)
+Tile::TileData TileMap::LookupTileData(int id)
 {
     auto it = tileMapData_->tileSets_.lower_bound(id);
 
