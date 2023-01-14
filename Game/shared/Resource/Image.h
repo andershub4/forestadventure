@@ -20,7 +20,7 @@ public:
     Image(const Frame& frame);
 
     void Update(float deltaTime);
-    void ApplyTo(sf::Sprite& sprite);
+    void ApplyTo(sf::Sprite& sprite) const;
     bool IsValid() const;
 
 private:

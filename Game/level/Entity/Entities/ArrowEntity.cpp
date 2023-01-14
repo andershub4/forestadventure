@@ -9,12 +9,12 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Abilities/AnimationAbility.h"
+#include "Entity/Abilities/ImageAbility.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
 #include "Level/Level.h"
-#include "Resource/AnimationData.h"
+#include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
 
 namespace FA {
@@ -53,10 +53,10 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
     }
 }
 
-void ArrowEntity::OnUpdateAnimation(const Shared::Animation& animation)
+void ArrowEntity::OnUpdateImage(const Shared::Image& image)
 {
     auto& sprite = shape_.GetSprite("Main");
-    animation.ApplyTo(sprite);
+    image.ApplyTo(sprite);
     sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 }
 
@@ -69,7 +69,7 @@ void ArrowEntity::RegisterShape()
 void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Move"; };
-    auto updateAnimation = [this](const Shared::Animation& animation) { OnUpdateAnimation(animation); };
+    auto updateImage = [this](const Shared::Image& image) { OnUpdateImage(image); };
 
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -79,11 +79,11 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const Propert
     auto move = std::make_shared<MoveAbility>(
         constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto moveAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
-    auto a = entityService_.MakeAnimation({Shared::SheetId::Arrow, {{0, 0}, 1, 0}, false});
-    moveAnimation->RegisterAnimation("Move", a);
+    auto moveImage = std::make_shared<ImageAbility>(getKey, updateImage);
+    auto i = entityService_.MakeImage({Shared::SheetId::Arrow, {0, 0}});
+    moveImage->RegisterImage("Move", i);
     moveState->RegisterAbility(move);
-    moveState->RegisterAbility(moveAnimation);
+    moveState->RegisterAbility(moveImage);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }

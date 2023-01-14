@@ -17,7 +17,7 @@ Image::Image(const Frame& frame)
     , isValid_(true)
 {}
 
-void Image::ApplyTo(sf::Sprite& sprite)
+void Image::ApplyTo(sf::Sprite& sprite) const
 {
     sprite.setTexture(*frame_.texture_);
     sprite.setTextureRect(frame_.rect_);

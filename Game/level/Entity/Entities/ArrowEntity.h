@@ -30,7 +30,7 @@ private:
 
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
-    void OnUpdateAnimation(const Shared::Animation& animation);
+    void OnUpdateImage(const Shared::Image& image);
 };
 
 }  // namespace Entity
