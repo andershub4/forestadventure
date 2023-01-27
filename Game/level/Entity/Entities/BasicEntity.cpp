@@ -126,7 +126,7 @@ void BasicEntity::RegisterUninitializedState()
 
 std::shared_ptr<State> BasicEntity::RegisterDeadState()
 {
-    auto deadState = RegisterState(StateType::Dead);
+    auto deadState = stateMachine_.RegisterState(StateType::Dead, body_);
     auto die = std::make_shared<DieAbility>([this]() { OnDying(); });
     deadState->RegisterAbility(die);
     deadState->IgnoreAllEvents();
