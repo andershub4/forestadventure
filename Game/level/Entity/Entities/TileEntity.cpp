@@ -9,8 +9,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/PropertyData.h"
+#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/State.h"
 
 namespace FA {
@@ -24,7 +24,8 @@ TileEntity::TileEntity(EntityId id, Level& level, const Shared::SheetManager& sh
 
 TileEntity::~TileEntity() = default;
 
-void TileEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
+void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+                                const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
     float t = constant::Entity::stdSwitchTime;

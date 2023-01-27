@@ -11,9 +11,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/PropertyData.h"
+#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/State.h"
 #include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
@@ -81,7 +81,8 @@ void MoleEntity::RegisterProperties()
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
 }
 
-void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
+void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+                                const PropertyData& data)
 {
     auto idleAnimations = GetAnimations(animationDatas.at(StateType::Idle));
     auto idleAnimation = std::make_shared<AnimationSprite>(std::bind(&MoleEntity::AnimationKey, this), idleAnimations);

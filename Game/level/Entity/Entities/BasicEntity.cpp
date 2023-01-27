@@ -35,9 +35,10 @@ void BasicEntity::Create(const PropertyData& data)
     RegisterProperties();
 
     RegisterUninitializedState();
-    RegisterDeadState();
     auto idleState = RegisterState(StateType::Idle);
-    RegisterStates(idleState, data);
+    auto deadState = RegisterDeadState();
+
+    RegisterStates(idleState, deadState, data);
 
     // ReadObjectData
     body_.position_ = data.position_;
@@ -123,12 +124,13 @@ void BasicEntity::RegisterUninitializedState()
     stateMachine_.SetStartState(uninitializedState);
 }
 
-void BasicEntity::RegisterDeadState()
+std::shared_ptr<State> BasicEntity::RegisterDeadState()
 {
     auto deadState = RegisterState(StateType::Dead);
     auto die = std::make_shared<DieAbility>([this]() { OnDying(); });
     deadState->RegisterAbility(die);
     deadState->IgnoreAllEvents();
+    return deadState;
 }
 
 }  // namespace Entity

@@ -26,7 +26,8 @@ public:
 
 private:
     virtual void RegisterProperties() override;
-    virtual void RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data) override;
+    virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+                                const PropertyData& data) override;
 
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);

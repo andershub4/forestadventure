@@ -9,9 +9,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Sprites/ImageSprite.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/PropertyData.h"
+#include "Entity/Sprites/ImageSprite.h"
 #include "Entity/State.h"
 #include "Level/Level.h"
 #include "Resource/ImageData.h"
@@ -53,7 +53,8 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
     }
 }
 
-void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
+void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+                                 const PropertyData& data)
 {
     auto getKey = [this]() { return "Move"; };
 

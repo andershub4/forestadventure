@@ -11,7 +11,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/Abilities/ShootAbility.h"
 #include "Entity/Events/AttackEvent.h"
@@ -20,6 +19,7 @@
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Events/StopMoveEvent.h"
 #include "Entity/PropertyData.h"
+#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/State.h"
 #include "Level/Level.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
@@ -171,7 +171,8 @@ void PlayerEntity::RegisterProperties()
     propertyManager_.Register<bool>("Shoot", false);
 }
 
-void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
+void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+                                  const PropertyData& data)
 {
     auto updateAnimationAndComplete = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
@@ -186,7 +187,8 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     };
 
     auto idleAnimations = GetAnimations(animationDatas.at(StateType::Idle));
-    auto idleAnimation = std::make_shared<AnimationSprite>(std::bind(&PlayerEntity::AnimationKey, this), idleAnimations);
+    auto idleAnimation =
+        std::make_shared<AnimationSprite>(std::bind(&PlayerEntity::AnimationKey, this), idleAnimations);
     idleState->RegisterSprite(idleAnimation);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -197,6 +199,8 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
         ChangeStateTo(StateType::AttackWeapon, event);
     });
     idleState->RegisterIgnoreEvents({EventType::Collision});
+
+    deadState->RegisterSprite(idleAnimation);
 
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(

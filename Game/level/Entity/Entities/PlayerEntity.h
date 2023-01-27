@@ -29,7 +29,8 @@ protected:
 
 private:
     virtual void RegisterProperties() override;
-    virtual void RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data) override;
+    virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+                                const PropertyData& data) override;
     virtual void Start() override;
     virtual void OnMessage(std::shared_ptr<Shared::Message> msg) override;
     virtual void OnDying() override;

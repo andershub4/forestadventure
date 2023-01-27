@@ -73,7 +73,9 @@ private:
     std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
 
 private:
-    virtual void RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data) {}
+    virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+                                const PropertyData& data)
+    {}
     virtual void RegisterProperties() {}
     virtual void Start() {}
     virtual void OnMessage(std::shared_ptr<Shared::Message> msg) {}
@@ -82,7 +84,7 @@ private:
     void Subscribe(const std::vector<Shared::MessageType>& messageTypes);
     void Unsubscribe(const std::vector<Shared::MessageType>& messageTypes);
     void RegisterUninitializedState();
-    void RegisterDeadState();
+    std::shared_ptr<State> RegisterDeadState();
 };
 
 }  // namespace Entity

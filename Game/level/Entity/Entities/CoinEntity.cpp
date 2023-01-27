@@ -6,8 +6,8 @@
 
 #include "CoinEntity.h"
 
-#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/PropertyData.h"
+#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/State.h"
 #include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
@@ -23,7 +23,8 @@ CoinEntity::CoinEntity(EntityId id, Level& level, const Shared::SheetManager& sh
 
 CoinEntity::~CoinEntity() = default;
 
-void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
+void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+                                const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
     auto a = entityService_.MakeAnimation({Shared::SheetId::Coin, {{0, 0}, 4, 0}, false});
