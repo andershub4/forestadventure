@@ -6,6 +6,8 @@
 
 #include "AnimationAbility.h"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+
 #include "Logging.h"
 
 namespace FA {
@@ -13,14 +15,21 @@ namespace FA {
 namespace Entity {
 
 AnimationAbility::AnimationAbility(std::function<std::string()> getKey,
-                                   std::function<void(const Shared::Animation &)> updateFn)
+                                   std::function<void(const Shared::Animation &)> updateFn, bool center)
     : getKey_(getKey)
     , updateFn_(updateFn)
+    , center_(center)
+{}
+
+AnimationAbility::AnimationAbility(std::function<std::string()> getKey, bool center)
+    : getKey_(getKey)
+    , updateFn_([](const Shared::Animation &) {})
+    , center_(center)
 {}
 
 AnimationAbility::~AnimationAbility() = default;
 
-void AnimationAbility::Enter(std::shared_ptr<BasicEvent> event)
+void AnimationAbility::Enter()
 {
     auto key = getKey_();
     if (map_.find(key) != map_.end()) {
@@ -36,8 +45,22 @@ void AnimationAbility::Update(float deltaTime)
 {
     if (currentAnimation_.IsValid()) {
         currentAnimation_.Update(deltaTime);
+        currentAnimation_.ApplyTo(sprite_);
+        if (center_) {
+            sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
+        }
         updateFn_(currentAnimation_);
     }
+}
+
+void AnimationAbility::SetPosition(const sf::Vector2f &position)
+{
+    sprite_.setPosition(position);
+}
+
+void AnimationAbility::SetRotation(float rot)
+{
+    sprite_.setRotation(rot);
 }
 
 void AnimationAbility::RegisterAnimation(const std::string &name, const Shared::Animation &animation)
@@ -50,9 +73,9 @@ void AnimationAbility::RegisterAnimation(const std::string &name, const Shared::
     }
 }
 
-bool AnimationAbility::AnimationIsCompleted() const
+void AnimationAbility::DrawTo(sf::RenderTarget &renderTarget)
 {
-    return currentAnimation_.IsValid() ? currentAnimation_.IsCompleted() : true;
+    renderTarget.draw(sprite_);
 }
 
 }  // namespace Entity

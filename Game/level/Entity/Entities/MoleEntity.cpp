@@ -52,25 +52,12 @@ void MoleEntity::OnBeginMove(FaceDirection faceDirection)
 
 void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
-    position_ += delta;
-}
-
-void MoleEntity::OnUpdateAnimation(const Shared::Animation& animation)
-{
-    auto& sprite = shape_.GetSprite("Main");
-    animation.ApplyTo(sprite);
-    sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+    body_.position_ += delta;
 }
 
 void MoleEntity::RegisterProperties()
 {
     propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
-}
-
-void MoleEntity::RegisterShape()
-{
-    shape_ = CreateShape();
-    shape_.AddSprite("Main");
 }
 
 void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
@@ -81,16 +68,15 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const Property
         ss << dir;
         return ss.str();
     };
-    auto updateAnimation = [this](const Shared::Animation& animation) { OnUpdateAnimation(animation); };
 
-    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+    auto idleAnimation = std::make_shared<AnimationAbility>(getKey);
     for (const auto& dir : animationDatas.at(StateType::Idle)) {
         std::stringstream ss;
         ss << dir.first;
         auto a = entityService_.MakeAnimation(dir.second);
         idleAnimation->RegisterAnimation(ss.str(), a);
     }
-    idleState->RegisterAbility(idleAnimation);
+    idleState->RegisterAnimation(idleAnimation);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterIgnoreEvents({EventType::StopMove, EventType::Collision});
@@ -99,7 +85,7 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const Property
     auto move = std::make_shared<MoveAbility>(
         constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto moveAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+    auto moveAnimation = std::make_shared<AnimationAbility>(getKey);
     for (const auto& dir : animationDatas.at(StateType::Move)) {
         std::stringstream ss;
         ss << dir.first;
@@ -107,7 +93,7 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const Property
         moveAnimation->RegisterAnimation(ss.str(), a);
     }
     moveState->RegisterAbility(move);
-    moveState->RegisterAbility(moveAnimation);  // register animation after move
+    moveState->RegisterAnimation(moveAnimation);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }

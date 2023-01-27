@@ -7,6 +7,7 @@
 #include "State.h"
 
 #include "Entity/Abilities/BasicAbility.h"
+#include "Entity/Body.h"
 #include "Entity/Events/BasicEvent.h"
 #include "Logging.h"
 
@@ -14,8 +15,9 @@ namespace FA {
 
 namespace Entity {
 
-State::State(StateType stateType)
+State::State(StateType stateType, Body &body)
     : stateType_(stateType)
+    , shape_(body)
 {}
 
 State::~State() = default;
@@ -25,6 +27,7 @@ void State::Enter(std::shared_ptr<BasicEvent> event)
     for (auto a : abilities_) {
         a->Enter(event);
     }
+    shape_.Enter();
 }
 
 void State::Exit()
@@ -39,6 +42,12 @@ void State::Update(float deltaTime)
     for (auto a : abilities_) {
         a->Update(deltaTime);
     }
+    shape_.Update(deltaTime);
+}
+
+void State::DrawTo(sf::RenderTarget &renderTarget)
+{
+    shape_.DrawTo(renderTarget);
 }
 
 void State::HandleEvent(std::shared_ptr<BasicEvent> event)
@@ -53,6 +62,16 @@ void State::HandleEvent(std::shared_ptr<BasicEvent> event)
 void State::RegisterAbility(std::shared_ptr<BasicAbility> ability)
 {
     abilities_.emplace_back(ability);
+}
+
+void State::RegisterAnimation(std::shared_ptr<AnimationAbility> animation)
+{
+    shape_.RegisterAnimation(animation);
+}
+
+void State::RegisterImage(std::shared_ptr<ImageAbility> image)
+{
+    shape_.RegisterImage(image);
 }
 
 void State::RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)> event)

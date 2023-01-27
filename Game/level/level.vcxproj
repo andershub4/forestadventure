@@ -175,6 +175,7 @@
     <ClInclude Include="Entity\Abilities\MoveAbility.h" />
     <ClInclude Include="Entity\Abilities\ShootAbility.h" />
     <ClInclude Include="Constant\Entity.h" />
+    <ClInclude Include="Entity\Body.h" />
     <ClInclude Include="Entity\Entities\ArrowEntity.h" />
     <ClInclude Include="Entity\Entities\BasicEntity.h" />
     <ClInclude Include="Entity\Entities\CoinEntity.h" />

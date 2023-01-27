@@ -6,9 +6,6 @@
 
 #include "CoinEntity.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
-
-#include "Constant/Entity.h"
 #include "Entity/Abilities/AnimationAbility.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
@@ -26,28 +23,13 @@ CoinEntity::CoinEntity(EntityId id, Level& level, const Shared::SheetManager& sh
 
 CoinEntity::~CoinEntity() = default;
 
-void CoinEntity::OnUpdateAnimation(const Shared::Animation& animation)
-{
-    auto& sprite = shape_.GetSprite("Main");
-    animation.ApplyTo(sprite);
-    sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
-}
-
-void CoinEntity::RegisterShape()
-{
-    shape_ = CreateShape();
-    shape_.AddSprite("Main");
-}
-
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
-    auto updateAnimation = [this](const Shared::Animation& animation) { OnUpdateAnimation(animation); };
-
-    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+    auto idleAnimation = std::make_shared<AnimationAbility>(getKey);
     auto a = entityService_.MakeAnimation({Shared::SheetId::Coin, {{0, 0}, 4, 0}, false});
     idleAnimation->RegisterAnimation("Idle", a);
-    idleState->RegisterAbility(idleAnimation);
+    idleState->RegisterAnimation(idleAnimation);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }
 

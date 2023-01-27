@@ -26,12 +26,10 @@ public:
 
 private:
     virtual void RegisterProperties() override;
-    virtual void RegisterShape() override;
     virtual void RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data) override;
 
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
-    void OnUpdateAnimation(const Shared::Animation& animation);
 };
 
 }  // namespace Entity

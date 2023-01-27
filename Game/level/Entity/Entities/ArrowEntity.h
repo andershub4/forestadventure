@@ -25,12 +25,10 @@ public:
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
 
 private:
-    virtual void RegisterShape() override;
     virtual void RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data) override;
 
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
-    void OnUpdateImage(const Shared::Image& image);
 };
 
 }  // namespace Entity

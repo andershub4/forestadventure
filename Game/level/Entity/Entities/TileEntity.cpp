@@ -24,28 +24,14 @@ TileEntity::TileEntity(EntityId id, Level& level, const Shared::SheetManager& sh
 
 TileEntity::~TileEntity() = default;
 
-void TileEntity::OnUpdateAnimation(const Shared::Animation& animation)
-{
-    auto& sprite = shape_.GetSprite("Main");
-    animation.ApplyTo(sprite);
-}
-
-void TileEntity::RegisterShape()
-{
-    shape_ = CreateShape();
-    shape_.AddSprite("Main");
-}
-
 void TileEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
-    auto updateAnimation = [this](const Shared::Animation& animation) { OnUpdateAnimation(animation); };
-
-    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, false);
     float t = constant::Entity::stdSwitchTime;
     auto a = Shared::Animation(data.graphic_.animation_, 0, t);
     idleAnimation->RegisterAnimation("Idle", a);
-    idleState->RegisterAbility(idleAnimation);
+    idleState->RegisterAnimation(idleAnimation);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }
 

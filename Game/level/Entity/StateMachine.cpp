@@ -36,9 +36,14 @@ void StateMachine::Update(float deltaTime)
     currentState_->Update(deltaTime);
 }
 
-std::shared_ptr<State> StateMachine::RegisterState(StateType stateType)
+void StateMachine::DrawTo(sf::RenderTarget& renderTarget)
 {
-    auto state = std::make_shared<State>(stateType);
+    currentState_->DrawTo(renderTarget);
+}
+
+std::shared_ptr<State> StateMachine::RegisterState(StateType stateType, Body& body)
+{
+    auto state = std::make_shared<State>(stateType, body);
     states_[stateType] = state;
     return state;
 }

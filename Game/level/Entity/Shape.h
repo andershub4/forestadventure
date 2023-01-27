@@ -15,6 +15,8 @@
 #endif
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "Abilities/AnimationAbility.h"
+#include "Abilities/ImageAbility.h"
 #include "Fwd/SfmlFwd.h"
 #include "StateType.h"
 
@@ -22,27 +24,30 @@ namespace FA {
 
 namespace Entity {
 
+struct Body;
+
 class Shape
 {
 public:
-    Shape();
-    Shape(std::function<void()> updateShape);
+    Shape(Body &body);
 
-    void AddSprite(const std::string &name);
-    sf::Sprite &GetSprite(const std::string &name);
+    void RegisterAnimation(std::shared_ptr<AnimationAbility> animation);
+    void RegisterImage(std::shared_ptr<ImageAbility> image);
 
-    void Update();
-    void Draw(sf::RenderTarget &renderTarget);
+    void Enter();
+    void Update(float deltaTime);
+    void DrawTo(sf::RenderTarget &renderTarget);
 
     void SetPosition(const sf::Vector2f &position);
     void SetRotation(float rotation);
 
 private:
-    std::function<void()> updateShape_;
-    std::unordered_map<std::string, sf::Sprite> sprites_;
+    std::vector<std::shared_ptr<AnimationAbility>> animations_;
+    std::vector<std::shared_ptr<ImageAbility>> images_;
 #ifdef _DEBUG
     sf::RectangleShape rShape_;
 #endif
+    Body &body_;
 };
 
 }  // namespace Entity

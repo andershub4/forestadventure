@@ -230,5 +230,8 @@
     <ClInclude Include="Entity\Abilities\ImageAbility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\Body.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

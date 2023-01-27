@@ -8,63 +8,64 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Entity/Body.h"
+
 namespace FA {
 
 namespace Entity {
 
-Shape::Shape() = default;
-
-Shape::Shape(std::function<void()> updateShape)
-    : updateShape_(updateShape)
+Shape::Shape(Body& body)
+    : body_(body)
 {
 #ifdef _DEBUG
     rShape_.setSize({1.0, 1.0});
 #endif
 }
 
-void Shape::Update()
+void Shape::Enter()
 {
-    updateShape_();
+    for (auto animation : animations_) {
+        animation->Enter();
+    }
+    for (auto image : images_) {
+        image->Enter();
+    }
 }
 
-void Shape::AddSprite(const std::string& name)
+void Shape::Update(float deltaTime)
 {
-    // check if not exist
-    sprites_[name] = sf::Sprite();
+    for (auto animation : animations_) {
+        animation->SetPosition(body_.position_);
+        animation->SetRotation(body_.rotation_);
+        animation->Update(deltaTime);
+    }
+    for (auto image : images_) {
+        image->SetPosition(body_.position_);
+        image->SetRotation(body_.rotation_);
+        image->Update(deltaTime);
+    }
 }
 
-sf::Sprite& Shape::GetSprite(const std::string& name)
+void Shape::RegisterAnimation(std::shared_ptr<AnimationAbility> animation)
 {
-    return sprites_.at(name);
+    animations_.push_back(animation);
 }
 
-void Shape::Draw(sf::RenderTarget& renderTarget)
+void Shape::RegisterImage(std::shared_ptr<ImageAbility> image)
 {
-    for (auto& sprite : sprites_) {
-        renderTarget.draw(sprite.second);
+    images_.push_back(image);
+}
+
+void Shape::DrawTo(sf::RenderTarget& renderTarget)
+{
+    for (auto animation : animations_) {
+        animation->DrawTo(renderTarget);
+    }
+    for (auto image : images_) {
+        image->DrawTo(renderTarget);
     }
 #ifdef _DEBUG
     renderTarget.draw(rShape_);
-#endif
-}
-
-void Shape::SetPosition(const sf::Vector2f& position)
-{
-    for (auto& sprite : sprites_) {
-        sprite.second.setPosition(position);
-    }
-#ifdef _DEBUG
-    rShape_.setPosition(position);
-#endif
-}
-
-void Shape::SetRotation(float rotation)
-{
-    for (auto& sprite : sprites_) {
-        sprite.second.setRotation(rotation);
-    }
-#ifdef _DEBUG
-    rShape_.setRotation(rotation);
 #endif
 }
 

@@ -9,6 +9,7 @@
 #include <memory>
 #include <unordered_map>
 
+#include "Fwd/SfmlFwd.h"
 #include "StateType.h"
 
 namespace FA {
@@ -17,6 +18,7 @@ namespace Entity {
 
 struct BasicEvent;
 class State;
+struct Body;
 
 class StateMachine
 {
@@ -25,10 +27,11 @@ public:
     ~StateMachine();
 
     void SetStartState(std::shared_ptr<State> state);
-    std::shared_ptr<State> RegisterState(StateType stateType);
+    std::shared_ptr<State> RegisterState(StateType stateType, Body& body);
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void Update(float deltaTime);
+    void DrawTo(sf::RenderTarget& renderTarget);
 
     void ChangeStateTo(StateType nextStateType, std::shared_ptr<BasicEvent> event);
 

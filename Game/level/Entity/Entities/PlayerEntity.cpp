@@ -125,7 +125,7 @@ void PlayerEntity::OnBeginMove(FaceDirection faceDirection)
 
 void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
-    position_ += delta;
+    body_.position_ += delta;
 }
 
 void PlayerEntity::OnExitShoot()
@@ -134,16 +134,9 @@ void PlayerEntity::OnExitShoot()
     if (shoot) {
         propertyManager_.Set<bool>("Shoot", false);
         auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
-        auto position = position_ + arrowOffset.at(dir);
+        auto position = body_.position_ + arrowOffset.at(dir);
         level_.SpawnEntity(EntityType::Arrow, dir, position);
     }
-}
-
-void PlayerEntity::OnUpdateAnimation(const Shared::Animation& animation)
-{
-    auto& sprite = shape_.GetSprite("Main");
-    animation.ApplyTo(sprite);
-    sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 }
 
 void PlayerEntity::OnDying()
@@ -157,12 +150,6 @@ void PlayerEntity::RegisterProperties()
     propertyManager_.Register<bool>("Shoot", false);
 }
 
-void PlayerEntity::RegisterShape()
-{
-    shape_ = CreateShape();
-    shape_.AddSprite("Main");
-}
-
 void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() {
@@ -171,29 +158,26 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
         ss << dir;
         return ss.str();
     };
-    auto updateAnimation = [this](const Shared::Animation& animation) { OnUpdateAnimation(animation); };
     auto updateAnimationAndComplete = [this](const Shared::Animation& animation) {
-        OnUpdateAnimation(animation);
         if (animation.IsCompleted()) {
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
     auto updateAnimationAndShoot = [this](const Shared::Animation& animation) {
-        OnUpdateAnimation(animation);
         if (animation.IsCompleted()) {
             propertyManager_.Set<bool>("Shoot", true);
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
 
-    auto idleAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+    auto idleAnimation = std::make_shared<AnimationAbility>(getKey);
     for (const auto& dir : animationDatas.at(StateType::Idle)) {
         std::stringstream ss;
         ss << dir.first;
         auto a = entityService_.MakeAnimation(dir.second);
         idleAnimation->RegisterAnimation(ss.str(), a);
     }
-    idleState->RegisterAbility(idleAnimation);
+    idleState->RegisterAnimation(idleAnimation);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
@@ -208,7 +192,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     auto move = std::make_shared<MoveAbility>(
         constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto moveAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimation);
+    auto moveAnimation = std::make_shared<AnimationAbility>(getKey);
     for (const auto& dir : animationDatas.at(StateType::Move)) {
         std::stringstream ss;
         ss << dir.first;
@@ -216,7 +200,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
         moveAnimation->RegisterAnimation(ss.str(), a);
     }
     moveState->RegisterAbility(move);
-    moveState->RegisterAbility(moveAnimation);  // register animation after move
+    moveState->RegisterAnimation(moveAnimation);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     moveState->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
@@ -229,7 +213,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
         auto a = entityService_.MakeAnimation(dir.second);
         attackAnimation->RegisterAnimation(ss.str(), a);
     }
-    attackState->RegisterAbility(attackAnimation);
+    attackState->RegisterAnimation(attackAnimation);
     attackState->RegisterEventCB(EventType::StartMove,
                                  [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     attackState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
@@ -245,7 +229,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
         attackWeaponAnimation->RegisterAnimation(ss.str(), a);
     }
     attackWeaponState->RegisterAbility(shoot);
-    attackWeaponState->RegisterAbility(attackWeaponAnimation);  // register animation after shoot
+    attackWeaponState->RegisterAnimation(attackWeaponAnimation);
     attackWeaponState->RegisterEventCB(
         EventType::StartMove, [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     attackWeaponState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
@@ -253,7 +237,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
 
 void PlayerEntity::Start()
 {
-    level_.AddCamera(position_);
+    level_.AddCamera(body_.position_);
 }
 
 }  // namespace Entity

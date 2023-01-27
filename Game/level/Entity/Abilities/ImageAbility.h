@@ -10,7 +10,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "BasicAbility.h"
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "Fwd/SfmlFwd.h"
 #include "Resource/Image.h"
@@ -19,22 +19,27 @@ namespace FA {
 
 namespace Entity {
 
-class ImageAbility : public BasicAbility
+class ImageAbility
 {
 public:
     ImageAbility(std::function<std::string()> getKey, std::function<void(const Shared::Image &)>);
+    ImageAbility(std::function<std::string()> getKey);
     virtual ~ImageAbility();
 
-    virtual void Enter(std::shared_ptr<BasicEvent> event) override;
-    virtual void Update(float deltaTime) override;
+    void Enter();
+    void Update(float deltaTime);
 
+    void SetPosition(const sf::Vector2f &position);
+    void SetRotation(float rot);
     void RegisterImage(const std::string &name, const Shared::Image &image);
+    void DrawTo(sf::RenderTarget &renderTarget);
 
 private:
     std::unordered_map<std::string, Shared::Image> map_;
     Shared::Image currentImage_;
     std::function<std::string()> getKey_;
     std::function<void(const Shared::Image &)> updateFn_;
+    sf::Sprite sprite_;
 };
 
 }  // namespace Entity

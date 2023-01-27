@@ -29,7 +29,6 @@ protected:
 
 private:
     virtual void RegisterProperties() override;
-    virtual void RegisterShape() override;
     virtual void RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data) override;
     virtual void Start() override;
     virtual void OnMessage(std::shared_ptr<Shared::Message> msg) override;
@@ -38,7 +37,6 @@ private:
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
     void OnExitShoot();
-    void OnUpdateAnimation(const Shared::Animation& animation);
 };
 
 }  // namespace Entity

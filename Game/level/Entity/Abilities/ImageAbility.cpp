@@ -6,6 +6,8 @@
 
 #include "ImageAbility.h"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+
 #include "Logging.h"
 
 namespace FA {
@@ -17,9 +19,14 @@ ImageAbility::ImageAbility(std::function<std::string()> getKey, std::function<vo
     , updateFn_(updateFn)
 {}
 
+ImageAbility::ImageAbility(std::function<std::string()> getKey)
+    : getKey_(getKey)
+    , updateFn_([](const Shared::Image &) {})
+{}
+
 ImageAbility::~ImageAbility() = default;
 
-void ImageAbility::Enter(std::shared_ptr<BasicEvent> event)
+void ImageAbility::Enter()
 {
     auto key = getKey_();
     if (map_.find(key) != map_.end()) {
@@ -33,8 +40,21 @@ void ImageAbility::Enter(std::shared_ptr<BasicEvent> event)
 void ImageAbility::Update(float deltaTime)
 {
     if (currentImage_.IsValid()) {
+        currentImage_.Update(deltaTime);
+        currentImage_.ApplyTo(sprite_);
+        sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
         updateFn_(currentImage_);
     }
+}
+
+void ImageAbility::SetPosition(const sf::Vector2f &position)
+{
+    sprite_.setPosition(position);
+}
+
+void ImageAbility::SetRotation(float rot)
+{
+    sprite_.setRotation(rot);
 }
 
 void ImageAbility::RegisterImage(const std::string &name, const Shared::Image &image)
@@ -45,6 +65,11 @@ void ImageAbility::RegisterImage(const std::string &name, const Shared::Image &i
     else {
         LOG_ERROR("name: %s already exist", name.c_str());
     }
+}
+
+void ImageAbility::DrawTo(sf::RenderTarget &renderTarget)
+{
+    renderTarget.draw(sprite_);
 }
 
 }  // namespace Entity

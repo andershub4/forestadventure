@@ -38,38 +38,24 @@ ArrowEntity::~ArrowEntity() = default;
 
 void ArrowEntity::OnBeginMove(FaceDirection faceDirection)
 {
-    rotation_ = arrowRotation.at(faceDirection);
+    body_.rotation_ = arrowRotation.at(faceDirection);
 }
 
 void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
-    position_ += delta;
+    body_.position_ += delta;
 
     auto mapRect = level_.GetMapRect();
-    bool outsideMap = !mapRect.contains(position_);
+    bool outsideMap = !mapRect.contains(body_.position_);
 
     if (outsideMap) {
         level_.DeleteEntity(GetId());
     }
 }
 
-void ArrowEntity::OnUpdateImage(const Shared::Image& image)
-{
-    auto& sprite = shape_.GetSprite("Main");
-    image.ApplyTo(sprite);
-    sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
-}
-
-void ArrowEntity::RegisterShape()
-{
-    shape_ = CreateShape();
-    shape_.AddSprite("Main");
-}
-
 void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Move"; };
-    auto updateImage = [this](const Shared::Image& image) { OnUpdateImage(image); };
 
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -79,11 +65,11 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const Propert
     auto move = std::make_shared<MoveAbility>(
         constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto moveImage = std::make_shared<ImageAbility>(getKey, updateImage);
+    auto moveImage = std::make_shared<ImageAbility>(getKey);
     auto i = entityService_.MakeImage({Shared::SheetId::Arrow, {0, 0}});
     moveImage->RegisterImage("Move", i);
     moveState->RegisterAbility(move);
-    moveState->RegisterAbility(moveImage);
+    moveState->RegisterImage(moveImage);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }

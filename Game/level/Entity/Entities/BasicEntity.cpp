@@ -11,7 +11,6 @@
 #include "Entity/Abilities/DieAbility.h"
 #include "Entity/Events/InitEvent.h"
 #include "Entity/PropertyData.h"
-#include "Entity/Shape.h"
 #include "Entity/State.h"
 #include "Message/BroadcastMessage/EntityCreatedMessage.h"
 #include "Message/BroadcastMessage/EntityDestroyedMessage.h"
@@ -41,13 +40,12 @@ void BasicEntity::Create(const PropertyData& data)
     RegisterStates(idleState, data);
 
     // ReadObjectData
-    position_ = data.position_;
+    body_.position_ = data.position_;
 
     for (const auto& p : data.properties_) {
         propertyManager_.ReadCustomProperty(p.first, p.second);
     }
 
-    RegisterShape();
     Subscribe(Messages());
     Start();  // must do this after setting position
     messageBus_.SendMessage(std::make_shared<Shared::EntityCreatedMessage>());
@@ -71,12 +69,11 @@ void BasicEntity::Init()
 void BasicEntity::Update(float deltaTime)
 {
     stateMachine_.Update(deltaTime);
-    shape_.Update();
 }
 
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
-    shape_.Draw(renderTarget);
+    stateMachine_.DrawTo(renderTarget);
 }
 
 void BasicEntity::QueueInitEvents(std::shared_ptr<BasicEvent> event)
@@ -94,20 +91,9 @@ void BasicEntity::ChangeStateTo(StateType stateType, std::shared_ptr<BasicEvent>
     stateMachine_.ChangeStateTo(stateType, event);
 }
 
-void BasicEntity::OnUpdateShape()
-{
-    shape_.SetPosition(position_);
-    shape_.SetRotation(rotation_);
-}
-
-Shape BasicEntity::CreateShape()
-{
-    return Shape([this]() { OnUpdateShape(); });
-}
-
 std::shared_ptr<State> BasicEntity::RegisterState(StateType stateType)
 {
-    auto state = stateMachine_.RegisterState(stateType);
+    auto state = stateMachine_.RegisterState(stateType, body_);
     state->RegisterEventCB(EventType::Dead,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Dead, event); });
     return state;
