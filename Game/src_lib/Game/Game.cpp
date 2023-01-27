@@ -23,6 +23,8 @@ namespace FA {
 int Game::Run()
 {
     LOG_INFO_ENTER_FUNC();
+    LOG_INFO("%s version %s", FA_APP_NAME, FA_APP_VERSION);
+    LOG_INFO("SFML version %u.%u.%u", SFML_VERSION_MAJOR, SFML_VERSION_MINOR, SFML_VERSION_PATCH);
 
     try {
         GameLoop();
@@ -38,18 +40,14 @@ int Game::Run()
 
 void Game::GameLoop()
 {
-    LOG_INFO("%s version %s", FA_APP_NAME, FA_APP_VERSION);
-    LOG_INFO("SFML version %u.%u.%u", SFML_VERSION_MAJOR, SFML_VERSION_MINOR, SFML_VERSION_PATCH);
-
-    sf::RenderWindow window;
-    sf::View view;
-
     LOG_INFO("Create main window");
-    const std::string title = UI::GetTitle();
+    sf::RenderWindow window;
 #ifdef _DEBUG
+    const std::string title = UI::GetTitle();
     window.create(sf::VideoMode(Shared::Screen::width, Shared::Screen::height), title);
 #else
     window.create(sf::VideoMode::getDesktopMode(), title, sf::Style::Fullscreen);
+    sf::View view;
     view.reset(sf::FloatRect(0.0, 0.0, Shared::Screen::width_f, Shared::Screen::height_f));
     window.setView(view);
 #endif
