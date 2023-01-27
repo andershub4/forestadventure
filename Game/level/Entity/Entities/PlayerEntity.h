@@ -37,6 +37,9 @@ private:
     void OnBeginMove(FaceDirection faceDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
     void OnExitShoot();
+    std::string AnimationKey() const;
+    std::unordered_map<std::string, Shared::Animation> GetAnimations(
+        const std::unordered_map<FaceDirection, Shared::AnimationData>& data) const;
 };
 
 }  // namespace Entity
