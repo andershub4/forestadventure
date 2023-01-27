@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Entity\Abilities\AnimationAbility.cpp">
+    <ClCompile Include="Entity\Sprites\AnimationSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity\Abilities\BasicAbility.cpp">
@@ -87,12 +87,15 @@
     <ClCompile Include="Level\TileMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Abilities\ImageAbility.cpp">
+    <ClCompile Include="Entity\Sprites\ImageSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Sprites\BasicSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Entity\Abilities\AnimationAbility.h">
+    <ClInclude Include="Entity\Sprites\AnimationSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Abilities\BasicAbility.h">
@@ -227,10 +230,13 @@
     <ClInclude Include="Constant\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Abilities\ImageAbility.h">
+    <ClInclude Include="Entity\Sprites\ImageSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Body.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Sprites\BasicSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

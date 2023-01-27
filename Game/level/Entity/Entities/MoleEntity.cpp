@@ -11,7 +11,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Abilities/AnimationAbility.h"
+#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
@@ -68,15 +68,20 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const Property
         ss << dir;
         return ss.str();
     };
+    auto GetAnimations = [this](const std::unordered_map<FaceDirection, Shared::AnimationData>& data) {
+        std::unordered_map<std::string, Shared::Animation> animations;
+        for (const auto& dir : data) {
+            std::stringstream ss;
+            ss << dir.first;
+            auto a = entityService_.MakeAnimation(dir.second);
+            animations[ss.str()] = a;
+        }
+        return animations;
+    };
 
-    auto idleAnimation = std::make_shared<AnimationAbility>(getKey);
-    for (const auto& dir : animationDatas.at(StateType::Idle)) {
-        std::stringstream ss;
-        ss << dir.first;
-        auto a = entityService_.MakeAnimation(dir.second);
-        idleAnimation->RegisterAnimation(ss.str(), a);
-    }
-    idleState->RegisterAnimation(idleAnimation);
+    auto idleAnimations = GetAnimations(animationDatas.at(StateType::Idle));
+    auto idleAnimation = std::make_shared<AnimationSprite>(getKey, idleAnimations);
+    idleState->RegisterSprite(idleAnimation);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterIgnoreEvents({EventType::StopMove, EventType::Collision});
@@ -85,15 +90,10 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, const Property
     auto move = std::make_shared<MoveAbility>(
         constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto moveAnimation = std::make_shared<AnimationAbility>(getKey);
-    for (const auto& dir : animationDatas.at(StateType::Move)) {
-        std::stringstream ss;
-        ss << dir.first;
-        auto a = entityService_.MakeAnimation(dir.second);
-        moveAnimation->RegisterAnimation(ss.str(), a);
-    }
+    auto moveAnimations = GetAnimations(animationDatas.at(StateType::Move));
+    auto moveAnimation = std::make_shared<AnimationSprite>(getKey, moveAnimations);
     moveState->RegisterAbility(move);
-    moveState->RegisterAnimation(moveAnimation);
+    moveState->RegisterSprite(moveAnimation);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }

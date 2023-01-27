@@ -9,7 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Abilities/ImageAbility.h"
+#include "Entity/Sprites/ImageSprite.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
@@ -65,11 +65,11 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, const Propert
     auto move = std::make_shared<MoveAbility>(
         constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto moveImage = std::make_shared<ImageAbility>(getKey);
     auto i = entityService_.MakeImage({Shared::SheetId::Arrow, {0, 0}});
-    moveImage->RegisterImage("Move", i);
+    std::unordered_map<std::string, Shared::Image> images{{"Move", i}};
+    auto moveImage = std::make_shared<ImageSprite>(getKey, images);
     moveState->RegisterAbility(move);
-    moveState->RegisterImage(moveImage);
+    moveState->RegisterSprite(moveImage);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }

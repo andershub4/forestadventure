@@ -11,7 +11,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
-#include "Entity/Abilities/AnimationAbility.h"
+#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/Abilities/ShootAbility.h"
 #include "Entity/Events/AttackEvent.h"
@@ -170,14 +170,20 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
         }
     };
 
-    auto idleAnimation = std::make_shared<AnimationAbility>(getKey);
-    for (const auto& dir : animationDatas.at(StateType::Idle)) {
-        std::stringstream ss;
-        ss << dir.first;
-        auto a = entityService_.MakeAnimation(dir.second);
-        idleAnimation->RegisterAnimation(ss.str(), a);
-    }
-    idleState->RegisterAnimation(idleAnimation);
+    auto GetAnimations = [this](const std::unordered_map<FaceDirection, Shared::AnimationData> &data) {
+        std::unordered_map<std::string, Shared::Animation> animations;
+        for (const auto& dir : data) {
+            std::stringstream ss;
+            ss << dir.first;
+            auto a = entityService_.MakeAnimation(dir.second);
+            animations[ss.str()] = a;
+        }
+        return animations;
+    };
+
+    auto idleAnimations = GetAnimations(animationDatas.at(StateType::Idle));
+    auto idleAnimation = std::make_shared<AnimationSprite>(getKey, idleAnimations);
+    idleState->RegisterSprite(idleAnimation);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
@@ -192,28 +198,18 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     auto move = std::make_shared<MoveAbility>(
         constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto moveAnimation = std::make_shared<AnimationAbility>(getKey);
-    for (const auto& dir : animationDatas.at(StateType::Move)) {
-        std::stringstream ss;
-        ss << dir.first;
-        auto a = entityService_.MakeAnimation(dir.second);
-        moveAnimation->RegisterAnimation(ss.str(), a);
-    }
+    auto moveAnimations = GetAnimations(animationDatas.at(StateType::Move));
+    auto moveAnimation = std::make_shared<AnimationSprite>(getKey, moveAnimations);
     moveState->RegisterAbility(move);
-    moveState->RegisterAnimation(moveAnimation);
+    moveState->RegisterSprite(moveAnimation);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     moveState->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
 
     auto attackState = RegisterState(StateType::Attack);
-    auto attackAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndComplete);
-    for (const auto& dir : animationDatas.at(StateType::Attack)) {
-        std::stringstream ss;
-        ss << dir.first;
-        auto a = entityService_.MakeAnimation(dir.second);
-        attackAnimation->RegisterAnimation(ss.str(), a);
-    }
-    attackState->RegisterAnimation(attackAnimation);
+    auto attackAnimations = GetAnimations(animationDatas.at(StateType::Attack));
+    auto attackAnimation = std::make_shared<AnimationSprite>(getKey, attackAnimations, updateAnimationAndComplete);
+    attackState->RegisterSprite(attackAnimation);
     attackState->RegisterEventCB(EventType::StartMove,
                                  [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     attackState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
@@ -221,15 +217,10 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, const Proper
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
     auto shoot = std::make_shared<ShootAbility>(
         nullptr, [this]() { OnExitShoot(); }, nullptr);
-    auto attackWeaponAnimation = std::make_shared<AnimationAbility>(getKey, updateAnimationAndShoot);
-    for (const auto& dir : animationDatas.at(StateType::AttackWeapon)) {
-        std::stringstream ss;
-        ss << dir.first;
-        auto a = entityService_.MakeAnimation(dir.second);
-        attackWeaponAnimation->RegisterAnimation(ss.str(), a);
-    }
+    auto attackWeaponAnimations = GetAnimations(animationDatas.at(StateType::AttackWeapon));
+    auto attackWeaponAnimation = std::make_shared<AnimationSprite>(getKey, attackWeaponAnimations, updateAnimationAndShoot);
     attackWeaponState->RegisterAbility(shoot);
-    attackWeaponState->RegisterAnimation(attackWeaponAnimation);
+    attackWeaponState->RegisterSprite(attackWeaponAnimation);
     attackWeaponState->RegisterEventCB(
         EventType::StartMove, [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     attackWeaponState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});

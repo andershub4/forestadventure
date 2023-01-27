@@ -10,37 +10,34 @@
 #include <string>
 #include <unordered_map>
 
-#include <SFML/Graphics/Sprite.hpp>
+//#include <SFML/Graphics/Sprite.hpp>
 
-#include "Fwd/SfmlFwd.h"
+//#include "Fwd/SfmlFwd.h"
+#include "BasicSprite.h"
 #include "Resource/Animation.h"
 
 namespace FA {
 
 namespace Entity {
 
-class AnimationAbility
+class AnimationSprite : public BasicSprite
 {
 public:
-    AnimationAbility(std::function<std::string()> getKey, std::function<void(const Shared::Animation &)>,
+    AnimationSprite(std::function<std::string()> getKey, const std::unordered_map<std::string, Shared::Animation> &animations,
+                     std::function<void(const Shared::Animation &)>,
                      bool center = true);
-    AnimationAbility(std::function<std::string()> getKey, bool center = true);
-    virtual ~AnimationAbility();
+    AnimationSprite(std::function<std::string()> getKey,
+                     const std::unordered_map<std::string, Shared::Animation> &animations, bool center = true);
+    virtual ~AnimationSprite();
 
-    void Enter();
-    void Update(float deltaTime);
-
-    void SetPosition(const sf::Vector2f &position);
-    void SetRotation(float rot);
-    void RegisterAnimation(const std::string &name, const Shared::Animation &animation);
-    void DrawTo(sf::RenderTarget &renderTarget);
+    virtual void Enter() override;
+    virtual void Update(float deltaTime) override;
 
 private:
     std::unordered_map<std::string, Shared::Animation> map_;
     Shared::Animation currentAnimation_;
     std::function<std::string()> getKey_;
     std::function<void(const Shared::Animation &)> updateFn_;
-    sf::Sprite sprite_;
     bool center_{};
 };
 

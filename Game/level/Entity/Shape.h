@@ -6,19 +6,16 @@
 
 #pragma once
 
-#include <functional>
-#include <string>
-#include <unordered_map>
+#include <vector>
+#include <memory>
 
 #ifdef _DEBUG
 #include <SFML/Graphics/RectangleShape.hpp>
 #endif
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Abilities/AnimationAbility.h"
-#include "Abilities/ImageAbility.h"
+#include "Sprites/BasicSprite.h"
 #include "Fwd/SfmlFwd.h"
-#include "StateType.h"
 
 namespace FA {
 
@@ -31,19 +28,15 @@ class Shape
 public:
     Shape(Body &body);
 
-    void RegisterAnimation(std::shared_ptr<AnimationAbility> animation);
-    void RegisterImage(std::shared_ptr<ImageAbility> image);
-
+    void RegisterSprite(std::shared_ptr<BasicSprite> sprite);
     void Enter();
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget);
-
     void SetPosition(const sf::Vector2f &position);
     void SetRotation(float rotation);
 
 private:
-    std::vector<std::shared_ptr<AnimationAbility>> animations_;
-    std::vector<std::shared_ptr<ImageAbility>> images_;
+    std::vector<std::shared_ptr<BasicSprite>> sprites_;
 #ifdef _DEBUG
     sf::RectangleShape rShape_;
 #endif

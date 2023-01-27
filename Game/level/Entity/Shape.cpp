@@ -24,45 +24,29 @@ Shape::Shape(Body& body)
 
 void Shape::Enter()
 {
-    for (auto animation : animations_) {
-        animation->Enter();
-    }
-    for (auto image : images_) {
-        image->Enter();
+    for (auto sprite : sprites_) {
+        sprite->Enter();
     }
 }
 
 void Shape::Update(float deltaTime)
 {
-    for (auto animation : animations_) {
-        animation->SetPosition(body_.position_);
-        animation->SetRotation(body_.rotation_);
-        animation->Update(deltaTime);
-    }
-    for (auto image : images_) {
-        image->SetPosition(body_.position_);
-        image->SetRotation(body_.rotation_);
-        image->Update(deltaTime);
+    for (auto sprite : sprites_) {
+        sprite->SetPosition(body_.position_);
+        sprite->SetRotation(body_.rotation_);
+        sprite->Update(deltaTime);
     }
 }
 
-void Shape::RegisterAnimation(std::shared_ptr<AnimationAbility> animation)
+void Shape::RegisterSprite(std::shared_ptr<BasicSprite> sprite)
 {
-    animations_.push_back(animation);
-}
-
-void Shape::RegisterImage(std::shared_ptr<ImageAbility> image)
-{
-    images_.push_back(image);
+    sprites_.push_back(sprite);
 }
 
 void Shape::DrawTo(sf::RenderTarget& renderTarget)
 {
-    for (auto animation : animations_) {
-        animation->DrawTo(renderTarget);
-    }
-    for (auto image : images_) {
-        image->DrawTo(renderTarget);
+    for (auto sprite : sprites_) {
+        sprite->DrawTo(renderTarget);
     }
 #ifdef _DEBUG
     renderTarget.draw(rShape_);

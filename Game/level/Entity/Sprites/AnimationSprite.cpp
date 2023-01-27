@@ -4,9 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "AnimationAbility.h"
-
-#include <SFML/Graphics/RenderWindow.hpp>
+#include "AnimationSprite.h"
 
 #include "Logging.h"
 
@@ -14,22 +12,25 @@ namespace FA {
 
 namespace Entity {
 
-AnimationAbility::AnimationAbility(std::function<std::string()> getKey,
+AnimationSprite::AnimationSprite(std::function<std::string()> getKey, const std::unordered_map<std::string, Shared::Animation> &animations,
                                    std::function<void(const Shared::Animation &)> updateFn, bool center)
     : getKey_(getKey)
+    , map_(animations)
     , updateFn_(updateFn)
     , center_(center)
 {}
 
-AnimationAbility::AnimationAbility(std::function<std::string()> getKey, bool center)
+AnimationSprite::AnimationSprite(std::function<std::string()> getKey,
+                                   const std::unordered_map<std::string, Shared::Animation>& animations, bool center)
     : getKey_(getKey)
+    , map_(animations)
     , updateFn_([](const Shared::Animation &) {})
     , center_(center)
 {}
 
-AnimationAbility::~AnimationAbility() = default;
+AnimationSprite::~AnimationSprite() = default;
 
-void AnimationAbility::Enter()
+void AnimationSprite::Enter()
 {
     auto key = getKey_();
     if (map_.find(key) != map_.end()) {
@@ -41,7 +42,7 @@ void AnimationAbility::Enter()
     }
 }
 
-void AnimationAbility::Update(float deltaTime)
+void AnimationSprite::Update(float deltaTime)
 {
     if (currentAnimation_.IsValid()) {
         currentAnimation_.Update(deltaTime);
@@ -51,31 +52,6 @@ void AnimationAbility::Update(float deltaTime)
         }
         updateFn_(currentAnimation_);
     }
-}
-
-void AnimationAbility::SetPosition(const sf::Vector2f &position)
-{
-    sprite_.setPosition(position);
-}
-
-void AnimationAbility::SetRotation(float rot)
-{
-    sprite_.setRotation(rot);
-}
-
-void AnimationAbility::RegisterAnimation(const std::string &name, const Shared::Animation &animation)
-{
-    if (map_.find(name) == map_.end()) {
-        map_[name] = animation;
-    }
-    else {
-        LOG_ERROR("name: %s already exist", name.c_str());
-    }
-}
-
-void AnimationAbility::DrawTo(sf::RenderTarget &renderTarget)
-{
-    renderTarget.draw(sprite_);
 }
 
 }  // namespace Entity

@@ -64,14 +64,9 @@ void State::RegisterAbility(std::shared_ptr<BasicAbility> ability)
     abilities_.emplace_back(ability);
 }
 
-void State::RegisterAnimation(std::shared_ptr<AnimationAbility> animation)
+void State::RegisterSprite(std::shared_ptr<BasicSprite> sprite)
 {
-    shape_.RegisterAnimation(animation);
-}
-
-void State::RegisterImage(std::shared_ptr<ImageAbility> image)
-{
-    shape_.RegisterImage(image);
+    shape_.RegisterSprite(sprite);
 }
 
 void State::RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)> event)

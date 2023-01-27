@@ -6,7 +6,7 @@
 
 #include "CoinEntity.h"
 
-#include "Entity/Abilities/AnimationAbility.h"
+#include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
 #include "Resource/AnimationData.h"
@@ -26,10 +26,10 @@ CoinEntity::~CoinEntity() = default;
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
-    auto idleAnimation = std::make_shared<AnimationAbility>(getKey);
     auto a = entityService_.MakeAnimation({Shared::SheetId::Coin, {{0, 0}, 4, 0}, false});
-    idleAnimation->RegisterAnimation("Idle", a);
-    idleState->RegisterAnimation(idleAnimation);
+    std::unordered_map<std::string, Shared::Animation> animations{{"Idle", a}};
+    auto idleAnimation = std::make_shared<AnimationSprite>(getKey, animations);
+    idleState->RegisterSprite(idleAnimation);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }
 

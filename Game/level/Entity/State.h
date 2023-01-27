@@ -41,8 +41,7 @@ public:
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     StateType GetStateType() const { return stateType_; }
     void RegisterAbility(std::shared_ptr<BasicAbility> ability);
-    void RegisterAnimation(std::shared_ptr<AnimationAbility> animation);
-    void RegisterImage(std::shared_ptr<ImageAbility> animation);
+    void RegisterSprite(std::shared_ptr<BasicSprite> sprite);
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
     void RegisterIgnoreEvents(const std::vector<EventType>& eventTypes);
     void IgnoreAllEvents();
