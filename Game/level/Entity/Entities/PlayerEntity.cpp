@@ -204,7 +204,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
 
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(
-        constant::Entity::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
+        Constant::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
     auto moveAnimations = GetAnimations(animationDatas.at(StateType::Move));
     auto moveAnimation =

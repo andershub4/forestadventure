@@ -25,7 +25,7 @@ EntityService::~EntityService() = default;
 
 Shared::Animation EntityService::MakeAnimation(const Shared::AnimationData& data) const
 {
-    float t = constant::Entity::stdSwitchTime;
+    float t = Constant::stdSwitchTime;
     auto frames = sheetManager_.MakeFrames(data);
     return Shared::Animation(frames, data.locationData_.defaultIndex_, t);
 }

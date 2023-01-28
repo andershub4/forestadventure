@@ -8,15 +8,15 @@
 
 namespace FA {
 
-namespace constant {
+namespace Entity {
 
-class Entity
-{
-public:
-    static constexpr float stdVelocity = 60.0f;
-    static constexpr float stdSwitchTime = 0.1f;
-};
+namespace Constant {
 
-}  // namespace constant
+constexpr float stdVelocity = 60.0f;
+constexpr float stdSwitchTime = 0.1f;
+
+}  // namespace Constant
+
+}  // namespace Entity
 
 }  // namespace FA

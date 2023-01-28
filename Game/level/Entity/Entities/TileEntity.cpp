@@ -28,7 +28,7 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
                                 const PropertyData& data)
 {
     auto getKey = [this]() { return "Idle"; };
-    float t = constant::Entity::stdSwitchTime;
+    float t = Constant::stdSwitchTime;
     auto a = Shared::Animation(data.graphic_.animation_, 0, t);
     std::unordered_map<std::string, Shared::Animation> animations{{"Idle", a}};
     auto idleAnimation = std::make_shared<AnimationSprite>(getKey, animations, false);

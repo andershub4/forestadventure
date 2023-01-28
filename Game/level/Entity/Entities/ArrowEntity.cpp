@@ -64,7 +64,7 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
 
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(
-        constant::Entity::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
+        Constant::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
     auto i = entityService_.MakeImage({Shared::SheetId::Arrow, {0, 0}});
     std::unordered_map<std::string, Shared::Image> images{{"Move", i}};
