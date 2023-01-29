@@ -42,8 +42,8 @@ void Game::GameLoop()
 {
     LOG_INFO("Create main window");
     sf::RenderWindow window;
-#ifdef _DEBUG
     const std::string title = UI::GetTitle();
+#ifdef _DEBUG
     window.create(sf::VideoMode(Shared::Screen::width, Shared::Screen::height), title);
 #else
     window.create(sf::VideoMode::getDesktopMode(), title, sf::Style::Fullscreen);
