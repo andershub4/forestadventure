@@ -15,7 +15,7 @@ namespace Entity {
 class StaticEntity : public BasicEntity
 {
 public:
-    StaticEntity(EntityId id, Level& level, const Shared::SheetManager& textureManager, Shared::MessageBus& messageBus);
+    StaticEntity(EntityId id, Level& level, const EntityService& service);
     virtual ~StaticEntity();
 
     virtual std::string Name() const override { return "StaticEntity"; }

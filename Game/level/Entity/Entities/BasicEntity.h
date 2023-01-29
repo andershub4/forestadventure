@@ -21,10 +21,8 @@ namespace FA {
 
 namespace Shared {
 
-class MessageBus;
 class Message;
 enum class MessageType;
-class SheetManager;
 
 }  // namespace Shared
 
@@ -37,7 +35,7 @@ struct PropertyData;
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager, Shared::MessageBus& messageBus);
+    BasicEntity(EntityId id, Level& level, const EntityService& service);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
@@ -68,7 +66,6 @@ protected:
 
 private:
     EntityId id_ = InvalidEntityId;
-    Shared::MessageBus& messageBus_;
     StateMachine stateMachine_;
     std::vector<std::shared_ptr<BasicEvent>> queuedInitEvents_;
 

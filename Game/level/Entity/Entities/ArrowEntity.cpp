@@ -29,9 +29,8 @@ const std::unordered_map<FaceDirection, float> arrowRotation = {{FaceDirection::
                                                                 {FaceDirection::Up, 0.0f}};
 }  // namespace
 
-ArrowEntity::ArrowEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
-                         Shared::MessageBus& messageBus)
-    : BasicEntity(id, level, sheetManager, messageBus)
+ArrowEntity::ArrowEntity(EntityId id, Level& level, const EntityService& service)
+    : BasicEntity(id, level, service)
 {}
 
 ArrowEntity::~ArrowEntity() = default;

@@ -8,19 +8,19 @@
 
 #include "CameraManager.h"
 
+#include <SFML/System/Vector2.hpp>
+
 #include "Camera.h"
 
 namespace FA {
 
-CameraManager::CameraManager(const sf::Vector2u& renderTargetSize)
-    : renderTargetSize_(renderTargetSize)
-{}
+CameraManager::CameraManager() = default;
 
 CameraManager::~CameraManager() = default;
 
-void CameraManager::Track(const sf::Vector2f& trackingPoint, const sf::Vector2u& mapSize)
+void CameraManager::CreateCamera(const sf::Vector2u& renderTargetSize, const sf::Vector2u& mapSize)
 {
-    camera_ = std::make_unique<Camera>(trackingPoint, renderTargetSize_, mapSize);
+    camera_ = std::make_unique<Camera>(renderTargetSize, mapSize);
 }
 
 void CameraManager::Update(float deltaTime)
@@ -28,16 +28,9 @@ void CameraManager::Update(float deltaTime)
     if (camera_) camera_->UpdatePosition(deltaTime);
 }
 
-sf::View CameraManager::GetView() const
+Camera& CameraManager::GetCamera() const
 {
-    if (camera_) return camera_->GetView();
-
-    return {};
-}
-
-void CameraManager::Reset()
-{
-    if (camera_) camera_->Reset();
+    return *camera_.get();
 }
 
 }  // namespace FA

@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Camera.h"
 #include "Constant/Entity.h"
 #include "Entity/PropertyData.h"
 #include "Enum/FaceDirection.h"
@@ -59,8 +60,10 @@ EntityType ObjTypeStrToEnum(const std::string &str)
 
 FaceDirection FaceDirStrToEnum(const std::string &str)
 {
-    static std::unordered_map<std::string, FaceDirection> map{
-        {"Up", FaceDirection::Up}, {"Down", FaceDirection::Down}, {"Right", FaceDirection::Right}, {"Left", FaceDirection::Left}};
+    static std::unordered_map<std::string, FaceDirection> map{{"Up", FaceDirection::Up},
+                                                              {"Down", FaceDirection::Down},
+                                                              {"Right", FaceDirection::Right},
+                                                              {"Left", FaceDirection::Left}};
     auto it = map.find(str);
     if (it != map.end()) {
         return map.at(str);
@@ -74,8 +77,8 @@ FaceDirection FaceDirStrToEnum(const std::string &str)
 Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureManager, const sf::Vector2u &viewSize)
     : sheetManager_(textureManager)
     , tileMap_(sheetManager_)
-    , cameraManager_(viewSize)
-    , factory_(messageBus, sheetManager_, *this)
+    , viewSize_(viewSize)
+    , factory_(messageBus, sheetManager_, cameraManager_, *this)
     , entityManager_(factory_)
     , spawnManager_(entityManager_)
 {}
@@ -92,15 +95,16 @@ void Level::Create()
 {
     LOG_INFO_ENTER_FUNC();
     CreateBackground();
+    cameraManager_.CreateCamera(viewSize_, tileMap_.GetSize());
     CreateEntities();
-    cameraManager_.Reset();  // Reset camera after player created the camera
     CreateFringe();
     LOG_INFO_EXIT_FUNC();
 }
 
 sf::View Level::GetView()
 {
-    return cameraManager_.GetView();
+    auto &camera = cameraManager_.GetCamera();
+    return camera.GetView();
 }
 
 void Level::Update(float deltaTime)
@@ -133,11 +137,6 @@ void Level::DeleteEntity(Entity::EntityId id)
 sf::FloatRect Level::GetMapRect() const
 {
     return mapRect_;
-}
-
-void Level::AddCamera(const sf::Vector2f &trackingPoint)
-{
-    cameraManager_.Track(trackingPoint, tileMap_.GetSize());
 }
 
 void Level::LoadEntitySheets()

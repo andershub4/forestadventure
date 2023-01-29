@@ -17,9 +17,8 @@ namespace FA {
 
 namespace Entity {
 
-TileEntity::TileEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
-                       Shared::MessageBus& messageBus)
-    : BasicEntity(id, level, sheetManager, messageBus)
+TileEntity::TileEntity(EntityId id, Level& level, const EntityService& service)
+    : BasicEntity(id, level, service)
 {}
 
 TileEntity::~TileEntity() = default;

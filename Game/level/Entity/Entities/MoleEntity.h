@@ -17,7 +17,7 @@ namespace Entity {
 class MoleEntity : public BasicEntity
 {
 public:
-    MoleEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager, Shared::MessageBus& messageBus);
+    MoleEntity(EntityId id, Level& level, const EntityService& service);
     virtual ~MoleEntity();
 
     virtual std::string Name() const override { return "MoleEntity"; }

@@ -15,16 +15,16 @@ namespace FA {
 class Camera
 {
 public:
-    Camera(const sf::Vector2f& trackingPoint, const sf::Vector2u& renderTargetSize, const sf::Vector2u& mapSize);
+    Camera(const sf::Vector2u& renderTargetSize, const sf::Vector2u& mapSize);
     ~Camera();
 
+    void Track(const sf::Vector2f& trackingPoint);
     void UpdatePosition(float deltaTime);
     sf::View GetView() const;
-    void Reset();
 
 private:
     sf::View view_;
-    const sf::Vector2f& trackingPoint_;
+    const sf::Vector2f* trackingPoint_{nullptr};
     sf::Vector2f minViewPosition_{};
     sf::Vector2f maxViewPosition_{};
 

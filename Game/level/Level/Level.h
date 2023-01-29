@@ -42,9 +42,9 @@ public:
     void SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position);
     void DeleteEntity(Entity::EntityId id);
     sf::FloatRect GetMapRect() const;
-    void AddCamera(const sf::Vector2f& trackingPoint);
 
 private:
+    const sf::Vector2u viewSize_;
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;

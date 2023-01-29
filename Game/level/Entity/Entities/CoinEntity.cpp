@@ -16,9 +16,8 @@ namespace FA {
 
 namespace Entity {
 
-CoinEntity::CoinEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
-                       Shared::MessageBus& messageBus)
-    : BasicEntity(id, level, sheetManager, messageBus)
+CoinEntity::CoinEntity(EntityId id, Level& level, const EntityService& service)
+    : BasicEntity(id, level, service)
 {}
 
 CoinEntity::~CoinEntity() = default;

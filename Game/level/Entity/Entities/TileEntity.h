@@ -15,7 +15,7 @@ namespace Entity {
 class TileEntity : public BasicEntity
 {
 public:
-    TileEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager, Shared::MessageBus& messageBus);
+    TileEntity(EntityId id, Level& level, const EntityService& service);
     virtual ~TileEntity();
 
     virtual std::string Name() const override { return "TileEntity"; }

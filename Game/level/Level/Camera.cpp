@@ -8,12 +8,13 @@
 
 #include "Camera.h"
 
+#include <SFML/System/Vector2.hpp>
+
 #include <algorithm>
 
 namespace FA {
 
-Camera::Camera(const sf::Vector2f& trackingPoint, const sf::Vector2u& viewSize, const sf::Vector2u& mapSize)
-    : trackingPoint_(trackingPoint)
+Camera::Camera(const sf::Vector2u& viewSize, const sf::Vector2u& mapSize)
 {
     auto size_f = static_cast<sf::Vector2f>(viewSize);
     const float zoomFactor = 0.5;
@@ -26,9 +27,14 @@ Camera::Camera(const sf::Vector2f& trackingPoint, const sf::Vector2u& viewSize, 
 
 Camera::~Camera() = default;
 
+void Camera::Track(const sf::Vector2f& trackingPoint)
+{
+    trackingPoint_ = &trackingPoint;
+}
+
 void Camera::UpdatePosition(float deltaTime)
 {
-    auto viewPosition = CalcViewPosition();
+    auto viewPosition = trackingPoint_ ? CalcViewPosition() : sf::Vector2f(0.0f, 0.0f);
     view_.setCenter(viewPosition);
 }
 
@@ -37,17 +43,11 @@ sf::View Camera::GetView() const
     return view_;
 }
 
-void Camera::Reset()
-{
-    auto viewPosition = CalcViewPosition();
-    view_.setCenter(viewPosition);
-}
-
 sf::Vector2f Camera::CalcViewPosition() const
 {
     sf::Vector2f viewPosition;
-    viewPosition.x = Clamp(trackingPoint_.x, minViewPosition_.x, maxViewPosition_.x);
-    viewPosition.y = Clamp(trackingPoint_.y, minViewPosition_.y, maxViewPosition_.y);
+    viewPosition.x = Clamp(trackingPoint_->x, minViewPosition_.x, maxViewPosition_.x);
+    viewPosition.y = Clamp(trackingPoint_->y, minViewPosition_.y, maxViewPosition_.y);
 
     return viewPosition;
 }

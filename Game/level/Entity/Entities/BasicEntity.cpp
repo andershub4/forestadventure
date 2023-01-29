@@ -14,18 +14,15 @@
 #include "Entity/State.h"
 #include "Message/BroadcastMessage/EntityCreatedMessage.h"
 #include "Message/BroadcastMessage/EntityDestroyedMessage.h"
-#include "Message/MessageBus.h"
 
 namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
-                         Shared::MessageBus& messageBus)
+BasicEntity::BasicEntity(EntityId id, Level& level, const EntityService& service)
     : id_(id)
     , level_(level)
-    , messageBus_(messageBus)
-    , entityService_(sheetManager)
+    , entityService_(service)
 {}
 
 BasicEntity::~BasicEntity() = default;
@@ -49,13 +46,13 @@ void BasicEntity::Create(const PropertyData& data)
 
     Subscribe(Messages());
     Start();  // must do this after setting position
-    messageBus_.SendMessage(std::make_shared<Shared::EntityCreatedMessage>());
+    entityService_.SendMessage(std::make_shared<Shared::EntityCreatedMessage>());
 }
 
 void BasicEntity::Destroy()
 {
     Unsubscribe(Messages());
-    messageBus_.SendMessage(std::make_shared<Shared::EntityDestroyedMessage>());
+    entityService_.SendMessage(std::make_shared<Shared::EntityDestroyedMessage>());
 }
 
 void BasicEntity::Init()
@@ -102,18 +99,18 @@ std::shared_ptr<State> BasicEntity::RegisterState(StateType stateType)
 
 void BasicEntity::SendMessage(std::shared_ptr<Shared::Message> message)
 {
-    messageBus_.SendMessage(message);
+    entityService_.SendMessage(message);
 }
 
 void BasicEntity::Subscribe(const std::vector<Shared::MessageType>& messageTypes)
 {
-    messageBus_.AddSubscriber(Name(), messageTypes,
-                              [this](std::shared_ptr<Shared::Message> message) { OnMessage(message); });
+    entityService_.AddSubscriber(Name(), messageTypes,
+                                 [this](std::shared_ptr<Shared::Message> message) { OnMessage(message); });
 }
 
 void BasicEntity::Unsubscribe(const std::vector<Shared::MessageType>& messageTypes)
 {
-    messageBus_.RemoveSubscriber(Name(), messageTypes);
+    entityService_.RemoveSubscriber(Name(), messageTypes);
 }
 
 void BasicEntity::RegisterUninitializedState()

@@ -21,6 +21,7 @@
 #include "Entity/PropertyData.h"
 #include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/State.h"
+#include "Level/Camera.h"
 #include "Level/Level.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
@@ -65,9 +66,8 @@ const std::unordered_map<StateType, std::unordered_map<FaceDirection, Shared::An
 
 }  // namespace
 
-PlayerEntity::PlayerEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager,
-                           Shared::MessageBus& messageBus)
-    : BasicEntity(id, level, sheetManager, messageBus)
+PlayerEntity::PlayerEntity(EntityId id, Level& level, const EntityService& service)
+    : BasicEntity(id, level, service)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
@@ -239,7 +239,10 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
 
 void PlayerEntity::Start()
 {
-    level_.AddCamera(body_.position_);
+    auto& camera = entityService_.GetCamera();
+    camera.Track(body_.position_);
+
+    //    level_.AddCamera(body_.position_);
 }
 
 }  // namespace Entity

@@ -7,6 +7,9 @@
 #include "EntityService.h"
 
 #include "Constant/Entity.h"
+#include "Level/Camera.h"
+#include "Level/CameraManager.h"
+#include "Message/MessageBus.h"
 #include "Resource/Animation.h"
 #include "Resource/AnimationData.h"
 #include "Resource/Image.h"
@@ -17,8 +20,11 @@ namespace FA {
 
 namespace Entity {
 
-EntityService::EntityService(const Shared::SheetManager& sheetManager)
-    : sheetManager_(sheetManager)
+EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager,
+                             const CameraManager& cameraManager)
+    : messageBus_(messageBus)
+    , sheetManager_(sheetManager)
+    , cameraManager_(cameraManager)
 {}
 
 EntityService::~EntityService() = default;
@@ -34,6 +40,28 @@ Shared::Image EntityService::MakeImage(const Shared::ImageData& data) const
 {
     auto frame = sheetManager_.MakeFrame(data);
     return Shared::Image(frame);
+}
+
+void EntityService::SendMessage(std::shared_ptr<Shared::Message> msg)
+{
+    messageBus_.SendMessage(msg);
+}
+
+void EntityService::AddSubscriber(const std::string& subscriber, const std::vector<Shared::MessageType>& messageTypes,
+                                  std::function<void(std::shared_ptr<Shared::Message>)> onMessage)
+{
+    messageBus_.AddSubscriber(subscriber, messageTypes, onMessage);
+}
+
+void EntityService::RemoveSubscriber(const std::string& subscriber,
+                                     const std::vector<Shared::MessageType>& messageTypes)
+{
+    messageBus_.RemoveSubscriber(subscriber, messageTypes);
+}
+
+Camera& EntityService::GetCamera() const
+{
+    return cameraManager_.GetCamera();
 }
 
 }  // namespace Entity

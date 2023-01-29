@@ -17,7 +17,7 @@ namespace Entity {
 class ArrowEntity : public BasicEntity
 {
 public:
-    ArrowEntity(EntityId id, Level& level, const Shared::SheetManager& sheetManager, Shared::MessageBus& messageBus);
+    ArrowEntity(EntityId id, Level& level, const EntityService& service);
     virtual ~ArrowEntity();
 
     virtual std::string Name() const override { return "ArrowEntity"; }
