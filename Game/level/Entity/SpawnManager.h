@@ -7,7 +7,7 @@
 #pragma once
 
 #include "Enum/EntityType.h"
-#include "Enum/FaceDirection.h"
+#include "Enum/MoveDirection.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -29,7 +29,7 @@ public:
     void Update(float deltaTime);
 
     void Spawn(EntityType entityType, const sf::Vector2f &position, const Shared::MapData &mapData,
-               FaceDirection faceDir);
+               MoveDirection moveDir);
 
 private:
     EntityManager &entityManager_;

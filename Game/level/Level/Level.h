@@ -39,7 +39,7 @@ public:
 
     void Create();
     sf::View GetView();
-    void SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f& position);
+    void SpawnEntity(EntityType entityType, MoveDirection moveDirection, const sf::Vector2f& position);
     void DeleteEntity(Entity::EntityId id);
     sf::FloatRect GetMapRect() const;
 

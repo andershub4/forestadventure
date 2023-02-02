@@ -12,7 +12,7 @@
 
 #include "BasicAbility.h"
 
-#include "Enum/FaceDirection.h"
+#include "Enum/MoveDirection.h"
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -22,7 +22,7 @@ namespace Entity {
 class MoveAbility : public BasicAbility
 {
 public:
-    MoveAbility(float velocity, std::function<void(FaceDirection)> enterFn,
+    MoveAbility(float velocity, std::function<void(MoveDirection)> enterFn,
                 std::function<void(const sf::Vector2f&)> updateFn);
     virtual ~MoveAbility();
 
@@ -31,7 +31,7 @@ public:
 
 private:
     sf::Vector2f movementVector_{};
-    std::function<void(FaceDirection)> enterFn_;
+    std::function<void(MoveDirection)> enterFn_;
     std::function<void(const sf::Vector2f&)> updateFn_;
     float velocity_{};
 };

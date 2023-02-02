@@ -23,10 +23,10 @@ namespace Entity {
 
 namespace {
 
-const std::unordered_map<FaceDirection, float> arrowRotation = {{FaceDirection::Down, 180.0f},
-                                                                {FaceDirection::Left, 270.0f},
-                                                                {FaceDirection::Right, 90.0f},
-                                                                {FaceDirection::Up, 0.0f}};
+const std::unordered_map<MoveDirection, float> arrowRotation = {{MoveDirection::Down, 180.0f},
+                                                                {MoveDirection::Left, 270.0f},
+                                                                {MoveDirection::Right, 90.0f},
+                                                                {MoveDirection::Up, 0.0f}};
 }  // namespace
 
 ArrowEntity::ArrowEntity(EntityId id, Level& level, const EntityService& service)
@@ -35,9 +35,9 @@ ArrowEntity::ArrowEntity(EntityId id, Level& level, const EntityService& service
 
 ArrowEntity::~ArrowEntity() = default;
 
-void ArrowEntity::OnBeginMove(FaceDirection faceDirection)
+void ArrowEntity::OnBeginMove(MoveDirection moveDirection)
 {
-    body_.rotation_ = arrowRotation.at(faceDirection);
+    body_.rotation_ = arrowRotation.at(moveDirection);
 }
 
 void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
@@ -61,7 +61,7 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
 
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(
-        Constant::stdVelocity * 8.0f, [this](FaceDirection f) { OnBeginMove(f); },
+        Constant::stdVelocity * 8.0f, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
     auto i = entityService_.MakeImage({Shared::SheetId::Arrow, {0, 0}});
     std::unordered_map<std::string, Shared::Image> images{{"Move", i}};

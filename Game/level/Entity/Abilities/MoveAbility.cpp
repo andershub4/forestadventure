@@ -26,7 +26,7 @@ namespace FA {
 
 namespace Entity {
 
-MoveAbility::MoveAbility(float velocity, std::function<void(FaceDirection)> enterFn,
+MoveAbility::MoveAbility(float velocity, std::function<void(MoveDirection)> enterFn,
                          std::function<void(const sf::Vector2f&)> updateFn)
     : enterFn_(enterFn)
     , updateFn_(updateFn)
@@ -43,7 +43,7 @@ void MoveAbility::Enter(std::shared_ptr<BasicEvent> event)
         movementVector_ = it->second * velocity_;
     }
 
-    enterFn_(m->faceDirection_);
+    enterFn_(m->moveDirection_);
 }
 
 void MoveAbility::Update(float deltaTime)

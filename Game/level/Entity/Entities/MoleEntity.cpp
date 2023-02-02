@@ -44,9 +44,18 @@ MoleEntity::MoleEntity(EntityId id, Level& level, const EntityService& service)
 
 MoleEntity::~MoleEntity() = default;
 
-void MoleEntity::OnBeginMove(FaceDirection faceDirection)
+void MoleEntity::OnBeginMove(MoveDirection moveDirection)
 {
-    propertyManager_.Set("FaceDirection", faceDirection);
+    FaceDirection faceDir = FaceDirection::Undefined;
+    if (moveDirection == MoveDirection::Down)
+        faceDir = FaceDirection::Down;
+    else if (moveDirection == MoveDirection::Up)
+        faceDir = FaceDirection::Up;
+    else if (moveDirection == MoveDirection::Left)
+        faceDir = FaceDirection::Left;
+    else if (moveDirection == MoveDirection::Right)
+        faceDir = FaceDirection::Right;
+    propertyManager_.Set("FaceDirection", faceDir);
 }
 
 void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
@@ -92,7 +101,7 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(
-        Constant::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
+        Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
     auto moveAnimations = GetAnimations(animationDatas.at(StateType::Move));
     auto moveAnimation = std::make_shared<AnimationSprite>(std::bind(&MoleEntity::AnimationKey, this), moveAnimations);

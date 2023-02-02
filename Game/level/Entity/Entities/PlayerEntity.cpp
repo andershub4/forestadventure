@@ -83,16 +83,16 @@ void PlayerEntity::OnMessage(std::shared_ptr<Shared::Message> msg)
         auto m = std::dynamic_pointer_cast<Shared::IsKeyPressedMessage>(msg);
         auto key = m->GetKey();
         if (key == sf::Keyboard::Key::Right) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right, FaceDirection::Right));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Right));
         }
         else if (key == sf::Keyboard::Key::Left) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Left, FaceDirection::Left));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Left));
         }
         else if (key == sf::Keyboard::Key::Down) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Down, FaceDirection::Down));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Down));
         }
         else if (key == sf::Keyboard::Key::Up) {
-            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up, FaceDirection::Up));
+            HandleEvent(std::make_shared<StartMoveEvent>(MoveDirection::Up));
         }
         else if (key == sf::Keyboard::Key::RControl) {
             HandleEvent(std::make_shared<AttackEvent>());
@@ -118,9 +118,18 @@ void PlayerEntity::OnMessage(std::shared_ptr<Shared::Message> msg)
     }
 }
 
-void PlayerEntity::OnBeginMove(FaceDirection faceDirection)
+void PlayerEntity::OnBeginMove(MoveDirection moveDirection)
 {
-    propertyManager_.Set("FaceDirection", faceDirection);
+    FaceDirection faceDir = FaceDirection::Undefined;
+    if (moveDirection == MoveDirection::Down)
+        faceDir = FaceDirection::Down;
+    else if (moveDirection == MoveDirection::Up)
+        faceDir = FaceDirection::Up;
+    else if (moveDirection == MoveDirection::Left)
+        faceDir = FaceDirection::Left;
+    else if (moveDirection == MoveDirection::Right)
+        faceDir = FaceDirection::Right;
+    propertyManager_.Set("FaceDirection", faceDir);
 }
 
 void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
@@ -135,7 +144,17 @@ void PlayerEntity::OnExitShoot()
         propertyManager_.Set<bool>("Shoot", false);
         auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
         auto position = body_.position_ + arrowOffset.at(dir);
-        level_.SpawnEntity(EntityType::Arrow, dir, position);
+        MoveDirection moveDir = MoveDirection::None;
+        if (dir == FaceDirection::Down)
+            moveDir = MoveDirection::Down;
+        else if (dir == FaceDirection::Up)
+            moveDir = MoveDirection::Up;
+        else if (dir == FaceDirection::Left)
+            moveDir = MoveDirection::Left;
+        else if (dir == FaceDirection::Right)
+            moveDir = MoveDirection::Right;
+        //entityService_.SpawnArrow(moveDir, position);
+        level_.SpawnEntity(EntityType::Arrow, moveDir, position);
     }
 }
 
@@ -204,7 +223,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
 
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(
-        Constant::stdVelocity, [this](FaceDirection f) { OnBeginMove(f); },
+        Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
     auto moveAnimations = GetAnimations(animationDatas.at(StateType::Move));
     auto moveAnimation =

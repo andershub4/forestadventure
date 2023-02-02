@@ -14,6 +14,7 @@
 #include "Constant/Entity.h"
 #include "Entity/PropertyData.h"
 #include "Enum/FaceDirection.h"
+#include "Enum/MoveDirection.h"
 #include "Folder.h"
 #include "Logging.h"
 #include "MapData.h"
@@ -125,11 +126,11 @@ void Level::Draw(sf::RenderTarget &renderTarget)
     }
 }
 
-void Level::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f &position)
+void Level::SpawnEntity(EntityType entityType, MoveDirection moveDirection, const sf::Vector2f &position)
 {
     auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
     Shared::MapData md{mapRect};
-    spawnManager_.Spawn(entityType, position, md, faceDirection);
+    spawnManager_.Spawn(entityType, position, md, moveDirection);
 }
 
 void Level::DeleteEntity(Entity::EntityId id)

@@ -9,6 +9,7 @@
 #include "BasicEntity.h"
 
 #include "Enum/FaceDirection.h"
+#include "Enum/MoveDirection.h"
 
 namespace FA {
 
@@ -29,7 +30,7 @@ private:
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data) override;
 
-    void OnBeginMove(FaceDirection faceDirection);
+    void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
     std::string AnimationKey() const;
     std::unordered_map<std::string, Shared::Animation> GetAnimations(

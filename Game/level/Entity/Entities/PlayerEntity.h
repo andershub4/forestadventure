@@ -9,6 +9,7 @@
 #include "BasicEntity.h"
 
 #include "Enum/FaceDirection.h"
+#include "Enum/MoveDirection.h"
 
 namespace FA {
 
@@ -35,7 +36,7 @@ private:
     virtual void OnMessage(std::shared_ptr<Shared::Message> msg) override;
     virtual void OnDying() override;
 
-    void OnBeginMove(FaceDirection faceDirection);
+    void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
     void OnExitShoot();
     std::string AnimationKey() const;

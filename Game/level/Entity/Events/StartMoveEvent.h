@@ -8,7 +8,6 @@
 
 #include "BasicEvent.h"
 
-#include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 
 namespace FA {
@@ -17,15 +16,13 @@ namespace Entity {
 
 struct StartMoveEvent : public BasicEvent
 {
-    StartMoveEvent(MoveDirection moveDirection, FaceDirection faceDirection)
+    StartMoveEvent(MoveDirection moveDirection)
         : moveDirection_(moveDirection)
-        , faceDirection_(faceDirection)
     {}
 
     virtual EventType GetEventType() const { return EventType::StartMove; }
 
     MoveDirection moveDirection_ = MoveDirection::None;
-    FaceDirection faceDirection_ = FaceDirection::Undefined;
 };
 
 }  // namespace Entity
