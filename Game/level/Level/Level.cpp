@@ -16,6 +16,7 @@
 #include "Enum/FaceDirection.h"
 #include "Folder.h"
 #include "Logging.h"
+#include "MapData.h"
 #include "Resource/Image.h"
 #include "Resource/SheetData.h"
 #include "Resource/SheetId.h"
@@ -126,7 +127,9 @@ void Level::Draw(sf::RenderTarget &renderTarget)
 
 void Level::SpawnEntity(EntityType entityType, FaceDirection faceDirection, const sf::Vector2f &position)
 {
-    spawnManager_.Spawn(entityType, position, faceDirection);
+    auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
+    Shared::MapData md{mapRect};
+    spawnManager_.Spawn(entityType, position, md, faceDirection);
 }
 
 void Level::DeleteEntity(Entity::EntityId id)
@@ -203,7 +206,9 @@ void Level::CreateObjectEntity(const TileMap::ObjectData &data)
     Entity::PropertyData d;
     d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     d.properties_ = data.properties_;
-    entityManager_.CreateEntity(ObjTypeStrToEnum(data.typeStr_), d);
+    auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
+    Shared::MapData md{mapRect};
+    entityManager_.CreateEntity(ObjTypeStrToEnum(data.typeStr_), d, md);
 }
 
 void Level::CreateTileEntity(const TileMap::TileData &data)
@@ -211,7 +216,9 @@ void Level::CreateTileEntity(const TileMap::TileData &data)
     Entity::PropertyData d;
     d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     d.graphic_ = data.graphic_;
-    entityManager_.CreateEntity(EntityType::Tile, d);
+    auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
+    Shared::MapData md{mapRect};
+    entityManager_.CreateEntity(EntityType::Tile, d, md);
 }
 
 void Level::CreateFringeTile(const TileMap::TileData &data)

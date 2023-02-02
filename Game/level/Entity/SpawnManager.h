@@ -12,6 +12,10 @@
 
 namespace FA {
 
+namespace Shared {
+struct MapData;
+}
+
 namespace Entity {
 
 class EntityManager;
@@ -24,7 +28,8 @@ public:
 
     void Update(float deltaTime);
 
-    void Spawn(EntityType entityType, const sf::Vector2f &position, FaceDirection faceDir);
+    void Spawn(EntityType entityType, const sf::Vector2f &position, const Shared::MapData &mapData,
+               FaceDirection faceDir);
 
 private:
     EntityManager &entityManager_;

@@ -19,6 +19,7 @@ namespace Shared {
 
 class MessageBus;
 class SheetManager;
+struct MapData;
 
 }  // namespace Shared
 
@@ -35,7 +36,7 @@ public:
             const CameraManager& cameraManager, Level& level);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type) const;
+    std::unique_ptr<BasicEntity> Create(EntityType type, const Shared::MapData& mapData) const;
 
 private:
     mutable Entity::EntityId id_{0};

@@ -27,9 +27,9 @@ Factory::Factory(Shared::MessageBus& messageBus, const Shared::SheetManager& she
 
 Factory::~Factory() = default;
 
-std::unique_ptr<BasicEntity> Factory::Create(EntityType type) const
+std::unique_ptr<BasicEntity> Factory::Create(EntityType type, const Shared::MapData& mapData) const
 {
-    EntityService service(messageBus_, sheetManager_, cameraManager_);
+    EntityService service(messageBus_, sheetManager_, cameraManager_, mapData);
 
     switch (type) {
         case EntityType::Mole:

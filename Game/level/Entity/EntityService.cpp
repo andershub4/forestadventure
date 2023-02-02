@@ -21,10 +21,11 @@ namespace FA {
 namespace Entity {
 
 EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager,
-                             const CameraManager& cameraManager)
+                             const CameraManager& cameraManager, const Shared::MapData& mapData)
     : messageBus_(messageBus)
     , sheetManager_(sheetManager)
     , cameraManager_(cameraManager)
+    , mapData_(mapData)
 {}
 
 EntityService::~EntityService() = default;
@@ -62,6 +63,11 @@ void EntityService::RemoveSubscriber(const std::string& subscriber,
 Camera& EntityService::GetCamera() const
 {
     return cameraManager_.GetCamera();
+}
+
+bool EntityService::IsInsideMap(const sf::Vector2f& pos) const
+{
+    return mapData_.rect_.contains(pos);
 }
 
 }  // namespace Entity

@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 
+#include "MapData.h"
+
 namespace FA {
 
 class CameraManager;
@@ -35,7 +37,7 @@ class EntityService
 {
 public:
     EntityService(Shared::MessageBus &messageBus, const Shared::SheetManager &sheetManager,
-                  const CameraManager &cameraManager);
+                  const CameraManager &cameraManager, const Shared::MapData &mapData);
     ~EntityService();
 
     Shared::Animation MakeAnimation(const Shared::AnimationData &data) const;
@@ -47,11 +49,13 @@ public:
 
     void RemoveSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes);
     Camera &GetCamera() const;
+    bool IsInsideMap(const sf::Vector2f &pos) const;
 
 private:
     Shared::MessageBus &messageBus_;
     const Shared::SheetManager &sheetManager_;
     const CameraManager &cameraManager_;
+    Shared::MapData mapData_;
 };
 
 }  // namespace Entity

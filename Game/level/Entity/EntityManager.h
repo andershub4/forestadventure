@@ -17,6 +17,10 @@
 
 namespace FA {
 
+namespace Shared {
+struct MapData;
+}
+
 namespace Entity {
 
 class BasicEntity;
@@ -31,7 +35,7 @@ public:
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
-    BasicEntity &CreateEntity(EntityType type, const PropertyData &data);
+    BasicEntity &CreateEntity(EntityType type, const PropertyData &data, const Shared::MapData &mapData);
     void DeleteEntity(EntityId id);
     void HandleCreatedEntities();
     void HandleDeletedEntities();

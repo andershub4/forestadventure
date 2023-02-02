@@ -43,9 +43,7 @@ void ArrowEntity::OnBeginMove(FaceDirection faceDirection)
 void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
     body_.position_ += delta;
-
-    auto mapRect = level_.GetMapRect();
-    bool outsideMap = !mapRect.contains(body_.position_);
+    bool outsideMap = !entityService_.IsInsideMap(body_.position_);
 
     if (outsideMap) {
         level_.DeleteEntity(GetId());

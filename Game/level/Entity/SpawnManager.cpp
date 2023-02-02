@@ -25,12 +25,13 @@ SpawnManager::~SpawnManager() = default;
 void SpawnManager::Update(float deltaTime)
 {}
 
-void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, FaceDirection faceDir)
+void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, const Shared::MapData &mapData,
+                         FaceDirection faceDir)
 {
     Entity::PropertyData data;
     data.position_ = position;
 
-    auto &entity = entityManager_.CreateEntity(entityType, data);
+    auto &entity = entityManager_.CreateEntity(entityType, data, mapData);
     auto moveDirection = MoveDirection::None;
 
     if (faceDir == FaceDirection::Down)
