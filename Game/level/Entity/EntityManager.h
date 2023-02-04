@@ -38,6 +38,7 @@ public:
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
     void CreateEntity(const std::string &typeStr, const PropertyData &data, const Shared::MapData &mapData);
+    void CreateTileEntity(const PropertyData &data, const Shared::MapData &mapData);
     void DeleteEntity(EntityId id);
     void HandleCreatedEntities();
     void HandleDeletedEntities();

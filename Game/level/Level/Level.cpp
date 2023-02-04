@@ -171,7 +171,7 @@ void Level::CreateTileEntity(const TileMap::TileData &data)
     d.graphic_ = data.graphic_;
     auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
     Shared::MapData md{mapRect};
-    entityManager_.CreateEntity("Tile", d, md);
+    entityManager_.CreateTileEntity(d, md);
 }
 
 void Level::CreateFringeTile(const TileMap::TileData &data)

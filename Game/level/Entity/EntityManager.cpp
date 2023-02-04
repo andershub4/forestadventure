@@ -49,6 +49,11 @@ void EntityManager::CreateEntity(const std::string& typeStr, const PropertyData&
     createdEntities_.push_back(std::move(entity));
 }
 
+void EntityManager::CreateTileEntity(const PropertyData& data, const Shared::MapData& mapData)
+{
+    CreateEntity("Tile", data, mapData);
+}
+
 void EntityManager::DeleteEntity(EntityId id)
 {
     deletedEntities_.push_back(id);
