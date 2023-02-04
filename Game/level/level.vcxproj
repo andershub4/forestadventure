@@ -145,7 +145,6 @@
     <ClCompile Include="Entity\Sprites\AnimationSprite.cpp" />
     <ClCompile Include="Entity\Abilities\BasicAbility.cpp" />
     <ClCompile Include="Entity\Sprites\BasicSprite.cpp" />
-    <ClCompile Include="Entity\Abilities\DieAbility.cpp" />
     <ClCompile Include="Entity\Sprites\ImageSprite.cpp" />
     <ClCompile Include="Entity\Abilities\MoveAbility.cpp" />
     <ClCompile Include="Entity\Abilities\ShootAbility.cpp" />
@@ -172,7 +171,6 @@
     <ClInclude Include="Entity\Sprites\AnimationSprite.h" />
     <ClInclude Include="Entity\Abilities\BasicAbility.h" />
     <ClInclude Include="Entity\Sprites\BasicSprite.h" />
-    <ClInclude Include="Entity\Abilities\DieAbility.h" />
     <ClInclude Include="Entity\Sprites\ImageSprite.h" />
     <ClInclude Include="Entity\Abilities\MoveAbility.h" />
     <ClInclude Include="Entity\Abilities\ShootAbility.h" />

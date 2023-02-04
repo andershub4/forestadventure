@@ -21,9 +21,6 @@
     <ClCompile Include="Entity\Abilities\BasicAbility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Abilities\DieAbility.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\Abilities\MoveAbility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -96,9 +93,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Abilities\BasicAbility.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\Abilities\DieAbility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Abilities\MoveAbility.h">

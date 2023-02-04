@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Abilities/DieAbility.h"
 #include "Entity/Events/InitEvent.h"
 #include "Entity/PropertyData.h"
 #include "Entity/State.h"
@@ -111,8 +110,7 @@ void BasicEntity::RegisterUninitializedState()
 std::shared_ptr<State> BasicEntity::RegisterDeadState()
 {
     auto deadState = stateMachine_.RegisterState(StateType::Dead, body_);
-    auto die = std::make_shared<DieAbility>([this]() { OnDying(); });
-    deadState->RegisterAbility(die);
+    deadState->RegisterBeginCB([this]() { OnDying(); });
     deadState->IgnoreAllEvents();
     return deadState;
 }
