@@ -9,7 +9,6 @@
 #include "EntityManager.h"
 
 #include "Entity/Entities/BasicEntity.h"
-#include "Factory.h"
 #include "Logging.h"
 
 namespace FA {
