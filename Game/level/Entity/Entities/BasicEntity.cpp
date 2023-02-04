@@ -28,16 +28,14 @@ BasicEntity::~BasicEntity() = default;
 void BasicEntity::Create(const PropertyData& data)
 {
     RegisterProperties();
+    body_.position_ = data.position_;
+    ReadProperties(data.properties_);
 
     RegisterUninitializedState();
     auto idleState = RegisterState(StateType::Idle);
     idleState->RegisterBeginCB([this]() { OnBeginIdle(); });
     auto deadState = RegisterDeadState();
     RegisterStates(idleState, deadState, data);
-
-    // ReadObjectData
-    body_.position_ = data.position_;
-    ReadProperties(data.properties_);
 
     Subscribe(Messages());
     Start();  // must do this after setting position
