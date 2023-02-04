@@ -6,8 +6,10 @@
 
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 #include "Id.h"
 
@@ -27,6 +29,7 @@ namespace Entity {
 
 class EntityManager;
 class BasicEntity;
+class EntityService;
 
 class Factory
 {
@@ -38,11 +41,17 @@ public:
     std::unique_ptr<BasicEntity> Create(const std::string& typeStr, const Shared::MapData& mapData) const;
 
 private:
-    mutable Entity::EntityId id_{0};
+    using CreateFn = std::function<std::unique_ptr<BasicEntity>(EntityId, const EntityService&)>;
+
+    mutable EntityId id_{0};
     Shared::MessageBus& messageBus_;
     const Shared::SheetManager& sheetManager_;
     const CameraManager& cameraManager_;
     EntityManager& entityManager_;
+    std::unordered_map<std::string, CreateFn> map_;
+
+private:
+    void RegisterEntity(const std::string& typeStr, CreateFn createFn);
 };
 
 }  // namespace Entity

@@ -23,32 +23,32 @@ Factory::Factory(Shared::MessageBus& messageBus, const Shared::SheetManager& she
     , sheetManager_(sheetManager)
     , cameraManager_(cameraManager)
     , entityManager_(entityManager)
-{}
+{
+    RegisterEntity("Mole", [](EntityId id, const EntityService& s) { return std::make_unique<MoleEntity>(id, s); });
+    RegisterEntity("Player", [](EntityId id, const EntityService& s) { return std::make_unique<PlayerEntity>(id, s); });
+    RegisterEntity("Arrow", [](EntityId id, const EntityService& s) { return std::make_unique<ArrowEntity>(id, s); });
+    RegisterEntity("Tile", [](EntityId id, const EntityService& s) { return std::make_unique<TileEntity>(id, s); });
+    RegisterEntity("Coin", [](EntityId id, const EntityService& s) { return std::make_unique<CoinEntity>(id, s); });
+}
 
 Factory::~Factory() = default;
 
 std::unique_ptr<BasicEntity> Factory::Create(const std::string& typeStr, const Shared::MapData& mapData) const
 {
-    EntityService service(messageBus_, sheetManager_, cameraManager_, entityManager_, mapData);
+    auto it = map_.find(typeStr);
 
-    if (typeStr == "Mole") {
-        return std::make_unique<MoleEntity>(id_++, service);
-    }
-    else if (typeStr == "Player") {
-        return std::make_unique<PlayerEntity>(id_++, service);
-    }
-    else if (typeStr == "Arrow") {
-        return std::make_unique<ArrowEntity>(id_++, service);
-    }
-    else if (typeStr == "Tile") {
-        return std::make_unique<TileEntity>(id_++, service);
-    }
-    else if (typeStr == "Coin") {
-        return std::make_unique<CoinEntity>(id_++, service);
+    if (it != map_.end()) {
+        EntityService service(messageBus_, sheetManager_, cameraManager_, entityManager_, mapData);
+        return it->second(id_++, service);
     }
 
     LOG_ERROR("Could not create entity of type: %s", typeStr.c_str());
     return nullptr;
+}
+
+void Factory::RegisterEntity(const std::string& typeStr, Factory::CreateFn createFn)
+{
+    map_[typeStr] = createFn;
 }
 
 }  // namespace Entity
