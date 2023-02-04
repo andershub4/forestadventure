@@ -160,7 +160,6 @@
     <ClCompile Include="Entity\EntityService.cpp" />
     <ClCompile Include="Entity\Factory.cpp" />
     <ClCompile Include="Entity\Shape.cpp" />
-    <ClCompile Include="Entity\SpawnManager.cpp" />
     <ClCompile Include="Entity\State.cpp" />
     <ClCompile Include="Entity\StateMachine.cpp" />
     <ClCompile Include="Level\Camera.cpp" />
@@ -204,7 +203,6 @@
     <ClInclude Include="Entity\PropertyData.h" />
     <ClInclude Include="Entity\PropertyStore.h" />
     <ClInclude Include="Entity\Shape.h" />
-    <ClInclude Include="Entity\SpawnManager.h" />
     <ClInclude Include="Entity\State.h" />
     <ClInclude Include="Entity\StateMachine.h" />
     <ClInclude Include="Entity\StateType.h" />

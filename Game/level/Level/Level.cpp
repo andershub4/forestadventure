@@ -13,8 +13,6 @@
 #include "Camera.h"
 #include "Constant/Entity.h"
 #include "Entity/PropertyData.h"
-#include "Enum/FaceDirection.h"
-#include "Enum/MoveDirection.h"
 #include "Folder.h"
 #include "Logging.h"
 #include "MapData.h"
@@ -66,9 +64,7 @@ Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureMana
     : sheetManager_(textureManager)
     , tileMap_(sheetManager_)
     , viewSize_(viewSize)
-    , factory_(messageBus, sheetManager_, cameraManager_, *this)
-    , entityManager_(factory_)
-    , spawnManager_(entityManager_)
+    , entityManager_(messageBus, sheetManager_, cameraManager_)
 {}
 
 Level::~Level() = default;
@@ -112,23 +108,6 @@ void Level::Draw(sf::RenderTarget &renderTarget)
     }
 }
 
-void Level::SpawnEntity(EntityType entityType, MoveDirection moveDirection, const sf::Vector2f &position)
-{
-    auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
-    Shared::MapData md{mapRect};
-    spawnManager_.Spawn(entityType, position, md, moveDirection);
-}
-
-void Level::DeleteEntity(Entity::EntityId id)
-{
-    entityManager_.DeleteEntity(id);
-}
-
-sf::FloatRect Level::GetMapRect() const
-{
-    return mapRect_;
-}
-
 void Level::LoadEntitySheets()
 {
     auto sheetPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
@@ -142,7 +121,6 @@ void Level::LoadTileMap(const std::string &levelName)
     auto path = GetAssetsPath() + "/map/" + levelName;
     tileMap_.Load(path);
     tileMap_.Setup();
-    mapRect_ = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
 }
 
 void Level::CreateBackground()

@@ -63,9 +63,6 @@
     <ClCompile Include="Entity\Shape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\SpawnManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\State.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -183,9 +180,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Shape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\SpawnManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\State.h">

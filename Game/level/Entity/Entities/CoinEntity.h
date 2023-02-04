@@ -15,7 +15,7 @@ namespace Entity {
 class CoinEntity : public BasicEntity
 {
 public:
-    CoinEntity(EntityId id, Level& level, const EntityService& service);
+    CoinEntity(EntityId id, const EntityService& service);
     virtual ~CoinEntity();
 
     virtual std::string Name() const override { return "CoinEntity"; }

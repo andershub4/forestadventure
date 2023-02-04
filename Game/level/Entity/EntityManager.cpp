@@ -16,8 +16,9 @@ namespace FA {
 
 namespace Entity {
 
-EntityManager::EntityManager(const Factory& factory)
-    : factory_(factory)
+EntityManager::EntityManager(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager,
+                             const CameraManager& cameraManager)
+    : factory_(messageBus, sheetManager, cameraManager, *this)
 {}
 
 EntityManager::~EntityManager()

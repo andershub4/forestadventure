@@ -7,6 +7,7 @@
 #include "EntityService.h"
 
 #include "Constant/Entity.h"
+#include "EntityManager.h"
 #include "Level/Camera.h"
 #include "Level/CameraManager.h"
 #include "Message/MessageBus.h"
@@ -21,10 +22,12 @@ namespace FA {
 namespace Entity {
 
 EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager,
-                             const CameraManager& cameraManager, const Shared::MapData& mapData)
+                             const CameraManager& cameraManager, EntityManager& entityManager,
+                             const Shared::MapData& mapData)
     : messageBus_(messageBus)
     , sheetManager_(sheetManager)
     , cameraManager_(cameraManager)
+    , entityManager_(entityManager)
     , mapData_(mapData)
 {}
 
@@ -68,6 +71,16 @@ Camera& EntityService::GetCamera() const
 bool EntityService::IsInsideMap(const sf::Vector2f& pos) const
 {
     return mapData_.rect_.contains(pos);
+}
+
+void EntityService::CreateEntity(EntityType type, const PropertyData& data)
+{
+    entityManager_.CreateEntity(type, data, mapData_);
+}
+
+void EntityService::DeleteEntity(EntityId id)
+{
+    entityManager_.DeleteEntity(id);
 }
 
 }  // namespace Entity

@@ -23,17 +23,16 @@ struct MapData;
 
 }  // namespace Shared
 
-class Level;
-
 namespace Entity {
 
+class EntityManager;
 class BasicEntity;
 
 class Factory
 {
 public:
     Factory(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager,
-            const CameraManager& cameraManager, Level& level);
+            const CameraManager& cameraManager, EntityManager& entityManager);
     ~Factory();
 
     std::unique_ptr<BasicEntity> Create(EntityType type, const Shared::MapData& mapData) const;
@@ -43,7 +42,7 @@ private:
     Shared::MessageBus& messageBus_;
     const Shared::SheetManager& sheetManager_;
     const CameraManager& cameraManager_;
-    Level& level_;
+    EntityManager& entityManager_;
 };
 
 }  // namespace Entity

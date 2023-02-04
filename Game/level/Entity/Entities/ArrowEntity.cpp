@@ -17,7 +17,6 @@
 #include "Entity/PropertyData.h"
 #include "Entity/Sprites/ImageSprite.h"
 #include "Entity/State.h"
-#include "Level/Level.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
 
@@ -46,8 +45,8 @@ PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, MoveD
     return data;
 }
 
-ArrowEntity::ArrowEntity(EntityId id, Level& level, const EntityService& service)
-    : BasicEntity(id, level, service)
+ArrowEntity::ArrowEntity(EntityId id, const EntityService& service)
+    : BasicEntity(id, service)
 {}
 
 ArrowEntity::~ArrowEntity() = default;
@@ -85,7 +84,7 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
     bool outsideMap = !entityService_.IsInsideMap(body_.position_);
 
     if (outsideMap) {
-        level_.DeleteEntity(GetId());
+        entityService_.DeleteEntity(GetId());
     }
 }
 

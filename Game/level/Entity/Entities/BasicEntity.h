@@ -26,8 +26,6 @@ enum class MessageType;
 
 }  // namespace Shared
 
-class Level;
-
 namespace Entity {
 
 struct PropertyData;
@@ -35,7 +33,7 @@ struct PropertyData;
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, Level& level, const EntityService& service);
+    BasicEntity(EntityId id, const EntityService& service);
     virtual ~BasicEntity();
 
     virtual std::string Name() const = 0;
@@ -52,7 +50,7 @@ public:
 protected:
     PropertyStore propertyStore_;
     EntityService entityService_;
-    Level& level_;
+    // Level& level_;
     Body body_;
 
 protected:

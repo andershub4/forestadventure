@@ -15,7 +15,7 @@ namespace Entity {
 class TileEntity : public BasicEntity
 {
 public:
-    TileEntity(EntityId id, Level& level, const EntityService& service);
+    TileEntity(EntityId id, const EntityService& service);
     virtual ~TileEntity();
 
     virtual std::string Name() const override { return "TileEntity"; }

@@ -11,9 +11,6 @@
 
 #include "CameraManager.h"
 #include "Entity/EntityManager.h"
-#include "Entity/Factory.h"
-#include "Entity/Id.h"
-#include "Entity/SpawnManager.h"
 #include "Fwd/SfmlFwd.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
@@ -39,9 +36,6 @@ public:
 
     void Create();
     sf::View GetView();
-    void SpawnEntity(EntityType entityType, MoveDirection moveDirection, const sf::Vector2f& position);
-    void DeleteEntity(Entity::EntityId id);
-    sf::FloatRect GetMapRect() const;
 
 private:
     const sf::Vector2u viewSize_;
@@ -51,10 +45,7 @@ private:
     Shared::SheetManager sheetManager_;
     TileMap tileMap_;
     CameraManager cameraManager_;
-    Entity::Factory factory_;
     Entity::EntityManager entityManager_;
-    sf::FloatRect mapRect_{};
-    Entity::SpawnManager spawnManager_;
 
 private:
     void LoadEntitySheets();

@@ -19,9 +19,8 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, Level& level, const EntityService& service)
+BasicEntity::BasicEntity(EntityId id, const EntityService& service)
     : id_(id)
-    , level_(level)
     , entityService_(service)
 {}
 

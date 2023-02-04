@@ -14,8 +14,8 @@ namespace FA {
 
 namespace Entity {
 
-StaticEntity::StaticEntity(EntityId id, Level& level, const EntityService& service)
-    : BasicEntity(id, level, service)
+StaticEntity::StaticEntity(EntityId id, const EntityService& service)
+    : BasicEntity(id, service)
 {}
 
 StaticEntity::~StaticEntity() = default;

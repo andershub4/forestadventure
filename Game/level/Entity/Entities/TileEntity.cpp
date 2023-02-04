@@ -17,8 +17,8 @@ namespace FA {
 
 namespace Entity {
 
-TileEntity::TileEntity(EntityId id, Level& level, const EntityService& service)
-    : BasicEntity(id, level, service)
+TileEntity::TileEntity(EntityId id, const EntityService& service)
+    : BasicEntity(id, service)
 {}
 
 TileEntity::~TileEntity() = default;

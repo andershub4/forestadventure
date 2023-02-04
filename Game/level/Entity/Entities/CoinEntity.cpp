@@ -16,8 +16,8 @@ namespace FA {
 
 namespace Entity {
 
-CoinEntity::CoinEntity(EntityId id, Level& level, const EntityService& service)
-    : BasicEntity(id, level, service)
+CoinEntity::CoinEntity(EntityId id, const EntityService& service)
+    : BasicEntity(id, service)
 {}
 
 CoinEntity::~CoinEntity() = default;

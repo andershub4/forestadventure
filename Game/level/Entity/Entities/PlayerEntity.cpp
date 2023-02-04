@@ -13,6 +13,7 @@
 #include "Constant/Entity.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/Abilities/ShootAbility.h"
+#include "Entity/Entities/ArrowEntity.h"
 #include "Entity/Events/AttackEvent.h"
 #include "Entity/Events/AttackWeaponEvent.h"
 #include "Entity/Events/DeadEvent.h"
@@ -23,7 +24,6 @@
 #include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/State.h"
 #include "Level/Camera.h"
-#include "Level/Level.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -67,8 +67,8 @@ const std::unordered_map<StateType, std::unordered_map<FaceDirection, Shared::An
 
 }  // namespace
 
-PlayerEntity::PlayerEntity(EntityId id, Level& level, const EntityService& service)
-    : BasicEntity(id, level, service)
+PlayerEntity::PlayerEntity(EntityId id, const EntityService& service)
+    : BasicEntity(id, service)
 {}
 
 PlayerEntity::~PlayerEntity() = default;
@@ -154,8 +154,8 @@ void PlayerEntity::OnExitShoot()
             moveDir = MoveDirection::Left;
         else if (dir == FaceDirection::Right)
             moveDir = MoveDirection::Right;
-        // entityService_.SpawnArrow(moveDir, position);
-        level_.SpawnEntity(EntityType::Arrow, moveDir, position);
+        auto data = ArrowEntity::CreatePropertyData(position, moveDir);
+        entityService_.CreateEntity(EntityType::Arrow, data);
     }
 }
 

@@ -10,6 +10,7 @@
 #include <memory>
 #include <unordered_map>
 
+#include "Entity/Factory.h"
 #include "Entity/Id.h"
 #include "Entity/LayerType.h"
 #include "Enum/EntityType.h"
@@ -30,7 +31,8 @@ struct PropertyData;
 class EntityManager
 {
 public:
-    EntityManager(const Factory &factory);
+    EntityManager(Shared::MessageBus &messageBus, const Shared::SheetManager &sheetManager,
+                  const CameraManager &cameraManager);
     ~EntityManager();
 
     void Update(float deltaTime);
@@ -49,7 +51,7 @@ private:
     };
 
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
-    const Factory &factory_;
+    Factory factory_;
     std::vector<std::unique_ptr<BasicEntity>> createdEntities_;
     std::vector<EntityId> deletedEntities_;
     std::map<std::string, DrawableInfo> drawables_;

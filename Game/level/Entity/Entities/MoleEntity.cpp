@@ -39,8 +39,8 @@ const std::unordered_map<StateType, std::unordered_map<FaceDirection, Shared::An
 
 }  // namespace
 
-MoleEntity::MoleEntity(EntityId id, Level& level, const EntityService& service)
-    : BasicEntity(id, level, service)
+MoleEntity::MoleEntity(EntityId id, const EntityService& service)
+    : BasicEntity(id, service)
 {}
 
 MoleEntity::~MoleEntity() = default;
