@@ -11,6 +11,7 @@
 #include "Enum/MoveDirection.h"
 #include "Events/StartMoveEvent.h"
 #include "PropertyData.h"
+#include "Entities/ArrowEntity.h"
 
 namespace FA {
 
@@ -28,8 +29,7 @@ void SpawnManager::Update(float deltaTime)
 void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, const Shared::MapData &mapData,
                          MoveDirection moveDir)
 {
-    Entity::PropertyData data;
-    data.position_ = position;
+    auto data = ArrowEntity::CreatePropertyData(position, moveDir);
 
     auto &entity = entityManager_.CreateEntity(entityType, data, mapData);
     entity.QueueInitEvents(std::make_shared<StartMoveEvent>(moveDir));

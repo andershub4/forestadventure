@@ -17,6 +17,8 @@ namespace Entity {
 class ArrowEntity : public BasicEntity
 {
 public:
+    static PropertyData CreatePropertyData(const sf::Vector2f &position, MoveDirection dir);
+
     ArrowEntity(EntityId id, Level& level, const EntityService& service);
     virtual ~ArrowEntity();
 

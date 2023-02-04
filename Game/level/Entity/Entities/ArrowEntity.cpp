@@ -6,6 +6,8 @@
 
 #include "ArrowEntity.h"
 
+#include <sstream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Constant/Entity.h"
@@ -28,6 +30,19 @@ const std::unordered_map<MoveDirection, float> arrowRotation = {{MoveDirection::
                                                                 {MoveDirection::Right, 90.0f},
                                                                 {MoveDirection::Up, 0.0f}};
 }  // namespace
+
+PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, MoveDirection dir)
+{
+    PropertyData data;
+    std::unordered_map<std::string, std::string> properties;
+    std::stringstream ss;
+    ss << dir;
+    properties["MoveDirection"] = ss.str();
+    data.properties_ = properties;
+    data.position_ = position;
+
+    return data;
+}
 
 ArrowEntity::ArrowEntity(EntityId id, Level& level, const EntityService& service)
     : BasicEntity(id, level, service)

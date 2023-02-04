@@ -6,8 +6,36 @@
 
 #pragma once
 
+#include <ostream>
+
 namespace FA {
 
 enum class MoveDirection { None, Up, Right, Down, Left };
+
+inline std::ostream& operator<<(std::ostream& os, const MoveDirection& e)
+{
+    std::string str;
+    switch (e) {
+        case MoveDirection::None:
+            str = "Undefined";
+            break;
+        case MoveDirection::Up:
+            str = "Up";
+            break;
+        case MoveDirection::Right:
+            str = "Right";
+            break;
+        case MoveDirection::Down:
+            str = "Down";
+            break;
+        case MoveDirection::Left:
+            str = "Left";
+            break;
+    }
+
+    os << str;
+
+    return os;
+}
 
 }  // namespace FA
