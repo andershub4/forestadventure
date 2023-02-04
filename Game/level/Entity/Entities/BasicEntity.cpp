@@ -34,15 +34,11 @@ void BasicEntity::Create(const PropertyData& data)
     RegisterUninitializedState();
     auto idleState = RegisterState(StateType::Idle);
     auto deadState = RegisterDeadState();
-
     RegisterStates(idleState, deadState, data);
 
     // ReadObjectData
     body_.position_ = data.position_;
-
-    for (const auto& p : data.properties_) {
-        propertyManager_.ReadCustomProperty(p.first, p.second);
-    }
+    ReadProperties(data.properties_);
 
     Subscribe(Messages());
     Start();  // must do this after setting position

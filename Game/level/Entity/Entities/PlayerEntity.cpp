@@ -18,6 +18,7 @@
 #include "Entity/Events/DeadEvent.h"
 #include "Entity/Events/StartMoveEvent.h"
 #include "Entity/Events/StopMoveEvent.h"
+#include "Entity/PropertyConverter.h"
 #include "Entity/PropertyData.h"
 #include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/State.h"
@@ -129,7 +130,7 @@ void PlayerEntity::OnBeginMove(MoveDirection moveDirection)
         faceDir = FaceDirection::Left;
     else if (moveDirection == MoveDirection::Right)
         faceDir = FaceDirection::Right;
-    propertyManager_.Set("FaceDirection", faceDir);
+    propertyStore_.Set("FaceDirection", faceDir);
 }
 
 void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
@@ -139,10 +140,10 @@ void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
 
 void PlayerEntity::OnExitShoot()
 {
-    bool shoot = propertyManager_.Get<bool>("Shoot");
+    bool shoot = propertyStore_.Get<bool>("Shoot");
     if (shoot) {
-        propertyManager_.Set<bool>("Shoot", false);
-        auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
+        propertyStore_.Set<bool>("Shoot", false);
+        auto dir = propertyStore_.Get<FaceDirection>("FaceDirection");
         auto position = body_.position_ + arrowOffset.at(dir);
         MoveDirection moveDir = MoveDirection::None;
         if (dir == FaceDirection::Down)
@@ -153,7 +154,7 @@ void PlayerEntity::OnExitShoot()
             moveDir = MoveDirection::Left;
         else if (dir == FaceDirection::Right)
             moveDir = MoveDirection::Right;
-        //entityService_.SpawnArrow(moveDir, position);
+        // entityService_.SpawnArrow(moveDir, position);
         level_.SpawnEntity(EntityType::Arrow, moveDir, position);
     }
 }
@@ -166,7 +167,7 @@ void PlayerEntity::OnDying()
 std::string PlayerEntity::AnimationKey() const
 {
     std::stringstream ss;
-    auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
+    auto dir = propertyStore_.Get<FaceDirection>("FaceDirection");
     ss << dir;
     return ss.str();
 }
@@ -186,8 +187,18 @@ std::unordered_map<std::string, Shared::Animation> PlayerEntity::GetAnimations(
 
 void PlayerEntity::RegisterProperties()
 {
-    propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
-    propertyManager_.Register<bool>("Shoot", false);
+    propertyStore_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
+    propertyStore_.Register<bool>("Shoot", false);
+}
+
+void PlayerEntity::ReadProperties(const std::unordered_map<std::string, std::string>& properties)
+{
+    for (const auto& p : properties) {
+        if (p.first == "FaceDirection") {
+            FaceDirection dir = ToValue<FaceDirection>(p.second);
+            propertyStore_.Set<FaceDirection>(p.first, dir);
+        }
+    }
 }
 
 void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
@@ -200,7 +211,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
     };
     auto updateAnimationAndShoot = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
-            propertyManager_.Set<bool>("Shoot", true);
+            propertyStore_.Set<bool>("Shoot", true);
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };

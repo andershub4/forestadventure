@@ -27,6 +27,7 @@ public:
 
 private:
     virtual void RegisterProperties() override;
+    virtual void ReadProperties(const std::unordered_map<std::string, std::string>& properties) override;
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data) override;
 

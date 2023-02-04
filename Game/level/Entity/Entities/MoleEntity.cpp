@@ -12,6 +12,7 @@
 
 #include "Constant/Entity.h"
 #include "Entity/Abilities/MoveAbility.h"
+#include "Entity/PropertyConverter.h"
 #include "Entity/PropertyData.h"
 #include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/State.h"
@@ -55,7 +56,7 @@ void MoleEntity::OnBeginMove(MoveDirection moveDirection)
         faceDir = FaceDirection::Left;
     else if (moveDirection == MoveDirection::Right)
         faceDir = FaceDirection::Right;
-    propertyManager_.Set("FaceDirection", faceDir);
+    propertyStore_.Set("FaceDirection", faceDir);
 }
 
 void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
@@ -66,7 +67,7 @@ void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
 std::string MoleEntity::AnimationKey() const
 {
     std::stringstream ss;
-    auto dir = propertyManager_.Get<FaceDirection>("FaceDirection");
+    auto dir = propertyStore_.Get<FaceDirection>("FaceDirection");
     ss << dir;
     return ss.str();
 }
@@ -86,7 +87,17 @@ std::unordered_map<std::string, Shared::Animation> MoleEntity::GetAnimations(
 
 void MoleEntity::RegisterProperties()
 {
-    propertyManager_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
+    propertyStore_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
+}
+
+void MoleEntity::ReadProperties(const std::unordered_map<std::string, std::string>& properties)
+{
+    for (const auto& p : properties) {
+        if (p.first == "FaceDirection") {
+            FaceDirection dir = ToValue<FaceDirection>(p.second);
+            propertyStore_.Set<FaceDirection>(p.first, dir);
+        }
+    }
 }
 
 void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,

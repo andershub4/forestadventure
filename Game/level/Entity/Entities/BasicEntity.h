@@ -12,7 +12,7 @@
 #include "Entity/EntityService.h"
 #include "Entity/Id.h"
 #include "Entity/LayerType.h"
-#include "Entity/PropertyManager.h"
+#include "Entity/PropertyStore.h"
 #include "Entity/StateMachine.h"
 #include "Enum/EntityType.h"
 #include "Fwd/SfmlFwd.h"
@@ -51,7 +51,7 @@ public:
     EntityId GetId() const { return id_; }
 
 protected:
-    PropertyManager propertyManager_;
+    PropertyStore propertyStore_;
     EntityService entityService_;
     Level& level_;
     Body body_;
@@ -74,6 +74,7 @@ private:
                                 const PropertyData& data)
     {}
     virtual void RegisterProperties() {}
+    virtual void ReadProperties(const std::unordered_map<std::string, std::string>& properties) {}
     virtual void Start() {}
     virtual void OnMessage(std::shared_ptr<Shared::Message> msg) {}
     virtual void OnDying() {}

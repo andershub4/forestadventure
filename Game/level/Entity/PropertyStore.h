@@ -9,7 +9,6 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Logging.h"
 #include "Properties/Property.h"
 
 namespace FA {
@@ -20,7 +19,7 @@ class PropertyStore
 {
 public:
     template <class T>
-    void Add(const std::string& name, const T& value)
+    void Register(const std::string& name, const T& value)
     {
         properties_[name] = std::make_shared<Property<T>>(name, value);
     }

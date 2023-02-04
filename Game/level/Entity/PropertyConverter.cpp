@@ -1,26 +1,16 @@
 /*
- *	Copyright (C) 2022 Anders Wennmo
+ *	Copyright (C) 2023 Anders Wennmo
  *	This file is part of forestadventure which is released under MIT license.
  *	See file LICENSE for full license details.
  */
 
-#include "PropertyManager.h"
+#include "PropertyConverter.h"
 
-#include <SFML/System/Vector2.hpp>
-
-#include "Enum/FaceDirection.h"
+#include <unordered_map>
 
 namespace FA {
 
 namespace Entity {
-
-namespace {
-
-template <class T>
-T ToValue(const std::string &value)
-{
-    return T();
-}
 
 template <>
 FaceDirection ToValue(const std::string &valueStr)
@@ -36,18 +26,6 @@ FaceDirection ToValue(const std::string &valueStr)
     }
 
     return FaceDirection::Undefined;
-}
-
-}  // namespace
-
-PropertyManager::PropertyManager() = default;
-
-void PropertyManager::ReadCustomProperty(const std::string &name, const std::string &valueStr)
-{
-    if (name == "FaceDirection") {
-        auto v = ToValue<FaceDirection>(valueStr);
-        propertyStore_.Set<FaceDirection>(name, v);
-    }
 }
 
 }  // namespace Entity

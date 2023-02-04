@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\PropertyConverter.cpp" />
     <ClCompile Include="Entity\Sprites\AnimationSprite.cpp" />
     <ClCompile Include="Entity\Abilities\BasicAbility.cpp" />
     <ClCompile Include="Entity\Sprites\BasicSprite.cpp" />
@@ -158,7 +159,6 @@
     <ClCompile Include="Entity\EntityManager.cpp" />
     <ClCompile Include="Entity\EntityService.cpp" />
     <ClCompile Include="Entity\Factory.cpp" />
-    <ClCompile Include="Entity\PropertyManager.cpp" />
     <ClCompile Include="Entity\Shape.cpp" />
     <ClCompile Include="Entity\SpawnManager.cpp" />
     <ClCompile Include="Entity\State.cpp" />
@@ -169,6 +169,7 @@
     <ClCompile Include="Level\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entity\PropertyConverter.h" />
     <ClInclude Include="Entity\Sprites\AnimationSprite.h" />
     <ClInclude Include="Entity\Abilities\BasicAbility.h" />
     <ClInclude Include="Entity\Sprites\BasicSprite.h" />
@@ -201,7 +202,6 @@
     <ClInclude Include="Entity\Properties\BasicProperty.h" />
     <ClInclude Include="Entity\Properties\Property.h" />
     <ClInclude Include="Entity\PropertyData.h" />
-    <ClInclude Include="Entity\PropertyManager.h" />
     <ClInclude Include="Entity\PropertyStore.h" />
     <ClInclude Include="Entity\Shape.h" />
     <ClInclude Include="Entity\SpawnManager.h" />
