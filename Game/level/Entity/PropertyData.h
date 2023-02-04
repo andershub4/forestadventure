@@ -6,8 +6,8 @@
 
 #pragma once
 
+#include <string>
 #include <unordered_map>
-#include <vector>
 
 #include <SFML/System/Vector2.hpp>
 
@@ -19,6 +19,7 @@ namespace Entity {
 
 struct PropertyData
 {
+    std::string typeStr_{};
     sf::Vector2f position_{};
     std::unordered_map<std::string, std::string> properties_;
     Shared::Graphic graphic_;

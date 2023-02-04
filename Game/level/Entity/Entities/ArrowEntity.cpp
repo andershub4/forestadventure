@@ -39,6 +39,7 @@ PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, MoveD
     std::stringstream ss;
     ss << dir;
     properties["MoveDirection"] = ss.str();
+    data.typeStr_ = "Arrow";
     data.properties_ = properties;
     data.position_ = position;
 

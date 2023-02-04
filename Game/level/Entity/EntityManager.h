@@ -19,8 +19,11 @@
 namespace FA {
 
 namespace Shared {
+
 struct MapData;
-}
+struct Graphic;
+
+}  // namespace Shared
 
 namespace Entity {
 
@@ -37,8 +40,10 @@ public:
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
-    void CreateEntity(const std::string &typeStr, const PropertyData &data, const Shared::MapData &mapData);
-    void CreateTileEntity(const PropertyData &data, const Shared::MapData &mapData);
+    void CreateEntity(const PropertyData &data, const Shared::MapData &mapData);
+    void CreateEntity(const std::string &typeStr, const sf::Vector2f &pos,
+                      std::unordered_map<std::string, std::string> properties, const Shared::MapData &mapData);
+    void CreateTileEntity(const sf::Vector2f &pos, const Shared::Graphic &graphic, const Shared::MapData &mapData);
     void DeleteEntity(EntityId id);
     void HandleCreatedEntities();
     void HandleDeletedEntities();

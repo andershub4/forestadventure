@@ -55,7 +55,7 @@ public:
     void RemoveSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes);
     Camera &GetCamera() const;
     bool IsInsideMap(const sf::Vector2f &pos) const;
-    void CreateEntity(const std::string &typeStr, const PropertyData &data);
+    void CreateEntity(const PropertyData &data);
     void DeleteEntity(EntityId id);
 
 private:

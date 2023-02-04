@@ -9,6 +9,7 @@
 #include "EntityManager.h"
 
 #include "Entity/Entities/BasicEntity.h"
+#include "Entity/PropertyData.h"
 #include "Logging.h"
 
 namespace FA {
@@ -42,16 +43,32 @@ void EntityManager::Update(float deltaTime)
     }
 }
 
-void EntityManager::CreateEntity(const std::string& typeStr, const PropertyData& data, const Shared::MapData& mapData)
+void EntityManager::CreateEntity(const PropertyData& data, const Shared::MapData& mapData)
 {
-    auto entity = factory_.Create(typeStr, mapData);
+    auto entity = factory_.Create(data.typeStr_, mapData);
     entity->Create(data);
     createdEntities_.push_back(std::move(entity));
 }
 
-void EntityManager::CreateTileEntity(const PropertyData& data, const Shared::MapData& mapData)
+void EntityManager::CreateEntity(const std::string& typeStr, const sf::Vector2f& pos,
+                                 std::unordered_map<std::string, std::string> properties,
+                                 const Shared::MapData& mapData)
 {
-    CreateEntity("Tile", data, mapData);
+    PropertyData data;
+    data.typeStr_ = typeStr;
+    data.position_ = pos;
+    data.properties_ = properties;
+    CreateEntity(data, mapData);
+}
+
+void EntityManager::CreateTileEntity(const sf::Vector2f& pos, const Shared::Graphic& graphic,
+                                     const Shared::MapData& mapData)
+{
+    PropertyData data;
+    data.typeStr_ = "Tile";
+    data.position_ = pos;
+    data.graphic_ = graphic;
+    CreateEntity(data, mapData);
 }
 
 void EntityManager::DeleteEntity(EntityId id)

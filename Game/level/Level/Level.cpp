@@ -12,7 +12,6 @@
 
 #include "Camera.h"
 #include "Constant/Entity.h"
-#include "Entity/PropertyData.h"
 #include "Folder.h"
 #include "Logging.h"
 #include "MapData.h"
@@ -156,22 +155,18 @@ void Level::CreateBackgroundTile(const TileMap::TileData &data)
 
 void Level::CreateObjectEntity(const TileMap::ObjectData &data)
 {
-    Entity::PropertyData d;
-    d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
-    d.properties_ = data.properties_;
+    auto position = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
-    Shared::MapData md{mapRect};
-    entityManager_.CreateEntity(data.typeStr_, d, md);
+    Shared::MapData mapData{mapRect};
+    entityManager_.CreateEntity(data.typeStr_, position, data.properties_, mapData);
 }
 
 void Level::CreateTileEntity(const TileMap::TileData &data)
 {
-    Entity::PropertyData d;
-    d.position_ = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
-    d.graphic_ = data.graphic_;
+    auto position = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
-    Shared::MapData md{mapRect};
-    entityManager_.CreateTileEntity(d, md);
+    Shared::MapData mapData{mapRect};
+    entityManager_.CreateTileEntity(position, data.graphic_, mapData);
 }
 
 void Level::CreateFringeTile(const TileMap::TileData &data)

@@ -155,7 +155,7 @@ void PlayerEntity::OnExitShoot()
         else if (dir == FaceDirection::Right)
             moveDir = MoveDirection::Right;
         auto data = ArrowEntity::CreatePropertyData(position, moveDir);
-        entityService_.CreateEntity("Arrow", data);
+        entityService_.CreateEntity(data);
     }
 }
 
