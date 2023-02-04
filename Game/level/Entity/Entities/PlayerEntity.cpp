@@ -271,8 +271,6 @@ void PlayerEntity::Start()
 {
     auto& camera = entityService_.GetCamera();
     camera.Track(body_.position_);
-
-    //    level_.AddCamera(body_.position_);
 }
 
 }  // namespace Entity
