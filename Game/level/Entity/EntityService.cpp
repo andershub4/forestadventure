@@ -73,9 +73,9 @@ bool EntityService::IsInsideMap(const sf::Vector2f& pos) const
     return mapData_.rect_.contains(pos);
 }
 
-void EntityService::CreateEntity(EntityType type, const PropertyData& data)
+void EntityService::CreateEntity(const std::string& typeStr, const PropertyData& data)
 {
-    entityManager_.CreateEntity(type, data, mapData_);
+    entityManager_.CreateEntity(typeStr, data, mapData_);
 }
 
 void EntityService::DeleteEntity(EntityId id)

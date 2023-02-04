@@ -27,31 +27,28 @@ Factory::Factory(Shared::MessageBus& messageBus, const Shared::SheetManager& she
 
 Factory::~Factory() = default;
 
-std::unique_ptr<BasicEntity> Factory::Create(EntityType type, const Shared::MapData& mapData) const
+std::unique_ptr<BasicEntity> Factory::Create(const std::string& typeStr, const Shared::MapData& mapData) const
 {
     EntityService service(messageBus_, sheetManager_, cameraManager_, entityManager_, mapData);
 
-    switch (type) {
-        case EntityType::Mole:
-            return std::make_unique<MoleEntity>(id_++, service);
-            break;
-        case EntityType::Player:
-            return std::make_unique<PlayerEntity>(id_++, service);
-            break;
-        case EntityType::Arrow:
-            return std::make_unique<ArrowEntity>(id_++, service);
-            break;
-        case EntityType::Tile:
-            return std::make_unique<TileEntity>(id_++, service);
-            break;
-        case EntityType::Coin:
-            return std::make_unique<CoinEntity>(id_++, service);
-            break;
-        default:
-            auto t = static_cast<int>(type);
-            LOG_ERROR("Could not create entity of type: %u", t);
-            return nullptr;
+    if (typeStr == "Mole") {
+        return std::make_unique<MoleEntity>(id_++, service);
     }
+    else if (typeStr == "Player") {
+        return std::make_unique<PlayerEntity>(id_++, service);
+    }
+    else if (typeStr == "Arrow") {
+        return std::make_unique<ArrowEntity>(id_++, service);
+    }
+    else if (typeStr == "Tile") {
+        return std::make_unique<TileEntity>(id_++, service);
+    }
+    else if (typeStr == "Coin") {
+        return std::make_unique<CoinEntity>(id_++, service);
+    }
+
+    LOG_ERROR("Could not create entity of type: %s", typeStr.c_str());
+    return nullptr;
 }
 
 }  // namespace Entity

@@ -46,18 +46,6 @@ const std::vector<Shared::SheetData> textureSheets = {
     {Shared::SheetId::Arrow, "sprites/misc/arrow.png", {1, 1}},
     {Shared::SheetId::Coin, "spritesheets/misc/coin.png", {4, 1}}};
 
-EntityType ObjTypeStrToEnum(const std::string &str)
-{
-    static std::unordered_map<std::string, EntityType> map{
-        {"Mole", EntityType::Mole}, {"Player", EntityType::Player}, {"Coin", EntityType::Coin}};
-    auto it = map.find(str);
-    if (it != map.end()) {
-        return map.at(str);
-    }
-
-    return EntityType::Unknown;
-}
-
 }  // namespace
 
 Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureManager, const sf::Vector2u &viewSize)
@@ -173,7 +161,7 @@ void Level::CreateObjectEntity(const TileMap::ObjectData &data)
     d.properties_ = data.properties_;
     auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
     Shared::MapData md{mapRect};
-    entityManager_.CreateEntity(ObjTypeStrToEnum(data.typeStr_), d, md);
+    entityManager_.CreateEntity(data.typeStr_, d, md);
 }
 
 void Level::CreateTileEntity(const TileMap::TileData &data)
@@ -183,7 +171,7 @@ void Level::CreateTileEntity(const TileMap::TileData &data)
     d.graphic_ = data.graphic_;
     auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
     Shared::MapData md{mapRect};
-    entityManager_.CreateEntity(EntityType::Tile, d, md);
+    entityManager_.CreateEntity("Tile", d, md);
 }
 
 void Level::CreateFringeTile(const TileMap::TileData &data)

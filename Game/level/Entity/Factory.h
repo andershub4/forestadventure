@@ -7,8 +7,8 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
-#include "Enum/EntityType.h"
 #include "Id.h"
 
 namespace FA {
@@ -35,7 +35,7 @@ public:
             const CameraManager& cameraManager, EntityManager& entityManager);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(EntityType type, const Shared::MapData& mapData) const;
+    std::unique_ptr<BasicEntity> Create(const std::string& typeStr, const Shared::MapData& mapData) const;
 
 private:
     mutable Entity::EntityId id_{0};

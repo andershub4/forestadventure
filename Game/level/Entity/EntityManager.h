@@ -13,7 +13,7 @@
 #include "Entity/Factory.h"
 #include "Entity/Id.h"
 #include "Entity/LayerType.h"
-#include "Enum/EntityType.h"
+
 #include "Fwd/SfmlFwd.h"
 
 namespace FA {
@@ -37,7 +37,7 @@ public:
 
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget) const;
-    void CreateEntity(EntityType type, const PropertyData &data, const Shared::MapData &mapData);
+    void CreateEntity(const std::string &typeStr, const PropertyData &data, const Shared::MapData &mapData);
     void DeleteEntity(EntityId id);
     void HandleCreatedEntities();
     void HandleDeletedEntities();

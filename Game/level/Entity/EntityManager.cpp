@@ -42,9 +42,9 @@ void EntityManager::Update(float deltaTime)
     }
 }
 
-void EntityManager::CreateEntity(EntityType type, const PropertyData& data, const Shared::MapData& mapData)
+void EntityManager::CreateEntity(const std::string& typeStr, const PropertyData& data, const Shared::MapData& mapData)
 {
-    auto entity = factory_.Create(type, mapData);
+    auto entity = factory_.Create(typeStr, mapData);
     entity->Create(data);
     createdEntities_.push_back(std::move(entity));
 }
