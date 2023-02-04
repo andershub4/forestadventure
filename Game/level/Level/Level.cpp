@@ -60,20 +60,6 @@ EntityType ObjTypeStrToEnum(const std::string &str)
     return EntityType::Unknown;
 }
 
-FaceDirection FaceDirStrToEnum(const std::string &str)
-{
-    static std::unordered_map<std::string, FaceDirection> map{{"Up", FaceDirection::Up},
-                                                              {"Down", FaceDirection::Down},
-                                                              {"Right", FaceDirection::Right},
-                                                              {"Left", FaceDirection::Left}};
-    auto it = map.find(str);
-    if (it != map.end()) {
-        return map.at(str);
-    }
-
-    return FaceDirection::Undefined;
-}
-
 }  // namespace
 
 Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureManager, const sf::Vector2u &viewSize)
