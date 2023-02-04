@@ -159,7 +159,7 @@ void PlayerEntity::OnExitShoot()
     }
 }
 
-void PlayerEntity::OnDying()
+void PlayerEntity::OnBeginDie()
 {
     SendMessage(std::make_shared<Shared::GameOverMessage>());
 }

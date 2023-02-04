@@ -50,7 +50,6 @@ public:
 protected:
     PropertyStore propertyStore_;
     EntityService entityService_;
-    // Level& level_;
     Body body_;
 
 protected:
@@ -74,7 +73,7 @@ private:
     virtual void Start() {}
     virtual void OnMessage(std::shared_ptr<Shared::Message> msg) {}
     virtual void OnBeginIdle() {}
-    virtual void OnDying() {}
+    virtual void OnBeginDie() {}
 
     void Subscribe(const std::vector<Shared::MessageType>& messageTypes);
     void Unsubscribe(const std::vector<Shared::MessageType>& messageTypes);

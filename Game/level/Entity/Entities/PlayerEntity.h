@@ -35,7 +35,7 @@ private:
                                 const PropertyData& data) override;
     virtual void Start() override;
     virtual void OnMessage(std::shared_ptr<Shared::Message> msg) override;
-    virtual void OnDying() override;
+    virtual void OnBeginDie() override;
 
     void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);

@@ -108,7 +108,7 @@ void BasicEntity::RegisterUninitializedState()
 std::shared_ptr<State> BasicEntity::RegisterDeadState()
 {
     auto deadState = stateMachine_.RegisterState(StateType::Dead, body_);
-    deadState->RegisterBeginCB([this]() { OnDying(); });
+    deadState->RegisterBeginCB([this]() { OnBeginDie(); });
     deadState->IgnoreAllEvents();
     return deadState;
 }
