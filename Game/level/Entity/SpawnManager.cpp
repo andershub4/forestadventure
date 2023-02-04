@@ -6,12 +6,12 @@
 
 #include "SpawnManager.h"
 
+#include "Entities/ArrowEntity.h"
 #include "Entities/BasicEntity.h"
 #include "EntityManager.h"
 #include "Enum/MoveDirection.h"
 #include "Events/StartMoveEvent.h"
 #include "PropertyData.h"
-#include "Entities/ArrowEntity.h"
 
 namespace FA {
 
@@ -31,8 +31,7 @@ void SpawnManager::Spawn(EntityType entityType, const sf::Vector2f &position, co
 {
     auto data = ArrowEntity::CreatePropertyData(position, moveDir);
 
-    auto &entity = entityManager_.CreateEntity(entityType, data, mapData);
-    entity.QueueInitEvents(std::make_shared<StartMoveEvent>(moveDir));
+    entityManager_.CreateEntity(entityType, data, mapData);
 }
 
 }  // namespace Entity

@@ -33,6 +33,7 @@ void BasicEntity::Create(const PropertyData& data)
 
     RegisterUninitializedState();
     auto idleState = RegisterState(StateType::Idle);
+    idleState->RegisterBeginCB([this]() { OnBeginIdle(); });
     auto deadState = RegisterDeadState();
     RegisterStates(idleState, deadState, data);
 
@@ -54,10 +55,6 @@ void BasicEntity::Destroy()
 void BasicEntity::Init()
 {
     HandleEvent(std::make_shared<InitEvent>());
-    for (auto event : queuedInitEvents_) {
-        HandleEvent(event);
-    }
-    queuedInitEvents_.clear();
 }
 
 void BasicEntity::Update(float deltaTime)
@@ -68,11 +65,6 @@ void BasicEntity::Update(float deltaTime)
 void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
 {
     stateMachine_.DrawTo(renderTarget);
-}
-
-void BasicEntity::QueueInitEvents(std::shared_ptr<BasicEvent> event)
-{
-    queuedInitEvents_.push_back(event);
 }
 
 void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)

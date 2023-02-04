@@ -18,12 +18,14 @@ namespace Entity {
 State::State(StateType stateType, Body &body)
     : stateType_(stateType)
     , shape_(body)
+    , beginCB_([]() {})
 {}
 
 State::~State() = default;
 
 void State::Enter(std::shared_ptr<BasicEvent> event)
 {
+    beginCB_();
     for (auto a : abilities_) {
         a->Enter(event);
     }
@@ -57,6 +59,11 @@ void State::HandleEvent(std::shared_ptr<BasicEvent> event)
         auto handler = eventCBs_.at(t);
         handler(event);
     }
+}
+
+void State::RegisterBeginCB(std::function<void()> beginCB)
+{
+    beginCB_ = beginCB;
 }
 
 void State::RegisterAbility(std::shared_ptr<BasicAbility> ability)

@@ -17,7 +17,7 @@ namespace Entity {
 class ArrowEntity : public BasicEntity
 {
 public:
-    static PropertyData CreatePropertyData(const sf::Vector2f &position, MoveDirection dir);
+    static PropertyData CreatePropertyData(const sf::Vector2f& position, MoveDirection dir);
 
     ArrowEntity(EntityId id, Level& level, const EntityService& service);
     virtual ~ArrowEntity();
@@ -27,9 +27,12 @@ public:
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
 
 private:
+    virtual void RegisterProperties() override;
+    virtual void ReadProperties(const std::unordered_map<std::string, std::string>& properties) override;
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data) override;
 
+    virtual void OnBeginIdle() override;
     void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
 };

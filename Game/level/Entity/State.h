@@ -40,6 +40,7 @@ public:
     void DrawTo(sf::RenderTarget& renderTarget);
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     StateType GetStateType() const { return stateType_; }
+    void RegisterBeginCB(std::function<void()> beginCB);
     void RegisterAbility(std::shared_ptr<BasicAbility> ability);
     void RegisterSprite(std::shared_ptr<BasicSprite> sprite);
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
@@ -52,6 +53,7 @@ private:
     std::unordered_map<EventType, std::function<void(std::shared_ptr<BasicEvent>)>> eventCBs_;
     bool ignoreAllEvents_ = false;
     Shape shape_;
+    std::function<void()> beginCB_;
 };
 
 }  // namespace Entity

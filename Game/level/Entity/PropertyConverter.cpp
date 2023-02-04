@@ -28,6 +28,22 @@ FaceDirection ToValue(const std::string &valueStr)
     return FaceDirection::Undefined;
 }
 
+template <>
+MoveDirection ToValue(const std::string &valueStr)
+{
+    static std::unordered_map<std::string, MoveDirection> map = {{"Down", MoveDirection::Down},
+                                                                 {"Up", MoveDirection::Up},
+                                                                 {"Left", MoveDirection::Left},
+                                                                 {"Right", MoveDirection::Right}};
+
+    auto it = map.find(valueStr);
+    if (it != map.end()) {
+        return map.at(valueStr);
+    }
+
+    return MoveDirection::None;
+}
+
 }  // namespace Entity
 
 }  // namespace FA

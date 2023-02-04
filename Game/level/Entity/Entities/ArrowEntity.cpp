@@ -12,6 +12,8 @@
 
 #include "Constant/Entity.h"
 #include "Entity/Abilities/MoveAbility.h"
+#include "Entity/Events/StartMoveEvent.h"
+#include "Entity/PropertyConverter.h"
 #include "Entity/PropertyData.h"
 #include "Entity/Sprites/ImageSprite.h"
 #include "Entity/State.h"
@@ -49,6 +51,28 @@ ArrowEntity::ArrowEntity(EntityId id, Level& level, const EntityService& service
 {}
 
 ArrowEntity::~ArrowEntity() = default;
+
+void ArrowEntity::RegisterProperties()
+{
+    propertyStore_.Register<MoveDirection>("MoveDirection", MoveDirection::Down);
+}
+
+void ArrowEntity::ReadProperties(const std::unordered_map<std::string, std::string>& properties)
+{
+    for (const auto& p : properties) {
+        if (p.first == "MoveDirection") {
+            MoveDirection dir = ToValue<MoveDirection>(p.second);
+            propertyStore_.Set<MoveDirection>(p.first, dir);
+        }
+    }
+}
+
+void ArrowEntity::OnBeginIdle()
+{
+    auto dir = propertyStore_.Get<MoveDirection>("MoveDirection");
+    auto event = std::make_shared<StartMoveEvent>(dir);
+    HandleEvent(event);
+}
 
 void ArrowEntity::OnBeginMove(MoveDirection moveDirection)
 {

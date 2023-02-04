@@ -7,6 +7,7 @@
 #pragma once
 
 #include "Enum/FaceDirection.h"
+#include "Enum/MoveDirection.h"
 
 namespace FA {
 
@@ -20,6 +21,9 @@ T ToValue(const std::string &value)
 
 template <>
 FaceDirection ToValue(const std::string &valueStr);
+
+template <>
+MoveDirection ToValue(const std::string &valueStr);
 
 }  // namespace Entity
 
