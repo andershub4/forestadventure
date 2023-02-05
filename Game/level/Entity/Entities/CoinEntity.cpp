@@ -16,6 +16,8 @@ namespace FA {
 
 namespace Entity {
 
+const std::string CoinEntity::str = "Coin";
+
 CoinEntity::CoinEntity(EntityId id, const EntityService& service)
     : BasicEntity(id, service)
 {}

@@ -15,10 +15,11 @@ namespace Entity {
 class CoinEntity : public BasicEntity
 {
 public:
+    static const std::string str;
+
     CoinEntity(EntityId id, const EntityService& service);
     virtual ~CoinEntity();
 
-    virtual std::string Name() const override { return "CoinEntity"; }
     virtual EntityType Type() const override { return EntityType::Coin; }
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
 

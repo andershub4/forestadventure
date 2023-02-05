@@ -9,6 +9,7 @@
 #include "EntityManager.h"
 
 #include "Entity/Entities/BasicEntity.h"
+#include "Entity/Entities/TileEntity.h"
 #include "Entity/PropertyData.h"
 #include "Logging.h"
 
@@ -65,7 +66,7 @@ void EntityManager::CreateTileEntity(const sf::Vector2f& pos, const Shared::Grap
                                      const Shared::MapData& mapData)
 {
     PropertyData data;
-    data.typeStr_ = "Tile";
+    data.typeStr_ = TileEntity::str;
     data.position_ = pos;
     data.graphic_ = graphic;
     CreateEntity(data, mapData);

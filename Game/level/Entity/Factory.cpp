@@ -24,11 +24,16 @@ Factory::Factory(Shared::MessageBus& messageBus, const Shared::SheetManager& she
     , cameraManager_(cameraManager)
     , entityManager_(entityManager)
 {
-    RegisterEntity("Mole", [](EntityId id, const EntityService& s) { return std::make_unique<MoleEntity>(id, s); });
-    RegisterEntity("Player", [](EntityId id, const EntityService& s) { return std::make_unique<PlayerEntity>(id, s); });
-    RegisterEntity("Arrow", [](EntityId id, const EntityService& s) { return std::make_unique<ArrowEntity>(id, s); });
-    RegisterEntity("Tile", [](EntityId id, const EntityService& s) { return std::make_unique<TileEntity>(id, s); });
-    RegisterEntity("Coin", [](EntityId id, const EntityService& s) { return std::make_unique<CoinEntity>(id, s); });
+    RegisterEntity(MoleEntity::str,
+                   [](EntityId id, const EntityService& s) { return std::make_unique<MoleEntity>(id, s); });
+    RegisterEntity(PlayerEntity::str,
+                   [](EntityId id, const EntityService& s) { return std::make_unique<PlayerEntity>(id, s); });
+    RegisterEntity(ArrowEntity::str,
+                   [](EntityId id, const EntityService& s) { return std::make_unique<ArrowEntity>(id, s); });
+    RegisterEntity(TileEntity::str,
+                   [](EntityId id, const EntityService& s) { return std::make_unique<TileEntity>(id, s); });
+    RegisterEntity(CoinEntity::str,
+                   [](EntityId id, const EntityService& s) { return std::make_unique<CoinEntity>(id, s); });
 }
 
 Factory::~Factory() = default;

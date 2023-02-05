@@ -67,6 +67,8 @@ const std::unordered_map<StateType, std::unordered_map<FaceDirection, Shared::An
 
 }  // namespace
 
+const std::string PlayerEntity::str = "Player";
+
 PlayerEntity::PlayerEntity(EntityId id, const EntityService& service)
     : BasicEntity(id, service)
 {}

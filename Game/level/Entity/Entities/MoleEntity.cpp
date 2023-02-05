@@ -39,6 +39,8 @@ const std::unordered_map<StateType, std::unordered_map<FaceDirection, Shared::An
 
 }  // namespace
 
+const std::string MoleEntity::str = "Mole";
+
 MoleEntity::MoleEntity(EntityId id, const EntityService& service)
     : BasicEntity(id, service)
 {}

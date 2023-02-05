@@ -32,6 +32,8 @@ const std::unordered_map<MoveDirection, float> arrowRotation = {{MoveDirection::
                                                                 {MoveDirection::Up, 0.0f}};
 }  // namespace
 
+const std::string ArrowEntity::str = "Arrow";
+
 PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, MoveDirection dir)
 {
     PropertyData data;
@@ -39,7 +41,7 @@ PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, MoveD
     std::stringstream ss;
     ss << dir;
     properties["MoveDirection"] = ss.str();
-    data.typeStr_ = "Arrow";
+    data.typeStr_ = ArrowEntity::str;
     data.properties_ = properties;
     data.position_ = position;
 

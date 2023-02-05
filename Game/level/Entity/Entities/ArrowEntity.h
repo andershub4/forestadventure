@@ -17,12 +17,12 @@ namespace Entity {
 class ArrowEntity : public BasicEntity
 {
 public:
+    static const std::string str;
     static PropertyData CreatePropertyData(const sf::Vector2f& position, MoveDirection dir);
 
     ArrowEntity(EntityId id, const EntityService& service);
     virtual ~ArrowEntity();
 
-    virtual std::string Name() const override { return "ArrowEntity"; }
     virtual EntityType Type() const override { return EntityType::Arrow; }
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
 

@@ -6,6 +6,8 @@
 
 #include "BasicEntity.h"
 
+#include <sstream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Entity/Events/InitEvent.h"
@@ -88,13 +90,19 @@ void BasicEntity::SendMessage(std::shared_ptr<Shared::Message> message)
 
 void BasicEntity::Subscribe(const std::vector<Shared::MessageType>& messageTypes)
 {
-    entityService_.AddSubscriber(Name(), messageTypes,
+    std::stringstream ss;
+    ss << Type();
+
+    entityService_.AddSubscriber(ss.str(), messageTypes,
                                  [this](std::shared_ptr<Shared::Message> message) { OnMessage(message); });
 }
 
 void BasicEntity::Unsubscribe(const std::vector<Shared::MessageType>& messageTypes)
 {
-    entityService_.RemoveSubscriber(Name(), messageTypes);
+    std::stringstream ss;
+    ss << Type();
+
+    entityService_.RemoveSubscriber(ss.str(), messageTypes);
 }
 
 void BasicEntity::RegisterUninitializedState()

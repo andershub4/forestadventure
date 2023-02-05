@@ -15,10 +15,11 @@ namespace Entity {
 class StaticEntity : public BasicEntity
 {
 public:
+    static const std::string str;
+
     StaticEntity(EntityId id, const EntityService& service);
     virtual ~StaticEntity();
 
-    virtual std::string Name() const override { return "StaticEntity"; }
     virtual EntityType Type() const override { return EntityType::Static; }
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
 };

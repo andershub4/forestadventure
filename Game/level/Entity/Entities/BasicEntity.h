@@ -36,7 +36,6 @@ public:
     BasicEntity(EntityId id, const EntityService& service);
     virtual ~BasicEntity();
 
-    virtual std::string Name() const = 0;
     virtual EntityType Type() const = 0;
     virtual LayerType GetLayer() const = 0;
 

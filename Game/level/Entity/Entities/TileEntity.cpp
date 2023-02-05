@@ -17,6 +17,8 @@ namespace FA {
 
 namespace Entity {
 
+const std::string TileEntity::str = "Tile";
+
 TileEntity::TileEntity(EntityId id, const EntityService& service)
     : BasicEntity(id, service)
 {}

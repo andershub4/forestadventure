@@ -14,6 +14,8 @@ namespace FA {
 
 namespace Entity {
 
+const std::string StaticEntity::str = "Static";
+
 StaticEntity::StaticEntity(EntityId id, const EntityService& service)
     : BasicEntity(id, service)
 {}

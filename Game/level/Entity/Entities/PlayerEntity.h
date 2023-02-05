@@ -18,10 +18,11 @@ namespace Entity {
 class PlayerEntity : public BasicEntity
 {
 public:
+    static const std::string str;
+
     PlayerEntity(EntityId id, const EntityService& service);
     virtual ~PlayerEntity();
 
-    virtual std::string Name() const override { return "PlayerEntity"; }
     virtual EntityType Type() const override { return EntityType::Player; }
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
 

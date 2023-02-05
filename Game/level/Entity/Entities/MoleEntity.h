@@ -18,10 +18,11 @@ namespace Entity {
 class MoleEntity : public BasicEntity
 {
 public:
+    static const std::string str;
+
     MoleEntity(EntityId id, const EntityService& service);
     virtual ~MoleEntity();
 
-    virtual std::string Name() const override { return "MoleEntity"; }
     virtual EntityType Type() const override { return EntityType::Mole; }
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
 
