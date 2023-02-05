@@ -9,7 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Effect/BasicEffect.h"
-#include "Level/Level.h"
+#include "Level.h"
 #include "Transitions/BasicTransition.h"
 
 namespace FA {

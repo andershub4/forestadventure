@@ -141,12 +141,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Level\Level.cpp" />
-    <ClCompile Include="Level\TileMap.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Level\Level.h" />
-    <ClInclude Include="Level\TileMap.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\entity\entity.vcxproj">
