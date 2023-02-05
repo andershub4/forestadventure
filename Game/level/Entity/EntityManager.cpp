@@ -97,13 +97,6 @@ void EntityManager::HandleDeletedEntities()
     deletedEntities_.clear();
 }
 
-void EntityManager::Init()
-{
-    for (const auto& entry : entityMap_) {
-        entry.second->Init();
-    }
-}
-
 void EntityManager::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)
 {
     auto id = entity->GetId();

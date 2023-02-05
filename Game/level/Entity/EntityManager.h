@@ -47,7 +47,6 @@ public:
     void DeleteEntity(EntityId id);
     void HandleCreatedEntities();
     void HandleDeletedEntities();
-    void Init();
 
 private:
     struct DrawableInfo
