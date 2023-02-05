@@ -20,7 +20,8 @@ namespace Entity {
 class ImageSprite : public BasicSprite
 {
 public:
-    ImageSprite(std::function<std::string()> getKey, const std::unordered_map<std::string, Shared::Image> &images, std::function<void(const Shared::Image &)>);
+    ImageSprite(std::function<std::string()> getKey, const std::unordered_map<std::string, Shared::Image> &images,
+                std::function<void(const Shared::Image &)>);
     ImageSprite(std::function<std::string()> getKey, const std::unordered_map<std::string, Shared::Image> &images);
     virtual ~ImageSprite();
 

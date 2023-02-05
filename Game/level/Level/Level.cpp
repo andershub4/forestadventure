@@ -12,6 +12,7 @@
 
 #include "Camera/Camera.h"
 #include "Constant/Entity.h"
+#include "EntityManager.h"
 #include "Folder.h"
 #include "Logging.h"
 #include "MapData.h"
@@ -51,7 +52,7 @@ Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureMana
     : sheetManager_(textureManager)
     , tileMap_(sheetManager_)
     , viewSize_(viewSize)
-    , entityManager_(messageBus, sheetManager_, cameraManager_)
+    , entityManager_(std::make_unique<Entity::EntityManager>(messageBus, sheetManager_, cameraManager_))
 {}
 
 Level::~Level() = default;
@@ -80,16 +81,16 @@ sf::View Level::GetView()
 
 void Level::Update(float deltaTime)
 {
-    entityManager_.HandleCreatedEntities();
+    entityManager_->HandleCreatedEntities();
     cameraManager_.Update(deltaTime);
-    entityManager_.Update(deltaTime);
-    entityManager_.HandleDeletedEntities();
+    entityManager_->Update(deltaTime);
+    entityManager_->HandleDeletedEntities();
 }
 
 void Level::Draw(sf::RenderTarget &renderTarget)
 {
     renderTarget.draw(backgroundSprite_);
-    entityManager_.DrawTo(renderTarget);
+    entityManager_->DrawTo(renderTarget);
     for (const auto &tile : fringeLayer_) {
         renderTarget.draw(tile);
     }
@@ -133,7 +134,7 @@ void Level::CreateEntities()
     for (const auto &tileData : tileMap_.GetLayer("Dynamic Layer 1")) {
         CreateTileEntity(tileData);
     }
-    entityManager_.HandleCreatedEntities();
+    entityManager_->HandleCreatedEntities();
 }
 
 void Level::CreateFringe()
@@ -158,7 +159,7 @@ void Level::CreateObjectEntity(const TileMap::ObjectData &data)
     auto position = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
     Shared::MapData mapData{mapRect};
-    entityManager_.CreateEntity(data.typeStr_, position, data.properties_, mapData);
+    entityManager_->CreateEntity(data.typeStr_, position, data.properties_, mapData);
 }
 
 void Level::CreateTileEntity(const TileMap::TileData &data)
@@ -166,7 +167,7 @@ void Level::CreateTileEntity(const TileMap::TileData &data)
     auto position = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
     Shared::MapData mapData{mapRect};
-    entityManager_.CreateTileEntity(position, data.graphic_, mapData);
+    entityManager_->CreateTileEntity(position, data.graphic_, mapData);
 }
 
 void Level::CreateFringeTile(const TileMap::TileData &data)

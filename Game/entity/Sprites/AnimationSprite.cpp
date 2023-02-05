@@ -12,8 +12,9 @@ namespace FA {
 
 namespace Entity {
 
-AnimationSprite::AnimationSprite(std::function<std::string()> getKey, const std::unordered_map<std::string, Shared::Animation> &animations,
-                                   std::function<void(const Shared::Animation &)> updateFn, bool center)
+AnimationSprite::AnimationSprite(std::function<std::string()> getKey,
+                                 const std::unordered_map<std::string, Shared::Animation> &animations,
+                                 std::function<void(const Shared::Animation &)> updateFn, bool center)
     : getKey_(getKey)
     , map_(animations)
     , updateFn_(updateFn)
@@ -21,7 +22,7 @@ AnimationSprite::AnimationSprite(std::function<std::string()> getKey, const std:
 {}
 
 AnimationSprite::AnimationSprite(std::function<std::string()> getKey,
-                                   const std::unordered_map<std::string, Shared::Animation>& animations, bool center)
+                                 const std::unordered_map<std::string, Shared::Animation> &animations, bool center)
     : getKey_(getKey)
     , map_(animations)
     , updateFn_([](const Shared::Animation &) {})

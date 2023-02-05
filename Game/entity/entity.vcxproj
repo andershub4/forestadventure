@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{2e247490-8768-4a34-a04e-0f7551db0499}</ProjectGuid>
-    <RootNamespace>level</RootNamespace>
+    <ProjectGuid>{141937d6-125d-4c26-9440-1d6028ef3ecd}</ProjectGuid>
+    <RootNamespace>entity</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)entity;$(SolutionDir)level;$(SolutionDir)tile\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)entity;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)entity;$(SolutionDir)level;$(SolutionDir)tile\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)entity;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,23 +141,68 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Level\Level.cpp" />
-    <ClCompile Include="Level\TileMap.cpp" />
+    <ClInclude Include="Abilities\BasicAbility.h" />
+    <ClInclude Include="Abilities\MoveAbility.h" />
+    <ClInclude Include="Abilities\ShootAbility.h" />
+    <ClInclude Include="Body.h" />
+    <ClInclude Include="Constant\Entity.h" />
+    <ClInclude Include="Entities\ArrowEntity.h" />
+    <ClInclude Include="Entities\BasicEntity.h" />
+    <ClInclude Include="Entities\CoinEntity.h" />
+    <ClInclude Include="Entities\MoleEntity.h" />
+    <ClInclude Include="Entities\PlayerEntity.h" />
+    <ClInclude Include="Entities\StaticEntity.h" />
+    <ClInclude Include="Entities\TileEntity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="EntityService.h" />
+    <ClInclude Include="Enum\EntityType.h" />
+    <ClInclude Include="Enum\FaceDirection.h" />
+    <ClInclude Include="Enum\MoveDirection.h" />
+    <ClInclude Include="Events\AttackEvent.h" />
+    <ClInclude Include="Events\AttackWeaponEvent.h" />
+    <ClInclude Include="Events\BasicEvent.h" />
+    <ClInclude Include="Events\DeadEvent.h" />
+    <ClInclude Include="Events\InitEvent.h" />
+    <ClInclude Include="Events\StartMoveEvent.h" />
+    <ClInclude Include="Events\StopMoveEvent.h" />
+    <ClInclude Include="EventType.h" />
+    <ClInclude Include="Factory.h" />
+    <ClInclude Include="Id.h" />
+    <ClInclude Include="LayerType.h" />
+    <ClInclude Include="Properties\BasicProperty.h" />
+    <ClInclude Include="Properties\Property.h" />
+    <ClInclude Include="PropertyConverter.h" />
+    <ClInclude Include="PropertyData.h" />
+    <ClInclude Include="PropertyStore.h" />
+    <ClInclude Include="Shape.h" />
+    <ClInclude Include="Sprites\AnimationSprite.h" />
+    <ClInclude Include="Sprites\BasicSprite.h" />
+    <ClInclude Include="Sprites\ImageSprite.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="StateType.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Level\Level.h" />
-    <ClInclude Include="Level\TileMap.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\entity\entity.vcxproj">
-      <Project>{141937d6-125d-4c26-9440-1d6028ef3ecd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\shared\shared.vcxproj">
-      <Project>{30c8aeea-9f9c-4d4c-9aec-9402e8961540}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\tile\tile.vcxproj">
-      <Project>{b998d8ba-9c74-429f-a576-5ee6c6e8ccb6}</Project>
-    </ProjectReference>
+    <ClCompile Include="Abilities\BasicAbility.cpp" />
+    <ClCompile Include="Abilities\MoveAbility.cpp" />
+    <ClCompile Include="Abilities\ShootAbility.cpp" />
+    <ClCompile Include="Entities\ArrowEntity.cpp" />
+    <ClCompile Include="Entities\BasicEntity.cpp" />
+    <ClCompile Include="Entities\CoinEntity.cpp" />
+    <ClCompile Include="Entities\MoleEntity.cpp" />
+    <ClCompile Include="Entities\PlayerEntity.cpp" />
+    <ClCompile Include="Entities\StaticEntity.cpp" />
+    <ClCompile Include="Entities\TileEntity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="EntityService.cpp" />
+    <ClCompile Include="Factory.cpp" />
+    <ClCompile Include="PropertyConverter.cpp" />
+    <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="Sprites\AnimationSprite.cpp" />
+    <ClCompile Include="Sprites\BasicSprite.cpp" />
+    <ClCompile Include="Sprites\ImageSprite.cpp" />
+    <ClCompile Include="State.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,9 +6,9 @@
 
 #include "State.h"
 
-#include "Entity/Abilities/BasicAbility.h"
-#include "Entity/Body.h"
-#include "Entity/Events/BasicEvent.h"
+#include "Abilities/BasicAbility.h"
+#include "Body.h"
+#include "Events/BasicEvent.h"
 #include "Logging.h"
 
 namespace FA {

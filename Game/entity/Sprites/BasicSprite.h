@@ -18,7 +18,7 @@ class BasicSprite
 {
 public:
     virtual ~BasicSprite() = default;
-    
+
     virtual void Enter() = 0;
     virtual void Update(float deltaTime) = 0;
 

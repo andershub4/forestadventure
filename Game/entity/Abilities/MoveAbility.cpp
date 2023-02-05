@@ -10,7 +10,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "Entity/Events/StartMoveEvent.h"
+#include "Events/StartMoveEvent.h"
 
 namespace {
 

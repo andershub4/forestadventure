@@ -10,15 +10,15 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Abilities/MoveAbility.h"
 #include "Constant/Entity.h"
-#include "Entity/Abilities/MoveAbility.h"
-#include "Entity/Events/StartMoveEvent.h"
-#include "Entity/PropertyConverter.h"
-#include "Entity/PropertyData.h"
-#include "Entity/Sprites/ImageSprite.h"
-#include "Entity/State.h"
+#include "Events/StartMoveEvent.h"
+#include "PropertyConverter.h"
+#include "PropertyData.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
+#include "Sprites/ImageSprite.h"
+#include "State.h"
 
 namespace FA {
 

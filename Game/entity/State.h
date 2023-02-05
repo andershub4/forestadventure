@@ -11,9 +11,9 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Entity/EventType.h"
-#include "Entity/Shape.h"
-#include "Entity/StateType.h"
+#include "EventType.h"
+#include "Shape.h"
+#include "StateType.h"
 
 namespace FA {
 

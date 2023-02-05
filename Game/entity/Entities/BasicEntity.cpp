@@ -10,11 +10,11 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Events/InitEvent.h"
-#include "Entity/PropertyData.h"
-#include "Entity/State.h"
+#include "Events/InitEvent.h"
 #include "Message/BroadcastMessage/EntityCreatedMessage.h"
 #include "Message/BroadcastMessage/EntityDestroyedMessage.h"
+#include "PropertyData.h"
+#include "State.h"
 
 namespace FA {
 

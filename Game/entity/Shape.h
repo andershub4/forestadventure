@@ -6,16 +6,16 @@
 
 #pragma once
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 #ifdef _DEBUG
 #include <SFML/Graphics/RectangleShape.hpp>
 #endif
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Sprites/BasicSprite.h"
 #include "Fwd/SfmlFwd.h"
+#include "Sprites/BasicSprite.h"
 
 namespace FA {
 

@@ -8,10 +8,10 @@
 
 #include "EntityManager.h"
 
-#include "Entity/Entities/BasicEntity.h"
-#include "Entity/Entities/TileEntity.h"
-#include "Entity/PropertyData.h"
+#include "Entities/BasicEntity.h"
+#include "Entities/TileEntity.h"
 #include "Logging.h"
+#include "PropertyData.h"
 
 namespace FA {
 

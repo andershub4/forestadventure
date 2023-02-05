@@ -11,8 +11,8 @@
 #include <string>
 #include <vector>
 
-#include "Entity/Id.h"
 #include "Enum/EntityType.h"
+#include "Id.h"
 #include "MapData.h"
 
 namespace FA {

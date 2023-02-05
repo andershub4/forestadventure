@@ -8,14 +8,14 @@
 
 #include <vector>
 
-#include "Entity/Body.h"
-#include "Entity/EntityService.h"
-#include "Entity/Id.h"
-#include "Entity/LayerType.h"
-#include "Entity/PropertyStore.h"
-#include "Entity/StateMachine.h"
+#include "Body.h"
+#include "EntityService.h"
 #include "Enum/EntityType.h"
 #include "Fwd/SfmlFwd.h"
+#include "Id.h"
+#include "LayerType.h"
+#include "PropertyStore.h"
+#include "StateMachine.h"
 
 namespace FA {
 

@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity/Body.h"
+#include "Body.h"
 
 namespace FA {
 

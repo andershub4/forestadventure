@@ -12,14 +12,16 @@ namespace FA {
 
 namespace Entity {
 
-ImageSprite::ImageSprite(std::function<std::string()> getKey, const std::unordered_map<std::string, Shared::Image> &images, std::function<void(const Shared::Image &)> updateFn)
+ImageSprite::ImageSprite(std::function<std::string()> getKey,
+                         const std::unordered_map<std::string, Shared::Image> &images,
+                         std::function<void(const Shared::Image &)> updateFn)
     : getKey_(getKey)
     , map_(images)
     , updateFn_(updateFn)
 {}
 
-ImageSprite::ImageSprite(
-    std::function<std::string()> getKey, const std::unordered_map<std::string, Shared::Image> &images)
+ImageSprite::ImageSprite(std::function<std::string()> getKey,
+                         const std::unordered_map<std::string, Shared::Image> &images)
     : getKey_(getKey)
     , map_(images)
     , updateFn_([](const Shared::Image &) {})

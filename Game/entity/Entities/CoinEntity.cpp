@@ -6,11 +6,11 @@
 
 #include "CoinEntity.h"
 
-#include "Entity/PropertyData.h"
-#include "Entity/Sprites/AnimationSprite.h"
-#include "Entity/State.h"
+#include "PropertyData.h"
 #include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
+#include "Sprites/AnimationSprite.h"
+#include "State.h"
 
 namespace FA {
 

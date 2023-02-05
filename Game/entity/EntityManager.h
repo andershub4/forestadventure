@@ -10,9 +10,9 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Entity/Factory.h"
-#include "Entity/Id.h"
-#include "Entity/LayerType.h"
+#include "Factory.h"
+#include "Id.h"
+#include "LayerType.h"
 
 #include "Fwd/SfmlFwd.h"
 

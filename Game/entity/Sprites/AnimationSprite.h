@@ -10,9 +10,6 @@
 #include <string>
 #include <unordered_map>
 
-//#include <SFML/Graphics/Sprite.hpp>
-
-//#include "Fwd/SfmlFwd.h"
 #include "BasicSprite.h"
 #include "Resource/Animation.h"
 
@@ -23,11 +20,11 @@ namespace Entity {
 class AnimationSprite : public BasicSprite
 {
 public:
-    AnimationSprite(std::function<std::string()> getKey, const std::unordered_map<std::string, Shared::Animation> &animations,
-                     std::function<void(const Shared::Animation &)>,
-                     bool center = true);
     AnimationSprite(std::function<std::string()> getKey,
-                     const std::unordered_map<std::string, Shared::Animation> &animations, bool center = true);
+                    const std::unordered_map<std::string, Shared::Animation> &animations,
+                    std::function<void(const Shared::Animation &)>, bool center = true);
+    AnimationSprite(std::function<std::string()> getKey,
+                    const std::unordered_map<std::string, Shared::Animation> &animations, bool center = true);
     virtual ~AnimationSprite();
 
     virtual void Enter() override;

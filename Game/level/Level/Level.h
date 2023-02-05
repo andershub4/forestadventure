@@ -10,13 +10,18 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Camera/CameraManager.h"
-#include "Entity/EntityManager.h"
 #include "Fwd/SfmlFwd.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
 #include "TileMap.h"
 
 namespace FA {
+
+namespace Entity {
+
+class EntityManager;
+
+}  // namespace Entity
 
 namespace Shared {
 
@@ -45,7 +50,7 @@ private:
     Shared::SheetManager sheetManager_;
     TileMap tileMap_;
     Shared::CameraManager cameraManager_;
-    Entity::EntityManager entityManager_;
+    std::unique_ptr<Entity::EntityManager> entityManager_;
 
 private:
     void LoadEntitySheets();

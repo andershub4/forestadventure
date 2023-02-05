@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "Entity/EventType.h"
+#include "EventType.h"
 
 namespace FA {
 
