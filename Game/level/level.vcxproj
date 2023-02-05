@@ -202,10 +202,8 @@
     <ClInclude Include="Entity\State.h" />
     <ClInclude Include="Entity\StateMachine.h" />
     <ClInclude Include="Entity\StateType.h" />
-    <ClInclude Include="Enum\AnimationType.h" />
     <ClInclude Include="Enum\EntityType.h" />
     <ClInclude Include="Enum\FaceDirection.h" />
-    <ClInclude Include="Enum\FrameType.h" />
     <ClInclude Include="Enum\MoveDirection.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Level\TileMap.h" />

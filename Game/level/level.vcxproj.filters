@@ -185,16 +185,10 @@
     <ClInclude Include="Level\TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enum\AnimationType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Enum\EntityType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\FaceDirection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum\FrameType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enum\MoveDirection.h">
