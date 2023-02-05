@@ -101,7 +101,7 @@ void PlayerEntity::OnMessage(std::shared_ptr<Shared::Message> msg)
             HandleEvent(std::make_shared<AttackEvent>());
         }
         else if (key == sf::Keyboard::Key::Space) {
-            HandleEvent(std::make_shared<AttackWeaponEvent>(EntityType::Arrow));
+            HandleEvent(std::make_shared<AttackWeaponEvent>());
         }
     }
     else if (msg->GetMessageType() == Shared::MessageType::KeyReleased) {
