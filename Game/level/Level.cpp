@@ -11,7 +11,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Camera/Camera.h"
-#include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Folder.h"
 #include "Logging.h"

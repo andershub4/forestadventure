@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)entity;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)entity\Src;$(SolutionDir)entity\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)entity;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)entity\Src;$(SolutionDir)entity\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,68 +141,68 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Abilities\BasicAbility.h" />
-    <ClInclude Include="Abilities\MoveAbility.h" />
-    <ClInclude Include="Abilities\ShootAbility.h" />
-    <ClInclude Include="Body.h" />
-    <ClInclude Include="Constant\Entity.h" />
-    <ClInclude Include="Entities\ArrowEntity.h" />
-    <ClInclude Include="Entities\BasicEntity.h" />
-    <ClInclude Include="Entities\CoinEntity.h" />
-    <ClInclude Include="Entities\MoleEntity.h" />
-    <ClInclude Include="Entities\PlayerEntity.h" />
-    <ClInclude Include="Entities\StaticEntity.h" />
-    <ClInclude Include="Entities\TileEntity.h" />
-    <ClInclude Include="EntityManager.h" />
-    <ClInclude Include="EntityService.h" />
-    <ClInclude Include="Enum\EntityType.h" />
-    <ClInclude Include="Enum\FaceDirection.h" />
-    <ClInclude Include="Enum\MoveDirection.h" />
-    <ClInclude Include="Events\AttackEvent.h" />
-    <ClInclude Include="Events\AttackWeaponEvent.h" />
-    <ClInclude Include="Events\BasicEvent.h" />
-    <ClInclude Include="Events\DeadEvent.h" />
-    <ClInclude Include="Events\InitEvent.h" />
-    <ClInclude Include="Events\StartMoveEvent.h" />
-    <ClInclude Include="Events\StopMoveEvent.h" />
-    <ClInclude Include="EventType.h" />
-    <ClInclude Include="Factory.h" />
-    <ClInclude Include="Id.h" />
-    <ClInclude Include="LayerType.h" />
-    <ClInclude Include="Properties\BasicProperty.h" />
-    <ClInclude Include="Properties\Property.h" />
-    <ClInclude Include="PropertyConverter.h" />
-    <ClInclude Include="PropertyData.h" />
-    <ClInclude Include="PropertyStore.h" />
-    <ClInclude Include="Shape.h" />
-    <ClInclude Include="Sprites\AnimationSprite.h" />
-    <ClInclude Include="Sprites\BasicSprite.h" />
-    <ClInclude Include="Sprites\ImageSprite.h" />
-    <ClInclude Include="State.h" />
-    <ClInclude Include="StateMachine.h" />
-    <ClInclude Include="StateType.h" />
+    <ClInclude Include="Src\Abilities\BasicAbility.h" />
+    <ClInclude Include="Src\Abilities\MoveAbility.h" />
+    <ClInclude Include="Src\Abilities\ShootAbility.h" />
+    <ClInclude Include="Src\Body.h" />
+    <ClInclude Include="Src\Constant\Entity.h" />
+    <ClInclude Include="Src\Entities\ArrowEntity.h" />
+    <ClInclude Include="Src\Entities\BasicEntity.h" />
+    <ClInclude Include="Src\Entities\CoinEntity.h" />
+    <ClInclude Include="Src\Entities\MoleEntity.h" />
+    <ClInclude Include="Src\Entities\PlayerEntity.h" />
+    <ClInclude Include="Src\Entities\StaticEntity.h" />
+    <ClInclude Include="Src\Entities\TileEntity.h" />
+    <ClInclude Include="Include\EntityManager.h" />
+    <ClInclude Include="Src\EntityService.h" />
+    <ClInclude Include="Src\Enum\EntityType.h" />
+    <ClInclude Include="Src\Enum\FaceDirection.h" />
+    <ClInclude Include="Src\Enum\MoveDirection.h" />
+    <ClInclude Include="Src\Events\AttackEvent.h" />
+    <ClInclude Include="Src\Events\AttackWeaponEvent.h" />
+    <ClInclude Include="Src\Events\BasicEvent.h" />
+    <ClInclude Include="Src\Events\DeadEvent.h" />
+    <ClInclude Include="Src\Events\InitEvent.h" />
+    <ClInclude Include="Src\Events\StartMoveEvent.h" />
+    <ClInclude Include="Src\Events\StopMoveEvent.h" />
+    <ClInclude Include="Src\EventType.h" />
+    <ClInclude Include="Src\Factory.h" />
+    <ClInclude Include="Include\Id.h" />
+    <ClInclude Include="Include\LayerType.h" />
+    <ClInclude Include="Src\Properties\BasicProperty.h" />
+    <ClInclude Include="Src\Properties\Property.h" />
+    <ClInclude Include="Src\PropertyConverter.h" />
+    <ClInclude Include="Src\PropertyData.h" />
+    <ClInclude Include="Src\PropertyStore.h" />
+    <ClInclude Include="Src\Shape.h" />
+    <ClInclude Include="Src\Sprites\AnimationSprite.h" />
+    <ClInclude Include="Src\Sprites\BasicSprite.h" />
+    <ClInclude Include="Src\Sprites\ImageSprite.h" />
+    <ClInclude Include="Src\State.h" />
+    <ClInclude Include="Src\StateMachine.h" />
+    <ClInclude Include="Src\StateType.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Abilities\BasicAbility.cpp" />
-    <ClCompile Include="Abilities\MoveAbility.cpp" />
-    <ClCompile Include="Abilities\ShootAbility.cpp" />
-    <ClCompile Include="Entities\ArrowEntity.cpp" />
-    <ClCompile Include="Entities\BasicEntity.cpp" />
-    <ClCompile Include="Entities\CoinEntity.cpp" />
-    <ClCompile Include="Entities\MoleEntity.cpp" />
-    <ClCompile Include="Entities\PlayerEntity.cpp" />
-    <ClCompile Include="Entities\StaticEntity.cpp" />
-    <ClCompile Include="Entities\TileEntity.cpp" />
-    <ClCompile Include="EntityManager.cpp" />
-    <ClCompile Include="EntityService.cpp" />
-    <ClCompile Include="Factory.cpp" />
-    <ClCompile Include="PropertyConverter.cpp" />
-    <ClCompile Include="Shape.cpp" />
-    <ClCompile Include="Sprites\AnimationSprite.cpp" />
-    <ClCompile Include="Sprites\BasicSprite.cpp" />
-    <ClCompile Include="Sprites\ImageSprite.cpp" />
-    <ClCompile Include="State.cpp" />
-    <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="Src\Abilities\BasicAbility.cpp" />
+    <ClCompile Include="Src\Abilities\MoveAbility.cpp" />
+    <ClCompile Include="Src\Abilities\ShootAbility.cpp" />
+    <ClCompile Include="Src\Entities\ArrowEntity.cpp" />
+    <ClCompile Include="Src\Entities\BasicEntity.cpp" />
+    <ClCompile Include="Src\Entities\CoinEntity.cpp" />
+    <ClCompile Include="Src\Entities\MoleEntity.cpp" />
+    <ClCompile Include="Src\Entities\PlayerEntity.cpp" />
+    <ClCompile Include="Src\Entities\StaticEntity.cpp" />
+    <ClCompile Include="Src\Entities\TileEntity.cpp" />
+    <ClCompile Include="Src\EntityManager.cpp" />
+    <ClCompile Include="Src\EntityService.cpp" />
+    <ClCompile Include="Src\Factory.cpp" />
+    <ClCompile Include="Src\PropertyConverter.cpp" />
+    <ClCompile Include="Src\Shape.cpp" />
+    <ClCompile Include="Src\Sprites\AnimationSprite.cpp" />
+    <ClCompile Include="Src\Sprites\BasicSprite.cpp" />
+    <ClCompile Include="Src\Sprites\ImageSprite.cpp" />
+    <ClCompile Include="Src\State.cpp" />
+    <ClCompile Include="Src\StateMachine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
