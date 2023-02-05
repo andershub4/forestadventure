@@ -10,7 +10,6 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Factory.h"
 #include "Id.h"
 #include "LayerType.h"
 
@@ -22,6 +21,9 @@ namespace Shared {
 
 struct MapData;
 struct Graphic;
+class MessageBus;
+class SheetManager;
+class CameraManager;
 
 }  // namespace Shared
 
@@ -56,7 +58,7 @@ private:
     };
 
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
-    Factory factory_;
+    std::unique_ptr<Factory> factory_;
     std::vector<std::unique_ptr<BasicEntity>> createdEntities_;
     std::vector<EntityId> deletedEntities_;
     std::map<std::string, DrawableInfo> drawables_;
