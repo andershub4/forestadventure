@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 class Camera;
 
 class CameraManager
@@ -27,5 +29,7 @@ public:
 private:
     std::unique_ptr<Camera> camera_ = nullptr;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

@@ -35,7 +35,7 @@ class EntityManager
 {
 public:
     EntityManager(Shared::MessageBus &messageBus, const Shared::SheetManager &sheetManager,
-                  const CameraManager &cameraManager);
+                  const Shared::CameraManager &cameraManager);
     ~EntityManager();
 
     void Update(float deltaTime);

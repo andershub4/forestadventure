@@ -9,7 +9,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "CameraManager.h"
+#include "Camera/CameraManager.h"
 #include "Entity/EntityManager.h"
 #include "Fwd/SfmlFwd.h"
 #include "Resource/SheetManager.h"
@@ -44,7 +44,7 @@ private:
     std::vector<sf::Sprite> fringeLayer_;
     Shared::SheetManager sheetManager_;
     TileMap tileMap_;
-    CameraManager cameraManager_;
+    Shared::CameraManager cameraManager_;
     Entity::EntityManager entityManager_;
 
 private:

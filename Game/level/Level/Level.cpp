@@ -10,7 +10,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Camera.h"
+#include "Camera/Camera.h"
 #include "Constant/Entity.h"
 #include "Folder.h"
 #include "Logging.h"

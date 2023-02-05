@@ -15,10 +15,9 @@
 
 namespace FA {
 
-class CameraManager;
-
 namespace Shared {
 
+class CameraManager;
 class MessageBus;
 class SheetManager;
 struct MapData;
@@ -35,7 +34,7 @@ class Factory
 {
 public:
     Factory(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager,
-            const CameraManager& cameraManager, EntityManager& entityManager);
+            const Shared::CameraManager& cameraManager, EntityManager& entityManager);
     ~Factory();
 
     std::unique_ptr<BasicEntity> Create(const std::string& typeStr, const Shared::MapData& mapData) const;
@@ -46,7 +45,7 @@ private:
     mutable EntityId id_{0};
     Shared::MessageBus& messageBus_;
     const Shared::SheetManager& sheetManager_;
-    const CameraManager& cameraManager_;
+    const Shared::CameraManager& cameraManager_;
     EntityManager& entityManager_;
     std::unordered_map<std::string, CreateFn> map_;
 

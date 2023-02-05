@@ -102,6 +102,12 @@
     <ClInclude Include="MapData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Camera\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\CameraManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp">
@@ -141,6 +147,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Effect\NullEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\CameraManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

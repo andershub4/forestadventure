@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Camera\CameraManager.h" />
     <ClInclude Include="Constant\Screen.h" />
     <ClInclude Include="Effect\BasicEffect.h" />
     <ClInclude Include="Effect\FadeEffect.h" />
@@ -172,6 +174,8 @@
     <ClInclude Include="Resource\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Camera\CameraManager.cpp" />
     <ClCompile Include="Effect\BasicEffect.cpp" />
     <ClCompile Include="Effect\FadeEffect.cpp" />
     <ClCompile Include="Effect\NullEffect.cpp" />

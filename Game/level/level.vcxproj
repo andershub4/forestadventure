@@ -161,8 +161,6 @@
     <ClCompile Include="Entity\Shape.cpp" />
     <ClCompile Include="Entity\State.cpp" />
     <ClCompile Include="Entity\StateMachine.cpp" />
-    <ClCompile Include="Level\Camera.cpp" />
-    <ClCompile Include="Level\CameraManager.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Level\TileMap.cpp" />
   </ItemGroup>
@@ -209,8 +207,6 @@
     <ClInclude Include="Enum\FaceDirection.h" />
     <ClInclude Include="Enum\FrameType.h" />
     <ClInclude Include="Enum\MoveDirection.h" />
-    <ClInclude Include="Level\Camera.h" />
-    <ClInclude Include="Level\CameraManager.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Level\TileMap.h" />
   </ItemGroup>

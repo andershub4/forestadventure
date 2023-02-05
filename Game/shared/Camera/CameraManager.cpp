@@ -14,6 +14,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 CameraManager::CameraManager() = default;
 
 CameraManager::~CameraManager() = default;
@@ -32,5 +34,7 @@ Camera& CameraManager::GetCamera() const
 {
     return *camera_.get();
 }
+
+}  // namespace Shared
 
 }  // namespace FA

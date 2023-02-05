@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Camera/Camera.h"
 #include "Constant/Entity.h"
 #include "Entity/Abilities/MoveAbility.h"
 #include "Entity/Abilities/ShootAbility.h"
@@ -23,7 +24,6 @@
 #include "Entity/PropertyData.h"
 #include "Entity/Sprites/AnimationSprite.h"
 #include "Entity/State.h"
-#include "Level/Camera.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"

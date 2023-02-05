@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Shared {
+
 class Camera
 {
 public:
@@ -32,5 +34,7 @@ private:
     sf::Vector2f CalcViewPosition() const;
     float Clamp(float value, float lower, float upper) const;
 };
+
+}  // namespace Shared
 
 }  // namespace FA

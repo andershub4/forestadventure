@@ -17,11 +17,10 @@
 
 namespace FA {
 
-class CameraManager;
-class Camera;
-
 namespace Shared {
 
+class CameraManager;
+class Camera;
 class Animation;
 class Image;
 class SheetManager;
@@ -42,7 +41,8 @@ class EntityService
 {
 public:
     EntityService(Shared::MessageBus &messageBus, const Shared::SheetManager &sheetManager,
-                  const CameraManager &cameraManager, EntityManager &entityManager, const Shared::MapData &mapData);
+                  const Shared::CameraManager &cameraManager, EntityManager &entityManager,
+                  const Shared::MapData &mapData);
     ~EntityService();
 
     Shared::Animation MakeAnimation(const Shared::AnimationData &data) const;
@@ -53,7 +53,7 @@ public:
                        std::function<void(std::shared_ptr<Shared::Message>)> onMessage);
 
     void RemoveSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes);
-    Camera &GetCamera() const;
+    Shared::Camera &GetCamera() const;
     bool IsInsideMap(const sf::Vector2f &pos) const;
     void CreateEntity(const PropertyData &data);
     void DeleteEntity(EntityId id);
@@ -61,7 +61,7 @@ public:
 private:
     Shared::MessageBus &messageBus_;
     const Shared::SheetManager &sheetManager_;
-    const CameraManager &cameraManager_;
+    const Shared::CameraManager &cameraManager_;
     EntityManager &entityManager_;
     Shared::MapData mapData_;
 };

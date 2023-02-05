@@ -66,12 +66,6 @@
     <ClCompile Include="Entity\StateMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Level\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Level\CameraManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Level\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -183,12 +177,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity\StateType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Level\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Level\CameraManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Level\Level.h">
