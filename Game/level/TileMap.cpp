@@ -110,7 +110,7 @@ void TileMap::SetupObjectGroups()
     }
 }
 
-const std::vector<TileMap::TileData>& TileMap::GetLayer(const std::string& name) const
+const std::vector<TileMap::TileData> TileMap::GetLayer(const std::string& name) const
 {
     return layers_.at(name);
 }

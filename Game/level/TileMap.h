@@ -53,7 +53,7 @@ public:
     ~TileMap();
     void Load(const std::string &fileName);
     void Setup();
-    const std::vector<TileData> &GetLayer(const std::string &name) const;
+    const std::vector<TileData> GetLayer(const std::string &name) const;
     const std::vector<ObjectData> GetObjectGroup(const std::string &name) const;
     sf::Vector2u GetSize() const;
 
