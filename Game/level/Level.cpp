@@ -149,24 +149,22 @@ void Level::CreateBackgroundTile(const TileMap::TileData &data)
     Shared::Image image(data.graphic_.image_);
     sf::Sprite tile;
     image.ApplyTo(tile);
-    tile.setPosition(static_cast<float>(data.x_), static_cast<float>(data.y_));
+    tile.setPosition(data.position_);
     backgroundTexture_.draw(tile);
 }
 
 void Level::CreateObjectEntity(const TileMap::ObjectData &data)
 {
-    auto position = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
     Shared::MapData mapData{mapRect};
-    entityManager_->CreateEntity(data.typeStr_, position, data.properties_, mapData);
+    entityManager_->CreateEntity(data.typeStr_, data.position_, data.properties_, mapData);
 }
 
 void Level::CreateTileEntity(const TileMap::TileData &data)
 {
-    auto position = sf::Vector2f(static_cast<float>(data.x_), static_cast<float>(data.y_));
     auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
     Shared::MapData mapData{mapRect};
-    entityManager_->CreateTileEntity(position, data.graphic_, mapData);
+    entityManager_->CreateTileEntity(data.position_, data.graphic_, mapData);
 }
 
 void Level::CreateFringeTile(const TileMap::TileData &data)
@@ -174,7 +172,7 @@ void Level::CreateFringeTile(const TileMap::TileData &data)
     Shared::Image image(data.graphic_.image_);
     sf::Sprite tile;
     image.ApplyTo(tile);
-    tile.setPosition(static_cast<float>(data.x_), static_cast<float>(data.y_));
+    tile.setPosition(data.position_);
     fringeLayer_.push_back(tile);
 }
 

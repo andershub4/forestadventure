@@ -12,6 +12,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <SFML/System/Vector2.hpp>
+
 #include "Resource/Graphic.h"
 
 namespace FA {
@@ -35,16 +37,14 @@ class TileMap
 public:
     struct TileData
     {
-        unsigned int x_{};
-        unsigned int y_{};
+        sf::Vector2f position_{};
         Shared::Graphic graphic_{};
     };
 
     struct ObjectData
     {
         std::string typeStr_{};
-        unsigned int x_{};
-        unsigned int y_{};
+        sf::Vector2f position_{};
         std::unordered_map<std::string, std::string> properties_;
     };
 

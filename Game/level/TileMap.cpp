@@ -70,8 +70,7 @@ void TileMap::SetupLayers()
                 }
             }
 
-            outData.x_ = x;
-            outData.y_ = y;
+            outData.position_ = sf::Vector2f(static_cast<float>(x), static_cast<float>(y));
 
             if (!tileData.animation_.empty()) {
                 std::vector<Shared::Frame> outAnimation;
@@ -100,8 +99,7 @@ void TileMap::SetupObjectGroups()
         std::vector<TileMap::ObjectData> objectDatas;
         for (const auto& object : group.objects_) {
             TileMap::ObjectData objectData;
-            objectData.x_ = object.x_;
-            objectData.y_ = object.y_;
+            objectData.position_ = sf::Vector2f(static_cast<float>(object.x_), static_cast<float>(object.y_));
             objectData.typeStr_ = object.typeStr_;
             objectData.properties_ = object.properties_;
             objectDatas.push_back(objectData);
