@@ -19,6 +19,7 @@
 #include "Resource/Image.h"
 #include "Resource/SheetData.h"
 #include "Resource/SheetId.h"
+#include "TileMap.h"
 
 namespace FA {
 
@@ -50,7 +51,7 @@ const std::vector<Shared::SheetData> textureSheets = {
 
 Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureManager, const sf::Vector2u &viewSize)
     : sheetManager_(textureManager)
-    , tileMap_(sheetManager_)
+    , tileMap_(std::make_unique<TileMap>(sheetManager_))
     , viewSize_(viewSize)
     , entityManager_(std::make_unique<Entity::EntityManager>(messageBus, sheetManager_, cameraManager_))
     , levelCreator_(std::make_unique<LevelCreator>())
@@ -68,7 +69,7 @@ void Level::Create()
 {
     LOG_INFO_ENTER_FUNC();
     CreateMap();
-    cameraManager_.CreateCamera(viewSize_, tileMap_.GetSize());  // Entities need camera, create before
+    cameraManager_.CreateCamera(viewSize_, tileMap_->GetSize());  // Entities need camera, create before
     CreateEntities();
     LOG_INFO_EXIT_FUNC();
 }
@@ -107,29 +108,29 @@ void Level::LoadEntitySheets()
 void Level::LoadTileMap(const std::string &levelName)
 {
     auto path = GetAssetsPath() + "/map/" + levelName;
-    tileMap_.Load(path);
-    tileMap_.Setup();
+    tileMap_->Load(path);
+    tileMap_->Setup();
 }
 
 void Level::CreateMap()
 {
     LOG_INFO("Create map");
-    levelCreator_->AddBackground(tileMap_.GetLayer("Ground Layer 1"));
-    levelCreator_->AddBackground(tileMap_.GetLayer("Ground Layer 2"));
-    levelCreator_->CreateBackground(tileMap_.GetSize(), backgroundTexture_);
+    levelCreator_->AddBackground(tileMap_->GetLayer("Ground Layer 1"));
+    levelCreator_->AddBackground(tileMap_->GetLayer("Ground Layer 2"));
+    levelCreator_->CreateBackground(tileMap_->GetSize(), backgroundTexture_);
     backgroundTexture_.display();
     backgroundSprite_.setTexture(backgroundTexture_.getTexture());
-    fringeLayer_ = levelCreator_->CreateFringe(tileMap_.GetLayer("Fringe Layer"));
+    fringeLayer_ = levelCreator_->CreateFringe(tileMap_->GetLayer("Fringe Layer"));
 }
 
 void Level::CreateEntities()
 {
     LOG_INFO("Create entities");
-    Shared::MapData mapData{tileMap_.GetSize()};
-    for (const auto &data : tileMap_.GetObjectGroup("Object Layer 1")) {
+    Shared::MapData mapData{tileMap_->GetSize()};
+    for (const auto &data : tileMap_->GetObjectGroup("Object Layer 1")) {
         entityManager_->CreateEntity(data.typeStr_, data.position_, data.properties_, mapData);
     }
-    for (const auto &data : tileMap_.GetLayer("Dynamic Layer 1")) {
+    for (const auto &data : tileMap_->GetLayer("Dynamic Layer 1")) {
         entityManager_->CreateTileEntity(data.position_, data.graphic_, mapData);
     }
     entityManager_->HandleCreatedEntities();

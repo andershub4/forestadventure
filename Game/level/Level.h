@@ -13,11 +13,11 @@
 #include "Fwd/SfmlFwd.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
-#include "TileMap.h"
 
 namespace FA {
 
 class LevelCreator;
+class TileMap;
 
 namespace Entity {
 
@@ -50,7 +50,7 @@ private:
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
     Shared::SheetManager sheetManager_;
-    TileMap tileMap_;
+    std::unique_ptr<TileMap> tileMap_;
     Shared::CameraManager cameraManager_;
     std::unique_ptr<Entity::EntityManager> entityManager_;
     std::unique_ptr<LevelCreator> levelCreator_;
