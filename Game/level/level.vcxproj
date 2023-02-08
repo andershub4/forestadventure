@@ -142,10 +142,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelCreator.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelCreator.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,7 @@
 #include "Camera/Camera.h"
 #include "EntityManager.h"
 #include "Folder.h"
+#include "LevelCreator.h"
 #include "Logging.h"
 #include "MapData.h"
 #include "Resource/Image.h"
@@ -52,6 +53,7 @@ Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureMana
     , tileMap_(sheetManager_)
     , viewSize_(viewSize)
     , entityManager_(std::make_unique<Entity::EntityManager>(messageBus, sheetManager_, cameraManager_))
+    , levelCreator_(std::make_unique<LevelCreator>())
 {}
 
 Level::~Level() = default;
@@ -65,10 +67,9 @@ void Level::Load(const std::string &levelName)
 void Level::Create()
 {
     LOG_INFO_ENTER_FUNC();
-    CreateBackground();
-    cameraManager_.CreateCamera(viewSize_, tileMap_.GetSize());
+    CreateMap();
+    cameraManager_.CreateCamera(viewSize_, tileMap_.GetSize());  // Entities need camera, create before
     CreateEntities();
-    CreateFringe();
     LOG_INFO_EXIT_FUNC();
 }
 
@@ -110,18 +111,15 @@ void Level::LoadTileMap(const std::string &levelName)
     tileMap_.Setup();
 }
 
-void Level::CreateBackground()
+void Level::CreateMap()
 {
-    LOG_INFO("Create background texture");
-    backgroundTexture_.create(tileMap_.GetSize().x, tileMap_.GetSize().y);
-    for (const auto &tileData : tileMap_.GetLayer("Ground Layer 1")) {
-        CreateBackgroundTile(tileData);
-    }
-    for (const auto &tileData : tileMap_.GetLayer("Ground Layer 2")) {
-        CreateBackgroundTile(tileData);
-    }
+    LOG_INFO("Create map");
+    levelCreator_->AddBackground(tileMap_.GetLayer("Ground Layer 1"));
+    levelCreator_->AddBackground(tileMap_.GetLayer("Ground Layer 2"));
+    levelCreator_->CreateBackground(tileMap_.GetSize(), backgroundTexture_);
     backgroundTexture_.display();
     backgroundSprite_.setTexture(backgroundTexture_.getTexture());
+    fringeLayer_ = levelCreator_->CreateFringe(tileMap_.GetLayer("Fringe Layer"));
 }
 
 void Level::CreateEntities()
@@ -135,32 +133,6 @@ void Level::CreateEntities()
         entityManager_->CreateTileEntity(data.position_, data.graphic_, mapData);
     }
     entityManager_->HandleCreatedEntities();
-}
-
-void Level::CreateFringe()
-{
-    LOG_INFO("Create fringe");
-    for (const auto &tileData : tileMap_.GetLayer("Fringe Layer")) {
-        CreateFringeTile(tileData);
-    }
-}
-
-void Level::CreateBackgroundTile(const TileMap::TileData &data)
-{
-    Shared::Image image(data.graphic_.image_);
-    sf::Sprite tile;
-    image.ApplyTo(tile);
-    tile.setPosition(data.position_);
-    backgroundTexture_.draw(tile);
-}
-
-void Level::CreateFringeTile(const TileMap::TileData &data)
-{
-    Shared::Image image(data.graphic_.image_);
-    sf::Sprite tile;
-    image.ApplyTo(tile);
-    tile.setPosition(data.position_);
-    fringeLayer_.push_back(tile);
 }
 
 }  // namespace FA

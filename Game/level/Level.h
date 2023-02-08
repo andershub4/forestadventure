@@ -17,6 +17,8 @@
 
 namespace FA {
 
+class LevelCreator;
+
 namespace Entity {
 
 class EntityManager;
@@ -51,17 +53,13 @@ private:
     TileMap tileMap_;
     Shared::CameraManager cameraManager_;
     std::unique_ptr<Entity::EntityManager> entityManager_;
+    std::unique_ptr<LevelCreator> levelCreator_;
 
 private:
     void LoadEntitySheets();
     void LoadTileMap(const std::string& levelName);
-
-    void CreateBackground();
+    void CreateMap();
     void CreateEntities();
-    void CreateFringe();
-
-    void CreateBackgroundTile(const TileMap::TileData& data);
-    void CreateFringeTile(const TileMap::TileData& data);
 };
 
 }  // namespace FA
