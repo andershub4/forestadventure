@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)entity\Include;$(SolutionDir)level;$(SolutionDir)tile\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)entity\Include;$(SolutionDir)level\Include;$(SolutionDir)tile\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)entity\Include;$(SolutionDir)level;$(SolutionDir)tile\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)entity\Include;$(SolutionDir)level\Include;$(SolutionDir)tile\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,14 +141,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Level.cpp" />
-    <ClCompile Include="LevelCreator.cpp" />
-    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Src\Level.cpp" />
+    <ClCompile Include="Src\LevelCreator.cpp" />
+    <ClCompile Include="Src\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="LevelCreator.h" />
-    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Include\Level.h" />
+    <ClInclude Include="Src\LevelCreator.h" />
+    <ClInclude Include="Src\TileMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\entity\entity.vcxproj">

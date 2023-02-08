@@ -15,24 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Level.cpp">
+    <ClCompile Include="Src\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TileMap.cpp">
+    <ClCompile Include="Src\TileMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LevelCreator.cpp">
+    <ClCompile Include="Src\LevelCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Level.h">
+    <ClInclude Include="Include\Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TileMap.h">
+    <ClInclude Include="Src\TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LevelCreator.h">
+    <ClInclude Include="Src\LevelCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
