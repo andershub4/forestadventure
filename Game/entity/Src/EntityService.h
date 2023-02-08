@@ -64,6 +64,7 @@ private:
     const Shared::CameraManager &cameraManager_;
     EntityManager &entityManager_;
     Shared::MapData mapData_;
+    sf::FloatRect mapRect_;
 };
 
 }  // namespace Entity

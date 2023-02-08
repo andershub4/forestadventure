@@ -127,11 +127,12 @@ void Level::CreateBackground()
 void Level::CreateEntities()
 {
     LOG_INFO("Create entities");
-    for (const auto &objectData : tileMap_.GetObjectGroup("Object Layer 1")) {
-        CreateObjectEntity(objectData);
+    Shared::MapData mapData{tileMap_.GetSize()};
+    for (const auto &data : tileMap_.GetObjectGroup("Object Layer 1")) {
+        entityManager_->CreateEntity(data.typeStr_, data.position_, data.properties_, mapData);
     }
-    for (const auto &tileData : tileMap_.GetLayer("Dynamic Layer 1")) {
-        CreateTileEntity(tileData);
+    for (const auto &data : tileMap_.GetLayer("Dynamic Layer 1")) {
+        entityManager_->CreateTileEntity(data.position_, data.graphic_, mapData);
     }
     entityManager_->HandleCreatedEntities();
 }
@@ -151,20 +152,6 @@ void Level::CreateBackgroundTile(const TileMap::TileData &data)
     image.ApplyTo(tile);
     tile.setPosition(data.position_);
     backgroundTexture_.draw(tile);
-}
-
-void Level::CreateObjectEntity(const TileMap::ObjectData &data)
-{
-    auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
-    Shared::MapData mapData{mapRect};
-    entityManager_->CreateEntity(data.typeStr_, data.position_, data.properties_, mapData);
-}
-
-void Level::CreateTileEntity(const TileMap::TileData &data)
-{
-    auto mapRect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(tileMap_.GetSize()));
-    Shared::MapData mapData{mapRect};
-    entityManager_->CreateTileEntity(data.position_, data.graphic_, mapData);
 }
 
 void Level::CreateFringeTile(const TileMap::TileData &data)

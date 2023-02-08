@@ -14,7 +14,7 @@ namespace Shared {
 
 struct MapData
 {
-    sf::FloatRect rect_;
+    sf::Vector2u size_;
 };
 
 }  // namespace Shared

@@ -29,7 +29,9 @@ EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::Sheet
     , cameraManager_(cameraManager)
     , entityManager_(entityManager)
     , mapData_(mapData)
-{}
+{
+    mapRect_ = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(mapData.size_));
+}
 
 EntityService::~EntityService() = default;
 
@@ -70,7 +72,7 @@ Shared::Camera& EntityService::GetCamera() const
 
 bool EntityService::IsInsideMap(const sf::Vector2f& pos) const
 {
-    return mapData_.rect_.contains(pos);
+    return mapRect_.contains(pos);
 }
 
 void EntityService::CreateEntity(const PropertyData& data)

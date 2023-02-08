@@ -61,9 +61,7 @@ private:
     void CreateFringe();
 
     void CreateBackgroundTile(const TileMap::TileData& data);
-    void CreateTileEntity(const TileMap::TileData& data);
     void CreateFringeTile(const TileMap::TileData& data);
-    void CreateObjectEntity(const TileMap::ObjectData& data);
 };
 
 }  // namespace FA
