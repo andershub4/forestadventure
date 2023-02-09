@@ -20,7 +20,7 @@ class MoleEntity : public BasicEntity
 public:
     static const std::string str;
 
-    MoleEntity(EntityId id, const EntityService& service);
+    MoleEntity(EntityId id, const PropertyData& data, const EntityService& service);
     virtual ~MoleEntity();
 
     virtual EntityType Type() const override { return EntityType::Mole; }

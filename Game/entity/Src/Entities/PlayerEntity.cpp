@@ -69,8 +69,8 @@ const std::unordered_map<StateType, std::unordered_map<FaceDirection, Shared::An
 
 const std::string PlayerEntity::str = "Player";
 
-PlayerEntity::PlayerEntity(EntityId id, const EntityService& service)
-    : BasicEntity(id, service)
+PlayerEntity::PlayerEntity(EntityId id, const PropertyData& data, const EntityService& service)
+    : BasicEntity(id, data, service)
 {}
 
 PlayerEntity::~PlayerEntity() = default;

@@ -16,8 +16,8 @@ namespace Entity {
 
 const std::string StaticEntity::str = "Static";
 
-StaticEntity::StaticEntity(EntityId id, const EntityService& service)
-    : BasicEntity(id, service)
+StaticEntity::StaticEntity(EntityId id, const PropertyData& data, const EntityService& service)
+    : BasicEntity(id, data, service)
 {}
 
 StaticEntity::~StaticEntity() = default;

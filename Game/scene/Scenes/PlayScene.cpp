@@ -38,7 +38,7 @@ void PlayScene::Enter()
 #endif
     layers_[LayerId::PreAlpha] = std::make_unique<PreAlphaLayer>(messageBus_, rect);
 
-    // subscribe layer message before entity is created (so layer can receive EntityCreatedMessage)
+    // subscribe layer message before entity is created (so layer can receive EntityInitializedMessage)
     Subscribe({Shared::MessageType::CloseWindow, Shared::MessageType::KeyPressed, Shared::MessageType::GameOver});
     for (const auto& entry : layers_) {
         auto& layer = entry.second;

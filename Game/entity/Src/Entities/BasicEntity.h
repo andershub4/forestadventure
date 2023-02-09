@@ -14,6 +14,7 @@
 #include "Fwd/SfmlFwd.h"
 #include "Id.h"
 #include "LayerType.h"
+#include "PropertyData.h"
 #include "PropertyStore.h"
 #include "StateMachine.h"
 
@@ -28,18 +29,15 @@ enum class MessageType;
 
 namespace Entity {
 
-struct PropertyData;
-
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, const EntityService& service);
+    BasicEntity(EntityId id, const PropertyData& data, const EntityService& service);
     virtual ~BasicEntity();
 
     virtual EntityType Type() const = 0;
     virtual LayerType GetLayer() const = 0;
 
-    void Create(const PropertyData& data);
     void Destroy();
     void Init();
     void Update(float deltaTime);
@@ -61,6 +59,7 @@ protected:
 
 private:
     EntityId id_ = InvalidEntityId;
+    const PropertyData data_;
     StateMachine stateMachine_;
 
 private:

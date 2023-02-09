@@ -19,8 +19,8 @@ namespace Entity {
 
 const std::string TileEntity::str = "Tile";
 
-TileEntity::TileEntity(EntityId id, const EntityService& service)
-    : BasicEntity(id, service)
+TileEntity::TileEntity(EntityId id, const PropertyData& data, const EntityService& service)
+    : BasicEntity(id, data, service)
 {}
 
 TileEntity::~TileEntity() = default;

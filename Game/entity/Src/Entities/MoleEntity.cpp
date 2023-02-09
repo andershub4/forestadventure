@@ -41,8 +41,8 @@ const std::unordered_map<StateType, std::unordered_map<FaceDirection, Shared::An
 
 const std::string MoleEntity::str = "Mole";
 
-MoleEntity::MoleEntity(EntityId id, const EntityService& service)
-    : BasicEntity(id, service)
+MoleEntity::MoleEntity(EntityId id, const PropertyData& data, const EntityService& service)
+    : BasicEntity(id, data, service)
 {}
 
 MoleEntity::~MoleEntity() = default;

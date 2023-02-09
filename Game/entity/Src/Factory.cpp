@@ -24,27 +24,33 @@ Factory::Factory(Shared::MessageBus& messageBus, const Shared::SheetManager& she
     , cameraManager_(cameraManager)
     , entityManager_(entityManager)
 {
-    RegisterEntity(MoleEntity::str,
-                   [](EntityId id, const EntityService& s) { return std::make_unique<MoleEntity>(id, s); });
-    RegisterEntity(PlayerEntity::str,
-                   [](EntityId id, const EntityService& s) { return std::make_unique<PlayerEntity>(id, s); });
-    RegisterEntity(ArrowEntity::str,
-                   [](EntityId id, const EntityService& s) { return std::make_unique<ArrowEntity>(id, s); });
-    RegisterEntity(TileEntity::str,
-                   [](EntityId id, const EntityService& s) { return std::make_unique<TileEntity>(id, s); });
-    RegisterEntity(CoinEntity::str,
-                   [](EntityId id, const EntityService& s) { return std::make_unique<CoinEntity>(id, s); });
+    RegisterEntity(MoleEntity::str, [](EntityId id, const PropertyData& data, const EntityService& s) {
+        return std::make_unique<MoleEntity>(id, data, s);
+    });
+    RegisterEntity(PlayerEntity::str, [](EntityId id, const PropertyData& data, const EntityService& s) {
+        return std::make_unique<PlayerEntity>(id, data, s);
+    });
+    RegisterEntity(ArrowEntity::str, [](EntityId id, const PropertyData& data, const EntityService& s) {
+        return std::make_unique<ArrowEntity>(id, data, s);
+    });
+    RegisterEntity(TileEntity::str, [](EntityId id, const PropertyData& data, const EntityService& s) {
+        return std::make_unique<TileEntity>(id, data, s);
+    });
+    RegisterEntity(CoinEntity::str, [](EntityId id, const PropertyData& data, const EntityService& s) {
+        return std::make_unique<CoinEntity>(id, data, s);
+    });
 }
 
 Factory::~Factory() = default;
 
-std::unique_ptr<BasicEntity> Factory::Create(const std::string& typeStr, const Shared::MapData& mapData) const
+std::unique_ptr<BasicEntity> Factory::Create(const std::string& typeStr, const PropertyData& data,
+                                             const Shared::MapData& mapData) const
 {
     auto it = map_.find(typeStr);
 
     if (it != map_.end()) {
         EntityService service(messageBus_, sheetManager_, cameraManager_, entityManager_, mapData);
-        return it->second(id_++, service);
+        return it->second(id_++, data, service);
     }
 
     LOG_ERROR("Could not create entity of type: %s", typeStr.c_str());

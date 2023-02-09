@@ -29,6 +29,7 @@ namespace Entity {
 class EntityManager;
 class BasicEntity;
 class EntityService;
+struct PropertyData;
 
 class Factory
 {
@@ -37,10 +38,11 @@ public:
             const Shared::CameraManager& cameraManager, EntityManager& entityManager);
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(const std::string& typeStr, const Shared::MapData& mapData) const;
+    std::unique_ptr<BasicEntity> Create(const std::string& typeStr, const PropertyData& data,
+                                        const Shared::MapData& mapData) const;
 
 private:
-    using CreateFn = std::function<std::unique_ptr<BasicEntity>(EntityId, const EntityService&)>;
+    using CreateFn = std::function<std::unique_ptr<BasicEntity>(EntityId, const PropertyData&, const EntityService&)>;
 
     mutable EntityId id_{0};
     Shared::MessageBus& messageBus_;

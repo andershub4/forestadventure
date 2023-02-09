@@ -79,12 +79,12 @@ void HelperLayer::OnCreate()
 
 void HelperLayer::SubscribeMessages()
 {
-    Subscribe({Shared::MessageType::EntityCreated, Shared::MessageType::EntityDestroyed});
+    Subscribe({Shared::MessageType::EntityInitialized, Shared::MessageType::EntityDestroyed});
 }
 
 void HelperLayer::UnsubscribeMessages()
 {
-    Unsubscribe({Shared::MessageType::EntityCreated, Shared::MessageType::EntityDestroyed});
+    Unsubscribe({Shared::MessageType::EntityInitialized, Shared::MessageType::EntityDestroyed});
 }
 
 void HelperLayer::Draw()
@@ -106,7 +106,7 @@ void HelperLayer::Update(float deltaTime)
 
 void HelperLayer::OnMessage(std::shared_ptr<Shared::Message> msg)
 {
-    if (msg->GetMessageType() == Shared::MessageType::EntityCreated) {
+    if (msg->GetMessageType() == Shared::MessageType::EntityInitialized) {
         nEntities_++;
     }
     else if (msg->GetMessageType() == Shared::MessageType::EntityDestroyed) {

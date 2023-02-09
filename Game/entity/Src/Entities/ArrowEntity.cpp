@@ -48,8 +48,8 @@ PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, MoveD
     return data;
 }
 
-ArrowEntity::ArrowEntity(EntityId id, const EntityService& service)
-    : BasicEntity(id, service)
+ArrowEntity::ArrowEntity(EntityId id, const PropertyData& data, const EntityService& service)
+    : BasicEntity(id, data, service)
 {}
 
 ArrowEntity::~ArrowEntity() = default;

@@ -18,8 +18,8 @@ namespace Entity {
 
 const std::string CoinEntity::str = "Coin";
 
-CoinEntity::CoinEntity(EntityId id, const EntityService& service)
-    : BasicEntity(id, service)
+CoinEntity::CoinEntity(EntityId id, const PropertyData& data, const EntityService& service)
+    : BasicEntity(id, data, service)
 {}
 
 CoinEntity::~CoinEntity() = default;

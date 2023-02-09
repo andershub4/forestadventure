@@ -20,7 +20,7 @@ public:
     static const std::string str;
     static PropertyData CreatePropertyData(const sf::Vector2f& position, MoveDirection dir);
 
-    ArrowEntity(EntityId id, const EntityService& service);
+    ArrowEntity(EntityId id, const PropertyData& data, const EntityService& service);
     virtual ~ArrowEntity();
 
     virtual EntityType Type() const override { return EntityType::Arrow; }

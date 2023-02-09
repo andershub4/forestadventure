@@ -13,46 +13,44 @@
 #include "Events/InitEvent.h"
 #include "Message/BroadcastMessage/EntityCreatedMessage.h"
 #include "Message/BroadcastMessage/EntityDestroyedMessage.h"
-#include "PropertyData.h"
 #include "State.h"
 
 namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, const EntityService& service)
+BasicEntity::BasicEntity(EntityId id, const PropertyData& data, const EntityService& service)
     : id_(id)
+    , data_(data)
     , entityService_(service)
-{}
+{
+    RegisterUninitializedState();
+}
 
 BasicEntity::~BasicEntity() = default;
 
-void BasicEntity::Create(const PropertyData& data)
+void BasicEntity::Init()
 {
     RegisterProperties();
-    body_.position_ = data.position_;
-    ReadProperties(data.properties_);
+    body_.position_ = data_.position_;
+    ReadProperties(data_.properties_);
 
-    RegisterUninitializedState();
     auto idleState = RegisterState(StateType::Idle);
     idleState->RegisterBeginCB([this]() { OnBeginIdle(); });
     auto deadState = RegisterDeadState();
-    RegisterStates(idleState, deadState, data);
+    RegisterStates(idleState, deadState, data_);
 
     Subscribe(Messages());
     Start();  // must do this after setting position
-    entityService_.SendMessage(std::make_shared<Shared::EntityCreatedMessage>());
+    entityService_.SendMessage(std::make_shared<Shared::EntityInitializedMessage>());
+
+    HandleEvent(std::make_shared<InitEvent>());
 }
 
 void BasicEntity::Destroy()
 {
     Unsubscribe(Messages());
     entityService_.SendMessage(std::make_shared<Shared::EntityDestroyedMessage>());
-}
-
-void BasicEntity::Init()
-{
-    HandleEvent(std::make_shared<InitEvent>());
 }
 
 void BasicEntity::Update(float deltaTime)

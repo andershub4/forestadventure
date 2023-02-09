@@ -16,7 +16,7 @@ enum class MessageType {
     KeyReleased,
     IsKeyPressed,
     CloseWindow,
-    EntityCreated,
+    EntityInitialized,
     EntityDestroyed,
     GameOver
 };
