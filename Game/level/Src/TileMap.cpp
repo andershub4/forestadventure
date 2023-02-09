@@ -14,6 +14,8 @@
 
 namespace FA {
 
+namespace World {
+
 TileMap::TileMap(Shared::SheetManager& sheetManager)
     : sheetManager_(sheetManager)
 {
@@ -142,5 +144,7 @@ Tile::TileData TileMap::LookupTileData(int id)
         return {};
     }
 }
+
+}  // namespace World
 
 }  // namespace FA

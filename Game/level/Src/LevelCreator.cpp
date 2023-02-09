@@ -14,6 +14,8 @@
 
 namespace FA {
 
+namespace World {
+
 void LevelCreator::AddBackground(const std::vector<TileMap::TileData> &layer)
 {
     layers_.push_back(layer);
@@ -52,5 +54,7 @@ sf::Sprite LevelCreator::CreateSprite(const TileMap::TileData &data) const
 
     return sprite;
 }
+
+}  // namespace World
 
 }  // namespace FA

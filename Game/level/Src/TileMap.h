@@ -32,6 +32,8 @@ struct TileData;
 
 }  // namespace Tile
 
+namespace World {
+
 class TileMap
 {
 public:
@@ -70,5 +72,7 @@ private:
     void SetupObjectGroups();
     Tile::TileData LookupTileData(int id);
 };
+
+}  // namespace World
 
 }  // namespace FA

@@ -21,7 +21,11 @@ class BasicEffect;
 
 }  // namespace Shared
 
+namespace World {
+
 class Level;
+
+}  // namespace World
 
 namespace Scene {
 
@@ -43,7 +47,7 @@ public:
 
 private:
     Shared::MessageBus& messageBus_;
-    std::unique_ptr<Level> level_ = nullptr;
+    std::unique_ptr<World::Level> level_ = nullptr;
     std::unique_ptr<Shared::BasicEffect> effect_ = nullptr;
     Shared::TextureManager& textureManager_;
 };

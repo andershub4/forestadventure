@@ -16,6 +16,8 @@
 
 namespace FA {
 
+namespace World {
+
 class LevelCreator
 {
 public:
@@ -30,5 +32,7 @@ private:
 private:
     sf::Sprite CreateSprite(const TileMap::TileData &data) const;
 };
+
+}  // namespace World
 
 }  // namespace FA

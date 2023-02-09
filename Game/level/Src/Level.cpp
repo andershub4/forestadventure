@@ -23,6 +23,8 @@
 
 namespace FA {
 
+namespace World {
+
 namespace {
 
 const std::vector<Shared::SheetData> textureSheets = {
@@ -135,5 +137,7 @@ void Level::CreateEntities()
     }
     entityManager_->HandleCreatedEntities();
 }
+
+}  // namespace World
 
 }  // namespace FA

@@ -16,9 +16,6 @@
 
 namespace FA {
 
-class LevelCreator;
-class TileMap;
-
 namespace Entity {
 
 class EntityManager;
@@ -30,6 +27,11 @@ namespace Shared {
 class MessageBus;
 
 }  // namespace Shared
+
+namespace World {
+
+class LevelCreator;
+class TileMap;
 
 class Level
 {
@@ -61,5 +63,7 @@ private:
     void CreateMap();
     void CreateEntities();
 };
+
+}  // namespace World
 
 }  // namespace FA

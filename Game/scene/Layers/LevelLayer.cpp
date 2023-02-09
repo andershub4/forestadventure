@@ -22,7 +22,7 @@ LevelLayer::LevelLayer(Shared::MessageBus& messageBus, const sf::IntRect& rect, 
     , textureManager_(textureManager)
 {
     auto viewSize = layerTexture_.getSize();
-    level_ = std::make_unique<Level>(messageBus_, textureManager_, viewSize);
+    level_ = std::make_unique<World::Level>(messageBus_, textureManager_, viewSize);
 }
 
 LevelLayer::~LevelLayer() = default;
