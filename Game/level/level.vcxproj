@@ -141,16 +141,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Level.cpp" />
-    <ClCompile Include="Src\LevelCreator.cpp" />
-    <ClCompile Include="Src\TileMap.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Include\Level.h" />
-    <ClInclude Include="Src\LevelCreator.h" />
-    <ClInclude Include="Src\TileMap.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\entity\entity.vcxproj">
       <Project>{141937d6-125d-4c26-9440-1d6028ef3ecd}</Project>
     </ProjectReference>

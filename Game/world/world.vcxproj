@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{4094dfc5-e913-4b41-87b7-6dad48c48c58}</ProjectGuid>
-    <RootNamespace>scene</RootNamespace>
+    <ProjectGuid>{5bb3dbfd-e41e-40d0-90f3-b2c049b6c8d0}</ProjectGuid>
+    <RootNamespace>world</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)world\Include;$(SolutionDir)scene;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)entity\Include;$(SolutionDir)tile\Include;$(SolutionDir)world\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)world\Include;$(SolutionDir)scene;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)entity\Include;$(SolutionDir)tile\Include;$(SolutionDir)world\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,42 +141,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Layers\BasicLayer.cpp" />
-    <ClCompile Include="Layers\HelperLayer.cpp" />
-    <ClCompile Include="Layers\IntroLayer.cpp" />
-    <ClCompile Include="Layers\LevelLayer.cpp" />
-    <ClCompile Include="Layers\PreAlphaLayer.cpp" />
-    <ClCompile Include="Manager.cpp" />
-    <ClCompile Include="Scenes\BasicScene.cpp" />
-    <ClCompile Include="Scenes\IntroScene.cpp" />
-    <ClCompile Include="Scenes\PlayScene.cpp" />
-    <ClCompile Include="Scenes\TransitionScene.cpp" />
-    <ClCompile Include="Transitions\BasicTransition.cpp" />
-    <ClCompile Include="Transitions\FadeTransition.cpp" />
-    <ClCompile Include="Transitions\NullTransition.cpp" />
+    <ClInclude Include="Include\Level.h" />
+    <ClInclude Include="Src\LevelCreator.h" />
+    <ClInclude Include="Src\TileMap.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LayerId.h" />
-    <ClInclude Include="Layers\BasicLayer.h" />
-    <ClInclude Include="Layers\HelperLayer.h" />
-    <ClInclude Include="Layers\IntroLayer.h" />
-    <ClInclude Include="Layers\LevelLayer.h" />
-    <ClInclude Include="Layers\PreAlphaLayer.h" />
-    <ClInclude Include="Manager.h" />
-    <ClInclude Include="Scenes\BasicScene.h" />
-    <ClInclude Include="Scenes\IntroScene.h" />
-    <ClInclude Include="Scenes\PlayScene.h" />
-    <ClInclude Include="Scenes\TransitionScene.h" />
-    <ClInclude Include="Transitions\BasicTransition.h" />
-    <ClInclude Include="Transitions\FadeTransition.h" />
-    <ClInclude Include="Transitions\NullTransition.h" />
+    <ClCompile Include="Src\Level.cpp" />
+    <ClCompile Include="Src\LevelCreator.cpp" />
+    <ClCompile Include="Src\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\entity\entity.vcxproj">
+      <Project>{141937d6-125d-4c26-9440-1d6028ef3ecd}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\shared\shared.vcxproj">
       <Project>{30c8aeea-9f9c-4d4c-9aec-9402e8961540}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\world\world.vcxproj">
-      <Project>{5bb3dbfd-e41e-40d0-90f3-b2c049b6c8d0}</Project>
+    <ProjectReference Include="..\tile\tile.vcxproj">
+      <Project>{b998d8ba-9c74-429f-a576-5ee6c6e8ccb6}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
