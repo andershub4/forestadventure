@@ -15,13 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game\Game.cpp">
+    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="System\InputSystem.cpp">
+    <ClCompile Include="InputSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Title.cpp">
+    <ClCompile Include="Title.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SfmlLog.cpp">
@@ -29,13 +29,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game\Game.h">
+    <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="System\InputSystem.h">
+    <ClInclude Include="InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Title.h">
+    <ClInclude Include="Title.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SfmlLog.h">

@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Game/Game.h"
+#include "Game.h"
 
 int main()
 {
