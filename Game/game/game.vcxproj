@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)scene;$(SolutionDir)game\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)scene;$(SolutionDir)game\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,16 +141,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="InputSystem.cpp" />
-    <ClCompile Include="SfmlLog.cpp" />
-    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Src\Game.cpp" />
+    <ClCompile Include="Src\InputSystem.cpp" />
+    <ClCompile Include="Src\SfmlLog.cpp" />
+    <ClCompile Include="Src\Title.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="InputSystem.h" />
-    <ClInclude Include="SfmlLog.h" />
-    <ClInclude Include="Title.h" />
+    <ClInclude Include="Include\Game.h" />
+    <ClInclude Include="Src\InputSystem.h" />
+    <ClInclude Include="Src\SfmlLog.h" />
+    <ClInclude Include="Src\Title.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\logging\logging.vcxproj">
