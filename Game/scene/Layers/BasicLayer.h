@@ -23,8 +23,6 @@ enum class MessageType;
 
 }  // namespace Shared
 
-class BasicEffect;
-
 namespace Scene {
 
 class BasicTransition;
