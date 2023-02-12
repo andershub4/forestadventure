@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "Fwd/SfmlFwd.h"
-#include "Layers/BasicLayer.h"
 #include "Resource/TextureManager.h"
 
 namespace FA {
@@ -26,6 +25,8 @@ namespace Scene {
 
 class BasicScene;
 class BasicTransition;
+class BasicLayer;
+enum class LayerId;
 
 class Manager
 {
