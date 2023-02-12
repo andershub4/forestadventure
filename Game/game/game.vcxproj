@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ca08c938-2967-40a8-9834-359d5b8009e7}</ProjectGuid>
-    <RootNamespace>srclib</RootNamespace>
+    <ProjectGuid>{d2a5b6a0-ec7f-4f46-9247-c64242dbdef9}</ProjectGuid>
+    <RootNamespace>game</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)src_lib;$(SolutionDir)shared;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)util\Include;$(SolutionDir)scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,6 +140,18 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="SfmlLog.cpp" />
+    <ClCompile Include="Title.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="SfmlLog.h" />
+    <ClInclude Include="Title.h" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\logging\logging.vcxproj">
       <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>

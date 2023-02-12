@@ -90,7 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)game;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -117,7 +117,7 @@ copy /Y "$(SolutionDir)Debug-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src_lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)game;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,11 +169,11 @@ copy /Y "$(SolutionDir)Release-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"</Com
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\game\game.vcxproj">
+      <Project>{d2a5b6a0-ec7f-4f46-9247-c64242dbdef9}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\logging\logging.vcxproj">
       <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\src_lib\src_lib.vcxproj">
-      <Project>{ca08c938-2967-40a8-9834-359d5b8009e7}</Project>
     </ProjectReference>
     <ProjectReference Include="..\util\util.vcxproj">
       <Project>{fc8641f9-67f5-474b-9296-f5cf069d6f6d}</Project>
