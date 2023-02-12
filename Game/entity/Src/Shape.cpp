@@ -25,6 +25,8 @@ Shape::Shape(Body& body)
 void Shape::Enter()
 {
     for (auto sprite : sprites_) {
+        sprite->SetPosition(body_.position_);
+        sprite->SetRotation(body_.rotation_);
         sprite->Enter();
     }
 }
