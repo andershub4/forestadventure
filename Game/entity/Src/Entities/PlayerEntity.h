@@ -34,7 +34,7 @@ private:
     virtual void ReadProperties(const std::unordered_map<std::string, std::string>& properties) override;
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data) override;
-    virtual void Start() override;
+    virtual void OnInit() override;
     virtual void OnMessage(std::shared_ptr<Shared::Message> msg) override;
     virtual void OnBeginDie() override;
 

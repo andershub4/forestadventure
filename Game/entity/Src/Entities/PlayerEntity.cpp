@@ -269,7 +269,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
     attackWeaponState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 }
 
-void PlayerEntity::Start()
+void PlayerEntity::OnInit()
 {
     auto& camera = entityService_.GetCamera();
     camera.Track(body_.position_);

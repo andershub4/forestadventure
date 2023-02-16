@@ -68,11 +68,12 @@ private:
     {}
     virtual void RegisterProperties() {}
     virtual void ReadProperties(const std::unordered_map<std::string, std::string>& properties) {}
-    virtual void Start() {}
     virtual void OnMessage(std::shared_ptr<Shared::Message> msg) {}
+    virtual void OnInit() {}
     virtual void OnBeginIdle() {}
     virtual void OnBeginDie() {}
 
+    void InitCB();
     void Subscribe(const std::vector<Shared::MessageType>& messageTypes);
     void Unsubscribe(const std::vector<Shared::MessageType>& messageTypes);
     void RegisterUninitializedState();

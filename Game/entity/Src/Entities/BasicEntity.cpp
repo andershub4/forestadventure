@@ -29,7 +29,7 @@ BasicEntity::BasicEntity(EntityId id, const PropertyData& data, const EntityServ
 
 BasicEntity::~BasicEntity() = default;
 
-void BasicEntity::Init()
+void BasicEntity::InitCB()
 {
     RegisterProperties();
     body_.position_ = data_.position_;
@@ -41,9 +41,13 @@ void BasicEntity::Init()
     RegisterStates(idleState, deadState, data_);
 
     Subscribe(Messages());
-    Start();  // must do this after setting position
+    OnInit();  // must do this after setting position
     entityService_.SendMessage(std::make_shared<Shared::EntityInitializedMessage>());
+    ChangeStateTo(StateType::Idle, nullptr);
+}
 
+void BasicEntity::Init()
+{
     HandleEvent(std::make_shared<InitEvent>());
 }
 
@@ -106,8 +110,7 @@ void BasicEntity::Unsubscribe(const std::vector<Shared::MessageType>& messageTyp
 void BasicEntity::RegisterUninitializedState()
 {
     auto uninitializedState = RegisterState(StateType::Uninitialized);
-    uninitializedState->RegisterEventCB(
-        EventType::Init, [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
+    uninitializedState->RegisterEventCB(EventType::Init, [this](std::shared_ptr<BasicEvent> event) { InitCB(); });
     stateMachine_.SetStartState(uninitializedState);
 }
 
