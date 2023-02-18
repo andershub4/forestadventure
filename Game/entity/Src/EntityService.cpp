@@ -6,8 +6,8 @@
 
 #include "EntityService.h"
 
-#include "Camera/Camera.h"
-#include "Camera/CameraManager.h"
+#include "Camera.h"
+#include "CameraManager.h"
 #include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Message/MessageBus.h"

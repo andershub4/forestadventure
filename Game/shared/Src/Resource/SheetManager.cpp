@@ -4,12 +4,12 @@
  *	See file LICENSE for full license details.
  */
 
-#include "SheetManager.h"
+#include "Resource/SheetManager.h"
 
-#include "AnimationData.h"
-#include "Frame.h"
-#include "ImageData.h"
-#include "SheetData.h"
+#include "Resource/AnimationData.h"
+#include "Resource/Frame.h"
+#include "Resource/ImageData.h"
+#include "Resource/SheetData.h"
 
 namespace FA {
 

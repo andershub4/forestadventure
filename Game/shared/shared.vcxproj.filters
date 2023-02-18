@@ -15,144 +15,132 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SfmlFwd.h">
+    <ClInclude Include="Include\SfmlFwd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\CloseWindowMessage.h">
+    <ClInclude Include="Include\Message\BroadcastMessage\CloseWindowMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\EntityCreatedMessage.h">
+    <ClInclude Include="Include\Message\BroadcastMessage\EntityCreatedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\EntityDestroyedMessage.h">
+    <ClInclude Include="Include\Message\BroadcastMessage\EntityDestroyedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\GameOverMessage.h">
+    <ClInclude Include="Include\Message\BroadcastMessage\GameOverMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\IsKeyPressedMessage.h">
+    <ClInclude Include="Include\Message\BroadcastMessage\IsKeyPressedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\KeyPressedMessage.h">
+    <ClInclude Include="Include\Message\BroadcastMessage\KeyPressedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\BroadcastMessage\KeyReleasedMessage.h">
+    <ClInclude Include="Include\Message\BroadcastMessage\KeyReleasedMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\Message.h">
+    <ClInclude Include="Include\Message\Message.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\MessageBus.h">
+    <ClInclude Include="Include\Message\MessageBus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message\MessageType.h">
+    <ClInclude Include="Include\Message\MessageType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\Animation.h">
+    <ClInclude Include="Include\Resource\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\AnimationData.h">
+    <ClInclude Include="Include\Resource\AnimationData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\Frame.h">
+    <ClInclude Include="Include\Resource\Frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\Image.h">
+    <ClInclude Include="Include\Resource\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\ImageData.h">
+    <ClInclude Include="Include\Resource\ImageData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\ResourceManager.h">
+    <ClInclude Include="Include\Resource\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\SheetData.h">
+    <ClInclude Include="Include\Resource\SheetData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\SheetId.h">
+    <ClInclude Include="Include\Resource\SheetId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\SheetManager.h">
+    <ClInclude Include="Include\Resource\SheetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\SpriteSheet.h">
+    <ClInclude Include="Include\Resource\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\TextureManager.h">
+    <ClInclude Include="Include\Resource\TextureManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logging.h">
+    <ClInclude Include="Include\Logging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Screen.h">
+    <ClInclude Include="Include\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\Graphic.h">
+    <ClInclude Include="Include\Resource\Graphic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Effect\BasicEffect.h">
+    <ClInclude Include="Include\Effect\BasicEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Effect\FadeEffect.h">
+    <ClInclude Include="Include\Effect\FadeEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Effect\NullEffect.h">
+    <ClInclude Include="Include\Effect\NullEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MapData.h">
+    <ClInclude Include="Include\MapData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Camera\Camera.h">
+    <ClInclude Include="Include\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Camera\CameraManager.h">
+    <ClInclude Include="Include\CameraManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Message\BroadcastMessage\IsKeyPressedMessage.cpp">
+    <ClCompile Include="Src\MessageBus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Message\BroadcastMessage\KeyPressedMessage.cpp">
+    <ClCompile Include="Src\Resource\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Message\BroadcastMessage\KeyReleasedMessage.cpp">
+    <ClCompile Include="Src\Resource\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Message\Message.cpp">
+    <ClCompile Include="Src\Resource\SheetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Message\MessageBus.cpp">
+    <ClCompile Include="Src\Resource\SpriteSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\Animation.cpp">
+    <ClCompile Include="Src\Logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\Image.cpp">
+    <ClCompile Include="Src\Effect\BasicEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\SheetManager.cpp">
+    <ClCompile Include="Src\Effect\FadeEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\SpriteSheet.cpp">
+    <ClCompile Include="Src\Effect\NullEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Logging.cpp">
+    <ClCompile Include="Src\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Effect\BasicEffect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect\FadeEffect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect\NullEffect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera\CameraManager.cpp">
+    <ClCompile Include="Src\CameraManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "FadeEffect.h"
+#include "Effect/FadeEffect.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 

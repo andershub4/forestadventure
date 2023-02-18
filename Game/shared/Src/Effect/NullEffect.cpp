@@ -4,14 +4,20 @@
  *	See file LICENSE for full license details.
  */
 
-#include "IsKeyPressedMessage.h"
+#include "Effect/NullEffect.h"
 
 namespace FA {
 
 namespace Shared {
 
-IsKeyPressedMessage::IsKeyPressedMessage(sf::Keyboard::Key key)
-    : key_(key)
+NullEffect::NullEffect()
+    : BasicEffect()
+{}
+
+void NullEffect::DrawTo(sf::RenderTarget& renderTarget) const
+{}
+
+void NullEffect::Update(float deltaTime)
 {}
 
 }  // namespace Shared

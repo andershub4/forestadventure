@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Animation.h"
+#include "Resource/Animation.h"
 
 #include <SFML/Graphics/Sprite.hpp>
 

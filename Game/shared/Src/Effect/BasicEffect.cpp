@@ -4,25 +4,16 @@
  *	See file LICENSE for full license details.
  */
 
-#pragma once
-
-#include <string>
-
-#include "MessageType.h"
+#include "Effect/BasicEffect.h"
 
 namespace FA {
 
 namespace Shared {
 
-class Message
-{
-public:
-    Message() = default;
-    virtual ~Message();
+BasicEffect::BasicEffect()
+{}
 
-    virtual MessageType GetMessageType() const = 0;
-    virtual std::string Name() const = 0;
-};
+BasicEffect::~BasicEffect() = default;
 
 }  // namespace Shared
 

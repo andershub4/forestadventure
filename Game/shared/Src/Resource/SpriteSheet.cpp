@@ -4,11 +4,11 @@
  *	See file LICENSE for full license details.
  */
 
-#include "SpriteSheet.h"
+#include "Resource/SpriteSheet.h"
 
 #include <SFML/Graphics/Texture.hpp>
 
-#include "Frame.h"
+#include "Resource/Frame.h"
 #include "Logging.h"
 
 namespace FA {

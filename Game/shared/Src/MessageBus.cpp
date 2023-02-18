@@ -4,9 +4,9 @@
  *	See file LICENSE for full license details.
  */
 
-#include "MessageBus.h"
+#include "Message/MessageBus.h"
 
-#include "Message.h"
+#include "Message/Message.h"
 
 namespace FA {
 

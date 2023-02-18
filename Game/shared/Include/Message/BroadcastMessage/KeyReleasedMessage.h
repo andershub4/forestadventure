@@ -6,21 +6,23 @@
 
 #pragma once
 
-#include <SFML/Window/Keyboard.hpp>
-
 #include "Message/Message.h"
+
+#include <SFML/Window/Keyboard.hpp>
 
 namespace FA {
 
 namespace Shared {
 
-class IsKeyPressedMessage : public Message
+class KeyReleasedMessage : public Message
 {
 public:
-    IsKeyPressedMessage(sf::Keyboard::Key key);
+    KeyReleasedMessage(sf::Keyboard::Key key)
+        : key_(key)
+    {}
 
-    virtual MessageType GetMessageType() const override { return MessageType::IsKeyPressed; }
-    virtual std::string Name() const override { return "IsKeyPressedMessage"; }
+    virtual MessageType GetMessageType() const override { return MessageType::KeyReleased; }
+    virtual std::string Name() const override { return "KeyReleased"; }
 
     sf::Keyboard::Key GetKey() const { return key_; }
 

@@ -17,7 +17,9 @@ namespace Shared {
 class KeyPressedMessage : public Message
 {
 public:
-    KeyPressedMessage(sf::Keyboard::Key key);
+    KeyPressedMessage(sf::Keyboard::Key key)
+        : key_(key)
+    {}
 
     virtual MessageType GetMessageType() const override { return MessageType::KeyPressed; }
     virtual std::string Name() const override { return "KeyPressed"; }

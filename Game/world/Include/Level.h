@@ -9,7 +9,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Camera/CameraManager.h"
+#include "CameraManager.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
 #include "SfmlFwd.h"

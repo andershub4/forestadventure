@@ -12,7 +12,7 @@
 
 #include "Abilities/MoveAbility.h"
 #include "Abilities/ShootAbility.h"
-#include "Camera/Camera.h"
+#include "Camera.h"
 #include "Constant/Entity.h"
 #include "Entities/ArrowEntity.h"
 #include "Events/AttackEvent.h"

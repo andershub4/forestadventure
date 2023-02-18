@@ -4,13 +4,25 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Message.h"
+#pragma once
+
+#include <string>
+
+#include "MessageType.h"
 
 namespace FA {
 
 namespace Shared {
 
-Message::~Message() = default;
+class Message
+{
+public:
+    Message() = default;
+    virtual ~Message() = default;
+
+    virtual MessageType GetMessageType() const = 0;
+    virtual std::string Name() const = 0;
+};
 
 }  // namespace Shared
 
