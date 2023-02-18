@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Events/DestroyEvent.h"
 #include "Events/InitEvent.h"
 #include "Message/BroadcastMessage/EntityCreatedMessage.h"
 #include "Message/BroadcastMessage/EntityDestroyedMessage.h"
@@ -51,10 +52,15 @@ void BasicEntity::Init()
     HandleEvent(std::make_shared<InitEvent>());
 }
 
-void BasicEntity::Destroy()
+void BasicEntity::DestroyCB()
 {
     Unsubscribe(Messages());
     entityService_.SendMessage(std::make_shared<Shared::EntityDestroyedMessage>());
+}
+
+void BasicEntity::Destroy()
+{
+    HandleEvent(std::make_shared<DestroyEvent>());
 }
 
 void BasicEntity::Update(float deltaTime)
@@ -82,6 +88,7 @@ std::shared_ptr<State> BasicEntity::RegisterState(StateType stateType)
     auto state = stateMachine_.RegisterState(stateType, body_);
     state->RegisterEventCB(EventType::Dead,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Dead, event); });
+    state->RegisterEventCB(EventType::Destroy, [this](std::shared_ptr<BasicEvent> event) { DestroyCB(); });
     return state;
 }
 
@@ -117,8 +124,13 @@ void BasicEntity::RegisterUninitializedState()
 std::shared_ptr<State> BasicEntity::RegisterDeadState()
 {
     auto deadState = stateMachine_.RegisterState(StateType::Dead, body_);
-    deadState->RegisterBeginCB([this]() { OnBeginDie(); });
-    deadState->IgnoreAllEvents();
+    deadState->RegisterBeginCB([this]() {
+        OnBeginDie();
+        entityService_.DeleteEntity(id_);
+    });
+    deadState->IgnoreAllEventsExcept({EventType::Destroy});
+    deadState->RegisterEventCB(EventType::Destroy, [this](std::shared_ptr<BasicEvent> event) { DestroyCB(); });
+
     return deadState;
 }
 

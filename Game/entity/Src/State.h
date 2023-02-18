@@ -9,6 +9,7 @@
 #include <functional>
 #include <memory>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include "EventType.h"
@@ -45,11 +46,12 @@ public:
     void RegisterSprite(std::shared_ptr<BasicSprite> sprite);
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
     void RegisterIgnoreEvents(const std::vector<EventType>& eventTypes);
-    void IgnoreAllEvents();
+    void IgnoreAllEventsExcept(const std::unordered_set<EventType>& notIgnorableEventTypes);
 
 private:
     StateType stateType_ = StateType::Uninitialized;
     std::vector<std::shared_ptr<BasicAbility>> abilities_;
+    std::unordered_set<EventType> notIgnorableEventTypes_;
     std::unordered_map<EventType, std::function<void(std::shared_ptr<BasicEvent>)>> eventCBs_;
     bool ignoreAllEvents_ = false;
     Shape shape_;

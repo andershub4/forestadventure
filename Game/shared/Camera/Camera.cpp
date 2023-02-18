@@ -34,6 +34,12 @@ void Camera::Track(const sf::Vector2f& trackingPoint)
     trackingPoint_ = &trackingPoint;
 }
 
+void Camera::Set(const sf::Vector2f& fixedPoint)
+{
+    fixedPoint_ = fixedPoint;
+    trackingPoint_ = &fixedPoint_;
+}
+
 void Camera::UpdatePosition(float deltaTime)
 {
     auto viewPosition = trackingPoint_ ? CalcViewPosition() : sf::Vector2f(0.0f, 0.0f);

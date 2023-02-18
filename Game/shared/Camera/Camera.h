@@ -21,12 +21,14 @@ public:
     ~Camera();
 
     void Track(const sf::Vector2f& trackingPoint);
+    void Set(const sf::Vector2f& fixedPoint);
     void UpdatePosition(float deltaTime);
     sf::View GetView() const;
 
 private:
     sf::View view_;
     const sf::Vector2f* trackingPoint_{nullptr};
+    sf::Vector2f fixedPoint_{};
     sf::Vector2f minViewPosition_{};
     sf::Vector2f maxViewPosition_{};
 

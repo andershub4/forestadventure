@@ -12,6 +12,7 @@
 
 #include "Abilities/MoveAbility.h"
 #include "Constant/Entity.h"
+#include "Events/DeadEvent.h"
 #include "Events/StartMoveEvent.h"
 #include "PropertyConverter.h"
 #include "PropertyData.h"
@@ -87,7 +88,7 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
     bool outsideMap = !entityService_.IsInsideMap(body_.position_);
 
     if (outsideMap) {
-        entityService_.DeleteEntity(GetId());
+        HandleEvent(std::make_shared<DeadEvent>());
     }
 }
 

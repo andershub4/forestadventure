@@ -54,7 +54,7 @@ void State::DrawTo(sf::RenderTarget &renderTarget)
 
 void State::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
-    if (!ignoreAllEvents_) {
+    if (!ignoreAllEvents_ || (notIgnorableEventTypes_.find(event->GetEventType()) != notIgnorableEventTypes_.end())) {
         auto t = event->GetEventType();
         auto handler = eventCBs_.at(t);
         handler(event);
@@ -93,8 +93,9 @@ void State::RegisterIgnoreEvents(const std::vector<EventType> &eventTypes)
     }
 }
 
-void State::IgnoreAllEvents()
+void State::IgnoreAllEventsExcept(const std::unordered_set<EventType> &notIgnorableEventTypes)
 {
+    notIgnorableEventTypes_ = notIgnorableEventTypes;
     ignoreAllEvents_ = true;
 }
 

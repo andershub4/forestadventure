@@ -74,6 +74,7 @@ private:
     virtual void OnBeginDie() {}
 
     void InitCB();
+    void DestroyCB();
     void Subscribe(const std::vector<Shared::MessageType>& messageTypes);
     void Unsubscribe(const std::vector<Shared::MessageType>& messageTypes);
     void RegisterUninitializedState();

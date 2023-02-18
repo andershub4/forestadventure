@@ -164,6 +164,8 @@ void PlayerEntity::OnExitShoot()
 void PlayerEntity::OnBeginDie()
 {
     SendMessage(std::make_shared<Shared::GameOverMessage>());
+    auto& camera = entityService_.GetCamera();
+    camera.Set(body_.position_);
 }
 
 std::string PlayerEntity::AnimationKey() const
