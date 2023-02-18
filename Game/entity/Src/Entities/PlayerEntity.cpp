@@ -208,18 +208,6 @@ void PlayerEntity::ReadProperties(const std::unordered_map<std::string, std::str
 void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                   const PropertyData& data)
 {
-    auto updateAnimationAndComplete = [this](const Shared::Animation& animation) {
-        if (animation.IsCompleted()) {
-            ChangeStateTo(StateType::Idle, nullptr);
-        }
-    };
-    auto updateAnimationAndShoot = [this](const Shared::Animation& animation) {
-        if (animation.IsCompleted()) {
-            propertyStore_.Set<bool>("Shoot", true);
-            ChangeStateTo(StateType::Idle, nullptr);
-        }
-    };
-
     auto idleAnimations = GetAnimations(animationDatas.at(StateType::Idle));
     auto idleAnimation =
         std::make_shared<AnimationSprite>(std::bind(&PlayerEntity::AnimationKey, this), idleAnimations);
@@ -251,6 +239,11 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
 
     auto attackState = RegisterState(StateType::Attack);
     auto attackAnimations = GetAnimations(animationDatas.at(StateType::Attack));
+    auto updateAnimationAndComplete = [this](const Shared::Animation& animation) {
+        if (animation.IsCompleted()) {
+            ChangeStateTo(StateType::Idle, nullptr);
+        }
+    };
     auto attackAnimation = std::make_shared<AnimationSprite>(std::bind(&PlayerEntity::AnimationKey, this),
                                                              attackAnimations, updateAnimationAndComplete);
     attackState->RegisterSprite(attackAnimation);
@@ -262,6 +255,12 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
     auto shoot = std::make_shared<ShootAbility>(
         nullptr, [this]() { OnExitShoot(); }, nullptr);
     auto attackWeaponAnimations = GetAnimations(animationDatas.at(StateType::AttackWeapon));
+    auto updateAnimationAndShoot = [this](const Shared::Animation& animation) {
+        if (animation.IsCompleted()) {
+            propertyStore_.Set<bool>("Shoot", true);
+            ChangeStateTo(StateType::Idle, nullptr);
+        }
+    };
     auto attackWeaponAnimation = std::make_shared<AnimationSprite>(std::bind(&PlayerEntity::AnimationKey, this),
                                                                    attackWeaponAnimations, updateAnimationAndShoot);
     attackWeaponState->RegisterAbility(shoot);
