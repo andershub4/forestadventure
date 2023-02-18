@@ -11,7 +11,7 @@
 #include "BasicAbility.h"
 
 #include "Enum/FaceDirection.h"
-#include "Fwd/SfmlFwd.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 

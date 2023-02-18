@@ -147,7 +147,7 @@
     <ClInclude Include="Effect\BasicEffect.h" />
     <ClInclude Include="Effect\FadeEffect.h" />
     <ClInclude Include="Effect\NullEffect.h" />
-    <ClInclude Include="Fwd\SfmlFwd.h" />
+    <ClInclude Include="SfmlFwd.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="MapData.h" />
     <ClInclude Include="Message\BroadcastMessage\CloseWindowMessage.h" />

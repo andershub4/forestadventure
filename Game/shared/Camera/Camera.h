@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/View.hpp>
 
-#include "Fwd/SfmlFwd.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 

@@ -14,7 +14,7 @@
 #endif
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Fwd/SfmlFwd.h"
+#include "SfmlFwd.h"
 #include "Sprites/BasicSprite.h"
 
 namespace FA {

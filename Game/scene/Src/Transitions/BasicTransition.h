@@ -12,8 +12,8 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 
-#include "Fwd/SfmlFwd.h"
 #include "Resource/TextureManager.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 

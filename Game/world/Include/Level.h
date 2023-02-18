@@ -10,9 +10,9 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Camera/CameraManager.h"
-#include "Fwd/SfmlFwd.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 

@@ -13,7 +13,7 @@
 #include "BasicAbility.h"
 
 #include "Enum/MoveDirection.h"
-#include "Fwd/SfmlFwd.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 

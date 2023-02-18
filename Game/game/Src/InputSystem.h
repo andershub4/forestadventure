@@ -10,7 +10,7 @@
 
 #include <SFML/Window/Keyboard.hpp>
 
-#include "Fwd/SfmlFwd.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 

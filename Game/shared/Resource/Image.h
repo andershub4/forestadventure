@@ -7,7 +7,7 @@
 #pragma once
 
 #include "Frame.h"
-#include "Fwd/SfmlFwd.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 

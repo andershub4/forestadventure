@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Fwd\SfmlFwd.h">
+    <ClInclude Include="SfmlFwd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Message\BroadcastMessage\CloseWindowMessage.h">

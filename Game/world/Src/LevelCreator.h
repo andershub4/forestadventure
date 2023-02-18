@@ -11,7 +11,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "Fwd/SfmlFwd.h"
+#include "SfmlFwd.h"
 #include "TileMap.h"
 
 namespace FA {

@@ -9,8 +9,8 @@
 #include <map>
 #include <memory>
 
-#include "Fwd/SfmlFwd.h"
 #include "Resource/TextureManager.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "Fwd/SfmlFwd.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 
