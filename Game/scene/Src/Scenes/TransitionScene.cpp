@@ -6,8 +6,8 @@
 
 #include "TransitionScene.h"
 
-#include "Constant/Screen.h"
 #include "Layers/HelperLayer.h"
+#include "Screen.h"
 #include "Transitions/BasicTransition.h"
 
 namespace FA {

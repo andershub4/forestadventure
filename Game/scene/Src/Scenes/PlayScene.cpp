@@ -8,13 +8,13 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Constant/Screen.h"
 #include "IntroScene.h"
 #include "Layers/HelperLayer.h"
 #include "Layers/LevelLayer.h"
 #include "Layers/PreAlphaLayer.h"
 #include "Message/BroadcastMessage/CloseWindowMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
+#include "Screen.h"
 #include "Transitions/FadeTransition.h"
 
 namespace FA {

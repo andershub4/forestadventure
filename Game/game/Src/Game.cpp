@@ -8,12 +8,12 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Constant/Screen.h"
 #include "InputSystem.h"
 #include "Logging.h"
 #include "Manager.h"
 #include "Message/MessageBus.h"
 #include "Resource/TextureManager.h"
+#include "Screen.h"
 #include "SfmlLog.h"
 #include "Title.h"
 #include "Version.h"
