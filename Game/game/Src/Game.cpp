@@ -30,7 +30,7 @@ int Game::Run()
         GameLoop();
     }
     catch (const std::exception& e) {
-        LOG_ERROR("Exception catched: ", e.what());
+        LOG_ERROR("Exception catched: %s", e.what());
         return EXIT_FAILURE;
     }
 
