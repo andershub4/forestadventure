@@ -6,8 +6,7 @@
 
 #include "FadeTransition.h"
 
-#include "Effect/FadeEffect.h"
-#include "Screen.h"
+#include "BasicEffect.h"
 
 namespace FA {
 
@@ -22,7 +21,7 @@ FadeTransition::~FadeTransition() = default;
 std::unique_ptr<Shared::BasicEffect> FadeTransition::CreateEffect(const sf::Vector2f& position,
                                                                   const sf::Vector2f& size) const
 {
-    return std::make_unique<Shared::FadeEffect>(position, size, seconds_);
+    return factory_.CreateFadeEffect(position, size, seconds_);
 }
 
 }  // namespace Scene

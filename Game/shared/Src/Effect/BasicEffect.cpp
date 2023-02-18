@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Effect/BasicEffect.h"
+#include "BasicEffect.h"
 
 namespace FA {
 

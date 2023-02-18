@@ -5,7 +5,8 @@
  */
 
 #include "NullTransition.h"
-#include "Effect/NullEffect.h"
+
+#include "BasicEffect.h"
 
 namespace FA {
 
@@ -20,7 +21,7 @@ NullTransition::~NullTransition() = default;
 std::unique_ptr<Shared::BasicEffect> NullTransition::CreateEffect(const sf::Vector2f& position,
                                                                   const sf::Vector2f& size) const
 {
-    return std::make_unique<Shared::NullEffect>();
+    return factory_.CreateNullEffect();
 }
 
 }  // namespace Scene

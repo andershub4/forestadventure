@@ -8,6 +8,8 @@
 
 #include "BasicTransition.h"
 
+#include "EffectFactory.h"
+
 namespace FA {
 
 namespace Scene {
@@ -20,6 +22,9 @@ public:
 
     virtual std::unique_ptr<Shared::BasicEffect> CreateEffect(const sf::Vector2f& position,
                                                               const sf::Vector2f& size) const override;
+
+private:
+    Shared::EffectFactory factory_;
 };
 
 }  // namespace Scene

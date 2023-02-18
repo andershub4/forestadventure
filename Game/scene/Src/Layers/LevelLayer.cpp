@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Effect/BasicEffect.h"
+#include "BasicEffect.h"
 #include "Level.h"
 #include "Transitions/BasicTransition.h"
 
