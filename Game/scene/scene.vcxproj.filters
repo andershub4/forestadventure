@@ -15,87 +15,87 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Layers\BasicLayer.cpp">
+    <ClCompile Include="Src\Layers\BasicLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Layers\HelperLayer.cpp">
+    <ClCompile Include="Src\Layers\HelperLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Layers\IntroLayer.cpp">
+    <ClCompile Include="Src\Layers\IntroLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Layers\LevelLayer.cpp">
+    <ClCompile Include="Src\Layers\LevelLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Layers\PreAlphaLayer.cpp">
+    <ClCompile Include="Src\Layers\PreAlphaLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\BasicScene.cpp">
+    <ClCompile Include="Src\Scenes\BasicScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\IntroScene.cpp">
+    <ClCompile Include="Src\Scenes\IntroScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\PlayScene.cpp">
+    <ClCompile Include="Src\Scenes\PlayScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\TransitionScene.cpp">
+    <ClCompile Include="Src\Scenes\TransitionScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Transitions\BasicTransition.cpp">
+    <ClCompile Include="Src\Transitions\BasicTransition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Transitions\FadeTransition.cpp">
+    <ClCompile Include="Src\Transitions\FadeTransition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Transitions\NullTransition.cpp">
+    <ClCompile Include="Src\Transitions\NullTransition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Manager.cpp">
+    <ClCompile Include="Src\Manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Layers\BasicLayer.h">
+    <ClInclude Include="Src\Layers\BasicLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Layers\HelperLayer.h">
+    <ClInclude Include="Src\Layers\HelperLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Layers\IntroLayer.h">
+    <ClInclude Include="Src\Layers\IntroLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Layers\LevelLayer.h">
+    <ClInclude Include="Src\Layers\LevelLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Layers\PreAlphaLayer.h">
+    <ClInclude Include="Src\Layers\PreAlphaLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\BasicScene.h">
+    <ClInclude Include="Src\Scenes\BasicScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\IntroScene.h">
+    <ClInclude Include="Src\Scenes\IntroScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\PlayScene.h">
+    <ClInclude Include="Src\Scenes\PlayScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\TransitionScene.h">
+    <ClInclude Include="Src\Scenes\TransitionScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Transitions\BasicTransition.h">
+    <ClInclude Include="Src\Transitions\BasicTransition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Transitions\FadeTransition.h">
+    <ClInclude Include="Src\Transitions\FadeTransition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Transitions\NullTransition.h">
+    <ClInclude Include="Src\Transitions\NullTransition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LayerId.h">
+    <ClInclude Include="Src\LayerId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Manager.h">
+    <ClInclude Include="Include\Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

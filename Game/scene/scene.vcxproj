@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)world\Include;$(SolutionDir)scene;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)world\Include;$(SolutionDir)scene\Src;$(SolutionDir)scene\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)world\Include;$(SolutionDir)scene;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared;$(SolutionDir)world\Include;$(SolutionDir)scene\Src;$(SolutionDir)scene\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,35 +141,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Layers\BasicLayer.cpp" />
-    <ClCompile Include="Layers\HelperLayer.cpp" />
-    <ClCompile Include="Layers\IntroLayer.cpp" />
-    <ClCompile Include="Layers\LevelLayer.cpp" />
-    <ClCompile Include="Layers\PreAlphaLayer.cpp" />
-    <ClCompile Include="Manager.cpp" />
-    <ClCompile Include="Scenes\BasicScene.cpp" />
-    <ClCompile Include="Scenes\IntroScene.cpp" />
-    <ClCompile Include="Scenes\PlayScene.cpp" />
-    <ClCompile Include="Scenes\TransitionScene.cpp" />
-    <ClCompile Include="Transitions\BasicTransition.cpp" />
-    <ClCompile Include="Transitions\FadeTransition.cpp" />
-    <ClCompile Include="Transitions\NullTransition.cpp" />
+    <ClCompile Include="Src\Layers\BasicLayer.cpp" />
+    <ClCompile Include="Src\Layers\HelperLayer.cpp" />
+    <ClCompile Include="Src\Layers\IntroLayer.cpp" />
+    <ClCompile Include="Src\Layers\LevelLayer.cpp" />
+    <ClCompile Include="Src\Layers\PreAlphaLayer.cpp" />
+    <ClCompile Include="Src\Manager.cpp" />
+    <ClCompile Include="Src\Scenes\BasicScene.cpp" />
+    <ClCompile Include="Src\Scenes\IntroScene.cpp" />
+    <ClCompile Include="Src\Scenes\PlayScene.cpp" />
+    <ClCompile Include="Src\Scenes\TransitionScene.cpp" />
+    <ClCompile Include="Src\Transitions\BasicTransition.cpp" />
+    <ClCompile Include="Src\Transitions\FadeTransition.cpp" />
+    <ClCompile Include="Src\Transitions\NullTransition.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LayerId.h" />
-    <ClInclude Include="Layers\BasicLayer.h" />
-    <ClInclude Include="Layers\HelperLayer.h" />
-    <ClInclude Include="Layers\IntroLayer.h" />
-    <ClInclude Include="Layers\LevelLayer.h" />
-    <ClInclude Include="Layers\PreAlphaLayer.h" />
-    <ClInclude Include="Manager.h" />
-    <ClInclude Include="Scenes\BasicScene.h" />
-    <ClInclude Include="Scenes\IntroScene.h" />
-    <ClInclude Include="Scenes\PlayScene.h" />
-    <ClInclude Include="Scenes\TransitionScene.h" />
-    <ClInclude Include="Transitions\BasicTransition.h" />
-    <ClInclude Include="Transitions\FadeTransition.h" />
-    <ClInclude Include="Transitions\NullTransition.h" />
+    <ClInclude Include="Src\LayerId.h" />
+    <ClInclude Include="Src\Layers\BasicLayer.h" />
+    <ClInclude Include="Src\Layers\HelperLayer.h" />
+    <ClInclude Include="Src\Layers\IntroLayer.h" />
+    <ClInclude Include="Src\Layers\LevelLayer.h" />
+    <ClInclude Include="Src\Layers\PreAlphaLayer.h" />
+    <ClInclude Include="Include\Manager.h" />
+    <ClInclude Include="Src\Scenes\BasicScene.h" />
+    <ClInclude Include="Src\Scenes\IntroScene.h" />
+    <ClInclude Include="Src\Scenes\PlayScene.h" />
+    <ClInclude Include="Src\Scenes\TransitionScene.h" />
+    <ClInclude Include="Src\Transitions\BasicTransition.h" />
+    <ClInclude Include="Src\Transitions\FadeTransition.h" />
+    <ClInclude Include="Src\Transitions\NullTransition.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\shared\shared.vcxproj">
