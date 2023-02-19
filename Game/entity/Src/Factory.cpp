@@ -43,17 +43,16 @@ Factory::Factory(Shared::MessageBus& messageBus, const Shared::SheetManager& she
 
 Factory::~Factory() = default;
 
-std::unique_ptr<BasicEntity> Factory::Create(const std::string& typeStr, const PropertyData& data,
-                                             const Shared::MapData& mapData) const
+std::unique_ptr<BasicEntity> Factory::Create(const PropertyData& data, const Shared::MapData& mapData) const
 {
-    auto it = map_.find(typeStr);
+    auto it = map_.find(data.typeStr_);
 
     if (it != map_.end()) {
         EntityService service(messageBus_, sheetManager_, cameraManager_, entityManager_, mapData);
         return it->second(id_++, data, service);
     }
 
-    LOG_ERROR("Could not create entity of type: %s", typeStr.c_str());
+    LOG_ERROR("Could not create entity of type: %s", data.typeStr_.c_str());
     return nullptr;
 }
 
