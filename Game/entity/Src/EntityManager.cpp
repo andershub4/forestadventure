@@ -74,6 +74,9 @@ void EntityManager::CreateTileEntity(const sf::Vector2f& pos, const Shared::Grap
 
 void EntityManager::DeleteEntity(EntityId id)
 {
+    if (std::find(deletedEntities_.begin(), deletedEntities_.end(), id) != deletedEntities_.end()) {
+        LOG_WARN("id: %u is already ready to be deleted", id);
+    }
     deletedEntities_.push_back(id);
 }
 
