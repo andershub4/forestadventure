@@ -37,7 +37,7 @@ void BasicEntity::InitCB()
     ReadProperties(data_.properties_);
 
     auto idleState = RegisterState(StateType::Idle);
-    idleState->RegisterBeginCB([this]() { OnBeginIdle(); });
+    idleState->RegisterEnterCB([this]() { OnBeginIdle(); });
     auto deadState = RegisterDeadState();
     RegisterStates(idleState, deadState, data_);
 
@@ -124,7 +124,7 @@ void BasicEntity::RegisterUninitializedState()
 std::shared_ptr<State> BasicEntity::RegisterDeadState()
 {
     auto deadState = stateMachine_.RegisterState(StateType::Dead, body_);
-    deadState->RegisterBeginCB([this]() {
+    deadState->RegisterEnterCB([this]() {
         OnBeginDie();
         entityService_.DeleteEntity(id_);
     });
