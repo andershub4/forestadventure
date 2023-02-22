@@ -19,6 +19,7 @@ State::State(StateType stateType, Body &body)
     : stateType_(stateType)
     , shape_(body)
     , beginCB_([]() {})
+    , exitCB_([]() {})
 {}
 
 State::~State() = default;
@@ -34,6 +35,7 @@ void State::Enter(std::shared_ptr<BasicEvent> event)
 
 void State::Exit()
 {
+    exitCB_();
     for (auto a : abilities_) {
         a->Exit();
     }
@@ -64,6 +66,11 @@ void State::HandleEvent(std::shared_ptr<BasicEvent> event)
 void State::RegisterBeginCB(std::function<void()> beginCB)
 {
     beginCB_ = beginCB;
+}
+
+void State::RegisterExitCB(std::function<void()> exitCB)
+{
+    exitCB_ = exitCB;
 }
 
 void State::RegisterAbility(std::shared_ptr<BasicAbility> ability)

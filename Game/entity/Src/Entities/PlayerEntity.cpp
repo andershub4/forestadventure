@@ -11,7 +11,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
-#include "Abilities/ShootAbility.h"
 #include "Camera.h"
 #include "Constant/Entity.h"
 #include "Entities/ArrowEntity.h"
@@ -140,7 +139,7 @@ void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
     body_.position_ += delta;
 }
 
-void PlayerEntity::OnExitShoot()
+void PlayerEntity::OnShoot()
 {
     bool shoot = propertyStore_.Get<bool>("Shoot");
     if (shoot) {
@@ -252,8 +251,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
     attackState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
-    auto shoot = std::make_shared<ShootAbility>(
-        nullptr, [this]() { OnExitShoot(); }, nullptr);
+    attackWeaponState->RegisterExitCB([this]() { OnShoot(); });
     auto attackWeaponAnimations = GetAnimations(animationDatas.at(StateType::AttackWeapon));
     auto updateAnimationAndShoot = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
@@ -263,7 +261,6 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
     };
     auto attackWeaponAnimation = std::make_shared<AnimationSprite>(std::bind(&PlayerEntity::AnimationKey, this),
                                                                    attackWeaponAnimations, updateAnimationAndShoot);
-    attackWeaponState->RegisterAbility(shoot);
     attackWeaponState->RegisterSprite(attackWeaponAnimation);
     attackWeaponState->RegisterEventCB(
         EventType::StartMove, [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
