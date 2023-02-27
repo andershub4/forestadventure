@@ -6,6 +6,7 @@
 
 #include "CoinEntity.h"
 
+#include "AnimationTable.h"
 #include "PropertyData.h"
 #include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
@@ -15,6 +16,12 @@
 namespace FA {
 
 namespace Entity {
+
+namespace {
+
+const Shared::AnimationData idle{Shared::SheetId::Coin, {{0, 0}, 4, 0}, false};
+
+}  // namespace
 
 const std::string CoinEntity::str = "Coin";
 
@@ -27,11 +34,10 @@ CoinEntity::~CoinEntity() = default;
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto getKey = [this]() { return "Idle"; };
-    auto a = entityService_.MakeAnimation({Shared::SheetId::Coin, {{0, 0}, 4, 0}, false});
-    std::unordered_map<std::string, Shared::Animation> animations{{"Idle", a}};
-    auto idleAnimation = std::make_shared<AnimationSprite>(getKey, animations);
-    idleState->RegisterSprite(idleAnimation);
+    AnimationTable table([]() { return "Idle"; });
+    table.RegisterAnimation("Idle", entityService_.MakeAnimation(idle));
+    auto idleSprite = std::make_shared<AnimationSprite>(table);
+    idleState->RegisterSprite(idleSprite);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }
 

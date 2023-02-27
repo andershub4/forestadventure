@@ -10,6 +10,7 @@
 #include <string>
 #include <unordered_map>
 
+#include "AnimationTable.h"
 #include "BasicSprite.h"
 #include "Resource/Animation.h"
 
@@ -20,20 +21,16 @@ namespace Entity {
 class AnimationSprite : public BasicSprite
 {
 public:
-    AnimationSprite(std::function<std::string()> getKey,
-                    const std::unordered_map<std::string, Shared::Animation> &animations,
-                    std::function<void(const Shared::Animation &)>, bool center = true);
-    AnimationSprite(std::function<std::string()> getKey,
-                    const std::unordered_map<std::string, Shared::Animation> &animations, bool center = true);
+    AnimationSprite(const AnimationTable &table, std::function<void(const Shared::Animation &)>, bool center = true);
+    AnimationSprite(const AnimationTable &table, bool center = true);
     virtual ~AnimationSprite();
 
     virtual void Enter() override;
     virtual void Update(float deltaTime) override;
 
 private:
-    std::unordered_map<std::string, Shared::Animation> map_;
+    AnimationTable table_;
     Shared::Animation currentAnimation_;
-    std::function<std::string()> getKey_;
     std::function<void(const Shared::Animation &)> updateFn_;
     bool center_{};
 };

@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Src\Abilities\BasicAbility.h" />
     <ClInclude Include="Src\Abilities\MoveAbility.h" />
+    <ClInclude Include="Src\AnimationTable.h" />
     <ClInclude Include="Src\Body.h" />
     <ClInclude Include="Src\Constant\Entity.h" />
     <ClInclude Include="Src\Entities\ArrowEntity.h" />
@@ -185,6 +186,7 @@
   <ItemGroup>
     <ClCompile Include="Src\Abilities\BasicAbility.cpp" />
     <ClCompile Include="Src\Abilities\MoveAbility.cpp" />
+    <ClCompile Include="Src\AnimationTable.cpp" />
     <ClCompile Include="Src\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Src\Entities\BasicEntity.cpp" />
     <ClCompile Include="Src\Entities\CoinEntity.cpp" />

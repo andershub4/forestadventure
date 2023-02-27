@@ -11,6 +11,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
+#include "AnimationTable.h"
 #include "Camera.h"
 #include "Constant/Entity.h"
 #include "Entities/ArrowEntity.h"
@@ -42,27 +43,25 @@ const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirect
                                                                      {FaceDirection::Right, {15.0, 5.0}},
                                                                      {FaceDirection::Up, {0.0, -15.0}}};
 
-const std::unordered_map<StateType, std::unordered_map<FaceDirection, Shared::AnimationData>> animationDatas = {
-    {StateType::Move,
-     {{FaceDirection::Left, {Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true}},
-      {FaceDirection::Right, {Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, false}},
-      {FaceDirection::Down, {Shared::SheetId::HeroWalkFront, {{0, 0}, 6, 0}, false}},
-      {FaceDirection::Up, {Shared::SheetId::HeroWalkBack, {{0, 0}, 6, 0}, false}}}},
-    {StateType::Idle,
-     {{FaceDirection::Left, {Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true}},
-      {FaceDirection::Right, {Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false}},
-      {FaceDirection::Down, {Shared::SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}},
-      {FaceDirection::Up, {Shared::SheetId::HeroIdleBack, {{0, 0}, 1, 0}, false}}}},
-    {StateType::Attack,
-     {{FaceDirection::Left, {Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true}},
-      {FaceDirection::Right, {Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false}},
-      {FaceDirection::Down, {Shared::SheetId::HeroAttackFront, {{0, 0}, 3, 0}, false}},
-      {FaceDirection::Up, {Shared::SheetId::HeroAttackBack, {{0, 0}, 3, 0}, false}}}},
-    {StateType::AttackWeapon,
-     {{FaceDirection::Left, {Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, true}},
-      {FaceDirection::Right, {Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, false}},
-      {FaceDirection::Down, {Shared::SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false}},
-      {FaceDirection::Up, {Shared::SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0}, false}}}}};
+const Shared::AnimationData idleLeft{Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true};
+const Shared::AnimationData idleRight{Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false};
+const Shared::AnimationData idleDown{Shared::SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false};
+const Shared::AnimationData idleUp{Shared::SheetId::HeroIdleBack, {{0, 0}, 1, 0}, false};
+
+const Shared::AnimationData walkLeft{Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true};
+const Shared::AnimationData walkRight{Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, false};
+const Shared::AnimationData walkDown{Shared::SheetId::HeroWalkFront, {{0, 0}, 6, 0}, false};
+const Shared::AnimationData walkUp{Shared::SheetId::HeroWalkBack, {{0, 0}, 6, 0}, false};
+
+const Shared::AnimationData attackLeft{Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true};
+const Shared::AnimationData attackRight{Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false};
+const Shared::AnimationData attackDown{Shared::SheetId::HeroAttackFront, {{0, 0}, 3, 0}, false};
+const Shared::AnimationData attackUp{Shared::SheetId::HeroAttackBack, {{0, 0}, 3, 0}, false};
+
+const Shared::AnimationData attackWeaponLeft{Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, true};
+const Shared::AnimationData attackWeaponRight{Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, false};
+const Shared::AnimationData attackWeaponDown{Shared::SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false};
+const Shared::AnimationData attackWeaponUp{Shared::SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0}, false};
 
 }  // namespace
 
@@ -207,10 +206,14 @@ void PlayerEntity::ReadProperties(const std::unordered_map<std::string, std::str
 void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                   const PropertyData& data)
 {
-    auto idleAnimations = GetAnimations(animationDatas.at(StateType::Idle));
-    auto idleAnimation =
-        std::make_shared<AnimationSprite>(std::bind(&PlayerEntity::AnimationKey, this), idleAnimations);
-    idleState->RegisterSprite(idleAnimation);
+    AnimationTable idleTable([this]() { return AnimationKey(); });
+    idleTable.RegisterAnimation("Left", entityService_.MakeAnimation(idleLeft));
+    idleTable.RegisterAnimation("Right", entityService_.MakeAnimation(idleRight));
+    idleTable.RegisterAnimation("Down", entityService_.MakeAnimation(idleDown));
+    idleTable.RegisterAnimation("Up", entityService_.MakeAnimation(idleUp));
+    auto idleSprite = std::make_shared<AnimationSprite>(idleTable);
+
+    idleState->RegisterSprite(idleSprite);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
@@ -221,47 +224,56 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
     });
     idleState->RegisterIgnoreEvents({EventType::Collision});
 
-    deadState->RegisterSprite(idleAnimation);
+    deadState->RegisterSprite(idleSprite);
 
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto moveAnimations = GetAnimations(animationDatas.at(StateType::Move));
-    auto moveAnimation =
-        std::make_shared<AnimationSprite>(std::bind(&PlayerEntity::AnimationKey, this), moveAnimations);
+    AnimationTable moveTable([this]() { return AnimationKey(); });
+    moveTable.RegisterAnimation("Left", entityService_.MakeAnimation(walkLeft));
+    moveTable.RegisterAnimation("Right", entityService_.MakeAnimation(walkRight));
+    moveTable.RegisterAnimation("Down", entityService_.MakeAnimation(walkDown));
+    moveTable.RegisterAnimation("Up", entityService_.MakeAnimation(walkUp));
+    auto moveSprite = std::make_shared<AnimationSprite>(moveTable);
     moveState->RegisterAbility(move);
-    moveState->RegisterSprite(moveAnimation);
+    moveState->RegisterSprite(moveSprite);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     moveState->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
 
     auto attackState = RegisterState(StateType::Attack);
-    auto attackAnimations = GetAnimations(animationDatas.at(StateType::Attack));
     auto updateAnimationAndComplete = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto attackAnimation = std::make_shared<AnimationSprite>(std::bind(&PlayerEntity::AnimationKey, this),
-                                                             attackAnimations, updateAnimationAndComplete);
-    attackState->RegisterSprite(attackAnimation);
+    AnimationTable attackTable([this]() { return AnimationKey(); });
+    attackTable.RegisterAnimation("Left", entityService_.MakeAnimation(attackLeft));
+    attackTable.RegisterAnimation("Right", entityService_.MakeAnimation(attackRight));
+    attackTable.RegisterAnimation("Down", entityService_.MakeAnimation(attackDown));
+    attackTable.RegisterAnimation("Up", entityService_.MakeAnimation(attackUp));
+    auto attackSprite = std::make_shared<AnimationSprite>(attackTable, updateAnimationAndComplete);
+    attackState->RegisterSprite(attackSprite);
     attackState->RegisterEventCB(EventType::StartMove,
                                  [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     attackState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
     attackWeaponState->RegisterExitCB([this]() { OnShoot(); });
-    auto attackWeaponAnimations = GetAnimations(animationDatas.at(StateType::AttackWeapon));
     auto updateAnimationAndShoot = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
             propertyStore_.Set<bool>("Shoot", true);
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto attackWeaponAnimation = std::make_shared<AnimationSprite>(std::bind(&PlayerEntity::AnimationKey, this),
-                                                                   attackWeaponAnimations, updateAnimationAndShoot);
-    attackWeaponState->RegisterSprite(attackWeaponAnimation);
+    AnimationTable attackWeaponTable([this]() { return AnimationKey(); });
+    attackWeaponTable.RegisterAnimation("Left", entityService_.MakeAnimation(attackWeaponLeft));
+    attackWeaponTable.RegisterAnimation("Right", entityService_.MakeAnimation(attackWeaponRight));
+    attackWeaponTable.RegisterAnimation("Down", entityService_.MakeAnimation(attackWeaponDown));
+    attackWeaponTable.RegisterAnimation("Up", entityService_.MakeAnimation(attackWeaponUp));
+    auto attackWeaponSprite = std::make_shared<AnimationSprite>(attackWeaponTable, updateAnimationAndShoot);
+    attackWeaponState->RegisterSprite(attackWeaponSprite);
     attackWeaponState->RegisterEventCB(
         EventType::StartMove, [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     attackWeaponState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});

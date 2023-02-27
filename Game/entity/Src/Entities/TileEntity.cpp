@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "AnimationTable.h"
 #include "Constant/Entity.h"
 #include "PropertyData.h"
 #include "Sprites/AnimationSprite.h"
@@ -28,12 +29,12 @@ TileEntity::~TileEntity() = default;
 void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto getKey = [this]() { return "Idle"; };
     float t = Constant::stdSwitchTime;
     auto a = Shared::Animation(data.graphic_.animation_, 0, t);
-    std::unordered_map<std::string, Shared::Animation> animations{{"Idle", a}};
-    auto idleAnimation = std::make_shared<AnimationSprite>(getKey, animations, false);
-    idleState->RegisterSprite(idleAnimation);
+    AnimationTable table([]() { return "Idle"; });
+    table.RegisterAnimation("Idle", a);
+    auto idleSprite = std::make_shared<AnimationSprite>(table, false);
+    idleState->RegisterSprite(idleSprite);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }
 

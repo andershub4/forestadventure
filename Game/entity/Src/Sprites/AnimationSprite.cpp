@@ -12,19 +12,15 @@ namespace FA {
 
 namespace Entity {
 
-AnimationSprite::AnimationSprite(std::function<std::string()> getKey,
-                                 const std::unordered_map<std::string, Shared::Animation> &animations,
-                                 std::function<void(const Shared::Animation &)> updateFn, bool center)
-    : getKey_(getKey)
-    , map_(animations)
+AnimationSprite::AnimationSprite(const AnimationTable &table, std::function<void(const Shared::Animation &)> updateFn,
+                                 bool center)
+    : table_(table)
     , updateFn_(updateFn)
     , center_(center)
 {}
 
-AnimationSprite::AnimationSprite(std::function<std::string()> getKey,
-                                 const std::unordered_map<std::string, Shared::Animation> &animations, bool center)
-    : getKey_(getKey)
-    , map_(animations)
+AnimationSprite::AnimationSprite(const AnimationTable &table, bool center)
+    : table_(table)
     , updateFn_([](const Shared::Animation &) {})
     , center_(center)
 {}
@@ -33,13 +29,9 @@ AnimationSprite::~AnimationSprite() = default;
 
 void AnimationSprite::Enter()
 {
-    auto key = getKey_();
-    if (map_.find(key) != map_.end()) {
-        currentAnimation_ = map_.at(key);
+    currentAnimation_ = table_.GetAnimation();
+    if (currentAnimation_.IsValid()) {
         currentAnimation_.Start();
-    }
-    else {
-        LOG_ERROR("Could not find key: %s", key.c_str());
     }
 }
 

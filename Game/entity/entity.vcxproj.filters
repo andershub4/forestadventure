@@ -135,6 +135,9 @@
     <ClInclude Include="Src\Events\DestroyEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Src\AnimationTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Abilities\BasicAbility.cpp">
@@ -192,6 +195,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\StateMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AnimationTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
