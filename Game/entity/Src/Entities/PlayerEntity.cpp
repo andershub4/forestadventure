@@ -224,8 +224,6 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
     });
     idleState->RegisterIgnoreEvents({EventType::Collision});
 
-    deadState->RegisterSprite(idleSprite);
-
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
