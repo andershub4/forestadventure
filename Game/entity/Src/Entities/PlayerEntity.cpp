@@ -217,13 +217,13 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
     moveState->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
 
     auto attackState = RegisterState(StateType::Attack);
-    auto updateAnimationAndComplete = [this](const Shared::Animation& animation) {
+    auto attackAnimationUpdateCB = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
     auto attackSprite = std::make_shared<AnimationSprite<FaceDirection>>(
-        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); }, updateAnimationAndComplete);
+        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); }, attackAnimationUpdateCB);
     attackSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(attackLeft));
     attackSprite->RegisterResource(FaceDirection::Right, entityService_.MakeAnimation(attackRight));
     attackSprite->RegisterResource(FaceDirection::Down, entityService_.MakeAnimation(attackDown));
@@ -235,14 +235,14 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
 
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
     attackWeaponState->RegisterExitCB([this]() { OnShoot(); });
-    auto updateAnimationAndShoot = [this](const Shared::Animation& animation) {
+    auto attackWeaponAnimationUpdateCB = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
             propertyStore_.Set<bool>("Shoot", true);
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
     auto attackWeaponSprite = std::make_shared<AnimationSprite<FaceDirection>>(
-        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); }, updateAnimationAndShoot);
+        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); }, attackWeaponAnimationUpdateCB);
     attackWeaponSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(attackWeaponLeft));
     attackWeaponSprite->RegisterResource(FaceDirection::Right, entityService_.MakeAnimation(attackWeaponRight));
     attackWeaponSprite->RegisterResource(FaceDirection::Down, entityService_.MakeAnimation(attackWeaponDown));
