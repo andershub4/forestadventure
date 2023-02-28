@@ -80,6 +80,12 @@ void MoleEntity::ReadProperties(const std::unordered_map<std::string, std::strin
 void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
+    RegisterIdleState(idleState);
+    RegisterMoveState();
+}
+
+void MoleEntity::RegisterIdleState(std::shared_ptr<State> idleState)
+{
     auto idleSprite = std::make_shared<AnimationSprite<FaceDirection>>(
         [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
     idleSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(idleLeft));
@@ -90,7 +96,10 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterIgnoreEvents({EventType::StopMove, EventType::Collision});
+}
 
+void MoleEntity::RegisterMoveState()
+{
     auto moveState = RegisterState(StateType::Move);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },

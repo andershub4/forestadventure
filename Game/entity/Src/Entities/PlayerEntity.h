@@ -40,6 +40,11 @@ private:
     void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
     void OnShoot();
+
+    void RegisterIdleState(std::shared_ptr<State> idleState);
+    void RegisterMoveState();
+    void RegisterAttackState();
+    void RegisterAttackWeaponState();
 };
 
 }  // namespace Entity
