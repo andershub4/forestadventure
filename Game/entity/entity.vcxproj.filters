@@ -135,7 +135,7 @@
     <ClInclude Include="Src\Events\DestroyEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\AnimationTable.h">
+    <ClInclude Include="Src\ResourceTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -167,13 +167,7 @@
     <ClCompile Include="Src\Entities\TileEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Sprites\AnimationSprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Sprites\BasicSprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Sprites\ImageSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\EntityManager.cpp">
@@ -195,9 +189,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\StateMachine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\AnimationTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

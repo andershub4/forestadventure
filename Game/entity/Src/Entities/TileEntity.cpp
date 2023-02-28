@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "AnimationTable.h"
 #include "Constant/Entity.h"
 #include "PropertyData.h"
 #include "Sprites/AnimationSprite.h"
@@ -31,9 +30,8 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 {
     float t = Constant::stdSwitchTime;
     auto a = Shared::Animation(data.graphic_.animation_, 0, t);
-    AnimationTable table([]() { return "Idle"; });
-    table.RegisterAnimation("Idle", a);
-    auto idleSprite = std::make_shared<AnimationSprite>(table, false);
+    auto idleSprite = std::make_shared<AnimationSprite<std::string>>([]() { return "Idle"; }, false);
+    idleSprite->RegisterResource("Idle", a);
     idleState->RegisterSprite(idleSprite);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }

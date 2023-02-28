@@ -6,7 +6,6 @@
 
 #include "CoinEntity.h"
 
-#include "AnimationTable.h"
 #include "PropertyData.h"
 #include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
@@ -34,9 +33,8 @@ CoinEntity::~CoinEntity() = default;
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    AnimationTable table([]() { return "Idle"; });
-    table.RegisterAnimation("Idle", entityService_.MakeAnimation(idle));
-    auto idleSprite = std::make_shared<AnimationSprite>(table);
+    auto idleSprite = std::make_shared<AnimationSprite<std::string>>([]() { return "Idle"; });
+    idleSprite->RegisterResource("Idle", entityService_.MakeAnimation(idle));
     idleState->RegisterSprite(idleSprite);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }

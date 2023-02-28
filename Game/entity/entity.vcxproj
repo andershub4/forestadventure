@@ -143,7 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Src\Abilities\BasicAbility.h" />
     <ClInclude Include="Src\Abilities\MoveAbility.h" />
-    <ClInclude Include="Src\AnimationTable.h" />
+    <ClInclude Include="Src\ResourceTable.h" />
     <ClInclude Include="Src\Body.h" />
     <ClInclude Include="Src\Constant\Entity.h" />
     <ClInclude Include="Src\Entities\ArrowEntity.h" />
@@ -186,7 +186,6 @@
   <ItemGroup>
     <ClCompile Include="Src\Abilities\BasicAbility.cpp" />
     <ClCompile Include="Src\Abilities\MoveAbility.cpp" />
-    <ClCompile Include="Src\AnimationTable.cpp" />
     <ClCompile Include="Src\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Src\Entities\BasicEntity.cpp" />
     <ClCompile Include="Src\Entities\CoinEntity.cpp" />
@@ -199,9 +198,7 @@
     <ClCompile Include="Src\Factory.cpp" />
     <ClCompile Include="Src\PropertyConverter.cpp" />
     <ClCompile Include="Src\Shape.cpp" />
-    <ClCompile Include="Src\Sprites\AnimationSprite.cpp" />
     <ClCompile Include="Src\Sprites\BasicSprite.cpp" />
-    <ClCompile Include="Src\Sprites\ImageSprite.cpp" />
     <ClCompile Include="Src\State.cpp" />
     <ClCompile Include="Src\StateMachine.cpp" />
   </ItemGroup>

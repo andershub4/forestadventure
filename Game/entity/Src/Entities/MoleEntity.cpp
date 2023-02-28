@@ -6,8 +6,6 @@
 
 #include "MoleEntity.h"
 
-#include <sstream>
-
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
@@ -64,27 +62,6 @@ void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
     body_.position_ += delta;
 }
 
-std::string MoleEntity::AnimationKey() const
-{
-    std::stringstream ss;
-    auto dir = propertyStore_.Get<FaceDirection>("FaceDirection");
-    ss << dir;
-    return ss.str();
-}
-
-std::unordered_map<std::string, Shared::Animation> MoleEntity::GetAnimations(
-    const std::unordered_map<FaceDirection, Shared::AnimationData>& data) const
-{
-    std::unordered_map<std::string, Shared::Animation> animations;
-    for (const auto& dir : data) {
-        std::stringstream ss;
-        ss << dir.first;
-        auto a = entityService_.MakeAnimation(dir.second);
-        animations[ss.str()] = a;
-    }
-    return animations;
-}
-
 void MoleEntity::RegisterProperties()
 {
     propertyStore_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
@@ -103,12 +80,12 @@ void MoleEntity::ReadProperties(const std::unordered_map<std::string, std::strin
 void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    AnimationTable idleTable([this]() { return AnimationKey(); });
-    idleTable.RegisterAnimation("Left", entityService_.MakeAnimation(idleLeft));
-    idleTable.RegisterAnimation("Right", entityService_.MakeAnimation(idleRight));
-    idleTable.RegisterAnimation("Down", entityService_.MakeAnimation(idleDown));
-    idleTable.RegisterAnimation("Up", entityService_.MakeAnimation(idleUp));
-    auto idleSprite = std::make_shared<AnimationSprite>(idleTable);
+    auto idleSprite = std::make_shared<AnimationSprite<FaceDirection>>(
+        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
+    idleSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(idleLeft));
+    idleSprite->RegisterResource(FaceDirection::Right, entityService_.MakeAnimation(idleRight));
+    idleSprite->RegisterResource(FaceDirection::Down, entityService_.MakeAnimation(idleDown));
+    idleSprite->RegisterResource(FaceDirection::Up, entityService_.MakeAnimation(idleUp));
     idleState->RegisterSprite(idleSprite);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -118,12 +95,12 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    AnimationTable moveTable([this]() { return AnimationKey(); });
-    moveTable.RegisterAnimation("Left", entityService_.MakeAnimation(walkLeft));
-    moveTable.RegisterAnimation("Right", entityService_.MakeAnimation(walkRight));
-    moveTable.RegisterAnimation("Down", entityService_.MakeAnimation(walkDown));
-    moveTable.RegisterAnimation("Up", entityService_.MakeAnimation(walkUp));
-    auto moveSprite = std::make_shared<AnimationSprite>(moveTable);
+    auto moveSprite = std::make_shared<AnimationSprite<FaceDirection>>(
+        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
+    moveSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(walkLeft));
+    moveSprite->RegisterResource(FaceDirection::Right, entityService_.MakeAnimation(walkRight));
+    moveSprite->RegisterResource(FaceDirection::Down, entityService_.MakeAnimation(walkDown));
+    moveSprite->RegisterResource(FaceDirection::Up, entityService_.MakeAnimation(walkUp));
     moveState->RegisterAbility(move);
     moveState->RegisterSprite(moveSprite);
     moveState->RegisterEventCB(EventType::StopMove,

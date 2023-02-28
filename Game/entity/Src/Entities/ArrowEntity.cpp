@@ -95,8 +95,6 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                  const PropertyData& data)
 {
-    auto getKey = [this]() { return "Move"; };
-
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterIgnoreEvents({EventType::Collision});
@@ -105,11 +103,10 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity * 8.0f, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto i = entityService_.MakeImage({Shared::SheetId::Arrow, {0, 0}});
-    std::unordered_map<std::string, Shared::Image> images{{"Move", i}};
-    auto moveImage = std::make_shared<ImageSprite>(getKey, images);
+    auto moveSprite = std::make_shared<ImageSprite<std::string>>([]() { return "Move"; });
+    moveSprite->RegisterImage("Move", entityService_.MakeImage({Shared::SheetId::Arrow, {0, 0}}));
     moveState->RegisterAbility(move);
-    moveState->RegisterSprite(moveImage);
+    moveState->RegisterSprite(moveSprite);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }

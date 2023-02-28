@@ -8,7 +8,6 @@
 
 #include "BasicEntity.h"
 
-#include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 
 namespace FA {
@@ -41,9 +40,6 @@ private:
     void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
     void OnShoot();
-    std::string AnimationKey() const;
-    std::unordered_map<std::string, Shared::Animation> GetAnimations(
-        const std::unordered_map<FaceDirection, Shared::AnimationData>& data) const;
 };
 
 }  // namespace Entity
