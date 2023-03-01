@@ -34,6 +34,8 @@ void BasicEntity::InitCB()
 {
     RegisterProperties();
     body_.position_ = data_.position_;
+    body_.scale_ = 1.0;
+    body_.rotation_ = 0.0;
     ReadProperties(data_.properties_);
 
     auto idleState = RegisterState(StateType::Idle);

@@ -47,7 +47,7 @@ public:
 protected:
     PropertyStore propertyStore_;
     EntityService entityService_;
-    Body body_;
+    Body body_{};
 
 protected:
     virtual std::vector<Shared::MessageType> Messages() const { return {}; }

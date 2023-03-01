@@ -16,6 +16,7 @@ struct Body
 {
     sf::Vector2f position_;
     float rotation_{};
+    float scale_{};
 };
 
 }  // namespace Entity
