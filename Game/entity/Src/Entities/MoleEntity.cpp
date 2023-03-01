@@ -23,15 +23,17 @@ namespace Entity {
 
 namespace {
 
-const Shared::AnimationData idleLeft{Shared::SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true};
-const Shared::AnimationData idleRight{Shared::SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false};
-const Shared::AnimationData idleDown{Shared::SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false};
-const Shared::AnimationData idleUp{Shared::SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false};
+const std::unordered_map<FaceDirection, Shared::AnimationData> idleData{
+    {FaceDirection::Left, {Shared::SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true}},
+    {FaceDirection::Right, {Shared::SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false}},
+    {FaceDirection::Down, {Shared::SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}},
+    {FaceDirection::Up, {Shared::SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}}};
 
-const Shared::AnimationData walkLeft{Shared::SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true};
-const Shared::AnimationData walkRight{Shared::SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false};
-const Shared::AnimationData walkDown{Shared::SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false};
-const Shared::AnimationData walkUp{Shared::SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false};
+const std::unordered_map<FaceDirection, Shared::AnimationData> moveData{
+    {FaceDirection::Left, {Shared::SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true}},
+    {FaceDirection::Right, {Shared::SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false}},
+    {FaceDirection::Down, {Shared::SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false}},
+    {FaceDirection::Up, {Shared::SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false}}};
 
 }  // namespace
 
@@ -86,13 +88,12 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 
 void MoleEntity::RegisterIdleState(std::shared_ptr<State> idleState)
 {
-    auto idleSprite = std::make_shared<AnimationSprite<FaceDirection>>(
+    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
         [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
-    idleSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(idleLeft));
-    idleSprite->RegisterResource(FaceDirection::Right, entityService_.MakeAnimation(idleRight));
-    idleSprite->RegisterResource(FaceDirection::Down, entityService_.MakeAnimation(idleDown));
-    idleSprite->RegisterResource(FaceDirection::Up, entityService_.MakeAnimation(idleUp));
-    idleState->RegisterSprite(idleSprite);
+    for (const auto& entry : idleData) {
+        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+    }
+    idleState->RegisterSprite(sprite);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterIgnoreEvents({EventType::StopMove, EventType::Collision});
@@ -104,14 +105,13 @@ void MoleEntity::RegisterMoveState()
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto moveSprite = std::make_shared<AnimationSprite<FaceDirection>>(
+    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
         [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
-    moveSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(walkLeft));
-    moveSprite->RegisterResource(FaceDirection::Right, entityService_.MakeAnimation(walkRight));
-    moveSprite->RegisterResource(FaceDirection::Down, entityService_.MakeAnimation(walkDown));
-    moveSprite->RegisterResource(FaceDirection::Up, entityService_.MakeAnimation(walkUp));
+    for (const auto& entry : moveData) {
+        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+    }
     moveState->RegisterAbility(move);
-    moveState->RegisterSprite(moveSprite);
+    moveState->RegisterSprite(sprite);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }

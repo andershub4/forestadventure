@@ -40,25 +40,29 @@ const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirect
                                                                      {FaceDirection::Right, {15.0, 5.0}},
                                                                      {FaceDirection::Up, {0.0, -15.0}}};
 
-const Shared::AnimationData idleLeft{Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true};
-const Shared::AnimationData idleRight{Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false};
-const Shared::AnimationData idleDown{Shared::SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false};
-const Shared::AnimationData idleUp{Shared::SheetId::HeroIdleBack, {{0, 0}, 1, 0}, false};
+const std::unordered_map<FaceDirection, Shared::AnimationData> idleData{
+    {FaceDirection::Left, {Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true}},
+    {FaceDirection::Right, {Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false}},
+    {FaceDirection::Down, {Shared::SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}},
+    {FaceDirection::Up, {Shared::SheetId::HeroIdleBack, {{0, 0}, 1, 0}, false}}};
 
-const Shared::AnimationData walkLeft{Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true};
-const Shared::AnimationData walkRight{Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, false};
-const Shared::AnimationData walkDown{Shared::SheetId::HeroWalkFront, {{0, 0}, 6, 0}, false};
-const Shared::AnimationData walkUp{Shared::SheetId::HeroWalkBack, {{0, 0}, 6, 0}, false};
+const std::unordered_map<FaceDirection, Shared::AnimationData> moveData{
+    {FaceDirection::Left, {Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true}},
+    {FaceDirection::Right, {Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, false}},
+    {FaceDirection::Down, {Shared::SheetId::HeroWalkFront, {{0, 0}, 6, 0}, false}},
+    {FaceDirection::Up, {Shared::SheetId::HeroWalkBack, {{0, 0}, 6, 0}, false}}};
 
-const Shared::AnimationData attackLeft{Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true};
-const Shared::AnimationData attackRight{Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false};
-const Shared::AnimationData attackDown{Shared::SheetId::HeroAttackFront, {{0, 0}, 3, 0}, false};
-const Shared::AnimationData attackUp{Shared::SheetId::HeroAttackBack, {{0, 0}, 3, 0}, false};
+const std::unordered_map<FaceDirection, Shared::AnimationData> attackData{
+    {FaceDirection::Left, {Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true}},
+    {FaceDirection::Right, {Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false}},
+    {FaceDirection::Down, {Shared::SheetId::HeroAttackFront, {{0, 0}, 3, 0}, false}},
+    {FaceDirection::Up, {Shared::SheetId::HeroAttackBack, {{0, 0}, 3, 0}, false}}};
 
-const Shared::AnimationData attackWeaponLeft{Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, true};
-const Shared::AnimationData attackWeaponRight{Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, false};
-const Shared::AnimationData attackWeaponDown{Shared::SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false};
-const Shared::AnimationData attackWeaponUp{Shared::SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0}, false};
+const std::unordered_map<FaceDirection, Shared::AnimationData> attackWData{
+    {FaceDirection::Left, {Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, true}},
+    {FaceDirection::Right, {Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, false}},
+    {FaceDirection::Down, {Shared::SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false}},
+    {FaceDirection::Up, {Shared::SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0}, false}}};
 
 }  // namespace
 
@@ -196,13 +200,12 @@ void PlayerEntity::OnInit()
 
 void PlayerEntity::RegisterIdleState(std::shared_ptr<State> idleState)
 {
-    auto idleSprite = std::make_shared<AnimationSprite<FaceDirection>>(
+    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
         [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
-    idleSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(idleLeft));
-    idleSprite->RegisterResource(FaceDirection::Right, entityService_.MakeAnimation(idleRight));
-    idleSprite->RegisterResource(FaceDirection::Down, entityService_.MakeAnimation(idleDown));
-    idleSprite->RegisterResource(FaceDirection::Up, entityService_.MakeAnimation(idleUp));
-    idleState->RegisterSprite(idleSprite);
+    for (const auto& entry : idleData) {
+        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+    }
+    idleState->RegisterSprite(sprite);
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     idleState->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
@@ -220,18 +223,18 @@ void PlayerEntity::RegisterMoveState()
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto moveSprite = std::make_shared<AnimationSprite<FaceDirection>>(
+    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
         [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
-    moveSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(walkLeft));
-    moveSprite->RegisterResource(FaceDirection::Right, entityService_.MakeAnimation(walkRight));
-    moveSprite->RegisterResource(FaceDirection::Down, entityService_.MakeAnimation(walkDown));
-    moveSprite->RegisterResource(FaceDirection::Up, entityService_.MakeAnimation(walkUp));
+    for (const auto& entry : moveData) {
+        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+    }
     moveState->RegisterAbility(move);
-    moveState->RegisterSprite(moveSprite);
+    moveState->RegisterSprite(sprite);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     moveState->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
 }
+
 void PlayerEntity::RegisterAttackState()
 {
     auto attackState = RegisterState(StateType::Attack);
@@ -240,13 +243,12 @@ void PlayerEntity::RegisterAttackState()
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto attackSprite = std::make_shared<AnimationSprite<FaceDirection>>(
+    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
         [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); }, attackAnimationUpdateCB);
-    attackSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(attackLeft));
-    attackSprite->RegisterResource(FaceDirection::Right, entityService_.MakeAnimation(attackRight));
-    attackSprite->RegisterResource(FaceDirection::Down, entityService_.MakeAnimation(attackDown));
-    attackSprite->RegisterResource(FaceDirection::Up, entityService_.MakeAnimation(attackUp));
-    attackState->RegisterSprite(attackSprite);
+    for (const auto& entry : attackData) {
+        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+    }
+    attackState->RegisterSprite(sprite);
     attackState->RegisterEventCB(EventType::StartMove,
                                  [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     attackState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
@@ -262,13 +264,12 @@ void PlayerEntity::RegisterAttackWeaponState()
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto attackWeaponSprite = std::make_shared<AnimationSprite<FaceDirection>>(
+    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
         [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); }, attackWeaponAnimationUpdateCB);
-    attackWeaponSprite->RegisterResource(FaceDirection::Left, entityService_.MakeAnimation(attackWeaponLeft));
-    attackWeaponSprite->RegisterResource(FaceDirection::Right, entityService_.MakeAnimation(attackWeaponRight));
-    attackWeaponSprite->RegisterResource(FaceDirection::Down, entityService_.MakeAnimation(attackWeaponDown));
-    attackWeaponSprite->RegisterResource(FaceDirection::Up, entityService_.MakeAnimation(attackWeaponUp));
-    attackWeaponState->RegisterSprite(attackWeaponSprite);
+    for (const auto& entry : attackWData) {
+        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+    }
+    attackWeaponState->RegisterSprite(sprite);
     attackWeaponState->RegisterEventCB(
         EventType::StartMove, [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     attackWeaponState->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
