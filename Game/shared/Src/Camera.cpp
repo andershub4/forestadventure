@@ -19,7 +19,7 @@ namespace Shared {
 Camera::Camera(const sf::Vector2u& viewSize, const sf::Vector2u& mapSize)
 {
     auto size_f = static_cast<sf::Vector2f>(viewSize);
-    const float zoomFactor = 0.5;
+    const float zoomFactor = 0.4f;
     view_.setSize(size_f);
     view_.zoom(zoomFactor);
     auto centerPos = size_f / (2.0f * (1 / zoomFactor));
