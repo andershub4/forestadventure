@@ -33,9 +33,9 @@ CoinEntity::~CoinEntity() = default;
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto idleSprite = std::make_shared<AnimationSprite<std::string>>([]() { return "Idle"; });
-    idleSprite->RegisterResource("Idle", entityService_.MakeAnimation(idle));
-    idleState->RegisterSprite(idleSprite);
+    auto sprite = std::make_shared<AnimationSprite<std::string>>([]() { return "Idle"; });
+    sprite->RegisterResource("Idle", entityService_.MakeAnimation(idle));
+    idleState->RegisterSprite(sprite);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }
 
