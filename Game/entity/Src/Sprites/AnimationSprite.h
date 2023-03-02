@@ -22,16 +22,9 @@ template <class KeyT>
 class AnimationSprite : public BasicSprite
 {
 public:
-    AnimationSprite(std::function<KeyT()> keyFn, std::function<void(const Shared::Animation &)> updateFn,
-                    bool center = true)
-        : table_(keyFn)
-        , updateFn_(updateFn)
-        , center_(center)
-    {}
-
     AnimationSprite(std::function<KeyT()> keyFn, bool center = true)
         : table_(keyFn)
-        , updateFn_([](const Shared::Animation &) {})
+        , updateCB_([](const Shared::Animation &) {})
         , center_(center)
     {}
 
@@ -53,7 +46,7 @@ public:
             if (center_) {
                 sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
             }
-            updateFn_(currentAnimation_);
+            updateCB_(currentAnimation_);
         }
     }
 
@@ -62,10 +55,12 @@ public:
         table_.RegisterResource(key, animation);
     }
 
+    void RegisterUpdateCB(std::function<void(const Shared::Animation &)> updateCB) { updateCB_ = updateCB; }
+
 private:
     ResourceTable<KeyT, Shared::Animation> table_;
     Shared::Animation currentAnimation_;
-    std::function<void(const Shared::Animation &)> updateFn_;
+    std::function<void(const Shared::Animation &)> updateCB_;
     bool center_{};
 };
 

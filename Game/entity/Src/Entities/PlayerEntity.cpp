@@ -244,7 +244,8 @@ void PlayerEntity::RegisterAttackState()
         }
     };
     auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
-        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); }, attackAnimationUpdateCB);
+        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
+    sprite->RegisterUpdateCB(attackAnimationUpdateCB);
     for (const auto& entry : attackData) {
         sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
     }
@@ -265,7 +266,8 @@ void PlayerEntity::RegisterAttackWeaponState()
         }
     };
     auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
-        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); }, attackWeaponAnimationUpdateCB);
+        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
+    sprite->RegisterUpdateCB(attackWeaponAnimationUpdateCB);
     for (const auto& entry : attackWData) {
         sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
     }

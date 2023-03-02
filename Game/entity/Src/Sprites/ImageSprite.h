@@ -22,13 +22,9 @@ template <class KeyT>
 class ImageSprite : public BasicSprite
 {
 public:
-    ImageSprite(std::function<KeyT()> keyFn, std::function<void(const Shared::Image &)> updateFn)
-        : table_(keyFn)
-        , updateFn_(updateFn)
-    {}
     ImageSprite(std::function<KeyT()> keyFn)
         : table_(keyFn)
-        , updateFn_([](const Shared::Image &) {})
+        , updateCB_([](const Shared::Image &) {})
     {}
 
     virtual ~ImageSprite() = default;
@@ -41,16 +37,18 @@ public:
             currentImage_.Update(deltaTime);
             currentImage_.ApplyTo(sprite_);
             sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
-            updateFn_(currentImage_);
+            updateCB_(currentImage_);
         }
     }
 
     void RegisterImage(const KeyT &key, const Shared::Image &image) { table_.RegisterResource(key, image); }
 
+    void RegisterUpdateCB(std::function<void(const Shared::Image &)> updateCB) { updateCB_ = updateCB; }
+
 private:
     ResourceTable<KeyT, Shared::Image> table_;
     Shared::Image currentImage_;
-    std::function<void(const Shared::Image &)> updateFn_;
+    std::function<void(const Shared::Image &)> updateCB_;
 };
 
 }  // namespace Entity
