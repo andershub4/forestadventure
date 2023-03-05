@@ -28,7 +28,14 @@ protected:
         , parser_(helper_)
     {}
 
-    const std::string xmlBuffer_ = "xml content";
+    const std::string xmlBuffer_ =
+        "<?xml version =\" 1.0 \" encoding=\" UTF - 8 \"?>\
+                                   < map version = \"1.8\" tiledversion = \"1.8.1\" orientation = \"orthogonal\" renderorder =\
+                                       \"right-down\" width = \"100\" height = \"100\" tilewidth = \"16\" tileheight =\
+                                           \"16\" infinite = \"0\" nextlayerid = \"11\" nextobjectid =\
+                                               \"9\" >\
+        <tileset firstgid = \"1\" source = \"tileset.tsx\" /> <tileset firstgid = \"1089\" source = \"simplewater.tsx\" />\
+        </map>";
     tinyxml2::XMLDocument doc_;
     std::shared_ptr<ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>> helper_;
     TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> parser_;
@@ -39,7 +46,7 @@ TEST_F(TmxParserInt, ParseValidMapShouldSucceed)
     ParsedTmx parsedTmx;
     parser_.Parse(doc_, xmlBuffer_, parsedTmx);
 
-    EXPECT_TRUE(parsedTmx.layers_.empty());
+    EXPECT_FALSE(parsedTmx.tileSets_.empty());
 }
 
 }  // namespace Tile
