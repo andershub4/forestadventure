@@ -8,8 +8,6 @@
 
 #include <gmock/gmock.h>
 
-#include "BasicLogger.h"
-
 namespace LogLib {
 
 class LoggerMock

@@ -41,11 +41,13 @@
     <ClCompile Include="Src\TileMapData_test.cpp" />
     <ClCompile Include="Src\TileService_test.cpp" />
     <ClCompile Include="Src\TileSetFactory_test.cpp" />
-    <ClCompile Include="Src\TmxLogMock.cpp" />
     <ClCompile Include="Src\TmxParser_test.cpp" />
     <ClCompile Include="Src\TsxParser_test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\test_common\test_common.vcxproj">
+      <Project>{4b41cfdf-ee79-4536-ab80-1e91e307970c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\tile\tile.vcxproj">
       <Project>{b998d8ba-9c74-429f-a576-5ee6c6e8ccb6}</Project>
     </ProjectReference>
@@ -57,7 +59,6 @@
     <ClInclude Include="Src\Mock\ParseHelperMock.h" />
     <ClInclude Include="Src\Mock\TileSetFactoryMock.h" />
     <ClInclude Include="Src\Mock\TileSetMock.h" />
-    <ClInclude Include="Src\Mock\TmxLogMock.h" />
     <ClInclude Include="Src\Mock\TmxParserMock.h" />
     <ClInclude Include="Src\Mock\TsxParserMock.h" />
     <ClInclude Include="Src\Mock\XMLMock.h" />
@@ -77,7 +78,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(SolutionDir)logging\Include;$(SolutionDir)logging_test\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)util_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)logging\Include;$(SolutionDir)logging_test\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile_test\Include;$(SolutionDir)util_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>
@@ -109,7 +110,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)logging\Include;$(SolutionDir)logging_test\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)util_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)logging\Include;$(SolutionDir)logging_test\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile_test\Include;$(SolutionDir)util_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>

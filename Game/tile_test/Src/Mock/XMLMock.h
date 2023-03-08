@@ -58,6 +58,7 @@ public:
     MOCK_METHOD(bool, Error, (), (const));
     MOCK_METHOD(const XMLElementMock*, FirstChildElement, (const char* name), (const));
     MOCK_METHOD(XMLElementMock*, FirstChildElement, (const char* name));
+    MOCK_METHOD(const char*, ErrorName, (), (const));
 };
 
 }  // namespace Tile

@@ -13,7 +13,6 @@
     <ClCompile Include="Src\TileSetFactory_test.cpp" />
     <ClCompile Include="Src\TmxParser_test.cpp" />
     <ClCompile Include="Src\TileService_test.cpp" />
-    <ClCompile Include="Src\TmxLogMock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -25,6 +24,5 @@
     <ClInclude Include="Src\Mock\TmxParserMock.h" />
     <ClInclude Include="Src\Mock\TileSetFactoryMock.h" />
     <ClInclude Include="Src\Mock\TileSetMock.h" />
-    <ClInclude Include="Src\Mock\TmxLogMock.h" />
   </ItemGroup>
 </Project>

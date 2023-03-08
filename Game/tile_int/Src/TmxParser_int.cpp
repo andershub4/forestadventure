@@ -8,6 +8,7 @@
 #include <gtest/gtest.h>
 
 #include <tinyxml2/tinyxml2.h>
+#include "Mock/TmxLogMock.h"
 #include "ParseHelper.h"
 
 #include "TmxParser.h"
@@ -36,19 +37,52 @@ protected:
         "\"tileset2.tsx\" />";
     const std::string xmlEndMap_ = "</map>";
 
+    StrictMock<LoggerMock> loggerMock_;
     tinyxml2::XMLDocument doc_;
     std::shared_ptr<ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>> helper_;
     TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> parser_;
 };
+
+TEST_F(TmxParserInt, ParseValidMapShouldFailDueToEmptyXml)
+{
+    ParsedTmx parsedTmx;
+
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Error while parsing: XML_ERROR_EMPTY_DOCUMENT")));
+    bool success = parser_.Parse(doc_, "", parsedTmx);
+
+    ParsedTmx expected{};
+
+    EXPECT_FALSE(success);
+    EXPECT_THAT(parsedTmx, Eq(expected));
+}
+
+TEST_F(TmxParserInt, ParseValidMapShouldFailDueToNoEndMapTag)
+{
+    ParsedTmx parsedTmx;
+    std::stringstream ss;
+    ss << xmlVersion_ << xmlStartMap_ << xmlTileSet_;
+
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Error while parsing: XML_ERROR_PARSING")));
+    bool success = parser_.Parse(doc_, ss.str(), parsedTmx);
+
+    ParsedTmx expected{};
+
+    EXPECT_FALSE(success);
+    EXPECT_THAT(parsedTmx, Eq(expected));
+}
 
 TEST_F(TmxParserInt, ParseValidMapShouldSucceed)
 {
     ParsedTmx parsedTmx;
     std::stringstream ss;
     ss << xmlVersion_ << xmlStartMap_ << xmlTileSet_ << xmlEndMap_;
-    parser_.Parse(doc_, ss.str(), parsedTmx);
+    bool success = parser_.Parse(doc_, ss.str(), parsedTmx);
 
-    EXPECT_FALSE(parsedTmx.tileSets_.empty());
+    ParsedMap expectedMap{"right-down", 100, 100, 16, 16};
+    ParsedTmx expected{expectedMap, {{1, "tileset1.tsx"}, {1089, "tileset2.tsx"}}, {}, {}};
+
+    EXPECT_TRUE(success);
+    EXPECT_THAT(parsedTmx, Eq(expected));
 }
 
 }  // namespace Tile

@@ -10,6 +10,7 @@
 
 #include "Mock/ParseHelperMock.h"
 #include "Mock/XMLMock.h"
+#include "Mock/TmxLogMock.h"
 
 #include "TmxParser.h"
 
@@ -43,6 +44,7 @@ protected:
     XMLDocumentMock docMock_;
     XMLElementMock mapElementMock_;
 
+    StrictMock<LoggerMock> loggerMock_;
     std::shared_ptr<ParseHelperMock<XMLElementMock, XMLErrorMock>> helperMock_;
     TmxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock> parser_;
 };
@@ -60,6 +62,8 @@ TEST_F(TmxParserTest, ParseShouldFailDueToError)
 {
     EXPECT_CALL(docMock_, Parse(StrEq(xmlBuffer_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(true));
+    EXPECT_CALL(docMock_, ErrorName()).WillOnce(Return("XML_ERROR_EMPTY_DOCUMENT"));
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Error while parsing: XML_ERROR_EMPTY_DOCUMENT")));
 
     ParsedTmx result;
     EXPECT_FALSE(parser_.Parse(docMock_, xmlBuffer_, result));

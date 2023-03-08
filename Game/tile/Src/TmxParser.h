@@ -33,6 +33,7 @@ public:
         xmlDocument.Parse(xmlBuffer.c_str());
 
         if (xmlDocument.Error()) {
+            LOG_TMXERROR("Error while parsing: %s", xmlDocument.ErrorName());
             return false;
         }
         else {
