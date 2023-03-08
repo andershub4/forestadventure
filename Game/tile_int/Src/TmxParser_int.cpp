@@ -43,7 +43,7 @@ protected:
     TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> parser_;
 };
 
-TEST_F(TmxParserInt, ParseValidMapShouldFailDueToEmptyXml)
+TEST_F(TmxParserInt, ParseShouldFailDueToEmptyXml)
 {
     ParsedTmx parsedTmx;
 
@@ -56,7 +56,7 @@ TEST_F(TmxParserInt, ParseValidMapShouldFailDueToEmptyXml)
     EXPECT_THAT(parsedTmx, Eq(expected));
 }
 
-TEST_F(TmxParserInt, ParseValidMapShouldFailDueToNoEndMapTag)
+TEST_F(TmxParserInt, ParseShouldFailDueToNoEndMapTag)
 {
     ParsedTmx parsedTmx;
     std::stringstream ss;
