@@ -56,6 +56,20 @@ TEST_F(TmxParserInt, ParseShouldFailDueToEmptyXml)
     EXPECT_THAT(parsedTmx, Eq(expected));
 }
 
+TEST_F(TmxParserInt, ParseShouldFailDueToWrongXmlContent)
+{
+    ParsedTmx parsedTmx;
+    const std::string s = "<br></br>";
+
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Error while parsing: map element does not exist")));
+    bool success = parser_.Parse(doc_, s, parsedTmx);
+
+    ParsedTmx expected{};
+
+    EXPECT_FALSE(success);
+    EXPECT_THAT(parsedTmx, Eq(expected));
+}
+
 TEST_F(TmxParserInt, ParseShouldFailDueToNoEndMapTag)
 {
     ParsedTmx parsedTmx;

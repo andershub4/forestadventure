@@ -38,8 +38,12 @@ public:
         }
         else {
             ElementT* map = xmlDocument.FirstChildElement("map");
-            ParseMapElement(map, parsedTmx);
-            return true;
+            if (map != nullptr) {
+                ParseMapElement(map, parsedTmx);
+                return true;
+            }
+            LOG_TMXERROR("Error while parsing: map element does not exist");
+            return false;
         }
     }
 
