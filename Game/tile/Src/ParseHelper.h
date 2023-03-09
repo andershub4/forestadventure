@@ -51,7 +51,9 @@ public:
                                                  {ParseElement<ElementT, ErrorT>(element, "width", layer.width_)},
                                                  {ParseElement<ElementT, ErrorT>(element, "height", layer.height_)}};
         auto dataElement = element->FirstChildElement("data");
-        layer.data_ = dataElement->GetText();
+        if (dataElement) {
+            layer.data_ = dataElement->GetText();
+        }
 
         return results;
     }

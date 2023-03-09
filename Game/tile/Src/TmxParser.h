@@ -33,7 +33,7 @@ public:
         xmlDocument.Parse(xmlBuffer.c_str());
 
         if (xmlDocument.Error()) {
-            LOG_TMXERROR("Error while parsing: %s", xmlDocument.ErrorName());
+            LOG_TMXERROR("tinyxml2 error: %s", xmlDocument.ErrorName());
             return false;
         }
         else {

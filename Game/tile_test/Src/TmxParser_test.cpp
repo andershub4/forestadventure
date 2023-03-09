@@ -9,8 +9,8 @@
 #include <gtest/gtest.h>
 
 #include "Mock/ParseHelperMock.h"
-#include "Mock/XMLMock.h"
 #include "Mock/TmxLogMock.h"
+#include "Mock/XMLMock.h"
 
 #include "TmxParser.h"
 
@@ -63,7 +63,7 @@ TEST_F(TmxParserTest, ParseShouldFailDueToError)
     EXPECT_CALL(docMock_, Parse(StrEq(xmlBuffer_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(true));
     EXPECT_CALL(docMock_, ErrorName()).WillOnce(Return("XML_ERROR_EMPTY_DOCUMENT"));
-    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Error while parsing: XML_ERROR_EMPTY_DOCUMENT")));
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("tinyxml2 error: XML_ERROR_EMPTY_DOCUMENT")));
 
     ParsedTmx result;
     EXPECT_FALSE(parser_.Parse(docMock_, xmlBuffer_, result));
