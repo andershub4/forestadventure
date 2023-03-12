@@ -34,12 +34,17 @@ public:
         xmlDocument.Parse(xmlBuffer.c_str());
 
         if (xmlDocument.Error()) {
+            LOG_TMXERROR("tinyxml2 error: %s", xmlDocument.ErrorName());
             return false;
         }
         else {
             ElementT* tileSetElement = xmlDocument.FirstChildElement("tileset");
-            ParseTileSetElement(tileSetElement, parsedTsx);
-            return true;
+            if (tileSetElement != nullptr) {
+                ParseTileSetElement(tileSetElement, parsedTsx);
+                return true;
+            }
+            LOG_TMXERROR("Error while parsing: tileset element does not exist");
+            return false;
         }
     }
 

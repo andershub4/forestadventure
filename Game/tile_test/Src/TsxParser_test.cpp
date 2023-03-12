@@ -62,6 +62,8 @@ TEST_F(TsxParserTest, ParseShouldFailDueToError)
 {
     EXPECT_CALL(docMock_, Parse(StrEq(xmlBuffer_)));
     EXPECT_CALL(docMock_, Error()).WillOnce(Return(true));
+    EXPECT_CALL(docMock_, ErrorName()).WillOnce(Return("XML_ERROR_EMPTY_DOCUMENT"));
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("tinyxml2 error: XML_ERROR_EMPTY_DOCUMENT")));
 
     ParsedTsx result;
     EXPECT_FALSE(parser_.Parse(docMock_, xmlBuffer_, result));

@@ -8,6 +8,7 @@
 #include <gtest/gtest.h>
 
 #include <tinyxml2/tinyxml2.h>
+
 #include "Mock/TmxLogMock.h"
 #include "ParseHelper.h"
 
