@@ -24,21 +24,31 @@ GridTileSet::~GridTileSet() = default;
 
 TileSetData GridTileSet::GenerateTileData() const
 {
+    auto nCount = parsedTileSet_.tileCount_;
     auto nCols = parsedTileSet_.columns_;
-    auto nRows = parsedTileSet_.tileCount_ / parsedTileSet_.columns_;
     std::vector<Image> images;
-    images.push_back({p_, nCols, nRows});
-
     std::unordered_map<int, TileData> lookupTable;
 
-    auto w = parsedTileSet_.tileWidth_;
-    auto h = parsedTileSet_.tileHeight_;
+    if (nCount == 0 || nCols == 0) {
+        images.push_back({p_, 0, 0});
+    }
+    else {
+        if (nCount > maxTileCount_) {
+            images.push_back({p_, 0, 0});
+        }
+        else {
+            auto nRows = nCount / nCols;
+            images.push_back({p_, nCols, nRows});
+            auto w = parsedTileSet_.tileWidth_;
+            auto h = parsedTileSet_.tileHeight_;
 
-    for (unsigned int id = 0; id < parsedTileSet_.tileCount_; id++) {
-        auto column = id % nCols;
-        auto row = id / nCols;
-        Frame frame = {p_, column, row, w, h};
-        lookupTable[id] = TileData{frame, {}};
+            for (unsigned int id = 0; id < nCount; id++) {
+                auto column = id % nCols;
+                auto row = id / nCols;
+                Frame frame = {p_, column, row, w, h};
+                lookupTable[id] = TileData{frame, {}};
+            }
+        }
     }
 
     return {images, lookupTable};

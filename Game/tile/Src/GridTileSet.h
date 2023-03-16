@@ -26,6 +26,7 @@ public:
     virtual TileSetData GenerateTileData() const override;
 
 private:
+    static const unsigned int maxTileCount_ = 5000;  // Arbitrary, but seems reasonable
     ParsedTileSet parsedTileSet_;
     std::string p_{};
 };
