@@ -126,9 +126,9 @@ sf::Vector2u TileMap::GetSize() const
     auto nRows = tileMapData_->mapProperties_.height_;
     auto tileWidth = tileMapData_->mapProperties_.tileWidth_;
     auto tileHeight = tileMapData_->mapProperties_.tileHeight_;
-    auto size = sf::Vector2i(nCols * tileWidth, nRows * tileHeight);
+    auto size = sf::Vector2u(nCols * tileWidth, nRows * tileHeight);
 
-    return static_cast<sf::Vector2u>(size);
+    return size;
 }
 
 Tile::TileData TileMap::LookupTileData(int id)
