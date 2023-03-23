@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 
+#include <SFML/Graphics/Rect.hpp>
+
 #include "Enum/EntityType.h"
 #include "Id.h"
 #include "MapData.h"
