@@ -88,10 +88,9 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 
 void MoleEntity::RegisterIdleState(std::shared_ptr<State> idleState)
 {
-    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
-        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(propertyStore_.GetRef<FaceDirection>("FaceDirection"));
     for (const auto& entry : idleData) {
-        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+         sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
     }
     idleState->RegisterSprite(sprite);
     idleState->RegisterEventCB(EventType::StartMove,
@@ -105,10 +104,9 @@ void MoleEntity::RegisterMoveState()
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
-        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(propertyStore_.GetRef<FaceDirection>("FaceDirection"));
     for (const auto& entry : moveData) {
-        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
     }
     moveState->RegisterAbility(move);
     moveState->RegisterSprite(sprite);

@@ -200,10 +200,9 @@ void PlayerEntity::OnInit()
 
 void PlayerEntity::RegisterIdleState(std::shared_ptr<State> idleState)
 {
-    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
-        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(propertyStore_.GetRef<FaceDirection>("FaceDirection"));
     for (const auto& entry : idleData) {
-        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
     }
     idleState->RegisterSprite(sprite);
     idleState->RegisterEventCB(EventType::StartMove,
@@ -223,10 +222,9 @@ void PlayerEntity::RegisterMoveState()
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
-        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(propertyStore_.GetRef<FaceDirection>("FaceDirection"));
     for (const auto& entry : moveData) {
-        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
     }
     moveState->RegisterAbility(move);
     moveState->RegisterSprite(sprite);
@@ -243,11 +241,10 @@ void PlayerEntity::RegisterAttackState()
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
-        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(propertyStore_.GetRef<FaceDirection>("FaceDirection"));
     sprite->RegisterUpdateCB(attackAnimationUpdateCB);
     for (const auto& entry : attackData) {
-        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
     }
     attackState->RegisterSprite(sprite);
     attackState->RegisterEventCB(EventType::StartMove,
@@ -265,11 +262,10 @@ void PlayerEntity::RegisterAttackWeaponState()
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto sprite = std::make_shared<AnimationSprite<FaceDirection>>(
-        [this]() { return propertyStore_.Get<FaceDirection>("FaceDirection"); });
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(propertyStore_.GetRef<FaceDirection>("FaceDirection"));
     sprite->RegisterUpdateCB(attackWeaponAnimationUpdateCB);
     for (const auto& entry : attackWData) {
-        sprite->RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
     }
     attackWeaponState->RegisterSprite(sprite);
     attackWeaponState->RegisterEventCB(

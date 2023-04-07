@@ -29,9 +29,8 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
                                 const PropertyData& data)
 {
     float t = Constant::stdSwitchTime;
-    auto a = Shared::Animation(data.graphic_.animation_, 0, t);
-    auto sprite = std::make_shared<AnimationSprite<std::string>>([]() { return "Idle"; }, false);
-    sprite->RegisterResource("Idle", a);
+    auto animation = Shared::Animation(data.graphic_.animation_, 0, t);
+    auto sprite = AnimationSprite::Create(animation, false);
     idleState->RegisterSprite(sprite);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }

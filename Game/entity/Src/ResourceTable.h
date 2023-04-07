@@ -21,10 +21,6 @@ template <class KeyT, class ItemT>
 class ResourceTable
 {
 public:
-    ResourceTable(std::function<KeyT()> keyFn)
-        : keyFn_(keyFn)
-    {}
-
     ~ResourceTable() = default;
 
     void RegisterResource(const KeyT& key, const ItemT& item)
@@ -33,9 +29,9 @@ public:
         map_[k] = item;
     }
 
-    ItemT GetResource() const
+    ItemT GetResource(const KeyT& key) const
     {
-        auto k = KeyToStr(keyFn_());
+        auto k = KeyToStr(key);
         if (map_.find(k) != map_.end()) {
             return map_.at(k);
         }
@@ -46,7 +42,6 @@ public:
 
 private:
     std::unordered_map<std::string, ItemT> map_;
-    std::function<KeyT()> keyFn_;
 
 private:
     std::string KeyToStr(const KeyT& item) const

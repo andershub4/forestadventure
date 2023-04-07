@@ -19,20 +19,24 @@ namespace FA {
 namespace Entity {
 
 template <class KeyT>
-class AnimationSprite : public BasicSprite
+class AnimationSpriteWith : public BasicSprite
 {
 public:
-    AnimationSprite(std::function<KeyT()> keyFn, bool center = true)
-        : table_(keyFn)
-        , updateCB_([](const Shared::Animation &) {})
-        , center_(center)
-    {}
+    static std::shared_ptr<AnimationSpriteWith<KeyT>> Create(const Shared::Animation &animation, bool center = true)
+    {
+        return std::make_shared<CtorHelper<KeyT>>(animation, center);
+    }
 
-    virtual ~AnimationSprite() = default;
+    static std::shared_ptr<AnimationSpriteWith<KeyT>> Create(KeyT &lookupKey, bool center = true)
+    {
+        return std::make_shared<CtorHelper<KeyT>>(lookupKey, center);
+    }
+
+    virtual ~AnimationSpriteWith() = default;
 
     virtual void Enter() override
     {
-        currentAnimation_ = table_.GetResource();
+        currentAnimation_ = table_.GetResource(lookupKey_);
         if (currentAnimation_.IsValid()) {
             currentAnimation_.Start();
         }
@@ -50,19 +54,47 @@ public:
         }
     }
 
-    void RegisterResource(const KeyT &key, const Shared::Animation &animation)
-    {
-        table_.RegisterResource(key, animation);
-    }
+    ResourceTable<KeyT, Shared::Animation> &Table() { return table_; }
 
     void RegisterUpdateCB(std::function<void(const Shared::Animation &)> updateCB) { updateCB_ = updateCB; }
 
+protected:
+    AnimationSpriteWith(KeyT &lookupKey, bool center = true)
+        : lookupKey_(lookupKey)
+        , updateCB_([](const Shared::Animation &) {})
+        , center_(center)
+    {}
+
+    AnimationSpriteWith(const Shared::Animation &animation, bool center = true)
+        : lookupKey_(defaultKey)
+        , updateCB_([](const Shared::Animation &) {})
+        , center_(center)
+    {
+        table_.RegisterResource(defaultKey, animation);
+    }
+
 private:
+    template <class KeyT>
+    struct CtorHelper : public AnimationSpriteWith<KeyT>
+    {
+        CtorHelper(KeyT &lookupKey, bool center = true)
+            : AnimationSpriteWith<KeyT>(lookupKey, center)
+        {}
+
+        CtorHelper(const Shared::Animation &animation, bool center = true)
+            : AnimationSpriteWith<KeyT>(animation, center)
+        {}
+    };
+
+    KeyT defaultKey{};
+    KeyT &lookupKey_;
     ResourceTable<KeyT, Shared::Animation> table_;
     Shared::Animation currentAnimation_;
     std::function<void(const Shared::Animation &)> updateCB_;
     bool center_{};
 };
+
+using AnimationSprite = AnimationSpriteWith<int>;
 
 }  // namespace Entity
 

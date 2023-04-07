@@ -103,8 +103,8 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity * 8.0f, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto sprite = std::make_shared<ImageSprite<std::string>>([]() { return "Move"; });
-    sprite->RegisterImage("Move", entityService_.MakeImage({Shared::SheetId::Arrow, {0, 0}}));
+    auto image = entityService_.MakeImage({Shared::SheetId::Arrow, {0, 0}});
+    auto sprite = ImageSprite::Create(image);
     moveState->RegisterAbility(move);
     moveState->RegisterSprite(sprite);
     moveState->RegisterEventCB(EventType::StopMove,

@@ -19,17 +19,17 @@ namespace FA {
 namespace Entity {
 
 template <class KeyT>
-class ImageSprite : public BasicSprite
+class ImageSpriteWith : public BasicSprite
 {
 public:
-    ImageSprite(std::function<KeyT()> keyFn)
-        : table_(keyFn)
-        , updateCB_([](const Shared::Image &) {})
-    {}
+    static std::shared_ptr<ImageSpriteWith<KeyT>> Create(const Shared::Image &image)
+    {
+        return std::make_shared<CtorHelper<KeyT>>(image);
+    }
 
-    virtual ~ImageSprite() = default;
+    virtual ~ImageSpriteWith() = default;
 
-    virtual void Enter() override { currentImage_ = table_.GetResource(); }
+    virtual void Enter() override { currentImage_ = table_.GetResource(defaultKey); }
 
     virtual void Update(float deltaTime) override
     {
@@ -41,15 +41,31 @@ public:
         }
     }
 
-    void RegisterImage(const KeyT &key, const Shared::Image &image) { table_.RegisterResource(key, image); }
-
     void RegisterUpdateCB(std::function<void(const Shared::Image &)> updateCB) { updateCB_ = updateCB; }
 
+protected:
+    ImageSpriteWith(const Shared::Image &image)
+        : updateCB_([](const Shared::Image &) {})
+    {
+        table_.RegisterResource(defaultKey, image);
+    }
+
 private:
+    template <class KeyT>
+    struct CtorHelper : public ImageSpriteWith<KeyT>
+    {
+        CtorHelper(const Shared::Image &image)
+            : ImageSpriteWith<KeyT>(image)
+        {}
+    };
+
+    KeyT defaultKey{};
     ResourceTable<KeyT, Shared::Image> table_;
     Shared::Image currentImage_;
     std::function<void(const Shared::Image &)> updateCB_;
 };
+
+using ImageSprite = ImageSpriteWith<int>;
 
 }  // namespace Entity
 
