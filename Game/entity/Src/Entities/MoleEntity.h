@@ -34,8 +34,8 @@ private:
     void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
 
-    void RegisterIdleState(std::shared_ptr<State> idleState);
-    void RegisterMoveState();
+    void RegisterIdleState(std::shared_ptr<State> state);
+    void RegisterMoveState(std::shared_ptr<State> state);
 };
 
 }  // namespace Entity

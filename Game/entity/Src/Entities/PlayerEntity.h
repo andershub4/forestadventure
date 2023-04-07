@@ -41,10 +41,10 @@ private:
     void OnUpdateMove(const sf::Vector2f& delta);
     void OnShoot();
 
-    void RegisterIdleState(std::shared_ptr<State> idleState);
-    void RegisterMoveState();
-    void RegisterAttackState();
-    void RegisterAttackWeaponState();
+    void RegisterIdleState(std::shared_ptr<State> state);
+    void RegisterMoveState(std::shared_ptr<State> state);
+    void RegisterAttackState(std::shared_ptr<State> state);
+    void RegisterAttackWeaponState(std::shared_ptr<State> state);
 };
 
 }  // namespace Entity

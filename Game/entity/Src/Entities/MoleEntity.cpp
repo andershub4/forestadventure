@@ -83,35 +83,37 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
                                 const PropertyData& data)
 {
     RegisterIdleState(idleState);
-    RegisterMoveState();
-}
-
-void MoleEntity::RegisterIdleState(std::shared_ptr<State> idleState)
-{
-    auto sprite = AnimationSpriteWith<FaceDirection>::Create(propertyStore_.GetRef<FaceDirection>("FaceDirection"));
-    for (const auto& entry : idleData) {
-         sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
-    }
-    idleState->RegisterSprite(sprite);
-    idleState->RegisterEventCB(EventType::StartMove,
-                               [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
-    idleState->RegisterIgnoreEvents({EventType::StopMove, EventType::Collision});
-}
-
-void MoleEntity::RegisterMoveState()
-{
     auto moveState = RegisterState(StateType::Move);
+    RegisterMoveState(moveState);
+}
+
+void MoleEntity::RegisterIdleState(std::shared_ptr<State> state)
+{
+    auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
+    for (const auto& entry : idleData) {
+        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+    }
+    state->RegisterSprite(sprite);
+    state->RegisterEventCB(EventType::StartMove,
+                           [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
+    state->RegisterIgnoreEvents({EventType::StopMove, EventType::Collision});
+}
+
+void MoleEntity::RegisterMoveState(std::shared_ptr<State> state)
+{
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto sprite = AnimationSpriteWith<FaceDirection>::Create(propertyStore_.GetRef<FaceDirection>("FaceDirection"));
+    auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
     for (const auto& entry : moveData) {
         sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
     }
-    moveState->RegisterAbility(move);
-    moveState->RegisterSprite(sprite);
-    moveState->RegisterEventCB(EventType::StopMove,
-                               [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
+    state->RegisterAbility(move);
+    state->RegisterSprite(sprite);
+    state->RegisterEventCB(EventType::StopMove,
+                           [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }
 
 }  // namespace Entity
