@@ -7,12 +7,13 @@
 #pragma once
 
 #include <functional>
+#include <sstream>
 #include <string>
 #include <unordered_map>
 
 #include "BasicSprite.h"
+#include "Logging.h"
 #include "Resource/Animation.h"
-#include "ResourceTable.h"
 
 namespace FA {
 
@@ -36,7 +37,8 @@ public:
 
     virtual void Enter() override
     {
-        currentAnimation_ = table_.GetResource(lookupKey_);
+        currentAnimation_ = GetAnimation(lookupKey_);
+
         if (currentAnimation_.IsValid()) {
             currentAnimation_.Start();
         }
@@ -54,8 +56,7 @@ public:
         }
     }
 
-    ResourceTable<KeyT, Shared::Animation> &Table() { return table_; }
-
+    void RegisterAnimation(const KeyT key, const Shared::Animation &animation) { map_[key] = animation; }
     void RegisterUpdateCB(std::function<void(const Shared::Animation &)> updateCB) { updateCB_ = updateCB; }
 
 protected:
@@ -66,11 +67,11 @@ protected:
     {}
 
     AnimationSpriteWith(const Shared::Animation &animation, bool center = true)
-        : lookupKey_(defaultKey)
+        : lookupKey_(defaultKey_)
         , updateCB_([](const Shared::Animation &) {})
         , center_(center)
     {
-        table_.RegisterResource(defaultKey, animation);
+        RegisterAnimation(defaultKey_, animation);
     }
 
 private:
@@ -86,12 +87,27 @@ private:
         {}
     };
 
-    KeyT defaultKey{};
+    KeyT defaultKey_{};
     KeyT &lookupKey_;
-    ResourceTable<KeyT, Shared::Animation> table_;
+    std::unordered_map<KeyT, Shared::Animation> map_;
     Shared::Animation currentAnimation_;
     std::function<void(const Shared::Animation &)> updateCB_;
     bool center_{};
+
+private:
+    Shared::Animation GetAnimation(const KeyT &key)
+    {
+        if (map_.find(key) != map_.end()) {
+            return map_.at(key);
+        }
+        else {
+            std::stringstream ss;
+            ss << key;
+            LOG_ERROR("Could not find key: %s", ss.str().c_str());
+        }
+
+        return {};
+    }
 };
 
 using AnimationSprite = AnimationSpriteWith<int>;

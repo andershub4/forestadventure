@@ -267,7 +267,7 @@ std::shared_ptr<AnimationSpriteWith<FaceDirection>> PlayerEntity::MakeSprite(
     auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
     auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
     for (const auto& entry : data) {
-        sprite->Table().RegisterResource(entry.first, service_.MakeAnimation(entry.second));
+        sprite->RegisterAnimation(entry.first, service_.MakeAnimation(entry.second));
     }
 
     return sprite;

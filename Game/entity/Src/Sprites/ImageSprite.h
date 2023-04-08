@@ -11,8 +11,8 @@
 #include <unordered_map>
 
 #include "BasicSprite.h"
+#include "Logging.h"
 #include "Resource/Image.h"
-#include "ResourceTable.h"
 
 namespace FA {
 
@@ -29,7 +29,7 @@ public:
 
     virtual ~ImageSpriteWith() = default;
 
-    virtual void Enter() override { currentImage_ = table_.GetResource(defaultKey); }
+    virtual void Enter() override { currentImage_ = GetImage(defaultKey_); }
 
     virtual void Update(float deltaTime) override
     {
@@ -41,13 +41,14 @@ public:
         }
     }
 
+    void RegisterImage(const KeyT key, const Shared::Image &image) { map_[key] = image; }
     void RegisterUpdateCB(std::function<void(const Shared::Image &)> updateCB) { updateCB_ = updateCB; }
 
 protected:
     ImageSpriteWith(const Shared::Image &image)
         : updateCB_([](const Shared::Image &) {})
     {
-        table_.RegisterResource(defaultKey, image);
+        RegisterImage(defaultKey_, image);
     }
 
 private:
@@ -59,10 +60,25 @@ private:
         {}
     };
 
-    KeyT defaultKey{};
-    ResourceTable<KeyT, Shared::Image> table_;
+    KeyT defaultKey_{};
+    std::unordered_map<KeyT, Shared::Image> map_;
     Shared::Image currentImage_;
     std::function<void(const Shared::Image &)> updateCB_;
+
+private:
+    Shared::Image GetImage(const KeyT &key)
+    {
+        if (map_.find(defaultKey_) != map_.end()) {
+            return map_.at(defaultKey_);
+        }
+        else {
+            std::stringstream ss;
+            ss << defaultKey_;
+            LOG_ERROR("Could not find key: %s", ss.str().c_str());
+        }
+
+        return {};
+    }
 };
 
 using ImageSprite = ImageSpriteWith<int>;
