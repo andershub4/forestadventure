@@ -42,8 +42,8 @@ private:
     std::shared_ptr<AnimationSpriteWith<FaceDirection>> MakeSprite(
         const std::unordered_map<FaceDirection, Shared::AnimationData>& data);
 
-    void RegisterIdleState(std::shared_ptr<State> state);
-    void RegisterMoveState(std::shared_ptr<State> state);
+    void DefineIdleState(std::shared_ptr<State> state);
+    void DefineMoveState(std::shared_ptr<State> state);
 };
 
 }  // namespace Entity

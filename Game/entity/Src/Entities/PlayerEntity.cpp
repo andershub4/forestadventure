@@ -186,13 +186,13 @@ void PlayerEntity::ReadProperties(const std::unordered_map<std::string, std::str
 void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                   const PropertyData& data)
 {
-    RegisterIdleState(idleState);
+    DefineIdleState(idleState);
     auto moveState = RegisterState(StateType::Move);
-    RegisterMoveState(moveState);
+    DefineMoveState(moveState);
     auto attackState = RegisterState(StateType::Attack);
-    RegisterAttackState(attackState);
+    DefineAttackState(attackState);
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
-    RegisterAttackWeaponState(attackWeaponState);
+    DefineAttackWeaponState(attackWeaponState);
 }
 
 void PlayerEntity::OnInit()
@@ -201,7 +201,7 @@ void PlayerEntity::OnInit()
     camera.Track(body_.position_);
 }
 
-void PlayerEntity::RegisterIdleState(std::shared_ptr<State> state)
+void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 {
     auto sprite = MakeSprite(idleData);
     state->RegisterSprite(sprite);
@@ -216,7 +216,7 @@ void PlayerEntity::RegisterIdleState(std::shared_ptr<State> state)
     state->RegisterIgnoreEvents({EventType::Collision});
 }
 
-void PlayerEntity::RegisterMoveState(std::shared_ptr<State> state)
+void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 {
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
@@ -229,7 +229,7 @@ void PlayerEntity::RegisterMoveState(std::shared_ptr<State> state)
     state->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
 }
 
-void PlayerEntity::RegisterAttackState(std::shared_ptr<State> state)
+void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
 {
     auto updateCB = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
@@ -244,7 +244,7 @@ void PlayerEntity::RegisterAttackState(std::shared_ptr<State> state)
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 }
 
-void PlayerEntity::RegisterAttackWeaponState(std::shared_ptr<State> state)
+void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
 {
     state->RegisterExitCB([this]() { OnShoot(); });
     auto updateCB = [this](const Shared::Animation& animation) {

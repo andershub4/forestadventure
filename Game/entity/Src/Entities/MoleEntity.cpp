@@ -82,12 +82,12 @@ void MoleEntity::ReadProperties(const std::unordered_map<std::string, std::strin
 void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    RegisterIdleState(idleState);
+    DefineIdleState(idleState);
     auto moveState = RegisterState(StateType::Move);
-    RegisterMoveState(moveState);
+    DefineMoveState(moveState);
 }
 
-void MoleEntity::RegisterIdleState(std::shared_ptr<State> state)
+void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 {
     auto sprite = MakeSprite(idleData);
     state->RegisterSprite(sprite);
@@ -96,7 +96,7 @@ void MoleEntity::RegisterIdleState(std::shared_ptr<State> state)
     state->RegisterIgnoreEvents({EventType::StopMove, EventType::Collision});
 }
 
-void MoleEntity::RegisterMoveState(std::shared_ptr<State> state)
+void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
 {
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
