@@ -203,11 +203,7 @@ void PlayerEntity::OnInit()
 
 void PlayerEntity::RegisterIdleState(std::shared_ptr<State> state)
 {
-    auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
-    auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
-    for (const auto& entry : idleData) {
-        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
-    }
+    auto sprite = MakeSprite(idleData);
     state->RegisterSprite(sprite);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -225,11 +221,7 @@ void PlayerEntity::RegisterMoveState(std::shared_ptr<State> state)
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
-    auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
-    for (const auto& entry : moveData) {
-        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
-    }
+    auto sprite = MakeSprite(moveData);
     state->RegisterAbility(move);
     state->RegisterSprite(sprite);
     state->RegisterEventCB(EventType::StopMove,
@@ -239,17 +231,13 @@ void PlayerEntity::RegisterMoveState(std::shared_ptr<State> state)
 
 void PlayerEntity::RegisterAttackState(std::shared_ptr<State> state)
 {
-    auto attackAnimationUpdateCB = [this](const Shared::Animation& animation) {
+    auto updateCB = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
-    auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
-    sprite->RegisterUpdateCB(attackAnimationUpdateCB);
-    for (const auto& entry : attackData) {
-        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
-    }
+    auto sprite = MakeSprite(attackData);
+    sprite->RegisterUpdateCB(updateCB);
     state->RegisterSprite(sprite);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -259,22 +247,30 @@ void PlayerEntity::RegisterAttackState(std::shared_ptr<State> state)
 void PlayerEntity::RegisterAttackWeaponState(std::shared_ptr<State> state)
 {
     state->RegisterExitCB([this]() { OnShoot(); });
-    auto attackWeaponAnimationUpdateCB = [this](const Shared::Animation& animation) {
+    auto updateCB = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
             propertyStore_.Set<bool>("Shoot", true);
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
-    auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
-    sprite->RegisterUpdateCB(attackWeaponAnimationUpdateCB);
-    for (const auto& entry : attackWData) {
-        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
-    }
+    auto sprite = MakeSprite(attackWData);
+    sprite->RegisterUpdateCB(updateCB);
     state->RegisterSprite(sprite);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
+}
+
+std::shared_ptr<AnimationSpriteWith<FaceDirection>> PlayerEntity::MakeSprite(
+    const std::unordered_map<FaceDirection, Shared::AnimationData>& data)
+{
+    auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
+    for (const auto& entry : data) {
+        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+    }
+
+    return sprite;
 }
 
 }  // namespace Entity
