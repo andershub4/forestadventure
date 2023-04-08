@@ -85,7 +85,7 @@ void ArrowEntity::OnBeginMove(MoveDirection moveDirection)
 void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
     body_.position_ += delta;
-    bool outsideMap = !entityService_.IsInsideMap(body_.position_);
+    bool outsideMap = !service_.IsInsideMap(body_.position_);
 
     if (outsideMap) {
         HandleEvent(std::make_shared<DeadEvent>());
@@ -103,7 +103,7 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity * 8.0f, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto image = entityService_.MakeImage({Shared::SheetId::Arrow, {0, 0}});
+    auto image = service_.MakeImage({Shared::SheetId::Arrow, {0, 0}});
     auto sprite = ImageSprite::Create(image);
     moveState->RegisterAbility(move);
     moveState->RegisterSprite(sprite);

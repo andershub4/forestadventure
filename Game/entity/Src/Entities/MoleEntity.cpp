@@ -114,7 +114,7 @@ std::shared_ptr<AnimationSpriteWith<FaceDirection>> MoleEntity::MakeSprite(
     auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
     auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
     for (const auto& entry : data) {
-        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+        sprite->Table().RegisterResource(entry.first, service_.MakeAnimation(entry.second));
     }
 
     return sprite;

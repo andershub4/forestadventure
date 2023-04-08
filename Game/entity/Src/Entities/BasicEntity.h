@@ -46,7 +46,7 @@ public:
 
 protected:
     PropertyStore propertyStore_;
-    EntityService entityService_;
+    EntityService service_;
     Body body_{};
 
 protected:

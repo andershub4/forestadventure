@@ -156,14 +156,14 @@ void PlayerEntity::OnShoot()
         else if (dir == FaceDirection::Right)
             moveDir = MoveDirection::Right;
         auto data = ArrowEntity::CreatePropertyData(position, moveDir);
-        entityService_.CreateEntity(data);
+        service_.CreateEntity(data);
     }
 }
 
 void PlayerEntity::OnBeginDie()
 {
     SendMessage(std::make_shared<Shared::GameOverMessage>());
-    auto& camera = entityService_.GetCamera();
+    auto& camera = service_.GetCamera();
     camera.Set(body_.position_);
 }
 
@@ -197,7 +197,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
 
 void PlayerEntity::OnInit()
 {
-    auto& camera = entityService_.GetCamera();
+    auto& camera = service_.GetCamera();
     camera.Track(body_.position_);
 }
 
@@ -267,7 +267,7 @@ std::shared_ptr<AnimationSpriteWith<FaceDirection>> PlayerEntity::MakeSprite(
     auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
     auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
     for (const auto& entry : data) {
-        sprite->Table().RegisterResource(entry.first, entityService_.MakeAnimation(entry.second));
+        sprite->Table().RegisterResource(entry.first, service_.MakeAnimation(entry.second));
     }
 
     return sprite;

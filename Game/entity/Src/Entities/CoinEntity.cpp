@@ -33,7 +33,7 @@ CoinEntity::~CoinEntity() = default;
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto animation = entityService_.MakeAnimation(idle);
+    auto animation = service_.MakeAnimation(idle);
     auto sprite = AnimationSprite::Create(animation);
     idleState->RegisterSprite(sprite);
     idleState->RegisterIgnoreEvents({EventType::Collision});
