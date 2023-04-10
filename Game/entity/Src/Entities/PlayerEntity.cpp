@@ -141,23 +141,19 @@ void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
 
 void PlayerEntity::OnShoot()
 {
-    bool shoot = propertyStore_.Get<bool>("Shoot");
-    if (shoot) {
-        propertyStore_.Set<bool>("Shoot", false);
-        auto dir = propertyStore_.Get<FaceDirection>("FaceDirection");
-        auto position = body_.position_ + arrowOffset.at(dir);
-        MoveDirection moveDir = MoveDirection::None;
-        if (dir == FaceDirection::Down)
-            moveDir = MoveDirection::Down;
-        else if (dir == FaceDirection::Up)
-            moveDir = MoveDirection::Up;
-        else if (dir == FaceDirection::Left)
-            moveDir = MoveDirection::Left;
-        else if (dir == FaceDirection::Right)
-            moveDir = MoveDirection::Right;
-        auto data = ArrowEntity::CreatePropertyData(position, moveDir);
-        service_.CreateEntity(data);
-    }
+    auto dir = propertyStore_.Get<FaceDirection>("FaceDirection");
+    auto position = body_.position_ + arrowOffset.at(dir);
+    MoveDirection moveDir = MoveDirection::None;
+    if (dir == FaceDirection::Down)
+        moveDir = MoveDirection::Down;
+    else if (dir == FaceDirection::Up)
+        moveDir = MoveDirection::Up;
+    else if (dir == FaceDirection::Left)
+        moveDir = MoveDirection::Left;
+    else if (dir == FaceDirection::Right)
+        moveDir = MoveDirection::Right;
+    auto data = ArrowEntity::CreatePropertyData(position, moveDir);
+    service_.CreateEntity(data);
 }
 
 void PlayerEntity::OnBeginDie()
@@ -170,7 +166,6 @@ void PlayerEntity::OnBeginDie()
 void PlayerEntity::RegisterProperties()
 {
     propertyStore_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
-    propertyStore_.Register<bool>("Shoot", false);
 }
 
 void PlayerEntity::ReadProperties(const std::unordered_map<std::string, std::string>& properties)
@@ -246,10 +241,9 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
 {
-    state->RegisterExitCB([this]() { OnShoot(); });
     auto updateCB = [this](const Shared::Animation& animation) {
         if (animation.IsCompleted()) {
-            propertyStore_.Set<bool>("Shoot", true);
+            OnShoot();
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
