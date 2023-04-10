@@ -35,6 +35,22 @@ const std::unordered_map<FaceDirection, Shared::AnimationData> moveData{
     {FaceDirection::Down, {Shared::SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false}},
     {FaceDirection::Up, {Shared::SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false}}};
 
+FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
+{
+    FaceDirection faceDir = FaceDirection::Undefined;
+
+    if (moveDirection == MoveDirection::Down)
+        faceDir = FaceDirection::Down;
+    else if (moveDirection == MoveDirection::Up)
+        faceDir = FaceDirection::Up;
+    else if (moveDirection == MoveDirection::Left)
+        faceDir = FaceDirection::Left;
+    else if (moveDirection == MoveDirection::Right)
+        faceDir = FaceDirection::Right;
+
+    return faceDir;
+}
+
 }  // namespace
 
 const std::string MoleEntity::str = "Mole";
@@ -47,15 +63,7 @@ MoleEntity::~MoleEntity() = default;
 
 void MoleEntity::OnBeginMove(MoveDirection moveDirection)
 {
-    FaceDirection faceDir = FaceDirection::Undefined;
-    if (moveDirection == MoveDirection::Down)
-        faceDir = FaceDirection::Down;
-    else if (moveDirection == MoveDirection::Up)
-        faceDir = FaceDirection::Up;
-    else if (moveDirection == MoveDirection::Left)
-        faceDir = FaceDirection::Left;
-    else if (moveDirection == MoveDirection::Right)
-        faceDir = FaceDirection::Right;
+    FaceDirection faceDir = MoveDirToFaceDir(moveDirection);
     propertyStore_.Set("FaceDirection", faceDir);
 }
 
