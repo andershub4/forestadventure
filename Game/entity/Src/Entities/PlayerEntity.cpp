@@ -64,6 +64,38 @@ const std::unordered_map<FaceDirection, Shared::AnimationData> attackWData{
     {FaceDirection::Down, {Shared::SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false}},
     {FaceDirection::Up, {Shared::SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0}, false}}};
 
+FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
+{
+    FaceDirection faceDir = FaceDirection::Undefined;
+
+    if (moveDirection == MoveDirection::Down)
+        faceDir = FaceDirection::Down;
+    else if (moveDirection == MoveDirection::Up)
+        faceDir = FaceDirection::Up;
+    else if (moveDirection == MoveDirection::Left)
+        faceDir = FaceDirection::Left;
+    else if (moveDirection == MoveDirection::Right)
+        faceDir = FaceDirection::Right;
+
+    return faceDir;
+}
+
+MoveDirection FaceDirToMoveDir(FaceDirection faceDir)
+{
+    MoveDirection moveDir = MoveDirection::None;
+
+    if (faceDir == FaceDirection::Down)
+        moveDir = MoveDirection::Down;
+    else if (faceDir == FaceDirection::Up)
+        moveDir = MoveDirection::Up;
+    else if (faceDir == FaceDirection::Left)
+        moveDir = MoveDirection::Left;
+    else if (faceDir == FaceDirection::Right)
+        moveDir = MoveDirection::Right;
+
+    return moveDir;
+}
+
 }  // namespace
 
 const std::string PlayerEntity::str = "Player";
@@ -122,15 +154,7 @@ void PlayerEntity::OnMessage(std::shared_ptr<Shared::Message> msg)
 
 void PlayerEntity::OnBeginMove(MoveDirection moveDirection)
 {
-    FaceDirection faceDir = FaceDirection::Undefined;
-    if (moveDirection == MoveDirection::Down)
-        faceDir = FaceDirection::Down;
-    else if (moveDirection == MoveDirection::Up)
-        faceDir = FaceDirection::Up;
-    else if (moveDirection == MoveDirection::Left)
-        faceDir = FaceDirection::Left;
-    else if (moveDirection == MoveDirection::Right)
-        faceDir = FaceDirection::Right;
+    FaceDirection faceDir = MoveDirToFaceDir(moveDirection);
     propertyStore_.Set("FaceDirection", faceDir);
 }
 
@@ -143,15 +167,7 @@ void PlayerEntity::OnShoot()
 {
     auto dir = propertyStore_.Get<FaceDirection>("FaceDirection");
     auto position = body_.position_ + arrowOffset.at(dir);
-    MoveDirection moveDir = MoveDirection::None;
-    if (dir == FaceDirection::Down)
-        moveDir = MoveDirection::Down;
-    else if (dir == FaceDirection::Up)
-        moveDir = MoveDirection::Up;
-    else if (dir == FaceDirection::Left)
-        moveDir = MoveDirection::Left;
-    else if (dir == FaceDirection::Right)
-        moveDir = MoveDirection::Right;
+    auto moveDir = FaceDirToMoveDir(dir);
     auto data = ArrowEntity::CreatePropertyData(position, moveDir);
     service_.CreateEntity(data);
 }
