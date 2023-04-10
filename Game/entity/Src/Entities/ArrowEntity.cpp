@@ -31,17 +31,34 @@ const std::unordered_map<MoveDirection, float> arrowRotation = {{MoveDirection::
                                                                 {MoveDirection::Left, 270.0f},
                                                                 {MoveDirection::Right, 90.0f},
                                                                 {MoveDirection::Up, 0.0f}};
+
+MoveDirection FaceDirToMoveDir(FaceDirection faceDir)
+{
+    MoveDirection moveDir = MoveDirection::None;
+
+    if (faceDir == FaceDirection::Down)
+        moveDir = MoveDirection::Down;
+    else if (faceDir == FaceDirection::Up)
+        moveDir = MoveDirection::Up;
+    else if (faceDir == FaceDirection::Left)
+        moveDir = MoveDirection::Left;
+    else if (faceDir == FaceDirection::Right)
+        moveDir = MoveDirection::Right;
+
+    return moveDir;
+}
+
 }  // namespace
 
 const std::string ArrowEntity::str = "Arrow";
 
-PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, MoveDirection dir)
+PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, FaceDirection dir)
 {
     PropertyData data;
     std::unordered_map<std::string, std::string> properties;
     std::stringstream ss;
     ss << dir;
-    properties["MoveDirection"] = ss.str();
+    properties["FaceDirection"] = ss.str();
     data.typeStr_ = ArrowEntity::str;
     data.properties_ = properties;
     data.position_ = position;
@@ -57,22 +74,23 @@ ArrowEntity::~ArrowEntity() = default;
 
 void ArrowEntity::RegisterProperties()
 {
-    propertyStore_.Register<MoveDirection>("MoveDirection", MoveDirection::Down);
+    propertyStore_.Register<FaceDirection>("FaceDirection", FaceDirection::Undefined);
 }
 
 void ArrowEntity::ReadProperties(const std::unordered_map<std::string, std::string>& properties)
 {
     for (const auto& p : properties) {
-        if (p.first == "MoveDirection") {
-            MoveDirection dir = ToValue<MoveDirection>(p.second);
-            propertyStore_.Set<MoveDirection>(p.first, dir);
+        if (p.first == "FaceDirection") {
+            FaceDirection dir = ToValue<FaceDirection>(p.second);
+            propertyStore_.Set<FaceDirection>(p.first, dir);
         }
     }
 }
 
 void ArrowEntity::OnBeginIdle()
 {
-    auto dir = propertyStore_.Get<MoveDirection>("MoveDirection");
+    auto faceDir = propertyStore_.Get<FaceDirection>("FaceDirection");
+    auto dir = FaceDirToMoveDir(faceDir);
     auto event = std::make_shared<StartMoveEvent>(dir);
     HandleEvent(event);
 }

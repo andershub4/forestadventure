@@ -80,22 +80,6 @@ FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
     return faceDir;
 }
 
-MoveDirection FaceDirToMoveDir(FaceDirection faceDir)
-{
-    MoveDirection moveDir = MoveDirection::None;
-
-    if (faceDir == FaceDirection::Down)
-        moveDir = MoveDirection::Down;
-    else if (faceDir == FaceDirection::Up)
-        moveDir = MoveDirection::Up;
-    else if (faceDir == FaceDirection::Left)
-        moveDir = MoveDirection::Left;
-    else if (faceDir == FaceDirection::Right)
-        moveDir = MoveDirection::Right;
-
-    return moveDir;
-}
-
 }  // namespace
 
 const std::string PlayerEntity::str = "Player";
@@ -167,8 +151,7 @@ void PlayerEntity::OnShoot()
 {
     auto dir = propertyStore_.Get<FaceDirection>("FaceDirection");
     auto position = body_.position_ + arrowOffset.at(dir);
-    auto moveDir = FaceDirToMoveDir(dir);
-    auto data = ArrowEntity::CreatePropertyData(position, moveDir);
+    auto data = ArrowEntity::CreatePropertyData(position, dir);
     service_.CreateEntity(data);
 }
 

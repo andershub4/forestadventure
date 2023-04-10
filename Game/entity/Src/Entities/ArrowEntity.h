@@ -8,6 +8,7 @@
 
 #include "BasicEntity.h"
 
+#include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 
 namespace FA {
@@ -18,7 +19,7 @@ class ArrowEntity : public BasicEntity
 {
 public:
     static const std::string str;
-    static PropertyData CreatePropertyData(const sf::Vector2f& position, MoveDirection dir);
+    static PropertyData CreatePropertyData(const sf::Vector2f& position, FaceDirection dir);
 
     ArrowEntity(EntityId id, const PropertyData& data, const EntityService& service);
     virtual ~ArrowEntity();
