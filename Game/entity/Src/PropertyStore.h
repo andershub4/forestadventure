@@ -25,17 +25,17 @@ public:
     }
 
     template <class T>
-    T Get(const std::string& name) const
+    void Get(const std::string& name, T& value) const
     {
         auto a = properties_.at(name);
-        return std::dynamic_pointer_cast<Property<T>>(a)->value_;
+        value = std::dynamic_pointer_cast<Property<T>>(a)->value_;
     }
 
     template <class T>
-    T& GetRef(const std::string& name) const
+    void GetPtr(const std::string& name, T*& value) const
     {
         auto a = properties_.at(name);
-        return std::dynamic_pointer_cast<Property<T>>(a)->value_;
+        value = &std::dynamic_pointer_cast<Property<T>>(a)->value_;
     }
 
     template <class T>

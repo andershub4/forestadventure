@@ -149,7 +149,8 @@ void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
 
 void PlayerEntity::OnShoot()
 {
-    auto dir = propertyStore_.Get<FaceDirection>("FaceDirection");
+    FaceDirection dir;
+    propertyStore_.Get("FaceDirection", dir);
     auto position = body_.position_ + arrowOffset.at(dir);
     auto data = ArrowEntity::CreatePropertyData(position, dir);
     service_.CreateEntity(data);
@@ -164,7 +165,7 @@ void PlayerEntity::OnBeginDie()
 
 void PlayerEntity::RegisterProperties()
 {
-    propertyStore_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
+    propertyStore_.Register("FaceDirection", FaceDirection::Down);
 }
 
 void PlayerEntity::ReadProperties(const std::unordered_map<std::string, std::string>& properties)
@@ -172,7 +173,7 @@ void PlayerEntity::ReadProperties(const std::unordered_map<std::string, std::str
     for (const auto& p : properties) {
         if (p.first == "FaceDirection") {
             FaceDirection dir = ToValue<FaceDirection>(p.second);
-            propertyStore_.Set<FaceDirection>(p.first, dir);
+            propertyStore_.Set(p.first, dir);
         }
     }
 }
@@ -257,8 +258,9 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
 std::shared_ptr<AnimationSpriteWith<FaceDirection>> PlayerEntity::MakeSprite(
     const std::unordered_map<FaceDirection, Shared::AnimationData>& data)
 {
-    auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
-    auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
+    FaceDirection* dir = nullptr;
+    propertyStore_.GetPtr("FaceDirection", dir);
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(*dir);
     for (const auto& entry : data) {
         sprite->RegisterAnimation(entry.first, service_.MakeAnimation(entry.second));
     }

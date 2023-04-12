@@ -74,7 +74,7 @@ void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
 
 void MoleEntity::RegisterProperties()
 {
-    propertyStore_.Register<FaceDirection>("FaceDirection", FaceDirection::Down);
+    propertyStore_.Register("FaceDirection", FaceDirection::Down);
 }
 
 void MoleEntity::ReadProperties(const std::unordered_map<std::string, std::string>& properties)
@@ -82,7 +82,7 @@ void MoleEntity::ReadProperties(const std::unordered_map<std::string, std::strin
     for (const auto& p : properties) {
         if (p.first == "FaceDirection") {
             FaceDirection dir = ToValue<FaceDirection>(p.second);
-            propertyStore_.Set<FaceDirection>(p.first, dir);
+            propertyStore_.Set(p.first, dir);
         }
     }
 }
@@ -119,8 +119,9 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
 std::shared_ptr<AnimationSpriteWith<FaceDirection>> MoleEntity::MakeSprite(
     const std::unordered_map<FaceDirection, Shared::AnimationData>& data)
 {
-    auto& ref = propertyStore_.GetRef<FaceDirection>("FaceDirection");
-    auto sprite = AnimationSpriteWith<FaceDirection>::Create(ref);
+    FaceDirection* dir = nullptr;
+    propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
+    auto sprite = AnimationSpriteWith<FaceDirection>::Create(*dir);
     for (const auto& entry : data) {
         sprite->RegisterAnimation(entry.first, service_.MakeAnimation(entry.second));
     }

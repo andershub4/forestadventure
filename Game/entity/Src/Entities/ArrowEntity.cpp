@@ -74,7 +74,7 @@ ArrowEntity::~ArrowEntity() = default;
 
 void ArrowEntity::RegisterProperties()
 {
-    propertyStore_.Register<FaceDirection>("FaceDirection", FaceDirection::Undefined);
+    propertyStore_.Register("FaceDirection", FaceDirection::Undefined);
 }
 
 void ArrowEntity::ReadProperties(const std::unordered_map<std::string, std::string>& properties)
@@ -82,14 +82,15 @@ void ArrowEntity::ReadProperties(const std::unordered_map<std::string, std::stri
     for (const auto& p : properties) {
         if (p.first == "FaceDirection") {
             FaceDirection dir = ToValue<FaceDirection>(p.second);
-            propertyStore_.Set<FaceDirection>(p.first, dir);
+            propertyStore_.Set(p.first, dir);
         }
     }
 }
 
 void ArrowEntity::OnBeginIdle()
 {
-    auto faceDir = propertyStore_.Get<FaceDirection>("FaceDirection");
+    FaceDirection faceDir;
+    propertyStore_.Get("FaceDirection", faceDir);
     auto dir = FaceDirToMoveDir(faceDir);
     auto event = std::make_shared<StartMoveEvent>(dir);
     HandleEvent(event);
