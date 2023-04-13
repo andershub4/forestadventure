@@ -12,19 +12,19 @@
 
 #include "Events/StartMoveEvent.h"
 
-namespace {
-
-const std::unordered_map<FA::MoveDirection, sf::Vector2f> dirToVector = {{FA::MoveDirection::None, {0.0, 0.0}},
-                                                                         {FA::MoveDirection::Up, {0.0, -1.0}},
-                                                                         {FA::MoveDirection::Right, {1.0, 0.0}},
-                                                                         {FA::MoveDirection::Down, {0.0, 1.0}},
-                                                                         {FA::MoveDirection::Left, {-1.0, 0.0}}};
-
-}  // namespace
-
 namespace FA {
 
 namespace Entity {
+
+namespace {
+
+const std::unordered_map<MoveDirection, sf::Vector2f> dirToVector = {{MoveDirection::None, {0.0, 0.0}},
+                                                                     {MoveDirection::Up, {0.0, -1.0}},
+                                                                     {MoveDirection::Right, {1.0, 0.0}},
+                                                                     {MoveDirection::Down, {0.0, 1.0}},
+                                                                     {MoveDirection::Left, {-1.0, 0.0}}};
+
+}  // namespace
 
 MoveAbility::MoveAbility(float velocity, std::function<void(MoveDirection)> enterFn,
                          std::function<void(const sf::Vector2f&)> updateFn)

@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Entity {
+
 enum class FaceDirection { Undefined, Up, Right, Down, Left };
 
 inline std::ostream& operator<<(std::ostream& os, const FaceDirection& e)
@@ -37,5 +39,7 @@ inline std::ostream& operator<<(std::ostream& os, const FaceDirection& e)
 
     return os;
 }
+
+}  // namespace Entity
 
 }  // namespace FA

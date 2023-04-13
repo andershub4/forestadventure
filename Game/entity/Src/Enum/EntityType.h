@@ -8,6 +8,8 @@
 
 namespace FA {
 
+namespace Entity {
+
 enum class EntityType { Unknown, Static, Player, Mole, Arrow, Tile, Coin };
 
 inline std::ostream& operator<<(std::ostream& os, const EntityType& e)
@@ -41,5 +43,7 @@ inline std::ostream& operator<<(std::ostream& os, const EntityType& e)
 
     return os;
 }
+
+}  // namespace Entity
 
 }  // namespace FA
