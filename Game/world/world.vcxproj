@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Include\Level.h" />
     <ClInclude Include="Src\LevelCreator.h" />
+    <ClInclude Include="Src\Sheets.h" />
     <ClInclude Include="Src\TileMap.h" />
   </ItemGroup>
   <ItemGroup>
