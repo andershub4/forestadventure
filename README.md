@@ -1,6 +1,6 @@
 ![forest adventure](Images/forestadventure2.gif)
 
-# Forest Adventure
+# Forest Adventure [![MSBuild](https://github.com/andershub4/forestadventure/actions/workflows/msbuild.yml/badge.svg)](https://github.com/andershub4/forestadventure/actions/workflows/msbuild.yml)
 
 Forest Adventure is a 2D game, currenly in a very early development stage. The title for this game is not settled yet, Forest Adventure is just a working name. It is currently available for Windows (x86).
 
