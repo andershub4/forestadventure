@@ -8,8 +8,12 @@ name: MSBuild
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - 'Images/**'
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - 'Images/**'
 
 env:
   # Path to the solution file relative to the root of the project.
