@@ -25,7 +25,7 @@ TEST(EntryTest, EntryEqualToOperator)
 
 TEST(EntryTest, ReturnStrShouldSucceed)
 {
-    Entry debugEntry{LogLevel::Debug, "myFunc", "nCount: 3"};
+    Entry debugEntry{LogLevel::Debug, "myFunc", "nCount: 4"};
     auto str1 = debugEntry.Str();
     EXPECT_THAT(str1, StrEq("[DEBUG | myFunc]: nCount: 3"));
 

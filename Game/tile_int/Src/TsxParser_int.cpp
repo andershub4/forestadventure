@@ -95,7 +95,7 @@ TEST_F(TsxParserInt, ParseValidSetShouldSucceed)
     ParsedTileSet expectedSet{"tileset", 16, 16, 100, 10};
     ParsedTsx expected{expectedSet, {"../game/resources/tilesets/tileset.png", 160, 160}, {}};
 
-    EXPECT_FALSE(success);
+    EXPECT_TRUE(success);
     EXPECT_THAT(parsedTsx, Eq(expected));
 }
 
