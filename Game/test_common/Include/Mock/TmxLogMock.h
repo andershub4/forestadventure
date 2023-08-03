@@ -10,7 +10,14 @@
 
 namespace FA {
 
-namespace Tile {
+// To follow existing naming convention, this namespace
+// should be called TestCommon.
+// However, this is not possible, since the production code
+// for MakeInfoLogEntry etc. is inside Tile namespace.
+// The code for production and test must be within same
+// namespace, so link time substition will work.
+namespace Tile
+{
 
 class LoggerMock : public LogLib::LoggerMock
 {
