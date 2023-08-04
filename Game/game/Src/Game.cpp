@@ -54,7 +54,8 @@ void Game::GameLoop()
     window.setFramerateLimit(120);
 
     Shared::MessageBus messageBus;
-    Shared::TextureManager textureManager;
+    auto createFn = []() { return std::make_unique<sf::Texture>(); };
+    Shared::TextureManager textureManager(createFn);
     Scene::Manager sceneManager(messageBus, textureManager);
     SfmlLog sfmlLog;
     sf::Clock clock;

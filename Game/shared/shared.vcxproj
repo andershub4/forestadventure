@@ -188,6 +188,14 @@
     <ClCompile Include="Src\Resource\SheetManager.cpp" />
     <ClCompile Include="Src\Resource\SpriteSheet.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\logging\logging.vcxproj">
+      <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\util\util.vcxproj">
+      <Project>{fc8641f9-67f5-474b-9296-f5cf069d6f6d}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

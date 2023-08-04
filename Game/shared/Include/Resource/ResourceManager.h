@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <sstream>
 #include <string>
@@ -21,9 +22,13 @@ template <class K, class R>
 class ResourceManager
 {
 public:
+    ResourceManager(std::function<std::unique_ptr<R>()> createFn)
+        : createFn_(createFn)
+    {}
+
     void Add(const K& key, const std::string& path)
     {
-        auto resource = std::make_unique<R>();
+        auto resource = createFn_();
 
         if (resource->loadFromFile(path)) {
             resources_.emplace(key, std::move(resource));
@@ -48,6 +53,7 @@ public:
 
 private:
     std::unordered_map<K, std::unique_ptr<R>> resources_;
+    std::function<std::unique_ptr<R>()> createFn_;
 };
 
 }  // namespace Shared
