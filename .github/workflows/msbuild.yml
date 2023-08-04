@@ -46,6 +46,10 @@ jobs:
     - name: Run util tests
       if: matrix.configuration == 'Release'
       run: ./Game/Release/tile_test.exe
+
+    - name: Run shared tests
+      if: matrix.configuration == 'Release'
+      run: ./Game/Release/shared_test.exe
       
     - name: Run tile integration tests
       if: matrix.configuration == 'Release'
