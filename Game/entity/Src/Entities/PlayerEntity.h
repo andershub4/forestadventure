@@ -24,7 +24,7 @@ class PlayerEntity : public BasicEntity
 public:
     static const std::string str;
 
-    PlayerEntity(EntityId id, const PropertyData& data, const EntityService& service);
+    PlayerEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& service);
     virtual ~PlayerEntity();
 
     virtual EntityType Type() const override { return EntityType::Player; }

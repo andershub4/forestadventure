@@ -17,7 +17,7 @@ class StaticEntity : public BasicEntity
 public:
     static const std::string str;
 
-    StaticEntity(EntityId id, const PropertyData& data, const EntityService& service);
+    StaticEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& service);
     virtual ~StaticEntity();
 
     virtual EntityType Type() const override { return EntityType::Static; }

@@ -15,7 +15,6 @@
 
 #include "Enum/EntityType.h"
 #include "Id.h"
-#include "MapData.h"
 
 namespace FA {
 
@@ -31,6 +30,7 @@ struct ImageData;
 class MessageBus;
 class Message;
 enum class MessageType;
+struct MapData;
 
 }  // namespace Shared
 
@@ -43,8 +43,7 @@ class EntityService
 {
 public:
     EntityService(Shared::MessageBus &messageBus, const Shared::SheetManager &sheetManager,
-                  const Shared::CameraManager &cameraManager, EntityManager &entityManager,
-                  const Shared::MapData &mapData);
+                  const Shared::CameraManager &cameraManager, EntityManager &entityManager);
     ~EntityService();
 
     Shared::Animation MakeAnimation(const Shared::AnimationData &data) const;
@@ -56,8 +55,7 @@ public:
 
     void RemoveSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes);
     Shared::Camera &GetCamera() const;
-    bool IsInsideMap(const sf::Vector2f &pos) const;
-    void CreateEntity(const PropertyData &data);
+    void CreateEntity(const PropertyData &data, const Shared::MapData &mapData);
     void DeleteEntity(EntityId id);
 
 private:
@@ -65,8 +63,6 @@ private:
     const Shared::SheetManager &sheetManager_;
     const Shared::CameraManager &cameraManager_;
     EntityManager &entityManager_;
-    Shared::MapData mapData_;
-    sf::FloatRect mapRect_;
 };
 
 }  // namespace Entity

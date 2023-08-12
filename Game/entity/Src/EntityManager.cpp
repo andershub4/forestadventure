@@ -10,6 +10,7 @@
 
 #include "Entities/BasicEntity.h"
 #include "Entities/TileEntity.h"
+#include "EntityService.h"
 #include "Factory.h"
 #include "Logging.h"
 #include "PropertyData.h"
@@ -20,7 +21,8 @@ namespace Entity {
 
 EntityManager::EntityManager(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager,
                              const Shared::CameraManager& cameraManager)
-    : factory_(std::make_unique<Factory>(messageBus, sheetManager, cameraManager, *this))
+    : factory_(std::make_unique<Factory>())
+    , service_(std::make_unique<EntityService>(messageBus, sheetManager, cameraManager, *this))
 {}
 
 EntityManager::~EntityManager()
@@ -47,7 +49,7 @@ void EntityManager::Update(float deltaTime)
 
 void EntityManager::CreateEntity(const PropertyData& data, const Shared::MapData& mapData)
 {
-    auto entity = factory_->Create(data, mapData);
+    auto entity = factory_->Create(data, mapData, *service_);
     createdEntities_.push_back(std::move(entity));
 }
 

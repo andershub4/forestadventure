@@ -24,8 +24,9 @@ const Shared::AnimationData idle{Shared::SheetId::Coin, {{0, 0}, 4, 0}, false};
 
 const std::string CoinEntity::str = "Coin";
 
-CoinEntity::CoinEntity(EntityId id, const PropertyData& data, const EntityService& service)
-    : BasicEntity(id, data, service)
+CoinEntity::CoinEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                       const EntityService& service)
+    : BasicEntity(id, data, mapData, service)
 {}
 
 CoinEntity::~CoinEntity() = default;

@@ -17,7 +17,7 @@ class TileEntity : public BasicEntity
 public:
     static const std::string str;
 
-    TileEntity(EntityId id, const PropertyData& data, const EntityService& service);
+    TileEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& service);
     virtual ~TileEntity();
 
     virtual EntityType Type() const override { return EntityType::Tile; }

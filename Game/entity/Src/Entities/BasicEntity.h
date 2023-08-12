@@ -24,6 +24,7 @@ namespace Shared {
 
 class Message;
 enum class MessageType;
+struct MapData;
 
 }  // namespace Shared
 
@@ -32,7 +33,7 @@ namespace Entity {
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, const PropertyData& data, const EntityService& service);
+    BasicEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& service);
     virtual ~BasicEntity();
 
     virtual EntityType Type() const = 0;
@@ -48,6 +49,7 @@ protected:
     PropertyStore propertyStore_;
     EntityService service_;
     Body body_{};
+    sf::FloatRect mapRect_;
 
 protected:
     virtual std::vector<Shared::MessageType> Messages() const { return {}; }

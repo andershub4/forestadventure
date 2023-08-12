@@ -22,16 +22,12 @@ namespace FA {
 namespace Entity {
 
 EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager,
-                             const Shared::CameraManager& cameraManager, EntityManager& entityManager,
-                             const Shared::MapData& mapData)
+                             const Shared::CameraManager& cameraManager, EntityManager& entityManager)
     : messageBus_(messageBus)
     , sheetManager_(sheetManager)
     , cameraManager_(cameraManager)
     , entityManager_(entityManager)
-    , mapData_(mapData)
-{
-    mapRect_ = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(mapData.size_));
-}
+{}
 
 EntityService::~EntityService() = default;
 
@@ -70,14 +66,9 @@ Shared::Camera& EntityService::GetCamera() const
     return cameraManager_.GetCamera();
 }
 
-bool EntityService::IsInsideMap(const sf::Vector2f& pos) const
+void EntityService::CreateEntity(const PropertyData& data, const Shared::MapData& mapData)
 {
-    return mapRect_.contains(pos);
-}
-
-void EntityService::CreateEntity(const PropertyData& data)
-{
-    entityManager_.CreateEntity(data, mapData_);
+    entityManager_.CreateEntity(data, mapData);
 }
 
 void EntityService::DeleteEntity(EntityId id)

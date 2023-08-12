@@ -30,6 +30,7 @@ namespace Entity {
 
 class BasicEntity;
 class Factory;
+class EntityService;
 struct PropertyData;
 
 class EntityManager
@@ -58,6 +59,7 @@ private:
 
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
     std::unique_ptr<Factory> factory_;
+    std::unique_ptr<EntityService> service_;
     std::vector<std::unique_ptr<BasicEntity>> createdEntities_;
     std::vector<EntityId> deletedEntities_;
     std::map<std::string, DrawableInfo> drawables_;

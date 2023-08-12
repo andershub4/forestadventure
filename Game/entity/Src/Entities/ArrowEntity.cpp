@@ -66,8 +66,9 @@ PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, FaceD
     return data;
 }
 
-ArrowEntity::ArrowEntity(EntityId id, const PropertyData& data, const EntityService& service)
-    : BasicEntity(id, data, service)
+ArrowEntity::ArrowEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                         const EntityService& service)
+    : BasicEntity(id, data, mapData, service)
 {}
 
 ArrowEntity::~ArrowEntity() = default;
@@ -104,7 +105,7 @@ void ArrowEntity::OnBeginMove(MoveDirection moveDirection)
 void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
     body_.position_ += delta;
-    bool outsideMap = !service_.IsInsideMap(body_.position_);
+    bool outsideMap = !mapRect_.contains(body_.position_);
 
     if (outsideMap) {
         HandleEvent(std::make_shared<DeadEvent>());

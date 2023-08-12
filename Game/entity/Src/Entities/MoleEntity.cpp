@@ -55,8 +55,9 @@ FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 
 const std::string MoleEntity::str = "Mole";
 
-MoleEntity::MoleEntity(EntityId id, const PropertyData& data, const EntityService& service)
-    : BasicEntity(id, data, service)
+MoleEntity::MoleEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                       const EntityService& service)
+    : BasicEntity(id, data, mapData, service)
 {}
 
 MoleEntity::~MoleEntity() = default;
