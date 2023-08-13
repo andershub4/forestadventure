@@ -54,6 +54,7 @@ TEST_F(ResourceManagerTest, AddResourceShouldSucceed)
 
     auto id = resourceManager_.Load(path_);
     auto result = resourceManager_.Get(id);
+    EXPECT_EQ(id, 0);
     EXPECT_EQ(result, expectedPtr);
 }
 
@@ -64,8 +65,9 @@ TEST_F(ResourceManagerTest, AddResourceShouldFail)
     EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not load C:/MyFolder/MyFile.jpg")));
 
     auto id = resourceManager_.Load(path_);
-    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not get 2")));
-    auto result = resourceManager_.Get(2);
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not get 0")));
+    auto result = resourceManager_.Get(0);
+    EXPECT_THAT(id, InvalidTextureId);
     EXPECT_THAT(result, IsNull());
 }
 
