@@ -19,10 +19,10 @@ namespace FA {
 
 namespace Entity {
 
-EntityManager::EntityManager(Shared::MessageBus& messageBus, const Shared::SheetManager& sheetManager,
-                             const Shared::CameraManager& cameraManager)
+EntityManager::EntityManager(Shared::MessageBus& messageBus, const Shared::TextureManager& textureManager,
+                             const Shared::SheetManager& sheetManager, const Shared::CameraManager& cameraManager)
     : factory_(std::make_unique<Factory>())
-    , service_(std::make_unique<EntityService>(messageBus, sheetManager, cameraManager, *this))
+    , service_(std::make_unique<EntityService>(messageBus, textureManager, sheetManager, cameraManager, *this))
 {}
 
 EntityManager::~EntityManager()

@@ -6,8 +6,10 @@
 
 #include "Resource/SheetManager.h"
 
+#include <sstream>
+
+#include "Logging.h"
 #include "Resource/AnimationData.h"
-#include "Resource/Frame.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetData.h"
 
@@ -15,62 +17,51 @@ namespace FA {
 
 namespace Shared {
 
-SheetManager::SheetManager(TextureManager& textureManager)
-    : textureManager_(textureManager)
-{}
-
-void SheetManager::LoadSheet(const std::string& sheetPath, const SheetData& data)
+void SheetManager::AddSheet(const std::string& name, ResourceId textureId, const sf::Vector2u& textureSize,
+                            const sf::Vector2u& rectCount)
 {
-    auto p = sheetPath + data.path_;
-    LoadSheet(data.name_, p, data.size_);
-}
-
-void SheetManager::LoadSheet(const std::string& name, const std::string& p, const sf::Vector2u& size)
-{
-    textureManager_.Add(name, p);
-    const sf::Texture* t = textureManager_.Get(name);
-    SpriteSheet s(t, size);
+    SpriteSheet s(textureId, textureSize, rectCount);
     sheetMap_.insert({name, s});
 }
 
-std::vector<Frame> SheetManager::MakeFrames(const AnimationData& data) const
+std::vector<TextureRect> SheetManager::MakeRects(const AnimationData& data) const
 {
     auto location = data.locationData_;
     auto sheet = GetSheet(data.sheetId_);
-    auto frames = CreateFrames(sheet, location.start_, location.nRects_);
+    auto rects = CreateRects(sheet, location.start_, location.nRects_);
 
-    return data.mirror_ ? SpriteSheet::MirrorX(frames) : frames;
+    return data.mirror_ ? SpriteSheet::MirrorX(rects) : rects;
 }
 
-Frame SheetManager::MakeFrame(const ImageData& data) const
+TextureRect SheetManager::MakeRect(const ImageData& data) const
 {
     auto sheet = GetSheet(data.sheetId_);
-    auto frame = CreateFrame(sheet, data.position_);
+    auto rect = CreateRect(sheet, data.position_);
 
-    return frame;
+    return rect;
 }
 
-Frame SheetManager::CreateFrame(const SpriteSheet& sheet, const sf::Vector2u position) const
+TextureRect SheetManager::CreateRect(const SpriteSheet& sheet, const sf::Vector2u position) const
 {
-    Frame f;
+    TextureRect rect;
 
     if (sheet.IsValid()) {
-        f = sheet.At(position);
+        rect = sheet.At(position);
     }
 
-    return f;
+    return rect;
 }
 
-std::vector<Frame> SheetManager::CreateFrames(const SpriteSheet& sheet, const sf::Vector2u start,
-                                              unsigned int nRects) const
+std::vector<TextureRect> SheetManager::CreateRects(const SpriteSheet& sheet, const sf::Vector2u start,
+                                                   unsigned int nRects) const
 {
-    std::vector<Frame> f;
+    std::vector<TextureRect> rects;
 
     if (sheet.IsValid()) {
-        f = sheet.Scan(start, nRects);
+        rects = sheet.Scan(start, nRects);
     }
 
-    return f;
+    return rects;
 }
 
 SpriteSheet SheetManager::GetSheet(const std::string& name) const

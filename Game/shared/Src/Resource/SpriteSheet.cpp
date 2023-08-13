@@ -6,41 +6,39 @@
 
 #include "Resource/SpriteSheet.h"
 
-#include <SFML/Graphics/Texture.hpp>
-
-#include "Resource/Frame.h"
 #include "Logging.h"
 
 namespace FA {
 
 namespace Shared {
 
-SpriteSheet::SpriteSheet(const sf::Texture* texture, const sf::Vector2u& rectCount)
-    : texture_(texture)
+SpriteSheet::SpriteSheet(ResourceId textureId, const sf::Vector2u& textureSize, const sf::Vector2u& rectCount)
+    : textureId_(textureId)
+    , textureSize_(textureSize)
     , rectCount_(rectCount)
     , isValid_(true)
 {}
 
-std::vector<Frame> SpriteSheet::MirrorX(const std::vector<Frame>& frames)
+std::vector<TextureRect> SpriteSheet::MirrorX(const std::vector<TextureRect>& rects)
 {
-    std::vector<Frame> mirrorFrames;
+    std::vector<TextureRect> mirrorRects;
 
-    for (const auto& frame : frames) {
-        Frame f = frame;
-        f.rect_.left = frame.rect_.left + frame.rect_.width;
-        f.rect_.width = -frame.rect_.width;
-        mirrorFrames.push_back(f);
+    for (const auto& rect : rects) {
+        TextureRect r = rect;
+        r.position_.x = r.position_.x + r.size_.x;
+        r.size_.x = -rect.size_.x;
+        mirrorRects.push_back(r);
     }
 
-    return mirrorFrames;
+    return mirrorRects;
 }
 
-std::vector<Frame> SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const
+std::vector<TextureRect> SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const
 {
     return GenerateFrames(uvCoord, nRects);
 }
 
-Frame SpriteSheet::At(const sf::Vector2u& uvCoord) const
+TextureRect SpriteSheet::At(const sf::Vector2u& uvCoord) const
 {
     auto rectSize = CalcRectSize();
 
@@ -49,8 +47,7 @@ Frame SpriteSheet::At(const sf::Vector2u& uvCoord) const
         int top = static_cast<int>(uvCoord.y * rectSize.y);
         int width = static_cast<int>(rectSize.x);
         int height = static_cast<int>(rectSize.y);
-        sf::IntRect rect = {left, top, width, height};
-        return Frame(texture_, rect);
+        return TextureRect(textureId_, {left, top}, {width, height});
     }
 
     return {};
@@ -58,31 +55,29 @@ Frame SpriteSheet::At(const sf::Vector2u& uvCoord) const
 
 sf::Vector2u SpriteSheet::CalcRectSize() const
 {
-    sf::Vector2u textureSize = texture_->getSize();
-
     if (rectCount_.x > 0 && rectCount_.y > 0)
-        return {textureSize.x / rectCount_.x, textureSize.y / rectCount_.y};
+        return {textureSize_.x / rectCount_.x, textureSize_.y / rectCount_.y};
     else
         LOG_ERROR("Can't calculate rectSize due to rectCount.x %u, rectCount.y  %u", rectCount_.x, rectCount_.y);
 
     return {};
 }
 
-std::vector<Frame> SpriteSheet::GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const
+std::vector<TextureRect> SpriteSheet::GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const
 {
-    std::vector<Frame> frames;
-    auto startFrame = At(uvCoord);
+    std::vector<TextureRect> rects;
+    auto startRect = At(uvCoord);
 
-    if (startFrame.isValid_) {
+    if (startRect.isValid_) {
         // build frames from left to right
         for (unsigned int i = 0; i < nRects; i++) {
-            auto frame = startFrame;
-            frame.rect_.left += i * frame.rect_.width;
-            frames.push_back(frame);
+            auto rect = startRect;
+            rect.position_.x += i * rect.size_.x;
+            rects.push_back(rect);
         }
     }
 
-    return frames;
+    return rects;
 }
 
 }  // namespace Shared

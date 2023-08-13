@@ -11,10 +11,16 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Resource/Image.h"
+#include "Resource/SheetManager.h"
 
 namespace FA {
 
 namespace World {
+
+LevelCreator::LevelCreator(const Shared::TextureManager &textureManager, const Shared::SheetManager &sheetManager)
+    : textureManager_(textureManager)
+    , sheetManager_(sheetManager)
+{}
 
 void LevelCreator::AddBackground(const std::vector<TileMap::TileData> &layer)
 {
@@ -47,7 +53,11 @@ std::vector<sf::Sprite> LevelCreator::CreateFringe(const std::vector<TileMap::Ti
 
 sf::Sprite LevelCreator::CreateSprite(const TileMap::TileData &data) const
 {
-    Shared::Image image(data.graphic_.image_);
+    auto imageData = data.graphic_.image_;
+    auto rect = sheetManager_.MakeRect(imageData);
+    const auto *texture = textureManager_.Get(rect.id_);
+    Shared::Image image({texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
+
     sf::Sprite sprite;
     image.ApplyTo(sprite);
     sprite.setPosition(data.position_);

@@ -8,7 +8,7 @@
 
 #include <vector>
 
-#include "Frame.h"
+#include "ImageData.h"
 
 namespace FA {
 
@@ -16,9 +16,9 @@ namespace Shared {
 
 struct Graphic
 {
-    using Animation = std::vector<Frame>;
+    using Animation = std::vector<ImageData>;
     Animation animation_;
-    Frame image_;
+    ImageData image_;
 };
 
 }  // namespace Shared

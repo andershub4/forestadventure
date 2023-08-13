@@ -19,7 +19,7 @@ class Animation
 {
 public:
     Animation() = default;
-    Animation(const std::vector<Frame>& frames, unsigned int defaultFrame, float switchTime);
+    Animation(unsigned int defaultFrame, float switchTime);
 
     void Update(float deltaTime);  // delta time; time since previous time to current frame
     void ApplyTo(sf::Sprite& sprite) const;
@@ -27,6 +27,7 @@ public:
     void Stop();
     bool IsCompleted() const;
     bool IsValid() const;
+    void AddFrame(const Frame& frame);
 
 private:
     bool isStopped_ = true;

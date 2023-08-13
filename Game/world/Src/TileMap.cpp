@@ -9,6 +9,8 @@
 #include "Logging.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
+#include "Resource/ResourceId.h"
+#include "Resource/TextureManager.h"
 #include "TileMapData.h"
 #include "TileMapParser.h"
 
@@ -16,8 +18,9 @@ namespace FA {
 
 namespace World {
 
-TileMap::TileMap(Shared::SheetManager& sheetManager)
-    : sheetManager_(sheetManager)
+TileMap::TileMap(Shared::TextureManager& textureManager, Shared::SheetManager& sheetManager)
+    : textureManager_(textureManager)
+    , sheetManager_(sheetManager)
 {
     tileMapParser_ = std::make_unique<Tile::TileMapParser>();
 }
@@ -42,7 +45,9 @@ void TileMap::LoadTileSets()
     for (auto& entry : tileMapData_->tileSets_) {
         auto images = entry.second.images_;
         for (const auto& image : images) {
-            sheetManager_.LoadSheet(image.path_, image.path_, sf::Vector2u(image.nCols_, image.nRows_));
+            Shared::ResourceId id = textureManager_.Load(image.path_);
+            auto size = textureManager_.Get(id)->getSize();
+            sheetManager_.AddSheet(image.path_, id, size, sf::Vector2u(image.nCols_, image.nRows_));
         }
     }
 }
@@ -75,19 +80,17 @@ void TileMap::SetupLayers()
             outData.position_ = sf::Vector2f(static_cast<float>(x), static_cast<float>(y));
 
             if (!tileData.animation_.empty()) {
-                std::vector<Shared::Frame> outAnimation;
+                std::vector<Shared::ImageData> outAnimation;
                 for (auto frame : tileData.animation_) {
                     Shared::ImageData data{frame.texturePath_, {frame.column_, frame.row_}};
-                    auto outFrame = sheetManager_.MakeFrame(data);
-                    outAnimation.push_back(outFrame);
+                    outAnimation.push_back(data);
                 }
 
                 outData.graphic_.animation_ = outAnimation;
             }
 
             Shared::ImageData data{tileData.image_.texturePath_, {tileData.image_.column_, tileData.image_.row_}};
-            auto outFrame = sheetManager_.MakeFrame(data);
-            outData.graphic_.image_ = outFrame;
+            outData.graphic_.image_ = data;
 
             layers_[layerName].push_back(outData);
         }

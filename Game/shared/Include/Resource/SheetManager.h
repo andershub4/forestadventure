@@ -10,7 +10,7 @@
 #include <unordered_map>
 
 #include "Resource/SpriteSheet.h"
-#include "Resource/TextureManager.h"
+#include "Resource/TextureRect.h"
 
 namespace FA {
 
@@ -23,20 +23,18 @@ struct ImageData;
 class SheetManager
 {
 public:
-    SheetManager(TextureManager &textureManager);
-    void LoadSheet(const std::string &sheetPath, const SheetData &data);
-    void LoadSheet(const std::string &name, const std::string &p, const sf::Vector2u &size);
-    std::vector<Frame> MakeFrames(const AnimationData &data) const;
-    Frame MakeFrame(const ImageData &data) const;
+    void AddSheet(const std::string &name, ResourceId textureId, const sf::Vector2u &textureSize,
+                  const sf::Vector2u &rectCount);
+    std::vector<TextureRect> MakeRects(const AnimationData &data) const;
+    TextureRect MakeRect(const ImageData &data) const;
 
 private:
-    TextureManager &textureManager_;
     std::unordered_map<std::string, SpriteSheet> sheetMap_;
 
 private:
     SpriteSheet GetSheet(const std::string &name) const;
-    Frame CreateFrame(const SpriteSheet &sheet, const sf::Vector2u position) const;
-    std::vector<Frame> CreateFrames(const SpriteSheet &sheet, const sf::Vector2u start, unsigned int nRects) const;
+    TextureRect CreateRect(const SpriteSheet &sheet, const sf::Vector2u position) const;
+    std::vector<TextureRect> CreateRects(const SpriteSheet &sheet, const sf::Vector2u start, unsigned int nRects) const;
 };
 
 }  // namespace Shared

@@ -51,6 +51,7 @@ private:
     sf::RenderTexture backgroundTexture_;
     sf::Sprite backgroundSprite_;
     std::vector<sf::Sprite> fringeLayer_;
+    Shared::TextureManager& textureManager_;
     Shared::SheetManager sheetManager_;
     std::unique_ptr<TileMap> tileMap_;
     Shared::CameraManager cameraManager_;

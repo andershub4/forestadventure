@@ -18,7 +18,7 @@ struct SheetData
 {
     std::string name_;
     std::string path_;
-    sf::Vector2u size_;
+    sf::Vector2u rectCount_;
 };
 
 }  // namespace Shared

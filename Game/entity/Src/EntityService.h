@@ -15,6 +15,7 @@
 
 #include "Enum/EntityType.h"
 #include "Id.h"
+#include "Resource/TextureManager.h"
 
 namespace FA {
 
@@ -31,6 +32,7 @@ class MessageBus;
 class Message;
 enum class MessageType;
 struct MapData;
+struct TextureRect;
 
 }  // namespace Shared
 
@@ -42,12 +44,16 @@ class EntityManager;
 class EntityService
 {
 public:
-    EntityService(Shared::MessageBus &messageBus, const Shared::SheetManager &sheetManager,
-                  const Shared::CameraManager &cameraManager, EntityManager &entityManager);
+    EntityService(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
+                  const Shared::SheetManager &sheetManager, const Shared::CameraManager &cameraManager,
+                  EntityManager &entityManager);
     ~EntityService();
 
     Shared::Animation MakeAnimation(const Shared::AnimationData &data) const;
     Shared::Image MakeImage(const Shared::ImageData &data) const;
+
+    Shared::TextureRect MakeRect(const Shared::ImageData &data) const;
+    const sf::Texture *GetTexture(Shared::ResourceId id) const;
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);
     void AddSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes,
@@ -60,6 +66,7 @@ public:
 
 private:
     Shared::MessageBus &messageBus_;
+    const Shared::TextureManager &textureManager_;
     const Shared::SheetManager &sheetManager_;
     const Shared::CameraManager &cameraManager_;
     EntityManager &entityManager_;

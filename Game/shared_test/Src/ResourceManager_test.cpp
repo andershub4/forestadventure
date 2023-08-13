@@ -43,7 +43,7 @@ protected:
     StrictMock<LoggerMock> loggerMock_;
     std::unique_ptr<SomeResourceMock> resourceMock_;
     MockFunction<std::unique_ptr<SomeResourceMock>()> createFn_;
-    ResourceManager<std::string, SomeResourceMock> resourceManager_;
+    ResourceManager<SomeResourceMock> resourceManager_;
 };
 
 TEST_F(ResourceManagerTest, AddResourceShouldSucceed)
@@ -52,8 +52,8 @@ TEST_F(ResourceManagerTest, AddResourceShouldSucceed)
     EXPECT_CALL(*resourceMock_, loadFromFileImpl).WillOnce(Return(true));
     EXPECT_CALL(createFn_, Call).WillOnce(Return(ByMove(std::move(resourceMock_))));
 
-    resourceManager_.Add("mykey", path_);
-    auto result = resourceManager_.Get("mykey");
+    auto id = resourceManager_.Load(path_);
+    auto result = resourceManager_.Get(id);
     EXPECT_EQ(result, expectedPtr);
 }
 
@@ -63,16 +63,16 @@ TEST_F(ResourceManagerTest, AddResourceShouldFail)
     EXPECT_CALL(createFn_, Call).WillOnce(Return(ByMove(std::move(resourceMock_))));
     EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not load C:/MyFolder/MyFile.jpg")));
 
-    resourceManager_.Add("mykey", path_);
-    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not get mykey")));
-    auto result = resourceManager_.Get("mykey");
+    auto id = resourceManager_.Load(path_);
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not get 2")));
+    auto result = resourceManager_.Get(2);
     EXPECT_THAT(result, IsNull());
 }
 
 TEST_F(ResourceManagerTest, GetResourceShouldReturnNull)
 {
-    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not get mykey")));
-    auto result = resourceManager_.Get("mykey");
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not get 123")));
+    auto result = resourceManager_.Get(123);
     EXPECT_THAT(result, IsNull());
 }
 

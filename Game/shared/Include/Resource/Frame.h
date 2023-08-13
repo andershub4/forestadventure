@@ -16,17 +16,8 @@ namespace Shared {
 
 struct Frame
 {
-    Frame(const sf::Texture* texture, const sf::IntRect& rect)
-        : texture_(texture)
-        , rect_(rect)
-        , isValid_(true)
-    {}
-
-    Frame() = default;
-
-    const sf::Texture* texture_ = nullptr;
+    const sf::Texture *texture_ = nullptr;
     sf::IntRect rect_;
-    bool isValid_ = false;
 };
 
 }  // namespace Shared

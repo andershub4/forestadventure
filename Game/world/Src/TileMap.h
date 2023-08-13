@@ -15,6 +15,7 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "Resource/Graphic.h"
+#include "Resource/TextureManager.h"
 
 namespace FA {
 
@@ -51,7 +52,7 @@ public:
     };
 
 public:
-    TileMap(Shared::SheetManager &sheetManager);
+    TileMap(Shared::TextureManager &textureManager, Shared::SheetManager &sheetManager);
     ~TileMap();
     void Load(const std::string &fileName);
     void Setup();
@@ -60,6 +61,7 @@ public:
     sf::Vector2u GetSize() const;
 
 private:
+    Shared::TextureManager &textureManager_;
     Shared::SheetManager &sheetManager_;
     std::unique_ptr<Tile::TileMapData> tileMapData_ = nullptr;
     std::unique_ptr<Tile::TileMapParser> tileMapParser_ = nullptr;

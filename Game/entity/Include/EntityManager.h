@@ -12,6 +12,7 @@
 
 #include "Id.h"
 #include "LayerType.h"
+#include "Resource/TextureManager.h"
 #include "SfmlFwd.h"
 
 namespace FA {
@@ -36,8 +37,8 @@ struct PropertyData;
 class EntityManager
 {
 public:
-    EntityManager(Shared::MessageBus &messageBus, const Shared::SheetManager &sheetManager,
-                  const Shared::CameraManager &cameraManager);
+    EntityManager(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
+                  const Shared::SheetManager &sheetManager, const Shared::CameraManager &cameraManager);
     ~EntityManager();
 
     void Update(float deltaTime);

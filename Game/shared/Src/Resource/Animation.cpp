@@ -12,16 +12,13 @@ namespace FA {
 
 namespace Shared {
 
-Animation::Animation(const std::vector<Frame>& frames, unsigned int defaultIndex, float switchTime)
-    : frames_(frames)
-    , switchTime_(switchTime)
+Animation::Animation(unsigned int defaultIndex, float switchTime)
+    : switchTime_(switchTime)
     , time_(0.0)
     , defaultIndex_(defaultIndex)
     , iFrame_(defaultIndex)
     , isValid_(true)
-{
-    nFrames_ = frames.size();
-}
+{}
 
 void Animation::ApplyTo(sf::Sprite& sprite) const
 {
@@ -61,6 +58,12 @@ bool Animation::IsCompleted() const
 bool Animation::IsValid() const
 {
     return isValid_;
+}
+
+void Animation::AddFrame(const Frame& frame)
+{
+    frames_.push_back(frame);
+    nFrames_ = frames_.size();
 }
 
 }  // namespace Shared

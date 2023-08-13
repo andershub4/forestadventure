@@ -16,6 +16,7 @@
 #include "LevelCreator.h"
 #include "Logging.h"
 #include "MapData.h"
+#include "Resource/ResourceId.h"
 #include "Sheets.h"
 #include "TileMap.h"
 
@@ -24,11 +25,12 @@ namespace FA {
 namespace World {
 
 Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureManager, const sf::Vector2u &viewSize)
-    : sheetManager_(textureManager)
-    , tileMap_(std::make_unique<TileMap>(sheetManager_))
+    : textureManager_(textureManager)
+    , sheetManager_()
+    , tileMap_(std::make_unique<TileMap>(textureManager, sheetManager_))
     , viewSize_(viewSize)
-    , entityManager_(std::make_unique<Entity::EntityManager>(messageBus, sheetManager_, cameraManager_))
-    , levelCreator_(std::make_unique<LevelCreator>())
+    , entityManager_(std::make_unique<Entity::EntityManager>(messageBus, textureManager, sheetManager_, cameraManager_))
+    , levelCreator_(std::make_unique<LevelCreator>(textureManager, sheetManager_))
 {}
 
 Level::~Level() = default;
@@ -75,7 +77,10 @@ void Level::LoadEntitySheets()
 {
     auto sheetPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
     for (const auto &sheetData : textureSheets) {
-        sheetManager_.LoadSheet(sheetPath, sheetData);
+        auto path = sheetPath + sheetData.path_;
+        Shared::ResourceId id = textureManager_.Load(path);
+        sf::Vector2u textureSize = textureManager_.Get(id)->getSize();
+        sheetManager_.AddSheet(sheetData.name_, id, textureSize, sheetData.rectCount_);
     }
 }
 

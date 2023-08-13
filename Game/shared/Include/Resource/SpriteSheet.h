@@ -13,33 +13,34 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "SfmlFwd.h"
+#include "ResourceId.h"
+#include "TextureRect.h"
 
 namespace FA {
 
 namespace Shared {
 
-struct Frame;
-
 class SpriteSheet
 {
 public:
     SpriteSheet() = default;
-    SpriteSheet(const sf::Texture* texture, const sf::Vector2u& rectCount);
+    SpriteSheet(ResourceId textureId, const sf::Vector2u& textureSize, const sf::Vector2u& rectCount);
 
-    static std::vector<Frame> MirrorX(const std::vector<Frame>& frames);
+    static std::vector<TextureRect> MirrorX(const std::vector<TextureRect>& rects);
 
     bool IsValid() const { return isValid_; }
-    std::vector<Frame> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const;
-    Frame At(const sf::Vector2u& uvCoord) const;
+    std::vector<TextureRect> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const;
+    TextureRect At(const sf::Vector2u& uvCoord) const;
 
 private:
-    const sf::Texture* texture_ = nullptr;
+    ResourceId textureId_;
+    sf::Vector2u textureSize_;
     sf::Vector2u rectCount_;
     bool isValid_ = false;
 
 private:
     sf::Vector2u CalcRectSize() const;
-    std::vector<Frame> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const;
+    std::vector<TextureRect> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const;
 };
 
 }  // namespace Shared

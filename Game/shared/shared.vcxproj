@@ -144,6 +144,8 @@
     <ClInclude Include="Include\Camera.h" />
     <ClInclude Include="Include\CameraManager.h" />
     <ClInclude Include="Include\EffectFactory.h" />
+    <ClInclude Include="Include\Resource\ResourceId.h" />
+    <ClInclude Include="Include\Resource\TextureRect.h" />
     <ClInclude Include="Include\Screen.h" />
     <ClInclude Include="Include\BasicEffect.h" />
     <ClInclude Include="Src\Effect\FadeEffect.h" />

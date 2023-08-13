@@ -13,12 +13,13 @@
 #include <unordered_map>
 
 #include "Logging.h"
+#include "ResourceId.h"
 
 namespace FA {
 
 namespace Shared {
 
-template <class K, class R>
+template <class R>
 class ResourceManager
 {
 public:
@@ -26,33 +27,36 @@ public:
         : createFn_(createFn)
     {}
 
-    void Add(const K& key, const std::string& path)
+    ResourceId Load(const std::string& path)
     {
         auto resource = createFn_();
 
         if (resource->loadFromFile(path)) {
-            resources_.emplace(key, std::move(resource));
+            resources_.emplace(id_, std::move(resource));
+            return id_++;
         }
         else {
             LOG_ERROR("Could not load %s", path.c_str());
+            return InvalidTextureId;
         }
     }
 
-    const R* Get(const K& key) const
+    const R* Get(ResourceId id) const
     {
-        auto it = resources_.find(key);
+        auto it = resources_.find(id);
 
         if (it != resources_.end()) return it->second.get();
 
         std::ostringstream oss;
-        oss << "Could not get " << key;
+        oss << "Could not get " << id;
         LOG_ERROR("%s", oss.str().c_str());
 
         return nullptr;
     }
 
 private:
-    std::unordered_map<K, std::unique_ptr<R>> resources_;
+    ResourceId id_{0};
+    std::unordered_map<ResourceId, std::unique_ptr<R>> resources_;
     std::function<std::unique_ptr<R>()> createFn_;
 };
 
