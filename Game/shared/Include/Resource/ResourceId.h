@@ -11,7 +11,7 @@ namespace FA {
 namespace Shared {
 
 using ResourceId = int;
-const ResourceId InvalidTextureId = std::numeric_limits<int>::max();
+const ResourceId InvalidResourceId = std::numeric_limits<int>::max();
 
 }  // namespace Shared
 

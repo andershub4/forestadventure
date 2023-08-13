@@ -11,6 +11,7 @@
 #include <sstream>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "Logging.h"
 #include "ResourceId.h"
@@ -29,15 +30,22 @@ public:
 
     ResourceId Load(const std::string& path)
     {
+        auto it = paths_.find(path);
+        if (it != paths_.end()) {
+            LOG_WARN("%s is already loaded", path.c_str());
+            return paths_.at(path);
+        }
+
         auto resource = createFn_();
 
         if (resource->loadFromFile(path)) {
+            paths_[path] = id_;
             resources_.emplace(id_, std::move(resource));
             return id_++;
         }
         else {
             LOG_ERROR("Could not load %s", path.c_str());
-            return InvalidTextureId;
+            return InvalidResourceId;
         }
     }
 
@@ -58,6 +66,7 @@ private:
     ResourceId id_{0};
     std::unordered_map<ResourceId, std::unique_ptr<R>> resources_;
     std::function<std::unique_ptr<R>()> createFn_;
+    std::unordered_map<std::string, ResourceId> paths_;
 };
 
 }  // namespace Shared

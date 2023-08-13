@@ -46,7 +46,7 @@ protected:
     ResourceManager<SomeResourceMock> resourceManager_;
 };
 
-TEST_F(ResourceManagerTest, AddResourceShouldSucceed)
+TEST_F(ResourceManagerTest, LoadResourceShouldSucceed)
 {
     auto expectedPtr = resourceMock_.get();
     EXPECT_CALL(*resourceMock_, loadFromFileImpl).WillOnce(Return(true));
@@ -58,7 +58,21 @@ TEST_F(ResourceManagerTest, AddResourceShouldSucceed)
     EXPECT_EQ(result, expectedPtr);
 }
 
-TEST_F(ResourceManagerTest, AddResourceShouldFail)
+TEST_F(ResourceManagerTest, LoadDuplicatedResourceShouldWarn)
+{
+    EXPECT_CALL(*resourceMock_, loadFromFileImpl).WillOnce(Return(true));
+    EXPECT_CALL(createFn_, Call).WillOnce(Return(ByMove(std::move(resourceMock_))));
+
+    ResourceId expectedId = 0;
+    auto id1 = resourceManager_.Load(path_);
+    EXPECT_EQ(id1, expectedId);
+
+    EXPECT_CALL(loggerMock_, MakeWarnLogEntry(StrEq("C:/MyFolder/MyFile.jpg is already loaded")));
+    auto id2 = resourceManager_.Load(path_);
+    EXPECT_EQ(id2, expectedId);
+}
+
+TEST_F(ResourceManagerTest, LoadResourceShouldFail)
 {
     EXPECT_CALL(*resourceMock_, loadFromFileImpl).WillOnce(Return(false));
     EXPECT_CALL(createFn_, Call).WillOnce(Return(ByMove(std::move(resourceMock_))));
@@ -67,7 +81,7 @@ TEST_F(ResourceManagerTest, AddResourceShouldFail)
     auto id = resourceManager_.Load(path_);
     EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not get 0")));
     auto result = resourceManager_.Get(0);
-    EXPECT_THAT(id, InvalidTextureId);
+    EXPECT_THAT(id, InvalidResourceId);
     EXPECT_THAT(result, IsNull());
 }
 
