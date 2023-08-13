@@ -6,13 +6,10 @@
 
 #pragma once
 
-#include <string>
 #include <vector>
 
-#include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "SfmlFwd.h"
 #include "ResourceId.h"
 #include "TextureRect.h"
 

@@ -6,12 +6,10 @@
 
 #include "Resource/SheetManager.h"
 
-#include <sstream>
-
 #include "Logging.h"
 #include "Resource/AnimationData.h"
 #include "Resource/ImageData.h"
-#include "Resource/SheetData.h"
+#include "Resource/TextureRect.h"
 
 namespace FA {
 

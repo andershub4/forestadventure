@@ -9,16 +9,17 @@
 #include <string>
 #include <unordered_map>
 
+#include "Resource/ResourceId.h"
 #include "Resource/SpriteSheet.h"
-#include "Resource/TextureRect.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 
 namespace Shared {
 
-struct SheetData;
 struct AnimationData;
 struct ImageData;
+struct TextureRect;
 
 class SheetManager
 {
