@@ -36,6 +36,8 @@
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc" />
     <ClCompile Include="Src\LogMock.cpp" />
     <ClCompile Include="Src\ResourceManager_test.cpp" />
+    <ClCompile Include="Src\SpriteSheet_test.cpp" />
+    <ClCompile Include="Src\TextureRect_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\shared\shared.vcxproj">
