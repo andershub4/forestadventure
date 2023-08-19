@@ -10,6 +10,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "SfmlPrint.h"
+
 namespace FA {
 
 namespace Shared {
@@ -21,6 +23,17 @@ struct SheetData
     sf::Vector2u rectCount_;
 };
 
+inline bool operator==(const SheetData& lhs, const SheetData& rhs)
+{
+    return std::tie(lhs.name_, lhs.path_, lhs.rectCount_) == std::tie(rhs.name_, rhs.path_, rhs.rectCount_);
+}
+
+inline std::ostream& operator<<(std::ostream& os, const SheetData& p)
+{
+    os << OUT2("name", p.name_) << DELIM << OUT2("path", p.path_) << DELIM << OUT2("rectCount", p.rectCount_);
+
+    return os;
+}
 }  // namespace Shared
 
 }  // namespace FA

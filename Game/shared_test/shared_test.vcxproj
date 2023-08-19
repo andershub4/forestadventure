@@ -38,6 +38,7 @@
     <ClCompile Include="Src\ImageData_test.cpp" />
     <ClCompile Include="Src\LogMock.cpp" />
     <ClCompile Include="Src\ResourceManager_test.cpp" />
+    <ClCompile Include="Src\SheetData_test.cpp" />
     <ClCompile Include="Src\SpriteSheet_test.cpp" />
     <ClCompile Include="Src\TextureRect_test.cpp" />
   </ItemGroup>
