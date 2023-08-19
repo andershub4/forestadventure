@@ -113,6 +113,27 @@ TEST_F(SpriteSheetTest, ScanOutsideEntireSheetShouldReturnMaxAvailableRects)
     EXPECT_THAT(rects, SizeIs(10));
 }
 
+TEST_F(SpriteSheetTest, MirrorShouldSucceed)
+{
+    std::vector<TextureRect> input{TextureRect(1, {0, 0}, {10, 10}), TextureRect(2, {10, 10}, {10, 10}),
+                                   TextureRect(3, {20, 20}, {10, 10})};
+    std::vector<TextureRect> expected{TextureRect(1, {10, 0}, {-10, 10}), TextureRect(2, {20, 10}, {-10, 10}),
+                                      TextureRect(3, {30, 20}, {-10, 10})};
+
+    auto result = SpriteSheet::MirrorX(input);
+
+    EXPECT_THAT(result, Eq(expected));
+}
+
+TEST_F(SpriteSheetTest, MirrorZeroRects)
+{
+    std::vector<TextureRect> input;
+    std::vector<TextureRect> expected;
+    auto result = SpriteSheet::MirrorX(input);
+
+    EXPECT_THAT(result, IsEmpty());
+}
+
 }  // namespace Shared
 
 }  // namespace FA
