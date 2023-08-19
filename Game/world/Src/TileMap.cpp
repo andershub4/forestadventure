@@ -8,8 +8,8 @@
 
 #include "Logging.h"
 #include "Resource/ImageData.h"
-#include "Resource/SheetManager.h"
 #include "Resource/ResourceId.h"
+#include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
 #include "TileMapData.h"
 #include "TileMapParser.h"
@@ -143,7 +143,7 @@ Tile::TileData TileMap::LookupTileData(int id)
         return it->second.lookupTable_[id - firstGid];
     }
     else {
-        LOG_ERROR("Id %u not found", id);
+        LOG_ERROR("%s not found", DUMP(id));
         return {};
     }
 }

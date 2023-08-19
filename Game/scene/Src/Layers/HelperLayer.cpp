@@ -32,7 +32,7 @@ void HelperLayer::OnLoad()
 {
     std::string path = GetAssetsPath() + "/font/cello-sans/hinted-CelloSans-Medium.ttf";
     if (!font_.loadFromFile(path)) {
-        LOG_ERROR("Could not load %s", path.c_str());
+        LOG_ERROR("Could not load %s", DUMP(path));
     }
 }
 

@@ -36,7 +36,6 @@ private:
     bool isValid_ = false;
 
 private:
-    sf::Vector2u CalcRectSize() const;
     std::vector<TextureRect> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const;
 };
 

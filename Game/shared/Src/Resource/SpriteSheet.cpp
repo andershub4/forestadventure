@@ -46,40 +46,26 @@ std::vector<TextureRect> SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned
 
 TextureRect SpriteSheet::At(const sf::Vector2u& uvCoord) const
 {
-    if (!isValid_) {
-        LOG_WARN("Invalid sheet textureSize.x %u textureSize.y %u rectCount.x %u rectCount.y %u", textureSize_.x,
-                 textureSize_.y, rectCount_.x, rectCount_.y);
-        return {};
+    if (isValid_) {
+        sf::IntRect r(0, 0, rectCount_.x, rectCount_.y);
+        bool validCoord = r.contains(static_cast<sf::Vector2i>(uvCoord));
+        if (!validCoord) {
+            LOG_ERROR("%s is outside sheet boundary %s", DUMP(uvCoord), DUMP(rectCount_));
+            return {};
+        }
+
+        sf::Vector2u rectSize = {textureSize_.x / rectCount_.x, textureSize_.y / rectCount_.y};
+
+        if (rectSize.x > 0 && rectSize.y > 0) {
+            int left = static_cast<int>(uvCoord.x * rectSize.x);
+            int top = static_cast<int>(uvCoord.y * rectSize.y);
+            int width = static_cast<int>(rectSize.x);
+            int height = static_cast<int>(rectSize.y);
+            return TextureRect(textureId_, {left, top}, {width, height});
+        }
     }
 
-    sf::IntRect r(0, 0, rectCount_.x, rectCount_.y);
-    bool validCoord = r.contains(static_cast<sf::Vector2i>(uvCoord));
-    if (!validCoord) {
-        LOG_WARN("uvCoord.x %u uvCoord.y %u is outside sheet boundary rectCount.x %u rectCount.y %u", uvCoord.x,
-                 uvCoord.y, rectCount_.x, rectCount_.y);
-        return {};
-    }
-
-    auto rectSize = CalcRectSize();
-
-    if (rectSize.x > 0 && rectSize.y > 0) {
-        int left = static_cast<int>(uvCoord.x * rectSize.x);
-        int top = static_cast<int>(uvCoord.y * rectSize.y);
-        int width = static_cast<int>(rectSize.x);
-        int height = static_cast<int>(rectSize.y);
-        return TextureRect(textureId_, {left, top}, {width, height});
-    }
-
-    return {};
-}
-
-sf::Vector2u SpriteSheet::CalcRectSize() const
-{
-    if (rectCount_.x > 0 && rectCount_.y > 0)
-        return {textureSize_.x / rectCount_.x, textureSize_.y / rectCount_.y};
-    else
-        LOG_ERROR("Can't calculate rectSize due to rectCount.x %u, rectCount.y  %u", rectCount_.x, rectCount_.y);
-
+    LOG_ERROR("Invalid sheet %s %s", DUMP(textureSize_), DUMP(rectCount_));
     return {};
 }
 
@@ -93,10 +79,8 @@ std::vector<TextureRect> SpriteSheet::GenerateFrames(const sf::Vector2u& uvCoord
         unsigned int maxRange = rectCount_.x - uvCoord.x;
         if (nRects > maxRange) {
             n = maxRange;
-            LOG_WARN(
-                "Scan is outside sheet boundary rectCount.x %u rectCount.y %u with uvCoord.x %u uvCoord.y %u and "
-                "nRects %u",
-                rectCount_.x, rectCount_.y, uvCoord.x, uvCoord.y, nRects);
+            LOG_ERROR("Scan is outside sheet boundary %s with %s and %s", DUMP(rectCount_), DUMP(uvCoord),
+                      DUMP(nRects));
         }
         // build frames from left to right
         for (unsigned int i = 0; i < n; i++) {

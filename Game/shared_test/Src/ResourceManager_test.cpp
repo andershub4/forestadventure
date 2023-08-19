@@ -67,7 +67,7 @@ TEST_F(ResourceManagerTest, LoadDuplicatedResourceShouldWarn)
     auto id1 = resourceManager_.Load(path_);
     EXPECT_EQ(id1, expectedId);
 
-    EXPECT_CALL(loggerMock_, MakeWarnLogEntry(StrEq("C:/MyFolder/MyFile.jpg is already loaded")));
+    EXPECT_CALL(loggerMock_, MakeWarnLogEntry(ContainsRegex("C:/MyFolder/MyFile.jpg.*is already loaded")));
     auto id2 = resourceManager_.Load(path_);
     EXPECT_EQ(id2, expectedId);
 }
@@ -76,10 +76,10 @@ TEST_F(ResourceManagerTest, LoadResourceShouldFail)
 {
     EXPECT_CALL(*resourceMock_, loadFromFileImpl).WillOnce(Return(false));
     EXPECT_CALL(createFn_, Call).WillOnce(Return(ByMove(std::move(resourceMock_))));
-    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not load C:/MyFolder/MyFile.jpg")));
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("Could not load.*C:/MyFolder/MyFile.jpg")));
 
     auto id = resourceManager_.Load(path_);
-    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not get 0")));
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("Could not get.*0")));
     auto result = resourceManager_.Get(0);
     EXPECT_THAT(id, InvalidResourceId);
     EXPECT_THAT(result, IsNull());
@@ -87,7 +87,7 @@ TEST_F(ResourceManagerTest, LoadResourceShouldFail)
 
 TEST_F(ResourceManagerTest, GetResourceShouldReturnNull)
 {
-    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(StrEq("Could not get 123")));
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("Could not get.*123")));
     auto result = resourceManager_.Get(123);
     EXPECT_THAT(result, IsNull());
 }

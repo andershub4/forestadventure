@@ -9,6 +9,7 @@
 #include <cstdarg>
 #include <string>
 
+#include "Print.h"
 #include "Format.h"
 
 namespace FA {

@@ -6,6 +6,7 @@
 
 #include <map>
 #include <ostream>
+#include <sstream>
 #include <unordered_map>
 #include <vector>
 
@@ -64,3 +65,26 @@ inline std::ostream& operator<<(std::ostream& os, const std::unordered_map<K, V>
 }
 
 }  // namespace FA
+
+#define DETAIL_FORMAT(name, arg) "{" << name << ": " << arg << "}"
+
+#define OUT(arg) DETAIL_FORMAT(#arg, arg);
+#define OUT2(name, arg) DETAIL_FORMAT(name, arg)
+
+#define DUMP(arg)              \
+    [&]() {                    \
+        std::ostringstream os; \
+        os << OUT(arg);        \
+        return os.str();       \
+    }()                        \
+        .c_str()
+
+#define DUMP2(name, arg)       \
+    [&]() {                    \
+        std::ostringstream os; \
+        os << OUT2(name, arg); \
+        return os.str();       \
+    }()                        \
+        .c_str()
+
+#define DELIM ", "

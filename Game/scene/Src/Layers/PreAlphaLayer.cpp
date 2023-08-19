@@ -27,7 +27,7 @@ void PreAlphaLayer::OnLoad()
 {
     std::string path = GetAssetsPath() + "/font/intuitive/intuitive.ttf";
     if (!font_.loadFromFile(path)) {
-        LOG_ERROR("Could not load %s", path.c_str());
+        LOG_ERROR("Could not load %s", DUMP(path));
     }
 }
 

@@ -103,7 +103,7 @@ private:
         else {
             std::stringstream ss;
             ss << key;
-            LOG_ERROR("Could not find key: %s", ss.str().c_str());
+            LOG_ERROR("Could not find %s", DUMP(key));
         }
 
         return {};

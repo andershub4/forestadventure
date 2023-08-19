@@ -49,9 +49,7 @@ TEST_F(SpriteSheetTest, AtInsideSheetShouldReturnValidRect)
 TEST_F(SpriteSheetTest, AtOutsideSheetShouldReturnInvalidRect)
 {
     SpriteSheet s(111, {100, 100}, {10, 10});
-    EXPECT_CALL(
-        loggerMock_,
-        MakeWarnLogEntry(StrEq("uvCoord.x 20 uvCoord.y 20 is outside sheet boundary rectCount.x 10 rectCount.y 10")));
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("uvCoord.*20.*20.*is outside.*rectCount.*10.*10")));
     auto rect = s.At({20, 20});
     TextureRect expected{};
     EXPECT_FALSE(rect.isValid_);
@@ -72,9 +70,7 @@ TEST_F(SpriteSheetTest, ScanThreeRectsShouldReturnThreeRects)
 TEST_F(SpriteSheetTest, ScanOneRectOutsideSheetShouldReturnZeroRects)
 {
     SpriteSheet s(111, {100, 100}, {10, 10});
-    EXPECT_CALL(
-        loggerMock_,
-        MakeWarnLogEntry(StrEq("uvCoord.x 11 uvCoord.y 11 is outside sheet boundary rectCount.x 10 rectCount.y 10")));
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("uvCoord.*11.*11.*is outside.*rectCount.*10.*10")));
     auto rects = s.Scan({11, 11}, 1);
     EXPECT_THAT(rects, SizeIs(0));
 }
@@ -82,8 +78,7 @@ TEST_F(SpriteSheetTest, ScanOneRectOutsideSheetShouldReturnZeroRects)
 TEST_F(SpriteSheetTest, AtShouldReturnInvalidRectWhenInvalidSheet)
 {
     SpriteSheet s(111, {0, 0}, {10, 10});
-    EXPECT_CALL(loggerMock_,
-                MakeWarnLogEntry(StrEq("Invalid sheet textureSize.x 0 textureSize.y 0 rectCount.x 10 rectCount.y 10")));
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("Invalid sheet.*textureSize.*0.*0.*rectCount.*10.*10")));
     auto rect = s.At({2, 1});
     TextureRect expected{};
     EXPECT_FALSE(rect.isValid_);
@@ -93,6 +88,8 @@ TEST_F(SpriteSheetTest, AtShouldReturnInvalidRectWhenInvalidSheet)
 TEST_F(SpriteSheetTest, AtShouldReturnInvalidRectWhenRectsSizeIsInvalid)
 {
     SpriteSheet s(111, {10, 10}, {100, 100});
+    EXPECT_CALL(loggerMock_,
+                MakeErrorLogEntry(ContainsRegex("Invalid sheet.*textureSize.*10.*10.*rectCount.*100.*100")));
     auto rect = s.At({2, 1});
     TextureRect expected{};
     EXPECT_FALSE(rect.isValid_);
@@ -109,8 +106,9 @@ TEST_F(SpriteSheetTest, ScanEntireSheetShouldReturnMaxAvailableRects)
 TEST_F(SpriteSheetTest, ScanOutsideEntireSheetShouldReturnMaxAvailableRects)
 {
     SpriteSheet s(111, {100, 100}, {10, 10});
-    EXPECT_CALL(loggerMock_, MakeWarnLogEntry(StrEq("Scan is outside sheet boundary rectCount.x 10 rectCount.y 10 with "
-                                                    "uvCoord.x 0 uvCoord.y 0 and nRects 11")));
+
+    EXPECT_CALL(loggerMock_,
+                MakeErrorLogEntry(ContainsRegex("Scan is outside.*rectCount.*10.*10.*uvCoord.*0.*0.*nRects.*11")));
     auto rects = s.Scan({0, 0}, 11);
     EXPECT_THAT(rects, SizeIs(10));
 }

@@ -8,7 +8,6 @@
 
 #include <functional>
 #include <memory>
-#include <sstream>
 #include <string>
 #include <unordered_map>
 
@@ -31,7 +30,7 @@ public:
     {
         auto it = paths_.find(path);
         if (it != paths_.end()) {
-            LOG_WARN("%s is already loaded", path.c_str());
+            LOG_WARN("%s is already loaded", DUMP(path));
             return paths_.at(path);
         }
 
@@ -43,7 +42,7 @@ public:
             return id_++;
         }
         else {
-            LOG_ERROR("Could not load %s", path.c_str());
+            LOG_ERROR("Could not load %s", DUMP(path));
             return InvalidResourceId;
         }
     }
@@ -54,9 +53,7 @@ public:
 
         if (it != resources_.end()) return it->second.get();
 
-        std::ostringstream oss;
-        oss << "Could not get " << id;
-        LOG_ERROR("%s", oss.str().c_str());
+        LOG_ERROR("Could not get %s", DUMP(id));
 
         return nullptr;
     }

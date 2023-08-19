@@ -52,7 +52,7 @@ std::unique_ptr<BasicEntity> Factory::Create(const PropertyData& data, const Sha
         return it->second(id_++, data, mapData, service);
     }
 
-    LOG_ERROR("Could not create entity of type: %s", data.typeStr_.c_str());
+    LOG_ERROR("Could not create entity of %s", DUMP2("type", data.typeStr_));
     return nullptr;
 }
 

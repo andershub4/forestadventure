@@ -148,6 +148,7 @@
     <ClInclude Include="Include\Resource\TextureRect.h" />
     <ClInclude Include="Include\Screen.h" />
     <ClInclude Include="Include\BasicEffect.h" />
+    <ClInclude Include="Include\SfmlPrint.h" />
     <ClInclude Include="Src\Effect\FadeEffect.h" />
     <ClInclude Include="Src\Effect\NullEffect.h" />
     <ClInclude Include="Include\SfmlFwd.h" />

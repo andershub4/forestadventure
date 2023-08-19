@@ -77,7 +77,7 @@ void EntityManager::CreateTileEntity(const sf::Vector2f& pos, const Shared::Grap
 void EntityManager::DeleteEntity(EntityId id)
 {
     if (std::find(deletedEntities_.begin(), deletedEntities_.end(), id) != deletedEntities_.end()) {
-        LOG_WARN("id: %u is already ready to be deleted", id);
+        LOG_WARN("%s is already ready to be deleted", DUMP(id));
     }
     deletedEntities_.push_back(id);
 }
@@ -109,7 +109,7 @@ void EntityManager::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)
         entityMap_[id] = std::move(entity);
     }
     else {
-        LOG_ERROR("id: %u already exist", id);
+        LOG_ERROR("%s already exist", DUMP(id));
     }
 }
 
