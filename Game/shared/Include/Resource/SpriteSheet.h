@@ -34,6 +34,7 @@ private:
     sf::Vector2u textureSize_;
     sf::Vector2u rectCount_;
     bool isValid_ = false;
+    sf::Vector2u rectSize_;
 
 private:
     std::vector<TextureRect> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const;

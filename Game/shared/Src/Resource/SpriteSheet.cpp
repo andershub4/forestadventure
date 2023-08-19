@@ -23,6 +23,10 @@ SpriteSheet::SpriteSheet(ResourceId textureId, const sf::Vector2u& textureSize, 
     if (rectCount_.x == 0 || rectCount_.y == 0 || textureSize_.x == 0 || textureSize_.y == 0) {
         isValid_ = false;
     }
+    else {
+        rectSize_ = {textureSize_.x / rectCount_.x, textureSize_.y / rectCount_.y};
+        isValid_ = rectSize_.x > 0 && rectSize_.y > 0;
+    }
 }
 
 std::vector<TextureRect> SpriteSheet::MirrorX(const std::vector<TextureRect>& rects)
@@ -54,15 +58,11 @@ TextureRect SpriteSheet::At(const sf::Vector2u& uvCoord) const
             return {};
         }
 
-        sf::Vector2u rectSize = {textureSize_.x / rectCount_.x, textureSize_.y / rectCount_.y};
-
-        if (rectSize.x > 0 && rectSize.y > 0) {
-            int left = static_cast<int>(uvCoord.x * rectSize.x);
-            int top = static_cast<int>(uvCoord.y * rectSize.y);
-            int width = static_cast<int>(rectSize.x);
-            int height = static_cast<int>(rectSize.y);
-            return TextureRect(textureId_, {left, top}, {width, height});
-        }
+        int left = static_cast<int>(uvCoord.x * rectSize_.x);
+        int top = static_cast<int>(uvCoord.y * rectSize_.y);
+        int width = static_cast<int>(rectSize_.x);
+        int height = static_cast<int>(rectSize_.y);
+        return TextureRect(textureId_, {left, top}, {width, height});
     }
 
     LOG_ERROR("Invalid sheet %s %s", DUMP(textureSize_), DUMP(rectCount_));
