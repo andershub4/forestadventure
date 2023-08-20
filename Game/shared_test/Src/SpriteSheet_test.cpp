@@ -25,18 +25,6 @@ protected:
     StrictMock<LoggerMock> loggerMock_;
 };
 
-TEST_F(SpriteSheetTest, DefaultConstructorGivesInvalidSheet)
-{
-    SpriteSheet s;
-    EXPECT_FALSE(s.IsValid());
-}
-
-TEST_F(SpriteSheetTest, ConstructorGivesValidSheet)
-{
-    SpriteSheet s(111, {100, 100}, {10, 10});
-    EXPECT_TRUE(s.IsValid());
-}
-
 TEST_F(SpriteSheetTest, AtInsideSheetShouldReturnValidRect)
 {
     SpriteSheet s(111, {100, 100}, {10, 10});
@@ -75,7 +63,17 @@ TEST_F(SpriteSheetTest, ScanOneRectOutsideSheetShouldReturnZeroRects)
     EXPECT_THAT(rects, SizeIs(0));
 }
 
-TEST_F(SpriteSheetTest, AtShouldReturnInvalidRectWhenInvalidSheet)
+TEST_F(SpriteSheetTest, AtInsideEmptySheetShouldReturnInvalidRect)
+{
+    SpriteSheet s;
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("Invalid sheet.*textureSize.*0.*0.*rectCount.*0.*0")));
+    auto rect = s.At({0, 0});
+    TextureRect expected{};
+    EXPECT_FALSE(rect.isValid_);
+    EXPECT_THAT(rect, expected);
+}
+
+TEST_F(SpriteSheetTest, AtInsideInvalidSheetShouldReturnInvalidRect)
 {
     SpriteSheet s(111, {0, 0}, {10, 10});
     EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("Invalid sheet.*textureSize.*0.*0.*rectCount.*10.*10")));
@@ -85,7 +83,7 @@ TEST_F(SpriteSheetTest, AtShouldReturnInvalidRectWhenInvalidSheet)
     EXPECT_THAT(rect, Eq(expected));
 }
 
-TEST_F(SpriteSheetTest, AtShouldReturnInvalidRectWhenRectsSizeIsInvalid)
+TEST_F(SpriteSheetTest, AtInsideInvalidSheetShouldReturnInvalidRect2)
 {
     SpriteSheet s(111, {10, 10}, {100, 100});
     EXPECT_CALL(loggerMock_,
