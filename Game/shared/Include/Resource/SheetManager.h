@@ -35,6 +35,7 @@ private:
     SpriteSheet GetSheet(const std::string &name) const;
     TextureRect CreateRect(const SpriteSheet &sheet, const sf::Vector2u position) const;
     std::vector<TextureRect> CreateRects(const SpriteSheet &sheet, const sf::Vector2u start, unsigned int nRects) const;
+    std::vector<TextureRect> MirrorX(const std::vector<TextureRect> &rects) const;
 };
 
 }  // namespace Shared

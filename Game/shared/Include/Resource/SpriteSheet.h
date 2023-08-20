@@ -23,8 +23,6 @@ public:
     SpriteSheet() = default;
     SpriteSheet(ResourceId textureId, const sf::Vector2u& textureSize, const sf::Vector2u& rectCount);
 
-    static std::vector<TextureRect> MirrorX(const std::vector<TextureRect>& rects);
-
     bool IsValid() const { return isValid_; }
     std::vector<TextureRect> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const;
     TextureRect At(const sf::Vector2u& uvCoord) const;

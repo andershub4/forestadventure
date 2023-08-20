@@ -26,7 +26,7 @@ std::vector<TextureRect> SheetManager::MakeRects(const AnimationData& data) cons
     auto sheet = GetSheet(data.sheetId_);
     auto rects = CreateRects(sheet, location.start_, location.nRects_);
 
-    return data.mirror_ ? SpriteSheet::MirrorX(rects) : rects;
+    return data.mirror_ ? MirrorX(rects) : rects;
 }
 
 TextureRect SheetManager::MakeRect(const ImageData& data) const
@@ -71,6 +71,20 @@ SpriteSheet SheetManager::GetSheet(const std::string& name) const
         LOG_ERROR("%s not found", DUMP(name));
         return SpriteSheet();
     }
+}
+
+std::vector<TextureRect> SheetManager::MirrorX(const std::vector<TextureRect>& rects) const
+{
+    std::vector<TextureRect> mirrorRects;
+
+    for (const auto& rect : rects) {
+        TextureRect r = rect;
+        r.position_.x = r.position_.x + r.size_.x;
+        r.size_.x = -rect.size_.x;
+        mirrorRects.push_back(r);
+    }
+
+    return mirrorRects;
 }
 
 }  // namespace Shared

@@ -29,20 +29,6 @@ SpriteSheet::SpriteSheet(ResourceId textureId, const sf::Vector2u& textureSize, 
     }
 }
 
-std::vector<TextureRect> SpriteSheet::MirrorX(const std::vector<TextureRect>& rects)
-{
-    std::vector<TextureRect> mirrorRects;
-
-    for (const auto& rect : rects) {
-        TextureRect r = rect;
-        r.position_.x = r.position_.x + r.size_.x;
-        r.size_.x = -rect.size_.x;
-        mirrorRects.push_back(r);
-    }
-
-    return mirrorRects;
-}
-
 std::vector<TextureRect> SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const
 {
     return GenerateFrames(uvCoord, nRects);
