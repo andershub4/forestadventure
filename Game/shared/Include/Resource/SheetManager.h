@@ -24,8 +24,7 @@ struct TextureRect;
 class SheetManager
 {
 public:
-    void AddSheet(const std::string &name, ResourceId textureId, const sf::Vector2u &textureSize,
-                  const sf::Vector2u &rectCount);
+    void AddSheet(const std::string &name, const SpriteSheet &sheet);
     std::vector<TextureRect> MakeRects(const AnimationData &data) const;
     TextureRect MakeRect(const ImageData &data) const;
 

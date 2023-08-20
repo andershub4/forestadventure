@@ -47,7 +47,8 @@ void TileMap::LoadTileSets()
         for (const auto& image : images) {
             Shared::ResourceId id = textureManager_.Load(image.path_);
             auto size = textureManager_.Get(id)->getSize();
-            sheetManager_.AddSheet(image.path_, id, size, sf::Vector2u(image.nCols_, image.nRows_));
+            sheetManager_.AddSheet(image.path_,
+                                   Shared::SpriteSheet(id, size, sf::Vector2u(image.nCols_, image.nRows_)));
         }
     }
 }

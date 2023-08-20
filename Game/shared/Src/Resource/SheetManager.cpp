@@ -15,11 +15,9 @@ namespace FA {
 
 namespace Shared {
 
-void SheetManager::AddSheet(const std::string& name, ResourceId textureId, const sf::Vector2u& textureSize,
-                            const sf::Vector2u& rectCount)
+void SheetManager::AddSheet(const std::string& name, const SpriteSheet& sheet)
 {
-    SpriteSheet s(textureId, textureSize, rectCount);
-    sheetMap_.insert({name, s});
+    sheetMap_.insert({name, sheet});
 }
 
 std::vector<TextureRect> SheetManager::MakeRects(const AnimationData& data) const
