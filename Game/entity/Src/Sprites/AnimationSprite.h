@@ -7,7 +7,6 @@
 #pragma once
 
 #include <functional>
-#include <sstream>
 #include <string>
 #include <unordered_map>
 
@@ -101,8 +100,6 @@ private:
             return map_.at(key);
         }
         else {
-            std::stringstream ss;
-            ss << key;
             LOG_ERROR("Could not find %s", DUMP(key));
         }
 
