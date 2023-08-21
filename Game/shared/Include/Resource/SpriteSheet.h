@@ -11,20 +11,21 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "ResourceId.h"
+#include "SpriteSheetIf.h"
 #include "TextureRect.h"
 
 namespace FA {
 
 namespace Shared {
 
-class SpriteSheet
+class SpriteSheet : public SpriteSheetIf
 {
 public:
     SpriteSheet() = default;
     SpriteSheet(ResourceId textureId, const sf::Vector2u& textureSize, const sf::Vector2u& rectCount);
 
-    std::vector<TextureRect> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const;
-    TextureRect At(const sf::Vector2u& uvCoord) const;
+    virtual std::vector<TextureRect> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const override;
+    virtual TextureRect At(const sf::Vector2u& uvCoord) const override;
 
 private:
     ResourceId textureId_;

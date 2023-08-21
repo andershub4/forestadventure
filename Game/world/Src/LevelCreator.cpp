@@ -12,6 +12,7 @@
 
 #include "Resource/Image.h"
 #include "Resource/SheetManager.h"
+#include "Resource/TextureRect.h"
 
 namespace FA {
 

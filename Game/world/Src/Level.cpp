@@ -17,6 +17,7 @@
 #include "Logging.h"
 #include "MapData.h"
 #include "Resource/ResourceId.h"
+#include "Resource/SpriteSheet.h"
 #include "Sheets.h"
 #include "TileMap.h"
 
@@ -80,7 +81,8 @@ void Level::LoadEntitySheets()
         auto path = sheetPath + sheetData.path_;
         Shared::ResourceId id = textureManager_.Load(path);
         sf::Vector2u textureSize = textureManager_.Get(id)->getSize();
-        sheetManager_.AddSheet(sheetData.name_, Shared::SpriteSheet(id, textureSize, sheetData.rectCount_));
+        auto sheet = std::make_unique<Shared::SpriteSheet>(id, textureSize, sheetData.rectCount_);
+        sheetManager_.AddSheet(sheetData.name_, std::move(sheet));
     }
 }
 

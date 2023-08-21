@@ -1,0 +1,31 @@
+/*
+ *	Copyright (C) 2023 Anders Wennmo
+ *	This file is part of forestadventure which is released under MIT license.
+ *	See file LICENSE for full license details.
+ */
+
+#pragma once
+
+#include <vector>
+
+#include "SfmlFwd.h"
+
+#include "ResourceId.h"
+
+namespace FA {
+
+namespace Shared {
+
+struct TextureRect;
+
+class SpriteSheetIf
+{
+public:
+    virtual ~SpriteSheetIf() = default;
+    virtual std::vector<TextureRect> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const = 0;
+    virtual TextureRect At(const sf::Vector2u& uvCoord) const = 0;
+};
+
+}  // namespace Shared
+
+}  // namespace FA

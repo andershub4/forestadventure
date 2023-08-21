@@ -10,6 +10,7 @@
 #include "Resource/ImageData.h"
 #include "Resource/ResourceId.h"
 #include "Resource/SheetManager.h"
+#include "Resource/SpriteSheet.h"
 #include "Resource/TextureManager.h"
 #include "TileMapData.h"
 #include "TileMapParser.h"
@@ -47,8 +48,8 @@ void TileMap::LoadTileSets()
         for (const auto& image : images) {
             Shared::ResourceId id = textureManager_.Load(image.path_);
             auto size = textureManager_.Get(id)->getSize();
-            sheetManager_.AddSheet(image.path_,
-                                   Shared::SpriteSheet(id, size, sf::Vector2u(image.nCols_, image.nRows_)));
+            auto sheet = std::make_unique<Shared::SpriteSheet>(id, size, sf::Vector2u(image.nCols_, image.nRows_));
+            sheetManager_.AddSheet(image.path_, std::move(sheet));
         }
     }
 }

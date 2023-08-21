@@ -9,44 +9,51 @@
 #include "Logging.h"
 #include "Resource/AnimationData.h"
 #include "Resource/ImageData.h"
+#include "Resource/SpriteSheet.h"
 #include "Resource/TextureRect.h"
 
 namespace FA {
 
 namespace Shared {
 
-void SheetManager::AddSheet(const std::string& name, const SpriteSheet& sheet)
+void SheetManager::AddSheet(const std::string& name, std::unique_ptr<SpriteSheetIf> sheet)
 {
-    sheetMap_.insert({name, sheet});
+    sheetMap_.insert({name, std::move(sheet)});
 }
 
 std::vector<TextureRect> SheetManager::MakeRects(const AnimationData& data) const
 {
     auto location = data.locationData_;
     auto sheet = GetSheet(data.sheetId_);
-    auto rects = sheet.Scan(location.start_, location.nRects_);
+    if (sheet != nullptr) {
+        auto rects = sheet->Scan(location.start_, location.nRects_);
+        return data.mirror_ ? MirrorX(rects) : rects;
+    }
 
-    return data.mirror_ ? MirrorX(rects) : rects;
+    return {};
 }
 
 TextureRect SheetManager::MakeRect(const ImageData& data) const
 {
     auto sheet = GetSheet(data.sheetId_);
-    auto rect = sheet.At(data.position_);
+    if (sheet != nullptr) {
+        auto rect = sheet->At(data.position_);
+        return rect;
+    }
 
-    return rect;
+    return {};
 }
 
-SpriteSheet SheetManager::GetSheet(const std::string& name) const
+SpriteSheetIf* SheetManager::GetSheet(const std::string& name) const
 {
     auto it = sheetMap_.find(name);
 
     if (it != sheetMap_.end()) {
-        return sheetMap_.at(name);
+        return sheetMap_.at(name).get();
     }
     else {
         LOG_ERROR("%s not found", DUMP(name));
-        return SpriteSheet();
+        return nullptr;
     }
 }
 

@@ -17,6 +17,7 @@
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
+#include "Resource/TextureRect.h"
 
 namespace FA {
 
