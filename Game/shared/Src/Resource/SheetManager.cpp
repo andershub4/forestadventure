@@ -44,15 +44,15 @@ TextureRect SheetManager::MakeRect(const ImageData& data) const
     return {};
 }
 
-SpriteSheetIf* SheetManager::GetSheet(const std::string& name) const
+SpriteSheetIf* SheetManager::GetSheet(const std::string& sheetId) const
 {
-    auto it = sheetMap_.find(name);
+    auto it = sheetMap_.find(sheetId);
 
     if (it != sheetMap_.end()) {
-        return sheetMap_.at(name).get();
+        return sheetMap_.at(sheetId).get();
     }
     else {
-        LOG_ERROR("%s not found", DUMP(name));
+        LOG_ERROR("%s not found", DUMP(sheetId));
         return nullptr;
     }
 }

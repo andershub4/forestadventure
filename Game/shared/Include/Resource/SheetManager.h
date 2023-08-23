@@ -10,6 +10,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "SpriteSheetIf.h"
+
 namespace FA {
 
 namespace Shared {
@@ -17,7 +19,6 @@ namespace Shared {
 struct AnimationData;
 struct ImageData;
 struct TextureRect;
-class SpriteSheetIf;
 
 class SheetManager
 {
@@ -30,7 +31,7 @@ private:
     std::unordered_map<std::string, std::unique_ptr<SpriteSheetIf>> sheetMap_;
 
 private:
-    SpriteSheetIf *GetSheet(const std::string &name) const;
+    SpriteSheetIf *GetSheet(const std::string &sheetId) const;
     std::vector<TextureRect> MirrorX(const std::vector<TextureRect> &rects) const;
 };
 

@@ -39,6 +39,7 @@
     <ClCompile Include="Src\LogMock.cpp" />
     <ClCompile Include="Src\ResourceManager_test.cpp" />
     <ClCompile Include="Src\SheetData_test.cpp" />
+    <ClCompile Include="Src\SheetManager_test.cpp" />
     <ClCompile Include="Src\SpriteSheet_test.cpp" />
     <ClCompile Include="Src\TextureRect_test.cpp" />
   </ItemGroup>
@@ -52,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Mock\LogMock.h" />
+    <ClInclude Include="Src\Mock\SpriteSheetMock.h" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

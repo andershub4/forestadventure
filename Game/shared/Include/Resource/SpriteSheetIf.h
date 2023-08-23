@@ -11,12 +11,11 @@
 #include "SfmlFwd.h"
 
 #include "ResourceId.h"
+#include "TextureRect.h"
 
 namespace FA {
 
 namespace Shared {
-
-struct TextureRect;
 
 class SpriteSheetIf
 {
