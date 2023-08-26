@@ -68,12 +68,10 @@ private:
 private:
     Shared::Image GetImage(const KeyT &key)
     {
-        if (map_.find(defaultKey_) != map_.end()) {
-            return map_.at(defaultKey_);
+        if (map_.find(key) != map_.end()) {
+            return map_.at(key);
         }
         else {
-            std::stringstream ss;
-            ss << defaultKey_;
             LOG_ERROR("Could not find %s", DUMP(key));
         }
 
