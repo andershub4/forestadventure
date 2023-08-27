@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include "Frame.h"
 #include "SfmlFwd.h"
 
@@ -16,14 +18,18 @@ namespace Shared {
 class Image
 {
 public:
+    Image(std::shared_ptr<sf::Sprite> sprite, const Frame &frame);
     Image() = default;
-    Image(const Frame& frame);
 
     void Update(float deltaTime);
-    void ApplyTo(sf::Sprite& sprite) const;
+    void SetPosition(const sf::Vector2f &position);
+    void SetRotation(float rot);
+    void DrawTo(sf::RenderTarget &renderTarget);
+    void Center();
     bool IsValid() const;
 
 private:
+    std::shared_ptr<sf::Sprite> sprite_;
     Frame frame_;
     bool isValid_ = false;
 };

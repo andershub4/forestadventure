@@ -6,25 +6,21 @@
 
 #include "Resource/Animation.h"
 
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
 namespace FA {
 
 namespace Shared {
 
-Animation::Animation(unsigned int defaultIndex, float switchTime)
-    : switchTime_(switchTime)
+Animation::Animation(std::shared_ptr<sf::Sprite> sprite, unsigned int defaultIndex, float switchTime)
+    : sprite_(sprite)
+    , switchTime_(switchTime)
     , time_(0.0)
     , defaultIndex_(defaultIndex)
     , iFrame_(defaultIndex)
     , isValid_(true)
 {}
-
-void Animation::ApplyTo(sf::Sprite& sprite) const
-{
-    sprite.setTexture(*frames_[iFrame_].texture_);
-    sprite.setTextureRect(frames_[iFrame_].rect_);
-}
 
 void Animation::Update(float deltaTime)
 {
@@ -37,6 +33,28 @@ void Animation::Update(float deltaTime)
             isCompleted_ = (iFrame_ == 0);
         }
     }
+    sprite_->setTexture(*frames_[iFrame_].texture_);
+    sprite_->setTextureRect(frames_[iFrame_].rect_);
+}
+
+void Animation::SetPosition(const sf::Vector2f& position)
+{
+    sprite_->setPosition(position);
+}
+
+void Animation::SetRotation(float rot)
+{
+    sprite_->setRotation(rot);
+}
+
+void Animation::DrawTo(sf::RenderTarget& renderTarget)
+{
+    renderTarget.draw(*sprite_);
+}
+
+void Animation::Center()
+{
+    sprite_->setOrigin(sprite_->getLocalBounds().width / 2, sprite_->getLocalBounds().height / 2);
 }
 
 void Animation::Start()

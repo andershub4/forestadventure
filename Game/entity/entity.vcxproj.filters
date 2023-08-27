@@ -164,9 +164,6 @@
     <ClCompile Include="Src\Entities\TileEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Sprites\BasicSprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\EntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

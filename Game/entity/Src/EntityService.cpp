@@ -4,6 +4,8 @@
  *	See file LICENSE for full license details.
  */
 
+#include <SFML/Graphics/Sprite.hpp>
+
 #include "EntityService.h"
 
 #include "Camera.h"
@@ -38,7 +40,8 @@ EntityService::~EntityService() = default;
 Shared::Animation EntityService::MakeAnimation(const Shared::AnimationData& data) const
 {
     float t = Constant::stdSwitchTime;
-    Shared::Animation animation(data.locationData_.defaultIndex_, t);
+    auto sprite = std::make_shared<sf::Sprite>();
+    Shared::Animation animation(sprite, data.locationData_.defaultIndex_, t);
     auto rects = sheetManager_.MakeRects(data);
 
     for (const auto& rect : rects) {
@@ -53,8 +56,9 @@ Shared::Image EntityService::MakeImage(const Shared::ImageData& data) const
 {
     auto rect = sheetManager_.MakeRect(data);
     const auto* texture = textureManager_.Get(rect.id_);
+    auto sprite = std::make_shared<sf::Sprite>();
 
-    return Shared::Image({texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
+    return Shared::Image(sprite, {texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
 }
 
 Shared::TextureRect EntityService::MakeRect(const Shared::ImageData& data) const

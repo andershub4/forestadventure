@@ -35,11 +35,16 @@ public:
     {
         if (currentImage_.IsValid()) {
             currentImage_.Update(deltaTime);
-            currentImage_.ApplyTo(sprite_);
-            sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
+            if (true) {
+                currentImage_.Center();
+            }
             updateCB_(currentImage_);
         }
     }
+
+    virtual void SetPosition(const sf::Vector2f &position) override { currentImage_.SetPosition(position); }
+    virtual void SetRotation(float rot) override { currentImage_.SetRotation(rot); }
+    virtual void DrawTo(sf::RenderTarget &renderTarget) override { currentImage_.DrawTo(renderTarget); }
 
     void RegisterImage(const KeyT key, const Shared::Image &image) { map_[key] = image; }
     void RegisterUpdateCB(std::function<void(const Shared::Image &)> updateCB) { updateCB_ = updateCB; }

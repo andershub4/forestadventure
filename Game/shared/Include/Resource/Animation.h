@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <memory>
 #include <vector>
 
 #include "Frame.h"
@@ -19,17 +20,21 @@ class Animation
 {
 public:
     Animation() = default;
-    Animation(unsigned int defaultFrame, float switchTime);
+    Animation(std::shared_ptr<sf::Sprite> sprite, unsigned int defaultFrame, float switchTime);
 
     void Update(float deltaTime);  // delta time; time since previous time to current frame
-    void ApplyTo(sf::Sprite& sprite) const;
+    void SetPosition(const sf::Vector2f &position);
+    void SetRotation(float rot);
+    void DrawTo(sf::RenderTarget &renderTarget);
+    void Center();
     void Start();
     void Stop();
     bool IsCompleted() const;
     bool IsValid() const;
-    void AddFrame(const Frame& frame);
+    void AddFrame(const Frame &frame);
 
 private:
+    std::shared_ptr<sf::Sprite> sprite_;
     bool isStopped_ = true;
     float time_{};        // time since we last switched frame
     float switchTime_{};  // time before to switch to next frame

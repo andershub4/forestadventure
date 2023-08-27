@@ -10,7 +10,6 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "Resource/Image.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureRect.h"
 
@@ -55,12 +54,12 @@ std::vector<sf::Sprite> LevelCreator::CreateFringe(const std::vector<TileMap::Ti
 sf::Sprite LevelCreator::CreateSprite(const TileMap::TileData &data) const
 {
     auto imageData = data.graphic_.image_;
-    auto rect = sheetManager_.MakeRect(imageData);
-    const auto *texture = textureManager_.Get(rect.id_);
-    Shared::Image image({texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
-
+    auto textureRect = sheetManager_.MakeRect(imageData);
+    const auto *texture = textureManager_.Get(textureRect.id_);
+    sf::IntRect rect{textureRect.position_.x, textureRect.position_.y, textureRect.size_.x, textureRect.size_.y};
     sf::Sprite sprite;
-    image.ApplyTo(sprite);
+    sprite.setTexture(*texture);
+    sprite.setTextureRect(rect);
     sprite.setPosition(data.position_);
 
     return sprite;

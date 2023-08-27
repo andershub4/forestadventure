@@ -25,18 +25,18 @@ Shape::Shape(Body& body)
 void Shape::Enter()
 {
     for (auto sprite : sprites_) {
+        sprite->Enter();
         sprite->SetPosition(body_.position_);
         sprite->SetRotation(body_.rotation_);
-        sprite->Enter();
     }
 }
 
 void Shape::Update(float deltaTime)
 {
     for (auto sprite : sprites_) {
+        sprite->Update(deltaTime);
         sprite->SetPosition(body_.position_);
         sprite->SetRotation(body_.rotation_);
-        sprite->Update(deltaTime);
     }
 }
 

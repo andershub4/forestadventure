@@ -197,7 +197,6 @@
     <ClCompile Include="Src\Factory.cpp" />
     <ClCompile Include="Src\PropertyConverter.cpp" />
     <ClCompile Include="Src\Shape.cpp" />
-    <ClCompile Include="Src\Sprites\BasicSprite.cpp" />
     <ClCompile Include="Src\State.cpp" />
     <ClCompile Include="Src\StateMachine.cpp" />
   </ItemGroup>

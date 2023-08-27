@@ -47,13 +47,16 @@ public:
     {
         if (currentAnimation_.IsValid()) {
             currentAnimation_.Update(deltaTime);
-            currentAnimation_.ApplyTo(sprite_);
             if (center_) {
-                sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
+                currentAnimation_.Center();
             }
             updateCB_(currentAnimation_);
         }
     }
+
+    virtual void SetPosition(const sf::Vector2f &position) override { currentAnimation_.SetPosition(position); }
+    virtual void SetRotation(float rot) override { currentAnimation_.SetRotation(rot); }
+    virtual void DrawTo(sf::RenderTarget &renderTarget) override { currentAnimation_.DrawTo(renderTarget); }
 
     void RegisterAnimation(const KeyT key, const Shared::Animation &animation) { map_[key] = animation; }
     void RegisterUpdateCB(std::function<void(const Shared::Animation &)> updateCB) { updateCB_ = updateCB; }
