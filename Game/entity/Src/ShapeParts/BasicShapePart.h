@@ -12,10 +12,10 @@ namespace FA {
 
 namespace Entity {
 
-class BasicSprite
+class BasicShapePart
 {
 public:
-    virtual ~BasicSprite() = default;
+    virtual ~BasicShapePart() = default;
 
     virtual void Enter() = 0;
     virtual void Update(float deltaTime) = 0;

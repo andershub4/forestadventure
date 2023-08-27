@@ -18,7 +18,7 @@
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
-#include "Sprites/ImageSprite.h"
+#include "ShapeParts/ImagePart.h"
 #include "State.h"
 
 namespace FA {
@@ -124,9 +124,9 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
         Constant::stdVelocity * 8.0f, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
     auto image = service_.MakeImage({Shared::SheetId::Arrow, {0, 0}});
-    auto sprite = ImageSprite::Create(image);
+    auto part = ImagePart::Create(image);
     moveState->RegisterAbility(move);
-    moveState->RegisterSprite(sprite);
+    moveState->RegisterShapePart(part);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }

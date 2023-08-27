@@ -24,31 +24,31 @@ Shape::Shape(Body& body)
 
 void Shape::Enter()
 {
-    for (auto sprite : sprites_) {
-        sprite->Enter();
-        sprite->SetPosition(body_.position_);
-        sprite->SetRotation(body_.rotation_);
+    for (auto part : parts_) {
+        part->Enter();
+        part->SetPosition(body_.position_);
+        part->SetRotation(body_.rotation_);
     }
 }
 
 void Shape::Update(float deltaTime)
 {
-    for (auto sprite : sprites_) {
-        sprite->Update(deltaTime);
-        sprite->SetPosition(body_.position_);
-        sprite->SetRotation(body_.rotation_);
+    for (auto part : parts_) {
+        part->Update(deltaTime);
+        part->SetPosition(body_.position_);
+        part->SetRotation(body_.rotation_);
     }
 }
 
-void Shape::RegisterSprite(std::shared_ptr<BasicSprite> sprite)
+void Shape::RegisterPart(std::shared_ptr<BasicShapePart> part)
 {
-    sprites_.push_back(sprite);
+    parts_.push_back(part);
 }
 
 void Shape::DrawTo(sf::RenderTarget& renderTarget)
 {
-    for (auto sprite : sprites_) {
-        sprite->DrawTo(renderTarget);
+    for (auto part : parts_) {
+        part->DrawTo(renderTarget);
     }
 #ifdef _DEBUG
     renderTarget.draw(rShape_);

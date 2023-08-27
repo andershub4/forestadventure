@@ -27,7 +27,7 @@
 #include "PropertyData.h"
 #include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
-#include "Sprites/AnimationSprite.h"
+#include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
 namespace FA {
@@ -203,8 +203,8 @@ void PlayerEntity::OnInit()
 
 void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 {
-    auto sprite = MakeSprite(idleData);
-    state->RegisterSprite(sprite);
+    auto part = MakePart(idleData);
+    state->RegisterShapePart(part);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
@@ -221,9 +221,9 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto sprite = MakeSprite(moveData);
+    auto part = MakePart(moveData);
     state->RegisterAbility(move);
-    state->RegisterSprite(sprite);
+    state->RegisterShapePart(part);
     state->RegisterEventCB(EventType::StopMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     state->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
@@ -236,9 +236,9 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto sprite = MakeSprite(attackData);
-    sprite->RegisterUpdateCB(updateCB);
-    state->RegisterSprite(sprite);
+    auto part = MakePart(attackData);
+    part->RegisterUpdateCB(updateCB);
+    state->RegisterShapePart(part);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
@@ -252,25 +252,25 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto sprite = MakeSprite(attackWData);
-    sprite->RegisterUpdateCB(updateCB);
-    state->RegisterSprite(sprite);
+    auto part = MakePart(attackWData);
+    part->RegisterUpdateCB(updateCB);
+    state->RegisterShapePart(part);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 }
 
-std::shared_ptr<AnimationSpriteWith<FaceDirection>> PlayerEntity::MakeSprite(
+std::shared_ptr<AnimationPartWith<FaceDirection>> PlayerEntity::MakePart(
     const std::unordered_map<FaceDirection, Shared::AnimationData>& data)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
-    auto sprite = AnimationSpriteWith<FaceDirection>::Create(*dir);
+    auto part = AnimationPartWith<FaceDirection>::Create(*dir);
     for (const auto& entry : data) {
-        sprite->RegisterAnimation(entry.first, service_.MakeAnimation(entry.second));
+        part->RegisterAnimation(entry.first, service_.MakeAnimation(entry.second));
     }
 
-    return sprite;
+    return part;
 }
 
 }  // namespace Entity

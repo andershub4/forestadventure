@@ -15,7 +15,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "SfmlFwd.h"
-#include "Sprites/BasicSprite.h"
+#include "ShapeParts/BasicShapePart.h"
 
 namespace FA {
 
@@ -28,7 +28,7 @@ class Shape
 public:
     Shape(Body &body);
 
-    void RegisterSprite(std::shared_ptr<BasicSprite> sprite);
+    void RegisterPart(std::shared_ptr<BasicShapePart> part);
     void Enter();
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget);
@@ -36,7 +36,7 @@ public:
     void SetRotation(float rotation);
 
 private:
-    std::vector<std::shared_ptr<BasicSprite>> sprites_;
+    std::vector<std::shared_ptr<BasicShapePart>> parts_;
 #ifdef _DEBUG
     sf::RectangleShape rShape_;
 #endif

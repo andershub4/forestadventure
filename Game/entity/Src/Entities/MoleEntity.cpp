@@ -14,7 +14,7 @@
 #include "PropertyData.h"
 #include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
-#include "Sprites/AnimationSprite.h"
+#include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
 namespace FA {
@@ -98,8 +98,8 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 
 void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 {
-    auto sprite = MakeSprite(idleData);
-    state->RegisterSprite(sprite);
+    auto part = MakePart(idleData);
+    state->RegisterShapePart(part);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::StopMove, EventType::Collision});
@@ -110,24 +110,24 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto sprite = MakeSprite(moveData);
+    auto part = MakePart(moveData);
     state->RegisterAbility(move);
-    state->RegisterSprite(sprite);
+    state->RegisterShapePart(part);
     state->RegisterEventCB(EventType::StopMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
 }
 
-std::shared_ptr<AnimationSpriteWith<FaceDirection>> MoleEntity::MakeSprite(
+std::shared_ptr<AnimationPartWith<FaceDirection>> MoleEntity::MakePart(
     const std::unordered_map<FaceDirection, Shared::AnimationData>& data)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto sprite = AnimationSpriteWith<FaceDirection>::Create(*dir);
+    auto part = AnimationPartWith<FaceDirection>::Create(*dir);
     for (const auto& entry : data) {
-        sprite->RegisterAnimation(entry.first, service_.MakeAnimation(entry.second));
+        part->RegisterAnimation(entry.first, service_.MakeAnimation(entry.second));
     }
 
-    return sprite;
+    return part;
 }
 
 }  // namespace Entity

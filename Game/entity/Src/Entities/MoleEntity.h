@@ -13,7 +13,7 @@
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 #include "Resource/AnimationData.h"
-#include "Sprites/AnimationSprite.h"
+#include "ShapeParts/AnimationPart.h"
 
 namespace FA {
 
@@ -39,7 +39,7 @@ private:
     void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
 
-    std::shared_ptr<AnimationSpriteWith<FaceDirection>> MakeSprite(
+    std::shared_ptr<AnimationPartWith<FaceDirection>> MakePart(
         const std::unordered_map<FaceDirection, Shared::AnimationData>& data);
 
     void DefineIdleState(std::shared_ptr<State> state);

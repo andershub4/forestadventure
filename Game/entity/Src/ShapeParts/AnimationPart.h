@@ -10,7 +10,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "BasicSprite.h"
+#include "BasicShapePart.h"
 #include "Logging.h"
 #include "Resource/Animation.h"
 
@@ -19,20 +19,20 @@ namespace FA {
 namespace Entity {
 
 template <class KeyT>
-class AnimationSpriteWith : public BasicSprite
+class AnimationPartWith : public BasicShapePart
 {
 public:
-    static std::shared_ptr<AnimationSpriteWith<KeyT>> Create(const Shared::Animation &animation, bool center = true)
+    static std::shared_ptr<AnimationPartWith<KeyT>> Create(const Shared::Animation &animation, bool center = true)
     {
         return std::make_shared<CtorHelper<KeyT>>(animation, center);
     }
 
-    static std::shared_ptr<AnimationSpriteWith<KeyT>> Create(KeyT &lookupKey, bool center = true)
+    static std::shared_ptr<AnimationPartWith<KeyT>> Create(KeyT &lookupKey, bool center = true)
     {
         return std::make_shared<CtorHelper<KeyT>>(lookupKey, center);
     }
 
-    virtual ~AnimationSpriteWith() = default;
+    virtual ~AnimationPartWith() = default;
 
     virtual void Enter() override
     {
@@ -62,13 +62,13 @@ public:
     void RegisterUpdateCB(std::function<void(const Shared::Animation &)> updateCB) { updateCB_ = updateCB; }
 
 protected:
-    AnimationSpriteWith(KeyT &lookupKey, bool center = true)
+    AnimationPartWith(KeyT &lookupKey, bool center = true)
         : lookupKey_(lookupKey)
         , updateCB_([](const Shared::Animation &) {})
         , center_(center)
     {}
 
-    AnimationSpriteWith(const Shared::Animation &animation, bool center = true)
+    AnimationPartWith(const Shared::Animation &animation, bool center = true)
         : lookupKey_(defaultKey_)
         , updateCB_([](const Shared::Animation &) {})
         , center_(center)
@@ -78,14 +78,14 @@ protected:
 
 private:
     template <class KeyT>
-    struct CtorHelper : public AnimationSpriteWith<KeyT>
+    struct CtorHelper : public AnimationPartWith<KeyT>
     {
         CtorHelper(KeyT &lookupKey, bool center = true)
-            : AnimationSpriteWith<KeyT>(lookupKey, center)
+            : AnimationPartWith<KeyT>(lookupKey, center)
         {}
 
         CtorHelper(const Shared::Animation &animation, bool center = true)
-            : AnimationSpriteWith<KeyT>(animation, center)
+            : AnimationPartWith<KeyT>(animation, center)
         {}
     };
 
@@ -110,7 +110,7 @@ private:
     }
 };
 
-using AnimationSprite = AnimationSpriteWith<int>;
+using AnimationPart = AnimationPartWith<int>;
 
 }  // namespace Entity
 

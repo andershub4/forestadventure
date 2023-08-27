@@ -44,7 +44,7 @@ public:
     void RegisterEnterCB(std::function<void()> enterCB);
     void RegisterExitCB(std::function<void()> exitCB);
     void RegisterAbility(std::shared_ptr<BasicAbility> ability);
-    void RegisterSprite(std::shared_ptr<BasicSprite> sprite);
+    void RegisterShapePart(std::shared_ptr<BasicShapePart> part);
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
     void RegisterIgnoreEvents(const std::vector<EventType>& eventTypes);
     void IgnoreAllEventsExcept(const std::unordered_set<EventType>& notIgnorableEventTypes);

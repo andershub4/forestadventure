@@ -81,13 +81,13 @@
     <ClInclude Include="Src\Properties\Property.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Sprites\AnimationSprite.h">
+    <ClInclude Include="Src\ShapeParts\AnimationPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Sprites\BasicSprite.h">
+    <ClInclude Include="Src\ShapeParts\BasicPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Sprites\ImageSprite.h">
+    <ClInclude Include="Src\ShapeParts\ImagePart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Body.h">
@@ -133,6 +133,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Events\DestroyEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ShapeParts\BasicShapePart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

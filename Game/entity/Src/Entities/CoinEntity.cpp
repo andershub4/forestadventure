@@ -9,7 +9,7 @@
 #include "PropertyData.h"
 #include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
-#include "Sprites/AnimationSprite.h"
+#include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
 namespace FA {
@@ -35,8 +35,8 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
                                 const PropertyData& data)
 {
     auto animation = service_.MakeAnimation(idle);
-    auto sprite = AnimationSprite::Create(animation);
-    idleState->RegisterSprite(sprite);
+    auto part = AnimationPart::Create(animation);
+    idleState->RegisterShapePart(part);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }
 

@@ -12,7 +12,7 @@
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
 #include "Resource/TextureRect.h"
-#include "Sprites/AnimationSprite.h"
+#include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
 namespace FA {
@@ -41,8 +41,8 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
         animation.AddFrame(frame);
     }
 
-    auto sprite = AnimationSprite::Create(animation, false);
-    idleState->RegisterSprite(sprite);
+    auto part = AnimationPart::Create(animation, false);
+    idleState->RegisterShapePart(part);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }
 

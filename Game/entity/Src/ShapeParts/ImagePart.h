@@ -10,7 +10,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "BasicSprite.h"
+#include "BasicShapePart.h"
 #include "Logging.h"
 #include "Resource/Image.h"
 
@@ -19,15 +19,15 @@ namespace FA {
 namespace Entity {
 
 template <class KeyT>
-class ImageSpriteWith : public BasicSprite
+class ImagePartWith : public BasicShapePart
 {
 public:
-    static std::shared_ptr<ImageSpriteWith<KeyT>> Create(const Shared::Image &image)
+    static std::shared_ptr<ImagePartWith<KeyT>> Create(const Shared::Image &image)
     {
         return std::make_shared<CtorHelper<KeyT>>(image);
     }
 
-    virtual ~ImageSpriteWith() = default;
+    virtual ~ImagePartWith() = default;
 
     virtual void Enter() override { currentImage_ = GetImage(defaultKey_); }
 
@@ -50,7 +50,7 @@ public:
     void RegisterUpdateCB(std::function<void(const Shared::Image &)> updateCB) { updateCB_ = updateCB; }
 
 protected:
-    ImageSpriteWith(const Shared::Image &image)
+    ImagePartWith(const Shared::Image &image)
         : updateCB_([](const Shared::Image &) {})
     {
         RegisterImage(defaultKey_, image);
@@ -58,10 +58,10 @@ protected:
 
 private:
     template <class KeyT>
-    struct CtorHelper : public ImageSpriteWith<KeyT>
+    struct CtorHelper : public ImagePartWith<KeyT>
     {
         CtorHelper(const Shared::Image &image)
-            : ImageSpriteWith<KeyT>(image)
+            : ImagePartWith<KeyT>(image)
         {}
     };
 
@@ -84,7 +84,7 @@ private:
     }
 };
 
-using ImageSprite = ImageSpriteWith<int>;
+using ImagePart = ImagePartWith<int>;
 
 }  // namespace Entity
 
