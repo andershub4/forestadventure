@@ -7,6 +7,7 @@
 #include "TileEntity.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "Constant/Entity.h"
 #include "PropertyData.h"

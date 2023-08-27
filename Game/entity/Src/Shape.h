@@ -12,7 +12,6 @@
 #ifdef _DEBUG
 #include <SFML/Graphics/RectangleShape.hpp>
 #endif
-#include <SFML/Graphics/Sprite.hpp>
 
 #include "SfmlFwd.h"
 #include "ShapeParts/BasicShapePart.h"
@@ -32,8 +31,6 @@ public:
     void Enter();
     void Update(float deltaTime);
     void DrawTo(sf::RenderTarget &renderTarget);
-    void SetPosition(const sf::Vector2f &position);
-    void SetRotation(float rotation);
 
 private:
     std::vector<std::shared_ptr<BasicShapePart>> parts_;
