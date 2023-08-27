@@ -12,7 +12,7 @@
 
 #include "BasicShapePart.h"
 #include "Logging.h"
-#include "Resource/Image.h"
+#include "Sprites/ImageSprite.h"
 
 namespace FA {
 
@@ -22,7 +22,7 @@ template <class KeyT>
 class ImagePartWith : public BasicShapePart
 {
 public:
-    static std::shared_ptr<ImagePartWith<KeyT>> Create(const Shared::Image &image)
+    static std::shared_ptr<ImagePartWith<KeyT>> Create(const Shared::ImageSprite &image)
     {
         return std::make_shared<CtorHelper<KeyT>>(image);
     }
@@ -46,12 +46,12 @@ public:
     virtual void SetRotation(float rot) override { currentImage_.SetRotation(rot); }
     virtual void DrawTo(sf::RenderTarget &renderTarget) override { currentImage_.DrawTo(renderTarget); }
 
-    void RegisterImage(const KeyT key, const Shared::Image &image) { map_[key] = image; }
-    void RegisterUpdateCB(std::function<void(const Shared::Image &)> updateCB) { updateCB_ = updateCB; }
+    void RegisterImage(const KeyT key, const Shared::ImageSprite &image) { map_[key] = image; }
+    void RegisterUpdateCB(std::function<void(const Shared::ImageSprite &)> updateCB) { updateCB_ = updateCB; }
 
 protected:
-    ImagePartWith(const Shared::Image &image)
-        : updateCB_([](const Shared::Image &) {})
+    ImagePartWith(const Shared::ImageSprite &image)
+        : updateCB_([](const Shared::ImageSprite &) {})
     {
         RegisterImage(defaultKey_, image);
     }
@@ -60,18 +60,18 @@ private:
     template <class KeyT>
     struct CtorHelper : public ImagePartWith<KeyT>
     {
-        CtorHelper(const Shared::Image &image)
+        CtorHelper(const Shared::ImageSprite &image)
             : ImagePartWith<KeyT>(image)
         {}
     };
 
     KeyT defaultKey_{};
-    std::unordered_map<KeyT, Shared::Image> map_;
-    Shared::Image currentImage_;
-    std::function<void(const Shared::Image &)> updateCB_;
+    std::unordered_map<KeyT, Shared::ImageSprite> map_;
+    Shared::ImageSprite currentImage_;
+    std::function<void(const Shared::ImageSprite &)> updateCB_;
 
 private:
-    Shared::Image GetImage(const KeyT &key)
+    Shared::ImageSprite GetImage(const KeyT &key)
     {
         if (map_.find(key) != map_.end()) {
             return map_.at(key);

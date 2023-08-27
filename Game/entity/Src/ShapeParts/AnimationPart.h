@@ -12,7 +12,7 @@
 
 #include "BasicShapePart.h"
 #include "Logging.h"
-#include "Resource/Animation.h"
+#include "Sprites/AnimationSprite.h"
 
 namespace FA {
 
@@ -22,7 +22,7 @@ template <class KeyT>
 class AnimationPartWith : public BasicShapePart
 {
 public:
-    static std::shared_ptr<AnimationPartWith<KeyT>> Create(const Shared::Animation &animation, bool center = true)
+    static std::shared_ptr<AnimationPartWith<KeyT>> Create(const Shared::AnimationSprite &animation, bool center = true)
     {
         return std::make_shared<CtorHelper<KeyT>>(animation, center);
     }
@@ -58,19 +58,19 @@ public:
     virtual void SetRotation(float rot) override { currentAnimation_.SetRotation(rot); }
     virtual void DrawTo(sf::RenderTarget &renderTarget) override { currentAnimation_.DrawTo(renderTarget); }
 
-    void RegisterAnimation(const KeyT key, const Shared::Animation &animation) { map_[key] = animation; }
-    void RegisterUpdateCB(std::function<void(const Shared::Animation &)> updateCB) { updateCB_ = updateCB; }
+    void RegisterAnimation(const KeyT key, const Shared::AnimationSprite &animation) { map_[key] = animation; }
+    void RegisterUpdateCB(std::function<void(const Shared::AnimationSprite &)> updateCB) { updateCB_ = updateCB; }
 
 protected:
     AnimationPartWith(KeyT &lookupKey, bool center = true)
         : lookupKey_(lookupKey)
-        , updateCB_([](const Shared::Animation &) {})
+        , updateCB_([](const Shared::AnimationSprite &) {})
         , center_(center)
     {}
 
-    AnimationPartWith(const Shared::Animation &animation, bool center = true)
+    AnimationPartWith(const Shared::AnimationSprite &animation, bool center = true)
         : lookupKey_(defaultKey_)
-        , updateCB_([](const Shared::Animation &) {})
+        , updateCB_([](const Shared::AnimationSprite &) {})
         , center_(center)
     {
         RegisterAnimation(defaultKey_, animation);
@@ -84,20 +84,20 @@ private:
             : AnimationPartWith<KeyT>(lookupKey, center)
         {}
 
-        CtorHelper(const Shared::Animation &animation, bool center = true)
+        CtorHelper(const Shared::AnimationSprite &animation, bool center = true)
             : AnimationPartWith<KeyT>(animation, center)
         {}
     };
 
     KeyT defaultKey_{};
     KeyT &lookupKey_;
-    std::unordered_map<KeyT, Shared::Animation> map_;
-    Shared::Animation currentAnimation_;
-    std::function<void(const Shared::Animation &)> updateCB_;
+    std::unordered_map<KeyT, Shared::AnimationSprite> map_;
+    Shared::AnimationSprite currentAnimation_;
+    std::function<void(const Shared::AnimationSprite &)> updateCB_;
     bool center_{};
 
 private:
-    Shared::Animation GetAnimation(const KeyT &key)
+    Shared::AnimationSprite GetAnimation(const KeyT &key)
     {
         if (map_.find(key) != map_.end()) {
             return map_.at(key);

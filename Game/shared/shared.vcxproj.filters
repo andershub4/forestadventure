@@ -48,7 +48,7 @@
     <ClInclude Include="Include\Message\MessageType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Resource\Animation.h">
+    <ClInclude Include="Include\Sprites\AnimationSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Resource\AnimationData.h">
@@ -57,7 +57,7 @@
     <ClInclude Include="Include\Resource\Frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Resource\Image.h">
+    <ClInclude Include="Include\Sprites\ImageSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Resource\ImageData.h">
@@ -123,15 +123,18 @@
     <ClInclude Include="Include\Resource\SpriteSheetIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Sprites\BasicSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\MessageBus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Resource\Animation.cpp">
+    <ClCompile Include="Src\Sprites\AnimationSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Resource\Image.cpp">
+    <ClCompile Include="Src\Sprites\ImageSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\Resource\SheetManager.cpp">
@@ -159,6 +162,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\EffectFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Sprites\BasicSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

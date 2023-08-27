@@ -13,13 +13,13 @@
 #include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Message/MessageBus.h"
-#include "Resource/Animation.h"
 #include "Resource/AnimationData.h"
-#include "Resource/Image.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
 #include "Resource/TextureRect.h"
+#include "Sprites/AnimationSprite.h"
+#include "Sprites/ImageSprite.h"
 
 namespace FA {
 
@@ -37,11 +37,11 @@ EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::Textu
 
 EntityService::~EntityService() = default;
 
-Shared::Animation EntityService::MakeAnimation(const Shared::AnimationData& data) const
+Shared::AnimationSprite EntityService::MakeAnimation(const Shared::AnimationData& data) const
 {
     float t = Constant::stdSwitchTime;
     auto sprite = std::make_shared<sf::Sprite>();
-    Shared::Animation animation(sprite, data.locationData_.defaultIndex_, t);
+    Shared::AnimationSprite animation(sprite, data.locationData_.defaultIndex_, t);
     auto rects = sheetManager_.MakeRects(data);
 
     for (const auto& rect : rects) {
@@ -52,13 +52,13 @@ Shared::Animation EntityService::MakeAnimation(const Shared::AnimationData& data
     return animation;
 }
 
-Shared::Image EntityService::MakeImage(const Shared::ImageData& data) const
+Shared::ImageSprite EntityService::MakeImage(const Shared::ImageData& data) const
 {
     auto rect = sheetManager_.MakeRect(data);
     const auto* texture = textureManager_.Get(rect.id_);
     auto sprite = std::make_shared<sf::Sprite>();
 
-    return Shared::Image(sprite, {texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
+    return Shared::ImageSprite(sprite, {texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
 }
 
 Shared::TextureRect EntityService::MakeRect(const Shared::ImageData& data) const

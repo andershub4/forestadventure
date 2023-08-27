@@ -231,7 +231,7 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
 {
-    auto updateCB = [this](const Shared::Animation& animation) {
+    auto updateCB = [this](const Shared::AnimationSprite& animation) {
         if (animation.IsCompleted()) {
             ChangeStateTo(StateType::Idle, nullptr);
         }
@@ -246,7 +246,7 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
 {
-    auto updateCB = [this](const Shared::Animation& animation) {
+    auto updateCB = [this](const Shared::AnimationSprite& animation) {
         if (animation.IsCompleted()) {
             OnShoot();
             ChangeStateTo(StateType::Idle, nullptr);

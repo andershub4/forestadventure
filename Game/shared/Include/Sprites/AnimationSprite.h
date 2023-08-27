@@ -6,35 +6,32 @@
 
 #pragma once
 
+#include "BasicSprite.h"
+
 #include <memory>
 #include <vector>
 
-#include "Frame.h"
+#include "Resource/Frame.h"
 #include "SfmlFwd.h"
 
 namespace FA {
 
 namespace Shared {
 
-class Animation
+class AnimationSprite : public BasicSprite
 {
 public:
-    Animation() = default;
-    Animation(std::shared_ptr<sf::Sprite> sprite, unsigned int defaultFrame, float switchTime);
+    AnimationSprite() = default;
+    AnimationSprite(std::shared_ptr<sf::Sprite> sprite, unsigned int defaultFrame, float switchTime);
 
-    void Update(float deltaTime);  // delta time; time since previous time to current frame
-    void SetPosition(const sf::Vector2f &position);
-    void SetRotation(float rot);
-    void DrawTo(sf::RenderTarget &renderTarget);
-    void Center();
+    virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
+
     void Start();
     void Stop();
     bool IsCompleted() const;
-    bool IsValid() const;
     void AddFrame(const Frame &frame);
 
 private:
-    std::shared_ptr<sf::Sprite> sprite_;
     bool isStopped_ = true;
     float time_{};        // time since we last switched frame
     float switchTime_{};  // time before to switch to next frame
@@ -43,7 +40,6 @@ private:
     unsigned int nFrames_{};
     unsigned int defaultIndex_{};
     bool isCompleted_ = false;
-    bool isValid_ = false;
 };
 
 }  // namespace Shared

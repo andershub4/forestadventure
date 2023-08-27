@@ -23,8 +23,8 @@ namespace Shared {
 
 class CameraManager;
 class Camera;
-class Animation;
-class Image;
+class AnimationSprite;
+class ImageSprite;
 class SheetManager;
 struct AnimationData;
 struct ImageData;
@@ -49,8 +49,8 @@ public:
                   EntityManager &entityManager);
     ~EntityService();
 
-    Shared::Animation MakeAnimation(const Shared::AnimationData &data) const;
-    Shared::Image MakeImage(const Shared::ImageData &data) const;
+    Shared::AnimationSprite MakeAnimation(const Shared::AnimationData &data) const;
+    Shared::ImageSprite MakeImage(const Shared::ImageData &data) const;
 
     Shared::TextureRect MakeRect(const Shared::ImageData &data) const;
     const sf::Texture *GetTexture(Shared::ResourceId id) const;
