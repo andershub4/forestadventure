@@ -17,12 +17,12 @@ bool Texture::create(unsigned int width, unsigned int height)
 
 bool Texture::loadFromFile(const std::string& filename, const sf::IntRect& area)
 {
-    return loadFromFile(filename, area);
+    return texture_.loadFromFile(filename, area);
 }
 
 bool Texture::loadFromMemory(const void* data, std::size_t size, const sf::IntRect& area)
 {
-    return loadFromMemory(data, size, area);
+    return texture_.loadFromMemory(data, size, area);
 }
 
 }  // namespace Graphic
