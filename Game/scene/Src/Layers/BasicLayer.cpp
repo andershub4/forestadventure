@@ -6,6 +6,9 @@
 
 #include "BasicLayer.h"
 
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
+
 #include "Message/MessageBus.h"
 
 namespace FA {
@@ -27,7 +30,7 @@ void BasicLayer::Clear()
     layerTexture_.clear(sf::Color::Transparent);
 }
 
-void BasicLayer::DrawTo(sf::RenderTarget& renderTarget)
+void BasicLayer::DrawTo(Graphic::IRenderTarget& renderTarget)
 {
     layerTexture_.display();
     renderTarget.draw(sprite_);

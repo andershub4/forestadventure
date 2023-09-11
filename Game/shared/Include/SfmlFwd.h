@@ -9,6 +9,11 @@
 namespace sf {
 
 template <class T>
+class Rect;
+typedef Rect<int> IntRect;
+typedef Rect<float> FloatRect;
+
+template <class T>
 class Vector2;
 typedef Vector2<int> Vector2i;
 typedef Vector2<unsigned int> Vector2u;

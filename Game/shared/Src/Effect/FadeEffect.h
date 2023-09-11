@@ -6,11 +6,12 @@
 
 #pragma once
 
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 
 #include "BasicEffect.h"
+
+#include "RectangleShape.h"
 
 namespace FA {
 
@@ -21,12 +22,12 @@ class FadeEffect : public BasicEffect
 public:
     FadeEffect(const sf::Vector2f& position, const sf::Vector2f& size, float seconds);
 
-    virtual void DrawTo(sf::RenderTarget& renderTarget) const override;
+    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) const override;
     virtual void Update(float deltaTime) override;
 
 private:
     sf::Clock clock_;
-    sf::RectangleShape fadeRect_;
+    Graphic::RectangleShape fadeRect_;
     int startAlpha_ = 0;
     int endAlpha_ = 255;
     sf::Time targetTime_;

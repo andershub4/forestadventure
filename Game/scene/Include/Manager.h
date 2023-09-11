@@ -14,6 +14,12 @@
 
 namespace FA {
 
+namespace Graphic {
+
+class IRenderTarget;
+
+}  // namespace Graphic
+
 namespace Shared {
 
 class MessageBus;
@@ -54,7 +60,7 @@ public:
 
     void SetScene(std::unique_ptr<BasicScene> newScene);
 
-    void DrawTo(sf::RenderTarget& renderTarget);
+    void DrawTo(Graphic::IRenderTarget& renderTarget);
     void Update(float deltaTime);
 
     bool IsRunning() const;

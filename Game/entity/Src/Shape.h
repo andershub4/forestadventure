@@ -10,13 +10,19 @@
 #include <vector>
 
 #ifdef _DEBUG
-#include <SFML/Graphics/RectangleShape.hpp>
+#include "RectangleShape.h"
 #endif
 
 #include "SfmlFwd.h"
 #include "ShapeParts/BasicShapePart.h"
 
 namespace FA {
+
+namespace Graphic {
+
+class IRenderTarget;
+
+}  // namespace Graphic
 
 namespace Entity {
 
@@ -30,12 +36,12 @@ public:
     void RegisterPart(std::shared_ptr<BasicShapePart> part);
     void Enter();
     void Update(float deltaTime);
-    void DrawTo(sf::RenderTarget &renderTarget);
+    void DrawTo(Graphic::IRenderTarget &renderTarget);
 
 private:
     std::vector<std::shared_ptr<BasicShapePart>> parts_;
 #ifdef _DEBUG
-    sf::RectangleShape rShape_;
+    Graphic::RectangleShape rShape_;
 #endif
     Body &body_;
 };

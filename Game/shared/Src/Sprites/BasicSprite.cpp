@@ -6,16 +6,21 @@
 
 #include "Sprites/BasicSprite.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Rect.hpp>
+
+#include "IRenderTarget.h"
+#include "Sprite.h"
 
 namespace FA {
 
 namespace Shared {
 
-BasicSprite::BasicSprite(std::shared_ptr<sf::Sprite> sprite)
+BasicSprite::BasicSprite(std::shared_ptr<Graphic::ISprite> sprite)
     : sprite_(sprite)
     , isValid_(true)
+{}
+
+void BasicSprite::Update(float deltaTime)
 {}
 
 void BasicSprite::SetPosition(const sf::Vector2f& position)
@@ -28,7 +33,7 @@ void BasicSprite::SetRotation(float rot)
     sprite_->setRotation(rot);
 }
 
-void BasicSprite::DrawTo(sf::RenderTarget& renderTarget)
+void BasicSprite::DrawTo(Graphic::IRenderTarget& renderTarget) const
 {
     renderTarget.draw(*sprite_);
 }

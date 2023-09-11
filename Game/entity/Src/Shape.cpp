@@ -6,9 +6,8 @@
 
 #include "Shape.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
-
 #include "Body.h"
+#include "IRenderTarget.h"
 
 namespace FA {
 
@@ -29,6 +28,9 @@ void Shape::Enter()
         part->SetPosition(body_.position_);
         part->SetRotation(body_.rotation_);
     }
+#ifdef _DEBUG
+    rShape_.setPosition(body_.position_);
+#endif
 }
 
 void Shape::Update(float deltaTime)
@@ -38,6 +40,9 @@ void Shape::Update(float deltaTime)
         part->SetPosition(body_.position_);
         part->SetRotation(body_.rotation_);
     }
+#ifdef _DEBUG
+    rShape_.setPosition(body_.position_);
+#endif
 }
 
 void Shape::RegisterPart(std::shared_ptr<BasicShapePart> part)
@@ -45,7 +50,7 @@ void Shape::RegisterPart(std::shared_ptr<BasicShapePart> part)
     parts_.push_back(part);
 }
 
-void Shape::DrawTo(sf::RenderTarget& renderTarget)
+void Shape::DrawTo(Graphic::IRenderTarget& renderTarget)
 {
     for (auto part : parts_) {
         part->DrawTo(renderTarget);

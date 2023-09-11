@@ -6,13 +6,12 @@
 
 #pragma once
 
-#include "BasicSprite.h"
-
 #include <memory>
 #include <vector>
 
+#include "BasicSprite.h"
+
 #include "Resource/Frame.h"
-#include "SfmlFwd.h"
 
 namespace FA {
 
@@ -22,7 +21,7 @@ class AnimationSprite : public BasicSprite
 {
 public:
     AnimationSprite() = default;
-    AnimationSprite(std::shared_ptr<sf::Sprite> sprite, unsigned int defaultFrame, float switchTime);
+    AnimationSprite(std::shared_ptr<Graphic::ISprite> sprite, unsigned int defaultFrame, float switchTime);
 
     virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
 

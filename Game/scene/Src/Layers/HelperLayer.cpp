@@ -8,7 +8,7 @@
 
 #include <cmath>
 
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 #include "Folder.h"
 #include "Logging.h"

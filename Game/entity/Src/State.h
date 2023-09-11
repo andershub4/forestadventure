@@ -18,6 +18,12 @@
 
 namespace FA {
 
+namespace Graphic {
+
+class IRenderTarget;
+
+}  // namespace Graphic
+
 namespace Entity {
 
 struct BasicEvent;
@@ -38,7 +44,7 @@ public:
     void Enter(std::shared_ptr<BasicEvent> event);
     void Exit();
     void Update(float deltaTime);
-    void DrawTo(sf::RenderTarget& renderTarget);
+    void DrawTo(Graphic::IRenderTarget& renderTarget);
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     StateType GetStateType() const { return stateType_; }
     void RegisterEnterCB(std::function<void()> enterCB);

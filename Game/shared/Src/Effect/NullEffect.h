@@ -17,7 +17,7 @@ class NullEffect : public BasicEffect
 public:
     NullEffect();
 
-    virtual void DrawTo(sf::RenderTarget& renderTarget) const override;
+    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) const override;
     virtual void Update(float deltaTime) override;
 };
 

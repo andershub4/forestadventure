@@ -14,8 +14,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "Resource/Graphic.h"
 #include "Resource/TextureManager.h"
+#include "Resource/TileGraphic.h"
 
 namespace FA {
 
@@ -41,7 +41,7 @@ public:
     struct TileData
     {
         sf::Vector2f position_{};
-        Shared::Graphic graphic_{};
+        Shared::TileGraphic graphic_{};
     };
 
     struct ObjectData

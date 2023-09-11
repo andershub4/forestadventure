@@ -6,7 +6,7 @@
 
 #include "IntroScene.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
 #include "Layers/HelperLayer.h"
 #include "Layers/IntroLayer.h"
@@ -63,7 +63,7 @@ void IntroScene::Exit()
     }
 }
 
-void IntroScene::DrawTo(sf::RenderTarget& renderTarget)
+void IntroScene::DrawTo(Graphic::IRenderTarget& renderTarget)
 {
     for (const auto& entry : layers_) {
         auto& layer = entry.second;

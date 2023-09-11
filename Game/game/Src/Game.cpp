@@ -6,12 +6,14 @@
 
 #include "Game.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/Window/VideoMode.hpp>
 
 #include "InputSystem.h"
 #include "Logging.h"
 #include "Manager.h"
 #include "Message/MessageBus.h"
+#include "RenderWindow.h"
 #include "Resource/TextureManager.h"
 #include "Screen.h"
 #include "SfmlLog.h"
@@ -41,7 +43,7 @@ int Game::Run()
 void Game::GameLoop()
 {
     LOG_INFO("Create main window");
-    sf::RenderWindow window;
+    Graphic::RenderWindow window;
     const std::string title = UI::GetTitle();
 #ifdef _DEBUG
     window.create(sf::VideoMode(Shared::Screen::width, Shared::Screen::height), title);
@@ -54,7 +56,7 @@ void Game::GameLoop()
     window.setFramerateLimit(120);
 
     Shared::MessageBus messageBus;
-    auto createFn = []() { return std::make_unique<sf::Texture>(); };
+    auto createFn = []() { return std::make_unique<Graphic::Texture>(); };
     Shared::TextureManager textureManager(createFn);
     Scene::Manager sceneManager(messageBus, textureManager);
     SfmlLog sfmlLog;

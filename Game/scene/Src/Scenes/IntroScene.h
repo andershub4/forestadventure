@@ -10,6 +10,12 @@
 
 namespace FA {
 
+namespace Graphic {
+
+class IRenderTarget;
+
+}  // namespace Graphic
+
 namespace Scene {
 
 class IntroScene : public BasicScene
@@ -19,7 +25,7 @@ public:
                Manager::Layers& components, Manager::Data& data);
     virtual ~IntroScene();
 
-    virtual void DrawTo(sf::RenderTarget& renderTarget) override;
+    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) override;
     virtual void Update(float deltaTime) override;
     virtual std::string Name() const override { return "IntroScene"; }
 

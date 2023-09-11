@@ -6,7 +6,7 @@
 
 #include "PlayScene.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
 #include "IntroScene.h"
 #include "Layers/HelperLayer.h"
@@ -65,7 +65,7 @@ void PlayScene::Exit()
     }
 }
 
-void PlayScene::DrawTo(sf::RenderTarget& renderTarget)
+void PlayScene::DrawTo(Graphic::IRenderTarget& renderTarget)
 {
     for (const auto& entry : layers_) {
         auto& layer = entry.second;

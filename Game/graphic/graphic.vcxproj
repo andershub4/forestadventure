@@ -141,10 +141,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Font.h" />
+    <ClInclude Include="Include\IDrawable.h" />
+    <ClInclude Include="Include\IFont.h" />
+    <ClInclude Include="Include\IRectangleShape.h" />
+    <ClInclude Include="Include\IRenderTarget.h" />
+    <ClInclude Include="Include\IRenderTexture.h" />
+    <ClInclude Include="Include\IRenderWindow.h" />
+    <ClInclude Include="Include\IShape.h" />
+    <ClInclude Include="Include\ISprite.h" />
+    <ClInclude Include="Include\IText.h" />
     <ClInclude Include="Include\ITexture.h" />
+    <ClInclude Include="Include\RectangleShape.h" />
+    <ClInclude Include="Include\RenderTexture.h" />
+    <ClInclude Include="Include\RenderWindow.h" />
+    <ClInclude Include="Include\Sprite.h" />
+    <ClInclude Include="Include\SpriteMock.h" />
+    <ClInclude Include="Include\Text.h" />
     <ClInclude Include="Include\Texture.h" />
+    <ClInclude Include="Include\TextureMock.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Font.cpp" />
+    <ClCompile Include="Src\RectangleShape.cpp" />
+    <ClCompile Include="Src\RenderTexture.cpp" />
+    <ClCompile Include="Src\RenderWindow.cpp" />
+    <ClCompile Include="Src\Sprite.cpp" />
+    <ClCompile Include="Src\Text.cpp" />
     <ClCompile Include="Src\Texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

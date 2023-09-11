@@ -8,7 +8,6 @@
 
 #include <algorithm>
 
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include "Logging.h"
@@ -20,7 +19,7 @@
 
 namespace FA {
 
-InputSystem::InputSystem(Shared::MessageBus& messageBus, sf::RenderWindow& window)
+InputSystem::InputSystem(Shared::MessageBus& messageBus, Graphic::IRenderWindow& window)
     : messageBus_(messageBus)
     , window_(window)
 {}

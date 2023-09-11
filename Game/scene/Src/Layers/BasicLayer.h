@@ -7,13 +7,21 @@
 #pragma once
 
 #include <memory>
-
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/Graphics/Sprite.hpp>
+#include <string>
+#include <vector>
 
 #include "LayerId.h"
+#include "RenderTexture.h"
+#include "SfmlFwd.h"
+#include "Sprite.h"
 
 namespace FA {
+
+namespace Graphic {
+
+class IRenderTarget;
+
+}  // namespace Graphic
 
 namespace Shared {
 
@@ -46,17 +54,17 @@ public:
     virtual void UnsubscribeMessages() {}
 
     void Clear();
-    void DrawTo(sf::RenderTarget& renderTarget);
+    void DrawTo(Graphic::IRenderTarget& renderTarget);
 
 protected:
-    sf::RenderTexture layerTexture_;
+    Graphic::RenderTexture layerTexture_;
 
 protected:
     void Subscribe(const std::vector<Shared::MessageType>& messageTypes);
     void Unsubscribe(const std::vector<Shared::MessageType>& messageTypes);
 
 private:
-    sf::Sprite sprite_;
+    Graphic::Sprite sprite_;
     Shared::MessageBus& messageBus_;
 
 private:

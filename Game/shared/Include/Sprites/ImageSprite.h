@@ -6,12 +6,11 @@
 
 #pragma once
 
-#include "BasicSprite.h"
-
 #include <memory>
 
+#include "BasicSprite.h"
+
 #include "Resource/Frame.h"
-#include "SfmlFwd.h"
 
 namespace FA {
 
@@ -20,7 +19,7 @@ namespace Shared {
 class ImageSprite : public BasicSprite
 {
 public:
-    ImageSprite(std::shared_ptr<sf::Sprite> sprite, const Frame &frame);
+    ImageSprite(std::shared_ptr<Graphic::ISprite> sprite, const Frame &frame);
     ImageSprite() = default;
 
     virtual void Update(float deltaTime) override;

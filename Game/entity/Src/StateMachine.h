@@ -14,6 +14,12 @@
 
 namespace FA {
 
+namespace Graphic {
+
+class IRenderTarget;
+
+}  // namespace Graphic
+
 namespace Entity {
 
 struct BasicEvent;
@@ -31,7 +37,7 @@ public:
 
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void Update(float deltaTime);
-    void DrawTo(sf::RenderTarget& renderTarget);
+    void DrawTo(Graphic::IRenderTarget& renderTarget);
 
     void ChangeStateTo(StateType nextStateType, std::shared_ptr<BasicEvent> event);
 

@@ -10,6 +10,12 @@
 
 namespace FA {
 
+namespace Graphic {
+
+class IRenderTarget;
+
+}  // namespace Graphic
+
 namespace Entity {
 
 class BasicShapePart
@@ -22,7 +28,7 @@ public:
 
     virtual void SetPosition(const sf::Vector2f &position) = 0;
     virtual void SetRotation(float rot) = 0;
-    virtual void DrawTo(sf::RenderTarget &renderTarget) = 0;
+    virtual void DrawTo(Graphic::IRenderTarget &renderTarget) = 0;
 };
 
 }  // namespace Entity

@@ -8,8 +8,6 @@
 
 #include <sstream>
 
-#include <SFML/Graphics/RenderWindow.hpp>
-
 #include "Events/DestroyEvent.h"
 #include "Events/InitEvent.h"
 #include "MapData.h"
@@ -73,7 +71,7 @@ void BasicEntity::Update(float deltaTime)
     stateMachine_.Update(deltaTime);
 }
 
-void BasicEntity::DrawTo(sf::RenderTarget& renderTarget)
+void BasicEntity::DrawTo(Graphic::IRenderTarget& renderTarget)
 {
     stateMachine_.DrawTo(renderTarget);
 }

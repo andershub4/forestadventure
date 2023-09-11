@@ -11,6 +11,7 @@
 #include <unordered_map>
 
 #include "BasicShapePart.h"
+#include "IRenderTarget.h"
 #include "Logging.h"
 #include "Sprites/AnimationSprite.h"
 
@@ -56,7 +57,7 @@ public:
 
     virtual void SetPosition(const sf::Vector2f &position) override { currentAnimation_.SetPosition(position); }
     virtual void SetRotation(float rot) override { currentAnimation_.SetRotation(rot); }
-    virtual void DrawTo(sf::RenderTarget &renderTarget) override { currentAnimation_.DrawTo(renderTarget); }
+    virtual void DrawTo(Graphic::IRenderTarget &renderTarget) override { currentAnimation_.DrawTo(renderTarget); }
 
     void RegisterAnimation(const KeyT key, const Shared::AnimationSprite &animation) { map_[key] = animation; }
     void RegisterUpdateCB(std::function<void(const Shared::AnimationSprite &)> updateCB) { updateCB_ = updateCB; }

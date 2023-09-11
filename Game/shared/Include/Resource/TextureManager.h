@@ -8,13 +8,13 @@
 
 #include "ResourceManager.h"
 
-#include <SFML/Graphics/Texture.hpp>
+#include "Texture.h"
 
 namespace FA {
 
 namespace Shared {
 
-using TextureManager = ResourceManager<sf::Texture>;
+using TextureManager = ResourceManager<Graphic::Texture>;
 
 }  // namespace Shared
 

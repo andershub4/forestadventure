@@ -20,6 +20,12 @@
 
 namespace FA {
 
+namespace Graphic {
+
+class IRenderTarget;
+
+}  // namespace Graphic
+
 namespace Shared {
 
 class Message;
@@ -42,7 +48,7 @@ public:
     void Destroy();
     void Init();
     void Update(float deltaTime);
-    void DrawTo(sf::RenderTarget& renderTarget);
+    void DrawTo(Graphic::IRenderTarget& renderTarget);
     EntityId GetId() const { return id_; }
 
 protected:

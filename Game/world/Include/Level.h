@@ -6,13 +6,12 @@
 
 #pragma once
 
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-
 #include "CameraManager.h"
+#include "RenderTexture.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
 #include "SfmlFwd.h"
+#include "Sprite.h"
 
 namespace FA {
 
@@ -41,16 +40,16 @@ public:
 
     void Load(const std::string& levelName);
     void Update(float deltaTime);
-    void Draw(sf::RenderTarget& renderTarget);
+    void Draw(Graphic::IRenderTarget& renderTarget);
 
     void Create();
     sf::View GetView();
 
 private:
     const sf::Vector2u viewSize_;
-    sf::RenderTexture backgroundTexture_;
-    sf::Sprite backgroundSprite_;
-    std::vector<sf::Sprite> fringeLayer_;
+    Graphic::RenderTexture backgroundTexture_;
+    Graphic::Sprite backgroundSprite_;
+    std::vector<Graphic::Sprite> fringeLayer_;
     Shared::TextureManager& textureManager_;
     Shared::SheetManager sheetManager_;
     std::unique_ptr<TileMap> tileMap_;

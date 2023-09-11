@@ -13,6 +13,7 @@
 
 #include "Mock/LogMock.h"
 #include "Resource/ResourceManager.h"
+#include "TextureMock.h"
 
 using namespace testing;
 
@@ -20,19 +21,11 @@ namespace FA {
 
 namespace Shared {
 
-class SomeResourceMock
-{
-public:
-    MOCK_METHOD(bool, loadFromFileImpl, (const std::string& fileName, const sf::IntRect& area));
-    bool loadFromFile(const std::string& fileName, const sf::IntRect& area = sf::IntRect())
-    {
-        return loadFromFileImpl(fileName, area);
-    }
-};
-
 class ResourceManagerTest : public Test
 {
 protected:
+    using SomeResourceMock = Graphic::TextureMock;
+
     ResourceManagerTest()
         : resourceManager_(createFn_.AsStdFunction())
     {}
@@ -49,7 +42,7 @@ protected:
 TEST_F(ResourceManagerTest, LoadResourceShouldSucceed)
 {
     auto expectedPtr = resourceMock_.get();
-    EXPECT_CALL(*resourceMock_, loadFromFileImpl).WillOnce(Return(true));
+    EXPECT_CALL(*resourceMock_, loadFromFile(path_)).WillOnce(Return(true));
     EXPECT_CALL(createFn_, Call).WillOnce(Return(ByMove(std::move(resourceMock_))));
 
     auto id = resourceManager_.Load(path_);
@@ -60,7 +53,7 @@ TEST_F(ResourceManagerTest, LoadResourceShouldSucceed)
 
 TEST_F(ResourceManagerTest, LoadDuplicatedResourceShouldWarn)
 {
-    EXPECT_CALL(*resourceMock_, loadFromFileImpl).WillOnce(Return(true));
+    EXPECT_CALL(*resourceMock_, loadFromFile(path_)).WillOnce(Return(true));
     EXPECT_CALL(createFn_, Call).WillOnce(Return(ByMove(std::move(resourceMock_))));
 
     ResourceId expectedId = 0;
@@ -74,7 +67,7 @@ TEST_F(ResourceManagerTest, LoadDuplicatedResourceShouldWarn)
 
 TEST_F(ResourceManagerTest, LoadResourceShouldFail)
 {
-    EXPECT_CALL(*resourceMock_, loadFromFileImpl).WillOnce(Return(false));
+    EXPECT_CALL(*resourceMock_, loadFromFile(path_)).WillOnce(Return(false));
     EXPECT_CALL(createFn_, Call).WillOnce(Return(ByMove(std::move(resourceMock_))));
     EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("Could not load.*C:/MyFolder/MyFile.jpg")));
 

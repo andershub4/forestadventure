@@ -6,7 +6,9 @@
 
 #include "Effect/FadeEffect.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Color.hpp>
+
+#include "RenderWindow.h"
 
 namespace FA {
 
@@ -21,7 +23,7 @@ FadeEffect::FadeEffect(const sf::Vector2f& position, const sf::Vector2f& size, f
     fadeRect_.setFillColor(sf::Color(0, 0, 0, 0));
 }
 
-void FadeEffect::DrawTo(sf::RenderTarget& renderTarget) const
+void FadeEffect::DrawTo(Graphic::IRenderTarget& renderTarget) const
 {
     renderTarget.draw(fadeRect_);
 }

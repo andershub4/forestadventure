@@ -36,7 +36,7 @@ void StateMachine::Update(float deltaTime)
     currentState_->Update(deltaTime);
 }
 
-void StateMachine::DrawTo(sf::RenderTarget& renderTarget)
+void StateMachine::DrawTo(Graphic::IRenderTarget& renderTarget)
 {
     currentState_->DrawTo(renderTarget);
 }

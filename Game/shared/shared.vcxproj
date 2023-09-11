@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Src;$(SolutionDir)shared\Include;$(SolutionDir)logging\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Src;$(SolutionDir)shared\Include;$(SolutionDir)logging\Include;$(SolutionDir)graphic\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Src;$(SolutionDir)shared\Include;$(SolutionDir)logging\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Src;$(SolutionDir)shared\Include;$(SolutionDir)logging\Include;$(SolutionDir)graphic\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -169,7 +169,7 @@
     <ClInclude Include="Include\Sprites\AnimationSprite.h" />
     <ClInclude Include="Include\Resource\AnimationData.h" />
     <ClInclude Include="Include\Resource\Frame.h" />
-    <ClInclude Include="Include\Resource\Graphic.h" />
+    <ClInclude Include="Include\Resource\TileGraphic.h" />
     <ClInclude Include="Include\Sprites\ImageSprite.h" />
     <ClInclude Include="Include\Resource\ImageData.h" />
     <ClInclude Include="Include\Resource\ResourceManager.h" />

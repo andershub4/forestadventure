@@ -43,7 +43,7 @@ void Manager::SetTransitionScene(Shared::MessageBus& messageBus, Shared::Texture
         std::make_unique<TransitionScene>(*this, messageBus, textureManager, layers_, data_, std::move(transition)));
 }
 
-void Manager::DrawTo(sf::RenderTarget& renderTarget)
+void Manager::DrawTo(Graphic::IRenderTarget& renderTarget)
 {
     currentScene_->DrawTo(renderTarget);
 }

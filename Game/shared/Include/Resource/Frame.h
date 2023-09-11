@@ -13,11 +13,17 @@
 
 namespace FA {
 
+namespace Graphic {
+
+class ITexture;
+
+}  // namespace Graphic
+
 namespace Shared {
 
 struct Frame
 {
-    const sf::Texture* texture_ = nullptr;
+    const FA::Graphic::ITexture* texture_ = nullptr;
     sf::IntRect rect_;
 };
 

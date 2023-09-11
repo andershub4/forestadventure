@@ -14,7 +14,7 @@ namespace FA {
 
 namespace Shared {
 
-struct Graphic
+struct TileGraphic
 {
     using Animation = std::vector<ImageData>;
     Animation animation_;

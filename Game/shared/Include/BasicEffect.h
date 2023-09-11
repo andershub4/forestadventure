@@ -10,6 +10,12 @@
 
 namespace FA {
 
+namespace Graphic {
+
+class IRenderTarget;
+
+}  // namespace Graphic
+
 namespace Shared {
 
 class BasicEffect
@@ -18,7 +24,7 @@ public:
     BasicEffect();
     virtual ~BasicEffect();
 
-    virtual void DrawTo(sf::RenderTarget& renderTarget) const = 0;
+    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) const = 0;
     virtual void Update(float deltaTime) = 0;
 };
 

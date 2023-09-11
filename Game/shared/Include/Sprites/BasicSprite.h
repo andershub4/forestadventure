@@ -7,11 +7,17 @@
 #pragma once
 
 #include <memory>
-#include <vector>
 
 #include "SfmlFwd.h"
 
 namespace FA {
+
+namespace Graphic {
+
+class ISprite;
+class IRenderTarget;
+
+}  // namespace Graphic
 
 namespace Shared {
 
@@ -19,19 +25,19 @@ class BasicSprite
 {
 public:
     BasicSprite() = default;
-    BasicSprite(std::shared_ptr<sf::Sprite> sprite);
-    ~BasicSprite() = default;
+    BasicSprite(std::shared_ptr<Graphic::ISprite> sprite);
+    virtual ~BasicSprite() = default;
 
-    virtual void Update(float deltaTime) = 0;  // delta time; time since previous time to current frame
+    virtual void Update(float deltaTime);  // delta time; time since previous time to current frame
 
     void SetPosition(const sf::Vector2f &position);
     void SetRotation(float rot);
-    void DrawTo(sf::RenderTarget &renderTarget);
+    void DrawTo(Graphic::IRenderTarget &renderTarget) const;
     void Center();
     bool IsValid() const;
 
 protected:
-    std::shared_ptr<sf::Sprite> sprite_;
+    std::shared_ptr<Graphic::ISprite> sprite_;
 
 private:
     bool isValid_ = false;

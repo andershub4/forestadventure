@@ -14,6 +14,12 @@
 
 namespace FA {
 
+namespace Graphic {
+
+class IRenderTarget;
+
+}  // namespace Graphic
+
 namespace Shared {
 
 class MessageBus;
@@ -30,7 +36,7 @@ public:
                Manager::Layers& layers, Manager::Data& data);
     virtual ~BasicScene();
 
-    virtual void DrawTo(sf::RenderTarget& renderTarget) = 0;
+    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) = 0;
     virtual void Update(float deltaTime) = 0;
     virtual std::string Name() const = 0;
 

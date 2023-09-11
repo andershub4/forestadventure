@@ -6,13 +6,13 @@
 
 #include "Sprites/ImageSprite.h"
 
-#include <SFML/Graphics/Sprite.hpp>
+#include "ISprite.h"
 
 namespace FA {
 
 namespace Shared {
 
-ImageSprite::ImageSprite(std::shared_ptr<sf::Sprite> sprite, const Frame& frame)
+ImageSprite::ImageSprite(std::shared_ptr<Graphic::ISprite> sprite, const Frame& frame)
     : BasicSprite(sprite)
     , frame_(frame)
 {}

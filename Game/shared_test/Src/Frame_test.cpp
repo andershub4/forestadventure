@@ -6,6 +6,7 @@
 
 #include <gtest/gtest.h>
 
+#include "ITexture.h"
 #include "Resource/Frame.h"
 
 using namespace testing;
@@ -17,7 +18,7 @@ namespace Shared {
 TEST(FrameTest, TestFrameEqualToOperator)
 {
     sf::IntRect rect{12, 12, 10, 10};
-    sf::Texture* texture = nullptr;
+    Graphic::ITexture* texture = nullptr;
     Frame d1{texture, rect};
     Frame d2 = d1;
     EXPECT_TRUE(d1 == d2);

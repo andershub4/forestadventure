@@ -6,6 +6,8 @@
 
 #include "TransitionScene.h"
 
+#include <SFML/Graphics/Rect.hpp>
+
 #include "Layers/HelperLayer.h"
 #include "Screen.h"
 #include "Transitions/BasicTransition.h"
@@ -46,7 +48,7 @@ void TransitionScene::Exit()
     }
 }
 
-void TransitionScene::DrawTo(sf::RenderTarget& renderTarget)
+void TransitionScene::DrawTo(Graphic::IRenderTarget& renderTarget)
 {
     for (const auto& entry : layers_) {
         auto& layer = entry.second;

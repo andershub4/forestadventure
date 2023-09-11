@@ -6,14 +6,12 @@
 
 #include "TileEntity.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-
 #include "Constant/Entity.h"
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
 #include "Resource/TextureRect.h"
 #include "ShapeParts/AnimationPart.h"
+#include "Sprite.h"
 #include "State.h"
 
 namespace FA {
@@ -34,10 +32,10 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 {
     float t = Constant::stdSwitchTime;
 
-    Shared::AnimationSprite animation(std::make_shared<sf::Sprite>(), 0, t);
+    Shared::AnimationSprite animation(std::make_shared<Graphic::Sprite>(), 0, t);
     for (const auto& d : data.graphic_.animation_) {
         auto rect = service_.MakeRect(d);
-        const sf::Texture* texture = service_.GetTexture(rect.id_);
+        const auto* texture = service_.GetTexture(rect.id_);
         Shared::Frame frame{texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}};
         animation.AddFrame(frame);
     }

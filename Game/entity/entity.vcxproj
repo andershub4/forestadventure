@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Include;$(SolutionDir)util\Include;$(SolutionDir)entity\Src;$(SolutionDir)entity\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Include;$(SolutionDir)util\Include;$(SolutionDir)entity\Src;$(SolutionDir)entity\Include;$(SolutionDir)graphic\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Include;$(SolutionDir)util\Include;$(SolutionDir)entity\Src;$(SolutionDir)entity\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Include;$(SolutionDir)util\Include;$(SolutionDir)entity\Src;$(SolutionDir)entity\Include;$(SolutionDir)graphic\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -200,6 +200,11 @@
     <ClCompile Include="Src\Shape.cpp" />
     <ClCompile Include="Src\State.cpp" />
     <ClCompile Include="Src\StateMachine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\graphic\graphic.vcxproj">
+      <Project>{1a26709c-735a-4ddd-9b76-ac08544b4b82}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -32,7 +32,7 @@ EntityManager::~EntityManager()
     }
 }
 
-void EntityManager::DrawTo(sf::RenderTarget& renderTarget) const
+void EntityManager::DrawTo(Graphic::IRenderTarget& renderTarget) const
 {
     for (auto p : drawables_) {
         auto id = p.second.id_;
@@ -64,7 +64,7 @@ void EntityManager::CreateEntity(const std::string& typeStr, const sf::Vector2f&
     CreateEntity(data, mapData);
 }
 
-void EntityManager::CreateTileEntity(const sf::Vector2f& pos, const Shared::Graphic& graphic,
+void EntityManager::CreateTileEntity(const sf::Vector2f& pos, const Shared::TileGraphic& graphic,
                                      const Shared::MapData& mapData)
 {
     PropertyData data;

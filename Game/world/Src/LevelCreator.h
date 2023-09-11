@@ -8,14 +8,18 @@
 
 #include <vector>
 
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/System/Vector2.hpp>
-
 #include "Resource/TextureManager.h"
 #include "SfmlFwd.h"
 #include "TileMap.h"
 
 namespace FA {
+
+namespace Graphic {
+
+class Sprite;
+class IRenderTarget;
+
+}  // namespace Graphic
 
 namespace Shared {
 
@@ -31,9 +35,9 @@ public:
     LevelCreator(const Shared::TextureManager &textureManager, const Shared::SheetManager &sheetManager);
 
     void AddBackground(const std::vector<TileMap::TileData> &layer);
-    void CreateBackground(const sf::Vector2u &size, sf::RenderTexture &texture) const;
+    void CreateBackground(Graphic::IRenderTarget &texture) const;
 
-    std::vector<sf::Sprite> CreateFringe(const std::vector<TileMap::TileData> &layer) const;
+    std::vector<Graphic::Sprite> CreateFringe(const std::vector<TileMap::TileData> &layer) const;
 
 private:
     const Shared::TextureManager &textureManager_;
@@ -41,7 +45,7 @@ private:
     std::vector<std::vector<TileMap::TileData>> layers_;
 
 private:
-    sf::Sprite CreateSprite(const TileMap::TileData &data) const;
+    Graphic::Sprite CreateSprite(const TileMap::TileData &data) const;
 };
 
 }  // namespace World

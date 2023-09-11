@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/Text.hpp>
+#include "Font.h"
+#include "Text.h"
 
 #include "BasicLayer.h"
 
@@ -30,8 +30,8 @@ public:
     virtual void OnCreate() override;
 
 private:
-    sf::Font font_;
-    sf::Text versionText_;
+    Graphic::Font font_;
+    Graphic::Text versionText_;
 };
 
 }  // namespace Scene

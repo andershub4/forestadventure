@@ -4,8 +4,6 @@
  *	See file LICENSE for full license details.
  */
 
-#include <SFML/Graphics/Sprite.hpp>
-
 #include "EntityService.h"
 
 #include "Camera.h"
@@ -18,6 +16,7 @@
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
 #include "Resource/TextureRect.h"
+#include "Sprite.h"
 #include "Sprites/AnimationSprite.h"
 #include "Sprites/ImageSprite.h"
 
@@ -40,7 +39,7 @@ EntityService::~EntityService() = default;
 Shared::AnimationSprite EntityService::MakeAnimation(const Shared::AnimationData& data) const
 {
     float t = Constant::stdSwitchTime;
-    auto sprite = std::make_shared<sf::Sprite>();
+    auto sprite = std::make_shared<Graphic::Sprite>();
     Shared::AnimationSprite animation(sprite, data.locationData_.defaultIndex_, t);
     auto rects = sheetManager_.MakeRects(data);
 
@@ -56,7 +55,7 @@ Shared::ImageSprite EntityService::MakeImage(const Shared::ImageData& data) cons
 {
     auto rect = sheetManager_.MakeRect(data);
     const auto* texture = textureManager_.Get(rect.id_);
-    auto sprite = std::make_shared<sf::Sprite>();
+    auto sprite = std::make_shared<Graphic::Sprite>();
 
     return Shared::ImageSprite(sprite, {texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
 }
@@ -66,7 +65,7 @@ Shared::TextureRect EntityService::MakeRect(const Shared::ImageData& data) const
     return sheetManager_.MakeRect(data);
 }
 
-const sf::Texture* EntityService::GetTexture(Shared::ResourceId id) const
+const Graphic::ITexture* EntityService::GetTexture(Shared::ResourceId id) const
 {
     return textureManager_.Get(id);
 }

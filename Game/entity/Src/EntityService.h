@@ -11,13 +11,17 @@
 #include <string>
 #include <vector>
 
-#include <SFML/Graphics/Rect.hpp>
-
 #include "Enum/EntityType.h"
 #include "Id.h"
 #include "Resource/TextureManager.h"
 
 namespace FA {
+
+namespace Graphic {
+
+class ISprite;
+
+}
 
 namespace Shared {
 
@@ -53,7 +57,7 @@ public:
     Shared::ImageSprite MakeImage(const Shared::ImageData &data) const;
 
     Shared::TextureRect MakeRect(const Shared::ImageData &data) const;
-    const sf::Texture *GetTexture(Shared::ResourceId id) const;
+    const Graphic::ITexture *GetTexture(Shared::ResourceId id) const;
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);
     void AddSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes,

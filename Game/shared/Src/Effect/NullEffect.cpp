@@ -14,7 +14,7 @@ NullEffect::NullEffect()
     : BasicEffect()
 {}
 
-void NullEffect::DrawTo(sf::RenderTarget& renderTarget) const
+void NullEffect::DrawTo(Graphic::IRenderTarget& renderTarget) const
 {}
 
 void NullEffect::Update(float deltaTime)

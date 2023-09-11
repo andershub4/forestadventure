@@ -8,10 +8,10 @@
 
 #include "LevelCreator.h"
 
-#include <SFML/Graphics/Sprite.hpp>
-
+#include "IRenderTarget.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureRect.h"
+#include "Sprite.h"
 
 namespace FA {
 
@@ -27,10 +27,8 @@ void LevelCreator::AddBackground(const std::vector<TileMap::TileData> &layer)
     layers_.push_back(layer);
 }
 
-void LevelCreator::CreateBackground(const sf::Vector2u &size, sf::RenderTexture &texture) const
+void LevelCreator::CreateBackground(Graphic::IRenderTarget &texture) const
 {
-    texture.create(size.x, size.y);
-
     for (const auto &layer : layers_) {
         for (const auto &data : layer) {
             auto sprite = CreateSprite(data);
@@ -39,9 +37,9 @@ void LevelCreator::CreateBackground(const sf::Vector2u &size, sf::RenderTexture 
     }
 }
 
-std::vector<sf::Sprite> LevelCreator::CreateFringe(const std::vector<TileMap::TileData> &layer) const
+std::vector<Graphic::Sprite> LevelCreator::CreateFringe(const std::vector<TileMap::TileData> &layer) const
 {
-    std::vector<sf::Sprite> fringe;
+    std::vector<Graphic::Sprite> fringe;
 
     for (const auto &data : layer) {
         auto sprite = CreateSprite(data);
@@ -51,13 +49,13 @@ std::vector<sf::Sprite> LevelCreator::CreateFringe(const std::vector<TileMap::Ti
     return fringe;
 }
 
-sf::Sprite LevelCreator::CreateSprite(const TileMap::TileData &data) const
+Graphic::Sprite LevelCreator::CreateSprite(const TileMap::TileData &data) const
 {
     auto imageData = data.graphic_.image_;
     auto textureRect = sheetManager_.MakeRect(imageData);
     const auto *texture = textureManager_.Get(textureRect.id_);
     sf::IntRect rect{textureRect.position_.x, textureRect.position_.y, textureRect.size_.x, textureRect.size_.y};
-    sf::Sprite sprite;
+    Graphic::Sprite sprite;
     sprite.setTexture(*texture);
     sprite.setTextureRect(rect);
     sprite.setPosition(data.position_);

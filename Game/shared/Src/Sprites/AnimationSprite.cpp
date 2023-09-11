@@ -6,13 +6,13 @@
 
 #include "Sprites/AnimationSprite.h"
 
-#include <SFML/Graphics/Sprite.hpp>
+#include "Sprite.h"
 
 namespace FA {
 
 namespace Shared {
 
-AnimationSprite::AnimationSprite(std::shared_ptr<sf::Sprite> sprite, unsigned int defaultIndex, float switchTime)
+AnimationSprite::AnimationSprite(std::shared_ptr<Graphic::ISprite> sprite, unsigned int defaultIndex, float switchTime)
     : BasicSprite(sprite)
     , switchTime_(switchTime)
     , time_(0.0)

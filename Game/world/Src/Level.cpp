@@ -8,11 +8,10 @@
 
 #include "Level.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
-
 #include "Camera.h"
 #include "EntityManager.h"
 #include "Folder.h"
+#include "IRenderTarget.h"
 #include "LevelCreator.h"
 #include "Logging.h"
 #include "MapData.h"
@@ -65,7 +64,7 @@ void Level::Update(float deltaTime)
     entityManager_->HandleDeletedEntities();
 }
 
-void Level::Draw(sf::RenderTarget &renderTarget)
+void Level::Draw(Graphic::IRenderTarget &renderTarget)
 {
     renderTarget.draw(backgroundSprite_);
     entityManager_->DrawTo(renderTarget);
@@ -98,7 +97,9 @@ void Level::CreateMap()
     LOG_INFO("Create map");
     levelCreator_->AddBackground(tileMap_->GetLayer("Ground Layer 1"));
     levelCreator_->AddBackground(tileMap_->GetLayer("Ground Layer 2"));
-    levelCreator_->CreateBackground(tileMap_->GetSize(), backgroundTexture_);
+    auto size = tileMap_->GetSize();
+    backgroundTexture_.create(size.x, size.y);
+    levelCreator_->CreateBackground(backgroundTexture_);
     backgroundTexture_.display();
     backgroundSprite_.setTexture(backgroundTexture_.getTexture());
     fringeLayer_ = levelCreator_->CreateFringe(tileMap_->GetLayer("Fringe Layer"));

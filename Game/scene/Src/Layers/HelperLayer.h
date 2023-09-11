@@ -6,9 +6,11 @@
 
 #pragma once
 
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/Text.hpp>
+#include <string>
+
+#include "Font.h"
+#include "RectangleShape.h"
+#include "Text.h"
 
 #include "BasicLayer.h"
 
@@ -33,13 +35,13 @@ public:
     virtual void UnsubscribeMessages() override;
 
 private:
-    sf::RectangleShape dotShape_;
-    sf::Font font_;
-    sf::Text sceneText_;
-    sf::Text fpsText_;
-    sf::Text fpsNumberText_;
-    sf::Text nEntitiesText_;
-    sf::Text nEntitiesCountText_;
+    Graphic::RectangleShape dotShape_;
+    Graphic::Font font_;
+    Graphic::Text sceneText_;
+    Graphic::Text fpsText_;
+    Graphic::Text fpsNumberText_;
+    Graphic::Text nEntitiesText_;
+    Graphic::Text nEntitiesCountText_;
     std::string sceneName_;
     unsigned int nEntities_ = 0;
 

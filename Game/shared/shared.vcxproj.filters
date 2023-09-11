@@ -87,7 +87,7 @@
     <ClInclude Include="Include\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Resource\Graphic.h">
+    <ClInclude Include="Include\Resource\TileGraphic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\BasicEffect.h">
