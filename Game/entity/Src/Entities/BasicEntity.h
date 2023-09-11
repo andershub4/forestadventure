@@ -48,7 +48,7 @@ public:
     void Destroy();
     void Init();
     void Update(float deltaTime);
-    void DrawTo(Graphic::IRenderTarget& renderTarget);
+    void DrawTo(Graphic::IRenderTarget& renderTarget) const;
     EntityId GetId() const { return id_; }
 
 protected:

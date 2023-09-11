@@ -36,7 +36,7 @@ public:
     void RegisterPart(std::shared_ptr<BasicShapePart> part);
     void Enter();
     void Update(float deltaTime);
-    void DrawTo(Graphic::IRenderTarget &renderTarget);
+    void DrawTo(Graphic::IRenderTarget &renderTarget) const;
 
 private:
     std::vector<std::shared_ptr<BasicShapePart>> parts_;

@@ -49,7 +49,7 @@ void State::Update(float deltaTime)
     shape_.Update(deltaTime);
 }
 
-void State::DrawTo(Graphic::IRenderTarget &renderTarget)
+void State::DrawTo(Graphic::IRenderTarget &renderTarget) const
 {
     shape_.DrawTo(renderTarget);
 }

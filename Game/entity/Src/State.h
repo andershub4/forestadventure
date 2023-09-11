@@ -44,7 +44,7 @@ public:
     void Enter(std::shared_ptr<BasicEvent> event);
     void Exit();
     void Update(float deltaTime);
-    void DrawTo(Graphic::IRenderTarget& renderTarget);
+    void DrawTo(Graphic::IRenderTarget& renderTarget) const;
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     StateType GetStateType() const { return stateType_; }
     void RegisterEnterCB(std::function<void()> enterCB);

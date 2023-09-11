@@ -28,7 +28,7 @@ public:
 
     virtual void SetPosition(const sf::Vector2f &position) = 0;
     virtual void SetRotation(float rot) = 0;
-    virtual void DrawTo(Graphic::IRenderTarget &renderTarget) = 0;
+    virtual void DrawTo(Graphic::IRenderTarget &renderTarget) const = 0;
 };
 
 }  // namespace Entity

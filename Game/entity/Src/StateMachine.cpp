@@ -36,7 +36,7 @@ void StateMachine::Update(float deltaTime)
     currentState_->Update(deltaTime);
 }
 
-void StateMachine::DrawTo(Graphic::IRenderTarget& renderTarget)
+void StateMachine::DrawTo(Graphic::IRenderTarget& renderTarget) const
 {
     currentState_->DrawTo(renderTarget);
 }

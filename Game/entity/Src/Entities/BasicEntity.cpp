@@ -71,7 +71,7 @@ void BasicEntity::Update(float deltaTime)
     stateMachine_.Update(deltaTime);
 }
 
-void BasicEntity::DrawTo(Graphic::IRenderTarget& renderTarget)
+void BasicEntity::DrawTo(Graphic::IRenderTarget& renderTarget) const
 {
     stateMachine_.DrawTo(renderTarget);
 }

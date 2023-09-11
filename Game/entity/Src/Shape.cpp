@@ -50,7 +50,7 @@ void Shape::RegisterPart(std::shared_ptr<BasicShapePart> part)
     parts_.push_back(part);
 }
 
-void Shape::DrawTo(Graphic::IRenderTarget& renderTarget)
+void Shape::DrawTo(Graphic::IRenderTarget& renderTarget) const
 {
     for (auto part : parts_) {
         part->DrawTo(renderTarget);
