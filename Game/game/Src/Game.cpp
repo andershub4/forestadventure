@@ -8,6 +8,8 @@
 
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <SFML/Window/WindowStyle.hpp>
+#include <SFML/Graphics/View.hpp>
 
 #include "InputSystem.h"
 #include "Logging.h"
