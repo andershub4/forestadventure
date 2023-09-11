@@ -39,6 +39,8 @@ public:
         if (resource->loadFromFile(path)) {
             paths_[path] = id_;
             resources_.emplace(id_, std::move(resource));
+            auto n = resources_.size();
+            LOG_INFO("Loaded %u resource(s)", n);
             return id_++;
         }
         else {

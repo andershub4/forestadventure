@@ -44,6 +44,7 @@ TEST_F(ResourceManagerTest, LoadResourceShouldSucceed)
     auto expectedPtr = resourceMock_.get();
     EXPECT_CALL(*resourceMock_, loadFromFile(path_)).WillOnce(Return(true));
     EXPECT_CALL(createFn_, Call).WillOnce(Return(ByMove(std::move(resourceMock_))));
+    EXPECT_CALL(loggerMock_, MakeInfoLogEntry("Loaded 1 resource(s)"));
 
     auto id = resourceManager_.Load(path_);
     auto result = resourceManager_.Get(id);
@@ -55,6 +56,7 @@ TEST_F(ResourceManagerTest, LoadDuplicatedResourceShouldWarn)
 {
     EXPECT_CALL(*resourceMock_, loadFromFile(path_)).WillOnce(Return(true));
     EXPECT_CALL(createFn_, Call).WillOnce(Return(ByMove(std::move(resourceMock_))));
+    EXPECT_CALL(loggerMock_, MakeInfoLogEntry("Loaded 1 resource(s)"));
 
     ResourceId expectedId = 0;
     auto id1 = resourceManager_.Load(path_);
