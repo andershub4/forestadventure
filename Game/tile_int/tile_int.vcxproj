@@ -65,7 +65,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile\Src;$(SolutionDir)3rdparty\submodules;$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)logging_test\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile\Src;$(SolutionDir)3rdparty\submodules;$(SolutionDir)util\Include;$(SolutionDir)logging\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -97,7 +97,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile\Src;$(SolutionDir)3rdparty\submodules;$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)logging_test\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile\Src;$(SolutionDir)3rdparty\submodules;$(SolutionDir)util\Include;$(SolutionDir)logging\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

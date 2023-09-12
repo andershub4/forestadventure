@@ -78,7 +78,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)logging\Include;$(SolutionDir)logging_test\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile_test\Include;$(SolutionDir)util_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)logging\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>
@@ -110,7 +110,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)logging\Include;$(SolutionDir)logging_test\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile_test\Include;$(SolutionDir)util_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)logging\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>

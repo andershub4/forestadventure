@@ -74,7 +74,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(SolutionDir)graphic\Include;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)logging_test\Include;$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)shared_test\Include;$(SolutionDir)shared\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)graphic\Include;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)shared_test\Include;$(SolutionDir)shared\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -105,7 +105,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)graphic\Include;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)logging_test\Include;$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)shared_test\Include;$(SolutionDir)shared\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)graphic\Include;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)shared_test\Include;$(SolutionDir)shared\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

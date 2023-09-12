@@ -35,5 +35,8 @@
     <ClInclude Include="Src\LogLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Mock\LoggerMock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

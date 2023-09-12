@@ -220,6 +220,8 @@
   <ItemGroup>
     <ClInclude Include="Include\BasicByteStream.h" />
     <ClInclude Include="Include\BasicByteStreamFactory.h" />
+    <ClInclude Include="Include\Mock\ByteStreamFactoryMock.h" />
+    <ClInclude Include="Include\Mock\ByteStreamMock.h" />
     <ClInclude Include="Include\Format.h" />
     <ClInclude Include="Include\Print.h" />
     <ClInclude Include="Src\ByteStream.h" />
