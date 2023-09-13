@@ -144,6 +144,7 @@
     <ClInclude Include="Include\Camera.h" />
     <ClInclude Include="Include\CameraManager.h" />
     <ClInclude Include="Include\EffectFactory.h" />
+    <ClInclude Include="Include\Mock\LogMock.h" />
     <ClInclude Include="Include\Sprites\BasicSprite.h" />
     <ClInclude Include="Include\Resource\ResourceId.h" />
     <ClInclude Include="Include\Resource\SpriteSheetIf.h" />

@@ -10,6 +10,10 @@
 
 namespace LogLib {
 
+// Currently not used. LoggerMocks in Shared and Tile projects
+// redefine the MOCK_METHODS, so test projects that uses
+// the LoggerMocks does not need to add include paths to
+// logging project as well.
 class LoggerMock
 {
 public:

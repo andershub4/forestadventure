@@ -39,7 +39,6 @@
     <ClCompile Include="Src\Frame_test.cpp" />
     <ClCompile Include="Src\ImageData_test.cpp" />
     <ClCompile Include="Src\ImageSprite_test.cpp" />
-    <ClCompile Include="Src\LogMock.cpp" />
     <ClCompile Include="Src\ResourceManager_test.cpp" />
     <ClCompile Include="Src\SheetData_test.cpp" />
     <ClCompile Include="Src\SheetManager_test.cpp" />
@@ -55,7 +54,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Mock\LogMock.h" />
     <ClInclude Include="Src\Mock\SpriteSheetMock.h" />
   </ItemGroup>
   <ItemDefinitionGroup />
@@ -74,7 +72,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(SolutionDir)graphic\Include;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)shared_test\Include;$(SolutionDir)shared\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)graphic\Include;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)util\Include;$(SolutionDir)shared_test\Include;$(SolutionDir)shared\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -105,7 +103,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)graphic\Include;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)util\Include;$(SolutionDir)logging\Include;$(SolutionDir)shared_test\Include;$(SolutionDir)shared\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)graphic\Include;$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)util\Include;$(SolutionDir)shared_test\Include;$(SolutionDir)shared\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

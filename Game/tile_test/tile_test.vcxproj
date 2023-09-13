@@ -45,9 +45,6 @@
     <ClCompile Include="Src\TsxParser_test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\test_common\test_common.vcxproj">
-      <Project>{4b41cfdf-ee79-4536-ab80-1e91e307970c}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\tile\tile.vcxproj">
       <Project>{b998d8ba-9c74-429f-a576-5ee6c6e8ccb6}</Project>
     </ProjectReference>
@@ -78,7 +75,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)logging\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>
@@ -110,7 +107,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)test_common\Include;$(SolutionDir)logging\Include;$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile_test\Include;$(SolutionDir)tile\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>
