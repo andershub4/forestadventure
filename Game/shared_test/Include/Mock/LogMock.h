@@ -4,9 +4,9 @@
  *	See file LICENSE for full license details.
  */
 
-#include <gmock/gmock.h>
-
 #pragma once
+
+#include <gmock/gmock.h>
 
 namespace FA {
 
