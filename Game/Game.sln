@@ -70,9 +70,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "world", "world\world.vcxproj", "{5BB3DBFD-E41E-40D0-90F3-B2C049B6C8D0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tile_int", "tile_int\tile_int.vcxproj", "{9B59F602-4FF9-4273-94D3-7883E42D331B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D73AC684-AA40-42CB-825F-7CA3045AA023} = {D73AC684-AA40-42CB-825F-7CA3045AA023}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shared_test", "shared_test\shared_test.vcxproj", "{A8446BE5-C735-41E1-A21B-603A7DAA8A0F}"
 EndProject
