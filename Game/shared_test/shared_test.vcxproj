@@ -39,6 +39,7 @@
     <ClCompile Include="Src\Frame_test.cpp" />
     <ClCompile Include="Src\ImageData_test.cpp" />
     <ClCompile Include="Src\ImageSprite_test.cpp" />
+    <ClCompile Include="Src\Mock\LogMock.cpp" />
     <ClCompile Include="Src\ResourceManager_test.cpp" />
     <ClCompile Include="Src\SheetData_test.cpp" />
     <ClCompile Include="Src\SheetManager_test.cpp" />
@@ -54,6 +55,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Mock\LogMock.h" />
     <ClInclude Include="Src\Mock\SpriteSheetMock.h" />
   </ItemGroup>
   <ItemDefinitionGroup />

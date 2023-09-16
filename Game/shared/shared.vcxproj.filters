@@ -126,9 +126,6 @@
     <ClInclude Include="Include\Sprites\BasicSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Mock\LogMock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\MessageBus.cpp">
