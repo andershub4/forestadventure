@@ -9,16 +9,7 @@
 #include <string>
 
 #include "IRenderTarget.h"
-
-namespace sf {
-
-class VideoMode;
-class Event;
-class Color;
-class View;
-typedef unsigned int Uint32;
-
-}  // namespace sf
+#include "SfmlFwd.h"
 
 namespace FA {
 

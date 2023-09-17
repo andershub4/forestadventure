@@ -23,8 +23,16 @@ class RectangleShape;
 class Texture;
 class RenderWindow;
 class RenderTarget;
+class RenderTexture;
 class Event;
 class Sprite;
 class View;
+class Font;
+class Drawable;
+class Color;
+class VideoMode;
+class Text;	
+
+typedef unsigned int Uint32;
 
 }  // namespace sf

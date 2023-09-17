@@ -9,12 +9,7 @@
 #include <memory>
 
 #include "IFont.h"
-
-namespace sf {
-
-class Font;
-
-}  // namespace sf
+#include "SfmlFwd.h"
 
 namespace FA {
 

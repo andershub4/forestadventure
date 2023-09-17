@@ -9,12 +9,7 @@
 #include <memory>
 
 #include "IRenderTexture.h"
-
-namespace sf {
-
-class RenderTexture;
-
-}  // namespace sf
+#include "SfmlFwd.h"
 
 namespace FA {
 

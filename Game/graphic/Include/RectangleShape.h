@@ -11,12 +11,7 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "IRectangleShape.h"
-
-namespace sf {
-
-class RectangleShape;
-
-}  // namespace sf
+#include "SfmlFwd.h"
 
 namespace FA {
 

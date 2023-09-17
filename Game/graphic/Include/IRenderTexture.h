@@ -7,19 +7,7 @@
 #pragma once
 
 #include "IRenderTarget.h"
-
-namespace sf {
-
-template <class T>
-class Vector2;
-typedef Vector2<int> Vector2i;
-typedef Vector2<unsigned int> Vector2u;
-typedef Vector2<float> Vector2f;
-
-class View;
-class Color;
-
-}  // namespace sf
+#include "SfmlFwd.h"
 
 namespace FA {
 

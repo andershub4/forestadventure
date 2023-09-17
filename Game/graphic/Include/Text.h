@@ -9,13 +9,7 @@
 #include <memory>
 
 #include "IText.h"
-
-namespace sf {
-
-class Text;
-class Drawable;
-
-}  // namespace sf
+#include "SfmlFwd.h"
 
 namespace FA {
 

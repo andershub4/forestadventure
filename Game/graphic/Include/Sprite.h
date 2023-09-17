@@ -9,13 +9,7 @@
 #include <memory>
 
 #include "ISprite.h"
-
-namespace sf {
-
-class Sprite;
-class Drawable;
-
-}  // namespace sf
+#include "SfmlFwd.h"
 
 namespace FA {
 

@@ -6,11 +6,7 @@
 
 #pragma once
 
-namespace sf {
-
-class Drawable;
-
-}  // namespace sf
+#include "SfmlFwd.h"
 
 namespace FA {
 

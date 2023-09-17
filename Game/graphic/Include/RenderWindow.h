@@ -9,12 +9,7 @@
 #include <memory>
 
 #include "IRenderWindow.h"
-
-namespace sf {
-
-class RenderWindow;
-
-}  // namespace sf
+#include "SfmlFwd.h"
 
 namespace FA {
 

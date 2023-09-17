@@ -9,12 +9,7 @@
 #include <memory>
 
 #include "ITexture.h"
-
-namespace sf {
-
-class Texture;
-
-}  // namespace sf
+#include "SfmlFwd.h"
 
 namespace FA {
 
