@@ -154,7 +154,6 @@
     <ClCompile Include="Src\TsxParser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Mock\TmxLogMock.h" />
     <ClInclude Include="Src\BasicParseHelper.h" />
     <ClInclude Include="Src\BasicTileSet.h" />
     <ClInclude Include="Src\BasicTileSetFactory.h" />

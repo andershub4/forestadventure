@@ -36,6 +36,7 @@
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc" />
     <ClCompile Include="Src\GridTileSet_test.cpp" />
     <ClCompile Include="Src\ImageTileSet_test.cpp" />
+    <ClCompile Include="Src\Mock\TmxLogMock.cpp" />
     <ClCompile Include="Src\ParsedElements_test.cpp" />
     <ClCompile Include="Src\ParseHelper_test.cpp" />
     <ClCompile Include="Src\TileMapData_test.cpp" />
@@ -53,6 +54,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Mock\TmxLogMock.h" />
     <ClInclude Include="Src\Mock\ParseHelperMock.h" />
     <ClInclude Include="Src\Mock\TileSetFactoryMock.h" />
     <ClInclude Include="Src\Mock\TileSetMock.h" />

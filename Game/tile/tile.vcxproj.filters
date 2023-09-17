@@ -101,8 +101,5 @@
     <ClInclude Include="Src\BasicTileSetFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Mock\TmxLogMock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

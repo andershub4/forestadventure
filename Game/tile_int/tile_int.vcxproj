@@ -34,6 +34,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc" />
+    <ClCompile Include="..\tile_test\Src\Mock\TmxLogMock.cpp" />
     <ClCompile Include="Src\TmxParser_int.cpp" />
     <ClCompile Include="Src\TsxParser_int.cpp" />
   </ItemGroup>
@@ -62,7 +63,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>$(SolutionDir)tile\Include;$(SolutionDir)tile\Src;$(SolutionDir)3rdparty\submodules;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)tile_test\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile\Src;$(SolutionDir)3rdparty\submodules;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -94,7 +95,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>$(SolutionDir)tile\Include;$(SolutionDir)tile\Src;$(SolutionDir)3rdparty\submodules;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)tile_test\Include;$(SolutionDir)tile\Include;$(SolutionDir)tile\Src;$(SolutionDir)3rdparty\submodules;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
