@@ -11,6 +11,7 @@
 #include <SFML/Graphics/Rect.hpp>
 
 #include "ISprite.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 
@@ -26,7 +27,7 @@ public:
     }
     MOCK_METHOD((void), setTextureRect, (const sf::IntRect&), (override));
     MOCK_METHOD((void), setColor, (const sf::Color&), (override));
-    MOCK_METHOD((const ITexture*), getTexture, (), (const));
+    MOCK_METHOD((const ITexture*), getTexture, (), (const override));
     MOCK_METHOD((sf::FloatRect), getLocalBounds, (), (const override));
     MOCK_METHOD((void), setPosition, (float, float), (override));
     MOCK_METHOD((void), setPosition, (const sf::Vector2f&), (override));
@@ -38,8 +39,6 @@ private:
     MOCK_METHOD((const sf::Drawable&), conversionOperator, (), (const));
     virtual operator const sf::Drawable&() const { return conversionOperator(); }
 };
-
-// sf::Sprite SpriteMock::sprite_;
 
 }  // namespace Graphic
 

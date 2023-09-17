@@ -9,6 +9,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <SFML/System/Vector2.hpp>
+
 #include "SpriteMock.h"
 #include "Sprites/BasicSprite.h"
 

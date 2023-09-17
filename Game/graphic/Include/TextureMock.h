@@ -8,6 +8,8 @@
 
 #include <gmock/gmock.h>
 
+#include <SFML/System/Vector2.hpp>
+
 #include "ITexture.h"
 
 namespace FA {
