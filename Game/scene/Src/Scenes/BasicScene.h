@@ -9,7 +9,6 @@
 #include "Layers/BasicLayer.h"
 #include "Manager.h"
 #include "Resource/TextureManager.h"
-#include "SfmlFwd.h"
 #include "Transitions/NullTransition.h"
 
 namespace FA {

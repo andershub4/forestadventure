@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include "SfmlFwd.h"
-
 namespace FA {
 
 namespace Graphic {

@@ -11,7 +11,6 @@
 #include <SFML/Window/Keyboard.hpp>
 
 #include "IRenderWindow.h"
-#include "SfmlFwd.h"
 
 namespace FA {
 

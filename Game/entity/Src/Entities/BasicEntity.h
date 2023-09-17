@@ -15,7 +15,6 @@
 #include "LayerType.h"
 #include "PropertyData.h"
 #include "PropertyStore.h"
-#include "SfmlFwd.h"
 #include "StateMachine.h"
 
 namespace FA {

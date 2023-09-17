@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "Resource/TextureManager.h"
-#include "SfmlFwd.h"
 
 namespace FA {
 

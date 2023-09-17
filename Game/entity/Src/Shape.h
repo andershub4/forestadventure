@@ -13,7 +13,6 @@
 #include "RectangleShape.h"
 #endif
 
-#include "SfmlFwd.h"
 #include "ShapeParts/BasicShapePart.h"
 
 namespace FA {

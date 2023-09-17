@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
-#include "SfmlFwd.h"
 #include "SfmlPrint.h"
 
 namespace FA {
@@ -23,7 +22,7 @@ namespace Shared {
 
 struct Frame
 {
-    const FA::Graphic::ITexture* texture_ = nullptr;
+    const Graphic::ITexture* texture_ = nullptr;
     sf::IntRect rect_;
 };
 

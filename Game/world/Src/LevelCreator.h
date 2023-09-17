@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "Resource/TextureManager.h"
-#include "SfmlFwd.h"
 #include "TileMap.h"
 
 namespace FA {

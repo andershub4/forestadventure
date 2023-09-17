@@ -9,7 +9,6 @@
 #include <memory>
 #include <unordered_map>
 
-#include "SfmlFwd.h"
 #include "StateType.h"
 
 namespace FA {
