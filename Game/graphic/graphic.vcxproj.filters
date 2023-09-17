@@ -72,6 +72,9 @@
     <ClInclude Include="Include\RectangleShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SfmlFwd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Texture.cpp">
