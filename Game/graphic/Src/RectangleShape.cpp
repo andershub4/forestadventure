@@ -12,6 +12,10 @@ namespace FA {
 
 namespace Graphic {
 
+RectangleShape::RectangleShape()
+    : rectangleShape_(std::make_shared<sf::RectangleShape>(sf::Vector2f(0, 0)))
+{}
+
 RectangleShape::RectangleShape(const sf::Vector2f& size)
     : rectangleShape_(std::make_shared<sf::RectangleShape>(size))
 {}

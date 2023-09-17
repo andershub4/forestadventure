@@ -8,8 +8,6 @@
 
 #include <memory>
 
-#include <SFML/System/Vector2.hpp>
-
 #include "IRectangleShape.h"
 #include "SfmlFwd.h"
 
@@ -20,7 +18,8 @@ namespace Graphic {
 class RectangleShape : public IRectangleShape
 {
 public:
-    RectangleShape(const sf::Vector2f &size = sf::Vector2f(0, 0));
+    RectangleShape();
+    RectangleShape(const sf::Vector2f &size);
     virtual ~RectangleShape();
 
     virtual void setSize(const sf::Vector2f &size) override;
