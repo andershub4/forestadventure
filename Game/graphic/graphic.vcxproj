@@ -153,6 +153,7 @@
     <ClInclude Include="Include\IText.h" />
     <ClInclude Include="Include\ITexture.h" />
     <ClInclude Include="Include\RectangleShape.h" />
+    <ClInclude Include="Include\RenderTargetMock.h" />
     <ClInclude Include="Include\RenderTexture.h" />
     <ClInclude Include="Include\RenderWindow.h" />
     <ClInclude Include="Include\SfmlFwd.h" />
