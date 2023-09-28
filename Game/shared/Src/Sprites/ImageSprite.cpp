@@ -15,12 +15,16 @@ namespace Shared {
 ImageSprite::ImageSprite(std::shared_ptr<Graphic::ISprite> sprite, const Frame& frame)
     : BasicSprite(sprite)
     , frame_(frame)
-{}
+{
+    isValid_ = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
+}
 
 void ImageSprite::Update(float deltaTime)
 {
-    sprite_->setTexture(*frame_.texture_);
-    sprite_->setTextureRect(frame_.rect_);
+    if (isValid_) {
+        sprite_->setTexture(*frame_.texture_);
+        sprite_->setTextureRect(frame_.rect_);
+    }
 }
 
 }  // namespace Shared

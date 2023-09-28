@@ -20,7 +20,6 @@ namespace Shared {
 class AnimationSprite : public BasicSprite
 {
 public:
-    AnimationSprite() = default;
     AnimationSprite(std::shared_ptr<Graphic::ISprite> sprite, unsigned int defaultFrame, float switchTime);
 
     virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
@@ -39,6 +38,7 @@ private:
     unsigned int nFrames_{};
     unsigned int defaultIndex_{};
     bool isCompleted_ = false;
+    bool isValid_ = false;
 };
 
 }  // namespace Shared

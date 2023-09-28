@@ -13,6 +13,7 @@
 #include "BasicShapePart.h"
 #include "IRenderTarget.h"
 #include "Logging.h"
+#include "Sprite.h"
 #include "Sprites/ImageSprite.h"
 
 namespace FA {
@@ -30,29 +31,37 @@ public:
 
     virtual ~ImagePartWith() = default;
 
-    virtual void Enter() override { currentImage_ = GetImage(defaultKey_); }
+    virtual void Enter() override { currentImage_ = GetImage(lookupKey_); }
 
     virtual void Update(float deltaTime) override
     {
-        if (currentImage_.IsValid()) {
-            currentImage_.Update(deltaTime);
-            if (true) {
-                currentImage_.Center();
-            }
-            updateCB_(currentImage_);
+        currentImage_.Update(deltaTime);
+        if (true) {
+            currentImage_.Center();
         }
+        updateCB_(currentImage_);
     }
 
     virtual void SetPosition(const sf::Vector2f &position) override { currentImage_.SetPosition(position); }
     virtual void SetRotation(float rot) override { currentImage_.SetRotation(rot); }
     virtual void DrawTo(Graphic::IRenderTarget &renderTarget) const override { currentImage_.DrawTo(renderTarget); }
 
-    void RegisterImage(const KeyT key, const Shared::ImageSprite &image) { map_[key] = image; }
+    void RegisterImage(const KeyT key, const Shared::ImageSprite &image)
+    {
+        auto res = map_.emplace(key, image);
+        if (!res.second) {
+            LOG_WARN("%s is already inserted", DUMP(key));
+        }
+    }
     void RegisterUpdateCB(std::function<void(const Shared::ImageSprite &)> updateCB) { updateCB_ = updateCB; }
 
 protected:
+    /* Constructor for singel animation */
     ImagePartWith(const Shared::ImageSprite &image)
-        : updateCB_([](const Shared::ImageSprite &) {})
+        : lookupKey_(defaultKey_)
+        , defaultImage_(image)
+        , currentImage_(defaultImage_)
+        , updateCB_([](const Shared::ImageSprite &) {})
     {
         RegisterImage(defaultKey_, image);
     }
@@ -67,6 +76,8 @@ private:
     };
 
     KeyT defaultKey_{};
+    Shared::ImageSprite defaultImage_;
+    KeyT &lookupKey_;
     std::unordered_map<KeyT, Shared::ImageSprite> map_;
     Shared::ImageSprite currentImage_;
     std::function<void(const Shared::ImageSprite &)> updateCB_;
@@ -77,11 +88,9 @@ private:
         if (map_.find(key) != map_.end()) {
             return map_.at(key);
         }
-        else {
-            LOG_ERROR("Could not find %s", DUMP(key));
-        }
 
-        return {};
+        LOG_ERROR("Could not find %s", DUMP(key));
+        return defaultImage_;
     }
 };
 

@@ -24,7 +24,6 @@ namespace Shared {
 class BasicSprite
 {
 public:
-    BasicSprite() = default;
     BasicSprite(std::shared_ptr<Graphic::ISprite> sprite);
     virtual ~BasicSprite() = default;
 
@@ -34,13 +33,9 @@ public:
     void SetRotation(float rot);
     void DrawTo(Graphic::IRenderTarget &renderTarget) const;
     void Center();
-    bool IsValid() const;
 
 protected:
     std::shared_ptr<Graphic::ISprite> sprite_;
-
-private:
-    bool isValid_ = false;
 };
 
 }  // namespace Shared

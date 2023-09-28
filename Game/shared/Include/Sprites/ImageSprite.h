@@ -20,12 +20,12 @@ class ImageSprite : public BasicSprite
 {
 public:
     ImageSprite(std::shared_ptr<Graphic::ISprite> sprite, const Frame &frame);
-    ImageSprite() = default;
 
     virtual void Update(float deltaTime) override;
 
 private:
     Frame frame_;
+    bool isValid_ = false;
 };
 
 }  // namespace Shared

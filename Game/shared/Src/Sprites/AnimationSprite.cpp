@@ -6,6 +6,7 @@
 
 #include "Sprites/AnimationSprite.h"
 
+#include "Logging.h"
 #include "Sprite.h"
 
 namespace FA {
@@ -31,8 +32,11 @@ void AnimationSprite::Update(float deltaTime)
             isCompleted_ = (iFrame_ == 0);
         }
     }
-    sprite_->setTexture(*frames_[iFrame_].texture_);
-    sprite_->setTextureRect(frames_[iFrame_].rect_);
+
+    if (isValid_) {
+        sprite_->setTexture(*frames_[iFrame_].texture_);
+        sprite_->setTextureRect(frames_[iFrame_].rect_);
+    }
 }
 
 void AnimationSprite::Start()
@@ -53,8 +57,15 @@ bool AnimationSprite::IsCompleted() const
 
 void AnimationSprite::AddFrame(const Frame& frame)
 {
-    frames_.push_back(frame);
-    nFrames_ = frames_.size();
+    isValid_ = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
+
+    if (isValid_) {
+        frames_.push_back(frame);
+        nFrames_ = frames_.size();
+    }
+    else {
+        LOG_WARN("%s is invalid", DUMP(frame));
+    }
 }
 
 }  // namespace Shared

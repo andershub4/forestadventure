@@ -17,7 +17,6 @@ namespace Shared {
 
 BasicSprite::BasicSprite(std::shared_ptr<Graphic::ISprite> sprite)
     : sprite_(sprite)
-    , isValid_(true)
 {}
 
 void BasicSprite::Update(float deltaTime)
@@ -41,11 +40,6 @@ void BasicSprite::DrawTo(Graphic::IRenderTarget& renderTarget) const
 void BasicSprite::Center()
 {
     sprite_->setOrigin(sprite_->getLocalBounds().width / 2, sprite_->getLocalBounds().height / 2);
-}
-
-bool BasicSprite::IsValid() const
-{
-    return isValid_;
 }
 
 }  // namespace Shared
