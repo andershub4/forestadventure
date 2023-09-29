@@ -26,7 +26,7 @@ class ImagePartWith : public BasicShapePart
 public:
     static std::shared_ptr<ImagePartWith<KeyT>> Create(const Shared::ImageSprite &image)
     {
-        return std::make_shared<CtorHelper<KeyT>>(image);
+        return std::make_shared<CtorHelper>(image);
     }
 
     virtual ~ImagePartWith() = default;
@@ -55,7 +55,7 @@ public:
     }
     void RegisterUpdateCB(std::function<void(const Shared::ImageSprite &)> updateCB) { updateCB_ = updateCB; }
 
-protected:
+private:
     /* Constructor for singel animation */
     ImagePartWith(const Shared::ImageSprite &image)
         : lookupKey_(defaultKey_)
@@ -67,7 +67,6 @@ protected:
     }
 
 private:
-    template <class KeyT>
     struct CtorHelper : public ImagePartWith<KeyT>
     {
         CtorHelper(const Shared::ImageSprite &image)

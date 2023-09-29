@@ -26,12 +26,12 @@ class AnimationPartWith : public BasicShapePart
 public:
     static std::shared_ptr<AnimationPartWith<KeyT>> Create(const Shared::AnimationSprite &animation, bool center = true)
     {
-        return std::make_shared<CtorHelper<KeyT>>(animation, center);
+        return std::make_shared<CtorHelper>(animation, center);
     }
 
     static std::shared_ptr<AnimationPartWith<KeyT>> Create(KeyT &lookupKey, bool center = true)
     {
-        return std::make_shared<CtorHelper<KeyT>>(lookupKey, center);
+        return std::make_shared<CtorHelper>(lookupKey, center);
     }
 
     virtual ~AnimationPartWith() = default;
@@ -64,7 +64,7 @@ public:
     }
     void RegisterUpdateCB(std::function<void(const Shared::AnimationSprite &)> updateCB) { updateCB_ = updateCB; }
 
-protected:
+private:
     /* Constructor for multiple animation, depending on KeyT */
     AnimationPartWith(KeyT &lookupKey, bool center = true)
         : lookupKey_(lookupKey)
@@ -86,7 +86,6 @@ protected:
     }
 
 private:
-    template <class KeyT>
     struct CtorHelper : public AnimationPartWith<KeyT>
     {
         CtorHelper(KeyT &lookupKey, bool center = true)
