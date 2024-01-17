@@ -47,8 +47,8 @@ TEST_F(ResourceManagerTest, LoadResourceShouldSucceed)
     EXPECT_CALL(loggerMock_, MakeInfoLogEntry("Loaded 1 resource(s)"));
 
     auto id = resourceManager_.Load(path_);
-    auto result = resourceManager_.Get(id);
     EXPECT_EQ(id, 0);
+    auto result = resourceManager_.Get(id);
     EXPECT_EQ(result, expectedPtr);
 }
 
@@ -74,9 +74,9 @@ TEST_F(ResourceManagerTest, LoadResourceShouldFail)
     EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("Could not load.*C:/MyFolder/MyFile.jpg")));
 
     auto id = resourceManager_.Load(path_);
+    EXPECT_EQ(id, InvalidResourceId);
     EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("Could not get.*0")));
     auto result = resourceManager_.Get(0);
-    EXPECT_THAT(id, InvalidResourceId);
     EXPECT_THAT(result, IsNull());
 }
 
