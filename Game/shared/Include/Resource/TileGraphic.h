@@ -9,10 +9,13 @@
 #include <vector>
 
 #include "ImageData.h"
+#include "Print.h"
 
 namespace FA {
 
 namespace Shared {
+
+using FA::operator<<;
 
 struct TileGraphic
 {
@@ -20,6 +23,18 @@ struct TileGraphic
     Animation animation_;
     ImageData image_;
 };
+
+inline bool operator==(const TileGraphic& lhs, const TileGraphic& rhs)
+{
+    return std::tie(lhs.animation_, lhs.image_) == std::tie(rhs.animation_, rhs.image_);
+}
+
+inline std::ostream& operator<<(std::ostream& os, const TileGraphic& p)
+{
+    os << OUT2("animation", p.animation_) << DELIM << OUT2("image", p.image_);
+
+    return os;
+}
 
 }  // namespace Shared
 

@@ -46,6 +46,7 @@
     <ClCompile Include="Src\SheetManager_test.cpp" />
     <ClCompile Include="Src\SpriteSheet_test.cpp" />
     <ClCompile Include="Src\TextureRect_test.cpp" />
+    <ClCompile Include="Src\TileGraphic_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\shared\shared.vcxproj">
