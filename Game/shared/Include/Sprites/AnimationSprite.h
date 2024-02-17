@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 
+#include "AnimationSpriteIf.h"
 #include "BasicSprite.h"
 
 #include "Resource/Frame.h"
@@ -17,26 +18,26 @@ namespace FA {
 
 namespace Shared {
 
-class AnimationSprite : public BasicSprite
+class AnimationSprite : public BasicSprite<AnimationSpriteIf>
 {
 public:
     AnimationSprite(std::shared_ptr<Graphic::ISprite> sprite, unsigned int defaultFrame, float switchTime);
 
     virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
 
-    void Start();
-    void Stop();
-    bool IsCompleted() const;
-    void AddFrame(const Frame &frame);
+    virtual void Start() override;
+    virtual void Stop() override;
+    virtual bool IsCompleted() const override;
+    virtual void AddFrame(const Frame &frame) override;
 
 private:
     bool isStopped_ = true;
-    float time_{};        // time since we last switched frame
     float switchTime_{};  // time before to switch to next frame
+    float time_{};        // time since we last switched frame
+    unsigned int defaultIndex_{};
     unsigned int iFrame_{};
     std::vector<Frame> frames_;
     unsigned int nFrames_{};
-    unsigned int defaultIndex_{};
     bool isCompleted_ = false;
     bool isValid_ = false;
 };

@@ -19,15 +19,52 @@ namespace FA {
 
 namespace Shared {
 
-TEST(ImageSpriteTest, ImageSpriteShouldUpdateTexture)
+class ImageSpriteTest : public testing::Test
 {
-    auto spriteMock = std::make_shared<StrictMock<Graphic::SpriteMock>>();
-    Graphic::TextureMock textureMock;
-    sf::IntRect rect{0, 0, 10, 12};
-    Frame frame{&textureMock, rect};
-    ImageSprite sprite(spriteMock, frame);
-    EXPECT_CALL(*spriteMock, setTextureImpl(Address(&textureMock), false));
-    EXPECT_CALL(*spriteMock, setTextureRect(Eq(rect)));
+protected:
+    ImageSpriteTest()
+        : spriteMock_(std::make_shared<StrictMock<Graphic::SpriteMock>>())
+        , sprite_(spriteMock_, frame_)
+    {}
+
+protected:
+    Graphic::TextureMock textureMock_;
+    sf::IntRect rect_{0, 0, 10, 12};
+    Frame frame_{&textureMock_, rect_};
+    std::shared_ptr<StrictMock<Graphic::SpriteMock>> spriteMock_;
+    ImageSprite sprite_;
+};
+TEST_F(ImageSpriteTest, UpdateShouldSetTexture)
+{
+    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
+
+    sprite_.Update(0.1f);
+}
+
+TEST_F(ImageSpriteTest, UpdateWithInvalidTextureShouldNotSetTexture)
+{
+    Frame frame{nullptr, rect_};
+    ImageSprite sprite(spriteMock_, frame);
+
+    sprite.Update(0.1f);
+}
+
+TEST_F(ImageSpriteTest, UpdateWithInvalidWidthShouldNotSetTexture)
+{
+    sf::IntRect rect{0, 0, 0, 12};
+    Frame frame{&textureMock_, rect};
+    ImageSprite sprite(spriteMock_, frame);
+
+    sprite.Update(0.1f);
+}
+
+TEST_F(ImageSpriteTest, UpdateWithInvalidHeightShouldNotSetTexture)
+{
+    sf::IntRect rect{0, 0, 10, 0};
+    Frame frame{&textureMock_, rect};
+    ImageSprite sprite(spriteMock_, frame);
+
     sprite.Update(0.1f);
 }
 

@@ -123,6 +123,15 @@
     <ClInclude Include="Include\Sprites\BasicSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Sprites\SpriteIf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Sprites\ImageSpriteIf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Sprites\AnimationSpriteIf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\MessageBus.cpp">
@@ -159,9 +168,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\EffectFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Sprites\BasicSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

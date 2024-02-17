@@ -1,5 +1,5 @@
 /*
- *	Copyright (C) 2023 Anders Wennmo
+ *	Copyright (C) 2024 Anders Wennmo
  *	This file is part of forestadventure which is released under MIT license.
  *	See file LICENSE for full license details.
  */
@@ -14,6 +14,7 @@
 #include "RenderTargetMock.h"
 #include "SpriteMock.h"
 #include "Sprites/BasicSprite.h"
+#include "Sprites/SpriteIf.h"
 
 using namespace testing;
 
@@ -21,41 +22,46 @@ namespace FA {
 
 namespace Shared {
 
-TEST(BasicSpriteTest, BasicSpriteShouldSetPosition)
+class BasicSpriteTest : public testing::Test
 {
-    auto spriteMock = std::make_shared<StrictMock<Graphic::SpriteMock>>();
+protected:
+    BasicSpriteTest()
+        : spriteMock_(std::make_shared<StrictMock<Graphic::SpriteMock>>())
+        , sprite_(spriteMock_)
+    {}
+
+protected:
+    std::shared_ptr<StrictMock<Graphic::SpriteMock>> spriteMock_;
+    BasicSprite<SpriteIf> sprite_;
+};
+
+TEST_F(BasicSpriteTest, BasicSpriteShouldSetPosition)
+{
     sf::Vector2f pos{12.0f, 3.0f};
-    BasicSprite sprite(spriteMock);
-    EXPECT_CALL(*spriteMock, setPosition(Eq(pos)));
-    sprite.SetPosition(pos);
+    EXPECT_CALL(*spriteMock_, setPosition(Eq(pos)));
+    sprite_.SetPosition(pos);
 }
 
-TEST(BasicSpriteTest, BasicSpriteShouldSetRotation)
+TEST_F(BasicSpriteTest, BasicSpriteShouldSetRotation)
 {
-    auto spriteMock = std::make_shared<StrictMock<Graphic::SpriteMock>>();
     float rot = 32.0f;
-    BasicSprite sprite(spriteMock);
-    EXPECT_CALL(*spriteMock, setRotation(Eq(rot)));
-    sprite.SetRotation(rot);
+    EXPECT_CALL(*spriteMock_, setRotation(Eq(rot)));
+    sprite_.SetRotation(rot);
 }
 
-TEST(BasicSpriteTest, BasicSpriteShouldDrawTo)
+TEST_F(BasicSpriteTest, BasicSpriteShouldDrawTo)
 {
-    auto spriteMock = std::make_shared<StrictMock<Graphic::SpriteMock>>();
     Graphic::RenderTargetMock renderTargetMock;
-    BasicSprite sprite(spriteMock);
-    EXPECT_CALL(renderTargetMock, draw(Ref(*spriteMock)));
-    sprite.DrawTo(renderTargetMock);
+    EXPECT_CALL(renderTargetMock, draw(Ref(*spriteMock_)));
+    sprite_.DrawTo(renderTargetMock);
 }
 
-TEST(BasicSpriteTest, BasicSpriteShouldCenter)
+TEST_F(BasicSpriteTest, BasicSpriteShouldCenter)
 {
-    auto spriteMock = std::make_shared<StrictMock<Graphic::SpriteMock>>();
-    BasicSprite sprite(spriteMock);
     sf::FloatRect rect{10.0f, 12.0f, 30.0f, 10.0f};
-    EXPECT_CALL(*spriteMock, getLocalBounds()).WillRepeatedly(Return(rect));
-    EXPECT_CALL(*spriteMock, setOrigin(Eq(15.0f), Eq(5.0f)));
-    sprite.Center();
+    EXPECT_CALL(*spriteMock_, getLocalBounds()).WillRepeatedly(Return(rect));
+    EXPECT_CALL(*spriteMock_, setOrigin(Eq(15.0f), Eq(5.0f)));
+    sprite_.Center();
 }
 
 }  // namespace Shared

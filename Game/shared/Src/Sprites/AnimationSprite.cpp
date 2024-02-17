@@ -6,15 +6,15 @@
 
 #include "Sprites/AnimationSprite.h"
 
+#include "ISprite.h"
 #include "Logging.h"
-#include "Sprite.h"
 
 namespace FA {
 
 namespace Shared {
 
 AnimationSprite::AnimationSprite(std::shared_ptr<Graphic::ISprite> sprite, unsigned int defaultIndex, float switchTime)
-    : BasicSprite(sprite)
+    : BasicSprite<AnimationSpriteIf>(sprite)
     , switchTime_(switchTime)
     , time_(0.0)
     , defaultIndex_(defaultIndex)
@@ -26,10 +26,10 @@ void AnimationSprite::Update(float deltaTime)
     if (!isStopped_ && nFrames_ > 1) {
         time_ += deltaTime;
 
-        while (time_ >= switchTime_) {
-            time_ -= switchTime_;
+        if (time_ >= switchTime_) {
+            time_ = 0.0;
             ++iFrame_ %= nFrames_;
-            isCompleted_ = (iFrame_ == 0);
+            isCompleted_ = (iFrame_ == defaultIndex_);
         }
     }
 
@@ -41,7 +41,18 @@ void AnimationSprite::Update(float deltaTime)
 
 void AnimationSprite::Start()
 {
-    isStopped_ = false;
+    if (nFrames_ <= 0) {
+        LOG_WARN("Can't start animation, no frames");
+        isValid_ = false;
+    }
+    else if (defaultIndex_ >= nFrames_) {
+        LOG_WARN("Can't start animation, defaultIndex %d is invalid", defaultIndex_);
+        isValid_ = false;
+    }
+    else {
+        isStopped_ = false;
+        isValid_ = true;
+    }
 }
 
 void AnimationSprite::Stop()
@@ -51,12 +62,18 @@ void AnimationSprite::Stop()
 }
 
 bool AnimationSprite::IsCompleted() const
+
 {
     return isCompleted_;
 }
 
 void AnimationSprite::AddFrame(const Frame& frame)
 {
+    if (!isStopped_) {
+        LOG_WARN("Can't add frame during animation");
+        return;
+    }
+
     isValid_ = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
 
     if (isValid_) {

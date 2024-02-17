@@ -151,6 +151,9 @@
     <ClInclude Include="Include\Screen.h" />
     <ClInclude Include="Include\BasicEffect.h" />
     <ClInclude Include="Include\SfmlPrint.h" />
+    <ClInclude Include="Include\Sprites\AnimationSpriteIf.h" />
+    <ClInclude Include="Include\Sprites\ImageSpriteIf.h" />
+    <ClInclude Include="Include\Sprites\SpriteIf.h" />
     <ClInclude Include="Src\Effect\FadeEffect.h" />
     <ClInclude Include="Src\Effect\NullEffect.h" />
     <ClInclude Include="Include\Logging.h" />
@@ -188,7 +191,6 @@
     <ClCompile Include="Src\Logging.cpp" />
     <ClCompile Include="Src\MessageBus.cpp" />
     <ClCompile Include="Src\Sprites\AnimationSprite.cpp" />
-    <ClCompile Include="Src\Sprites\BasicSprite.cpp" />
     <ClCompile Include="Src\Sprites\ImageSprite.cpp" />
     <ClCompile Include="Src\Resource\SheetManager.cpp" />
     <ClCompile Include="Src\Resource\SpriteSheet.cpp" />
