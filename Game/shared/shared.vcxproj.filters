@@ -99,10 +99,10 @@
     <ClInclude Include="Include\MapData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Camera.h">
+    <ClInclude Include="Include\CameraView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\CameraManager.h">
+    <ClInclude Include="Include\CameraViews.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\EffectFactory.h">
@@ -130,6 +130,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Sprites\AnimationSpriteIf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CameraViewIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -161,10 +164,10 @@
     <ClCompile Include="Src\Effect\NullEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Camera.cpp">
+    <ClCompile Include="Src\CameraView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\CameraManager.cpp">
+    <ClCompile Include="Src\CameraViews.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\EffectFactory.cpp">

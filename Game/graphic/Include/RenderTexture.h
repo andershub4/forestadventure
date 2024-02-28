@@ -28,7 +28,7 @@ public:
     virtual const Graphic::ITexture& getTexture() const override;
     virtual void clear() override;
     virtual void clear(const sf::Color& color) override;
-    virtual void setView(const sf::View& view) override;
+    virtual void setView(const Graphic::IView& view) override;
     virtual sf::Vector2f mapPixelToCoords(const sf::Vector2i& point) const override;
 
 private:

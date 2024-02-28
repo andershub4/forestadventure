@@ -78,6 +78,12 @@
     <ClInclude Include="Include\RenderTargetMock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\IView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\View.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Texture.cpp">
@@ -99,6 +105,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\RectangleShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\View.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

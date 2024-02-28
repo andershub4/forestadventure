@@ -25,8 +25,8 @@ class ISprite;
 
 namespace Shared {
 
-class CameraManager;
-class Camera;
+class CameraViews;
+class CameraView;
 class AnimationSprite;
 class ImageSprite;
 class SheetManager;
@@ -49,7 +49,7 @@ class EntityService
 {
 public:
     EntityService(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
-                  const Shared::SheetManager &sheetManager, const Shared::CameraManager &cameraManager,
+                  const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews,
                   EntityManager &entityManager);
     ~EntityService();
 
@@ -64,7 +64,7 @@ public:
                        std::function<void(std::shared_ptr<Shared::Message>)> onMessage);
 
     void RemoveSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes);
-    Shared::Camera &GetCamera() const;
+    Shared::CameraView &GetCameraView() const;
     void CreateEntity(const PropertyData &data, const Shared::MapData &mapData);
     void DeleteEntity(EntityId id);
 
@@ -72,7 +72,7 @@ private:
     Shared::MessageBus &messageBus_;
     const Shared::TextureManager &textureManager_;
     const Shared::SheetManager &sheetManager_;
-    const Shared::CameraManager &cameraManager_;
+    const Shared::CameraViews &cameraViews_;
     EntityManager &entityManager_;
 };
 

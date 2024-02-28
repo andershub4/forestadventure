@@ -152,6 +152,7 @@
     <ClInclude Include="Include\ISprite.h" />
     <ClInclude Include="Include\IText.h" />
     <ClInclude Include="Include\ITexture.h" />
+    <ClInclude Include="Include\IView.h" />
     <ClInclude Include="Include\RectangleShape.h" />
     <ClInclude Include="Include\RenderTargetMock.h" />
     <ClInclude Include="Include\RenderTexture.h" />
@@ -162,8 +163,10 @@
     <ClInclude Include="Include\Text.h" />
     <ClInclude Include="Include\Texture.h" />
     <ClInclude Include="Include\TextureMock.h" />
+    <ClInclude Include="Include\View.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\View.cpp" />
     <ClCompile Include="Src\Font.cpp" />
     <ClCompile Include="Src\RectangleShape.cpp" />
     <ClCompile Include="Src\RenderTexture.cpp" />

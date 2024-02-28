@@ -29,7 +29,7 @@ struct MapData;
 struct TileGraphic;
 class MessageBus;
 class SheetManager;
-class CameraManager;
+class CameraViews;
 
 }  // namespace Shared
 
@@ -44,7 +44,7 @@ class EntityManager
 {
 public:
     EntityManager(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
-                  const Shared::SheetManager &sheetManager, const Shared::CameraManager &cameraManager);
+                  const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews);
     ~EntityManager();
 
     void Update(float deltaTime);

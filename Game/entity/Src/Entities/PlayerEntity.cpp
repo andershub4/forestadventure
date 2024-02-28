@@ -9,7 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
-#include "Camera.h"
+#include "CameraView.h"
 #include "Constant/Entity.h"
 #include "Entities/ArrowEntity.h"
 #include "Events/AttackEvent.h"
@@ -164,8 +164,8 @@ void PlayerEntity::OnShoot()
 void PlayerEntity::OnBeginDie()
 {
     SendMessage(std::make_shared<Shared::GameOverMessage>());
-    auto& camera = service_.GetCamera();
-    camera.Set(body_.position_);
+    auto& cameraView = service_.GetCameraView();
+    cameraView.SetFixPoint(body_.position_);
 }
 
 void PlayerEntity::RegisterProperties()
@@ -197,8 +197,8 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
 
 void PlayerEntity::OnInit()
 {
-    auto& camera = service_.GetCamera();
-    camera.Track(body_.position_);
+    auto& cameraView = service_.GetCameraView();
+    cameraView.SetTrackPoint(body_.position_);
 }
 
 void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)

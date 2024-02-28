@@ -6,8 +6,8 @@
 
 #include "EntityService.h"
 
-#include "Camera.h"
-#include "CameraManager.h"
+#include "CameraView.h"
+#include "CameraViews.h"
 #include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Message/MessageBus.h"
@@ -25,12 +25,12 @@ namespace FA {
 namespace Entity {
 
 EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::TextureManager& textureManager,
-                             const Shared::SheetManager& sheetManager, const Shared::CameraManager& cameraManager,
+                             const Shared::SheetManager& sheetManager, const Shared::CameraViews& cameraViews,
                              EntityManager& entityManager)
     : messageBus_(messageBus)
     , textureManager_(textureManager)
     , sheetManager_(sheetManager)
-    , cameraManager_(cameraManager)
+    , cameraViews_(cameraViews)
     , entityManager_(entityManager)
 {}
 
@@ -87,9 +87,9 @@ void EntityService::RemoveSubscriber(const std::string& subscriber,
     messageBus_.RemoveSubscriber(subscriber, messageTypes);
 }
 
-Shared::Camera& EntityService::GetCamera() const
+Shared::CameraView& EntityService::GetCameraView() const
 {
-    return cameraManager_.GetCamera();
+    return cameraViews_.GetCameraView();
 }
 
 void EntityService::CreateEntity(const PropertyData& data, const Shared::MapData& mapData)

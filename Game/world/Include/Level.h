@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "CameraManager.h"
+#include "CameraViews.h"
 #include "RenderTexture.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
@@ -14,6 +14,12 @@
 #include "Sprite.h"
 
 namespace FA {
+
+namespace Graphic {
+
+class View;
+
+}
 
 namespace Entity {
 
@@ -43,7 +49,7 @@ public:
     void Draw(Graphic::IRenderTarget& renderTarget);
 
     void Create();
-    sf::View GetView();
+    Graphic::View GetView() const;
 
 private:
     const sf::Vector2u viewSize_;
@@ -53,9 +59,10 @@ private:
     Shared::TextureManager& textureManager_;
     Shared::SheetManager sheetManager_;
     std::unique_ptr<TileMap> tileMap_;
-    Shared::CameraManager cameraManager_;
+    Shared::CameraViews cameraViews_;
     std::unique_ptr<Entity::EntityManager> entityManager_;
     std::unique_ptr<LevelCreator> levelCreator_;
+    const float zoomFactor_{0.4f};
 
 private:
     void LoadEntitySheets();

@@ -14,6 +14,7 @@ namespace FA {
 namespace Graphic {
 
 class ITexture;
+class IView;
 
 class IRenderTexture : public IRenderTarget
 {
@@ -25,7 +26,7 @@ public:
     virtual const Graphic::ITexture& getTexture() const = 0;
     virtual void clear() = 0;
     virtual void clear(const sf::Color& color) = 0;
-    virtual void setView(const sf::View& view) = 0;
+    virtual void setView(const Graphic::IView& view) = 0;
     virtual sf::Vector2f mapPixelToCoords(const sf::Vector2i& point) const = 0;
 };
 

@@ -14,20 +14,20 @@ namespace FA {
 
 namespace Shared {
 
-class Camera;
+class CameraView;
 
-class CameraManager
+class CameraViews
 {
 public:
-    CameraManager();
-    ~CameraManager();
+    CameraViews();
+    ~CameraViews();
 
-    void CreateCamera(const sf::Vector2u& renderTargetSize, const sf::Vector2u& mapSize);
+    void CreateCameraView(const sf::Vector2u& renderTargetSize, const sf::Vector2u& mapSize, float zoomFactor);
     void Update(float deltaTime);
-    Camera& GetCamera() const;
+    CameraView& GetCameraView() const;
 
 private:
-    std::unique_ptr<Camera> camera_ = nullptr;
+    std::unique_ptr<CameraView> cameraView_ = nullptr;
 };
 
 }  // namespace Shared

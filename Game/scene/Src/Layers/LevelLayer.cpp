@@ -11,6 +11,7 @@
 #include "BasicEffect.h"
 #include "Level.h"
 #include "Transitions/BasicTransition.h"
+#include "View.h"
 
 namespace FA {
 

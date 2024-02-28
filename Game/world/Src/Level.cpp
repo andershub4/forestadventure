@@ -8,7 +8,7 @@
 
 #include "Level.h"
 
-#include "Camera.h"
+#include "CameraView.h"
 #include "EntityManager.h"
 #include "Folder.h"
 #include "IRenderTarget.h"
@@ -19,6 +19,7 @@
 #include "Resource/SpriteSheet.h"
 #include "Sheets.h"
 #include "TileMap.h"
+#include "View.h"
 
 namespace FA {
 
@@ -29,7 +30,7 @@ Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureMana
     , sheetManager_()
     , tileMap_(std::make_unique<TileMap>(textureManager, sheetManager_))
     , viewSize_(viewSize)
-    , entityManager_(std::make_unique<Entity::EntityManager>(messageBus, textureManager, sheetManager_, cameraManager_))
+    , entityManager_(std::make_unique<Entity::EntityManager>(messageBus, textureManager, sheetManager_, cameraViews_))
     , levelCreator_(std::make_unique<LevelCreator>(textureManager, sheetManager_))
 {}
 
@@ -45,21 +46,27 @@ void Level::Create()
 {
     LOG_INFO_ENTER_FUNC();
     CreateMap();
-    cameraManager_.CreateCamera(viewSize_, tileMap_->GetSize());  // Entities need camera, create before
+    cameraViews_.CreateCameraView(viewSize_, tileMap_->GetSize(),
+                                  zoomFactor_);  // Entities need cameraView, create before
     CreateEntities();
     LOG_INFO_EXIT_FUNC();
 }
 
-sf::View Level::GetView()
+Graphic::View Level::GetView() const
 {
-    auto &camera = cameraManager_.GetCamera();
-    return camera.GetView();
+    auto &cameraView = cameraViews_.GetCameraView();
+    Graphic::View view;
+    view.setSize(static_cast<sf::Vector2f>(viewSize_));
+    view.zoom(zoomFactor_);
+    view.setCenter(cameraView.GetPosition());
+
+    return view;
 }
 
 void Level::Update(float deltaTime)
 {
     entityManager_->HandleCreatedEntities();
-    cameraManager_.Update(deltaTime);
+    cameraViews_.Update(deltaTime);
     entityManager_->Update(deltaTime);
     entityManager_->HandleDeletedEntities();
 }

@@ -141,8 +141,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Camera.h" />
-    <ClInclude Include="Include\CameraManager.h" />
+    <ClInclude Include="Include\CameraView.h" />
+    <ClInclude Include="Include\CameraViewIf.h" />
+    <ClInclude Include="Include\CameraViews.h" />
     <ClInclude Include="Include\EffectFactory.h" />
     <ClInclude Include="Include\Sprites\BasicSprite.h" />
     <ClInclude Include="Include\Resource\ResourceId.h" />
@@ -183,8 +184,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\EffectFactory.cpp" />
-    <ClCompile Include="Src\Camera.cpp" />
-    <ClCompile Include="Src\CameraManager.cpp" />
+    <ClCompile Include="Src\CameraView.cpp" />
+    <ClCompile Include="Src\CameraViews.cpp" />
     <ClCompile Include="Src\Effect\BasicEffect.cpp" />
     <ClCompile Include="Src\Effect\FadeEffect.cpp" />
     <ClCompile Include="Src\Effect\NullEffect.cpp" />

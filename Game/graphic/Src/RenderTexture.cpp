@@ -11,6 +11,7 @@
 
 #include "IDrawable.h"
 #include "Texture.h"
+#include "View.h"
 
 namespace FA {
 
@@ -59,9 +60,10 @@ void RenderTexture::clear(const sf::Color& color)
     renderTexture_->clear(color);
 }
 
-void RenderTexture::setView(const sf::View& view)
+void RenderTexture::setView(const Graphic::IView& view)
 {
-    renderTexture_->setView(view);
+    const sf::View& sfView = dynamic_cast<const View&>(view);
+    renderTexture_->setView(sfView);
 }
 
 sf::Vector2f RenderTexture::mapPixelToCoords(const sf::Vector2i& point) const
