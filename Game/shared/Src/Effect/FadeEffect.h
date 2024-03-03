@@ -6,9 +6,6 @@
 
 #pragma once
 
-#include <SFML/System/Clock.hpp>
-#include <SFML/System/Time.hpp>
-
 #include "EffectIf.h"
 
 #include "RectangleShape.h"
@@ -26,7 +23,6 @@ public:
     virtual void Update(float deltaTime) override;
 
 private:
-    sf::Clock clock_;
     Graphic::RectangleShape fadeRect_;
     int startAlpha_ = 0;
     int endAlpha_ = 255;
