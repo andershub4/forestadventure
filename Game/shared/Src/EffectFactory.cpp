@@ -13,10 +13,10 @@ namespace FA {
 
 namespace Shared {
 
-std::unique_ptr<EffectIf> EffectFactory::CreateFadeEffect(const sf::Vector2f& position, const sf::Vector2f& size,
-                                                          float duration) const
+std::unique_ptr<EffectIf> EffectFactory::CreateFadeEffect(std::shared_ptr<Graphic::IRectangleShape> rect,
+                                                          const sf::Vector2f& position, float duration) const
 {
-    return std::make_unique<FadeEffect>(position, size, duration);
+    return std::make_unique<FadeEffect>(rect, position, duration);
 }
 
 std::unique_ptr<EffectIf> EffectFactory::CreateNullEffect() const

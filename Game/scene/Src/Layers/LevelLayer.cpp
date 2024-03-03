@@ -10,6 +10,7 @@
 
 #include "EffectIf.h"
 #include "Level.h"
+#include "RectangleShape.h"
 #include "Transitions/BasicTransition.h"
 #include "View.h"
 
@@ -56,7 +57,8 @@ void LevelLayer::EnterTransition(const BasicTransition& transition)
 {
     sf::Vector2f layerPos = layerTexture_.mapPixelToCoords({0, 0});
     sf::Vector2f layerSize = static_cast<sf::Vector2f>(layerTexture_.getSize());
-    effect_ = transition.CreateEffect(layerPos, layerSize);
+    auto rect = std::make_shared<Graphic::RectangleShape>(layerSize);
+    effect_ = transition.CreateEffect(rect, layerPos);
 }
 
 void LevelLayer::ExitTransition(const BasicTransition& transition)

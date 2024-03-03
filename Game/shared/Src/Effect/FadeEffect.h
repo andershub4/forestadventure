@@ -8,22 +8,30 @@
 
 #include "EffectIf.h"
 
-#include "RectangleShape.h"
+#include <memory>
+
+#include "SfmlFwd.h"
 
 namespace FA {
+
+namespace Graphic {
+
+class IRectangleShape;
+
+}  // namespace Graphic
 
 namespace Shared {
 
 class FadeEffect : public EffectIf
 {
 public:
-    FadeEffect(const sf::Vector2f& position, const sf::Vector2f& size, float duration);
+    FadeEffect(std::shared_ptr<Graphic::IRectangleShape> fadeRect, const sf::Vector2f& position, float duration);
 
     virtual void DrawTo(Graphic::IRenderTarget& renderTarget) const override;
     virtual void Update(float deltaTime) override;
 
 private:
-    Graphic::RectangleShape fadeRect_;
+    std::shared_ptr<Graphic::IRectangleShape> fadeRect_;
     int startAlpha_ = 0;
     int endAlpha_ = 255;
     float duration_{};

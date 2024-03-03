@@ -18,10 +18,10 @@ FadeTransition::FadeTransition(CreateSceneFn nextSceneFn)
 
 FadeTransition::~FadeTransition() = default;
 
-std::unique_ptr<Shared::EffectIf> FadeTransition::CreateEffect(const sf::Vector2f& position,
-                                                               const sf::Vector2f& size) const
+std::unique_ptr<Shared::EffectIf> FadeTransition::CreateEffect(std::shared_ptr<Graphic::IRectangleShape> rect,
+                                                               const sf::Vector2f& position) const
 {
-    return factory_.CreateFadeEffect(position, size, duration_);
+    return factory_.CreateFadeEffect(rect, position, duration_);
 }
 
 }  // namespace Scene

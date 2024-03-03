@@ -18,8 +18,8 @@ NullTransition::NullTransition(CreateSceneFn nextSceneFn)
 
 NullTransition::~NullTransition() = default;
 
-std::unique_ptr<Shared::EffectIf> NullTransition::CreateEffect(const sf::Vector2f& position,
-                                                               const sf::Vector2f& size) const
+std::unique_ptr<Shared::EffectIf> NullTransition::CreateEffect(std::shared_ptr<Graphic::IRectangleShape> rect,
+                                                               const sf::Vector2f& position) const
 {
     return factory_.CreateNullEffect();
 }

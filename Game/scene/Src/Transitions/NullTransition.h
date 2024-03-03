@@ -20,8 +20,8 @@ public:
     NullTransition(CreateSceneFn nextSceneFn);
     virtual ~NullTransition();
 
-    virtual std::unique_ptr<Shared::EffectIf> CreateEffect(const sf::Vector2f& position,
-                                                           const sf::Vector2f& size) const override;
+    virtual std::unique_ptr<Shared::EffectIf> CreateEffect(std::shared_ptr<Graphic::IRectangleShape> rect,
+                                                           const sf::Vector2f& position) const override;
 
 private:
     Shared::EffectFactory factory_;

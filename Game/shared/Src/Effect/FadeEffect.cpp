@@ -8,24 +8,25 @@
 
 #include <SFML/Graphics/Color.hpp>
 
-#include "RenderWindow.h"
+#include "IRectangleShape.h"
+#include "IRenderTarget.h"
 
 namespace FA {
 
 namespace Shared {
 
-FadeEffect::FadeEffect(const sf::Vector2f& position, const sf::Vector2f& size, float duration)
+FadeEffect::FadeEffect(std::shared_ptr<Graphic::IRectangleShape> fadeRect, const sf::Vector2f& position, float duration)
     : EffectIf()
-    , fadeRect_(size)
+    , fadeRect_(fadeRect)
     , duration_(duration)
 {
-    fadeRect_.setPosition(position);
-    fadeRect_.setFillColor(sf::Color(0, 0, 0, 0));
+    fadeRect_->setPosition(position);
+    fadeRect_->setFillColor(sf::Color(0, 0, 0, 0));
 }
 
 void FadeEffect::DrawTo(Graphic::IRenderTarget& renderTarget) const
 {
-    renderTarget.draw(fadeRect_);
+    renderTarget.draw(*fadeRect_);
 }
 
 void FadeEffect::Update(float deltaTime)
@@ -33,7 +34,7 @@ void FadeEffect::Update(float deltaTime)
     currentTime_ += deltaTime;
     float currentAlpha = startAlpha_ + (endAlpha_ - startAlpha_) * (currentTime_ / duration_);
 
-    fadeRect_.setFillColor(sf::Color(0, 0, 0, static_cast<unsigned int>(currentAlpha)));
+    fadeRect_->setFillColor(sf::Color(0, 0, 0, static_cast<unsigned int>(currentAlpha)));
 }
 
 }  // namespace Shared
