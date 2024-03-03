@@ -13,13 +13,13 @@ namespace FA {
 
 namespace Shared {
 
-std::unique_ptr<BasicEffect> EffectFactory::CreateFadeEffect(const sf::Vector2f& position, const sf::Vector2f& size,
-                                                             float seconds) const
+std::unique_ptr<EffectIf> EffectFactory::CreateFadeEffect(const sf::Vector2f& position, const sf::Vector2f& size,
+                                                          float duration) const
 {
-    return std::make_unique<FadeEffect>(position, size, seconds);
+    return std::make_unique<FadeEffect>(position, size, duration);
 }
 
-std::unique_ptr<BasicEffect> EffectFactory::CreateNullEffect() const
+std::unique_ptr<EffectIf> EffectFactory::CreateNullEffect() const
 {
     return std::make_unique<NullEffect>();
 }

@@ -20,10 +20,14 @@ public:
     FadeTransition(CreateSceneFn nextSceneFn);
     virtual ~FadeTransition();
 
-    virtual std::unique_ptr<Shared::BasicEffect> CreateEffect(const sf::Vector2f& position,
-                                                              const sf::Vector2f& size) const override;
+    virtual void Update(float deltaTime) { elapsedTime_ += deltaTime; }
+    virtual bool IsFinished() const { return elapsedTime_ > duration_; }
+
+    virtual std::unique_ptr<Shared::EffectIf> CreateEffect(const sf::Vector2f& position,
+                                                           const sf::Vector2f& size) const override;
 
 private:
+    float elapsedTime_{0.0f};
     Shared::EffectFactory factory_;
 };
 

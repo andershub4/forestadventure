@@ -12,10 +12,9 @@ namespace FA {
 
 namespace Scene {
 
-BasicTransition::BasicTransition(float seconds, CreateSceneFn nextSceneFn)
-    : targetTime_(sf::seconds(seconds))
+BasicTransition::BasicTransition(float duration, CreateSceneFn nextSceneFn)
+    : duration_(duration)
     , nextSceneFn_(nextSceneFn)
-    , seconds_(seconds)
 {}
 
 BasicTransition::~BasicTransition() = default;
@@ -24,11 +23,6 @@ std::unique_ptr<BasicScene> BasicTransition::CreateNextScene(Shared::MessageBus 
                                                              Shared::TextureManager &textureManager) const
 {
     return nextSceneFn_(messageBus, textureManager);
-}
-
-bool BasicTransition::IsFinished() const
-{
-    return clock_.getElapsedTime() >= targetTime_;
 }
 
 }  // namespace Scene

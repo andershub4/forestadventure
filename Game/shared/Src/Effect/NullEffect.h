@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include "BasicEffect.h"
+#include "EffectIf.h"
 
 namespace FA {
 
 namespace Shared {
 
-class NullEffect : public BasicEffect
+class NullEffect : public EffectIf
 {
 public:
     NullEffect();

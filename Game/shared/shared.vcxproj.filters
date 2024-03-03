@@ -87,7 +87,7 @@
     <ClInclude Include="Include\Resource\TileGraphic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\BasicEffect.h">
+    <ClInclude Include="Include\EffectIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Effect\FadeEffect.h">
@@ -153,9 +153,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\Logging.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Effect\BasicEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\Effect\FadeEffect.cpp">

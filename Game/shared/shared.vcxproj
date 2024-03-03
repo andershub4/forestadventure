@@ -150,7 +150,7 @@
     <ClInclude Include="Include\Resource\SpriteSheetIf.h" />
     <ClInclude Include="Include\Resource\TextureRect.h" />
     <ClInclude Include="Include\Screen.h" />
-    <ClInclude Include="Include\BasicEffect.h" />
+    <ClInclude Include="Include\EffectIf.h" />
     <ClInclude Include="Include\SfmlPrint.h" />
     <ClInclude Include="Include\Sprites\AnimationSpriteIf.h" />
     <ClInclude Include="Include\Sprites\ImageSpriteIf.h" />
@@ -186,7 +186,6 @@
     <ClCompile Include="Src\EffectFactory.cpp" />
     <ClCompile Include="Src\CameraView.cpp" />
     <ClCompile Include="Src\CameraViews.cpp" />
-    <ClCompile Include="Src\Effect\BasicEffect.cpp" />
     <ClCompile Include="Src\Effect\FadeEffect.cpp" />
     <ClCompile Include="Src\Effect\NullEffect.cpp" />
     <ClCompile Include="Src\Logging.cpp" />

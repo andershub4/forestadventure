@@ -14,14 +14,14 @@ namespace FA {
 
 namespace Shared {
 
-class BasicEffect;
+class EffectIf;
 
 class EffectFactory
 {
 public:
-    std::unique_ptr<BasicEffect> CreateFadeEffect(const sf::Vector2f& position, const sf::Vector2f& size,
-                                                  float seconds) const;
-    std::unique_ptr<BasicEffect> CreateNullEffect() const;
+    std::unique_ptr<EffectIf> CreateFadeEffect(const sf::Vector2f& position, const sf::Vector2f& size,
+                                               float duration) const;
+    std::unique_ptr<EffectIf> CreateNullEffect() const;
 };
 
 }  // namespace Shared

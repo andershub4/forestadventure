@@ -14,10 +14,10 @@ namespace FA {
 
 namespace Shared {
 
-FadeEffect::FadeEffect(const sf::Vector2f& position, const sf::Vector2f& size, float seconds)
-    : BasicEffect()
+FadeEffect::FadeEffect(const sf::Vector2f& position, const sf::Vector2f& size, float duration)
+    : EffectIf()
     , fadeRect_(size)
-    , targetTime_(sf::seconds(seconds))
+    , duration_(duration)
 {
     fadeRect_.setPosition(position);
     fadeRect_.setFillColor(sf::Color(0, 0, 0, 0));
@@ -30,8 +30,9 @@ void FadeEffect::DrawTo(Graphic::IRenderTarget& renderTarget) const
 
 void FadeEffect::Update(float deltaTime)
 {
-    currentTime_ = clock_.getElapsedTime();
-    float currentAlpha = startAlpha_ + (endAlpha_ - startAlpha_) * (currentTime_ / targetTime_);
+    currentTime_ += deltaTime;
+    float currentAlpha = startAlpha_ + (endAlpha_ - startAlpha_) * (currentTime_ / duration_);
+
     fadeRect_.setFillColor(sf::Color(0, 0, 0, static_cast<unsigned int>(currentAlpha)));
 }
 

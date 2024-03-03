@@ -16,11 +16,10 @@ class IRenderTarget;
 
 namespace Shared {
 
-class BasicEffect
+class EffectIf
 {
 public:
-    BasicEffect();
-    virtual ~BasicEffect();
+    virtual ~EffectIf() = default;
 
     virtual void DrawTo(Graphic::IRenderTarget& renderTarget) const = 0;
     virtual void Update(float deltaTime) = 0;

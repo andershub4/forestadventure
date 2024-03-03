@@ -6,7 +6,7 @@
 
 #include "NullTransition.h"
 
-#include "BasicEffect.h"
+#include "EffectIf.h"
 
 namespace FA {
 
@@ -18,8 +18,8 @@ NullTransition::NullTransition(CreateSceneFn nextSceneFn)
 
 NullTransition::~NullTransition() = default;
 
-std::unique_ptr<Shared::BasicEffect> NullTransition::CreateEffect(const sf::Vector2f& position,
-                                                                  const sf::Vector2f& size) const
+std::unique_ptr<Shared::EffectIf> NullTransition::CreateEffect(const sf::Vector2f& position,
+                                                               const sf::Vector2f& size) const
 {
     return factory_.CreateNullEffect();
 }

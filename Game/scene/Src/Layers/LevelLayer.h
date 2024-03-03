@@ -17,7 +17,7 @@ namespace FA {
 namespace Shared {
 
 class MessageBus;
-class BasicEffect;
+class EffectIf;
 
 }  // namespace Shared
 
@@ -48,7 +48,7 @@ public:
 private:
     Shared::MessageBus& messageBus_;
     std::unique_ptr<World::Level> level_ = nullptr;
-    std::unique_ptr<Shared::BasicEffect> effect_ = nullptr;
+    std::unique_ptr<Shared::EffectIf> effect_ = nullptr;
     Shared::TextureManager& textureManager_;
 };
 

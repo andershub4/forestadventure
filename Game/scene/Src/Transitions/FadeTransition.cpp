@@ -6,7 +6,7 @@
 
 #include "FadeTransition.h"
 
-#include "BasicEffect.h"
+#include "EffectIf.h"
 
 namespace FA {
 
@@ -18,10 +18,10 @@ FadeTransition::FadeTransition(CreateSceneFn nextSceneFn)
 
 FadeTransition::~FadeTransition() = default;
 
-std::unique_ptr<Shared::BasicEffect> FadeTransition::CreateEffect(const sf::Vector2f& position,
-                                                                  const sf::Vector2f& size) const
+std::unique_ptr<Shared::EffectIf> FadeTransition::CreateEffect(const sf::Vector2f& position,
+                                                               const sf::Vector2f& size) const
 {
-    return factory_.CreateFadeEffect(position, size, seconds_);
+    return factory_.CreateFadeEffect(position, size, duration_);
 }
 
 }  // namespace Scene

@@ -9,7 +9,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 
-#include "BasicEffect.h"
+#include "EffectIf.h"
 
 #include "RectangleShape.h"
 
@@ -17,10 +17,10 @@ namespace FA {
 
 namespace Shared {
 
-class FadeEffect : public BasicEffect
+class FadeEffect : public EffectIf
 {
 public:
-    FadeEffect(const sf::Vector2f& position, const sf::Vector2f& size, float seconds);
+    FadeEffect(const sf::Vector2f& position, const sf::Vector2f& size, float duration);
 
     virtual void DrawTo(Graphic::IRenderTarget& renderTarget) const override;
     virtual void Update(float deltaTime) override;
@@ -30,8 +30,8 @@ private:
     Graphic::RectangleShape fadeRect_;
     int startAlpha_ = 0;
     int endAlpha_ = 255;
-    sf::Time targetTime_;
-    sf::Time currentTime_;
+    float duration_{};
+    float currentTime_{};
 };
 
 }  // namespace Shared

@@ -11,7 +11,7 @@ namespace FA {
 namespace Shared {
 
 NullEffect::NullEffect()
-    : BasicEffect()
+    : EffectIf()
 {}
 
 void NullEffect::DrawTo(Graphic::IRenderTarget& renderTarget) const
