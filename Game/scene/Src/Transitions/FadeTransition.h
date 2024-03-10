@@ -8,9 +8,13 @@
 
 #include "BasicTransition.h"
 
-#include "EffectFactory.h"
-
 namespace FA {
+
+namespace Graphic {
+
+class IRectangleShape;
+
+}  // namespace Graphic
 
 namespace Scene {
 
@@ -20,15 +24,16 @@ public:
     FadeTransition(CreateSceneFn nextSceneFn);
     virtual ~FadeTransition();
 
-    virtual void Update(float deltaTime) { elapsedTime_ += deltaTime; }
-    virtual bool IsFinished() const { return elapsedTime_ > duration_; }
-
-    virtual std::unique_ptr<Shared::EffectIf> CreateEffect(std::shared_ptr<Graphic::IRectangleShape> rect,
-                                                           const sf::Vector2f& position) const override;
+    virtual void Enter(const Graphic::IRenderTexture& renderTexture) override;
+    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) const override;
+    virtual void Update(float deltaTime) override;
+    virtual bool IsFinished() const override { return elapsedTime_ > duration_; }
 
 private:
     float elapsedTime_{0.0f};
-    Shared::EffectFactory factory_;
+    std::shared_ptr<Graphic::IRectangleShape> fadeRect_;
+    int startAlpha_ = 0;
+    int endAlpha_ = 255;
 };
 
 }  // namespace Scene

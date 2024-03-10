@@ -17,7 +17,6 @@ namespace FA {
 namespace Shared {
 
 class MessageBus;
-class EffectIf;
 
 }  // namespace Shared
 
@@ -40,15 +39,14 @@ public:
     virtual void Update(float deltaTime) override;
     virtual void Draw() override;
     virtual void EnableInput(bool enable) override {}
-    virtual void EnterTransition(const BasicTransition& transition) override;
-    virtual void ExitTransition(const BasicTransition& transition) override;
+    virtual void EnterTransition(BasicTransition& transition) override;
+    virtual void DrawTransition(const BasicTransition& transition) override;
     virtual void OnLoad() override;
     virtual void OnCreate() override;
 
 private:
     Shared::MessageBus& messageBus_;
     std::unique_ptr<World::Level> level_ = nullptr;
-    std::unique_ptr<Shared::EffectIf> effect_ = nullptr;
     Shared::TextureManager& textureManager_;
 };
 

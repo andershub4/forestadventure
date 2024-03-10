@@ -6,8 +6,6 @@
 
 #include "NullTransition.h"
 
-#include "EffectIf.h"
-
 namespace FA {
 
 namespace Scene {
@@ -17,12 +15,6 @@ NullTransition::NullTransition(CreateSceneFn nextSceneFn)
 {}
 
 NullTransition::~NullTransition() = default;
-
-std::unique_ptr<Shared::EffectIf> NullTransition::CreateEffect(std::shared_ptr<Graphic::IRectangleShape> rect,
-                                                               const sf::Vector2f& position) const
-{
-    return factory_.CreateNullEffect();
-}
 
 }  // namespace Scene
 

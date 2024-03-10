@@ -144,19 +144,15 @@
     <ClInclude Include="Include\CameraView.h" />
     <ClInclude Include="Include\CameraViewIf.h" />
     <ClInclude Include="Include\CameraViews.h" />
-    <ClInclude Include="Include\EffectFactory.h" />
     <ClInclude Include="Include\Sprites\BasicSprite.h" />
     <ClInclude Include="Include\Resource\ResourceId.h" />
     <ClInclude Include="Include\Resource\SpriteSheetIf.h" />
     <ClInclude Include="Include\Resource\TextureRect.h" />
     <ClInclude Include="Include\Screen.h" />
-    <ClInclude Include="Include\EffectIf.h" />
     <ClInclude Include="Include\SfmlPrint.h" />
     <ClInclude Include="Include\Sprites\AnimationSpriteIf.h" />
     <ClInclude Include="Include\Sprites\ImageSpriteIf.h" />
     <ClInclude Include="Include\Sprites\SpriteIf.h" />
-    <ClInclude Include="Src\Effect\FadeEffect.h" />
-    <ClInclude Include="Src\Effect\NullEffect.h" />
     <ClInclude Include="Include\Logging.h" />
     <ClInclude Include="Include\MapData.h" />
     <ClInclude Include="Include\Message\BroadcastMessage\CloseWindowMessage.h" />
@@ -183,11 +179,8 @@
     <ClInclude Include="Include\Resource\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\EffectFactory.cpp" />
     <ClCompile Include="Src\CameraView.cpp" />
     <ClCompile Include="Src\CameraViews.cpp" />
-    <ClCompile Include="Src\Effect\FadeEffect.cpp" />
-    <ClCompile Include="Src\Effect\NullEffect.cpp" />
     <ClCompile Include="Src\Logging.cpp" />
     <ClCompile Include="Src\MessageBus.cpp" />
     <ClCompile Include="Src\Sprites\AnimationSprite.cpp" />

@@ -46,8 +46,9 @@ public:
     virtual void Update(float deltaTime) = 0;
     virtual void Draw() = 0;
     virtual void EnableInput(bool enable) = 0;
-    virtual void EnterTransition(const BasicTransition& transition) {}
-    virtual void ExitTransition(const BasicTransition& transition) {}
+    virtual void EnterTransition(BasicTransition& transition) {}
+    virtual void ExitTransition(BasicTransition& transition) {}
+    virtual void DrawTransition(const BasicTransition& transition) {}
     virtual void OnLoad() {}
     virtual void OnCreate() {}
     virtual void SubscribeMessages() {}

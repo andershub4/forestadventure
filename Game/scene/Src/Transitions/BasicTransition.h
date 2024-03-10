@@ -16,14 +16,14 @@ namespace FA {
 
 namespace Graphic {
 
-class IRectangleShape;
+class IRenderTarget;
+class IRenderTexture;
 
 }  // namespace Graphic
 
 namespace Shared {
 
 class MessageBus;
-class EffectIf;
 
 }  // namespace Shared
 
@@ -41,9 +41,10 @@ public:
     BasicTransition(float duration, CreateSceneFn nextSceneFn);
     virtual ~BasicTransition();
 
+    virtual void Enter(const Graphic::IRenderTexture& renderTexture) {}
+    virtual void Exit() {}
+    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) const {}
     virtual void Update(float deltaTime) {}
-    virtual std::unique_ptr<Shared::EffectIf> CreateEffect(std::shared_ptr<Graphic::IRectangleShape> rect,
-                                                           const sf::Vector2f& position) const = 0;
 
     std::unique_ptr<BasicScene> CreateNextScene(Shared::MessageBus& messageBus,
                                                 Shared::TextureManager& textureManager) const;

@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "EffectIf.h"
 #include "Level.h"
 #include "RectangleShape.h"
 #include "Transitions/BasicTransition.h"
@@ -44,26 +43,21 @@ void LevelLayer::Draw()
     auto view = level_->GetView();
     layerTexture_.setView(view);
     level_->Draw(layerTexture_);  // When drawing, the view must already have been set
-    if (effect_) effect_->DrawTo(layerTexture_);
+}
+
+void LevelLayer::DrawTransition(const BasicTransition& transition)
+{
+    transition.DrawTo(layerTexture_);
 }
 
 void LevelLayer::Update(float deltaTime)
 {
     level_->Update(deltaTime);
-    if (effect_) effect_->Update(deltaTime);
 }
 
-void LevelLayer::EnterTransition(const BasicTransition& transition)
+void LevelLayer::EnterTransition(BasicTransition& transition)
 {
-    sf::Vector2f layerPos = layerTexture_.mapPixelToCoords({0, 0});
-    sf::Vector2f layerSize = static_cast<sf::Vector2f>(layerTexture_.getSize());
-    auto rect = std::make_shared<Graphic::RectangleShape>(layerSize);
-    effect_ = transition.CreateEffect(rect, layerPos);
-}
-
-void LevelLayer::ExitTransition(const BasicTransition& transition)
-{
-    effect_.reset();
+    transition.Enter(layerTexture_);
 }
 
 }  // namespace Scene

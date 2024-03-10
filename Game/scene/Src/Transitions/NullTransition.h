@@ -8,8 +8,6 @@
 
 #include "BasicTransition.h"
 
-#include "EffectFactory.h"
-
 namespace FA {
 
 namespace Scene {
@@ -19,12 +17,6 @@ class NullTransition : public BasicTransition
 public:
     NullTransition(CreateSceneFn nextSceneFn);
     virtual ~NullTransition();
-
-    virtual std::unique_ptr<Shared::EffectIf> CreateEffect(std::shared_ptr<Graphic::IRectangleShape> rect,
-                                                           const sf::Vector2f& position) const override;
-
-private:
-    Shared::EffectFactory factory_;
 };
 
 }  // namespace Scene

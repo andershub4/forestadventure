@@ -87,15 +87,6 @@
     <ClInclude Include="Include\Resource\TileGraphic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EffectIf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Effect\FadeEffect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Effect\NullEffect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\MapData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -103,9 +94,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\CameraViews.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EffectFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Resource\ResourceId.h">
@@ -155,19 +143,10 @@
     <ClCompile Include="Src\Logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Effect\FadeEffect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Effect\NullEffect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\CameraView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\CameraViews.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EffectFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

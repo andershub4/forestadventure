@@ -54,7 +54,8 @@ void TransitionScene::DrawTo(Graphic::IRenderTarget& renderTarget)
         auto& layer = entry.second;
         layer->Clear();
         layer->Draw();
-        layer->DrawTo(renderTarget);
+        layer->DrawTransition(*transition_);
+        layer->DrawTo(renderTarget); 
     }
 }
 
