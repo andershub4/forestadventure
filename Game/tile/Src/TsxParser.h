@@ -55,13 +55,13 @@ private:
     void ParseTileSetElement(ElementT* tileSetElement, ParsedTsx& parsedTsx) const
     {
         helper_->ParseTileSet(tileSetElement, parsedTsx.tileSet_);
-        LOG_TMXVARIABLE(parsedTsx.tileSet_);
+        LOG_TMXDEBUG("%s", DUMP(parsedTsx.tileSet_));
 
         auto tileElement = tileSetElement->FirstChildElement("tile");
         while (tileElement != nullptr) {
             ParsedTile tile;
             helper_->ParseTile(tileElement, tile);
-            LOG_TMXVARIABLE(tile);
+            LOG_TMXDEBUG("%s", DUMP(tile));
             parsedTsx.tiles_.push_back(tile);
             tileElement = tileElement->NextSiblingElement("tile");
         }
@@ -69,7 +69,7 @@ private:
         auto imageElement = tileSetElement->FirstChildElement("image");
         if (imageElement != nullptr) {
             helper_->ParseImage(imageElement, parsedTsx.image_);
-            LOG_TMXVARIABLE(parsedTsx.image_);
+            LOG_TMXDEBUG("%s", DUMP(parsedTsx.image_));
         }
     }
 };

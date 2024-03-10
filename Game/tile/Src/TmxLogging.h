@@ -28,8 +28,27 @@ void MakeErrorLogEntry(const std::string& fn, const std::string& str);
 #define LOG_TMXINFO(...) MakeInfoLogEntry(__FUNCTION__, ToString(__VA_ARGS__))
 #define LOG_TMXWARN(...) MakeWarnLogEntry(__FUNCTION__, ToString(__VA_ARGS__))
 #define LOG_TMXERROR(...) MakeErrorLogEntry(__FUNCTION__, ToString(__VA_ARGS__))
+#define LOG_TMXDEBUG(...) MakeDebugLogEntry(__FUNCTION__, ToString(__VA_ARGS__))
 
-#define LOG_TMXVARIABLE(variable)                       \
-    std::ostringstream oss;                             \
-    oss << "{" << #variable << ": " << variable << "}"; \
-    MakeDebugLogEntry(__FUNCTION__, oss.str())
+#define DETAIL_FORMAT(name, arg) "{" << name << ": " << arg << "}"
+
+#define OUT(arg) DETAIL_FORMAT(#arg, arg);
+#define OUT2(name, arg) DETAIL_FORMAT(name, arg)
+
+#define DUMP(arg)              \
+    [&]() {                    \
+        std::ostringstream os; \
+        os << OUT(arg);        \
+        return os.str();       \
+    }()                        \
+        .c_str()
+
+#define DUMP2(name, arg)       \
+    [&]() {                    \
+        std::ostringstream os; \
+        os << OUT2(name, arg); \
+        return os.str();       \
+    }()                        \
+        .c_str()
+
+#define DELIM ", "
