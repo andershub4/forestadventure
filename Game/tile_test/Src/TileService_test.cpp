@@ -12,7 +12,7 @@
 #include "Mock/ByteStreamMock.h"
 #include "Mock/TileSetFactoryMock.h"
 #include "Mock/TileSetMock.h"
-#include "Mock/TmxLogMock.h"
+#include "Mock/TmxLoggerMock.h"
 #include "Mock/TmxParserMock.h"
 #include "Mock/TsxParserMock.h"
 #include "Mock/XMLMock.h"
