@@ -9,7 +9,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "Mock/LogMock.h"
+#include "Mock/LoggerMock.h"
 #include "SpriteMock.h"
 #include "Sprites/AnimationSprite.h"
 #include "TextureMock.h"

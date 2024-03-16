@@ -209,10 +209,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Src\ByteStreamFactory.cpp" />
+    <ClCompile Include="Src\Entry.cpp" />
     <ClCompile Include="Src\Error.cpp" />
     <ClCompile Include="Src\ByteStream.cpp" />
     <ClCompile Include="Src\Folder.cpp" />
     <ClCompile Include="Src\Format.cpp" />
+    <ClCompile Include="Src\Logger.cpp" />
+    <ClCompile Include="Src\LogUtil.cpp" />
     <ClCompile Include="Src\Path.cpp" />
     <ClCompile Include="Src\Random.cpp" />
     <ClCompile Include="Src\SpecialFolder.cpp" />
@@ -220,17 +223,24 @@
   <ItemGroup>
     <ClInclude Include="Include\BasicByteStream.h" />
     <ClInclude Include="Include\BasicByteStreamFactory.h" />
+    <ClInclude Include="Include\BasicLogger.h" />
+    <ClInclude Include="Include\Logger.h" />
+    <ClInclude Include="Include\LogUtil.h" />
     <ClInclude Include="Include\Mock\ByteStreamFactoryMock.h" />
     <ClInclude Include="Include\Mock\ByteStreamMock.h" />
     <ClInclude Include="Include\Format.h" />
+    <ClInclude Include="Include\Mock\BasicLoggerMock.h" />
+    <ClInclude Include="Include\Mock\LoggerMockProxy.h" />
     <ClInclude Include="Include\Print.h" />
     <ClInclude Include="Src\ByteStream.h" />
     <ClInclude Include="Include\ByteStreamFactory.h" />
+    <ClInclude Include="Src\Entry.h" />
     <ClInclude Include="Src\Error.h" />
     <ClInclude Include="Include\Folder.h" />
     <ClInclude Include="Include\Path.h" />
     <ClInclude Include="Include\Random.h" />
     <ClInclude Include="Include\Result.h" />
+    <ClInclude Include="Src\LogLevel.h" />
     <ClInclude Include="Src\SpecialFolder.h" />
     <ClInclude Include="Include\Version.h" />
   </ItemGroup>

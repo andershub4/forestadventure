@@ -35,10 +35,6 @@ jobs:
     - name: Build
       run: msbuild /m /p:Configuration=${{matrix.configuration}} /p:Platform=x86 ./Game/Game.sln
       
-    - name: Run logging tests
-      if: matrix.configuration == 'Release'
-      run: ./Game/Release/logging_test.exe
-      
     - name: Run tile tests
       if: matrix.configuration == 'Release'
       run: ./Game/Release/tile_test.exe

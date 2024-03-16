@@ -34,7 +34,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc" />
-    <ClCompile Include="..\tile_test\Src\Mock\TmxLogMock.cpp" />
+    <ClCompile Include="..\tile_test\Src\Mock\TmxLoggerMock.cpp" />
     <ClCompile Include="Src\TmxParser_int.cpp" />
     <ClCompile Include="Src\TsxParser_int.cpp" />
   </ItemGroup>

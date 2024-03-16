@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Src;$(SolutionDir)shared\Include;$(SolutionDir)logging\Include;$(SolutionDir)graphic\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Src;$(SolutionDir)shared\Include;$(SolutionDir)graphic\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Src;$(SolutionDir)shared\Include;$(SolutionDir)logging\Include;$(SolutionDir)graphic\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\submodules\SFML\include;$(SolutionDir)shared\Src;$(SolutionDir)shared\Include;$(SolutionDir)graphic\Include;$(SolutionDir)util\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -189,9 +189,6 @@
     <ClCompile Include="Src\Resource\SpriteSheet.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\logging\logging.vcxproj">
-      <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\util\util.vcxproj">
       <Project>{fc8641f9-67f5-474b-9296-f5cf069d6f6d}</Project>
     </ProjectReference>

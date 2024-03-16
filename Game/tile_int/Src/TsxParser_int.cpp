@@ -9,7 +9,7 @@
 
 #include <tinyxml2/tinyxml2.h>
 
-#include "Mock/TmxLogMock.h"
+#include "Mock/TmxLoggerMock.h"
 #include "ParseHelper.h"
 
 #include "TsxParser.h"

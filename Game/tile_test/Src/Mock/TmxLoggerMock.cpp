@@ -1,30 +1,22 @@
 /*
- *	Copyright (C) 2022 Anders Wennmo
+ *	Copyright (C) 2023 Anders Wennmo
  *	This file is part of forestadventure which is released under MIT license.
  *	See file LICENSE for full license details.
  */
 
-#include "TmxLogging.h"
-
-#include "Folder.h"
-#include "Logger.h"
+#include "Mock/TmxLoggerMock.h"
 
 namespace FA {
 
 namespace Tile {
 
+LogLib::BasicLogger* LoggerMock::proxy_;
+
 // Implementation must be in a cpp file, so it can be substituted during link time
 // for mocking purpose
 LogLib::BasicLogger& Logger()
 {
-    static LogLib::Logger logger;
-
-    static bool once = []() {
-        logger.OpenLog(FA::GetLogPath(), "tmx-log.txt", false);
-        return true;
-    }();
-
-    return logger;
+    return LoggerMock::Proxy();
 }
 
 }  // namespace Tile

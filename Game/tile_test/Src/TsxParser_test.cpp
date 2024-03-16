@@ -9,7 +9,7 @@
 #include <gtest/gtest.h>
 
 #include "Mock/ParseHelperMock.h"
-#include "Mock/TmxLogMock.h"
+#include "Mock/TmxLoggerMock.h"
 #include "Mock/XMLMock.h"
 
 #include "TsxParser.h"

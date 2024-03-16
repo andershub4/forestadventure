@@ -11,7 +11,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "Mock/LogMock.h"
+#include "Mock/LoggerMock.h"
 #include "Resource/ResourceManager.h"
 #include "TextureMock.h"
 

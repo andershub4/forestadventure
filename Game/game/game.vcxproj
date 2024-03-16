@@ -153,9 +153,6 @@
     <ClInclude Include="Src\Title.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\logging\logging.vcxproj">
-      <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\scene\scene.vcxproj">
       <Project>{4094dfc5-e913-4b41-87b7-6dad48c48c58}</Project>
     </ProjectReference>

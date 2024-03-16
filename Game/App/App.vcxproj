@@ -172,9 +172,6 @@ copy /Y "$(SolutionDir)Release-Dll\tinyxml2.dll" "$(TargetDir)tinyxml2.dll"</Com
     <ProjectReference Include="..\game\game.vcxproj">
       <Project>{d2a5b6a0-ec7f-4f46-9247-c64242dbdef9}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\logging\logging.vcxproj">
-      <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\util\util.vcxproj">
       <Project>{fc8641f9-67f5-474b-9296-f5cf069d6f6d}</Project>
     </ProjectReference>

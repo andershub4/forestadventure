@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)tile\Include;$(SolutionDir)3rdparty\submodules;$(SolutionDir)logging\Include;$(SolutionDir)util\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)tile\Include;$(SolutionDir)3rdparty\submodules;$(SolutionDir)util\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)tile\Include;$(SolutionDir)3rdparty\submodules;$(SolutionDir)logging\Include;$(SolutionDir)util\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)tile\Include;$(SolutionDir)3rdparty\submodules;$(SolutionDir)util\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -175,9 +175,6 @@
   <ItemGroup>
     <ProjectReference Include="..\3rdparty\submodules\tinyxml2\tinyxml2\tinyxml2.vcxproj">
       <Project>{d1c528b6-aa02-4d29-9d61-dc08e317a70d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\logging\logging.vcxproj">
-      <Project>{28493cc5-4774-40e3-8e2b-973209705419}</Project>
     </ProjectReference>
     <ProjectReference Include="..\util\util.vcxproj">
       <Project>{fc8641f9-67f5-474b-9296-f5cf069d6f6d}</Project>
