@@ -17,7 +17,7 @@ namespace FA {
 
 namespace Shared {
 
-LogLib::BasicLogger& Logger();
+BasicLogger& Logger();
 
 }  // namespace Shared
 

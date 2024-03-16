@@ -15,9 +15,9 @@ namespace Tile {
 
 // Implementation must be in a cpp file, so it can be substituted during link time
 // for mocking purpose
-LogLib::BasicLogger& Logger()
+BasicLogger& Logger()
 {
-    static LogLib::Logger logger;
+    static FA::Logger logger;
 
     static bool once = []() {
         logger.OpenLog(FA::GetLogPath(), "tmx-log.txt", false);

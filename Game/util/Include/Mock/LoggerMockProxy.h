@@ -14,7 +14,7 @@
 
 namespace FA {
 
-class LoggerMockProxy : public LogLib::BasicLogger
+class LoggerMockProxy : public BasicLogger
 {
 public:
     LoggerMockProxy(BasicLoggerMock& mock)

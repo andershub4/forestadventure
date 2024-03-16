@@ -10,7 +10,7 @@
 
 #include "LogLevel.h"
 
-namespace LogLib {
+namespace FA {
 
 class Entry
 {
@@ -29,4 +29,4 @@ private:
 
 bool operator==(const Entry& lhs, const Entry& rhs);
 
-}  // namespace LogLib
+}  // namespace FA

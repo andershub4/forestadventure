@@ -16,7 +16,7 @@
 #include "Entry.h"
 #include "LogLevel.h"
 
-namespace LogLib {
+namespace FA {
 
 Logger::Logger() = default;
 
@@ -141,4 +141,4 @@ bool Logger::FolderExists(const std::string& folder) const
     return info.st_mode & S_IFDIR ? true : false;
 }
 
-}  // namespace LogLib
+}  // namespace FA

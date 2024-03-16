@@ -8,7 +8,7 @@
 
 #include <ostream>
 
-namespace LogLib {
+namespace FA {
 
 enum class LogLevel { Debug, Info, Warn, Error };
 
@@ -35,4 +35,4 @@ inline std::ostream& operator<<(std::ostream& os, const LogLevel& e)
     return os;
 }
 
-}  // namespace LogLib
+}  // namespace FA

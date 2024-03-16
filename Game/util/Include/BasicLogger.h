@@ -8,7 +8,7 @@
 
 #include <string>
 
-namespace LogLib {
+namespace FA {
 
 class BasicLogger
 {
@@ -23,4 +23,4 @@ public:
     virtual void MakeErrorLogEntry(const std::string& fn, const std::string& str) = 0;
 };
 
-}  // namespace LogLib
+}  // namespace FA

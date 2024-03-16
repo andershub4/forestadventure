@@ -17,7 +17,7 @@ namespace FA {
 
 namespace Tile {
 
-LogLib::BasicLogger& Logger();
+BasicLogger& Logger();
 
 }  // namespace Tile
 

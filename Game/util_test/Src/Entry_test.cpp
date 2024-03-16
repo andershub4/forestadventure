@@ -11,7 +11,7 @@
 
 using namespace testing;
 
-namespace LogLib {
+namespace FA {
 
 TEST(EntryTest, EntryEqualToOperator)
 {
@@ -42,4 +42,4 @@ TEST(EntryTest, ReturnStrShouldSucceed)
     EXPECT_THAT(str4, StrEq("[ERROR | myFunc]: nCount: 3"));
 }
 
-}  // namespace LogLib
+}  // namespace FA

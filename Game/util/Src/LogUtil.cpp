@@ -10,22 +10,22 @@
 
 namespace FA {
 
-void MakeDebugLogEntry(LogLib::BasicLogger& logger, const std::string& fn, const std::string& str)
+void MakeDebugLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str)
 {
     logger.MakeDebugLogEntry(fn, str);
 }
 
-void MakeInfoLogEntry(LogLib::BasicLogger& logger, const std::string& fn, const std::string& str)
+void MakeInfoLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str)
 {
     logger.MakeInfoLogEntry(fn, str);
 }
 
-void MakeWarnLogEntry(LogLib::BasicLogger& logger, const std::string& fn, const std::string& str)
+void MakeWarnLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str)
 {
     logger.MakeWarnLogEntry(fn, str);
 }
 
-void MakeErrorLogEntry(LogLib::BasicLogger& logger, const std::string& fn, const std::string& str)
+void MakeErrorLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str)
 {
     logger.MakeErrorLogEntry(fn, str);
 }

@@ -11,7 +11,7 @@
 #include <fstream>
 #include <string>
 
-namespace LogLib {
+namespace FA {
 
 enum class LogLevel;
 class Entry;
@@ -48,4 +48,4 @@ private:
     bool FolderExists(const std::string& folder) const;
 };
 
-}  // namespace LogLib
+}  // namespace FA

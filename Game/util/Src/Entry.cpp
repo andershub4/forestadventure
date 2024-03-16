@@ -9,7 +9,7 @@
 #include <sstream>
 #include <tuple>
 
-namespace LogLib {
+namespace FA {
 
 Entry::Entry(const LogLevel& logLevel, const std::string& fn, const std::string& str)
     : logLevel_(logLevel)
@@ -30,4 +30,4 @@ bool operator==(const Entry& lhs, const Entry& rhs)
     return (std::tie(lhs.logLevel_, lhs.fn_, lhs.str_) == std::tie(rhs.logLevel_, rhs.fn_, rhs.str_));
 }
 
-}  // namespace LogLib
+}  // namespace FA

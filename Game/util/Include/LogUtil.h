@@ -8,17 +8,13 @@
 
 #include <string>
 
-namespace LogLib {
+namespace FA {
 
 class BasicLogger;
 
-}  // namespace LogLib
-
-namespace FA {
-
-void MakeDebugLogEntry(LogLib::BasicLogger& logger, const std::string& fn, const std::string& str);
-void MakeInfoLogEntry(LogLib::BasicLogger& logger, const std::string& fn, const std::string& str);
-void MakeWarnLogEntry(LogLib::BasicLogger& logger, const std::string& fn, const std::string& str);
-void MakeErrorLogEntry(LogLib::BasicLogger& logger, const std::string& fn, const std::string& str);
+void MakeDebugLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
+void MakeInfoLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
+void MakeWarnLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
+void MakeErrorLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
 
 }  // namespace FA
