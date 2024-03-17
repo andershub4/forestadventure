@@ -11,6 +11,8 @@
 
 namespace FA {
 
+namespace Util {
+
 class Random
 {
 public:
@@ -34,5 +36,7 @@ int RandomizeRange(int min, int max)
 {
     return r.RandomizeRange(min, max);
 }
+
+}  // namespace Util
 
 }  // namespace FA

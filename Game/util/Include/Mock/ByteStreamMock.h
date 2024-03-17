@@ -12,7 +12,7 @@
 
 namespace FA {
 
-namespace Tile {
+namespace Util {
 
 class ByteStreamMock : public BasicByteStream
 {
@@ -20,6 +20,6 @@ public:
     MOCK_METHOD(std::string, GetBuffer, (), (const override));
 };
 
-}  // namespace Tile
+}  // namespace Util
 
 }  // namespace FA

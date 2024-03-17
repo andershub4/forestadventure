@@ -13,6 +13,8 @@ using namespace testing;
 
 namespace FA {
 
+namespace Util {
+
 TEST(FormatTest, ValidVaArgsShouldReturnString)
 {
     int nCount = 3;
@@ -35,5 +37,7 @@ TEST(FormatTest, TooLongVaArgsShouldReturnTruncatedString)
 
     EXPECT_THAT(str, SizeIs(40000));
 }
+
+}  // namespace Util
 
 }  // namespace FA

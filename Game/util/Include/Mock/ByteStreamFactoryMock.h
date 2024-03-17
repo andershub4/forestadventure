@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Util {
+
 class ByteStreamFactoryMock : public BasicByteStreamFactory
 {
 public:
@@ -33,5 +35,7 @@ public:
 private:
     ByteStreamFactoryMock& mock_;
 };
+
+}  // namespace Util
 
 }  // namespace FA

@@ -32,7 +32,7 @@ public:
     TileService(std::unique_ptr<BasicTmxParser<DocumentT, ElementT, ErrorT>> tmxParser,
                 std::unique_ptr<BasicTsxParser<DocumentT, ElementT, ErrorT>> tsxParser,
                 std::unique_ptr<BasicTileSetFactory> tileSetFactory,
-                std::unique_ptr<BasicByteStreamFactory> byteStreamFactory)
+                std::unique_ptr<Util::BasicByteStreamFactory> byteStreamFactory)
         : tmxParser_(std::move(tmxParser))
         , tsxParser_(std::move(tsxParser))
         , tileSetFactory_(std::move(tileSetFactory))
@@ -70,7 +70,7 @@ public:
         else {
             for (const auto &parsedSet : parsedTmx_.tileSets_) {
                 auto tsxFilePath = GetFilePath(tmxDir, parsedSet.tsxSource_);
-                auto tsxDir = GetHead(tsxFilePath);
+                auto tsxDir = Util::GetHead(tsxFilePath);
                 DocumentT doc;
                 ParsedTsx parsedTsx;
                 auto byteStream = byteStreamFactory_->Create(tsxFilePath);
@@ -136,7 +136,7 @@ private:
     std::unique_ptr<BasicTmxParser<DocumentT, ElementT, ErrorT>> tmxParser_;
     std::unique_ptr<BasicTsxParser<DocumentT, ElementT, ErrorT>> tsxParser_;
     std::unique_ptr<BasicTileSetFactory> tileSetFactory_;
-    std::unique_ptr<BasicByteStreamFactory> byteStreamFactory_;
+    std::unique_ptr<Util::BasicByteStreamFactory> byteStreamFactory_;
 
     ParsedTmx parsedTmx_;
 

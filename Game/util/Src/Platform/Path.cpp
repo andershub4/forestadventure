@@ -14,7 +14,7 @@
 
 namespace FA {
 
-namespace Platform {
+namespace Util {
 
 Result GetShortPathNameW(const std::wstring& longPath, std::wstring& shortPath)
 {
@@ -62,6 +62,6 @@ std::string GetExeFileName()
     return std::string(buffer);
 }
 
-}  // namespace Platform
+}  // namespace Util
 
 }  // namespace FA

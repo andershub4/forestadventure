@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Util {
+
 class BasicByteStream
 {
 public:
@@ -17,5 +19,7 @@ public:
 
     virtual std::string GetBuffer() const = 0;
 };
+
+}  // namespace Util
 
 }  // namespace FA

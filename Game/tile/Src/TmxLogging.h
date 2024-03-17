@@ -17,13 +17,13 @@ namespace FA {
 
 namespace Tile {
 
-BasicLogger& Logger();
+Util::BasicLogger& Logger();
 
 }  // namespace Tile
 
 }  // namespace FA
 
-#define LOG_TMXINFO(...) FA::MakeInfoLogEntry(FA::Tile::Logger(), __FUNCTION__, FA::ToString(__VA_ARGS__))
-#define LOG_TMXWARN(...) FA::MakeWarnLogEntry(FA::Tile::ogger(), __FUNCTION__, FA::ToString(__VA_ARGS__))
-#define LOG_TMXERROR(...) FA::MakeErrorLogEntry(FA::Tile::Logger(), __FUNCTION__, FA::ToString(__VA_ARGS__))
-#define LOG_TMXDEBUG(...) FA::MakeDebugLogEntry(FA::Tile::Logger(), __FUNCTION__, FA::ToString(__VA_ARGS__))
+#define LOG_TMXINFO(...) Util::MakeInfoLogEntry(Tile::Logger(), __FUNCTION__, Util::ToString(__VA_ARGS__))
+#define LOG_TMXWARN(...) Util::MakeWarnLogEntry(Tile::ogger(), __FUNCTION__, Util::ToString(__VA_ARGS__))
+#define LOG_TMXERROR(...) Util::MakeErrorLogEntry(Tile::Logger(), __FUNCTION__, Util::ToString(__VA_ARGS__))
+#define LOG_TMXDEBUG(...) Util::MakeDebugLogEntry(Tile::Logger(), __FUNCTION__, Util::ToString(__VA_ARGS__))

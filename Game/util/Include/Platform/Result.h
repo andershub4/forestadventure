@@ -10,7 +10,7 @@
 
 namespace FA {
 
-namespace Platform {
+namespace Util {
 
 struct Result
 {
@@ -25,6 +25,6 @@ struct Result
     std::string errorMessage_{};
 };
 
-}  // namespace Platform
+}  // namespace Util
 
 }  // namespace FA

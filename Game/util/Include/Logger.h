@@ -13,6 +13,8 @@
 
 namespace FA {
 
+namespace Util {
+
 enum class LogLevel;
 class Entry;
 
@@ -47,5 +49,7 @@ private:
     std::string TimeStr();
     bool FolderExists(const std::string& folder) const;
 };
+
+}  // namespace Util
 
 }  // namespace FA

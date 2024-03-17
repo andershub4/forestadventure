@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Util {
+
 ByteStreamFactory::ByteStreamFactory() = default;
 
 ByteStreamFactory::~ByteStreamFactory() = default;
@@ -21,5 +23,7 @@ std::unique_ptr<BasicByteStream> ByteStreamFactory::Create(const std::string &fi
     auto ifd = std::make_unique<std::ifstream>(fileName, std::ios::binary);
     return std::make_unique<ByteStream>(std::move(ifd));
 }
+
+}  // namespace Util
 
 }  // namespace FA

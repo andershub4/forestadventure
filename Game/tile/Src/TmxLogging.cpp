@@ -15,12 +15,12 @@ namespace Tile {
 
 // Implementation must be in a cpp file, so it can be substituted during link time
 // for mocking purpose
-BasicLogger& Logger()
+Util::BasicLogger& Logger()
 {
-    static FA::Logger logger;
+    static Util::Logger logger;
 
     static bool once = []() {
-        logger.OpenLog(FA::GetLogPath(), "tmx-log.txt", false);
+        logger.OpenLog(Util::GetLogPath(), "tmx-log.txt", false);
         return true;
     }();
 

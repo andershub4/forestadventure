@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Util {
+
 class BasicLoggerMock
 {
 public:
@@ -29,5 +31,7 @@ public:
     MOCK_METHOD(void, MakeWarnLogEntry, (const std::string& str));
     MOCK_METHOD(void, MakeErrorLogEntry, (const std::string& str));
 };
+
+}  // namespace Util
 
 }  // namespace FA

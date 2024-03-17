@@ -10,10 +10,10 @@
 
 namespace FA {
 
-namespace Platform {
+namespace Util {
 
 std::string GetLastErrorAsStr();
 
-}  // namespace Platform
+}  // namespace Util
 
 }  // namespace FA

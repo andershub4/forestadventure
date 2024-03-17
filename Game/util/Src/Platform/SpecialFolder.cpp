@@ -11,7 +11,7 @@
 
 namespace FA {
 
-namespace Platform {
+namespace Util {
 
 namespace {
 
@@ -50,6 +50,6 @@ Result GetSpecialPath(SpecialFolder specialFolder, std::wstring& specialPath)
     return result;
 }
 
-}  // namespace Platform
+}  // namespace Util
 
 }  // namespace FA

@@ -12,16 +12,18 @@
 
 namespace FA {
 
+namespace Util {
+
 namespace {
 
-std::string GetSpecialPath(Platform::SpecialFolder specialFolder)
+std::string GetSpecialPath(SpecialFolder specialFolder)
 {
     std::string specialPath;
     std::wstring specialPathW;
-    auto result = Platform::GetSpecialPath(specialFolder, specialPathW);
+    auto result = GetSpecialPath(specialFolder, specialPathW);
 
     if (result.IsOk()) {
-        auto result = Platform::GetShortPathNameA(specialPathW, specialPath);
+        auto result = GetShortPathNameA(specialPathW, specialPath);
     }
 
     return specialPath;
@@ -29,17 +31,17 @@ std::string GetSpecialPath(Platform::SpecialFolder specialFolder)
 
 std::string GetLocalAppDataPath()
 {
-    return GetSpecialPath(Platform::SpecialFolder::LocalAppData);
+    return GetSpecialPath(SpecialFolder::LocalAppData);
 }
 
 std::string GetProgramDataPath()
 {
-    return GetSpecialPath(Platform::SpecialFolder::ProgramData);
+    return GetSpecialPath(SpecialFolder::ProgramData);
 }
 
 std::string GetExePath()
 {
-    std::string exeFileName = Platform::GetExeFileName();
+    std::string exeFileName = GetExeFileName();
     std::string exePath = GetHead(exeFileName);
 
     return exePath;
@@ -96,5 +98,7 @@ std::string GetAssetsPath()
 #endif  // INSTALL
     return p;
 }
+
+}  // namespace Util
 
 }  // namespace FA

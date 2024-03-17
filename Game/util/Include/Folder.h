@@ -10,9 +10,13 @@
 
 namespace FA {
 
+namespace Util {
+
 std::string GetHead(const std::string& filePath);
 
 std::string GetLogPath();
 std::string GetAssetsPath();
+
+}  // namespace Util
 
 }  // namespace FA

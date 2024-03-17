@@ -8,6 +8,8 @@
 
 namespace FA {
 
+namespace Util {
+
 static constexpr int maxLogEntrySize{40000};  // arbitrary number
 
 std::string ToString(const char* format, ...)
@@ -26,5 +28,7 @@ std::string ToString(const char* format, ...)
 
     return result;
 }
+
+}  // namespace Util
 
 }  // namespace FA

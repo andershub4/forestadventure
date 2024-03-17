@@ -12,6 +12,8 @@
 
 namespace FA {
 
+namespace Util {
+
 class Entry
 {
 public:
@@ -28,5 +30,7 @@ private:
 };
 
 bool operator==(const Entry& lhs, const Entry& rhs);
+
+}  // namespace Util
 
 }  // namespace FA

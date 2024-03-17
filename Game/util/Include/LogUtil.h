@@ -10,11 +10,15 @@
 
 namespace FA {
 
+namespace Util {
+
 class BasicLogger;
 
 void MakeDebugLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
 void MakeInfoLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
 void MakeWarnLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
 void MakeErrorLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
+
+}  // namespace Util
 
 }  // namespace FA

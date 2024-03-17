@@ -19,7 +19,7 @@ namespace FA {
 
 namespace Tile {
 
-using FA::operator<<;
+using FA::Util::operator<<;
 
 /* first = attribute name, second = XMLError */
 template <class ErrorT>

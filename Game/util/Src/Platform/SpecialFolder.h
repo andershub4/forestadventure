@@ -12,12 +12,12 @@
 
 namespace FA {
 
-namespace Platform {
+namespace Util {
 
 enum class SpecialFolder { Documents, LocalAppData, ProgramData };
 
 Result GetSpecialPath(SpecialFolder specialFolder, std::wstring& specialPath);
 
-}  // namespace Platform
+}  // namespace Util
 
 }  // namespace FA

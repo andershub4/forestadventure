@@ -14,7 +14,7 @@ namespace FA {
 
 namespace Tile {
 
-using FA::operator<<;
+using FA::Util::operator<<;
 
 bool operator==(const Image& lhs, const Image& rhs)
 {

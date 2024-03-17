@@ -20,7 +20,7 @@ std::string GetFilePath(const std::string& baseDir, const std::string& source)
     const std::string moveBackMatch = "../";
     auto index = tail.find(moveBackMatch);
     while (index != std::string::npos) {
-        head = GetHead(head);
+        head = Util::GetHead(head);
         tail = tail.substr(index + moveBackMatch.size());
         index = tail.find(moveBackMatch);
     }

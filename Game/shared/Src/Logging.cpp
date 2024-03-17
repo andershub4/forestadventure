@@ -15,12 +15,12 @@ namespace Shared {
 
 // Implementation must be in a cpp file, so it can be substituted during link time
 // for mocking purpose
-BasicLogger& Logger()
+Util::BasicLogger& Logger()
 {
-    static FA::Logger logger;
+    static Util::Logger logger;
 
     static bool once = []() {
-        logger.OpenLog(FA::GetLogPath(), "log.txt", true);
+        logger.OpenLog(Util::GetLogPath(), "log.txt", true);
         return true;
     }();
 

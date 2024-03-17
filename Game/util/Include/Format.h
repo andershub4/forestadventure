@@ -11,6 +11,10 @@
 
 namespace FA {
 
+namespace Util {
+
 std::string ToString(const char* format, ...);
 
-}
+}  // namespace Util
+
+}  // namespace FA

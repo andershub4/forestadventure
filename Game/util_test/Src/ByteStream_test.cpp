@@ -14,6 +14,8 @@ using namespace testing;
 
 namespace FA {
 
+namespace Util {
+
 TEST(ByteStreamTest, GetBufferShouldReturnStringContent)
 {
     std::string expected{"Hello file!"};
@@ -22,5 +24,7 @@ TEST(ByteStreamTest, GetBufferShouldReturnStringContent)
 
     EXPECT_EQ(expected, result);
 }
+
+}  // namespace Util
 
 }  // namespace FA

@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Util {
+
 enum class LogLevel { Debug, Info, Warn, Error };
 
 inline std::ostream& operator<<(std::ostream& os, const LogLevel& e)
@@ -34,5 +36,7 @@ inline std::ostream& operator<<(std::ostream& os, const LogLevel& e)
 
     return os;
 }
+
+}  // namespace Util
 
 }  // namespace FA

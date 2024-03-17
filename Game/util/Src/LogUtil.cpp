@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Util {
+
 void MakeDebugLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str)
 {
     logger.MakeDebugLogEntry(fn, str);
@@ -29,5 +31,7 @@ void MakeErrorLogEntry(BasicLogger& logger, const std::string& fn, const std::st
 {
     logger.MakeErrorLogEntry(fn, str);
 }
+
+}  // namespace Util
 
 }  // namespace FA

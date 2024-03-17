@@ -11,6 +11,8 @@
 
 namespace FA {
 
+namespace Util {
+
 Entry::Entry(const LogLevel& logLevel, const std::string& fn, const std::string& str)
     : logLevel_(logLevel)
     , fn_(fn)
@@ -29,5 +31,7 @@ bool operator==(const Entry& lhs, const Entry& rhs)
 {
     return (std::tie(lhs.logLevel_, lhs.fn_, lhs.str_) == std::tie(rhs.logLevel_, rhs.fn_, rhs.str_));
 }
+
+}  // namespace Util
 
 }  // namespace FA

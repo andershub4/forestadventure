@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Util {
+
 class BasicLogger
 {
 public:
@@ -22,5 +24,7 @@ public:
     virtual void MakeWarnLogEntry(const std::string& fn, const std::string& str) = 0;
     virtual void MakeErrorLogEntry(const std::string& fn, const std::string& str) = 0;
 };
+
+}  // namespace Util
 
 }  // namespace FA

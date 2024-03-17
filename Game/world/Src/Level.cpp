@@ -82,7 +82,7 @@ void Level::Draw(Graphic::IRenderTarget &renderTarget)
 
 void Level::LoadEntitySheets()
 {
-    auto sheetPath = GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
+    auto sheetPath = Util::GetAssetsPath() + "/tiny-RPG-forest-files/PNG/";
     for (const auto &sheetData : textureSheets) {
         auto path = sheetPath + sheetData.path_;
         Shared::ResourceId id = textureManager_.Load(path);
@@ -94,7 +94,7 @@ void Level::LoadEntitySheets()
 
 void Level::LoadTileMap(const std::string &levelName)
 {
-    auto path = GetAssetsPath() + "/map/" + levelName;
+    auto path = Util::GetAssetsPath() + "/map/" + levelName;
     tileMap_->Load(path);
     tileMap_->Setup();
 }

@@ -13,6 +13,8 @@
 
 namespace FA {
 
+namespace Util {
+
 class ByteStream : public BasicByteStream
 {
 public:
@@ -23,5 +25,7 @@ public:
 private:
     std::unique_ptr<std::istream> is_;
 };
+
+}  // namespace Util
 
 }  // namespace FA

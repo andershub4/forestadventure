@@ -18,6 +18,8 @@
 
 namespace FA {
 
+namespace Util {
+
 Logger::Logger() = default;
 
 Logger::~Logger()
@@ -140,5 +142,7 @@ bool Logger::FolderExists(const std::string& folder) const
 
     return info.st_mode & S_IFDIR ? true : false;
 }
+
+}  // namespace Util
 
 }  // namespace FA

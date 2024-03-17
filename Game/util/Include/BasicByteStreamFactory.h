@@ -11,6 +11,8 @@
 
 namespace FA {
 
+namespace Util {
+
 class BasicByteStream;
 
 class BasicByteStreamFactory
@@ -20,5 +22,7 @@ public:
 
     virtual std::unique_ptr<BasicByteStream> Create(const std::string& fileName) const = 0;
 };
+
+}  // namespace Util
 
 }  // namespace FA

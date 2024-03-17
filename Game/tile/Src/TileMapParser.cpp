@@ -27,7 +27,7 @@ TileMapParser::TileMapParser()
     , tileService_(std::make_unique<TileService<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(
           std::make_unique<TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(helper_),
           std::make_unique<TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(helper_),
-          std::make_unique<TileSetFactory>(), std::make_unique<ByteStreamFactory>()))
+          std::make_unique<TileSetFactory>(), std::make_unique<Util::ByteStreamFactory>()))
 {}
 
 TileMapParser::~TileMapParser() = default;
@@ -40,7 +40,7 @@ TileMapData TileMapParser::Run(const std::string& fileName)
 
     if (tileService_->Parse(fileName)) {
         tileMapData.mapProperties_ = tileService_->ReadMapProperties();
-        auto tmxDir = GetHead(fileName);
+        auto tmxDir = Util::GetHead(fileName);
         tileMapData.tileSets_ = tileService_->ReadTileSets(tmxDir);
         tileMapData.layers_ = tileService_->ReadLayers();
         tileMapData.objectGroups_ = tileService_->ReadObjectGroups();

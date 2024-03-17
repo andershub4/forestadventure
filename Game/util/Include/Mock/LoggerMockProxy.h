@@ -14,6 +14,8 @@
 
 namespace FA {
 
+namespace Util {
+
 class LoggerMockProxy : public BasicLogger
 {
 public:
@@ -47,5 +49,7 @@ public:
 private:
     BasicLoggerMock& mock_;
 };
+
+}  // namespace Util
 
 }  // namespace FA

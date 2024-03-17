@@ -15,7 +15,7 @@ namespace FA {
 
 namespace Shared {
 
-using FA::operator<<;
+using FA::Util::operator<<;
 
 struct TileGraphic
 {

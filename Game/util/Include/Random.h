@@ -8,6 +8,10 @@
 
 namespace FA {
 
+namespace Util {
+
 int RandomizeRange(int min, int max);
+
+}  // namespace Util
 
 }  // namespace FA

@@ -10,6 +10,8 @@
 
 namespace FA {
 
+namespace Util {
+
 class BasicByteStream;
 
 class ByteStreamFactory : public BasicByteStreamFactory
@@ -20,5 +22,7 @@ public:
 
     virtual std::unique_ptr<BasicByteStream> Create(const std::string& fileName) const override;
 };
+
+}  // namespace Util
 
 }  // namespace FA

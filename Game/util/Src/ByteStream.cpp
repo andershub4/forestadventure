@@ -11,6 +11,8 @@
 
 namespace FA {
 
+namespace Util {
+
 ByteStream::ByteStream(std::unique_ptr<std::istream> is)
     : is_(std::move(is))
 {}
@@ -30,5 +32,7 @@ std::string ByteStream::GetBuffer() const
 
     return {};
 }
+
+}  // namespace Util
 
 }  // namespace FA

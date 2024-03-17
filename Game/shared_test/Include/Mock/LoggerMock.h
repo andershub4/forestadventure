@@ -15,16 +15,16 @@ namespace FA {
 
 namespace Shared {
 
-class LoggerMock : public FA::BasicLoggerMock
+class LoggerMock : public Util::BasicLoggerMock
 {
 public:
-    LoggerMock() { proxy_ = new LoggerMockProxy(*this); }
+    LoggerMock() { proxy_ = new Util::LoggerMockProxy(*this); }
     ~LoggerMock() { delete proxy_; }
 
-    static BasicLogger& Proxy() { return *proxy_; }
+    static Util::BasicLogger& Proxy() { return *proxy_; }
 
 private:
-    static BasicLogger* proxy_;
+    static Util::BasicLogger* proxy_;
 };
 
 }  // namespace Shared

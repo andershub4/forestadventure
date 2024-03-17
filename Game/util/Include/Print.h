@@ -14,6 +14,8 @@
 
 namespace FA {
 
+namespace Util {
+
 template <class K, class V>
 inline std::ostream& operator<<(std::ostream& os, const std::pair<K, V>& p)
 {
@@ -63,6 +65,8 @@ inline std::ostream& operator<<(std::ostream& os, const std::unordered_map<K, V>
 
     return os;
 }
+
+}  // namespace Util
 
 }  // namespace FA
 

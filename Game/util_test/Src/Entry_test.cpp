@@ -13,6 +13,8 @@ using namespace testing;
 
 namespace FA {
 
+namespace Util {
+
 TEST(EntryTest, EntryEqualToOperator)
 {
     Entry a{LogLevel::Debug, "myFunc", "in here"};
@@ -41,5 +43,7 @@ TEST(EntryTest, ReturnStrShouldSucceed)
     auto str4 = errorEntry.Str();
     EXPECT_THAT(str4, StrEq("[ERROR | myFunc]: nCount: 3"));
 }
+
+}  // namespace Util
 
 }  // namespace FA

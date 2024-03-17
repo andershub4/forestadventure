@@ -12,12 +12,12 @@
 
 namespace FA {
 
-namespace Platform {
+namespace Util {
 
 Result GetShortPathNameW(const std::wstring& longPath, std::wstring& shortPath);
 Result GetShortPathNameA(const std::wstring& longPath, std::string& shortPath);
 std::string GetExeFileName();
 
-}  // namespace Platform
+}  // namespace Util
 
 }  // namespace FA
