@@ -24,12 +24,11 @@ public:
 
     virtual std::vector<ParseResult<ErrorT>> ParseMap(ElementT* element, ParsedMap& map) const override
     {
-        std::vector<ParseResult<ErrorT>> results{
-            {ParseElement<ElementT, ErrorT>(element, "renderorder", map.renderOrder_)},
-            {ParseElement<ElementT, ErrorT>(element, "width", map.width_)},
-            {ParseElement<ElementT, ErrorT>(element, "height", map.height_)},
-            {ParseElement<ElementT, ErrorT>(element, "tilewidth", map.tileWidth_)},
-            {ParseElement<ElementT, ErrorT>(element, "tileheight", map.tileHeight_)}};
+        std::vector<ParseResult<ErrorT>> results{{ParseElement(element, "renderorder", map.renderOrder_)},
+                                                 {ParseElement(element, "width", map.width_)},
+                                                 {ParseElement(element, "height", map.height_)},
+                                                 {ParseElement(element, "tilewidth", map.tileWidth_)},
+                                                 {ParseElement(element, "tileheight", map.tileHeight_)}};
 
         return results;
     }
@@ -37,19 +36,18 @@ public:
     virtual std::vector<ParseResult<ErrorT>> ParseTmxTileSet(ElementT* element,
                                                              ParsedTmxTileSet& tileSet) const override
     {
-        std::vector<ParseResult<ErrorT>> results{
-            {ParseElement<ElementT, ErrorT>(element, "firstgid", tileSet.firstGid_)},
-            {ParseElement<ElementT, ErrorT>(element, "source", tileSet.tsxSource_)}};
+        std::vector<ParseResult<ErrorT>> results{{ParseElement(element, "firstgid", tileSet.firstGid_)},
+                                                 {ParseElement(element, "source", tileSet.tsxSource_)}};
 
         return results;
     }
 
     virtual std::vector<ParseResult<ErrorT>> ParseLayer(ElementT* element, ParsedLayer& layer) const override
     {
-        std::vector<ParseResult<ErrorT>> results{{ParseElement<ElementT, ErrorT>(element, "id", layer.id_)},
-                                                 {ParseElement<ElementT, ErrorT>(element, "name", layer.name_)},
-                                                 {ParseElement<ElementT, ErrorT>(element, "width", layer.width_)},
-                                                 {ParseElement<ElementT, ErrorT>(element, "height", layer.height_)}};
+        std::vector<ParseResult<ErrorT>> results{{ParseElement(element, "id", layer.id_)},
+                                                 {ParseElement(element, "name", layer.name_)},
+                                                 {ParseElement(element, "width", layer.width_)},
+                                                 {ParseElement(element, "height", layer.height_)}};
         auto dataElement = element->FirstChildElement("data");
         if (dataElement) {
             layer.data_ = dataElement->GetText();
@@ -61,8 +59,8 @@ public:
     virtual std::vector<ParseResult<ErrorT>> ParseObjectGroup(ElementT* element,
                                                               ParsedObjectGroup& group) const override
     {
-        std::vector<ParseResult<ErrorT>> results{ParseElement<ElementT, ErrorT>(element, "id", group.id_),
-                                                 ParseElement<ElementT, ErrorT>(element, "name", group.name_)};
+        std::vector<ParseResult<ErrorT>> results{ParseElement(element, "id", group.id_),
+                                                 ParseElement(element, "name", group.name_)};
         auto r1 = ParseObjects(element, group.objects_);
         results.insert(results.end(), r1.begin(), r1.end());
 
@@ -71,21 +69,20 @@ public:
 
     virtual std::vector<ParseResult<ErrorT>> ParseTileSet(ElementT* element, ParsedTileSet& tileSet) const override
     {
-        std::vector<ParseResult<ErrorT>> results{
-            {ParseElement<ElementT, ErrorT>(element, "name", tileSet.name_)},
-            {ParseElement<ElementT, ErrorT>(element, "tilewidth", tileSet.tileWidth_)},
-            {ParseElement<ElementT, ErrorT>(element, "tileheight", tileSet.tileHeight_)},
-            {ParseElement<ElementT, ErrorT>(element, "tilecount", tileSet.tileCount_)},
-            {ParseElement<ElementT, ErrorT>(element, "columns", tileSet.columns_)}};
+        std::vector<ParseResult<ErrorT>> results{{ParseElement(element, "name", tileSet.name_)},
+                                                 {ParseElement(element, "tilewidth", tileSet.tileWidth_)},
+                                                 {ParseElement(element, "tileheight", tileSet.tileHeight_)},
+                                                 {ParseElement(element, "tilecount", tileSet.tileCount_)},
+                                                 {ParseElement(element, "columns", tileSet.columns_)}};
 
         return results;
     }
 
     virtual std::vector<ParseResult<ErrorT>> ParseImage(ElementT* element, ParsedImage& image) const override
     {
-        std::vector<ParseResult<ErrorT>> results{{ParseElement<ElementT, ErrorT>(element, "source", image.source_)},
-                                                 {ParseElement<ElementT, ErrorT>(element, "width", image.width_)},
-                                                 {ParseElement<ElementT, ErrorT>(element, "height", image.height_)}};
+        std::vector<ParseResult<ErrorT>> results{{ParseElement(element, "source", image.source_)},
+                                                 {ParseElement(element, "width", image.width_)},
+                                                 {ParseElement(element, "height", image.height_)}};
 
         return results;
     }
@@ -93,7 +90,7 @@ public:
     virtual std::vector<ParseResult<ErrorT>> ParseTile(ElementT* element, ParsedTile& tile) const override
     {
         std::vector<ParseResult<ErrorT>> results;
-        auto r1 = ParseElement<ElementT, ErrorT>(element, "id", tile.id_);
+        auto r1 = ParseElement(element, "id", tile.id_);
         results.push_back(r1);
         auto imageElement = element->FirstChildElement("image");
         auto r2 = ParseImage(imageElement, tile.image_);
@@ -106,14 +103,14 @@ public:
     }
 
 private:
-    template <class ElementT, class ErrorT, class ValueT>
+    template <class ValueT>
     auto ParseElement(ElementT* element, const std::string& attrName, ValueT& attrValue) const
     {
         auto r = element->QueryAttribute(attrName.c_str(), &attrValue);
         return std::make_tuple(attrName, r);
     }
 
-    template <class ElementT, class ErrorT>
+    template <>
     auto ParseElement(ElementT* element, const std::string& attrName, std::string& attrValue) const
     {
         const char* charPtr = nullptr;
@@ -124,8 +121,8 @@ private:
 
     std::vector<ParseResult<ErrorT>> ParseProperty(ElementT* element, ParsedObject::Property& property) const
     {
-        std::vector<ParseResult<ErrorT>> results{{ParseElement<ElementT, ErrorT>(element, "name", property.first)},
-                                                 {ParseElement<ElementT, ErrorT>(element, "value", property.second)}};
+        std::vector<ParseResult<ErrorT>> results{{ParseElement(element, "name", property.first)},
+                                                 {ParseElement(element, "value", property.second)}};
 
         return results;
     }
@@ -152,10 +149,10 @@ private:
 
     std::vector<ParseResult<ErrorT>> ParseObject(ElementT* element, ParsedObject& object) const
     {
-        std::vector<ParseResult<ErrorT>> results{{ParseElement<ElementT, ErrorT>(element, "id", object.id_)},
-                                                 {ParseElement<ElementT, ErrorT>(element, "type", object.type_)},
-                                                 {ParseElement<ElementT, ErrorT>(element, "x", object.x_)},
-                                                 {ParseElement<ElementT, ErrorT>(element, "y", object.y_)}};
+        std::vector<ParseResult<ErrorT>> results{{ParseElement(element, "id", object.id_)},
+                                                 {ParseElement(element, "type", object.type_)},
+                                                 {ParseElement(element, "x", object.x_)},
+                                                 {ParseElement(element, "y", object.y_)}};
 
         auto r1 = ParseProperties(element, object.properties_);
         results.insert(results.end(), r1.begin(), r1.end());
@@ -181,9 +178,8 @@ private:
 
     std::vector<ParseResult<ErrorT>> ParseFrame(ElementT* element, ParsedFrame& frame) const
     {
-        std::vector<ParseResult<ErrorT>> results{
-            {ParseElement<ElementT, ErrorT>(element, "tileid", frame.id_)},
-            {ParseElement<ElementT, ErrorT>(element, "duration", frame.duration_)}};
+        std::vector<ParseResult<ErrorT>> results{{ParseElement(element, "tileid", frame.id_)},
+                                                 {ParseElement(element, "duration", frame.duration_)}};
 
         return results;
     }
