@@ -8,7 +8,7 @@
 
 #include <string>
 
-#include "Result.h"
+#include "Platform/Result.h"
 
 namespace FA {
 

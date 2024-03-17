@@ -6,8 +6,8 @@
 
 #include "Folder.h"
 
-#include "Path.h"
-#include "SpecialFolder.h"
+#include "Platform/Path.h"
+#include "Platform/SpecialFolder.h"
 #include "Version.h"
 
 namespace FA {

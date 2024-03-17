@@ -15,19 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Error.cpp">
+    <ClCompile Include="Src\Platform\Error.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\Folder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Path.cpp">
+    <ClCompile Include="Src\Platform\Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\SpecialFolder.cpp">
+    <ClCompile Include="Src\Platform\SpecialFolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\ByteStream.cpp">
@@ -50,22 +50,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\Error.h">
+    <ClInclude Include="Src\Platform\Error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Folder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Path.h">
+    <ClInclude Include="Include\Platform\Path.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Result.h">
+    <ClInclude Include="Include\Platform\Result.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\SpecialFolder.h">
+    <ClInclude Include="Src\Platform\SpecialFolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Version.h">

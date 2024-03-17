@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Path.h"
+#include "Platform/Path.h"
 
 #include <shlobj.h>
 #include <algorithm>

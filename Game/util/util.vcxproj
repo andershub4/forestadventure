@@ -210,15 +210,15 @@
   <ItemGroup>
     <ClCompile Include="Src\ByteStreamFactory.cpp" />
     <ClCompile Include="Src\Entry.cpp" />
-    <ClCompile Include="Src\Error.cpp" />
+    <ClCompile Include="Src\Platform\Error.cpp" />
     <ClCompile Include="Src\ByteStream.cpp" />
     <ClCompile Include="Src\Folder.cpp" />
     <ClCompile Include="Src\Format.cpp" />
     <ClCompile Include="Src\Logger.cpp" />
     <ClCompile Include="Src\LogUtil.cpp" />
-    <ClCompile Include="Src\Path.cpp" />
+    <ClCompile Include="Src\Platform\Path.cpp" />
     <ClCompile Include="Src\Random.cpp" />
-    <ClCompile Include="Src\SpecialFolder.cpp" />
+    <ClCompile Include="Src\Platform\SpecialFolder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\BasicByteStream.h" />
@@ -235,13 +235,13 @@
     <ClInclude Include="Src\ByteStream.h" />
     <ClInclude Include="Include\ByteStreamFactory.h" />
     <ClInclude Include="Src\Entry.h" />
-    <ClInclude Include="Src\Error.h" />
+    <ClInclude Include="Src\Platform\Error.h" />
     <ClInclude Include="Include\Folder.h" />
-    <ClInclude Include="Include\Path.h" />
+    <ClInclude Include="Include\Platform\Path.h" />
     <ClInclude Include="Include\Random.h" />
-    <ClInclude Include="Include\Result.h" />
+    <ClInclude Include="Include\Platform\Result.h" />
     <ClInclude Include="Src\LogLevel.h" />
-    <ClInclude Include="Src\SpecialFolder.h" />
+    <ClInclude Include="Src\Platform\SpecialFolder.h" />
     <ClInclude Include="Include\Version.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
