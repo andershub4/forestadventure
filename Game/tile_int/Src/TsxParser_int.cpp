@@ -23,8 +23,10 @@ namespace Tile {
 class TsxParserInt : public Test
 {
 protected:
+    using ParseHelperImpl = ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>;
+
     TsxParserInt()
-        : helper_(std::make_shared<ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>>())
+        : helper_(std::make_shared<ParseHelperImpl>())
         , parser_(helper_)
     {}
 
@@ -39,7 +41,7 @@ protected:
 
     StrictMock<LoggerMock> loggerMock_;
     tinyxml2::XMLDocument doc_;
-    std::shared_ptr<ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>> helper_;
+    std::shared_ptr<ParseHelperImpl> helper_;
     TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError> parser_;
 };
 
