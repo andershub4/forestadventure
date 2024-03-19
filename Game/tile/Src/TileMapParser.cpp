@@ -7,6 +7,7 @@
 #include "TileMapParser.h"
 
 #include <tinyxml2/tinyxml2.h>
+#include <vector>
 
 #include "ByteStreamFactory.h"
 #include "Folder.h"
@@ -23,10 +24,9 @@ namespace FA {
 namespace Tile {
 
 TileMapParser::TileMapParser()
-    : helper_(std::make_shared<ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>>())
-    , tileService_(std::make_unique<TileService<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(
-          std::make_unique<TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(helper_),
-          std::make_unique<TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>>(helper_),
+    : helper_(std::make_shared<ParseHelperImpl>())
+    , tileService_(std::make_unique<TileServiceImpl>(
+          std::make_unique<TmxParserImpl>(helper_), std::make_unique<TsxParserImpl>(helper_),
           std::make_unique<TileSetFactory>(), std::make_unique<Util::ByteStreamFactory>()))
 {}
 

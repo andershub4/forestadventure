@@ -27,6 +27,12 @@ template <class ElementT, class ErrorT>
 class ParseHelper;
 
 template <class DocumentT, class ElementT, class ErrorT>
+class TmxParser;
+
+template <class DocumentT, class ElementT, class ErrorT>
+class TsxParser;
+
+template <class DocumentT, class ElementT, class ErrorT>
 class TileService;
 
 class TileMapParser
@@ -38,8 +44,13 @@ public:
     TileMapData Run(const std::string& fileName);
 
 private:
-    std::shared_ptr<ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>> helper_;
-    std::unique_ptr<TileService<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>> tileService_;
+    using ParseHelperImpl = ParseHelper<tinyxml2::XMLElement, tinyxml2::XMLError>;
+    using TileServiceImpl = TileService<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>;
+    using TmxParserImpl = TmxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>;
+    using TsxParserImpl = TsxParser<tinyxml2::XMLDocument, tinyxml2::XMLElement, tinyxml2::XMLError>;
+
+    std::shared_ptr<ParseHelperImpl> helper_;
+    std::unique_ptr<TileServiceImpl> tileService_;
 };
 
 }  // namespace Tile
