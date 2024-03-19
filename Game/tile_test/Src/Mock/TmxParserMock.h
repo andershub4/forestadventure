@@ -9,34 +9,33 @@
 #include <gmock/gmock.h>
 
 #include "BasicTmxParser.h"
+#include "Mock/XMLMock.h"
 
 namespace FA {
 
 namespace Tile {
 
-template <class DocumentT, class ElementT, class ErrorT>
-class TmxParserMock : public BasicTmxParser<DocumentT, ElementT, ErrorT>
+class TmxParserMock : public BasicTmxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock>
 {
 public:
-    MOCK_METHOD(bool, Parse, (DocumentT & xmlDocument, const std::string& xmlBuffer, ParsedTmx& parsedTmx),
+    MOCK_METHOD(bool, Parse, (XMLDocumentMock & xmlDocument, const std::string& xmlBuffer, ParsedTmx& parsedTmx),
                 (const override));
 };
 
-template <class DocumentT, class ElementT, class ErrorT>
-class TmxParserMockProxy : public BasicTmxParser<DocumentT, ElementT, ErrorT>
+class TmxParserMockProxy : public BasicTmxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock>
 {
 public:
-    TmxParserMockProxy(TmxParserMock<DocumentT, ElementT, ErrorT>& mock)
+    TmxParserMockProxy(TmxParserMock& mock)
         : mock_(mock)
     {}
 
-    bool Parse(DocumentT& xmlDocument, const std::string& xmlBuffer, ParsedTmx& parsedTmx) const override
+    bool Parse(XMLDocumentMock& xmlDocument, const std::string& xmlBuffer, ParsedTmx& parsedTmx) const override
     {
         return mock_.Parse(xmlDocument, xmlBuffer, parsedTmx);
     }
 
 private:
-    TmxParserMock<DocumentT, ElementT, ErrorT>& mock_;
+    TmxParserMock& mock_;
 };
 
 }  // namespace Tile

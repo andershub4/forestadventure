@@ -9,27 +9,28 @@
 #include <gmock/gmock.h>
 
 #include "BasicParseHelper.h"
+#include "Mock/XMLMock.h"
 
 namespace FA {
 
 namespace Tile {
 
-template <class ElementT, class ErrorT>
-class ParseHelperMock : public BasicParseHelper<ElementT, ErrorT>
+class ParseHelperMock : public BasicParseHelper<XMLElementMock, XMLErrorMock>
 {
 public:
-    MOCK_METHOD((std::vector<ParseResult<ErrorT>>), ParseMap, (ElementT * element, ParsedMap& map), (const, override));
-    MOCK_METHOD((std::vector<ParseResult<ErrorT>>), ParseTmxTileSet, (ElementT * element, ParsedTmxTileSet& tileSet),
+    MOCK_METHOD((std::vector<ParseResult<XMLErrorMock>>), ParseMap, (XMLElementMock * element, ParsedMap& map),
                 (const, override));
-    MOCK_METHOD((std::vector<ParseResult<ErrorT>>), ParseLayer, (ElementT * element, ParsedLayer& layer),
+    MOCK_METHOD((std::vector<ParseResult<XMLErrorMock>>), ParseTmxTileSet,
+                (XMLElementMock * element, ParsedTmxTileSet& tileSet), (const, override));
+    MOCK_METHOD((std::vector<ParseResult<XMLErrorMock>>), ParseLayer, (XMLElementMock * element, ParsedLayer& layer),
                 (const, override));
-    MOCK_METHOD((std::vector<ParseResult<ErrorT>>), ParseObjectGroup, (ElementT * element, ParsedObjectGroup& group),
+    MOCK_METHOD((std::vector<ParseResult<XMLErrorMock>>), ParseObjectGroup,
+                (XMLElementMock * element, ParsedObjectGroup& group), (const, override));
+    MOCK_METHOD((std::vector<ParseResult<XMLErrorMock>>), ParseTileSet,
+                (XMLElementMock * element, ParsedTileSet& tileSet), (const, override));
+    MOCK_METHOD((std::vector<ParseResult<XMLErrorMock>>), ParseImage, (XMLElementMock * element, ParsedImage& image),
                 (const, override));
-    MOCK_METHOD((std::vector<ParseResult<ErrorT>>), ParseTileSet, (ElementT * element, ParsedTileSet& tileSet),
-                (const, override));
-    MOCK_METHOD((std::vector<ParseResult<ErrorT>>), ParseImage, (ElementT * element, ParsedImage& image),
-                (const, override));
-    MOCK_METHOD((std::vector<ParseResult<ErrorT>>), ParseTile, (ElementT * element, ParsedTile& tile),
+    MOCK_METHOD((std::vector<ParseResult<XMLErrorMock>>), ParseTile, (XMLElementMock * element, ParsedTile& tile),
                 (const, override));
 };
 

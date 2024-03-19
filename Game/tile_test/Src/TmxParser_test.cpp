@@ -26,7 +26,7 @@ protected:
     using ParseResult = ParseResult<XMLErrorMock>;
 
     TmxParserTest()
-        : helperMock_(std::make_shared<ParseHelperMock<XMLElementMock, XMLErrorMock>>())
+        : helperMock_(std::make_shared<ParseHelperMock>())
         , parser_(helperMock_)
     {}
 
@@ -45,7 +45,7 @@ protected:
     XMLElementMock mapElementMock_;
 
     StrictMock<LoggerMock> loggerMock_;
-    std::shared_ptr<ParseHelperMock<XMLElementMock, XMLErrorMock>> helperMock_;
+    std::shared_ptr<ParseHelperMock> helperMock_;
     TmxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock> parser_;
 };
 

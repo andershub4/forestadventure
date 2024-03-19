@@ -63,8 +63,8 @@ protected:
     TileData tileData3{frame3, {}};
     TileSetData imageTileSetData_{{image1, image2, image3}, {{0, tileData1}, {1, tileData2}, {2, tileData3}}};
 
-    TmxParserMock<XMLDocumentMock, XMLElementMock, XMLErrorMock> tmxParserMock_;
-    TsxParserMock<XMLDocumentMock, XMLElementMock, XMLErrorMock> tsxParserMock_;
+    TmxParserMock tmxParserMock_;
+    TsxParserMock tsxParserMock_;
     TileSetFactoryMock tileSetFactoryMock_;
     Util::ByteStreamFactoryMock byteStreamFactoryMock_;
     StrictMock<LoggerMock> loggerMock_;
@@ -77,10 +77,8 @@ protected:
 
 void TileServiceTest::SetUp()
 {
-    auto tmxParserMockProxy =
-        std::make_unique<TmxParserMockProxy<XMLDocumentMock, XMLElementMock, XMLErrorMock>>(tmxParserMock_);
-    auto tsxParserMockProxy =
-        std::make_unique<TsxParserMockProxy<XMLDocumentMock, XMLElementMock, XMLErrorMock>>(tsxParserMock_);
+    auto tmxParserMockProxy = std::make_unique<TmxParserMockProxy>(tmxParserMock_);
+    auto tsxParserMockProxy = std::make_unique<TsxParserMockProxy>(tsxParserMock_);
     auto tileSetFactoryMockProxy = std::make_unique<TileSetFactoryMockProxy>(tileSetFactoryMock_);
     auto byteStreamFactoryMockProxy = std::make_unique<Util::ByteStreamFactoryMockProxy>(byteStreamFactoryMock_);
     service_ = std::make_unique<TileService<XMLDocumentMock, XMLElementMock, XMLErrorMock>>(
