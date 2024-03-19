@@ -13,10 +13,10 @@ namespace FA {
 namespace Tile {
 
 template <class ElementT, class ErrorT>
-class BasicParseHelper
+class ParseHelperIf
 {
 public:
-    virtual ~BasicParseHelper() = default;
+    virtual ~ParseHelperIf() = default;
 
     virtual std::vector<ParseResult<ErrorT>> ParseMap(ElementT* element, ParsedMap& map) const = 0;
     virtual std::vector<ParseResult<ErrorT>> ParseTmxTileSet(ElementT* element, ParsedTmxTileSet& tileSet) const = 0;

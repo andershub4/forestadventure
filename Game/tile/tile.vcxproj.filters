@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\BasicTileSet.cpp">
+    <ClCompile Include="Src\TileSetIf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\GridTileSet.cpp">
@@ -50,7 +50,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\BasicTileSet.h">
+    <ClInclude Include="Src\TileSetIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\GridTileSet.h">
@@ -80,16 +80,16 @@
     <ClInclude Include="Src\ParseHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\BasicParseHelper.h">
+    <ClInclude Include="Src\ParseHelperIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\ParsedElements.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\BasicTsxParser.h">
+    <ClInclude Include="Src\TsxParserIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\BasicTmxParser.h">
+    <ClInclude Include="Src\TmxParserIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\TileSetFactory.h">
@@ -98,7 +98,7 @@
     <ClInclude Include="Src\TileService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\BasicTileSetFactory.h">
+    <ClInclude Include="Src\TileSetFactoryIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

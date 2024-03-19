@@ -17,10 +17,10 @@ TileSetFactory::TileSetFactory() = default;
 
 TileSetFactory::~TileSetFactory() = default;
 
-std::unique_ptr<BasicTileSet> TileSetFactory::Create(const std::string &tsxDir, const std::vector<ParsedTile> &tiles,
-                                                     const ParsedTileSet &tileSet, const std::string &imageSource) const
+std::unique_ptr<TileSetIf> TileSetFactory::Create(const std::string &tsxDir, const std::vector<ParsedTile> &tiles,
+                                                  const ParsedTileSet &tileSet, const std::string &imageSource) const
 {
-    std::unique_ptr<BasicTileSet> s = nullptr;
+    std::unique_ptr<TileSetIf> s = nullptr;
 
     if (!tiles.empty()) {
         s = std::make_unique<ImageTileSet>(tsxDir, tiles);

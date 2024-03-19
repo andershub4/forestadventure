@@ -8,21 +8,21 @@
 
 #include <gmock/gmock.h>
 
-#include "BasicTsxParser.h"
 #include "Mock/XMLMock.h"
+#include "TsxParserIf.h"
 
 namespace FA {
 
 namespace Tile {
 
-class TsxParserMock : public BasicTsxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock>
+class TsxParserMock : public TsxParserIf<XMLDocumentMock, XMLElementMock, XMLErrorMock>
 {
 public:
     MOCK_METHOD(bool, Parse, (XMLDocumentMock & xmlDocument, const std::string& xmlBuffer, ParsedTsx& parsedTsx),
                 (const override));
 };
 
-class TsxParserMockProxy : public BasicTsxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock>
+class TsxParserMockProxy : public TsxParserIf<XMLDocumentMock, XMLElementMock, XMLErrorMock>
 {
 public:
     TsxParserMockProxy(TsxParserMock& mock)

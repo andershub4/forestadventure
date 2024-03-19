@@ -8,13 +8,13 @@
 
 #include <gmock/gmock.h>
 
-#include "BasicTileSet.h"
+#include "TileSetIf.h"
 
 namespace FA {
 
 namespace Tile {
 
-class TileSetMock : public BasicTileSet
+class TileSetMock : public TileSetIf
 {
 public:
     MOCK_METHOD(TileSetData, GenerateTileData, (), (const, override));

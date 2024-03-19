@@ -12,10 +12,10 @@
 
 #include "BasicByteStream.h"
 #include "BasicByteStreamFactory.h"
-#include "BasicTileSet.h"
-#include "BasicTileSetFactory.h"
-#include "BasicTmxParser.h"
-#include "BasicTsxParser.h"
+#include "TileSetFactoryIf.h"
+#include "TileSetIf.h"
+#include "TmxParserIf.h"
+#include "TsxParserIf.h"
 
 #include "Folder.h"
 #include "TileHelper.h"
@@ -29,9 +29,9 @@ template <class DocumentT, class ElementT, class ErrorT>
 class TileService
 {
 public:
-    TileService(std::unique_ptr<BasicTmxParser<DocumentT, ElementT, ErrorT>> tmxParser,
-                std::unique_ptr<BasicTsxParser<DocumentT, ElementT, ErrorT>> tsxParser,
-                std::unique_ptr<BasicTileSetFactory> tileSetFactory,
+    TileService(std::unique_ptr<TmxParserIf<DocumentT, ElementT, ErrorT>> tmxParser,
+                std::unique_ptr<TsxParserIf<DocumentT, ElementT, ErrorT>> tsxParser,
+                std::unique_ptr<TileSetFactoryIf> tileSetFactory,
                 std::unique_ptr<Util::BasicByteStreamFactory> byteStreamFactory)
         : tmxParser_(std::move(tmxParser))
         , tsxParser_(std::move(tsxParser))
@@ -133,9 +133,9 @@ public:
     }
 
 private:
-    std::unique_ptr<BasicTmxParser<DocumentT, ElementT, ErrorT>> tmxParser_;
-    std::unique_ptr<BasicTsxParser<DocumentT, ElementT, ErrorT>> tsxParser_;
-    std::unique_ptr<BasicTileSetFactory> tileSetFactory_;
+    std::unique_ptr<TmxParserIf<DocumentT, ElementT, ErrorT>> tmxParser_;
+    std::unique_ptr<TsxParserIf<DocumentT, ElementT, ErrorT>> tsxParser_;
+    std::unique_ptr<TileSetFactoryIf> tileSetFactory_;
     std::unique_ptr<Util::BasicByteStreamFactory> byteStreamFactory_;
 
     ParsedTmx parsedTmx_;

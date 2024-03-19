@@ -4,15 +4,25 @@
  *	See file LICENSE for full license details.
  */
 
-#include "BasicTileSet.h"
+#pragma once
+
+#include <unordered_map>
+#include <vector>
+
+#include "TileMapData.h"
 
 namespace FA {
 
 namespace Tile {
 
-BasicTileSet::BasicTileSet() = default;
+class TileSetIf
+{
+public:
+    TileSetIf();
+    virtual ~TileSetIf();
 
-BasicTileSet::~BasicTileSet() = default;
+    virtual TileSetData GenerateTileData() const = 0;
+};
 
 }  // namespace Tile
 

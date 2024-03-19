@@ -9,8 +9,8 @@
 #include <string>
 #include <vector>
 
-#include "BasicParseHelper.h"
-#include "BasicTmxParser.h"
+#include "ParseHelperIf.h"
+#include "TmxParserIf.h"
 
 #include "TmxLogging.h"
 
@@ -19,10 +19,10 @@ namespace FA {
 namespace Tile {
 
 template <class DocumentT, class ElementT, class ErrorT>
-class TmxParser : public BasicTmxParser<DocumentT, ElementT, ErrorT>
+class TmxParser : public TmxParserIf<DocumentT, ElementT, ErrorT>
 {
 public:
-    TmxParser(std::shared_ptr<BasicParseHelper<ElementT, ErrorT>> helper)
+    TmxParser(std::shared_ptr<ParseHelperIf<ElementT, ErrorT>> helper)
         : helper_(helper)
     {}
 
@@ -48,7 +48,7 @@ public:
     }
 
 private:
-    std::shared_ptr<BasicParseHelper<ElementT, ErrorT>> helper_;
+    std::shared_ptr<ParseHelperIf<ElementT, ErrorT>> helper_;
 
 private:
     void ParseMapElement(ElementT* mapElement, ParsedTmx& parsedTmx) const

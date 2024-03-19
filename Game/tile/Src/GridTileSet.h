@@ -9,7 +9,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "BasicTileSet.h"
+#include "TileSetIf.h"
 
 #include "ParsedElements.h"
 
@@ -17,7 +17,7 @@ namespace FA {
 
 namespace Tile {
 
-class GridTileSet : public BasicTileSet
+class GridTileSet : public TileSetIf
 {
 public:
     GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const ParsedTileSet &parsedTileSet);

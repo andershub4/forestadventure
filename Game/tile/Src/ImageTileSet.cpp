@@ -13,7 +13,7 @@ namespace FA {
 namespace Tile {
 
 ImageTileSet::ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTile> &parsedTiles)
-    : BasicTileSet()
+    : TileSetIf()
     , tsxDir_(tsxDir)
     , parsedTiles_(parsedTiles)
 {}

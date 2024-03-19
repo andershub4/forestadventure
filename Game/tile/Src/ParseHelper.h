@@ -10,14 +10,14 @@
 #include <string>
 #include <vector>
 
-#include "BasicParseHelper.h"
+#include "ParseHelperIf.h"
 
 namespace FA {
 
 namespace Tile {
 
 template <class ElementT, class ErrorT>
-class ParseHelper : public BasicParseHelper<ElementT, ErrorT>
+class ParseHelper : public ParseHelperIf<ElementT, ErrorT>
 {
 public:
     virtual ~ParseHelper() = default;

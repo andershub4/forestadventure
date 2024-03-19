@@ -8,7 +8,7 @@
 
 #include <unordered_map>
 
-#include "BasicTileSet.h"
+#include "TileSetIf.h"
 
 #include "ParsedElements.h"
 
@@ -16,7 +16,7 @@ namespace FA {
 
 namespace Tile {
 
-class ImageTileSet : public BasicTileSet
+class ImageTileSet : public TileSetIf
 {
 public:
     ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTile> &parsedTiles);

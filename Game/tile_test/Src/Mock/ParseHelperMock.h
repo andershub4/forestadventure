@@ -8,14 +8,14 @@
 
 #include <gmock/gmock.h>
 
-#include "BasicParseHelper.h"
 #include "Mock/XMLMock.h"
+#include "ParseHelperIf.h"
 
 namespace FA {
 
 namespace Tile {
 
-class ParseHelperMock : public BasicParseHelper<XMLElementMock, XMLErrorMock>
+class ParseHelperMock : public ParseHelperIf<XMLElementMock, XMLErrorMock>
 {
 public:
     MOCK_METHOD((std::vector<ParseResult<XMLErrorMock>>), ParseMap, (XMLElementMock * element, ParsedMap& map),

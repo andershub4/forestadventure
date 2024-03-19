@@ -8,30 +8,30 @@
 
 #include <gmock/gmock.h>
 
-#include "BasicTileSetFactory.h"
+#include "TileSetFactoryIf.h"
 
 namespace FA {
 
 namespace Tile {
 
-class TileSetFactoryMock : public BasicTileSetFactory
+class TileSetFactoryMock : public TileSetFactoryIf
 {
 public:
-    MOCK_METHOD(std::unique_ptr<BasicTileSet>, Create,
+    MOCK_METHOD(std::unique_ptr<TileSetIf>, Create,
                 (const std::string& tsxDir, const std::vector<ParsedTile>& tiles, const ParsedTileSet& tileSet,
                  const std::string& imageSource),
                 (const override));
 };
 
-class TileSetFactoryMockProxy : public BasicTileSetFactory
+class TileSetFactoryMockProxy : public TileSetFactoryIf
 {
 public:
     TileSetFactoryMockProxy(TileSetFactoryMock& mock)
         : mock_(mock)
     {}
 
-    std::unique_ptr<BasicTileSet> Create(const std::string& tsxDir, const std::vector<ParsedTile>& tiles,
-                                         const ParsedTileSet& tileSet, const std::string& imageSource) const override
+    std::unique_ptr<TileSetIf> Create(const std::string& tsxDir, const std::vector<ParsedTile>& tiles,
+                                      const ParsedTileSet& tileSet, const std::string& imageSource) const override
     {
         return mock_.Create(tsxDir, tiles, tileSet, imageSource);
     }

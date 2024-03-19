@@ -14,7 +14,7 @@ namespace Tile {
 
 GridTileSet::GridTileSet(const std::string &tsxDir, const std::string &textureFilePath,
                          const ParsedTileSet &parsedTileSet)
-    : BasicTileSet()
+    : TileSetIf()
     , parsedTileSet_(parsedTileSet)
 {
     p_ = GetFilePath(tsxDir, textureFilePath);

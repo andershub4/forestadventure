@@ -6,22 +6,22 @@
 
 #pragma once
 
-#include "BasicTileSetFactory.h"
+#include "TileSetFactoryIf.h"
 
 namespace FA {
 
 namespace Tile {
 
-class BasicTileSet;
+class TileSetIf;
 
-class TileSetFactory : public BasicTileSetFactory
+class TileSetFactory : public TileSetFactoryIf
 {
 public:
     TileSetFactory();
     virtual ~TileSetFactory();
 
-    std::unique_ptr<BasicTileSet> Create(const std::string &tsxDir, const std::vector<ParsedTile> &tiles,
-                                         const ParsedTileSet &tileSet, const std::string &imageSource) const;
+    std::unique_ptr<TileSetIf> Create(const std::string &tsxDir, const std::vector<ParsedTile> &tiles,
+                                      const ParsedTileSet &tileSet, const std::string &imageSource) const;
 };
 
 }  // namespace Tile

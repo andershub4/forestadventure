@@ -16,14 +16,14 @@ namespace FA {
 
 namespace Tile {
 
-class BasicTileSet;
+class TileSetIf;
 
-class BasicTileSetFactory
+class TileSetFactoryIf
 {
 public:
-    virtual ~BasicTileSetFactory() = default;
+    virtual ~TileSetFactoryIf() = default;
 
-    virtual std::unique_ptr<BasicTileSet> Create(const std::string &tsxDir, const std::vector<ParsedTile> &tiles,
+    virtual std::unique_ptr<TileSetIf> Create(const std::string &tsxDir, const std::vector<ParsedTile> &tiles,
                                                  const ParsedTileSet &tileSet,
                                                  const std::string &imageSource) const = 0;
 };

@@ -39,10 +39,10 @@ inline std::ostream& operator<<(std::ostream& os, const ParsedTmx& p)
 }
 
 template <class DocumentT, class ElementT, class ErrorT>
-class BasicTmxParser
+class TmxParserIf
 {
 public:
-    virtual ~BasicTmxParser() = default;
+    virtual ~TmxParserIf() = default;
 
     virtual bool Parse(DocumentT& xmlDocument, const std::string& xmlBuffer, ParsedTmx& parsedTmx) const = 0;
 };

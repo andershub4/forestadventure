@@ -141,7 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Src\BasicTileSet.cpp" />
+    <ClCompile Include="Src\TileSetIf.cpp" />
     <ClCompile Include="Src\GridTileSet.cpp" />
     <ClCompile Include="Src\ImageTileSet.cpp" />
     <ClCompile Include="Src\TileHelper.cpp" />
@@ -154,11 +154,11 @@
     <ClCompile Include="Src\TsxParser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\BasicParseHelper.h" />
-    <ClInclude Include="Src\BasicTileSet.h" />
-    <ClInclude Include="Src\BasicTileSetFactory.h" />
-    <ClInclude Include="Src\BasicTmxParser.h" />
-    <ClInclude Include="Src\BasicTsxParser.h" />
+    <ClInclude Include="Src\ParseHelperIf.h" />
+    <ClInclude Include="Src\TileSetIf.h" />
+    <ClInclude Include="Src\TileSetFactoryIf.h" />
+    <ClInclude Include="Src\TmxParserIf.h" />
+    <ClInclude Include="Src\TsxParserIf.h" />
     <ClInclude Include="Src\GridTileSet.h" />
     <ClInclude Include="Src\ImageTileSet.h" />
     <ClInclude Include="Src\ParsedElements.h" />
