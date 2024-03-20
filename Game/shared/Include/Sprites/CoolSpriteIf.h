@@ -18,10 +18,10 @@ class IRenderTarget;
 
 namespace Shared {
 
-class SpriteIf
+class CoolSpriteIf
 {
 public:
-    virtual ~SpriteIf() = default;
+    virtual ~CoolSpriteIf() = default;
 
     virtual void Update(float deltaTime) = 0;
     virtual void SetPosition(const sf::Vector2f& position) = 0;

@@ -13,8 +13,8 @@
 
 #include "RenderTargetMock.h"
 #include "SpriteMock.h"
-#include "Sprites/BasicSprite.h"
-#include "Sprites/SpriteIf.h"
+#include "Sprites/BasicCoolSprite.h"
+#include "Sprites/CoolSpriteIf.h"
 
 using namespace testing;
 
@@ -22,41 +22,41 @@ namespace FA {
 
 namespace Shared {
 
-class BasicSpriteTest : public testing::Test
+class BasicCoolSpriteTest : public testing::Test
 {
 protected:
-    BasicSpriteTest()
+    BasicCoolSpriteTest()
         : spriteMock_(std::make_shared<StrictMock<Graphic::SpriteMock>>())
         , sprite_(spriteMock_)
     {}
 
 protected:
     std::shared_ptr<StrictMock<Graphic::SpriteMock>> spriteMock_;
-    BasicSprite<SpriteIf> sprite_;
+    BasicCoolSprite<CoolSpriteIf> sprite_;
 };
 
-TEST_F(BasicSpriteTest, BasicSpriteShouldSetPosition)
+TEST_F(BasicCoolSpriteTest, BasicSpriteShouldSetPosition)
 {
     sf::Vector2f pos{12.0f, 3.0f};
     EXPECT_CALL(*spriteMock_, setPosition(Eq(pos)));
     sprite_.SetPosition(pos);
 }
 
-TEST_F(BasicSpriteTest, BasicSpriteShouldSetRotation)
+TEST_F(BasicCoolSpriteTest, BasicSpriteShouldSetRotation)
 {
     float rot = 32.0f;
     EXPECT_CALL(*spriteMock_, setRotation(Eq(rot)));
     sprite_.SetRotation(rot);
 }
 
-TEST_F(BasicSpriteTest, BasicSpriteShouldDrawTo)
+TEST_F(BasicCoolSpriteTest, BasicSpriteShouldDrawTo)
 {
     Graphic::RenderTargetMock renderTargetMock;
     EXPECT_CALL(renderTargetMock, draw(Ref(*spriteMock_)));
     sprite_.DrawTo(renderTargetMock);
 }
 
-TEST_F(BasicSpriteTest, BasicSpriteShouldCenter)
+TEST_F(BasicCoolSpriteTest, BasicSpriteShouldCenter)
 {
     sf::FloatRect rect{10.0f, 12.0f, 30.0f, 10.0f};
     EXPECT_CALL(*spriteMock_, getLocalBounds()).WillRepeatedly(Return(rect));

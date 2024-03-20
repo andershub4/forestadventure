@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "AnimationSpriteIf.h"
-#include "BasicSprite.h"
+#include "BasicCoolSprite.h"
 
 #include "Resource/Frame.h"
 
@@ -18,7 +18,7 @@ namespace FA {
 
 namespace Shared {
 
-class AnimationSprite : public BasicSprite<AnimationSpriteIf>
+class AnimationSprite : public BasicCoolSprite<AnimationSpriteIf>
 {
 public:
     AnimationSprite(std::shared_ptr<Graphic::ISprite> sprite, unsigned int defaultFrame, float switchTime);

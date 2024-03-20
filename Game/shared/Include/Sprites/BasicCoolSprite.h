@@ -21,11 +21,11 @@ class ISprite;
 
 namespace Shared {
 
-template <class SpriteIfT>
-class BasicSprite : public SpriteIfT
+template <class CoolSpriteIfT>
+class BasicCoolSprite : public CoolSpriteIfT
 {
 public:
-    BasicSprite(std::shared_ptr<Graphic::ISprite> sprite)
+    BasicCoolSprite(std::shared_ptr<Graphic::ISprite> sprite)
         : sprite_(sprite)
     {}
 

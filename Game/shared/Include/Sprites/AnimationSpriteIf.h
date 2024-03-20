@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "SpriteIf.h"
+#include "CoolSpriteIf.h"
 
 namespace FA {
 
@@ -14,7 +14,7 @@ namespace Shared {
 
 struct Frame;
 
-class AnimationSpriteIf : public SpriteIf
+class AnimationSpriteIf : public CoolSpriteIf
 {
 public:
     virtual void Start() = 0;

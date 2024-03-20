@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include "BasicSprite.h"
+#include "BasicCoolSprite.h"
 #include "ImageSpriteIf.h"
 
 #include "Resource/Frame.h"
@@ -17,7 +17,7 @@ namespace FA {
 
 namespace Shared {
 
-class ImageSprite : public BasicSprite<ImageSpriteIf>
+class ImageSprite : public BasicCoolSprite<ImageSpriteIf>
 {
 public:
     ImageSprite(std::shared_ptr<Graphic::ISprite> sprite, const Frame &frame);

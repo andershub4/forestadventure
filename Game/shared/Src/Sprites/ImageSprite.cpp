@@ -13,7 +13,7 @@ namespace FA {
 namespace Shared {
 
 ImageSprite::ImageSprite(std::shared_ptr<Graphic::ISprite> sprite, const Frame& frame)
-    : BasicSprite<ImageSpriteIf>(sprite)
+    : BasicCoolSprite<ImageSpriteIf>(sprite)
     , frame_(frame)
 {
     isValid_ = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;

@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include "SpriteIf.h"
+#include "CoolSpriteIf.h"
 
 namespace FA {
 
 namespace Shared {
 
-class ImageSpriteIf : public SpriteIf
+class ImageSpriteIf : public CoolSpriteIf
 {
 };
 

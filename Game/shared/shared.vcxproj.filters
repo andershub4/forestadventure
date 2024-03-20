@@ -108,10 +108,10 @@
     <ClInclude Include="Include\Resource\SpriteSheetIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Sprites\BasicSprite.h">
+    <ClInclude Include="Include\Sprites\BasicCoolSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Sprites\SpriteIf.h">
+    <ClInclude Include="Include\Sprites\CoolSpriteIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Sprites\ImageSpriteIf.h">

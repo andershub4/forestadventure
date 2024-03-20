@@ -14,7 +14,7 @@ namespace FA {
 namespace Shared {
 
 AnimationSprite::AnimationSprite(std::shared_ptr<Graphic::ISprite> sprite, unsigned int defaultIndex, float switchTime)
-    : BasicSprite<AnimationSpriteIf>(sprite)
+    : BasicCoolSprite<AnimationSpriteIf>(sprite)
     , switchTime_(switchTime)
     , time_(0.0)
     , defaultIndex_(defaultIndex)
