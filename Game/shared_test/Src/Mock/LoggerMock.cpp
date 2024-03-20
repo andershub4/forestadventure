@@ -10,11 +10,11 @@ namespace FA {
 
 namespace Shared {
 
-Util::BasicLogger* LoggerMock::proxy_;
+Util::LoggerIf* LoggerMock::proxy_;
 
 // Implementation must be in a cpp file, so it can be substituted during link time
 // for mocking purpose
-Util::BasicLogger& Logger()
+Util::LoggerIf& Logger()
 {
     return LoggerMock::Proxy();
 }

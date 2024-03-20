@@ -6,21 +6,21 @@
 
 #pragma once
 
-#include "BasicByteStreamFactory.h"
+#include "ByteStreamFactoryIf.h"
 
 namespace FA {
 
 namespace Util {
 
-class BasicByteStream;
+class ByteStreamIf;
 
-class ByteStreamFactory : public BasicByteStreamFactory
+class ByteStreamFactory : public ByteStreamFactoryIf
 {
 public:
     ByteStreamFactory();
     ~ByteStreamFactory();
 
-    virtual std::unique_ptr<BasicByteStream> Create(const std::string& fileName) const override;
+    virtual std::unique_ptr<ByteStreamIf> Create(const std::string& fileName) const override;
 };
 
 }  // namespace Util

@@ -12,12 +12,12 @@ namespace FA {
 
 namespace Util {
 
-class BasicLogger;
+class LoggerIf;
 
-void MakeDebugLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
-void MakeInfoLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
-void MakeWarnLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
-void MakeErrorLogEntry(BasicLogger& logger, const std::string& fn, const std::string& str);
+void MakeDebugLogEntry(LoggerIf& logger, const std::string& fn, const std::string& str);
+void MakeInfoLogEntry(LoggerIf& logger, const std::string& fn, const std::string& str);
+void MakeWarnLogEntry(LoggerIf& logger, const std::string& fn, const std::string& str);
+void MakeErrorLogEntry(LoggerIf& logger, const std::string& fn, const std::string& str);
 
 }  // namespace Util
 

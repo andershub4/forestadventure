@@ -74,10 +74,10 @@
     <ClInclude Include="Src\ByteStream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\BasicByteStream.h">
+    <ClInclude Include="Include\ByteStreamIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\BasicByteStreamFactory.h">
+    <ClInclude Include="Include\ByteStreamFactoryIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\ByteStreamFactory.h">
@@ -104,7 +104,7 @@
     <ClInclude Include="Include\Mock\LoggerMockProxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\BasicLogger.h">
+    <ClInclude Include="Include\LoggerIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Logger.h">

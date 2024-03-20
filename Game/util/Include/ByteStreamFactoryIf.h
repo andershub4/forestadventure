@@ -13,14 +13,14 @@ namespace FA {
 
 namespace Util {
 
-class BasicByteStream;
+class ByteStreamIf;
 
-class BasicByteStreamFactory
+class ByteStreamFactoryIf
 {
 public:
-    virtual ~BasicByteStreamFactory() = default;
+    virtual ~ByteStreamFactoryIf() = default;
 
-    virtual std::unique_ptr<BasicByteStream> Create(const std::string& fileName) const = 0;
+    virtual std::unique_ptr<ByteStreamIf> Create(const std::string& fileName) const = 0;
 };
 
 }  // namespace Util

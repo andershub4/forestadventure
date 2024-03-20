@@ -12,10 +12,10 @@ namespace FA {
 
 namespace Util {
 
-class BasicByteStream
+class ByteStreamIf
 {
 public:
-    virtual ~BasicByteStream() = default;
+    virtual ~ByteStreamIf() = default;
 
     virtual std::string GetBuffer() const = 0;
 };

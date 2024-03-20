@@ -10,8 +10,8 @@
 #include <string>
 #include <vector>
 
-#include "BasicByteStream.h"
-#include "BasicByteStreamFactory.h"
+#include "ByteStreamFactoryIf.h"
+#include "ByteStreamIf.h"
 #include "TileSetFactoryIf.h"
 #include "TileSetIf.h"
 #include "TmxParserIf.h"
@@ -32,7 +32,7 @@ public:
     TileService(std::unique_ptr<TmxParserIf<DocumentT, ElementT, ErrorT>> tmxParser,
                 std::unique_ptr<TsxParserIf<DocumentT, ElementT, ErrorT>> tsxParser,
                 std::unique_ptr<TileSetFactoryIf> tileSetFactory,
-                std::unique_ptr<Util::BasicByteStreamFactory> byteStreamFactory)
+                std::unique_ptr<Util::ByteStreamFactoryIf> byteStreamFactory)
         : tmxParser_(std::move(tmxParser))
         , tsxParser_(std::move(tsxParser))
         , tileSetFactory_(std::move(tileSetFactory))
@@ -136,7 +136,7 @@ private:
     std::unique_ptr<TmxParserIf<DocumentT, ElementT, ErrorT>> tmxParser_;
     std::unique_ptr<TsxParserIf<DocumentT, ElementT, ErrorT>> tsxParser_;
     std::unique_ptr<TileSetFactoryIf> tileSetFactory_;
-    std::unique_ptr<Util::BasicByteStreamFactory> byteStreamFactory_;
+    std::unique_ptr<Util::ByteStreamFactoryIf> byteStreamFactory_;
 
     ParsedTmx parsedTmx_;
 

@@ -12,10 +12,10 @@ namespace FA {
 
 namespace Util {
 
-class BasicLogger
+class LoggerIf
 {
 public:
-    virtual ~BasicLogger() = default;
+    virtual ~LoggerIf() = default;
 
     virtual void OpenLog(const std::string& folder, const std::string& fileName, bool toConsole) = 0;
     virtual void CloseLog() = 0;

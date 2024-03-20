@@ -21,10 +21,10 @@ public:
     LoggerMock() { proxy_ = new Util::LoggerMockProxy(*this); }
     ~LoggerMock() { delete proxy_; }
 
-    static Util::BasicLogger& Proxy() { return *proxy_; }
+    static Util::LoggerIf& Proxy() { return *proxy_; }
 
 private:
-    static Util::BasicLogger* proxy_;
+    static Util::LoggerIf* proxy_;
 };
 
 }  // namespace Tile

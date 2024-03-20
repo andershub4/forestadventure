@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "BasicByteStream.h"
+#include "ByteStreamIf.h"
 
 #include <iosfwd>
 #include <memory>
@@ -15,7 +15,7 @@ namespace FA {
 
 namespace Util {
 
-class ByteStream : public BasicByteStream
+class ByteStream : public ByteStreamIf
 {
 public:
     ByteStream(std::unique_ptr<std::istream> is);

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "BasicLogger.h"
+#include "LoggerIf.h"
 
 #include <fstream>
 #include <string>
@@ -18,7 +18,7 @@ namespace Util {
 enum class LogLevel;
 class Entry;
 
-class Logger : public BasicLogger
+class Logger : public LoggerIf
 {
 public:
     Logger();

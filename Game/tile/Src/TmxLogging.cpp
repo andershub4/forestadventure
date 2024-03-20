@@ -15,7 +15,7 @@ namespace Tile {
 
 // Implementation must be in a cpp file, so it can be substituted during link time
 // for mocking purpose
-Util::BasicLogger& Logger()
+Util::LoggerIf& Logger()
 {
     static Util::Logger logger;
 

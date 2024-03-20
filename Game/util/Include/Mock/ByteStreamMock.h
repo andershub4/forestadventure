@@ -8,13 +8,13 @@
 
 #include <gmock/gmock.h>
 
-#include "BasicByteStream.h"
+#include "ByteStreamIf.h"
 
 namespace FA {
 
 namespace Util {
 
-class ByteStreamMock : public BasicByteStream
+class ByteStreamMock : public ByteStreamIf
 {
 public:
     MOCK_METHOD(std::string, GetBuffer, (), (const override));

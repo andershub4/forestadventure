@@ -16,7 +16,7 @@ namespace FA {
 
 namespace Util {
 
-class LoggerMockProxy : public BasicLogger
+class LoggerMockProxy : public LoggerIf
 {
 public:
     LoggerMockProxy(BasicLoggerMock& mock)

@@ -8,29 +8,26 @@
 
 #include <gmock/gmock.h>
 
-#include "BasicByteStreamFactory.h"
+#include "ByteStreamFactoryIf.h"
 
 namespace FA {
 
 namespace Util {
 
-class ByteStreamFactoryMock : public BasicByteStreamFactory
+class ByteStreamFactoryMock : public ByteStreamFactoryIf
 {
 public:
-    MOCK_METHOD(std::unique_ptr<BasicByteStream>, Create, (const std::string& fileName), (const override));
+    MOCK_METHOD(std::unique_ptr<ByteStreamIf>, Create, (const std::string& fileName), (const override));
 };
 
-class ByteStreamFactoryMockProxy : public BasicByteStreamFactory
+class ByteStreamFactoryMockProxy : public ByteStreamFactoryIf
 {
 public:
     ByteStreamFactoryMockProxy(ByteStreamFactoryMock& mock)
         : mock_(mock)
     {}
 
-    std::unique_ptr<BasicByteStream> Create(const std::string& fileName) const override
-    {
-        return mock_.Create(fileName);
-    }
+    std::unique_ptr<ByteStreamIf> Create(const std::string& fileName) const override { return mock_.Create(fileName); }
 
 private:
     ByteStreamFactoryMock& mock_;
