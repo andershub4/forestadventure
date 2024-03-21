@@ -46,7 +46,7 @@ public:
 
     void Load(const std::string& levelName);
     void Update(float deltaTime);
-    void Draw(Graphic::IRenderTarget& renderTarget);
+    void Draw(Graphic::RenderTargetIf& renderTarget);
 
     void Create();
     Graphic::View GetView() const;

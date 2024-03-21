@@ -8,20 +8,20 @@
 
 #include <memory>
 
-#include "IRenderWindow.h"
+#include "RenderWindowIf.h"
 #include "SfmlFwd.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class RenderWindow : public IRenderWindow
+class RenderWindow : public RenderWindowIf
 {
 public:
     RenderWindow();
     virtual ~RenderWindow();
 
-    virtual void draw(const IDrawable &drawable) override;
+    virtual void draw(const DrawableIf &drawable) override;
     virtual void display() override;
     virtual bool pollEvent(sf::Event &event) override;
     virtual void create(sf::VideoMode mode, const std::string &title) override;

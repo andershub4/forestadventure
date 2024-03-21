@@ -15,13 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\ITexture.h">
+    <ClInclude Include="Include\TextureIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ISprite.h">
+    <ClInclude Include="Include\SpriteIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Sprite.h">
@@ -33,13 +33,13 @@
     <ClInclude Include="Include\TextureMock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IRenderTarget.h">
+    <ClInclude Include="Include\RenderTargetIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IRenderTexture.h">
+    <ClInclude Include="Include\RenderTextureIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IRenderWindow.h">
+    <ClInclude Include="Include\RenderWindowIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\RenderTexture.h">
@@ -48,25 +48,25 @@
     <ClInclude Include="Include\RenderWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IDrawable.h">
+    <ClInclude Include="Include\DrawableIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IText.h">
+    <ClInclude Include="Include\TextIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IFont.h">
+    <ClInclude Include="Include\FontIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IShape.h">
+    <ClInclude Include="Include\ShapeIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IRectangleShape.h">
+    <ClInclude Include="Include\RectangleShapeIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\RectangleShape.h">
@@ -78,7 +78,7 @@
     <ClInclude Include="Include\RenderTargetMock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IView.h">
+    <ClInclude Include="Include\ViewIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\View.h">

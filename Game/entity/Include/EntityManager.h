@@ -19,7 +19,7 @@ namespace FA {
 
 namespace Graphic {
 
-class IRenderTarget;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -48,7 +48,7 @@ public:
     ~EntityManager();
 
     void Update(float deltaTime);
-    void DrawTo(Graphic::IRenderTarget &renderTarget) const;
+    void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
     void CreateEntity(const PropertyData &data, const Shared::MapData &mapData);
     void CreateEntity(const std::string &typeStr, const sf::Vector2f &pos,
                       std::unordered_map<std::string, std::string> properties, const Shared::MapData &mapData);

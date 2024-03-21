@@ -6,14 +6,14 @@
 
 #include "Sprites/AnimationSprite.h"
 
-#include "ISprite.h"
 #include "Logging.h"
+#include "SpriteIf.h"
 
 namespace FA {
 
 namespace Shared {
 
-AnimationSprite::AnimationSprite(std::shared_ptr<Graphic::ISprite> sprite, unsigned int defaultIndex, float switchTime)
+AnimationSprite::AnimationSprite(std::shared_ptr<Graphic::SpriteIf> sprite, unsigned int defaultIndex, float switchTime)
     : BasicCoolSprite<AnimationSpriteIf>(sprite)
     , switchTime_(switchTime)
     , time_(0.0)

@@ -6,17 +6,17 @@
 
 #pragma once
 
-#include "IShape.h"
 #include "SfmlFwd.h"
+#include "ShapeIf.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class IRectangleShape : public IShape
+class RectangleShapeIf : public ShapeIf
 {
 public:
-    virtual ~IRectangleShape() = default;
+    virtual ~RectangleShapeIf() = default;
 
     virtual void setSize(const sf::Vector2f &size) = 0;
     virtual void setPosition(float x, float y) = 0;

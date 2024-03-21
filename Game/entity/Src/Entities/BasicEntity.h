@@ -21,7 +21,7 @@ namespace FA {
 
 namespace Graphic {
 
-class IRenderTarget;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -47,7 +47,7 @@ public:
     void Destroy();
     void Init();
     void Update(float deltaTime);
-    void DrawTo(Graphic::IRenderTarget& renderTarget) const;
+    void DrawTo(Graphic::RenderTargetIf& renderTarget) const;
     EntityId GetId() const { return id_; }
 
 protected:

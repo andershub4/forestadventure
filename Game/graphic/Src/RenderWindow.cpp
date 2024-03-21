@@ -20,7 +20,7 @@ RenderWindow::RenderWindow()
 
 RenderWindow::~RenderWindow() = default;
 
-void RenderWindow::draw(const IDrawable& drawable)
+void RenderWindow::draw(const DrawableIf& drawable)
 {
     const sf::Drawable& sfDrawable = drawable;
     return renderWindow_->draw(sfDrawable);

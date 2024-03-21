@@ -8,14 +8,14 @@
 
 #include <memory>
 
-#include "IRectangleShape.h"
+#include "RectangleShapeIf.h"
 #include "SfmlFwd.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class RectangleShape : public IRectangleShape
+class RectangleShape : public RectangleShapeIf
 {
 public:
     RectangleShape();

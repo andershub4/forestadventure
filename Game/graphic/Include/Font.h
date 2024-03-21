@@ -8,14 +8,14 @@
 
 #include <memory>
 
-#include "IFont.h"
+#include "FontIf.h"
 #include "SfmlFwd.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class Font : public IFont
+class Font : public FontIf
 {
 public:
     Font();

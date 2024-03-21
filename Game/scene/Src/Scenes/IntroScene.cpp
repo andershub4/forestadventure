@@ -63,7 +63,7 @@ void IntroScene::Exit()
     }
 }
 
-void IntroScene::DrawTo(Graphic::IRenderTarget& renderTarget)
+void IntroScene::DrawTo(Graphic::RenderTargetIf& renderTarget)
 {
     for (const auto& entry : layers_) {
         auto& layer = entry.second;

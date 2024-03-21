@@ -142,17 +142,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Font.h" />
-    <ClInclude Include="Include\IDrawable.h" />
-    <ClInclude Include="Include\IFont.h" />
-    <ClInclude Include="Include\IRectangleShape.h" />
-    <ClInclude Include="Include\IRenderTarget.h" />
-    <ClInclude Include="Include\IRenderTexture.h" />
-    <ClInclude Include="Include\IRenderWindow.h" />
-    <ClInclude Include="Include\IShape.h" />
-    <ClInclude Include="Include\ISprite.h" />
-    <ClInclude Include="Include\IText.h" />
-    <ClInclude Include="Include\ITexture.h" />
-    <ClInclude Include="Include\IView.h" />
+    <ClInclude Include="Include\DrawableIf.h" />
+    <ClInclude Include="Include\FontIf.h" />
+    <ClInclude Include="Include\RectangleShapeIf.h" />
+    <ClInclude Include="Include\RenderTargetIf.h" />
+    <ClInclude Include="Include\RenderTextureIf.h" />
+    <ClInclude Include="Include\RenderWindowIf.h" />
+    <ClInclude Include="Include\ShapeIf.h" />
+    <ClInclude Include="Include\SpriteIf.h" />
+    <ClInclude Include="Include\TextIf.h" />
+    <ClInclude Include="Include\TextureIf.h" />
+    <ClInclude Include="Include\ViewIf.h" />
     <ClInclude Include="Include\RectangleShape.h" />
     <ClInclude Include="Include\RenderTargetMock.h" />
     <ClInclude Include="Include\RenderTexture.h" />

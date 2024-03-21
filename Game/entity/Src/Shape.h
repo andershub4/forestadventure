@@ -19,7 +19,7 @@ namespace FA {
 
 namespace Graphic {
 
-class IRenderTarget;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -35,7 +35,7 @@ public:
     void RegisterPart(std::shared_ptr<BasicShapePart> part);
     void Enter();
     void Update(float deltaTime);
-    void DrawTo(Graphic::IRenderTarget &renderTarget) const;
+    void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
 
 private:
     std::vector<std::shared_ptr<BasicShapePart>> parts_;

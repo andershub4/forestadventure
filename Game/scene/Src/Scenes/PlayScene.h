@@ -19,7 +19,7 @@ public:
               Manager::Layers& layers, Manager::Data& data);
     virtual ~PlayScene();
 
-    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) override;
+    virtual void DrawTo(Graphic::RenderTargetIf& renderTarget) override;
     virtual void Update(float deltaTime) override;
     virtual std::string Name() const override { return "PlayScene"; }
 

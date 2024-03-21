@@ -19,7 +19,7 @@
 
 namespace FA {
 
-InputSystem::InputSystem(Shared::MessageBus& messageBus, Graphic::IRenderWindow& window)
+InputSystem::InputSystem(Shared::MessageBus& messageBus, Graphic::RenderWindowIf& window)
     : messageBus_(messageBus)
     , window_(window)
 {}

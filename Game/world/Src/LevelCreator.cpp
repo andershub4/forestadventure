@@ -8,7 +8,7 @@
 
 #include "LevelCreator.h"
 
-#include "IRenderTarget.h"
+#include "RenderTargetIf.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureRect.h"
 #include "Sprite.h"
@@ -27,7 +27,7 @@ void LevelCreator::AddBackground(const std::vector<TileMap::TileData> &layer)
     layers_.push_back(layer);
 }
 
-void LevelCreator::CreateBackground(Graphic::IRenderTarget &texture) const
+void LevelCreator::CreateBackground(Graphic::RenderTargetIf &texture) const
 {
     for (const auto &layer : layers_) {
         for (const auto &data : layer) {

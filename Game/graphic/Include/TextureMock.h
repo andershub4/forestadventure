@@ -10,13 +10,13 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "ITexture.h"
+#include "TextureIf.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class TextureMock : public ITexture
+class TextureMock : public TextureIf
 {
 public:
     MOCK_METHOD((bool), create, (unsigned int, unsigned int), (override));

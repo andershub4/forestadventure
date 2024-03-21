@@ -25,7 +25,7 @@ void Text::setString(const std::string &string)
     text_->setString(string);
 }
 
-void Text::setFont(const Graphic::IFont &font)
+void Text::setFont(const Graphic::FontIf &font)
 {
     const sf::Font &sfFont = dynamic_cast<const Font &>(font);
     text_->setFont(sfFont);

@@ -9,7 +9,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 
-#include "IDrawable.h"
+#include "DrawableIf.h"
 #include "Texture.h"
 #include "View.h"
 
@@ -24,7 +24,7 @@ RenderTexture::RenderTexture()
 
 RenderTexture::~RenderTexture() = default;
 
-void RenderTexture::draw(const IDrawable& drawable)
+void RenderTexture::draw(const DrawableIf& drawable)
 {
     const sf::Drawable& sfDrawable = drawable;
     return renderTexture_->draw(sfDrawable);
@@ -45,7 +45,7 @@ sf::Vector2u RenderTexture::getSize() const
     return renderTexture_->getSize();
 }
 
-const Graphic::ITexture& RenderTexture::getTexture() const
+const Graphic::TextureIf& RenderTexture::getTexture() const
 {
     return *texture_;
 }
@@ -60,7 +60,7 @@ void RenderTexture::clear(const sf::Color& color)
     renderTexture_->clear(color);
 }
 
-void RenderTexture::setView(const Graphic::IView& view)
+void RenderTexture::setView(const Graphic::ViewIf& view)
 {
     const sf::View& sfView = dynamic_cast<const View&>(view);
     renderTexture_->setView(sfView);

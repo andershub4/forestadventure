@@ -65,7 +65,7 @@ Shared::TextureRect EntityService::MakeRect(const Shared::ImageData& data) const
     return sheetManager_.MakeRect(data);
 }
 
-const Graphic::ITexture* EntityService::GetTexture(Shared::ResourceId id) const
+const Graphic::TextureIf* EntityService::GetTexture(Shared::ResourceId id) const
 {
     return textureManager_.Get(id);
 }

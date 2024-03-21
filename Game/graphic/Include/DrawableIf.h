@@ -6,19 +6,25 @@
 
 #pragma once
 
-#include <string>
-
-#include "IDrawable.h"
 #include "SfmlFwd.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class IShape : public IDrawable
+class DrawableIf
 {
 public:
-    virtual ~IShape() = default;
+    virtual ~DrawableIf() = default;
+
+    // sfml has protected draw method, but since it's not public, I don't need it.
+
+private:
+    friend class RenderWindow;
+    friend class RenderTexture;
+
+private:
+    virtual operator const sf::Drawable&() const = 0;
 };
 
 }  // namespace Graphic

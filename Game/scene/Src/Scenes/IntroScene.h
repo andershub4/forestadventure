@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Graphic {
 
-class IRenderTarget;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -25,7 +25,7 @@ public:
                Manager::Layers& components, Manager::Data& data);
     virtual ~IntroScene();
 
-    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) override;
+    virtual void DrawTo(Graphic::RenderTargetIf& renderTarget) override;
     virtual void Update(float deltaTime) override;
     virtual std::string Name() const override { return "IntroScene"; }
 

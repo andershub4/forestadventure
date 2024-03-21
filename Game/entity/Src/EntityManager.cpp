@@ -32,7 +32,7 @@ EntityManager::~EntityManager()
     }
 }
 
-void EntityManager::DrawTo(Graphic::IRenderTarget& renderTarget) const
+void EntityManager::DrawTo(Graphic::RenderTargetIf& renderTarget) const
 {
     for (auto p : drawables_) {
         auto id = p.second.id_;

@@ -10,8 +10,8 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "RectangleShape.h"
-#include "IRenderTarget.h"
-#include "IRenderTexture.h"
+#include "RenderTargetIf.h"
+#include "RenderTextureIf.h"
 
 namespace FA {
 
@@ -23,7 +23,7 @@ FadeTransition::FadeTransition(CreateSceneFn nextSceneFn)
 
 FadeTransition::~FadeTransition() = default;
 
-void FadeTransition::Enter(const Graphic::IRenderTexture& renderTexture)
+void FadeTransition::Enter(const Graphic::RenderTextureIf& renderTexture)
 {
     sf::Vector2f position = renderTexture.mapPixelToCoords({0, 0});
     sf::Vector2f size = static_cast<sf::Vector2f>(renderTexture.getSize());
@@ -32,7 +32,7 @@ void FadeTransition::Enter(const Graphic::IRenderTexture& renderTexture)
     fadeRect_->setFillColor(sf::Color(0, 0, 0, 0));
 }
 
-void FadeTransition::DrawTo(Graphic::IRenderTarget& renderTarget) const
+void FadeTransition::DrawTo(Graphic::RenderTargetIf& renderTarget) const
 {
     if (fadeRect_) renderTarget.draw(*fadeRect_);
 }

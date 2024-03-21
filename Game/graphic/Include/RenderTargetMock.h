@@ -8,16 +8,16 @@
 
 #include <gmock/gmock.h>
 
-#include "IRenderTarget.h"
+#include "RenderTargetIf.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class RenderTargetMock : public IRenderTarget
+class RenderTargetMock : public RenderTargetIf
 {
 public:
-    MOCK_METHOD((void), draw, (const IDrawable&), (override));
+    MOCK_METHOD((void), draw, (const DrawableIf&), (override));
 };
 
 }  // namespace Graphic

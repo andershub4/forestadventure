@@ -11,8 +11,8 @@
 #include <unordered_map>
 
 #include "BasicShapePart.h"
-#include "IRenderTarget.h"
 #include "Logging.h"
+#include "RenderTargetIf.h"
 #include "Sprite.h"
 #include "Sprites/ImageSprite.h"
 
@@ -44,7 +44,7 @@ public:
 
     virtual void SetPosition(const sf::Vector2f &position) override { currentImage_.SetPosition(position); }
     virtual void SetRotation(float rot) override { currentImage_.SetRotation(rot); }
-    virtual void DrawTo(Graphic::IRenderTarget &renderTarget) const override { currentImage_.DrawTo(renderTarget); }
+    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override { currentImage_.DrawTo(renderTarget); }
 
     void RegisterImage(const KeyT key, const Shared::ImageSprite &image)
     {

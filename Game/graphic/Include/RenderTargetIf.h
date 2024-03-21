@@ -6,17 +6,18 @@
 
 #pragma once
 
-#include <string>
-
 namespace FA {
 
 namespace Graphic {
 
-class IFont
+class DrawableIf;
+
+class RenderTargetIf
 {
 public:
-    virtual ~IFont() = default;
-    virtual bool loadFromFile(const std::string &filename) = 0;
+    virtual ~RenderTargetIf() = default;
+    // This will do for now, it's simplied, I don't need to deal with RenderStates
+    virtual void draw(const DrawableIf &drawable) = 0;
 };
 
 }  // namespace Graphic

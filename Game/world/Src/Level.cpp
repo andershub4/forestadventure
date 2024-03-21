@@ -11,10 +11,10 @@
 #include "CameraView.h"
 #include "EntityManager.h"
 #include "Folder.h"
-#include "IRenderTarget.h"
 #include "LevelCreator.h"
 #include "Logging.h"
 #include "MapData.h"
+#include "RenderTargetIf.h"
 #include "Resource/ResourceId.h"
 #include "Resource/SpriteSheet.h"
 #include "Sheets.h"
@@ -71,7 +71,7 @@ void Level::Update(float deltaTime)
     entityManager_->HandleDeletedEntities();
 }
 
-void Level::Draw(Graphic::IRenderTarget &renderTarget)
+void Level::Draw(Graphic::RenderTargetIf &renderTarget)
 {
     renderTarget.draw(backgroundSprite_);
     entityManager_->DrawTo(renderTarget);

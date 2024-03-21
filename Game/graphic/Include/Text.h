@@ -8,21 +8,21 @@
 
 #include <memory>
 
-#include "IText.h"
 #include "SfmlFwd.h"
+#include "TextIf.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class Text : public IText
+class Text : public TextIf
 {
 public:
     Text();
     virtual ~Text();
 
     virtual void setString(const std::string &string) override;
-    virtual void setFont(const Graphic::IFont &font) override;
+    virtual void setFont(const Graphic::FontIf &font) override;
     virtual void setCharacterSize(unsigned int size) override;
     virtual void setFillColor(const sf::Color &color) override;
     virtual sf::FloatRect getGlobalBounds() const override;

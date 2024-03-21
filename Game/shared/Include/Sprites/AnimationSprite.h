@@ -21,7 +21,7 @@ namespace Shared {
 class AnimationSprite : public BasicCoolSprite<AnimationSpriteIf>
 {
 public:
-    AnimationSprite(std::shared_ptr<Graphic::ISprite> sprite, unsigned int defaultFrame, float switchTime);
+    AnimationSprite(std::shared_ptr<Graphic::SpriteIf> sprite, unsigned int defaultFrame, float switchTime);
 
     virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
 

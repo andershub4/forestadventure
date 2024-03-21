@@ -10,7 +10,7 @@
 
 #include <SFML/Window/Keyboard.hpp>
 
-#include "IRenderWindow.h"
+#include "RenderWindowIf.h"
 
 namespace FA {
 
@@ -23,12 +23,12 @@ class MessageBus;
 class InputSystem
 {
 public:
-    InputSystem(Shared::MessageBus& messageBus, Graphic::IRenderWindow& window);
+    InputSystem(Shared::MessageBus& messageBus, Graphic::RenderWindowIf& window);
 
     void Update(float deltaTime);
 
 private:
-    Graphic::IRenderWindow& window_;
+    Graphic::RenderWindowIf& window_;
     Shared::MessageBus& messageBus_;
     std::unordered_set<sf::Keyboard::Key> pressedKeys_;
 

@@ -16,8 +16,8 @@ namespace FA {
 
 namespace Graphic {
 
-class IRenderTarget;
-class IRenderTexture;
+class RenderTargetIf;
+class RenderTextureIf;
 
 }  // namespace Graphic
 
@@ -41,9 +41,9 @@ public:
     BasicTransition(float duration, CreateSceneFn nextSceneFn);
     virtual ~BasicTransition();
 
-    virtual void Enter(const Graphic::IRenderTexture& renderTexture) {}
+    virtual void Enter(const Graphic::RenderTextureIf& renderTexture) {}
     virtual void Exit() {}
-    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) const {}
+    virtual void DrawTo(Graphic::RenderTargetIf& renderTarget) const {}
     virtual void Update(float deltaTime) {}
 
     std::unique_ptr<BasicScene> CreateNextScene(Shared::MessageBus& messageBus,

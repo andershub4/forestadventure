@@ -7,7 +7,7 @@
 #include "Shape.h"
 
 #include "Body.h"
-#include "IRenderTarget.h"
+#include "RenderTargetIf.h"
 
 namespace FA {
 
@@ -50,7 +50,7 @@ void Shape::RegisterPart(std::shared_ptr<BasicShapePart> part)
     parts_.push_back(part);
 }
 
-void Shape::DrawTo(Graphic::IRenderTarget& renderTarget) const
+void Shape::DrawTo(Graphic::RenderTargetIf& renderTarget) const
 {
     for (auto part : parts_) {
         part->DrawTo(renderTarget);

@@ -14,7 +14,7 @@ namespace FA {
 
 namespace Graphic {
 
-class ITexture;
+class TextureIf;
 
 }  // namespace Graphic
 
@@ -22,7 +22,7 @@ namespace Shared {
 
 struct Frame
 {
-    const Graphic::ITexture* texture_ = nullptr;
+    const Graphic::TextureIf* texture_ = nullptr;
     sf::IntRect rect_;
 };
 

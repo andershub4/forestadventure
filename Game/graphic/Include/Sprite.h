@@ -8,23 +8,23 @@
 
 #include <memory>
 
-#include "ISprite.h"
 #include "SfmlFwd.h"
+#include "SpriteIf.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class Sprite : public ISprite
+class Sprite : public SpriteIf
 {
 public:
     Sprite();
     virtual ~Sprite();
 
-    virtual void setTexture(const ITexture &texture, bool resetRect = false) override;
+    virtual void setTexture(const TextureIf &texture, bool resetRect = false) override;
     virtual void setTextureRect(const sf::IntRect &rectangle) override;
     virtual void setColor(const sf::Color &color) override;
-    virtual const ITexture *getTexture() const override;
+    virtual const TextureIf *getTexture() const override;
 
     virtual sf::FloatRect getLocalBounds() const override;
     virtual void setPosition(float x, float y) override;
@@ -35,7 +35,7 @@ public:
 
 private:
     std::shared_ptr<sf::Sprite> sprite_;
-    const ITexture *texture_{nullptr};
+    const TextureIf *texture_{nullptr};
 
 private:
     virtual operator const sf::Drawable &() const override;

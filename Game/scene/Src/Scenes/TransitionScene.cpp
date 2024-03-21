@@ -48,14 +48,14 @@ void TransitionScene::Exit()
     }
 }
 
-void TransitionScene::DrawTo(Graphic::IRenderTarget& renderTarget)
+void TransitionScene::DrawTo(Graphic::RenderTargetIf& renderTarget)
 {
     for (const auto& entry : layers_) {
         auto& layer = entry.second;
         layer->Clear();
         layer->Draw();
         layer->DrawTransition(*transition_);
-        layer->DrawTo(renderTarget); 
+        layer->DrawTo(renderTarget);
     }
 }
 

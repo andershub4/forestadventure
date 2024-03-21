@@ -6,13 +6,13 @@
 
 #include "Sprites/ImageSprite.h"
 
-#include "ISprite.h"
+#include "SpriteIf.h"
 
 namespace FA {
 
 namespace Shared {
 
-ImageSprite::ImageSprite(std::shared_ptr<Graphic::ISprite> sprite, const Frame& frame)
+ImageSprite::ImageSprite(std::shared_ptr<Graphic::SpriteIf> sprite, const Frame& frame)
     : BasicCoolSprite<ImageSpriteIf>(sprite)
     , frame_(frame)
 {

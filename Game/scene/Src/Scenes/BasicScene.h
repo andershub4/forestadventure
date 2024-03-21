@@ -15,7 +15,7 @@ namespace FA {
 
 namespace Graphic {
 
-class IRenderTarget;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -35,7 +35,7 @@ public:
                Manager::Layers& layers, Manager::Data& data);
     virtual ~BasicScene();
 
-    virtual void DrawTo(Graphic::IRenderTarget& renderTarget) = 0;
+    virtual void DrawTo(Graphic::RenderTargetIf& renderTarget) = 0;
     virtual void Update(float deltaTime) = 0;
     virtual std::string Name() const = 0;
 

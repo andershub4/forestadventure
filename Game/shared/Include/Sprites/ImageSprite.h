@@ -20,7 +20,7 @@ namespace Shared {
 class ImageSprite : public BasicCoolSprite<ImageSpriteIf>
 {
 public:
-    ImageSprite(std::shared_ptr<Graphic::ISprite> sprite, const Frame &frame);
+    ImageSprite(std::shared_ptr<Graphic::SpriteIf> sprite, const Frame &frame);
 
     virtual void Update(float deltaTime) override;
 

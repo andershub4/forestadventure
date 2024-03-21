@@ -15,7 +15,7 @@ namespace FA {
 
 namespace Graphic {
 
-class IRenderTarget;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -59,7 +59,7 @@ public:
 
     void SetScene(std::unique_ptr<BasicScene> newScene);
 
-    void DrawTo(Graphic::IRenderTarget& renderTarget);
+    void DrawTo(Graphic::RenderTargetIf& renderTarget);
     void Update(float deltaTime);
 
     bool IsRunning() const;

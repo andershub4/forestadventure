@@ -20,7 +20,7 @@ Sprite::Sprite()
 
 Sprite::~Sprite() = default;
 
-void Sprite::setTexture(const ITexture& texture, bool resetRect)
+void Sprite::setTexture(const TextureIf& texture, bool resetRect)
 {
     texture_ = &texture;
     const sf::Texture& sfTexture = dynamic_cast<const Texture&>(texture);
@@ -37,7 +37,7 @@ void Sprite::setColor(const sf::Color& color)
     sprite_->setColor(color);
 }
 
-const ITexture* Sprite::getTexture() const
+const TextureIf* Sprite::getTexture() const
 {
     return texture_;
 }

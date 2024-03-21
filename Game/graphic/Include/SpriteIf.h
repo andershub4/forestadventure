@@ -6,23 +6,23 @@
 
 #pragma once
 
-#include "IDrawable.h"
+#include "DrawableIf.h"
 #include "SfmlFwd.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class ITexture;
+class TextureIf;
 
-class ISprite : public IDrawable
+class SpriteIf : public DrawableIf
 {
 public:
-    virtual ~ISprite() = default;
-    virtual void setTexture(const ITexture &texture, bool resetRect = false) = 0;
+    virtual ~SpriteIf() = default;
+    virtual void setTexture(const TextureIf &texture, bool resetRect = false) = 0;
     virtual void setTextureRect(const sf::IntRect &rectangle) = 0;
     virtual void setColor(const sf::Color &color) = 0;
-    virtual const ITexture *getTexture() const = 0;
+    virtual const TextureIf *getTexture() const = 0;
 
     virtual sf::FloatRect getLocalBounds() const = 0;
     virtual void setPosition(float x, float y) = 0;

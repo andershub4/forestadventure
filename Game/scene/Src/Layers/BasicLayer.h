@@ -19,7 +19,7 @@ namespace FA {
 
 namespace Graphic {
 
-class IRenderTarget;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -55,7 +55,7 @@ public:
     virtual void UnsubscribeMessages() {}
 
     void Clear();
-    void DrawTo(Graphic::IRenderTarget& renderTarget);
+    void DrawTo(Graphic::RenderTargetIf& renderTarget);
 
 protected:
     Graphic::RenderTexture layerTexture_;

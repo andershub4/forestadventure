@@ -19,7 +19,7 @@ namespace FA {
 
 namespace Graphic {
 
-class ISprite;
+class SpriteIf;
 
 }
 
@@ -57,7 +57,7 @@ public:
     Shared::ImageSprite MakeImage(const Shared::ImageData &data) const;
 
     Shared::TextureRect MakeRect(const Shared::ImageData &data) const;
-    const Graphic::ITexture *GetTexture(Shared::ResourceId id) const;
+    const Graphic::TextureIf *GetTexture(Shared::ResourceId id) const;
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);
     void AddSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes,

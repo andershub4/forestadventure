@@ -8,17 +8,17 @@
 
 #include <string>
 
-#include "IRenderTarget.h"
+#include "RenderTargetIf.h"
 #include "SfmlFwd.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class IRenderWindow : public IRenderTarget
+class RenderWindowIf : public RenderTargetIf
 {
 public:
-    virtual ~IRenderWindow() override = default;
+    virtual ~RenderWindowIf() override = default;
     virtual void display() = 0;
     virtual bool pollEvent(sf::Event &event) = 0;
     virtual void create(sf::VideoMode mode, const std::string &title) = 0;

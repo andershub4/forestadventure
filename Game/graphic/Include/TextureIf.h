@@ -13,10 +13,10 @@ namespace FA {
 
 namespace Graphic {
 
-class ITexture
+class TextureIf
 {
 public:
-    virtual ~ITexture() = default;
+    virtual ~TextureIf() = default;
     virtual bool create(unsigned int width, unsigned int height) = 0;
     virtual bool loadFromFile(const std::string &filename) = 0;
     virtual bool loadFromFile(const std::string &filename, const sf::IntRect &area) = 0;

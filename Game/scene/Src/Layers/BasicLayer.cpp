@@ -30,7 +30,7 @@ void BasicLayer::Clear()
     layerTexture_.clear(sf::Color::Transparent);
 }
 
-void BasicLayer::DrawTo(Graphic::IRenderTarget& renderTarget)
+void BasicLayer::DrawTo(Graphic::RenderTargetIf& renderTarget)
 {
     layerTexture_.display();
     renderTarget.draw(sprite_);

@@ -6,27 +6,27 @@
 
 #pragma once
 
-#include "IRenderTarget.h"
+#include "RenderTargetIf.h"
 #include "SfmlFwd.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class ITexture;
-class IView;
+class TextureIf;
+class ViewIf;
 
-class IRenderTexture : public IRenderTarget
+class RenderTextureIf : public RenderTargetIf
 {
 public:
-    virtual ~IRenderTexture() override = default;
+    virtual ~RenderTextureIf() override = default;
     virtual bool create(unsigned int width, unsigned int height, bool depthBuffer) = 0;
     virtual void display() = 0;
     virtual sf::Vector2u getSize() const = 0;
-    virtual const Graphic::ITexture& getTexture() const = 0;
+    virtual const Graphic::TextureIf& getTexture() const = 0;
     virtual void clear() = 0;
     virtual void clear(const sf::Color& color) = 0;
-    virtual void setView(const Graphic::IView& view) = 0;
+    virtual void setView(const Graphic::ViewIf& view) = 0;
     virtual sf::Vector2f mapPixelToCoords(const sf::Vector2i& point) const = 0;
 };
 

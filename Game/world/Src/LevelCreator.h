@@ -16,7 +16,7 @@ namespace FA {
 namespace Graphic {
 
 class Sprite;
-class IRenderTarget;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -34,7 +34,7 @@ public:
     LevelCreator(const Shared::TextureManager &textureManager, const Shared::SheetManager &sheetManager);
 
     void AddBackground(const std::vector<TileMap::TileData> &layer);
-    void CreateBackground(Graphic::IRenderTarget &texture) const;
+    void CreateBackground(Graphic::RenderTargetIf &texture) const;
 
     std::vector<Graphic::Sprite> CreateFringe(const std::vector<TileMap::TileData> &layer) const;
 

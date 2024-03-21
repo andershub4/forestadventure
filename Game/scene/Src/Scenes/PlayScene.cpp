@@ -65,7 +65,7 @@ void PlayScene::Exit()
     }
 }
 
-void PlayScene::DrawTo(Graphic::IRenderTarget& renderTarget)
+void PlayScene::DrawTo(Graphic::RenderTargetIf& renderTarget)
 {
     for (const auto& entry : layers_) {
         auto& layer = entry.second;

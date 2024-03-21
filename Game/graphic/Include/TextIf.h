@@ -8,21 +8,21 @@
 
 #include <string>
 
-#include "IDrawable.h"
+#include "DrawableIf.h"
 #include "SfmlFwd.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class IFont;
+class FontIf;
 
-class IText : public IDrawable
+class TextIf : public DrawableIf
 {
 public:
-    virtual ~IText() = default;
+    virtual ~TextIf() = default;
     virtual void setString(const std::string &string) = 0;
-    virtual void setFont(const Graphic::IFont &font) = 0;
+    virtual void setFont(const Graphic::FontIf &font) = 0;
     virtual void setCharacterSize(unsigned int size) = 0;
     virtual void setFillColor(const sf::Color &color) = 0;
     virtual sf::FloatRect getGlobalBounds() const = 0;

@@ -11,8 +11,8 @@
 #include <unordered_map>
 
 #include "BasicShapePart.h"
-#include "IRenderTarget.h"
 #include "Logging.h"
+#include "RenderTargetIf.h"
 #include "Sprite.h"
 #include "Sprites/AnimationSprite.h"
 
@@ -53,7 +53,10 @@ public:
 
     virtual void SetPosition(const sf::Vector2f &position) override { currentAnimation_.SetPosition(position); }
     virtual void SetRotation(float rot) override { currentAnimation_.SetRotation(rot); }
-    virtual void DrawTo(Graphic::IRenderTarget &renderTarget) const override { currentAnimation_.DrawTo(renderTarget); }
+    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override
+    {
+        currentAnimation_.DrawTo(renderTarget);
+    }
 
     void RegisterAnimation(const KeyT key, const Shared::AnimationSprite &animation)
     {

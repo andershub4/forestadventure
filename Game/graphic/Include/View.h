@@ -8,14 +8,14 @@
 
 #include <memory>
 
-#include "IView.h"
 #include "SfmlFwd.h"
+#include "ViewIf.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class View : public IView
+class View : public ViewIf
 {
 public:
     View();

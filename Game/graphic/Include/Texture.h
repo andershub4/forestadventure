@@ -8,20 +8,20 @@
 
 #include <memory>
 
-#include "ITexture.h"
 #include "SfmlFwd.h"
+#include "TextureIf.h"
 
 namespace FA {
 
 namespace Graphic {
 
-class Texture : public ITexture
+class Texture : public TextureIf
 {
 public:
     Texture();
     virtual ~Texture();
 
-    static std::shared_ptr<const ITexture> CreateWrapper(const sf::Texture &texture)
+    static std::shared_ptr<const TextureIf> CreateWrapper(const sf::Texture &texture)
     {
         return std::shared_ptr<Texture>(new Texture(texture));
     }
