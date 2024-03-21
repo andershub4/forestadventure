@@ -56,7 +56,7 @@ public:
     void RegisterUpdateCB(std::function<void(const Shared::ImageSprite &)> updateCB) { updateCB_ = updateCB; }
 
 private:
-    /* Constructor for singel animation */
+    /* Constructor for singel image */
     ImagePartWith(const Shared::ImageSprite &image)
         : lookupKey_(defaultKey_)
         , defaultImage_(image)
