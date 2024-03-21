@@ -47,7 +47,7 @@ public:
     }
 
 private:
-    std::unordered_map<std::string, std::shared_ptr<BasicProperty>> properties_;
+    std::unordered_map<std::string, std::shared_ptr<PropertyIf>> properties_;
 };
 
 }  // namespace Entity

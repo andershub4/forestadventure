@@ -6,20 +6,22 @@
 
 #pragma once
 
-#include <string>
+#include <memory>
 
 namespace FA {
 
 namespace Entity {
 
-struct BasicProperty
-{
-    BasicProperty(const std::string name)
-        : name_(name)
-    {}
-    std::string name_;
+struct BasicEvent;
 
-    virtual ~BasicProperty() = default;
+class AbilityIf
+{
+public:
+    virtual ~AbilityIf() = default;
+
+    virtual void Enter(std::shared_ptr<BasicEvent> event) {}
+    virtual void Exit() {}
+    virtual void Update(float deltaTime) {}
 };
 
 }  // namespace Entity

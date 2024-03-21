@@ -6,21 +6,22 @@
 
 #pragma once
 
-#include "BasicProperty.h"
+#include "PropertyIf.h"
 
 namespace FA {
 
 namespace Entity {
 
 template <class T>
-struct Property : public BasicProperty
+struct Property : public PropertyIf
 {
     Property(const std::string& name, const T& value)
-        : BasicProperty(name)
-        , value_(value)
+        : value_(value)
+        , name_(name)
     {}
 
     T value_;
+    std::string name_;
 };
 
 }  // namespace Entity

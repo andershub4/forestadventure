@@ -27,7 +27,7 @@ class RenderTargetIf;
 namespace Entity {
 
 struct BasicEvent;
-class BasicAbility;
+class AbilityIf;
 struct Body;
 
 class State
@@ -49,7 +49,7 @@ public:
     StateType GetStateType() const { return stateType_; }
     void RegisterEnterCB(std::function<void()> enterCB);
     void RegisterExitCB(std::function<void()> exitCB);
-    void RegisterAbility(std::shared_ptr<BasicAbility> ability);
+    void RegisterAbility(std::shared_ptr<AbilityIf> ability);
     void RegisterShapePart(std::shared_ptr<BasicShapePart> part);
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
     void RegisterIgnoreEvents(const std::vector<EventType>& eventTypes);
@@ -57,7 +57,7 @@ public:
 
 private:
     StateType stateType_ = StateType::Uninitialized;
-    std::vector<std::shared_ptr<BasicAbility>> abilities_;
+    std::vector<std::shared_ptr<AbilityIf>> abilities_;
     std::unordered_set<EventType> notIgnorableEventTypes_;
     std::unordered_map<EventType, std::function<void(std::shared_ptr<BasicEvent>)>> eventCBs_;
     bool ignoreAllEvents_ = false;

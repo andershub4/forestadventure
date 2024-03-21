@@ -10,7 +10,7 @@
 
 #include <functional>
 
-#include "BasicAbility.h"
+#include "AbilityIf.h"
 
 #include "Enum/MoveDirection.h"
 
@@ -18,7 +18,7 @@ namespace FA {
 
 namespace Entity {
 
-class MoveAbility : public BasicAbility
+class MoveAbility : public AbilityIf
 {
 public:
     MoveAbility(float velocity, std::function<void(MoveDirection)> enterFn,

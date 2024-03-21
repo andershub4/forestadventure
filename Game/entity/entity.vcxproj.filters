@@ -27,7 +27,7 @@
     <ClInclude Include="Src\Enum\MoveDirection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Abilities\BasicAbility.h">
+    <ClInclude Include="Src\Abilities\AbilityIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Abilities\MoveAbility.h">
@@ -75,7 +75,7 @@
     <ClInclude Include="Src\Events\StopMoveEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Properties\BasicProperty.h">
+    <ClInclude Include="Src\Properties\PropertyIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Properties\Property.h">
@@ -140,9 +140,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Abilities\BasicAbility.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Abilities\MoveAbility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

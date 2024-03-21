@@ -141,7 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Src\Abilities\BasicAbility.h" />
+    <ClInclude Include="Src\Abilities\AbilityIf.h" />
     <ClInclude Include="Src\Abilities\MoveAbility.h" />
     <ClInclude Include="Src\Body.h" />
     <ClInclude Include="Src\Constant\Entity.h" />
@@ -169,7 +169,7 @@
     <ClInclude Include="Src\Factory.h" />
     <ClInclude Include="Include\Id.h" />
     <ClInclude Include="Include\LayerType.h" />
-    <ClInclude Include="Src\Properties\BasicProperty.h" />
+    <ClInclude Include="Src\Properties\PropertyIf.h" />
     <ClInclude Include="Src\Properties\Property.h" />
     <ClInclude Include="Src\PropertyConverter.h" />
     <ClInclude Include="Src\PropertyData.h" />
@@ -184,7 +184,6 @@
     <ClInclude Include="Src\StateType.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Abilities\BasicAbility.cpp" />
     <ClCompile Include="Src\Abilities\MoveAbility.cpp" />
     <ClCompile Include="Src\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Src\Entities\BasicEntity.cpp" />

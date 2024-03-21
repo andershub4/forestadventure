@@ -6,7 +6,7 @@
 
 #include "State.h"
 
-#include "Abilities/BasicAbility.h"
+#include "Abilities/AbilityIf.h"
 #include "Body.h"
 #include "Events/BasicEvent.h"
 #include "Logging.h"
@@ -73,7 +73,7 @@ void State::RegisterExitCB(std::function<void()> exitCB)
     exitCB_ = exitCB;
 }
 
-void State::RegisterAbility(std::shared_ptr<BasicAbility> ability)
+void State::RegisterAbility(std::shared_ptr<AbilityIf> ability)
 {
     abilities_.emplace_back(ability);
 }

@@ -4,15 +4,18 @@
  *	See file LICENSE for full license details.
  */
 
-#include "BasicAbility.h"
+#pragma once
+
+#include <string>
 
 namespace FA {
 
 namespace Entity {
 
-BasicAbility::BasicAbility() = default;
-
-BasicAbility::~BasicAbility() = default;
+struct PropertyIf
+{
+    virtual ~PropertyIf() = default;
+};
 
 }  // namespace Entity
 
