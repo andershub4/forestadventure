@@ -17,11 +17,8 @@ class TileSetIf;
 class TileSetFactory : public TileSetFactoryIf
 {
 public:
-    TileSetFactory();
-    virtual ~TileSetFactory();
-
     std::unique_ptr<TileSetIf> Create(const std::string &tsxDir, const std::vector<ParsedTile> &tiles,
-                                      const ParsedTileSet &tileSet, const std::string &imageSource) const;
+                                      const ParsedTileSet &tileSet, const std::string &imageSource) const override;
 };
 
 }  // namespace Tile

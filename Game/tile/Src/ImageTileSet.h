@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <unordered_map>
+#include <vector>
 
 #include "TileSetIf.h"
 
@@ -20,7 +20,6 @@ class ImageTileSet : public TileSetIf
 {
 public:
     ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTile> &parsedTiles);
-    virtual ~ImageTileSet();
 
     virtual TileSetData GenerateTileData() const override;
 

@@ -18,8 +18,6 @@ ImageTileSet::ImageTileSet(const std::string &tsxDir, const std::vector<ParsedTi
     , parsedTiles_(parsedTiles)
 {}
 
-ImageTileSet::~ImageTileSet() = default;
-
 TileSetData ImageTileSet::GenerateTileData() const
 {
     std::vector<Image> images;

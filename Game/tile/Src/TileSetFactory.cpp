@@ -13,10 +13,6 @@ namespace FA {
 
 namespace Tile {
 
-TileSetFactory::TileSetFactory() = default;
-
-TileSetFactory::~TileSetFactory() = default;
-
 std::unique_ptr<TileSetIf> TileSetFactory::Create(const std::string &tsxDir, const std::vector<ParsedTile> &tiles,
                                                   const ParsedTileSet &tileSet, const std::string &imageSource) const
 {

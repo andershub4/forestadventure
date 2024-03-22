@@ -141,7 +141,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Src\TileSetIf.cpp" />
     <ClCompile Include="Src\GridTileSet.cpp" />
     <ClCompile Include="Src\ImageTileSet.cpp" />
     <ClCompile Include="Src\TileHelper.cpp" />

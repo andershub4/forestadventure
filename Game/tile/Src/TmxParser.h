@@ -26,8 +26,6 @@ public:
         : helper_(helper)
     {}
 
-    virtual ~TmxParser() = default;
-
     virtual bool Parse(DocumentT& xmlDocument, const std::string& xmlBuffer, ParsedTmx& parsedTmx) const override
     {
         xmlDocument.Parse(xmlBuffer.c_str());

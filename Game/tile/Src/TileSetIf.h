@@ -6,9 +6,6 @@
 
 #pragma once
 
-#include <unordered_map>
-#include <vector>
-
 #include "TileMapData.h"
 
 namespace FA {
@@ -18,8 +15,7 @@ namespace Tile {
 class TileSetIf
 {
 public:
-    TileSetIf();
-    virtual ~TileSetIf();
+    virtual ~TileSetIf() = default;
 
     virtual TileSetData GenerateTileData() const = 0;
 };

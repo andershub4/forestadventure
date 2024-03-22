@@ -7,7 +7,6 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
 
 #include "TileSetIf.h"
 
@@ -21,7 +20,6 @@ class GridTileSet : public TileSetIf
 {
 public:
     GridTileSet(const std::string &tsxDir, const std::string &textureFilePath, const ParsedTileSet &parsedTileSet);
-    virtual ~GridTileSet();
 
     virtual TileSetData GenerateTileData() const override;
 

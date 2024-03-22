@@ -20,8 +20,6 @@ GridTileSet::GridTileSet(const std::string &tsxDir, const std::string &textureFi
     p_ = GetFilePath(tsxDir, textureFilePath);
 }
 
-GridTileSet::~GridTileSet() = default;
-
 TileSetData GridTileSet::GenerateTileData() const
 {
     auto nCount = parsedTileSet_.tileCount_;
