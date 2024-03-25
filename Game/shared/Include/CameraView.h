@@ -19,7 +19,6 @@ class CameraView : public CameraViewIf
 {
 public:
     CameraView(const sf::Vector2u& renderTargetSize, const sf::Vector2u& mapSize, float zoomFactor);
-    virtual ~CameraView();
 
     virtual void SetTrackPoint(const sf::Vector2f& trackingPoint) override;
     virtual void SetFixPoint(const sf::Vector2f& fixedPoint) override;

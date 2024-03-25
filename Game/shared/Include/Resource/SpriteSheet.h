@@ -21,7 +21,6 @@ namespace Shared {
 class SpriteSheet : public SpriteSheetIf
 {
 public:
-    SpriteSheet() = default;
     SpriteSheet(ResourceId textureId, const sf::Vector2u& textureSize, const sf::Vector2u& rectCount);
 
     virtual std::vector<TextureRect> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const override;

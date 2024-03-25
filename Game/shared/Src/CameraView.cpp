@@ -24,8 +24,6 @@ CameraView::CameraView(const sf::Vector2u& viewSize, const sf::Vector2u& mapSize
     maxViewPosition_ = {mapSize.x - centerPos.x, mapSize.y - centerPos.y};
 }
 
-CameraView::~CameraView() = default;
-
 void CameraView::SetTrackPoint(const sf::Vector2f& trackingPoint)
 {
     trackingPoint_ = &trackingPoint;
