@@ -19,7 +19,6 @@ class View : public ViewIf
 {
 public:
     View();
-    virtual ~View();
 
     virtual void setSize(const sf::Vector2f &size) override;
     virtual void zoom(float factor) override;

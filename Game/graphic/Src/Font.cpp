@@ -16,8 +16,6 @@ Font::Font()
     : font_(std::make_shared<sf::Font>())
 {}
 
-Font::~Font() = default;
-
 bool Font::loadFromFile(const std::string &string)
 {
     return font_->loadFromFile(string);

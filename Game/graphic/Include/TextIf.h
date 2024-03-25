@@ -20,7 +20,6 @@ class FontIf;
 class TextIf : public DrawableIf
 {
 public:
-    virtual ~TextIf() = default;
     virtual void setString(const std::string &string) = 0;
     virtual void setFont(const Graphic::FontIf &font) = 0;
     virtual void setCharacterSize(unsigned int size) = 0;

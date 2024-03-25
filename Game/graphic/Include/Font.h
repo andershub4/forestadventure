@@ -19,7 +19,6 @@ class Font : public FontIf
 {
 public:
     Font();
-    virtual ~Font();
 
     virtual bool loadFromFile(const std::string &filename) override;
 

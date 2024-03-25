@@ -16,8 +16,6 @@ View::View()
     : view_(std::make_shared<sf::View>())
 {}
 
-View::~View() = default;
-
 void View::setSize(const sf::Vector2f& size)
 {
     view_->setSize(size);

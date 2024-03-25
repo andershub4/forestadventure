@@ -22,8 +22,6 @@ Texture::Texture(const sf::Texture& texture)
     : texture_(const_cast<sf::Texture*>(&texture))
 {}
 
-Texture::~Texture() = default;
-
 bool Texture::create(unsigned int width, unsigned int height)
 {
     return texture_->create(width, height);

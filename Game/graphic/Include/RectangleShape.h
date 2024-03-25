@@ -20,7 +20,6 @@ class RectangleShape : public RectangleShapeIf
 public:
     RectangleShape();
     RectangleShape(const sf::Vector2f &size);
-    virtual ~RectangleShape();
 
     virtual void setSize(const sf::Vector2f &size) override;
     virtual void setPosition(const sf::Vector2f &position) override;

@@ -18,8 +18,6 @@ Sprite::Sprite()
     : sprite_(std::make_shared<sf::Sprite>())
 {}
 
-Sprite::~Sprite() = default;
-
 void Sprite::setTexture(const TextureIf& texture, bool resetRect)
 {
     texture_ = &texture;

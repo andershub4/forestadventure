@@ -19,7 +19,6 @@ class Sprite : public SpriteIf
 {
 public:
     Sprite();
-    virtual ~Sprite();
 
     virtual void setTexture(const TextureIf &texture, bool resetRect = false) override;
     virtual void setTextureRect(const sf::IntRect &rectangle) override;

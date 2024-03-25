@@ -19,7 +19,6 @@ class Text : public TextIf
 {
 public:
     Text();
-    virtual ~Text();
 
     virtual void setString(const std::string &string) override;
     virtual void setFont(const Graphic::FontIf &font) override;

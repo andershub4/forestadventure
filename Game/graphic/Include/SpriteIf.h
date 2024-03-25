@@ -18,7 +18,6 @@ class TextureIf;
 class SpriteIf : public DrawableIf
 {
 public:
-    virtual ~SpriteIf() = default;
     virtual void setTexture(const TextureIf &texture, bool resetRect = false) = 0;
     virtual void setTextureRect(const sf::IntRect &rectangle) = 0;
     virtual void setColor(const sf::Color &color) = 0;

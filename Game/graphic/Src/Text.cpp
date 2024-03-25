@@ -18,8 +18,6 @@ Text::Text()
     : text_(std::make_shared<sf::Text>())
 {}
 
-Text::~Text() = default;
-
 void Text::setString(const std::string &string)
 {
     text_->setString(string);

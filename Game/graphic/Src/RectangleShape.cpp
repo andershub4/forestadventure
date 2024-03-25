@@ -20,8 +20,6 @@ RectangleShape::RectangleShape(const sf::Vector2f& size)
     : rectangleShape_(std::make_shared<sf::RectangleShape>(size))
 {}
 
-RectangleShape::~RectangleShape() = default;
-
 void RectangleShape::setSize(const sf::Vector2f& size)
 {
     rectangleShape_->setSize(size);

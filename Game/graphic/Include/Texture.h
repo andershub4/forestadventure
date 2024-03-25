@@ -19,7 +19,6 @@ class Texture : public TextureIf
 {
 public:
     Texture();
-    virtual ~Texture();
 
     static std::shared_ptr<const TextureIf> CreateWrapper(const sf::Texture &texture)
     {
