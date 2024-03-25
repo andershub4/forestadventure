@@ -17,9 +17,6 @@ class ByteStreamIf;
 class ByteStreamFactory : public ByteStreamFactoryIf
 {
 public:
-    ByteStreamFactory();
-    ~ByteStreamFactory();
-
     virtual std::unique_ptr<ByteStreamIf> Create(const std::string& fileName) const override;
 };
 
