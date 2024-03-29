@@ -10,4 +10,4 @@
 #define FA_APP_NAME "FA-Pre-alpha"
 
 // If this version is updated, update in inno setup file as well
-#define FA_APP_VERSION "0.49"
+#define FA_APP_VERSION "0.50"
