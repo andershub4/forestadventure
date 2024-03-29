@@ -34,6 +34,7 @@ TEST_F(CameraViewTest, GetPositionShouldReturnDefaultPositionWhenPointNotIsSet)
     cameraView.UpdatePosition(0.01f);
     EXPECT_THAT(cameraView.GetPosition(), Eq(sf::Vector2f(0.0f, 0.0f)));
 }
+
 TEST_F(CameraViewTest, GetPositionShouldReturnInitPositionWhenTrackPointIsSet)
 {
     CameraView cameraView(viewSize_, mapSize_, 1.0f);
