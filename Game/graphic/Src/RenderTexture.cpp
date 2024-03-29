@@ -52,7 +52,7 @@ const Graphic::TextureIf& RenderTexture::getTexture() const
 
 void RenderTexture::clear()
 {
-    renderTexture_->clear(sf::Color(0, 0, 0, 255));
+    renderTexture_->clear();
 }
 
 void RenderTexture::clear(const sf::Color& color)
