@@ -71,7 +71,7 @@ private:
     /* Constructor for multiple animation, depending on KeyT */
     AnimationPartWith(KeyT &lookupKey, bool center = true)
         : lookupKey_(lookupKey)
-        , defaultAnimation_(std::shared_ptr<Graphic::Sprite>(), 0, 1.0f)
+        , defaultAnimation_(std::shared_ptr<Graphic::Sprite>(), 1.0f)
         , currentAnimation_(defaultAnimation_)
         , updateCB_([](const Shared::AnimationSprite &) {})
         , center_(center)

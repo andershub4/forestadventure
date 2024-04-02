@@ -6,6 +6,7 @@
 
 #include "Sprites/ImageSprite.h"
 
+#include "Logging.h"
 #include "SpriteIf.h"
 
 namespace FA {
@@ -14,16 +15,15 @@ namespace Shared {
 
 ImageSprite::ImageSprite(std::shared_ptr<Graphic::SpriteIf> sprite, const Frame& frame)
     : BasicCoolSprite<ImageSpriteIf>(sprite)
-    , frame_(frame)
 {
-    isValid_ = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
-}
+    bool isValid = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
 
-void ImageSprite::Update(float deltaTime)
-{
-    if (isValid_) {
-        sprite_->setTexture(*frame_.texture_);
-        sprite_->setTextureRect(frame_.rect_);
+    if (isValid) {
+        sprite_->setTexture(*frame.texture_);
+        sprite_->setTextureRect(frame.rect_);
+    }
+    else {
+        LOG_WARN("%s is invalid", DUMP(frame));
     }
 }
 

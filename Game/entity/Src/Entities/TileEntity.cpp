@@ -32,7 +32,7 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 {
     float t = Constant::stdSwitchTime;
 
-    Shared::AnimationSprite animation(std::make_shared<Graphic::Sprite>(), 0, t);
+    Shared::AnimationSprite animation(std::make_shared<Graphic::Sprite>(), t);
     for (const auto& d : data.graphic_.animation_) {
         auto rect = service_.MakeRect(d);
         const auto* texture = service_.GetTexture(rect.id_);

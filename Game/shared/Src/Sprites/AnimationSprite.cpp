@@ -13,12 +13,10 @@ namespace FA {
 
 namespace Shared {
 
-AnimationSprite::AnimationSprite(std::shared_ptr<Graphic::SpriteIf> sprite, unsigned int defaultIndex, float switchTime)
+AnimationSprite::AnimationSprite(std::shared_ptr<Graphic::SpriteIf> sprite, float switchTime)
     : BasicCoolSprite<AnimationSpriteIf>(sprite)
     , switchTime_(switchTime)
     , time_(0.0)
-    , defaultIndex_(defaultIndex)
-    , iFrame_(defaultIndex)
 {}
 
 void AnimationSprite::Update(float deltaTime)
@@ -29,7 +27,7 @@ void AnimationSprite::Update(float deltaTime)
         if (time_ >= switchTime_) {
             time_ = 0.0;
             ++iFrame_ %= nFrames_;
-            isCompleted_ = (iFrame_ == defaultIndex_);
+            isCompleted_ = (iFrame_ == 0);
         }
     }
 
@@ -45,10 +43,6 @@ void AnimationSprite::Start()
         LOG_WARN("Can't start animation, no frames");
         isValid_ = false;
     }
-    else if (defaultIndex_ >= nFrames_) {
-        LOG_WARN("Can't start animation, defaultIndex %d is invalid", defaultIndex_);
-        isValid_ = false;
-    }
     else {
         isStopped_ = false;
         isValid_ = true;
@@ -58,7 +52,7 @@ void AnimationSprite::Start()
 void AnimationSprite::Stop()
 {
     isStopped_ = true;
-    iFrame_ = defaultIndex_;
+    iFrame_ = 0;
 }
 
 bool AnimationSprite::IsCompleted() const
@@ -77,6 +71,10 @@ void AnimationSprite::AddFrame(const Frame& frame)
     isValid_ = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
 
     if (isValid_) {
+        if (frames_.empty()) {
+            sprite_->setTexture(*frame.texture_);
+            sprite_->setTextureRect(frame.rect_);
+        }
         frames_.push_back(frame);
         nFrames_ = frames_.size();
     }

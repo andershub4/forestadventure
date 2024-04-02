@@ -6,6 +6,8 @@
 
 #include "Resource/SheetManager.h"
 
+#include <algorithm>
+
 #include "Logging.h"
 #include "Resource/AnimationData.h"
 #include "Resource/ImageData.h"
@@ -27,6 +29,8 @@ std::vector<TextureRect> SheetManager::MakeRects(const AnimationData& data) cons
     auto sheet = GetSheet(data.sheetId_);
     if (sheet != nullptr) {
         auto rects = sheet->Scan(location.start_, location.nRects_);
+        auto range = data.locationData_.defaultIndex_;
+        std::rotate(rects.begin(), rects.begin() + range, rects.end());
         return data.mirror_ ? MirrorX(rects) : rects;
     }
 

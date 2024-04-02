@@ -10,11 +10,11 @@
 #include <gtest/gtest.h>
 
 #include "Mock/LoggerMock.h"
+#include "Mock/SpriteSheetMock.h"
 #include "Resource/AnimationData.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureRect.h"
-#include "Mock/SpriteSheetMock.h"
 
 using namespace testing;
 
@@ -79,6 +79,16 @@ TEST_F(SheetManagerTest, MakeRectsShouldReturnValidVector)
     EXPECT_CALL(sheetMock_, Scan(Eq(sf::Vector2u(223, 122)), Eq(2))).WillOnce(Return(rects_));
     auto result = sheetManager_.MakeRects(data);
     std::vector<TextureRect> expected = rects_;
+    EXPECT_THAT(result, Eq(expected));
+}
+
+TEST_F(SheetManagerTest, MakeRectsShouldReturnValidVectorAdjustedAccordingToDefaultIndex)
+{
+    AnimationData data{"whiteEnemyId", {{223, 122}, 2, 1}, false};
+    sheetManager_.AddSheet("whiteEnemyId", std::move(sheetMockProxy_));
+    EXPECT_CALL(sheetMock_, Scan(Eq(sf::Vector2u(223, 122)), Eq(2))).WillOnce(Return(rects_));
+    auto result = sheetManager_.MakeRects(data);
+    std::vector<TextureRect> expected = {rect2_, rect1_};
     EXPECT_THAT(result, Eq(expected));
 }
 

@@ -40,7 +40,7 @@ Shared::AnimationSprite EntityService::MakeAnimation(const Shared::AnimationData
 {
     float t = Constant::stdSwitchTime;
     auto sprite = std::make_shared<Graphic::Sprite>();
-    Shared::AnimationSprite animation(sprite, data.locationData_.defaultIndex_, t);
+    Shared::AnimationSprite animation(sprite, t);
     auto rects = sheetManager_.MakeRects(data);
 
     for (const auto& rect : rects) {

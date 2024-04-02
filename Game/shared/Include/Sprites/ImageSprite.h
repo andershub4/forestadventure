@@ -22,11 +22,7 @@ class ImageSprite : public BasicCoolSprite<ImageSpriteIf>
 public:
     ImageSprite(std::shared_ptr<Graphic::SpriteIf> sprite, const Frame &frame);
 
-    virtual void Update(float deltaTime) override;
-
-private:
-    Frame frame_;
-    bool isValid_ = false;
+    virtual void Update(float deltaTime) override {}
 };
 
 }  // namespace Shared
