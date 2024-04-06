@@ -8,6 +8,7 @@
 
 #include <map>
 #include <memory>
+#include <set>
 #include <unordered_map>
 
 #include "Id.h"
@@ -49,6 +50,8 @@ public:
 
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
+    void DetectCollisions();
+    void HandleCollisions();
     void CreateEntity(const PropertyData &data, const Shared::MapData &mapData);
     void CreateEntity(const std::string &typeStr, const sf::Vector2f &pos,
                       std::unordered_map<std::string, std::string> properties, const Shared::MapData &mapData);
@@ -64,12 +67,25 @@ private:
         EntityId id_{};
     };
 
+    template <typename T>
+    struct customPairLess
+    {
+        bool operator()(const std::pair<T, T> &lhs, const std::pair<T, T> &rhs) const
+        {
+            const auto lhs_order = lhs.first < lhs.second ? lhs : std::tie(lhs.second, lhs.first);
+            const auto rhs_order = rhs.first < rhs.second ? rhs : std::tie(rhs.second, rhs.first);
+
+            return lhs_order < rhs_order;
+        }
+    };
+
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
     std::unique_ptr<Factory> factory_;
     std::unique_ptr<EntityService> service_;
     std::vector<std::unique_ptr<BasicEntity>> createdEntities_;
     std::vector<EntityId> deletedEntities_;
     std::map<std::string, DrawableInfo> drawables_;
+    std::set<std::pair<EntityId, EntityId>, customPairLess<EntityId>> collisionPairs_;
 
 private:
     void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);

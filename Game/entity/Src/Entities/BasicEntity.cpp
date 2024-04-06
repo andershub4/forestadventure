@@ -76,6 +76,11 @@ void BasicEntity::DrawTo(Graphic::RenderTargetIf& renderTarget) const
     stateMachine_.GetShape().DrawTo(renderTarget);
 }
 
+bool BasicEntity::Intersect(const BasicEntity& otherEntity) const
+{
+    return stateMachine_.GetShape().Intersect(otherEntity.stateMachine_.GetShape());
+}
+
 void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
     stateMachine_.HandleEvent(event);

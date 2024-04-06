@@ -6,6 +6,8 @@
 
 #include "Shape.h"
 
+#include "SFML/Graphics/Rect.hpp"
+
 #include "Body.h"
 #include "RenderTargetIf.h"
 #include "Sprite.h"
@@ -70,6 +72,21 @@ void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const
 #ifdef _DEBUG
     renderTarget.draw(rShape_);
 #endif
+}
+
+bool Shape::Intersect(const Shape &otherShape) const
+{
+    bool intersect = false;
+
+    for (auto &thisSprite : sprites_) {
+        auto thisBB = thisSprite->getGlobalBounds();
+        for (auto &otherSprite : otherShape.sprites_) {
+            auto otherBB = otherSprite->getGlobalBounds();
+            intersect |= thisBB.intersects(otherBB);
+        }
+    }
+
+    return intersect;
 }
 
 }  // namespace Entity

@@ -24,6 +24,7 @@ public:
     virtual const TextureIf *getTexture() const = 0;
 
     virtual sf::FloatRect getLocalBounds() const = 0;
+    virtual sf::FloatRect getGlobalBounds() const = 0;
     virtual void setPosition(float x, float y) = 0;
     virtual void setPosition(const sf::Vector2f &position) = 0;
     virtual void setRotation(float angle) = 0;

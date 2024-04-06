@@ -40,6 +40,34 @@ void EntityManager::DrawTo(Graphic::RenderTargetIf& renderTarget) const
     }
 }
 
+void EntityManager::DetectCollisions()
+{
+    for (const auto& entry : entityMap_) {
+        for (const auto& otherEntry : entityMap_) {
+            EntityId firstId = entry.second->GetId();
+            EntityId secondId = otherEntry.second->GetId();
+            if (firstId != secondId) {
+                bool intersect = entry.second->Intersect(*otherEntry.second);
+                if (intersect) {
+                    std::pair<EntityId, EntityId> pair{firstId, secondId};
+                    collisionPairs_.insert(pair);
+                }
+            }
+        }
+    }
+}
+
+void EntityManager::HandleCollisions()
+{
+    for (const auto& pair : collisionPairs_) {
+        auto& first = *entityMap_.at(pair.first);
+        auto& second = *entityMap_.at(pair.second);
+        first.HandleCollision(second);
+        second.HandleCollision(first);
+    }
+    collisionPairs_.clear();
+}
+
 void EntityManager::Update(float deltaTime)
 {
     for (const auto& entry : entityMap_) {

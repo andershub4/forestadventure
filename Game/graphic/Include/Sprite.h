@@ -26,6 +26,7 @@ public:
     virtual const TextureIf *getTexture() const override;
 
     virtual sf::FloatRect getLocalBounds() const override;
+    virtual sf::FloatRect getGlobalBounds() const override;
     virtual void setPosition(float x, float y) override;
     virtual void setPosition(const sf::Vector2f &position) override;
     virtual void setRotation(float angle) override;

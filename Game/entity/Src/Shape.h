@@ -38,6 +38,7 @@ public:
     void Enter();
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
+    bool Intersect(const Shape &shape) const;
 
 private:
     std::vector<std::shared_ptr<BasicShapePart>> parts_;

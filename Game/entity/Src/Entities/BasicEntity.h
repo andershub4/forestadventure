@@ -48,6 +48,8 @@ public:
     void Init();
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf& renderTarget) const;
+    bool Intersect(const BasicEntity& otherEntity) const;
+    void HandleCollision(const BasicEntity& otherEntity) {}
     EntityId GetId() const { return id_; }
 
 protected:
