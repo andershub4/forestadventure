@@ -73,7 +73,7 @@ void BasicEntity::Update(float deltaTime)
 
 void BasicEntity::DrawTo(Graphic::RenderTargetIf& renderTarget) const
 {
-    stateMachine_.DrawTo(renderTarget);
+    stateMachine_.GetShape().DrawTo(renderTarget);
 }
 
 void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)

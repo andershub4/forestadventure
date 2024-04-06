@@ -8,12 +8,13 @@
 
 #include "Body.h"
 #include "RenderTargetIf.h"
+#include "Sprite.h"
 
 namespace FA {
 
 namespace Entity {
 
-Shape::Shape(Body& body)
+Shape::Shape(Body &body)
     : body_(body)
 {
 #ifdef _DEBUG
@@ -21,12 +22,18 @@ Shape::Shape(Body& body)
 #endif
 }
 
+Shape::~Shape() = default;
+
 void Shape::Enter()
 {
+    int i = 0;
     for (auto part : parts_) {
         part->Enter();
-        part->SetPosition(body_.position_);
-        part->SetRotation(body_.rotation_);
+        auto &sprite = sprites_.at(i);
+        part->ApplyTo(*sprite);
+        sprite->setPosition(body_.position_);
+        sprite->setRotation(body_.rotation_);
+        i++;
     }
 #ifdef _DEBUG
     rShape_.setPosition(body_.position_);
@@ -35,10 +42,14 @@ void Shape::Enter()
 
 void Shape::Update(float deltaTime)
 {
+    int i = 0;
     for (auto part : parts_) {
         part->Update(deltaTime);
-        part->SetPosition(body_.position_);
-        part->SetRotation(body_.rotation_);
+        auto &sprite = sprites_.at(i);
+        part->ApplyTo(*sprite);
+        sprite->setPosition(body_.position_);
+        sprite->setRotation(body_.rotation_);
+        i++;
     }
 #ifdef _DEBUG
     rShape_.setPosition(body_.position_);
@@ -48,12 +59,13 @@ void Shape::Update(float deltaTime)
 void Shape::RegisterPart(std::shared_ptr<BasicShapePart> part)
 {
     parts_.push_back(part);
+    sprites_.push_back(std::make_shared<Graphic::Sprite>());
 }
 
-void Shape::DrawTo(Graphic::RenderTargetIf& renderTarget) const
+void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const
 {
-    for (auto part : parts_) {
-        part->DrawTo(renderTarget);
+    for (auto &sprite : sprites_) {
+        renderTarget.draw(*sprite);
     }
 #ifdef _DEBUG
     renderTarget.draw(rShape_);

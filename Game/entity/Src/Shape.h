@@ -20,6 +20,7 @@ namespace FA {
 namespace Graphic {
 
 class RenderTargetIf;
+class SpriteIf;
 
 }  // namespace Graphic
 
@@ -31,6 +32,7 @@ class Shape
 {
 public:
     Shape(Body &body);
+    ~Shape();
 
     void RegisterPart(std::shared_ptr<BasicShapePart> part);
     void Enter();
@@ -43,6 +45,7 @@ private:
     Graphic::RectangleShape rShape_;
 #endif
     Body &body_;
+    std::vector<std::shared_ptr<Graphic::SpriteIf>> sprites_;
 };
 
 }  // namespace Entity

@@ -7,6 +7,7 @@
 #include "StateMachine.h"
 
 #include "Events/BasicEvent.h"
+#include "Shape.h"
 #include "State.h"
 
 namespace FA {
@@ -53,6 +54,11 @@ void StateMachine::ChangeStateTo(StateType nextStateType, std::shared_ptr<BasicE
     currentState_->Exit();
     currentState_ = states_.at(nextStateType);
     currentState_->Enter(event);
+}
+
+Shape StateMachine::GetShape() const
+{
+    return currentState_->GetShape();
 }
 
 }  // namespace Entity

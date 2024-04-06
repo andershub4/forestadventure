@@ -12,7 +12,6 @@
 
 #include "BasicShapePart.h"
 #include "Logging.h"
-#include "RenderTargetIf.h"
 #include "Sprite.h"
 #include "Sprites/AnimationSprite.h"
 
@@ -45,17 +44,16 @@ public:
     virtual void Update(float deltaTime) override
     {
         currentAnimation_.Update(deltaTime);
-        if (center_) {
-            currentAnimation_.Center();
-        }
         updateCB_(currentAnimation_);
     }
 
-    virtual void SetPosition(const sf::Vector2f &position) override { currentAnimation_.SetPosition(position); }
-    virtual void SetRotation(float rot) override { currentAnimation_.SetRotation(rot); }
-    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override
+    virtual void ApplyTo(Graphic::SpriteIf &sprite) const override
     {
-        currentAnimation_.DrawTo(renderTarget);
+        currentAnimation_.ApplyTo(sprite);
+
+        if (center_) {
+            sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+        }
     }
 
     void RegisterAnimation(const KeyT key, const Shared::AnimationSprite &animation)
@@ -71,7 +69,7 @@ private:
     /* Constructor for multiple animation, depending on KeyT */
     AnimationPartWith(KeyT &lookupKey, bool center = true)
         : lookupKey_(lookupKey)
-        , defaultAnimation_(std::shared_ptr<Graphic::Sprite>(), 1.0f)
+        , defaultAnimation_(1.0f)
         , currentAnimation_(defaultAnimation_)
         , updateCB_([](const Shared::AnimationSprite &) {})
         , center_(center)

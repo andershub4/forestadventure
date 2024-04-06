@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <memory>
-
 #include "BasicCoolSprite.h"
 #include "ImageSpriteIf.h"
 
@@ -20,9 +18,13 @@ namespace Shared {
 class ImageSprite : public BasicCoolSprite<ImageSpriteIf>
 {
 public:
-    ImageSprite(std::shared_ptr<Graphic::SpriteIf> sprite, const Frame &frame);
+    ImageSprite(const Frame &frame);
 
-    virtual void Update(float deltaTime) override {}
+    virtual void ApplyTo(Graphic::SpriteIf &sprite) const override;
+
+private:
+    Frame frame_{};
+    bool isValid_{false};
 };
 
 }  // namespace Shared

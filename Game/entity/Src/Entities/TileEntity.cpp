@@ -11,7 +11,6 @@
 #include "Resource/ImageData.h"
 #include "Resource/TextureRect.h"
 #include "ShapeParts/AnimationPart.h"
-#include "Sprite.h"
 #include "State.h"
 
 namespace FA {
@@ -32,7 +31,7 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 {
     float t = Constant::stdSwitchTime;
 
-    Shared::AnimationSprite animation(std::make_shared<Graphic::Sprite>(), t);
+    Shared::AnimationSprite animation(t);
     for (const auto& d : data.graphic_.animation_) {
         auto rect = service_.MakeRect(d);
         const auto* texture = service_.GetTexture(rect.id_);

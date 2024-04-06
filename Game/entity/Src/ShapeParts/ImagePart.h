@@ -12,7 +12,6 @@
 
 #include "BasicShapePart.h"
 #include "Logging.h"
-#include "RenderTargetIf.h"
 #include "Sprite.h"
 #include "Sprites/ImageSprite.h"
 
@@ -36,15 +35,17 @@ public:
     virtual void Update(float deltaTime) override
     {
         currentImage_.Update(deltaTime);
-        if (true) {
-            currentImage_.Center();
-        }
         updateCB_(currentImage_);
     }
 
-    virtual void SetPosition(const sf::Vector2f &position) override { currentImage_.SetPosition(position); }
-    virtual void SetRotation(float rot) override { currentImage_.SetRotation(rot); }
-    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override { currentImage_.DrawTo(renderTarget); }
+    virtual void ApplyTo(Graphic::SpriteIf &sprite) const override
+    {
+        currentImage_.ApplyTo(sprite);
+
+        if (true) {
+            sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+        }
+    }
 
     void RegisterImage(const KeyT key, const Shared::ImageSprite &image)
     {

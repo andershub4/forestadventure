@@ -106,6 +106,11 @@ void State::IgnoreAllEventsExcept(const std::unordered_set<EventType> &notIgnora
     ignoreAllEvents_ = true;
 }
 
+Shape State::GetShape() const
+{
+    return shape_;
+}
+
 }  // namespace Entity
 
 }  // namespace FA

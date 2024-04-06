@@ -13,17 +13,22 @@ namespace FA {
 
 namespace Shared {
 
-ImageSprite::ImageSprite(std::shared_ptr<Graphic::SpriteIf> sprite, const Frame& frame)
-    : BasicCoolSprite<ImageSpriteIf>(sprite)
+ImageSprite::ImageSprite(const Frame& frame)
+    : BasicCoolSprite<ImageSpriteIf>()
+    , frame_(frame)
 {
-    bool isValid = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
+    isValid_ = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
 
-    if (isValid) {
-        sprite_->setTexture(*frame.texture_);
-        sprite_->setTextureRect(frame.rect_);
-    }
-    else {
+    if (!isValid_) {
         LOG_WARN("%s is invalid", DUMP(frame));
+    }
+}
+
+void ImageSprite::ApplyTo(Graphic::SpriteIf& sprite) const
+{
+    if (isValid_) {
+        sprite.setTexture(*frame_.texture_);
+        sprite.setTextureRect(frame_.rect_);
     }
 }
 

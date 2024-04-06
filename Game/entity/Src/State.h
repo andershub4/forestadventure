@@ -54,6 +54,7 @@ public:
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
     void RegisterIgnoreEvents(const std::vector<EventType>& eventTypes);
     void IgnoreAllEventsExcept(const std::unordered_set<EventType>& notIgnorableEventTypes);
+    Shape GetShape() const;
 
 private:
     StateType stateType_ = StateType::Uninitialized;

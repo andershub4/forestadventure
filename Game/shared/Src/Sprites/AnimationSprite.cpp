@@ -13,8 +13,8 @@ namespace FA {
 
 namespace Shared {
 
-AnimationSprite::AnimationSprite(std::shared_ptr<Graphic::SpriteIf> sprite, float switchTime)
-    : BasicCoolSprite<AnimationSpriteIf>(sprite)
+AnimationSprite::AnimationSprite(float switchTime)
+    : BasicCoolSprite<AnimationSpriteIf>()
     , switchTime_(switchTime)
     , time_(0.0)
 {}
@@ -30,10 +30,13 @@ void AnimationSprite::Update(float deltaTime)
             isCompleted_ = (iFrame_ == 0);
         }
     }
+}
 
-    if (isValid_) {
-        sprite_->setTexture(*frames_[iFrame_].texture_);
-        sprite_->setTextureRect(frames_[iFrame_].rect_);
+void AnimationSprite::ApplyTo(Graphic::SpriteIf& sprite) const
+{
+    if (nFrames_ >= 1) {
+        sprite.setTexture(*frames_[iFrame_].texture_);
+        sprite.setTextureRect(frames_[iFrame_].rect_);
     }
 }
 
@@ -56,7 +59,6 @@ void AnimationSprite::Stop()
 }
 
 bool AnimationSprite::IsCompleted() const
-
 {
     return isCompleted_;
 }
@@ -71,10 +73,6 @@ void AnimationSprite::AddFrame(const Frame& frame)
     isValid_ = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
 
     if (isValid_) {
-        if (frames_.empty()) {
-            sprite_->setTexture(*frame.texture_);
-            sprite_->setTextureRect(frame.rect_);
-        }
         frames_.push_back(frame);
         nFrames_ = frames_.size();
     }

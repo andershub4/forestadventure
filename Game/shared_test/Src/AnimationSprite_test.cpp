@@ -4,8 +4,6 @@
  *	See file LICENSE for full license details.
  */
 
-#include <memory>
-
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -23,12 +21,6 @@ namespace Shared {
 class AnimationSpriteTest : public testing::Test
 {
 protected:
-    AnimationSpriteTest()
-        : spriteMock_(std::make_shared<StrictMock<Graphic::SpriteMock>>())
-        , sprite_(spriteMock_, switchTime_)
-    {}
-
-protected:
     const float switchTime_ = 0.01f;
     const float deltaTimeToMakeAdvancement_ = switchTime_;
     const float deltaTimeToNotMakeAdvancement_ = switchTime_ / 2.0f;
@@ -41,119 +33,144 @@ protected:
     Frame frame_{&textureMock_, rect_};
     Frame frame2_{&textureMock2_, rect2_};
     Frame frame3_{&textureMock3_, rect3_};
-    std::shared_ptr<StrictMock<Graphic::SpriteMock>> spriteMock_;
+    StrictMock<Graphic::SpriteMock> spriteMock_;
     StrictMock<LoggerMock> loggerMock_;
-    AnimationSprite sprite_;
+    AnimationSprite sprite_{switchTime_};
 };
 
-TEST_F(AnimationSpriteTest, UpdateWithNoTextureShouldDoNothing)
+TEST_F(AnimationSpriteTest, ApplyToWithNoFrameShouldDoNothing)
 {
     EXPECT_CALL(loggerMock_, MakeWarnLogEntry("Can't start animation, no frames"));
     sprite_.Start();
     sprite_.Update(deltaTimeToMakeAdvancement_);
+    sprite_.ApplyTo(spriteMock_);
 }
 
-TEST_F(AnimationSpriteTest, UpdateWithInvalidFrameShouldDoNothing)
+TEST_F(AnimationSpriteTest, ApplyToWithInvalidFrameShouldDoNothing)
 {
     sf::IntRect rect{0, 0, 10, 0};
-    Frame frame{&textureMock_, rect};
+    Frame invalidFrame{&textureMock_, rect};
     EXPECT_CALL(loggerMock_, MakeWarnLogEntry(ContainsRegex(".*is invalid")));
-    sprite_.AddFrame(frame);
+    sprite_.AddFrame(invalidFrame);
 
     EXPECT_CALL(loggerMock_, MakeWarnLogEntry("Can't start animation, no frames"));
     sprite_.Start();
 
     sprite_.Update(deltaTimeToMakeAdvancement_);
+    sprite_.ApplyTo(spriteMock_);
 }
 
-TEST_F(AnimationSpriteTest, UpdateWithSingleTextureShouldSetSameTexture)
+TEST_F(AnimationSpriteTest, ApplyToWithoutUpdateWithSingleTextureShouldSetSameTexture)
 {
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-
     sprite_.AddFrame(frame_);
     sprite_.Start();
 
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
 
-    sprite_.Update(deltaTimeToMakeAdvancement_);
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
 }
 
-TEST_F(AnimationSpriteTest, UpdateWithMultipleTextureShouldAdvanceAndWrapAroundToDefaultIndex0)
+TEST_F(AnimationSpriteTest, ApplyToWithSingleTextureShouldSetSameTexture)
 {
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.AddFrame(frame_);
+    sprite_.Start();
+    sprite_.Update(deltaTimeToMakeAdvancement_);
 
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
+
+    sprite_.Update(deltaTimeToMakeAdvancement_);
+
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
+}
+
+TEST_F(AnimationSpriteTest, ApplyToWithoutUpdateWithMultipleTextureShouldNotAdvance)
+{
     sprite_.AddFrame(frame_);
     sprite_.AddFrame(frame2_);
     sprite_.Start();
 
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock2_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect2_)));
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
+
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
+}
+
+TEST_F(AnimationSpriteTest, ApplyToWithMultipleTextureShouldAdvanceAndWrapAroundToDefaultIndex0)
+{
+    sprite_.AddFrame(frame_);
+    sprite_.AddFrame(frame2_);
+    sprite_.Start();
 
     sprite_.Update(deltaTimeToMakeAdvancement_);
 
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock2_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect2_)));
+    sprite_.ApplyTo(spriteMock_);
 
     sprite_.Update(deltaTimeToMakeAdvancement_);
+
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
 }
 
 TEST_F(AnimationSpriteTest, StopShouldRestoreToDefaultIndex0AndNotAdvance)
 {
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-
     sprite_.AddFrame(frame_);
     sprite_.AddFrame(frame2_);
     sprite_.Start();
 
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock2_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect2_)));
-
     sprite_.Update(deltaTimeToMakeAdvancement_);
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock2_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect2_)));
+    sprite_.ApplyTo(spriteMock_);
 
     sprite_.Stop();
+    sprite_.Update(deltaTimeToMakeAdvancement_);
 
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
 
     sprite_.Update(deltaTimeToMakeAdvancement_);
 
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-
-    sprite_.Update(deltaTimeToMakeAdvancement_);
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
 }
 
-TEST_F(AnimationSpriteTest, UpdateWithMultipleTextureWhenAnimationNotStartedShouldNotAdvance)
+TEST_F(AnimationSpriteTest, ApplyToWithMultipleTextureWhenAnimationNotStartedShouldNotAdvance)
 {
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-
     sprite_.AddFrame(frame_);
     sprite_.AddFrame(frame2_);
-
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-
     sprite_.Update(deltaTimeToMakeAdvancement_);
+
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
 }
 
 TEST_F(AnimationSpriteTest, UpdateWithMultipleTextureWithDeltaTimeLesserThanSwitchTimeShouldNotAdvance)
 {
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-
     sprite_.AddFrame(frame_);
     sprite_.AddFrame(frame2_);
     sprite_.Start();
-
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-
     sprite_.Update(deltaTimeToNotMakeAdvancement_);
+
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
 }
 
 TEST_F(AnimationSpriteTest, AddFrameWithInvalidTextureShouldWarn)
@@ -185,25 +202,22 @@ TEST_F(AnimationSpriteTest, AddFrameWithInvalidHeightShouldWarn)
 
 TEST_F(AnimationSpriteTest, AddFrameShouldNotInsertNewFrameDuringAnimation)
 {
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-
     sprite_.AddFrame(frame_);
     sprite_.AddFrame(frame2_);
     sprite_.Start();
-
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock2_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect2_)));
-
     sprite_.Update(deltaTimeToMakeAdvancement_);
+
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock2_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect2_)));
+    sprite_.ApplyTo(spriteMock_);
 
     EXPECT_CALL(loggerMock_, MakeWarnLogEntry("Can't add frame during animation"));
     sprite_.AddFrame(frame3_);
-
-    EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
-    EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-
     sprite_.Update(deltaTimeToMakeAdvancement_);
+
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    sprite_.ApplyTo(spriteMock_);
 }
 
 }  // namespace Shared
