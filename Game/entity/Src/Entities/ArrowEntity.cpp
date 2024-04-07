@@ -12,6 +12,7 @@
 
 #include "Abilities/MoveAbility.h"
 #include "Constant/Entity.h"
+#include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
 #include "Events/StartMoveEvent.h"
 #include "PropertyConverter.h"
@@ -129,6 +130,12 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
     moveState->RegisterShapePart(part);
     moveState->RegisterEventCB(EventType::StopMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
+    moveState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
+        auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
+        if (service_.GetType(collisionEvent->id_) == EntityType::Mole) {
+            HandleEvent(std::make_shared<DeadEvent>());
+        }
+    });
 }
 
 }  // namespace Entity

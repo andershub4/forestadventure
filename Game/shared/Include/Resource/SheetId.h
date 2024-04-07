@@ -34,6 +34,7 @@ const std::string MoleIdleFront = "MoleIdleFront";
 const std::string MoleIdleBack = "MoleIdleBack";
 const std::string Arrow = "Arrow";
 const std::string Coin = "Coin";
+const std::string Death = "Death";
 
 }  // namespace SheetId
 

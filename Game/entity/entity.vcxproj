@@ -160,6 +160,7 @@
     <ClInclude Include="Src\Events\AttackEvent.h" />
     <ClInclude Include="Src\Events\AttackWeaponEvent.h" />
     <ClInclude Include="Src\Events\BasicEvent.h" />
+    <ClInclude Include="Src\Events\CollisionEvent.h" />
     <ClInclude Include="Src\Events\DeadEvent.h" />
     <ClInclude Include="Src\Events\DestroyEvent.h" />
     <ClInclude Include="Src\Events\InitEvent.h" />

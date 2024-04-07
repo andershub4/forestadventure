@@ -49,7 +49,7 @@ public:
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf& renderTarget) const;
     bool Intersect(const BasicEntity& otherEntity) const;
-    void HandleCollision(const BasicEntity& otherEntity) {}
+    void HandleCollision(const EntityId id);
     EntityId GetId() const { return id_; }
 
 protected:

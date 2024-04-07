@@ -40,6 +40,7 @@ class BasicEntity;
 class Factory;
 class EntityService;
 struct PropertyData;
+enum class EntityType;
 
 class EntityManager
 {
@@ -52,6 +53,7 @@ public:
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
     void DetectCollisions();
     void HandleCollisions();
+    EntityType GetType(EntityId id) const;
     void CreateEntity(const PropertyData &data, const Shared::MapData &mapData);
     void CreateEntity(const std::string &typeStr, const sf::Vector2f &pos,
                       std::unordered_map<std::string, std::string> properties, const Shared::MapData &mapData);

@@ -49,17 +49,17 @@ void State::Update(float deltaTime)
     shape_.Update(deltaTime);
 }
 
-void State::DrawTo(Graphic::RenderTargetIf &renderTarget) const
-{
-    shape_.DrawTo(renderTarget);
-}
-
 void State::HandleEvent(std::shared_ptr<BasicEvent> event)
 {
     if (!ignoreAllEvents_ || (notIgnorableEventTypes_.find(event->GetEventType()) != notIgnorableEventTypes_.end())) {
-        auto t = event->GetEventType();
-        auto handler = eventCBs_.at(t);
-        handler(event);
+        auto eventType = event->GetEventType();
+        if (eventCBs_.find(eventType) != eventCBs_.end()) {
+            auto handler = eventCBs_.at(eventType);
+            handler(event);
+        }
+        else {
+            LOG_WARN("%s has no handler for %s", DUMP(stateType_), DUMP(eventType));
+        }
     }
 }
 

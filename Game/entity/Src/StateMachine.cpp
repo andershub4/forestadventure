@@ -37,11 +37,6 @@ void StateMachine::Update(float deltaTime)
     currentState_->Update(deltaTime);
 }
 
-void StateMachine::DrawTo(Graphic::RenderTargetIf& renderTarget) const
-{
-    currentState_->DrawTo(renderTarget);
-}
-
 std::shared_ptr<State> StateMachine::RegisterState(StateType stateType, Body& body)
 {
     auto state = std::make_shared<State>(stateType, body);

@@ -8,6 +8,7 @@
 
 #include <sstream>
 
+#include "Events/CollisionEvent.h"
 #include "Events/DestroyEvent.h"
 #include "Events/InitEvent.h"
 #include "MapData.h"
@@ -79,6 +80,11 @@ void BasicEntity::DrawTo(Graphic::RenderTargetIf& renderTarget) const
 bool BasicEntity::Intersect(const BasicEntity& otherEntity) const
 {
     return stateMachine_.GetShape().Intersect(otherEntity.stateMachine_.GetShape());
+}
+
+void BasicEntity::HandleCollision(const EntityId id)
+{
+    HandleEvent(std::make_shared<CollisionEvent>(id));
 }
 
 void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)

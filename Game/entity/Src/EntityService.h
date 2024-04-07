@@ -44,6 +44,7 @@ namespace Entity {
 
 struct PropertyData;
 class EntityManager;
+enum class EntityType;
 
 class EntityService
 {
@@ -67,6 +68,7 @@ public:
     Shared::CameraView &GetCameraView() const;
     void CreateEntity(const PropertyData &data, const Shared::MapData &mapData);
     void DeleteEntity(EntityId id);
+    EntityType GetType(EntityId id) const;
 
 private:
     Shared::MessageBus &messageBus_;

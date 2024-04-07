@@ -10,6 +10,8 @@
 
 #include "Abilities/MoveAbility.h"
 #include "Constant/Entity.h"
+#include "Events/CollisionEvent.h"
+#include "Events/DeadEvent.h"
 #include "PropertyConverter.h"
 #include "PropertyData.h"
 #include "Resource/AnimationData.h"
@@ -34,6 +36,8 @@ const std::unordered_map<FaceDirection, Shared::AnimationData> moveData{
     {FaceDirection::Right, {Shared::SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false}},
     {FaceDirection::Down, {Shared::SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false}},
     {FaceDirection::Up, {Shared::SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false}}};
+
+const Shared::AnimationData collision{Shared::SheetId::Death, {{0, 0}, 6, 0}, false};
 
 FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 {
@@ -94,6 +98,8 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     DefineIdleState(idleState);
     auto moveState = RegisterState(StateType::Move);
     DefineMoveState(moveState);
+    auto collisionState = RegisterState(StateType::Collision);
+    DefineCollisionState(collisionState);
 }
 
 void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
@@ -102,7 +108,13 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
     state->RegisterShapePart(part);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
-    state->RegisterIgnoreEvents({EventType::StopMove, EventType::Collision});
+    state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
+        auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
+        if (service_.GetType(collisionEvent->id_) == EntityType::Arrow) {
+            ChangeStateTo(StateType::Collision, event);
+        }
+    });
+    state->RegisterIgnoreEvents({EventType::StopMove});
 }
 
 void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
@@ -115,6 +127,26 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
     state->RegisterShapePart(part);
     state->RegisterEventCB(EventType::StopMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
+    state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
+        auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
+        if (service_.GetType(collisionEvent->id_) == EntityType::Arrow) {
+            ChangeStateTo(StateType::Collision, event);
+        }
+    });
+}
+
+void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
+{
+    auto updateCB = [this](const Shared::AnimationSprite& animation) {
+        if (animation.IsCompleted()) {
+            HandleEvent(std::make_shared<DeadEvent>());
+        }
+    };
+    auto animation = service_.MakeAnimation(collision);
+    auto part = AnimationPart::Create(animation);
+    part->RegisterUpdateCB(updateCB);
+    state->RegisterShapePart(part);
+    state->RegisterIgnoreEvents({EventType::Collision});
 }
 
 std::shared_ptr<AnimationPartWith<FaceDirection>> MoleEntity::MakePart(

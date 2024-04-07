@@ -62,10 +62,15 @@ void EntityManager::HandleCollisions()
     for (const auto& pair : collisionPairs_) {
         auto& first = *entityMap_.at(pair.first);
         auto& second = *entityMap_.at(pair.second);
-        first.HandleCollision(second);
-        second.HandleCollision(first);
+        first.HandleCollision(pair.second);
+        second.HandleCollision(pair.first);
     }
     collisionPairs_.clear();
+}
+
+EntityType EntityManager::GetType(EntityId id) const
+{
+    return entityMap_.at(id)->Type();
 }
 
 void EntityManager::Update(float deltaTime)

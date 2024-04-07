@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Entity {
 
-enum class StateType { None, Uninitialized, Idle, Move, Attack, AttackWeapon, Dead };
+enum class StateType { None, Uninitialized, Idle, Move, Attack, AttackWeapon, Collision, Dead };
 
 inline std::ostream& operator<<(std::ostream& os, const StateType& e)
 {
@@ -32,6 +32,9 @@ inline std::ostream& operator<<(std::ostream& os, const StateType& e)
             break;
         case StateType::Move:
             str = "Move";
+            break;
+        case StateType::Collision:
+            str = "Collision";
             break;
         case StateType::Dead:
             str = "Dead";

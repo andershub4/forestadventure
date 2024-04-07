@@ -35,7 +35,8 @@ const std::vector<Shared::SheetData> textureSheets = {
     {Shared::SheetId::MoleIdleFront, "spritesheets/mole/idle/mole-idle-front.png", {1, 1}},
     {Shared::SheetId::MoleIdleBack, "spritesheets/mole/idle/mole-idle-back.png", {1, 1}},
     {Shared::SheetId::Arrow, "sprites/misc/arrow.png", {1, 1}},
-    {Shared::SheetId::Coin, "spritesheets/misc/coin.png", {4, 1}}};
+    {Shared::SheetId::Coin, "spritesheets/misc/coin.png", {4, 1}},
+    {Shared::SheetId::Death, "spritesheets/misc/enemy-death.png", {6, 1}}};
 
 }  // namespace World
 

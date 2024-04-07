@@ -10,6 +10,7 @@
 #include "CameraViews.h"
 #include "Constant/Entity.h"
 #include "EntityManager.h"
+#include "Enum/EntityType.h"
 #include "Message/MessageBus.h"
 #include "Resource/AnimationData.h"
 #include "Resource/ImageData.h"
@@ -96,6 +97,11 @@ void EntityService::CreateEntity(const PropertyData& data, const Shared::MapData
 void EntityService::DeleteEntity(EntityId id)
 {
     entityManager_.DeleteEntity(id);
+}
+
+EntityType EntityService::GetType(EntityId id) const
+{
+    return entityManager_.GetType(id);
 }
 
 }  // namespace Entity

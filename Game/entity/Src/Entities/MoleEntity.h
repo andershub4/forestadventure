@@ -44,6 +44,7 @@ private:
 
     void DefineIdleState(std::shared_ptr<State> state);
     void DefineMoveState(std::shared_ptr<State> state);
+    void DefineCollisionState(std::shared_ptr<State> state);
 };
 
 }  // namespace Entity
