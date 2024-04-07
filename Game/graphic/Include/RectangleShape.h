@@ -25,6 +25,8 @@ public:
     virtual void setPosition(const sf::Vector2f &position) override;
     virtual void setPosition(float x, float y) override;
     virtual void setFillColor(const sf::Color &color) override;
+    virtual void setOutlineColor(const sf::Color &color) override;
+    virtual void setOutlineThickness(float thickness) override;
 
 private:
     std::shared_ptr<sf::RectangleShape> rectangleShape_;

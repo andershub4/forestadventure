@@ -9,6 +9,8 @@
 #include <memory>
 #include <vector>
 
+#include "SFML/Graphics/Rect.hpp"
+
 #ifdef _DEBUG
 #include "RectangleShape.h"
 #endif
@@ -42,11 +44,13 @@ public:
 
 private:
     std::vector<std::shared_ptr<BasicShapePart>> parts_;
-#ifdef _DEBUG
-    Graphic::RectangleShape rShape_;
-#endif
     Body &body_;
     std::vector<std::shared_ptr<Graphic::SpriteIf>> sprites_;
+    std::vector<sf::FloatRect> hitBoxes_;
+#ifdef _DEBUG
+    Graphic::RectangleShape rShape_;
+    std::vector<std::shared_ptr<Graphic::RectangleShape>> hitSprites_;
+#endif  // _DEBUG
 };
 
 }  // namespace Entity

@@ -40,6 +40,16 @@ void RectangleShape::setFillColor(const sf::Color& color)
     rectangleShape_->setFillColor(color);
 }
 
+void RectangleShape::setOutlineColor(const sf::Color& color)
+{
+    rectangleShape_->setOutlineColor(color);
+}
+
+void RectangleShape::setOutlineThickness(float thickness)
+{
+    rectangleShape_->setOutlineThickness(thickness);
+}
+
 RectangleShape::operator const sf::Drawable&() const
 {
     return *rectangleShape_;

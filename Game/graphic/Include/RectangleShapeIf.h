@@ -20,6 +20,8 @@ public:
     virtual void setPosition(float x, float y) = 0;
     virtual void setPosition(const sf::Vector2f &position) = 0;
     virtual void setFillColor(const sf::Color &color) = 0;
+    virtual void setOutlineColor(const sf::Color &color) = 0;
+    virtual void setOutlineThickness(float thickness) = 0;
 };
 
 }  // namespace Graphic

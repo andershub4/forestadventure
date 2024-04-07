@@ -6,7 +6,7 @@
 
 #include "Shape.h"
 
-#include "SFML/Graphics/Rect.hpp"
+#include "SFML/Graphics/Color.hpp"
 
 #include "Body.h"
 #include "RenderTargetIf.h"
@@ -35,6 +35,11 @@ void Shape::Enter()
         part->ApplyTo(*sprite);
         sprite->setPosition(body_.position_);
         sprite->setRotation(body_.rotation_);
+        hitBoxes_.at(i) = sprite->getGlobalBounds();
+#ifdef _DEBUG
+        hitSprites_.at(i)->setPosition(hitBoxes_.at(i).left, hitBoxes_.at(i).top);
+        hitSprites_.at(i)->setSize({hitBoxes_.at(i).width, hitBoxes_.at(i).height});
+#endif  // _DEBUG
         i++;
     }
 #ifdef _DEBUG
@@ -51,23 +56,44 @@ void Shape::Update(float deltaTime)
         part->ApplyTo(*sprite);
         sprite->setPosition(body_.position_);
         sprite->setRotation(body_.rotation_);
+        hitBoxes_.at(i) = sprite->getGlobalBounds();
+#ifdef _DEBUG
+        hitSprites_.at(i)->setPosition(hitBoxes_.at(i).left, hitBoxes_.at(i).top);
+        hitSprites_.at(i)->setSize({hitBoxes_.at(i).width, hitBoxes_.at(i).height});
+#endif  // _DEBUG
         i++;
     }
 #ifdef _DEBUG
     rShape_.setPosition(body_.position_);
-#endif
+#endif  // _DEBUG
 }
 
 void Shape::RegisterPart(std::shared_ptr<BasicShapePart> part)
 {
     parts_.push_back(part);
     sprites_.push_back(std::make_shared<Graphic::Sprite>());
+    hitBoxes_.push_back(sf::FloatRect());
+#ifdef _DEBUG
+    auto hitSprite = std::make_shared<Graphic::RectangleShape>();
+    hitSprite->setFillColor(sf::Color::Transparent);
+    hitSprite->setOutlineColor(sf::Color::Red);
+    hitSprite->setOutlineThickness(1.0f);
+    hitSprites_.push_back(hitSprite);
+#endif  // _DEBUG
 }
 
 void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const
 {
+#ifdef _DEBUG
+    int i = 0;
+#endif  // _DEBUG
     for (auto &sprite : sprites_) {
         renderTarget.draw(*sprite);
+#ifdef _DEBUG
+        auto hitSprite = hitSprites_.at(i);
+        renderTarget.draw(*hitSprite);
+        i++;
+#endif  // _DEBUG
     }
 #ifdef _DEBUG
     renderTarget.draw(rShape_);
@@ -78,11 +104,9 @@ bool Shape::Intersect(const Shape &otherShape) const
 {
     bool intersect = false;
 
-    for (auto &thisSprite : sprites_) {
-        auto thisBB = thisSprite->getGlobalBounds();
-        for (auto &otherSprite : otherShape.sprites_) {
-            auto otherBB = otherSprite->getGlobalBounds();
-            intersect |= thisBB.intersects(otherBB);
+    for (auto &thisBox : hitBoxes_) {
+        for (auto &otherBox : otherShape.hitBoxes_) {
+            intersect |= thisBox.intersects(otherBox);
         }
     }
 
