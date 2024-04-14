@@ -58,6 +58,8 @@ public:
         }
     }
 
+    virtual bool IsDrawable() const override { return true; }
+
     virtual bool IsCollidable() const override { return isCollidable_; }
 
     void RegisterAnimation(const KeyT key, const Shared::AnimationSprite &animation)

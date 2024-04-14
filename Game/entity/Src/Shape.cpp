@@ -78,7 +78,9 @@ void Shape::RegisterPart(std::shared_ptr<BasicShapePart> part)
 void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const
 {
     for (auto &entry : entries_) {
-        renderTarget.draw(*entry.sprite_);
+        if (entry.part_->IsDrawable()) {
+            renderTarget.draw(*entry.sprite_);
+        }
 #ifdef _DEBUG
         if (entry.part_->IsCollidable()) {
             renderTarget.draw(*entry.hitSprite_);

@@ -48,6 +48,8 @@ public:
         }
     }
 
+    virtual bool IsDrawable() const override { return true; }
+
     virtual bool IsCollidable() const override { return isCollidable_; }
 
     void RegisterImage(const KeyT key, const Shared::ImageSprite &image)
