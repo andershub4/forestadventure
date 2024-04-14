@@ -86,7 +86,7 @@ class CameraViewAdjustmentTestP : public CameraViewTest, public WithParamInterfa
 {
 };
 
-INSTANTIATE_TEST_CASE_P(CameraViewTests, CameraViewAdjustmentTestP,
+INSTANTIATE_TEST_SUITE_P(CameraViewTests, CameraViewAdjustmentTestP,
                         Values(
                             /* ---------- Upper left corner ---------- */
                             PositionItem{{10.0f, 10.0f}, {10.0f, 10.0f}},  // view fit inside map -> no adjustment
@@ -127,7 +127,7 @@ class CameraViewZoomAdjustmentTestP : public CameraViewTest, public WithParamInt
 {
 };
 
-INSTANTIATE_TEST_CASE_P(CameraViewZoomTests, CameraViewZoomAdjustmentTestP,
+INSTANTIATE_TEST_SUITE_P(CameraViewZoomTests, CameraViewZoomAdjustmentTestP,
                         Values(std::make_tuple(1.0f, sf::Vector2f(10.0f, 10.0f)),
                                std::make_tuple(0.5f, sf::Vector2f(5.0f, 5.0f)),
                                std::make_tuple(2.0f, sf::Vector2f(20.0f, 20.0f))));
@@ -151,7 +151,7 @@ class CameraViewRangeTestP : public CameraViewTest, public WithParamInterface<st
 {
 };
 
-INSTANTIATE_TEST_CASE_P(CameraViewTests2, CameraViewRangeTestP, Combine(Range(0.0f, 4.0f), Range(0.0f, 4.0f)));
+INSTANTIATE_TEST_SUITE_P(CameraViewTests2, CameraViewRangeTestP, Combine(Range(0.0f, 4.0f), Range(0.0f, 4.0f)));
 
 TEST_P(CameraViewRangeTestP, GetPositionShouldAlwaysReturnCenterPointWhenViewAndMapSizesAreEqual)
 {
