@@ -28,19 +28,16 @@ Shape::~Shape() = default;
 
 void Shape::Enter()
 {
-    int i = 0;
-    for (auto part : parts_) {
-        part->Enter();
-        auto &sprite = sprites_.at(i);
-        part->ApplyTo(*sprite);
-        sprite->setPosition(body_.position_);
-        sprite->setRotation(body_.rotation_);
-        hitBoxes_.at(i) = sprite->getGlobalBounds();
+    for (auto &entry : entries_) {
+        entry.part_->Enter();
+        entry.part_->ApplyTo(*entry.sprite_);
+        entry.sprite_->setPosition(body_.position_);
+        entry.sprite_->setRotation(body_.rotation_);
+        entry.hitBox_ = entry.sprite_->getGlobalBounds();
 #ifdef _DEBUG
-        hitSprites_.at(i)->setPosition(hitBoxes_.at(i).left, hitBoxes_.at(i).top);
-        hitSprites_.at(i)->setSize({hitBoxes_.at(i).width, hitBoxes_.at(i).height});
+        entry.hitSprite_->setPosition(entry.hitBox_.left, entry.hitBox_.top);
+        entry.hitSprite_->setSize({entry.hitBox_.width, entry.hitBox_.height});
 #endif  // _DEBUG
-        i++;
     }
 #ifdef _DEBUG
     rShape_.setPosition(body_.position_);
@@ -49,19 +46,16 @@ void Shape::Enter()
 
 void Shape::Update(float deltaTime)
 {
-    int i = 0;
-    for (auto part : parts_) {
-        part->Update(deltaTime);
-        auto &sprite = sprites_.at(i);
-        part->ApplyTo(*sprite);
-        sprite->setPosition(body_.position_);
-        sprite->setRotation(body_.rotation_);
-        hitBoxes_.at(i) = sprite->getGlobalBounds();
+    for (auto &entry : entries_) {
+        entry.part_->Update(deltaTime);
+        entry.part_->ApplyTo(*entry.sprite_);
+        entry.sprite_->setPosition(body_.position_);
+        entry.sprite_->setRotation(body_.rotation_);
+        entry.hitBox_ = entry.sprite_->getGlobalBounds();
 #ifdef _DEBUG
-        hitSprites_.at(i)->setPosition(hitBoxes_.at(i).left, hitBoxes_.at(i).top);
-        hitSprites_.at(i)->setSize({hitBoxes_.at(i).width, hitBoxes_.at(i).height});
+        entry.hitSprite_->setPosition(entry.hitBox_.left, entry.hitBox_.top);
+        entry.hitSprite_->setSize({entry.hitBox_.width, entry.hitBox_.height});
 #endif  // _DEBUG
-        i++;
     }
 #ifdef _DEBUG
     rShape_.setPosition(body_.position_);
@@ -70,29 +64,23 @@ void Shape::Update(float deltaTime)
 
 void Shape::RegisterPart(std::shared_ptr<BasicShapePart> part)
 {
-    parts_.push_back(part);
-    sprites_.push_back(std::make_shared<Graphic::Sprite>());
-    hitBoxes_.push_back(sf::FloatRect());
 #ifdef _DEBUG
     auto hitSprite = std::make_shared<Graphic::RectangleShape>();
     hitSprite->setFillColor(sf::Color::Transparent);
     hitSprite->setOutlineColor(sf::Color::Red);
     hitSprite->setOutlineThickness(1.0f);
-    hitSprites_.push_back(hitSprite);
+    entries_.push_back({part, std::make_shared<Graphic::Sprite>(), sf::FloatRect{}, hitSprite});
+#else
+    entries_.push_back({part, std::make_shared<Graphic::Sprite>(), sf::FloatRect{}});
 #endif  // _DEBUG
 }
 
 void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const
 {
+    for (auto &entry : entries_) {
+        renderTarget.draw(*entry.sprite_);
 #ifdef _DEBUG
-    int i = 0;
-#endif  // _DEBUG
-    for (auto &sprite : sprites_) {
-        renderTarget.draw(*sprite);
-#ifdef _DEBUG
-        auto hitSprite = hitSprites_.at(i);
-        renderTarget.draw(*hitSprite);
-        i++;
+        renderTarget.draw(*entry.hitSprite_);
 #endif  // _DEBUG
     }
 #ifdef _DEBUG
@@ -104,9 +92,9 @@ bool Shape::Intersect(const Shape &otherShape) const
 {
     bool intersect = false;
 
-    for (auto &thisBox : hitBoxes_) {
-        for (auto &otherBox : otherShape.hitBoxes_) {
-            intersect |= thisBox.intersects(otherBox);
+    for (auto &entry : entries_) {
+        for (auto &otherEntry : otherShape.entries_) {
+            intersect |= entry.hitBox_.intersects(otherEntry.hitBox_);
         }
     }
 

@@ -43,13 +43,21 @@ public:
     bool Intersect(const Shape &shape) const;
 
 private:
-    std::vector<std::shared_ptr<BasicShapePart>> parts_;
+    struct Entry
+    {
+        std::shared_ptr<BasicShapePart> part_;
+        std::shared_ptr<Graphic::SpriteIf> sprite_{};
+        sf::FloatRect hitBox_{};
+#ifdef _DEBUG
+        std::shared_ptr<Graphic::RectangleShape> hitSprite_{};
+#endif  // _DEBUG
+    };
+
+private:
+    std::vector<Entry> entries_;
     Body &body_;
-    std::vector<std::shared_ptr<Graphic::SpriteIf>> sprites_;
-    std::vector<sf::FloatRect> hitBoxes_;
 #ifdef _DEBUG
     Graphic::RectangleShape rShape_;
-    std::vector<std::shared_ptr<Graphic::RectangleShape>> hitSprites_;
 #endif  // _DEBUG
 };
 
