@@ -23,9 +23,10 @@ template <class KeyT>
 class ImagePartWith : public BasicShapePart
 {
 public:
-    static std::shared_ptr<ImagePartWith<KeyT>> Create(const Shared::ImageSprite &image)
+    static std::shared_ptr<ImagePartWith<KeyT>> Create(const Shared::ImageSprite &image, bool center = true,
+                                                       bool isCollidable = true)
     {
-        return std::make_shared<CtorHelper>(image);
+        return std::make_shared<CtorHelper>(image, center, isCollidable);
     }
 
     virtual ~ImagePartWith() = default;
@@ -42,10 +43,12 @@ public:
     {
         currentImage_.ApplyTo(sprite);
 
-        if (true) {
+        if (center_) {
             sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
         }
     }
+
+    virtual bool IsCollidable() const override { return isCollidable_; }
 
     void RegisterImage(const KeyT key, const Shared::ImageSprite &image)
     {
@@ -58,11 +61,13 @@ public:
 
 private:
     /* Constructor for singel image */
-    ImagePartWith(const Shared::ImageSprite &image)
+    ImagePartWith(const Shared::ImageSprite &image, bool center = true, bool isCollidable = true)
         : lookupKey_(defaultKey_)
         , defaultImage_(image)
         , currentImage_(defaultImage_)
         , updateCB_([](const Shared::ImageSprite &) {})
+        , center_(center)
+        , isCollidable_(isCollidable)
     {
         RegisterImage(defaultKey_, image);
     }
@@ -70,8 +75,8 @@ private:
 private:
     struct CtorHelper : public ImagePartWith<KeyT>
     {
-        CtorHelper(const Shared::ImageSprite &image)
-            : ImagePartWith<KeyT>(image)
+        CtorHelper(const Shared::ImageSprite &image, bool center = true, bool isCollidable = true)
+            : ImagePartWith<KeyT>(image, center, isCollidable)
         {}
     };
 
@@ -81,6 +86,8 @@ private:
     std::unordered_map<KeyT, Shared::ImageSprite> map_;
     Shared::ImageSprite currentImage_;
     std::function<void(const Shared::ImageSprite &)> updateCB_;
+    bool center_{};
+    bool isCollidable_{false};
 
 private:
     Shared::ImageSprite GetImage(const KeyT &key)

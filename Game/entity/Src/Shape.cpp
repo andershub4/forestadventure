@@ -80,7 +80,9 @@ void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const
     for (auto &entry : entries_) {
         renderTarget.draw(*entry.sprite_);
 #ifdef _DEBUG
-        renderTarget.draw(*entry.hitSprite_);
+        if (entry.part_->IsCollidable()) {
+            renderTarget.draw(*entry.hitSprite_);
+        }
 #endif  // _DEBUG
     }
 #ifdef _DEBUG
@@ -93,7 +95,9 @@ bool Shape::Intersect(const Shape &otherShape) const
     bool intersect = false;
 
     for (auto &entry : entries_) {
+        if (!entry.part_->IsCollidable()) break;
         for (auto &otherEntry : otherShape.entries_) {
+            if (!otherEntry.part_->IsCollidable()) break;
             intersect |= entry.hitBox_.intersects(otherEntry.hitBox_);
         }
     }

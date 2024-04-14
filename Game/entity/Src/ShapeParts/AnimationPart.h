@@ -23,14 +23,16 @@ template <class KeyT>
 class AnimationPartWith : public BasicShapePart
 {
 public:
-    static std::shared_ptr<AnimationPartWith<KeyT>> Create(const Shared::AnimationSprite &animation, bool center = true)
+    static std::shared_ptr<AnimationPartWith<KeyT>> Create(const Shared::AnimationSprite &animation, bool center = true,
+                                                           bool isCollidable = true)
     {
-        return std::make_shared<CtorHelper>(animation, center);
+        return std::make_shared<CtorHelper>(animation, center, isCollidable);
     }
 
-    static std::shared_ptr<AnimationPartWith<KeyT>> Create(KeyT &lookupKey, bool center = true)
+    static std::shared_ptr<AnimationPartWith<KeyT>> Create(KeyT &lookupKey, bool center = true,
+                                                           bool isCollidable = true)
     {
-        return std::make_shared<CtorHelper>(lookupKey, center);
+        return std::make_shared<CtorHelper>(lookupKey, center, isCollidable);
     }
 
     virtual ~AnimationPartWith() = default;
@@ -56,6 +58,8 @@ public:
         }
     }
 
+    virtual bool IsCollidable() const override { return isCollidable_; }
+
     void RegisterAnimation(const KeyT key, const Shared::AnimationSprite &animation)
     {
         auto res = map_.emplace(key, animation);
@@ -67,21 +71,23 @@ public:
 
 private:
     /* Constructor for multiple animation, depending on KeyT */
-    AnimationPartWith(KeyT &lookupKey, bool center = true)
+    AnimationPartWith(KeyT &lookupKey, bool center = true, bool isCollidable = true)
         : lookupKey_(lookupKey)
         , defaultAnimation_(1.0f)
         , currentAnimation_(defaultAnimation_)
         , updateCB_([](const Shared::AnimationSprite &) {})
         , center_(center)
+        , isCollidable_(isCollidable)
     {}
 
     /* Constructor for singel animation */
-    AnimationPartWith(const Shared::AnimationSprite &animation, bool center = true)
+    AnimationPartWith(const Shared::AnimationSprite &animation, bool center = true, bool isCollidable = true)
         : lookupKey_(defaultKey_)
         , defaultAnimation_(animation)
         , currentAnimation_(defaultAnimation_)
         , updateCB_([](const Shared::AnimationSprite &) {})
         , center_(center)
+        , isCollidable_(isCollidable)
     {
         RegisterAnimation(defaultKey_, animation);
     }
@@ -89,12 +95,12 @@ private:
 private:
     struct CtorHelper : public AnimationPartWith<KeyT>
     {
-        CtorHelper(KeyT &lookupKey, bool center = true)
-            : AnimationPartWith<KeyT>(lookupKey, center)
+        CtorHelper(KeyT &lookupKey, bool center = true, bool isCollidable = true)
+            : AnimationPartWith<KeyT>(lookupKey, center, isCollidable)
         {}
 
-        CtorHelper(const Shared::AnimationSprite &animation, bool center = true)
-            : AnimationPartWith<KeyT>(animation, center)
+        CtorHelper(const Shared::AnimationSprite &animation, bool center = true, bool isCollidable = true)
+            : AnimationPartWith<KeyT>(animation, center, isCollidable)
         {}
     };
 
@@ -105,6 +111,7 @@ private:
     Shared::AnimationSprite currentAnimation_;
     std::function<void(const Shared::AnimationSprite &)> updateCB_;
     bool center_{};
+    bool isCollidable_{false};
 
 private:
     Shared::AnimationSprite GetAnimation(const KeyT &key)
