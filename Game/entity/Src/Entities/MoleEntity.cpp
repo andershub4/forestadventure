@@ -29,7 +29,7 @@ const std::unordered_map<FaceDirection, Shared::AnimationData> idleData{
     {FaceDirection::Left, {Shared::SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true}},
     {FaceDirection::Right, {Shared::SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false}},
     {FaceDirection::Down, {Shared::SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}},
-    {FaceDirection::Up, {Shared::SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}}};
+    {FaceDirection::Up, {Shared::SheetId::MoleIdleBack, {{0, 0}, 1, 0}, false}}};
 
 const std::unordered_map<FaceDirection, Shared::AnimationData> moveData{
     {FaceDirection::Left, {Shared::SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true}},
