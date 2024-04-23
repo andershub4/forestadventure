@@ -12,7 +12,7 @@
 
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
-#include "Resource/AnimationData.h"
+#include "Resource/ImageData.h"
 #include "ShapeParts/AnimationPart.h"
 
 namespace FA {
@@ -40,7 +40,7 @@ private:
     void OnUpdateMove(const sf::Vector2f& delta);
 
     std::shared_ptr<AnimationPartWith<FaceDirection>> MakePart(
-        const std::unordered_map<FaceDirection, Shared::AnimationData>& data);
+        const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& data);
 
     void DefineIdleState(std::shared_ptr<State> state);
     void DefineMoveState(std::shared_ptr<State> state);

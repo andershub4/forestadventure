@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <vector>
-
 #include <SFML/System/Vector2.hpp>
 
 #include "ResourceId.h"
@@ -24,7 +22,6 @@ public:
     SpriteSheet() = default;
     SpriteSheet(ResourceId textureId, const sf::Vector2u& textureSize, const sf::Vector2u& rectCount);
 
-    virtual std::vector<TextureRect> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const override;
     virtual TextureRect At(const sf::Vector2u& uvCoord) const override;
 
 private:
@@ -33,9 +30,6 @@ private:
     sf::Vector2u rectCount_;
     bool isValid_ = false;
     sf::Vector2u rectSize_;
-
-private:
-    std::vector<TextureRect> GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const;
 };
 
 }  // namespace Shared

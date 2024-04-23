@@ -48,9 +48,6 @@
     <ClInclude Include="Include\Sprites\AnimationSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Resource\AnimationData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Resource\Frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>

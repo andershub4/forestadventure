@@ -16,7 +16,6 @@ namespace FA {
 
 namespace Shared {
 
-struct AnimationData;
 struct ImageData;
 struct TextureRect;
 
@@ -24,7 +23,6 @@ class SheetManager
 {
 public:
     void AddSheet(const std::string &name, std::unique_ptr<SpriteSheetIf> sheet);
-    std::vector<TextureRect> MakeRects(const AnimationData &data) const;
     TextureRect MakeRect(const ImageData &data) const;
 
 private:
@@ -32,7 +30,7 @@ private:
 
 private:
     SpriteSheetIf *GetSheet(const std::string &sheetId) const;
-    std::vector<TextureRect> MirrorX(const std::vector<TextureRect> &rects) const;
+    TextureRect MirrorX(const TextureRect &rect) const;
 };
 
 }  // namespace Shared

@@ -25,7 +25,6 @@
 #include "Message/MessageType.h"
 #include "PropertyConverter.h"
 #include "PropertyData.h"
-#include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
 #include "ShapeParts/AnimationPart.h"
 #include "State.h"
@@ -40,30 +39,56 @@ const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirect
                                                                      {FaceDirection::Left, {-15.0, 5.0}},
                                                                      {FaceDirection::Right, {15.0, 5.0}},
                                                                      {FaceDirection::Up, {0.0, -15.0}}};
+using namespace Shared::SheetId;
 
-const std::unordered_map<FaceDirection, Shared::AnimationData> idleData{
-    {FaceDirection::Left, {Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, true}},
-    {FaceDirection::Right, {Shared::SheetId::HeroIdleSide, {{0, 0}, 1, 0}, false}},
-    {FaceDirection::Down, {Shared::SheetId::HeroIdleFront, {{0, 0}, 1, 0}, false}},
-    {FaceDirection::Up, {Shared::SheetId::HeroIdleBack, {{0, 0}, 1, 0}, false}}};
+const std::vector<Shared::ImageData> idleLeft{{HeroIdleSide, {0, 0}, true}};
+const std::vector<Shared::ImageData> idleRight{{HeroIdleSide, {0, 0}}};
+const std::vector<Shared::ImageData> idleFront{{HeroIdleFront, {0, 0}}};
+const std::vector<Shared::ImageData> idleBack{{HeroIdleBack, {0, 0}}};
+const std::vector<Shared::ImageData> moveLeft{{HeroWalkSide, {0, 0}, true}, {HeroWalkSide, {1, 0}, true},
+                                              {HeroWalkSide, {2, 0}, true}, {HeroWalkSide, {3, 0}, true},
+                                              {HeroWalkSide, {4, 0}, true}, {HeroWalkSide, {5, 0}, true}};
+const std::vector<Shared::ImageData> moveRight{{HeroWalkSide, {0, 0}}, {HeroWalkSide, {1, 0}}, {HeroWalkSide, {2, 0}},
+                                               {HeroWalkSide, {3, 0}}, {HeroWalkSide, {4, 0}}, {HeroWalkSide, {5, 0}}};
+const std::vector<Shared::ImageData> moveDown{{HeroWalkFront, {0, 0}}, {HeroWalkFront, {1, 0}},
+                                              {HeroWalkFront, {2, 0}}, {HeroWalkFront, {3, 0}},
+                                              {HeroWalkFront, {4, 0}}, {HeroWalkFront, {5, 0}}};
+const std::vector<Shared::ImageData> moveUp{{HeroWalkBack, {0, 0}}, {HeroWalkBack, {1, 0}}, {HeroWalkBack, {2, 0}},
+                                            {HeroWalkBack, {3, 0}}, {HeroWalkBack, {4, 0}}, {HeroWalkBack, {5, 0}}};
+const std::vector<Shared::ImageData> attackLeft{
+    {HeroAttackSide, {0, 0}, true}, {HeroAttackSide, {1, 0}, true}, {HeroAttackSide, {2, 0}, true}};
+const std::vector<Shared::ImageData> attackRight{
+    {HeroAttackSide, {0, 0}}, {HeroAttackSide, {1, 0}}, {HeroAttackSide, {2, 0}}};
+const std::vector<Shared::ImageData> attackDown{
+    {HeroAttackFront, {0, 0}}, {HeroAttackFront, {1, 0}}, {HeroAttackFront, {2, 0}}};
+const std::vector<Shared::ImageData> attackUp{
+    {HeroAttackBack, {0, 0}}, {HeroAttackBack, {1, 0}}, {HeroAttackBack, {2, 0}}};
+const std::vector<Shared::ImageData> attackWLeft{
+    {HeroAttackWeaponSide, {0, 0}, true}, {HeroAttackWeaponSide, {1, 0}, true}, {HeroAttackWeaponSide, {2, 0}, true}};
+const std::vector<Shared::ImageData> attackWRight{
+    {HeroAttackWeaponSide, {0, 0}}, {HeroAttackWeaponSide, {1, 0}}, {HeroAttackWeaponSide, {2, 0}}};
+const std::vector<Shared::ImageData> attackWDown{
+    {HeroAttackWeaponFront, {0, 0}}, {HeroAttackWeaponFront, {1, 0}}, {HeroAttackWeaponFront, {2, 0}}};
+const std::vector<Shared::ImageData> attackWUp{
+    {HeroAttackWeaponBack, {0, 0}}, {HeroAttackWeaponBack, {1, 0}}, {HeroAttackWeaponBack, {2, 0}}};
 
-const std::unordered_map<FaceDirection, Shared::AnimationData> moveData{
-    {FaceDirection::Left, {Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, true}},
-    {FaceDirection::Right, {Shared::SheetId::HeroWalkSide, {{0, 0}, 6, 0}, false}},
-    {FaceDirection::Down, {Shared::SheetId::HeroWalkFront, {{0, 0}, 6, 0}, false}},
-    {FaceDirection::Up, {Shared::SheetId::HeroWalkBack, {{0, 0}, 6, 0}, false}}};
-
-const std::unordered_map<FaceDirection, Shared::AnimationData> attackData{
-    {FaceDirection::Left, {Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, true}},
-    {FaceDirection::Right, {Shared::SheetId::HeroAttackSide, {{0, 0}, 3, 0}, false}},
-    {FaceDirection::Down, {Shared::SheetId::HeroAttackFront, {{0, 0}, 3, 0}, false}},
-    {FaceDirection::Up, {Shared::SheetId::HeroAttackBack, {{0, 0}, 3, 0}, false}}};
-
-const std::unordered_map<FaceDirection, Shared::AnimationData> attackWData{
-    {FaceDirection::Left, {Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, true}},
-    {FaceDirection::Right, {Shared::SheetId::HeroAttackWeaponSide, {{0, 0}, 3, 0}, false}},
-    {FaceDirection::Down, {Shared::SheetId::HeroAttackWeaponFront, {{0, 0}, 3, 0}, false}},
-    {FaceDirection::Up, {Shared::SheetId::HeroAttackWeaponBack, {{0, 0}, 3, 0}, false}}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> idleData{{FaceDirection::Left, idleLeft},
+                                                                                 {FaceDirection::Right, idleRight},
+                                                                                 {FaceDirection::Down, idleFront},
+                                                                                 {FaceDirection::Up, idleBack}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> moveData{{FaceDirection::Left, moveLeft},
+                                                                                 {FaceDirection::Right, moveRight},
+                                                                                 {FaceDirection::Down, moveDown},
+                                                                                 {FaceDirection::Up, moveUp}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackData{{FaceDirection::Left, attackLeft},
+                                                                                   {FaceDirection::Right, attackRight},
+                                                                                   {FaceDirection::Down, attackDown},
+                                                                                   {FaceDirection::Up, attackUp}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackWData{
+    {FaceDirection::Left, attackWLeft},
+    {FaceDirection::Right, attackWRight},
+    {FaceDirection::Down, attackWDown},
+    {FaceDirection::Up, attackWUp}};
 
 FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 {
@@ -261,7 +286,7 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
 }
 
 std::shared_ptr<AnimationPartWith<FaceDirection>> PlayerEntity::MakePart(
-    const std::unordered_map<FaceDirection, Shared::AnimationData>& data)
+    const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& data)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);

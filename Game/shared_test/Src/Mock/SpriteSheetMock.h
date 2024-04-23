@@ -17,7 +17,6 @@ namespace Shared {
 class SpriteSheetMock : public SpriteSheetIf
 {
 public:
-    MOCK_METHOD(std::vector<TextureRect>, Scan, (const sf::Vector2u& uvCoord, unsigned int nRects), (const override));
     MOCK_METHOD(TextureRect, At, (const sf::Vector2u& uvCoord), (const override));
 };
 
@@ -27,11 +26,6 @@ public:
     SpriteSheetMockProxy(SpriteSheetMock& mock)
         : mock_(mock)
     {}
-
-    std::vector<TextureRect> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const override
-    {
-        return mock_.Scan(uvCoord, nRects);
-    }
 
     TextureRect At(const sf::Vector2u& uvCoord) const override { return mock_.At(uvCoord); }
 

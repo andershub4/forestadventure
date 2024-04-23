@@ -14,7 +14,6 @@
 #include "Events/DeadEvent.h"
 #include "PropertyConverter.h"
 #include "PropertyData.h"
-#include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
 #include "ShapeParts/AnimationPart.h"
 #include "State.h"
@@ -25,19 +24,34 @@ namespace Entity {
 
 namespace {
 
-const std::unordered_map<FaceDirection, Shared::AnimationData> idleData{
-    {FaceDirection::Left, {Shared::SheetId::MoleIdleSide, {{0, 0}, 1, 0}, true}},
-    {FaceDirection::Right, {Shared::SheetId::MoleIdleSide, {{0, 0}, 1, 0}, false}},
-    {FaceDirection::Down, {Shared::SheetId::MoleIdleFront, {{0, 0}, 1, 0}, false}},
-    {FaceDirection::Up, {Shared::SheetId::MoleIdleBack, {{0, 0}, 1, 0}, false}}};
+using namespace Shared::SheetId;
 
-const std::unordered_map<FaceDirection, Shared::AnimationData> moveData{
-    {FaceDirection::Left, {Shared::SheetId::MoleWalkSide, {{0, 0}, 4, 0}, true}},
-    {FaceDirection::Right, {Shared::SheetId::MoleWalkSide, {{0, 0}, 4, 0}, false}},
-    {FaceDirection::Down, {Shared::SheetId::MoleWalkFront, {{0, 0}, 4, 0}, false}},
-    {FaceDirection::Up, {Shared::SheetId::MoleWalkBack, {{0, 0}, 4, 0}, false}}};
+const std::vector<Shared::ImageData> idleLeft{{MoleIdleSide, {0, 0}, true}};
+const std::vector<Shared::ImageData> idleRight{{MoleIdleSide, {0, 0}}};
+const std::vector<Shared::ImageData> idleFront{{MoleIdleFront, {0, 0}}};
+const std::vector<Shared::ImageData> idleBack{{MoleIdleBack, {0, 0}}};
+const std::vector<Shared::ImageData> moveLeft{{MoleWalkSide, {0, 0}, true},
+                                              {MoleWalkSide, {1, 0}, true},
+                                              {MoleWalkSide, {2, 0}, true},
+                                              {MoleWalkSide, {3, 0}, true}};
+const std::vector<Shared::ImageData> moveRight{
+    {MoleWalkSide, {0, 0}}, {MoleWalkSide, {1, 0}}, {MoleWalkSide, {2, 0}}, {MoleWalkSide, {3, 0}}};
+const std::vector<Shared::ImageData> moveDown{
+    {MoleWalkFront, {0, 0}}, {MoleWalkFront, {1, 0}}, {MoleWalkFront, {2, 0}}, {MoleWalkFront, {3, 0}}};
+const std::vector<Shared::ImageData> moveUp{
+    {MoleWalkBack, {0, 0}}, {MoleWalkBack, {1, 0}}, {MoleWalkBack, {2, 0}}, {MoleWalkBack, {3, 0}}};
 
-const Shared::AnimationData collision{Shared::SheetId::Death, {{0, 0}, 6, 0}, false};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> idleData{{FaceDirection::Left, idleLeft},
+                                                                                 {FaceDirection::Right, idleRight},
+                                                                                 {FaceDirection::Down, idleFront},
+                                                                                 {FaceDirection::Up, idleBack}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> moveData{{FaceDirection::Left, moveLeft},
+                                                                                 {FaceDirection::Right, moveRight},
+                                                                                 {FaceDirection::Down, moveDown},
+                                                                                 {FaceDirection::Up, moveUp}};
+
+const std::vector<Shared::ImageData> collision{{Death, {0, 0}}, {Death, {1, 0}}, {Death, {2, 0}},
+                                               {Death, {3, 0}}, {Death, {4, 0}}, {Death, {5, 0}}};
 
 FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 {
@@ -150,7 +164,7 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
 }
 
 std::shared_ptr<AnimationPartWith<FaceDirection>> MoleEntity::MakePart(
-    const std::unordered_map<FaceDirection, Shared::AnimationData>& data)
+    const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& data)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);

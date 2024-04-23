@@ -21,7 +21,6 @@ class SpriteSheetIf
 {
 public:
     virtual ~SpriteSheetIf() = default;
-    virtual std::vector<TextureRect> Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const = 0;
     virtual TextureRect At(const sf::Vector2u& uvCoord) const = 0;
 };
 

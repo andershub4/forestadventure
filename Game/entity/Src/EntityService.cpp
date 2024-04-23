@@ -12,7 +12,6 @@
 #include "EntityManager.h"
 #include "Enum/EntityType.h"
 #include "Message/MessageBus.h"
-#include "Resource/AnimationData.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
@@ -36,13 +35,13 @@ EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::Textu
 
 EntityService::~EntityService() = default;
 
-Shared::AnimationSprite EntityService::MakeAnimation(const Shared::AnimationData& data) const
+Shared::AnimationSprite EntityService::MakeAnimation(const std::vector<Shared::ImageData>& data) const
 {
     float t = Constant::stdSwitchTime;
     Shared::AnimationSprite animation(t);
-    auto rects = sheetManager_.MakeRects(data);
 
-    for (const auto& rect : rects) {
+    for (const auto& item : data) {
+        auto rect = sheetManager_.MakeRect(item);
         const auto* texture = textureManager_.Get(rect.id_);
         animation.AddFrame({texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
     }

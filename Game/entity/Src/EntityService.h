@@ -30,7 +30,6 @@ class CameraView;
 class AnimationSprite;
 class ImageSprite;
 class SheetManager;
-struct AnimationData;
 struct ImageData;
 class MessageBus;
 class Message;
@@ -53,8 +52,7 @@ public:
                   const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews,
                   EntityManager &entityManager);
     ~EntityService();
-
-    Shared::AnimationSprite MakeAnimation(const Shared::AnimationData &data) const;
+    Shared::AnimationSprite MakeAnimation(const std::vector<Shared::ImageData> &data) const;
     Shared::ImageSprite MakeImage(const Shared::ImageData &data) const;
 
     Shared::TextureRect MakeRect(const Shared::ImageData &data) const;

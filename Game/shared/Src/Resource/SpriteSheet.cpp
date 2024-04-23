@@ -29,11 +29,6 @@ SpriteSheet::SpriteSheet(ResourceId textureId, const sf::Vector2u& textureSize, 
     }
 }
 
-std::vector<TextureRect> SpriteSheet::Scan(const sf::Vector2u& uvCoord, unsigned int nRects) const
-{
-    return GenerateFrames(uvCoord, nRects);
-}
-
 TextureRect SpriteSheet::At(const sf::Vector2u& uvCoord) const
 {
     if (isValid_) {
@@ -53,30 +48,6 @@ TextureRect SpriteSheet::At(const sf::Vector2u& uvCoord) const
 
     LOG_ERROR("Invalid sheet %s %s", DUMP(textureSize_), DUMP(rectCount_));
     return {};
-}
-
-std::vector<TextureRect> SpriteSheet::GenerateFrames(const sf::Vector2u& uvCoord, unsigned int nRects) const
-{
-    std::vector<TextureRect> rects;
-    auto startRect = At(uvCoord);
-
-    if (startRect.isValid_) {
-        unsigned int n = nRects;
-        unsigned int maxRange = rectCount_.x - uvCoord.x;
-        if (nRects > maxRange) {
-            n = maxRange;
-            LOG_ERROR("Scan is outside sheet boundary %s with %s and %s", DUMP(rectCount_), DUMP(uvCoord),
-                      DUMP(nRects));
-        }
-        // build frames from left to right
-        for (unsigned int i = 0; i < n; i++) {
-            auto rect = startRect;
-            rect.position_.x += i * rect.size_.x;
-            rects.push_back(rect);
-        }
-    }
-
-    return rects;
 }
 
 }  // namespace Shared

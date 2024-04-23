@@ -7,7 +7,6 @@
 #include "CoinEntity.h"
 
 #include "PropertyData.h"
-#include "Resource/AnimationData.h"
 #include "Resource/SheetId.h"
 #include "ShapeParts/AnimationPart.h"
 #include "State.h"
@@ -18,7 +17,9 @@ namespace Entity {
 
 namespace {
 
-const Shared::AnimationData idle{Shared::SheetId::Coin, {{0, 0}, 4, 0}, false};
+using namespace Shared::SheetId;
+
+const std::vector<Shared::ImageData> idle{{Coin, {0, 0}}, {Coin, {1, 0}}, {Coin, {2, 0}}, {Coin, {3, 0}}};
 
 }  // namespace
 

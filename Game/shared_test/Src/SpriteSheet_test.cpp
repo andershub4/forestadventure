@@ -44,25 +44,6 @@ TEST_F(SpriteSheetTest, AtOutsideSheetShouldReturnInvalidRect)
     EXPECT_THAT(rect, expected);
 }
 
-TEST_F(SpriteSheetTest, ScanThreeRectsShouldReturnThreeRects)
-{
-    SpriteSheet s(111, {100, 100}, {10, 10});
-    auto rects = s.Scan({0, 0}, 3);
-    ASSERT_THAT(rects, SizeIs(3));
-    TextureRect expected1(111, {0, 0}, {10, 10});
-    TextureRect expected2(111, {10, 0}, {10, 10});
-    TextureRect expected3(111, {20, 0}, {10, 10});
-    EXPECT_THAT(rects, ElementsAre(expected1, expected2, expected3));
-}
-
-TEST_F(SpriteSheetTest, ScanOneRectOutsideSheetShouldReturnZeroRects)
-{
-    SpriteSheet s(111, {100, 100}, {10, 10});
-    EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex("uvCoord.*11.*11.*is outside.*rectCount.*10.*10")));
-    auto rects = s.Scan({11, 11}, 1);
-    EXPECT_THAT(rects, SizeIs(0));
-}
-
 TEST_F(SpriteSheetTest, AtInsideEmptySheetShouldReturnInvalidRect)
 {
     SpriteSheet s;
@@ -92,23 +73,6 @@ TEST_F(SpriteSheetTest, AtInsideInvalidSheetShouldReturnInvalidRect2)
     TextureRect expected{};
     EXPECT_FALSE(rect.isValid_);
     EXPECT_THAT(rect, Eq(expected));
-}
-
-TEST_F(SpriteSheetTest, ScanEntireSheetShouldReturnMaxAvailableRects)
-{
-    SpriteSheet s(111, {100, 100}, {10, 10});
-    auto rects = s.Scan({0, 0}, 10);
-    EXPECT_THAT(rects, SizeIs(10));
-}
-
-TEST_F(SpriteSheetTest, ScanOutsideEntireSheetShouldReturnMaxAvailableRects)
-{
-    SpriteSheet s(111, {100, 100}, {10, 10});
-
-    EXPECT_CALL(loggerMock_,
-                MakeErrorLogEntry(ContainsRegex("Scan is outside.*rectCount.*10.*10.*uvCoord.*0.*0.*nRects.*11")));
-    auto rects = s.Scan({0, 0}, 11);
-    EXPECT_THAT(rects, SizeIs(10));
 }
 
 }  // namespace Shared

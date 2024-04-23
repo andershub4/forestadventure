@@ -34,7 +34,6 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc" />
-    <ClCompile Include="Src\AnimationData_test.cpp" />
     <ClCompile Include="Src\AnimationSprite_test.cpp" />
     <ClCompile Include="Src\BasicCoolSprite_test.cpp" />
     <ClCompile Include="Src\CameraView_test.cpp" />
