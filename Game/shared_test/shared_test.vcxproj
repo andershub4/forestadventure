@@ -37,6 +37,7 @@
     <ClCompile Include="Src\AnimationSprite_test.cpp" />
     <ClCompile Include="Src\BasicCoolSprite_test.cpp" />
     <ClCompile Include="Src\CameraView_test.cpp" />
+    <ClCompile Include="Src\ColliderData_test.cpp" />
     <ClCompile Include="Src\Frame_test.cpp" />
     <ClCompile Include="Src\ImageData_test.cpp" />
     <ClCompile Include="Src\ImageSprite_test.cpp" />

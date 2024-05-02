@@ -144,6 +144,7 @@
     <ClInclude Include="Include\CameraView.h" />
     <ClInclude Include="Include\CameraViewIf.h" />
     <ClInclude Include="Include\CameraViews.h" />
+    <ClInclude Include="Include\Resource\ColliderData.h" />
     <ClInclude Include="Include\Sprites\BasicCoolSprite.h" />
     <ClInclude Include="Include\Resource\ResourceId.h" />
     <ClInclude Include="Include\Resource\SpriteSheetIf.h" />
