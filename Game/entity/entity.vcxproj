@@ -179,7 +179,6 @@
     <ClInclude Include="Src\ShapeParts\AnimationPart.h" />
     <ClInclude Include="Src\ShapeParts\BasicPart.h" />
     <ClInclude Include="Src\ShapeParts\BasicShapePart.h" />
-    <ClInclude Include="Src\ShapeParts\ImagePart.h" />
     <ClInclude Include="Src\ShapeParts\NoShapePart.h" />
     <ClInclude Include="Src\State.h" />
     <ClInclude Include="Src\StateMachine.h" />

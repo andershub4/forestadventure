@@ -87,9 +87,6 @@
     <ClInclude Include="Src\ShapeParts\BasicPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ShapeParts\ImagePart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Body.h">
       <Filter>Header Files</Filter>
     </ClInclude>

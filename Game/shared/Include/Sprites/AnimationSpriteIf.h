@@ -6,17 +6,23 @@
 
 #pragma once
 
-#include "CoolSpriteIf.h"
-
 namespace FA {
+
+namespace Graphic {
+
+class SpriteIf;
+
+}  // namespace Graphic
 
 namespace Shared {
 
 struct Frame;
 
-class AnimationSpriteIf : public CoolSpriteIf
+class AnimationSpriteIf
 {
 public:
+    virtual void Update(float deltaTime) = 0;
+    virtual void ApplyTo(Graphic::SpriteIf &sprite) const = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual bool IsCompleted() const = 0;

@@ -14,8 +14,7 @@ namespace FA {
 namespace Shared {
 
 AnimationSprite::AnimationSprite(float switchTime)
-    : BasicCoolSprite<AnimationSpriteIf>()
-    , switchTime_(switchTime)
+    : switchTime_(switchTime)
     , time_(0.0)
 {}
 

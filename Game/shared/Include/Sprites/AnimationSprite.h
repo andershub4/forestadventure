@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "AnimationSpriteIf.h"
-#include "BasicCoolSprite.h"
 
 #include "Resource/Frame.h"
 
@@ -17,14 +16,13 @@ namespace FA {
 
 namespace Shared {
 
-class AnimationSprite : public BasicCoolSprite<AnimationSpriteIf>
+class AnimationSprite : public AnimationSpriteIf
 {
 public:
     AnimationSprite(float switchTime);
 
     virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
     virtual void ApplyTo(Graphic::SpriteIf &sprite) const override;
-
     virtual void Start() override;
     virtual void Stop() override;
     virtual bool IsCompleted() const override;

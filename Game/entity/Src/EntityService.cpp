@@ -17,7 +17,6 @@
 #include "Resource/TextureManager.h"
 #include "Resource/TextureRect.h"
 #include "Sprites/AnimationSprite.h"
-#include "Sprites/ImageSprite.h"
 
 namespace FA {
 
@@ -47,13 +46,6 @@ Shared::AnimationSprite EntityService::MakeAnimation(const std::vector<Shared::I
     }
 
     return animation;
-}
-
-Shared::ImageSprite EntityService::MakeImage(const Shared::ImageData& data) const
-{
-    auto rect = sheetManager_.MakeRect(data);
-    const auto* texture = textureManager_.Get(rect.id_);
-    return Shared::ImageSprite({texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
 }
 
 Shared::TextureRect EntityService::MakeRect(const Shared::ImageData& data) const

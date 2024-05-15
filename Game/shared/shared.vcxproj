@@ -145,15 +145,12 @@
     <ClInclude Include="Include\CameraViewIf.h" />
     <ClInclude Include="Include\CameraViews.h" />
     <ClInclude Include="Include\Resource\ColliderData.h" />
-    <ClInclude Include="Include\Sprites\BasicCoolSprite.h" />
     <ClInclude Include="Include\Resource\ResourceId.h" />
     <ClInclude Include="Include\Resource\SpriteSheetIf.h" />
     <ClInclude Include="Include\Resource\TextureRect.h" />
     <ClInclude Include="Include\Screen.h" />
     <ClInclude Include="Include\SfmlPrint.h" />
     <ClInclude Include="Include\Sprites\AnimationSpriteIf.h" />
-    <ClInclude Include="Include\Sprites\ImageSpriteIf.h" />
-    <ClInclude Include="Include\Sprites\CoolSpriteIf.h" />
     <ClInclude Include="Include\Logging.h" />
     <ClInclude Include="Include\MapData.h" />
     <ClInclude Include="Include\Message\BroadcastMessage\CloseWindowMessage.h" />
@@ -169,7 +166,6 @@
     <ClInclude Include="Include\Sprites\AnimationSprite.h" />
     <ClInclude Include="Include\Resource\Frame.h" />
     <ClInclude Include="Include\Resource\TileGraphic.h" />
-    <ClInclude Include="Include\Sprites\ImageSprite.h" />
     <ClInclude Include="Include\Resource\ImageData.h" />
     <ClInclude Include="Include\Resource\ResourceManager.h" />
     <ClInclude Include="Include\Resource\SheetData.h" />
@@ -184,7 +180,6 @@
     <ClCompile Include="Src\Logging.cpp" />
     <ClCompile Include="Src\MessageBus.cpp" />
     <ClCompile Include="Src\Sprites\AnimationSprite.cpp" />
-    <ClCompile Include="Src\Sprites\ImageSprite.cpp" />
     <ClCompile Include="Src\Resource\SheetManager.cpp" />
     <ClCompile Include="Src\Resource\SpriteSheet.cpp" />
   </ItemGroup>
