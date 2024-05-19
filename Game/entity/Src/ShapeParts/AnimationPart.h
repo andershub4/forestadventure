@@ -12,6 +12,7 @@
 
 #include "BasicShapePart.h"
 #include "Logging.h"
+#include "Sequence.h"
 #include "Sprite.h"
 #include "Sprites/AnimationSprite.h"
 
@@ -75,7 +76,7 @@ private:
     /* Constructor for multiple animation, depending on KeyT */
     AnimationPartWith(KeyT &lookupKey, bool center = true, bool isCollidable = true)
         : lookupKey_(lookupKey)
-        , defaultAnimation_(1.0f)
+        , defaultAnimation_(std::make_shared<Shared::Sequence<Shared::Frame>>(1.0f))
         , currentAnimation_(defaultAnimation_)
         , updateCB_([](const Shared::AnimationSprite &) {})
         , center_(center)

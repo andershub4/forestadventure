@@ -13,67 +13,45 @@ namespace FA {
 
 namespace Shared {
 
-AnimationSprite::AnimationSprite(float switchTime)
-    : switchTime_(switchTime)
-    , time_(0.0)
+AnimationSprite::AnimationSprite(std::shared_ptr<SequenceIf<Frame>> seq)
+    : seq_(seq)
 {}
 
 void AnimationSprite::Update(float deltaTime)
 {
-    if (!isStopped_ && nFrames_ > 1) {
-        time_ += deltaTime;
-
-        if (time_ >= switchTime_) {
-            time_ = 0.0;
-            ++iFrame_ %= nFrames_;
-            isCompleted_ = (iFrame_ == 0);
-        }
-    }
+    seq_->Update(deltaTime);
 }
 
 void AnimationSprite::ApplyTo(Graphic::SpriteIf& sprite) const
 {
-    if (nFrames_ >= 1) {
-        sprite.setTexture(*frames_[iFrame_].texture_);
-        sprite.setTextureRect(frames_[iFrame_].rect_);
+    auto frame = seq_->GetCurrent();
+    if (frame != InvalidFrame) {
+        sprite.setTexture(*frame.texture_);
+        sprite.setTextureRect(frame.rect_);
     }
 }
 
 void AnimationSprite::Start()
 {
-    if (nFrames_ <= 0) {
-        LOG_WARN("Can't start animation, no frames");
-        isValid_ = false;
-    }
-    else {
-        isStopped_ = false;
-        isValid_ = true;
-    }
+    seq_->Start();
 }
 
 void AnimationSprite::Stop()
 {
-    isStopped_ = true;
-    iFrame_ = 0;
+    seq_->Stop();
 }
 
 bool AnimationSprite::IsCompleted() const
 {
-    return isCompleted_;
+    return seq_->IsCompleted();
 }
 
 void AnimationSprite::AddFrame(const Frame& frame)
 {
-    if (!isStopped_) {
-        LOG_WARN("Can't add frame during animation");
-        return;
-    }
+    bool isValid = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
 
-    isValid_ = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
-
-    if (isValid_) {
-        frames_.push_back(frame);
-        nFrames_ = frames_.size();
+    if (isValid) {
+        seq_->Add(frame);
     }
     else {
         LOG_WARN("%s is invalid", DUMP(frame));

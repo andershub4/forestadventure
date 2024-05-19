@@ -26,9 +26,16 @@ struct Frame
     sf::IntRect rect_;
 };
 
+const Frame InvalidFrame{nullptr, sf::IntRect{}};
+
 inline bool operator==(const Frame& lhs, const Frame& rhs)
 {
     return std::tie(lhs.texture_, lhs.rect_) == std::tie(rhs.texture_, rhs.rect_);
+}
+
+inline bool operator!=(const Frame& lhs, const Frame& rhs)
+{
+    return !operator==(lhs, rhs);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Frame& p)

@@ -149,6 +149,8 @@
     <ClInclude Include="Include\Resource\SpriteSheetIf.h" />
     <ClInclude Include="Include\Resource\TextureRect.h" />
     <ClInclude Include="Include\Screen.h" />
+    <ClInclude Include="Include\Sequence.h" />
+    <ClInclude Include="Include\SequenceIf.h" />
     <ClInclude Include="Include\SfmlPrint.h" />
     <ClInclude Include="Include\Sprites\AnimationSpriteIf.h" />
     <ClInclude Include="Include\Logging.h" />

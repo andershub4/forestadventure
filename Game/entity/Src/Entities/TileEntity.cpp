@@ -10,6 +10,7 @@
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
 #include "Resource/TextureRect.h"
+#include "Sequence.h"
 #include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
@@ -30,8 +31,8 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
                                 const PropertyData& data)
 {
     float t = Constant::stdSwitchTime;
-
-    Shared::AnimationSprite animation(t);
+    auto seq = std::make_shared<Shared::Sequence<Shared::Frame>>(t);
+    Shared::AnimationSprite animation(seq);
     for (const auto& d : data.graphic_.animation_) {
         auto rect = service_.MakeRect(d);
         const auto* texture = service_.GetTexture(rect.id_);

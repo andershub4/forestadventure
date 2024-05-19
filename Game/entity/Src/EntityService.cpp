@@ -16,6 +16,7 @@
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
 #include "Resource/TextureRect.h"
+#include "Sequence.h"
 #include "Sprites/AnimationSprite.h"
 
 namespace FA {
@@ -37,7 +38,8 @@ EntityService::~EntityService() = default;
 Shared::AnimationSprite EntityService::MakeAnimation(const std::vector<Shared::ImageData>& data) const
 {
     float t = Constant::stdSwitchTime;
-    Shared::AnimationSprite animation(t);
+    auto seq = std::make_shared<Shared::Sequence<Shared::Frame>>(t);
+    Shared::AnimationSprite animation(seq);
 
     for (const auto& item : data) {
         auto rect = sheetManager_.MakeRect(item);
