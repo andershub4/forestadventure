@@ -25,26 +25,20 @@ struct ColliderData
         , position_(position)
     {}
 
-    ColliderData(const std::string sheetId, const sf::Vector2u position, const sf::IntRect& rect)
-        : sheetId_(sheetId)
-        , position_(position)
-        , rect_(rect)
-    {}
-
     std::string sheetId_;
-    sf::Vector2u position_;
-    sf::IntRect rect_{0, 0, 0, 0};
+    sf::Vector2u position_{};
 };
 
 inline bool operator==(const ColliderData& lhs, const ColliderData& rhs)
 {
-    return std::tie(lhs.sheetId_, lhs.position_, lhs.rect_) ==
-           std::tie(rhs.sheetId_, rhs.position_, rhs.rect_);
+    return std::tie(lhs.sheetId_, lhs.position_) ==
+           std::tie(rhs.sheetId_, rhs.position_);
+           
 }
 
 inline std::ostream& operator<<(std::ostream& os, const ColliderData& p)
 {
-    os << OUT2("sheetId", p.sheetId_) << DELIM << OUT2("position", p.position_) << DELIM << OUT2("rect", p.rect_);
+    os << OUT2("sheetId", p.sheetId_) << DELIM << OUT2("position", p.position_);
 
     return os;
 }

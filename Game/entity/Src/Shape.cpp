@@ -9,6 +9,7 @@
 #include "SFML/Graphics/Color.hpp"
 
 #include "Body.h"
+#include "RectangleShape.h"
 #include "RenderTargetIf.h"
 #include "Sprite.h"
 
@@ -28,17 +29,20 @@ Shape::~Shape() = default;
 
 void Shape::Enter()
 {
-    for (auto &entry : entries_) {
+    for (auto &entry : shapeParts_) {
         entry.part_->Enter();
         entry.part_->ApplyTo(*entry.sprite_);
         entry.sprite_->setPosition(body_.position_);
         entry.sprite_->setRotation(body_.rotation_);
-        entry.hitBox_ = entry.sprite_->getGlobalBounds();
-#ifdef _DEBUG
-        entry.hitSprite_->setPosition(entry.hitBox_.left, entry.hitBox_.top);
-        entry.hitSprite_->setSize({entry.hitBox_.width, entry.hitBox_.height});
-#endif  // _DEBUG
     }
+
+    for (auto &entry : colliderParts_) {
+        entry.part_->Enter();
+        entry.part_->ApplyTo(*entry.hitRect_);
+        entry.hitRect_->setPosition(body_.position_);
+        entry.hitRect_->setRotation(body_.rotation_);
+    }
+
 #ifdef _DEBUG
     rShape_.setPosition(body_.position_);
 #endif
@@ -46,47 +50,52 @@ void Shape::Enter()
 
 void Shape::Update(float deltaTime)
 {
-    for (auto &entry : entries_) {
+    for (auto &entry : shapeParts_) {
         entry.part_->Update(deltaTime);
         entry.part_->ApplyTo(*entry.sprite_);
         entry.sprite_->setPosition(body_.position_);
         entry.sprite_->setRotation(body_.rotation_);
-        entry.hitBox_ = entry.sprite_->getGlobalBounds();
-#ifdef _DEBUG
-        entry.hitSprite_->setPosition(entry.hitBox_.left, entry.hitBox_.top);
-        entry.hitSprite_->setSize({entry.hitBox_.width, entry.hitBox_.height});
-#endif  // _DEBUG
     }
+
+    for (auto &entry : colliderParts_) {
+        entry.part_->Update(deltaTime);
+        entry.part_->ApplyTo(*entry.hitRect_);
+        entry.hitRect_->setPosition(body_.position_);
+        entry.hitRect_->setRotation(body_.rotation_);
+    }
+
 #ifdef _DEBUG
     rShape_.setPosition(body_.position_);
 #endif  // _DEBUG
 }
 
-void Shape::RegisterPart(std::shared_ptr<BasicShapePart> part)
+void Shape::RegisterShapePart(std::shared_ptr<BasicShapePart> part)
 {
-#ifdef _DEBUG
+    shapeParts_.push_back({part, std::make_shared<Graphic::Sprite>()});
+}
+
+void Shape::RegisterColliderPart(std::shared_ptr<BasicColliderPart> part)
+{
     auto hitSprite = std::make_shared<Graphic::RectangleShape>();
     hitSprite->setFillColor(sf::Color::Transparent);
     hitSprite->setOutlineColor(sf::Color::Red);
     hitSprite->setOutlineThickness(1.0f);
-    entries_.push_back({part, std::make_shared<Graphic::Sprite>(), sf::FloatRect{}, hitSprite});
-#else
-    entries_.push_back({part, std::make_shared<Graphic::Sprite>(), sf::FloatRect{}});
-#endif  // _DEBUG
+    colliderParts_.push_back({part, hitSprite});
 }
 
 void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const
 {
-    for (auto &entry : entries_) {
-        if (entry.part_->IsDrawable()) {
-            renderTarget.draw(*entry.sprite_);
-        }
-#ifdef _DEBUG
-        if (entry.part_->IsCollidable()) {
-            renderTarget.draw(*entry.hitSprite_);
-        }
-#endif  // _DEBUG
+    for (auto &entry : shapeParts_) {
+        renderTarget.draw(*entry.sprite_);
     }
+
+#ifdef _DEBUG
+    for (auto &entry : colliderParts_) {
+        auto rectShape = entry.hitRect_;
+        renderTarget.draw(*rectShape);
+    }
+#endif  // _DEBUG
+
 #ifdef _DEBUG
     renderTarget.draw(rShape_);
 #endif
@@ -96,11 +105,9 @@ bool Shape::Intersect(const Shape &otherShape) const
 {
     bool intersect = false;
 
-    for (auto &entry : entries_) {
-        if (!entry.part_->IsCollidable()) break;
-        for (auto &otherEntry : otherShape.entries_) {
-            if (!otherEntry.part_->IsCollidable()) break;
-            intersect |= entry.hitBox_.intersects(otherEntry.hitBox_);
+    for (auto &entry : colliderParts_) {
+        for (auto &otherEntry : otherShape.colliderParts_) {
+            intersect |= entry.hitRect_->getGlobalBounds().intersects(otherEntry.hitRect_->getGlobalBounds());
         }
     }
 

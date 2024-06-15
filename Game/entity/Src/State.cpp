@@ -80,7 +80,12 @@ void State::RegisterAbility(std::shared_ptr<AbilityIf> ability)
 
 void State::RegisterShapePart(std::shared_ptr<BasicShapePart> part)
 {
-    shape_.RegisterPart(part);
+    shape_.RegisterShapePart(part);
+}
+
+void State::RegisterColliderPart(std::shared_ptr<BasicColliderPart> part)
+{
+    shape_.RegisterColliderPart(part);
 }
 
 void State::RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)> event)

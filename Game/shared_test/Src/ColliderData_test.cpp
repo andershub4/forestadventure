@@ -15,27 +15,7 @@ namespace FA {
 
 namespace Shared {
 
-TEST(ColliderDataTest, CtorShouldDefaultInitializeRect)
-{
-    ColliderData d{"sheet1", {2, 2}};
-    ColliderData expected;
-    expected.sheetId_ = "sheet1";
-    expected.position_ = sf::Vector2u(2, 2);
-    expected.rect_ = sf::IntRect(0, 0, 0, 0);
-    EXPECT_THAT(d, Eq(expected));
-}
-
-TEST(ColliderDataTest, CtorShouldInitializeRect)
-{
-    ColliderData d{"sheet1", {2, 2}, {2, 2, 6, 6}};
-    ColliderData expected;
-    expected.sheetId_ = "sheet1";
-    expected.position_ = sf::Vector2u(2, 2);
-    expected.rect_ = sf::IntRect(2, 2, 6, 6);
-    EXPECT_THAT(d, Eq(expected));
-}
-
-TEST(ColliderDataTest, TestImageDataEqualToOperator)
+TEST(ColliderDataTest, TestColliderDataEqualToOperator)
 {
     ColliderData d1{"sheet1", {0, 0}};
     ColliderData d2 = d1;
@@ -43,6 +23,7 @@ TEST(ColliderDataTest, TestImageDataEqualToOperator)
     d1.sheetId_ = "mysheet";
     EXPECT_FALSE(d1 == d2);
 }
+
 }  // namespace Shared
 
 }  // namespace FA

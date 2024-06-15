@@ -8,10 +8,12 @@
 
 #include "CameraView.h"
 #include "CameraViews.h"
+#include "Colliders/Collider.h"
 #include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Enum/EntityType.h"
 #include "Message/MessageBus.h"
+#include "Resource/ColliderData.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
@@ -48,6 +50,23 @@ Shared::AnimationSprite EntityService::MakeAnimation(const std::vector<Shared::I
     }
 
     return animation;
+}
+
+Shared::Collider EntityService::MakeCollider(const std::vector<Shared::ColliderData>& data) const
+{
+    float t = Constant::stdSwitchTime;
+    auto seq = std::make_shared<Shared::Sequence<sf::FloatRect>>(t);
+    Shared::Collider collider(seq);
+
+    for (const auto& item : data) {
+        auto rect = sheetManager_.MakeRect(item);
+        //        auto offsetX = item.offset_.x;
+        // auto offsetY = item.offset_.y;
+        // collider.AddRect({offsetX, offsetY, rect.width - item.sizeAdjust_.x, rect.height - item.sizeAdjust_.y});
+        collider.AddRect({0, 0, rect.width, rect.height});
+    }
+
+    return collider;
 }
 
 Shared::TextureRect EntityService::MakeRect(const Shared::ImageData& data) const

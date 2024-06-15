@@ -28,8 +28,10 @@ namespace Shared {
 class CameraViews;
 class CameraView;
 class AnimationSprite;
+class Collider;
 class SheetManager;
 struct ImageData;
+struct ColliderData;
 class MessageBus;
 class Message;
 enum class MessageType;
@@ -52,6 +54,7 @@ public:
                   EntityManager &entityManager);
     ~EntityService();
     Shared::AnimationSprite MakeAnimation(const std::vector<Shared::ImageData> &data) const;
+    Shared::Collider MakeCollider(const std::vector<Shared::ColliderData> &data) const;
 
     Shared::TextureRect MakeRect(const Shared::ImageData &data) const;
     const Graphic::TextureIf *GetTexture(Shared::ResourceId id) const;

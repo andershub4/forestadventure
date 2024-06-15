@@ -144,6 +144,8 @@
     <ClInclude Include="Include\CameraView.h" />
     <ClInclude Include="Include\CameraViewIf.h" />
     <ClInclude Include="Include\CameraViews.h" />
+    <ClInclude Include="Include\Colliders\Collider.h" />
+    <ClInclude Include="Include\Colliders\ColliderIf.h" />
     <ClInclude Include="Include\Resource\ColliderData.h" />
     <ClInclude Include="Include\Resource\ResourceId.h" />
     <ClInclude Include="Include\Resource\SpriteSheetIf.h" />
@@ -179,6 +181,7 @@
   <ItemGroup>
     <ClCompile Include="Src\CameraView.cpp" />
     <ClCompile Include="Src\CameraViews.cpp" />
+    <ClCompile Include="Src\Colliders\Collider.cpp" />
     <ClCompile Include="Src\Logging.cpp" />
     <ClCompile Include="Src\MessageBus.cpp" />
     <ClCompile Include="Src\Sprites\AnimationSprite.cpp" />

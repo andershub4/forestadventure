@@ -8,6 +8,7 @@
 
 #include "Logging.h"
 #include "Resource/ImageData.h"
+#include "Resource/ColliderData.h"
 #include "Resource/SpriteSheet.h"
 #include "Resource/TextureRect.h"
 
@@ -26,6 +27,17 @@ TextureRect SheetManager::MakeRect(const ImageData& data) const
     if (sheet != nullptr) {
         auto rect = sheet->At(data.position_);
         return data.mirror_ ? MirrorX(rect) : rect;
+    }
+
+    return {};
+}
+
+sf::IntRect SheetManager::MakeRect(const ColliderData& data) const
+{
+    auto sheet = GetSheet(data.sheetId_);
+    if (sheet != nullptr) {
+        auto rect = sheet->At(data.position_);
+        return sf::IntRect(0, 0, rect.size_.x, rect.size_.y);
     }
 
     return {};

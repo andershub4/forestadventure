@@ -141,6 +141,12 @@
     <ClInclude Include="Src\ShapeParts\NoShapePart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Src\ShapeParts\ColliderPart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ShapeParts\BasicColliderPart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Abilities\MoveAbility.cpp">

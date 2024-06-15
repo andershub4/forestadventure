@@ -27,6 +27,7 @@
 #include "PropertyData.h"
 #include "Resource/SheetId.h"
 #include "ShapeParts/AnimationPart.h"
+#include "ShapeParts/ColliderPart.h"
 #include "State.h"
 
 namespace FA {
@@ -89,6 +90,61 @@ const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackWD
     {FaceDirection::Right, attackWRight},
     {FaceDirection::Down, attackWDown},
     {FaceDirection::Up, attackWUp}};
+
+//
+const std::vector<Shared::ColliderData> colliderIdleLeft{{HeroIdleSide, {0, 0}}};
+const std::vector<Shared::ColliderData> colliderIdleRight{{HeroIdleSide, {0, 0}}};
+const std::vector<Shared::ColliderData> colliderIdleFront{{HeroIdleFront, {0, 0}}};
+const std::vector<Shared::ColliderData> colliderIdleBack{{HeroIdleBack, {0, 0}}};
+const std::vector<Shared::ColliderData> colliderMoveLeft{{HeroWalkSide, {0, 0}}, {HeroWalkSide, {1, 0}},
+                                                         {HeroWalkSide, {2, 0}}, {HeroWalkSide, {3, 0}},
+                                                         {HeroWalkSide, {4, 0}}, {HeroWalkSide, {5, 0}}};
+const std::vector<Shared::ColliderData> colliderMoveRight{{HeroWalkSide, {0, 0}}, {HeroWalkSide, {1, 0}},
+                                                          {HeroWalkSide, {2, 0}}, {HeroWalkSide, {3, 0}},
+                                                          {HeroWalkSide, {4, 0}}, {HeroWalkSide, {5, 0}}};
+const std::vector<Shared::ColliderData> colliderMoveDown{{HeroWalkFront, {0, 0}}, {HeroWalkFront, {1, 0}},
+                                                         {HeroWalkFront, {2, 0}}, {HeroWalkFront, {3, 0}},
+                                                         {HeroWalkFront, {4, 0}}, {HeroWalkFront, {5, 0}}};
+const std::vector<Shared::ColliderData> colliderMoveUp{{HeroWalkBack, {0, 0}}, {HeroWalkBack, {1, 0}},
+                                                       {HeroWalkBack, {2, 0}}, {HeroWalkBack, {3, 0}},
+                                                       {HeroWalkBack, {4, 0}}, {HeroWalkBack, {5, 0}}};
+const std::vector<Shared::ColliderData> colliderAttackLeft{
+    {HeroAttackSide, {0, 0}}, {HeroAttackSide, {1, 0}}, {HeroAttackSide, {2, 0}}};
+const std::vector<Shared::ColliderData> colliderAttackRight{
+    {HeroAttackSide, {0, 0}}, {HeroAttackSide, {1, 0}}, {HeroAttackSide, {2, 0}}};
+const std::vector<Shared::ColliderData> colliderAttackDown{
+    {HeroAttackFront, {0, 0}}, {HeroAttackFront, {1, 0}}, {HeroAttackFront, {2, 0}}};
+const std::vector<Shared::ColliderData> colliderAttackUp{
+    {HeroAttackBack, {0, 0}}, {HeroAttackBack, {1, 0}}, {HeroAttackBack, {2, 0}}};
+const std::vector<Shared::ColliderData> colliderAttackWLeft{
+    {HeroAttackWeaponSide, {0, 0}}, {HeroAttackWeaponSide, {1, 0}}, {HeroAttackWeaponSide, {2, 0}}};
+const std::vector<Shared::ColliderData> colliderAttackWRight{
+    {HeroAttackWeaponSide, {0, 0}}, {HeroAttackWeaponSide, {1, 0}}, {HeroAttackWeaponSide, {2, 0}}};
+const std::vector<Shared::ColliderData> colliderAttackWDown{
+    {HeroAttackWeaponFront, {0, 0}}, {HeroAttackWeaponFront, {1, 0}}, {HeroAttackWeaponFront, {2, 0}}};
+const std::vector<Shared::ColliderData> colliderAttackWUp{
+    {HeroAttackWeaponBack, {0, 0}}, {HeroAttackWeaponBack, {1, 0}}, {HeroAttackWeaponBack, {2, 0}}};
+
+const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderIdleData{
+    {FaceDirection::Left, colliderIdleLeft},
+    {FaceDirection::Right, colliderIdleRight},
+    {FaceDirection::Down, colliderIdleFront},
+    {FaceDirection::Up, colliderIdleBack}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderMoveData{
+    {FaceDirection::Left, colliderMoveLeft},
+    {FaceDirection::Right, colliderMoveRight},
+    {FaceDirection::Down, colliderMoveDown},
+    {FaceDirection::Up, colliderMoveUp}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderAttackData{
+    {FaceDirection::Left, colliderAttackLeft},
+    {FaceDirection::Right, colliderAttackRight},
+    {FaceDirection::Down, colliderAttackDown},
+    {FaceDirection::Up, colliderAttackUp}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderAttackWData{
+    {FaceDirection::Left, colliderAttackWLeft},
+    {FaceDirection::Right, colliderAttackWRight},
+    {FaceDirection::Down, colliderAttackWDown},
+    {FaceDirection::Up, colliderAttackWUp}};
 
 FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 {
@@ -228,8 +284,10 @@ void PlayerEntity::OnInit()
 
 void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 {
-    auto part = MakePart(idleData);
-    state->RegisterShapePart(part);
+    auto shapePart = MakeShapePart(idleData);
+    state->RegisterShapePart(shapePart);
+    auto colliderPart = MakeColliderPart(colliderIdleData);
+    state->RegisterColliderPart(colliderPart);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
@@ -243,12 +301,15 @@ void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 {
+    auto shapePart = MakeShapePart(moveData);
+    state->RegisterShapePart(shapePart);
+    auto colliderPart = MakeColliderPart(colliderMoveData);
+    state->RegisterColliderPart(colliderPart);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    auto part = MakePart(moveData);
     state->RegisterAbility(move);
-    state->RegisterShapePart(part);
+
     state->RegisterEventCB(EventType::StopMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     state->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
@@ -261,9 +322,11 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto part = MakePart(attackData);
-    part->RegisterUpdateCB(updateCB);
-    state->RegisterShapePart(part);
+    auto shapePart = MakeShapePart(attackData);
+    state->RegisterShapePart(shapePart);
+    auto colliderPart = MakeColliderPart(colliderAttackData);
+    state->RegisterColliderPart(colliderPart);
+    shapePart->RegisterUpdateCB(updateCB);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
@@ -277,15 +340,17 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto part = MakePart(attackWData);
-    part->RegisterUpdateCB(updateCB);
-    state->RegisterShapePart(part);
+    auto shapePart = MakeShapePart(attackWData);
+    state->RegisterShapePart(shapePart);
+    auto colliderPart = MakeColliderPart(colliderAttackWData);
+    state->RegisterColliderPart(colliderPart);
+    shapePart->RegisterUpdateCB(updateCB);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 }
 
-std::shared_ptr<AnimationPartWith<FaceDirection>> PlayerEntity::MakePart(
+std::shared_ptr<AnimationPartWith<FaceDirection>> PlayerEntity::MakeShapePart(
     const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& data)
 {
     FaceDirection* dir = nullptr;
@@ -293,6 +358,19 @@ std::shared_ptr<AnimationPartWith<FaceDirection>> PlayerEntity::MakePart(
     auto part = AnimationPartWith<FaceDirection>::Create(*dir);
     for (const auto& entry : data) {
         part->RegisterAnimation(entry.first, service_.MakeAnimation(entry.second));
+    }
+
+    return part;
+}
+
+std::shared_ptr<ColliderPartWith<FaceDirection>> PlayerEntity::MakeColliderPart(
+    const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& data)
+{
+    FaceDirection* dir = nullptr;
+    propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
+    auto part = ColliderPartWith<FaceDirection>::Create(*dir);
+    for (const auto& entry : data) {
+        part->RegisterCollider(entry.first, service_.MakeCollider(entry.second));
     }
 
     return part;

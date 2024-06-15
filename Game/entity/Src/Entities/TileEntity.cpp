@@ -40,7 +40,7 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
         animation.AddFrame(frame);
     }
 
-    auto part = AnimationPart::Create(animation, false, false);
+    auto part = AnimationPart::Create(animation, false);
     idleState->RegisterShapePart(part);
     idleState->RegisterIgnoreEvents({EventType::Collision});
 }

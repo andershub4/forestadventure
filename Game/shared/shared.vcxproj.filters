@@ -117,6 +117,12 @@
     <ClInclude Include="Include\Sequence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Colliders\ColliderIf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Colliders\Collider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\MessageBus.cpp">
@@ -138,6 +144,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\CameraViews.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Colliders\Collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

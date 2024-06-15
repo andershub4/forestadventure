@@ -7,8 +7,10 @@
 #include "CoinEntity.h"
 
 #include "PropertyData.h"
+#include "Resource/ColliderData.h"
 #include "Resource/SheetId.h"
 #include "ShapeParts/AnimationPart.h"
+#include "ShapeParts/ColliderPart.h"
 #include "State.h"
 
 namespace FA {
@@ -20,6 +22,7 @@ namespace {
 using namespace Shared::SheetId;
 
 const std::vector<Shared::ImageData> idle{{Coin, {0, 0}}, {Coin, {1, 0}}, {Coin, {2, 0}}, {Coin, {3, 0}}};
+const std::vector<Shared::ColliderData> colliderIdle{{Coin, {0, 0}}, {Coin, {1, 0}}, {Coin, {2, 0}}, {Coin, {3, 0}}};
 
 }  // namespace
 
@@ -36,9 +39,11 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
                                 const PropertyData& data)
 {
     auto animation = service_.MakeAnimation(idle);
-    auto part = AnimationPart::Create(animation);
-    idleState->RegisterShapePart(part);
-    idleState->RegisterIgnoreEvents({EventType::Collision});
+    auto shapePart = AnimationPart::Create(animation);
+    idleState->RegisterShapePart(shapePart);
+    auto collider = service_.MakeCollider(colliderIdle);
+    auto colliderPart = ColliderPart::Create(collider);
+    idleState->RegisterColliderPart(colliderPart);
 }
 
 }  // namespace Entity
