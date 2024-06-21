@@ -8,7 +8,6 @@
 
 #include <string>
 
-#include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 
 #include "SfmlPrint.h"
@@ -20,12 +19,12 @@ namespace Shared {
 struct ImageData
 {
     ImageData() = default;
-    ImageData(const std::string sheetId, const sf::Vector2u position)
+    ImageData(const std::string& sheetId, const sf::Vector2u& position)
         : sheetId_(sheetId)
         , position_(position)
     {}
 
-    ImageData(const std::string sheetId, const sf::Vector2u position, bool mirror)
+    ImageData(const std::string& sheetId, const sf::Vector2u& position, bool mirror)
         : sheetId_(sheetId)
         , position_(position)
         , mirror_(mirror)
