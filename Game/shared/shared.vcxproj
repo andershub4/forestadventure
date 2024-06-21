@@ -147,6 +147,7 @@
     <ClInclude Include="Include\Colliders\Collider.h" />
     <ClInclude Include="Include\Colliders\ColliderIf.h" />
     <ClInclude Include="Include\Resource\ColliderData.h" />
+    <ClInclude Include="Include\Resource\ColliderFrame.h" />
     <ClInclude Include="Include\Resource\ResourceId.h" />
     <ClInclude Include="Include\Resource\SpriteSheetIf.h" />
     <ClInclude Include="Include\Resource\TextureRect.h" />

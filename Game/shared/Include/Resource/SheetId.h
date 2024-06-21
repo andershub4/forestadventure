@@ -14,6 +14,7 @@ namespace Shared {
 
 namespace SheetId {
 
+const std::string Unknown = "Unknown";
 const std::string HeroWalkSide = "HeroWalkSide";
 const std::string HeroWalkFront = "HeroWalkFront";
 const std::string HeroWalkBack = "HeroWalkBack";

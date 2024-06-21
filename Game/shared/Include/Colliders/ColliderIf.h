@@ -19,6 +19,8 @@ class RectangleShapeIf;
 
 namespace Shared {
 
+struct ColliderFrame;
+
 class ColliderIf
 {
 public:
@@ -27,7 +29,7 @@ public:
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual bool IsCompleted() const = 0;
-    virtual void AddRect(const sf::IntRect &rect) = 0;
+    virtual void AddRect(const Shared::ColliderFrame &frame) = 0;
 };
 
 }  // namespace Shared

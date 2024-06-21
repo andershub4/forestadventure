@@ -18,8 +18,10 @@
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
 #include "Resource/TextureRect.h"
+#include "Resource/ColliderFrame.h"
 #include "Sequence.h"
 #include "Sprites/AnimationSprite.h"
+#include "Resource/SheetId.h"
 
 namespace FA {
 
@@ -55,15 +57,33 @@ Shared::AnimationSprite EntityService::MakeAnimation(const std::vector<Shared::I
 Shared::Collider EntityService::MakeCollider(const std::vector<Shared::ColliderData>& data) const
 {
     float t = Constant::stdSwitchTime;
-    auto seq = std::make_shared<Shared::Sequence<sf::FloatRect>>(t);
+    auto seq = std::make_shared<Shared::Sequence<Shared::ColliderFrame>>(t);
     Shared::Collider collider(seq);
 
     for (const auto& item : data) {
-        auto rect = sheetManager_.MakeRect(item);
-        //        auto offsetX = item.offset_.x;
-        // auto offsetY = item.offset_.y;
-        // collider.AddRect({offsetX, offsetY, rect.width - item.sizeAdjust_.x, rect.height - item.sizeAdjust_.y});
-        collider.AddRect({0, 0, rect.width, rect.height});
+        Shared::ColliderFrame frame{};
+        sf::Vector2i colliderSize{};
+        sf::Vector2i center{};
+
+        if (item.sheetId_ == Shared::SheetId::Unknown) {
+            colliderSize = {item.rect_.width, item.rect_.height};
+            center = colliderSize / 2;
+        }
+        else {
+            auto spriteRect = sheetManager_.MakeRect(item);
+            sf::Vector2i spriteSize{spriteRect.width, spriteRect.height};
+            colliderSize = spriteSize;
+
+            if (item.rect_ != sf::IntRect{}) {
+                colliderSize = {item.rect_.width, item.rect_.height};
+            }
+            center = spriteSize / 2;
+            center.x -= item.rect_.left;
+            center.y -= item.rect_.top;
+        }
+
+        frame = {static_cast<sf::Vector2f>(colliderSize), static_cast<sf::Vector2f>(center)};
+        collider.AddRect(frame);
     }
 
     return collider;

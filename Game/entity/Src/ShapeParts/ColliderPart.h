@@ -66,7 +66,7 @@ private:
     /* Constructor for multiple colliders, depending on KeyT */
     ColliderPartWith(KeyT &lookupKey, bool center = true)
         : lookupKey_(lookupKey)
-        , defaultCollider_(std::make_shared<Shared::Sequence<sf::FloatRect>>(1.0f))
+        , defaultCollider_(std::make_shared<Shared::Sequence<Shared::ColliderFrame>>(1.0f))
         , currentCollider_(defaultCollider_)
         , updateCB_([](const Shared::Collider &) {})
         , center_(center)

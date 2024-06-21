@@ -16,7 +16,7 @@ namespace FA {
 
 namespace Shared {
 
-Collider::Collider(std::shared_ptr<SequenceIf<sf::FloatRect>> seq)
+Collider::Collider(std::shared_ptr<SequenceIf<Shared::ColliderFrame>> seq)
     : seq_(seq)
 {}
 
@@ -27,12 +27,12 @@ void Collider::Update(float deltaTime)
 
 void Collider::ApplyTo(Graphic::RectangleShapeIf& rectShape, bool center) const
 {
-    auto rect = seq_->GetCurrent();
-    auto size = sf::Vector2f(rect.width, rect.height);
+    auto frame = seq_->GetCurrent();
+    auto size = frame.size_;
     if (size != sf::Vector2f{}) {
         rectShape.setSize(size);
         if (center) {
-            rectShape.setOrigin(rectShape.getLocalBounds().width / 2, rectShape.getLocalBounds().height / 2);
+            rectShape.setOrigin(frame.center_.x, frame.center_.y);
         }
     }
 }
@@ -52,15 +52,15 @@ bool Collider::IsCompleted() const
     return seq_->IsCompleted();
 }
 
-void Collider::AddRect(const sf::IntRect& rect)
+void Collider::AddRect(const Shared::ColliderFrame& frame)
 {
-    bool isValid = rect != sf::IntRect{};
+    bool isValid = frame != InvalidColliderFrame;
 
     if (isValid) {
-        seq_->Add(static_cast<sf::FloatRect>(rect));
+        seq_->Add(frame);
     }
     else {
-        LOG_WARN("%s is invalid", DUMP(rect));
+        LOG_WARN("%s is invalid", DUMP(frame));
     }
 }
 
