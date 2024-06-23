@@ -20,7 +20,7 @@ TEST(SheetItemTest, TestSheetItemEqualToOperator)
     SheetItem item1{"mysheet1", {20, 0}};
     SheetItem item2 = item1;
     EXPECT_TRUE(item1 == item2);
-    item1.sheetId_ = "mysheet32";
+    item1.id_ = "mysheet32";
     EXPECT_FALSE(item1 == item2);
 }
 

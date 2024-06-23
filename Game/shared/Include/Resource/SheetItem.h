@@ -18,18 +18,18 @@ namespace Shared {
 
 struct SheetItem
 {
-    std::string sheetId_;
+    std::string id_;
     sf::Vector2u position_{};
 };
 
 inline bool operator==(const SheetItem& lhs, const SheetItem& rhs)
 {
-    return std::tie(lhs.sheetId_, lhs.position_) == std::tie(rhs.sheetId_, rhs.position_);
+    return std::tie(lhs.id_, lhs.position_) == std::tie(rhs.id_, rhs.position_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const SheetItem& p)
 {
-    os << OUT2("sheetId", p.sheetId_) << DELIM << OUT2("position", p.position_);
+    os << OUT2("id", p.id_) << DELIM << OUT2("position", p.position_);
 
     return os;
 }

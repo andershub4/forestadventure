@@ -30,7 +30,7 @@ TEST(ImageDataTest, TestImageDataEqualToOperator)
     ImageData d1{{"sheet1", {0, 0}}};
     ImageData d2 = d1;
     EXPECT_TRUE(d1 == d2);
-    d1.sheetItem_.sheetId_ = "mysheet";
+    d1.sheetItem_.id_ = "mysheet";
     EXPECT_FALSE(d1 == d2);
 }
 }  // namespace Shared

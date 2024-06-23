@@ -20,7 +20,7 @@ TEST(ColliderDataTest, TestColliderDataEqualToOperator)
     ColliderData d1{{"sheet1", {0, 0}}};
     ColliderData d2 = d1;
     EXPECT_TRUE(d1 == d2);
-    d1.sheetItem_.sheetId_ = "mysheet";
+    d1.sheetItem_.id_ = "mysheet";
     EXPECT_FALSE(d1 == d2);
 }
 

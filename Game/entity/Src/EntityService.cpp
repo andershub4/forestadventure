@@ -67,7 +67,7 @@ Shared::Collider EntityService::MakeCollider(const std::vector<Shared::ColliderD
         sf::Vector2i colliderSize{};
         sf::Vector2i center{};
 
-        if (item.sheetItem_.sheetId_ == Shared::SheetId::Unknown) {
+        if (item.sheetItem_.id_ == Shared::SheetId::Unknown) {
             colliderSize = {item.rect_.width, item.rect_.height};
             center = colliderSize / 2;
         }

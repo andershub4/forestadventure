@@ -22,7 +22,7 @@ void SheetManager::AddSheet(const std::string& name, std::unique_ptr<SpriteSheet
 
 TextureRect SheetManager::GetRect(const SheetItem& item) const
 {
-    auto sheet = GetSheet(item.sheetId_);
+    auto sheet = GetSheet(item.id_);
     if (sheet != nullptr) {
         auto rect = sheet->At(item.position_);
         return rect;

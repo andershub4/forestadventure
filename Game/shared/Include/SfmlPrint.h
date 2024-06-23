@@ -23,9 +23,9 @@ An alternative to this solution is add these operator overloading to global name
 And in each defintion of operator <<, explicit declare usage of the global operator.
 
 using ::operator<<;
-inline std::ostream& operator<<(std::ostream& os, const ImageData& p)
+inline std::ostream& operator<<(std::ostream& os, const SheetItem& p)
 {
-    os << OUT2("sheetId", p.sheetId_) << DELIM << OUT2("position", p.position_);
+    os << OUT2("id", p.id_) << DELIM << OUT2("position", p.position_);
 
     return os;
 }
