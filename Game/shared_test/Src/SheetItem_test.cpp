@@ -4,10 +4,10 @@
  *	See file LICENSE for full license details.
  */
 
-#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "Resource/ColliderData.h"
+#include <SFML/System/Vector2.hpp>
+#include "Resource/SheetItem.h"
 
 using namespace testing;
 
@@ -15,13 +15,13 @@ namespace FA {
 
 namespace Shared {
 
-TEST(ColliderDataTest, TestColliderDataEqualToOperator)
+TEST(SheetItemTest, TestSheetItemEqualToOperator)
 {
-    ColliderData d1{{"sheet1", {0, 0}}};
-    ColliderData d2 = d1;
-    EXPECT_TRUE(d1 == d2);
-    d1.sheetItem_.sheetId_ = "mysheet";
-    EXPECT_FALSE(d1 == d2);
+    SheetItem item1{"mysheet1", {20, 0}};
+    SheetItem item2 = item1;
+    EXPECT_TRUE(item1 == item2);
+    item1.sheetId_ = "mysheet32";
+    EXPECT_FALSE(item1 == item2);
 }
 
 }  // namespace Shared

@@ -11,7 +11,7 @@
 
 #include "Mock/LoggerMock.h"
 #include "Mock/SpriteSheetMock.h"
-#include "Resource/ImageData.h"
+#include "Resource/SheetItem.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureRect.h"
 
@@ -27,7 +27,6 @@ protected:
     SheetManagerTest()
         : sheetMockProxy_(std::make_unique<SpriteSheetMockProxy>(sheetMock_))
         , rect1_(3142, {0, 0}, {10, 10})
-        , mirrorRect1_(3142, {10, 0}, {-10, 10})
     {}
 
     SheetManager sheetManager_;
@@ -35,13 +34,12 @@ protected:
     SpriteSheetMock sheetMock_;
     std::unique_ptr<SpriteSheetMockProxy> sheetMockProxy_;
     TextureRect rect1_;
-    TextureRect mirrorRect1_;
 };
 
 TEST_F(SheetManagerTest, MakeRectShouldReturnInvalidRectDueToSheetIdNotFound)
 {
     EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex(".*mysheetId.*not found")));
-    auto result = sheetManager_.MakeRect({"mysheetId", {1, 1}});
+    auto result = sheetManager_.GetRect({"mysheetId", {1, 1}});
     TextureRect expected;
     EXPECT_FALSE(result.isValid_);
     EXPECT_THAT(result, Eq(expected));
@@ -49,21 +47,11 @@ TEST_F(SheetManagerTest, MakeRectShouldReturnInvalidRectDueToSheetIdNotFound)
 
 TEST_F(SheetManagerTest, MakeRectShouldReturnValidRect)
 {
-    ImageData data{"blackEnemyId", {23, 33}};
+    SheetItem item{"blackEnemyId", {23, 33}};
     sheetManager_.AddSheet("blackEnemyId", std::move(sheetMockProxy_));
     EXPECT_CALL(sheetMock_, At(Eq(sf::Vector2u(23, 33)))).WillOnce(Return(rect1_));
-    auto result = sheetManager_.MakeRect(data);
+    auto result = sheetManager_.GetRect(item);
     TextureRect expected = rect1_;
-    EXPECT_THAT(result, Eq(expected));
-}
-
-TEST_F(SheetManagerTest, MakeRectWithMirrorEnabledShouldReturnValidRect)
-{
-    ImageData data{"blackEnemyId", {23, 33}, true};
-    sheetManager_.AddSheet("blackEnemyId", std::move(sheetMockProxy_));
-    EXPECT_CALL(sheetMock_, At(Eq(sf::Vector2u(23, 33)))).WillOnce(Return(rect1_));
-    auto result = sheetManager_.MakeRect(data);
-    TextureRect expected = mirrorRect1_;
     EXPECT_THAT(result, Eq(expected));
 }
 

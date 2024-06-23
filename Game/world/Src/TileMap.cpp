@@ -84,14 +84,14 @@ void TileMap::SetupLayers()
             if (!tileData.animation_.empty()) {
                 std::vector<Shared::ImageData> outAnimation;
                 for (auto frame : tileData.animation_) {
-                    Shared::ImageData data{frame.texturePath_, {frame.column_, frame.row_}};
+                    Shared::ImageData data{{frame.texturePath_, {frame.column_, frame.row_}}};
                     outAnimation.push_back(data);
                 }
 
                 outData.graphic_.animation_ = outAnimation;
             }
 
-            Shared::ImageData data{tileData.image_.texturePath_, {tileData.image_.column_, tileData.image_.row_}};
+            Shared::ImageData data{{tileData.image_.texturePath_, {tileData.image_.column_, tileData.image_.row_}}};
             outData.graphic_.image_ = data;
 
             layers_[layerName].push_back(outData);

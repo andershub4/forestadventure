@@ -17,12 +17,6 @@
 
 namespace FA {
 
-namespace Graphic {
-
-class SpriteIf;
-
-}
-
 namespace Shared {
 
 class CameraViews;
@@ -53,11 +47,9 @@ public:
                   const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews,
                   EntityManager &entityManager);
     ~EntityService();
+
     Shared::AnimationSprite MakeAnimation(const std::vector<Shared::ImageData> &data) const;
     Shared::Collider MakeCollider(const std::vector<Shared::ColliderData> &data) const;
-
-    Shared::TextureRect MakeRect(const Shared::ImageData &data) const;
-    const Graphic::TextureIf *GetTexture(Shared::ResourceId id) const;
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);
     void AddSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes,
@@ -75,6 +67,9 @@ private:
     const Shared::SheetManager &sheetManager_;
     const Shared::CameraViews &cameraViews_;
     EntityManager &entityManager_;
+
+private:
+    Shared::TextureRect MirrorX(const Shared::TextureRect &rect) const;
 };
 
 }  // namespace Entity

@@ -14,14 +14,15 @@
 #include "Enum/EntityType.h"
 #include "Message/MessageBus.h"
 #include "Resource/ColliderData.h"
+#include "Resource/ColliderFrame.h"
 #include "Resource/ImageData.h"
+#include "Resource/SheetId.h"
+#include "Resource/SheetItem.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
 #include "Resource/TextureRect.h"
-#include "Resource/ColliderFrame.h"
 #include "Sequence.h"
 #include "Sprites/AnimationSprite.h"
-#include "Resource/SheetId.h"
 
 namespace FA {
 
@@ -46,7 +47,8 @@ Shared::AnimationSprite EntityService::MakeAnimation(const std::vector<Shared::I
     Shared::AnimationSprite animation(seq);
 
     for (const auto& item : data) {
-        auto rect = sheetManager_.MakeRect(item);
+        auto rect = sheetManager_.GetRect(item.sheetItem_);
+        rect = item.mirror_ ? MirrorX(rect) : rect;
         const auto* texture = textureManager_.Get(rect.id_);
         animation.AddFrame({texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
     }
@@ -65,13 +67,13 @@ Shared::Collider EntityService::MakeCollider(const std::vector<Shared::ColliderD
         sf::Vector2i colliderSize{};
         sf::Vector2i center{};
 
-        if (item.sheetId_ == Shared::SheetId::Unknown) {
+        if (item.sheetItem_.sheetId_ == Shared::SheetId::Unknown) {
             colliderSize = {item.rect_.width, item.rect_.height};
             center = colliderSize / 2;
         }
         else {
-            auto spriteRect = sheetManager_.MakeRect(item);
-            sf::Vector2i spriteSize{spriteRect.width, spriteRect.height};
+            auto spriteRect = sheetManager_.GetRect(item.sheetItem_);
+            sf::Vector2i spriteSize{spriteRect.size_.x, spriteRect.size_.y};
             colliderSize = spriteSize;
 
             if (item.rect_ != sf::IntRect{}) {
@@ -87,16 +89,6 @@ Shared::Collider EntityService::MakeCollider(const std::vector<Shared::ColliderD
     }
 
     return collider;
-}
-
-Shared::TextureRect EntityService::MakeRect(const Shared::ImageData& data) const
-{
-    return sheetManager_.MakeRect(data);
-}
-
-const Graphic::TextureIf* EntityService::GetTexture(Shared::ResourceId id) const
-{
-    return textureManager_.Get(id);
 }
 
 void EntityService::SendMessage(std::shared_ptr<Shared::Message> msg)
@@ -134,6 +126,15 @@ void EntityService::DeleteEntity(EntityId id)
 EntityType EntityService::GetType(EntityId id) const
 {
     return entityManager_.GetType(id);
+}
+
+Shared::TextureRect EntityService::MirrorX(const Shared::TextureRect& rect) const
+{
+    Shared::TextureRect mirrorRect = rect;
+    mirrorRect.position_.x = mirrorRect.position_.x + mirrorRect.size_.x;
+    mirrorRect.size_.x = -rect.size_.x;
+
+    return mirrorRect;
 }
 
 }  // namespace Entity

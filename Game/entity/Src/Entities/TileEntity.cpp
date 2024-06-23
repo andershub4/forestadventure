@@ -6,11 +6,8 @@
 
 #include "TileEntity.h"
 
-#include "Constant/Entity.h"
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
-#include "Resource/TextureRect.h"
-#include "Sequence.h"
 #include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
@@ -30,16 +27,7 @@ TileEntity::~TileEntity() = default;
 void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    float t = Constant::stdSwitchTime;
-    auto seq = std::make_shared<Shared::Sequence<Shared::Frame>>(t);
-    Shared::AnimationSprite animation(seq);
-    for (const auto& d : data.graphic_.animation_) {
-        auto rect = service_.MakeRect(d);
-        const auto* texture = service_.GetTexture(rect.id_);
-        Shared::Frame frame{texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}};
-        animation.AddFrame(frame);
-    }
-
+    auto animation = service_.MakeAnimation(data.graphic_.animation_);
     auto part = AnimationPart::Create(animation, false);
     idleState->RegisterShapePart(part);
     idleState->RegisterIgnoreEvents({EventType::Collision});

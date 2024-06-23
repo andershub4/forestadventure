@@ -9,10 +9,10 @@
 #include <string>
 
 #include <SFML/Graphics/Rect.hpp>
-#include <SFML/System/Vector2.hpp>
 
 #include "SfmlPrint.h"
 #include "SheetId.h"
+#include "SheetItem.h"
 
 namespace FA {
 
@@ -21,37 +21,32 @@ namespace Shared {
 struct ColliderData
 {
     ColliderData() = default;
-    ColliderData(const std::string& sheetId, const sf::Vector2u& position)
-        : sheetId_(sheetId)
-        , position_(position)
+    ColliderData(const SheetItem& sheetItem)
+        : sheetItem_(sheetItem)
     {}
 
-    ColliderData(const std::string& sheetId, const sf::Vector2u& position, const sf::IntRect &rect) 
-        : sheetId_(sheetId)
-        , position_(position)
+    ColliderData(const SheetItem& sheetItem, const sf::IntRect& rect)
+        : sheetItem_(sheetItem)
         , rect_(rect)
     {}
 
     ColliderData(const sf::Vector2i& rectSize)
-        : sheetId_(SheetId::Unknown)
+        : sheetItem_({SheetId::Unknown, {0, 0}})
         , rect_{0, 0, rectSize.x, rectSize.y}
     {}
 
-    std::string sheetId_;
-    sf::Vector2u position_{};
+    SheetItem sheetItem_;
     sf::IntRect rect_{};
 };
 
 inline bool operator==(const ColliderData& lhs, const ColliderData& rhs)
 {
-    return std::tie(lhs.sheetId_, lhs.position_, lhs.rect_) ==
-           std::tie(rhs.sheetId_, rhs.position_, rhs.rect_);
+    return std::tie(lhs.sheetItem_, lhs.rect_) == std::tie(rhs.sheetItem_, rhs.rect_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const ColliderData& p)
 {
-    os << OUT2("sheetId", p.sheetId_) << DELIM << OUT2("position", p.position_) << DELIM
-       << OUT2("rect", p.rect_);
+    os << OUT2("sheetItem", p.sheetItem_) << DELIM << OUT2("rect", p.rect_);
 
     return os;
 }

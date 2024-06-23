@@ -9,6 +9,7 @@
 #include "PropertyData.h"
 #include "Resource/ColliderData.h"
 #include "Resource/SheetId.h"
+#include "Resource/SheetItem.h"
 #include "ShapeParts/AnimationPart.h"
 #include "ShapeParts/ColliderPart.h"
 #include "State.h"
@@ -21,8 +22,13 @@ namespace {
 
 using namespace Shared::SheetId;
 
-const std::vector<Shared::ImageData> idle{{Coin, {0, 0}}, {Coin, {1, 0}}, {Coin, {2, 0}}, {Coin, {3, 0}}};
-const std::vector<Shared::ColliderData> colliderIdle{{Coin, {0, 0}}, {Coin, {1, 0}}, {Coin, {2, 0}}, {Coin, {3, 0}}};
+const Shared::SheetItem coin1{Coin, {0, 0}};
+const Shared::SheetItem coin2{Coin, {1, 0}};
+const Shared::SheetItem coin3{Coin, {2, 0}};
+const Shared::SheetItem coin4{Coin, {3, 0}};
+
+const std::vector<Shared::ImageData> idle{coin1, coin2, coin3, coin4};
+const std::vector<Shared::ColliderData> colliderIdle{coin1, coin2, coin3, coin4};
 
 }  // namespace
 

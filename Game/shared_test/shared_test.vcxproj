@@ -43,6 +43,7 @@
     <ClCompile Include="Src\ResourceManager_test.cpp" />
     <ClCompile Include="Src\Sequence_test.cpp" />
     <ClCompile Include="Src\SheetData_test.cpp" />
+    <ClCompile Include="Src\SheetItem_test.cpp" />
     <ClCompile Include="Src\SheetManager_test.cpp" />
     <ClCompile Include="Src\SpriteSheet_test.cpp" />
     <ClCompile Include="Src\TextureRect_test.cpp" />

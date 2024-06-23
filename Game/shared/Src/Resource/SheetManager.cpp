@@ -7,8 +7,7 @@
 #include "Resource/SheetManager.h"
 
 #include "Logging.h"
-#include "Resource/ImageData.h"
-#include "Resource/ColliderData.h"
+#include "Resource/SheetItem.h"
 #include "Resource/SpriteSheet.h"
 #include "Resource/TextureRect.h"
 
@@ -21,23 +20,12 @@ void SheetManager::AddSheet(const std::string& name, std::unique_ptr<SpriteSheet
     sheetMap_.insert({name, std::move(sheet)});
 }
 
-TextureRect SheetManager::MakeRect(const ImageData& data) const
+TextureRect SheetManager::GetRect(const SheetItem& item) const
 {
-    auto sheet = GetSheet(data.sheetId_);
+    auto sheet = GetSheet(item.sheetId_);
     if (sheet != nullptr) {
-        auto rect = sheet->At(data.position_);
-        return data.mirror_ ? MirrorX(rect) : rect;
-    }
-
-    return {};
-}
-
-sf::IntRect SheetManager::MakeRect(const ColliderData& data) const
-{
-    auto sheet = GetSheet(data.sheetId_);
-    if (sheet != nullptr) {
-        auto rect = sheet->At(data.position_);
-        return sf::IntRect(0, 0, rect.size_.x, rect.size_.y);
+        auto rect = sheet->At(item.position_);
+        return rect;
     }
 
     return {};
@@ -54,15 +42,6 @@ SpriteSheetIf* SheetManager::GetSheet(const std::string& sheetId) const
         LOG_ERROR("%s not found", DUMP(sheetId));
         return nullptr;
     }
-}
-
-TextureRect SheetManager::MirrorX(const TextureRect& rect) const
-{
-    TextureRect mirrorRect = rect;
-    mirrorRect.position_.x = mirrorRect.position_.x + mirrorRect.size_.x;
-    mirrorRect.size_.x = -rect.size_.x;
-
-    return mirrorRect;
 }
 
 }  // namespace Shared

@@ -20,6 +20,7 @@
 #include "Resource/ColliderData.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
+#include "Resource/SheetItem.h"
 #include "ShapeParts/AnimationPart.h"
 #include "ShapeParts/ColliderPart.h"
 #include "State.h"
@@ -123,10 +124,10 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
     idleState->RegisterIgnoreEvents({EventType::Collision});
 
     auto moveState = RegisterState(StateType::Move);
-    auto animation = service_.MakeAnimation({{Shared::SheetId::Arrow, {0, 0}}});
+    auto animation = service_.MakeAnimation({{{Shared::SheetId::Arrow, {0, 0}}}});
     auto shapePart = AnimationPart::Create(animation);
     moveState->RegisterShapePart(shapePart);
-    auto collider = service_.MakeCollider({{Shared::SheetId::Arrow, {0, 0}}});
+    auto collider = service_.MakeCollider({{{Shared::SheetId::Arrow, {0, 0}}}});
     auto colliderPart = ColliderPart::Create(collider);
     moveState->RegisterColliderPart(colliderPart);
     auto move = std::make_shared<MoveAbility>(

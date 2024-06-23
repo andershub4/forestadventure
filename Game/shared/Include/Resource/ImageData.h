@@ -6,11 +6,8 @@
 
 #pragma once
 
-#include <string>
-
-#include <SFML/System/Vector2.hpp>
-
 #include "SfmlPrint.h"
+#include "SheetItem.h"
 
 namespace FA {
 
@@ -19,30 +16,27 @@ namespace Shared {
 struct ImageData
 {
     ImageData() = default;
-    ImageData(const std::string& sheetId, const sf::Vector2u& position)
-        : sheetId_(sheetId)
-        , position_(position)
+    ImageData(const SheetItem& sheetItem)
+        : sheetItem_(sheetItem)
     {}
 
-    ImageData(const std::string& sheetId, const sf::Vector2u& position, bool mirror)
-        : sheetId_(sheetId)
-        , position_(position)
+    ImageData(const SheetItem& sheetItem, bool mirror)
+        : sheetItem_(sheetItem)
         , mirror_(mirror)
     {}
 
-    std::string sheetId_;
-    sf::Vector2u position_;
+    SheetItem sheetItem_;
     bool mirror_{false};
 };
 
 inline bool operator==(const ImageData& lhs, const ImageData& rhs)
 {
-    return std::tie(lhs.sheetId_, lhs.position_, lhs.mirror_) == std::tie(rhs.sheetId_, rhs.position_, rhs.mirror_);
+    return std::tie(lhs.sheetItem_, lhs.mirror_) == std::tie(rhs.sheetItem_, rhs.mirror_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const ImageData& p)
 {
-    os << OUT2("sheetId", p.sheetId_) << DELIM << OUT2("position", p.position_) << DELIM << OUT2("mirror", p.mirror_);
+    os << OUT2("sheetItem", p.sheetItem_) << DELIM << OUT2("mirror", p.mirror_);
 
     return os;
 }

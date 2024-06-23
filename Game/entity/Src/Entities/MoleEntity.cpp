@@ -15,6 +15,7 @@
 #include "PropertyConverter.h"
 #include "PropertyData.h"
 #include "Resource/SheetId.h"
+#include "Resource/SheetItem.h"
 #include "ShapeParts/AnimationPart.h"
 #include "ShapeParts/ColliderPart.h"
 #include "State.h"
@@ -27,20 +28,41 @@ namespace {
 
 using namespace Shared::SheetId;
 
-const std::vector<Shared::ImageData> idleLeft{{MoleIdleSide, {0, 0}, true}};
-const std::vector<Shared::ImageData> idleRight{{MoleIdleSide, {0, 0}}};
-const std::vector<Shared::ImageData> idleFront{{MoleIdleFront, {0, 0}}};
-const std::vector<Shared::ImageData> idleBack{{MoleIdleBack, {0, 0}}};
-const std::vector<Shared::ImageData> moveLeft{{MoleWalkSide, {0, 0}, true},
-                                              {MoleWalkSide, {1, 0}, true},
-                                              {MoleWalkSide, {2, 0}, true},
-                                              {MoleWalkSide, {3, 0}, true}};
-const std::vector<Shared::ImageData> moveRight{
-    {MoleWalkSide, {0, 0}}, {MoleWalkSide, {1, 0}}, {MoleWalkSide, {2, 0}}, {MoleWalkSide, {3, 0}}};
-const std::vector<Shared::ImageData> moveDown{
-    {MoleWalkFront, {0, 0}}, {MoleWalkFront, {1, 0}}, {MoleWalkFront, {2, 0}}, {MoleWalkFront, {3, 0}}};
-const std::vector<Shared::ImageData> moveUp{
-    {MoleWalkBack, {0, 0}}, {MoleWalkBack, {1, 0}}, {MoleWalkBack, {2, 0}}, {MoleWalkBack, {3, 0}}};
+const Shared::SheetItem idleSide1{MoleIdleSide, {0, 0}};
+const Shared::SheetItem idleFront1{MoleIdleFront, {0, 0}};
+const Shared::SheetItem idleBack1{MoleIdleBack, {0, 0}};
+
+const Shared::SheetItem moveSide1{MoleWalkSide, {0, 0}};
+const Shared::SheetItem moveSide2{MoleWalkSide, {1, 0}};
+const Shared::SheetItem moveSide3{MoleWalkSide, {2, 0}};
+const Shared::SheetItem moveSide4{MoleWalkSide, {3, 0}};
+
+const Shared::SheetItem moveDown1{MoleWalkFront, {0, 0}};
+const Shared::SheetItem moveDown2{MoleWalkFront, {1, 0}};
+const Shared::SheetItem moveDown3{MoleWalkFront, {2, 0}};
+const Shared::SheetItem moveDown4{MoleWalkFront, {3, 0}};
+
+const Shared::SheetItem moveUp1{MoleWalkBack, {0, 0}};
+const Shared::SheetItem moveUp2{MoleWalkBack, {1, 0}};
+const Shared::SheetItem moveUp3{MoleWalkBack, {2, 0}};
+const Shared::SheetItem moveUp4{MoleWalkBack, {3, 0}};
+
+const Shared::SheetItem collision1{Death, {0, 0}};
+const Shared::SheetItem collision2{Death, {1, 0}};
+const Shared::SheetItem collision3{Death, {2, 0}};
+const Shared::SheetItem collision4{Death, {3, 0}};
+const Shared::SheetItem collision5{Death, {4, 0}};
+const Shared::SheetItem collision6{Death, {5, 0}};
+
+const std::vector<Shared::ImageData> idleLeft{{idleSide1, true}};
+const std::vector<Shared::ImageData> idleRight{idleSide1};
+const std::vector<Shared::ImageData> idleFront{idleFront1};
+const std::vector<Shared::ImageData> idleBack{idleBack1};
+const std::vector<Shared::ImageData> moveLeft{
+    {moveSide1, true}, {moveSide2, true}, {moveSide3, true}, {moveSide4, true}};
+const std::vector<Shared::ImageData> moveRight{moveSide1, moveSide2, moveSide3, moveSide4};
+const std::vector<Shared::ImageData> moveDown{moveDown1, moveDown2, moveDown3, moveDown4};
+const std::vector<Shared::ImageData> moveUp{moveUp1, moveUp2, moveUp3, moveUp4};
 
 const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> idleData{{FaceDirection::Left, idleLeft},
                                                                                  {FaceDirection::Right, idleRight},
@@ -51,21 +73,16 @@ const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> moveData
                                                                                  {FaceDirection::Down, moveDown},
                                                                                  {FaceDirection::Up, moveUp}};
 
-const std::vector<Shared::ImageData> collision{{Death, {0, 0}}, {Death, {1, 0}}, {Death, {2, 0}},
-                                               {Death, {3, 0}}, {Death, {4, 0}}, {Death, {5, 0}}};
+const std::vector<Shared::ImageData> collision{collision1, collision2, collision3, collision4, collision5, collision6};
 
-const std::vector<Shared::ColliderData> colliderIdleLeft{{MoleIdleSide, {0, 0}}};
-const std::vector<Shared::ColliderData> colliderIdleRight{{MoleIdleSide, {0, 0}}};
-const std::vector<Shared::ColliderData> colliderIdleFront{{MoleIdleFront, {0, 0}}};
-const std::vector<Shared::ColliderData> colliderIdleBack{{MoleIdleBack, {0, 0}}};
-const std::vector<Shared::ColliderData> colliderMoveLeft{
-    {MoleWalkSide, {0, 0}}, {MoleWalkSide, {1, 0}}, {MoleWalkSide, {2, 0}}, {MoleWalkSide, {3, 0}}};
-const std::vector<Shared::ColliderData> colliderMoveRight{
-    {MoleWalkSide, {0, 0}}, {MoleWalkSide, {1, 0}}, {MoleWalkSide, {2, 0}}, {MoleWalkSide, {3, 0}}};
-const std::vector<Shared::ColliderData> colliderMoveDown{
-    {MoleWalkFront, {0, 0}}, {MoleWalkFront, {1, 0}}, {MoleWalkFront, {2, 0}}, {MoleWalkFront, {3, 0}}};
-const std::vector<Shared::ColliderData> colliderMoveUp{
-    {MoleWalkBack, {0, 0}}, {MoleWalkBack, {1, 0}}, {MoleWalkBack, {2, 0}}, {MoleWalkBack, {3, 0}}};
+const std::vector<Shared::ColliderData> colliderIdleLeft{idleSide1};
+const std::vector<Shared::ColliderData> colliderIdleRight{idleSide1};
+const std::vector<Shared::ColliderData> colliderIdleFront{idleFront1};
+const std::vector<Shared::ColliderData> colliderIdleBack{idleBack1};
+const std::vector<Shared::ColliderData> colliderMoveLeft{moveSide1, moveSide2, moveSide3, moveSide4};
+const std::vector<Shared::ColliderData> colliderMoveRight{moveSide1, moveSide2, moveSide3, moveSide4};
+const std::vector<Shared::ColliderData> colliderMoveDown{moveDown1, moveDown2, moveDown3, moveDown4};
+const std::vector<Shared::ColliderData> colliderMoveUp{moveUp1, moveUp2, moveUp3, moveUp4};
 
 const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderIdleData{
     {FaceDirection::Left, colliderIdleLeft},

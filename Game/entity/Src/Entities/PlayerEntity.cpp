@@ -26,6 +26,7 @@
 #include "PropertyConverter.h"
 #include "PropertyData.h"
 #include "Resource/SheetId.h"
+#include "Resource/SheetItem.h"
 #include "ShapeParts/AnimationPart.h"
 #include "ShapeParts/ColliderPart.h"
 #include "State.h"
@@ -42,36 +43,74 @@ const std::unordered_map<FaceDirection, sf::Vector2f> arrowOffset = {{FaceDirect
                                                                      {FaceDirection::Up, {0.0, -15.0}}};
 using namespace Shared::SheetId;
 
-const std::vector<Shared::ImageData> idleLeft{{HeroIdleSide, {0, 0}, true}};
-const std::vector<Shared::ImageData> idleRight{{HeroIdleSide, {0, 0}}};
-const std::vector<Shared::ImageData> idleFront{{HeroIdleFront, {0, 0}}};
-const std::vector<Shared::ImageData> idleBack{{HeroIdleBack, {0, 0}}};
-const std::vector<Shared::ImageData> moveLeft{{HeroWalkSide, {0, 0}, true}, {HeroWalkSide, {1, 0}, true},
-                                              {HeroWalkSide, {2, 0}, true}, {HeroWalkSide, {3, 0}, true},
-                                              {HeroWalkSide, {4, 0}, true}, {HeroWalkSide, {5, 0}, true}};
-const std::vector<Shared::ImageData> moveRight{{HeroWalkSide, {0, 0}}, {HeroWalkSide, {1, 0}}, {HeroWalkSide, {2, 0}},
-                                               {HeroWalkSide, {3, 0}}, {HeroWalkSide, {4, 0}}, {HeroWalkSide, {5, 0}}};
-const std::vector<Shared::ImageData> moveDown{{HeroWalkFront, {0, 0}}, {HeroWalkFront, {1, 0}},
-                                              {HeroWalkFront, {2, 0}}, {HeroWalkFront, {3, 0}},
-                                              {HeroWalkFront, {4, 0}}, {HeroWalkFront, {5, 0}}};
-const std::vector<Shared::ImageData> moveUp{{HeroWalkBack, {0, 0}}, {HeroWalkBack, {1, 0}}, {HeroWalkBack, {2, 0}},
-                                            {HeroWalkBack, {3, 0}}, {HeroWalkBack, {4, 0}}, {HeroWalkBack, {5, 0}}};
-const std::vector<Shared::ImageData> attackLeft{
-    {HeroAttackSide, {0, 0}, true}, {HeroAttackSide, {1, 0}, true}, {HeroAttackSide, {2, 0}, true}};
-const std::vector<Shared::ImageData> attackRight{
-    {HeroAttackSide, {0, 0}}, {HeroAttackSide, {1, 0}}, {HeroAttackSide, {2, 0}}};
-const std::vector<Shared::ImageData> attackDown{
-    {HeroAttackFront, {0, 0}}, {HeroAttackFront, {1, 0}}, {HeroAttackFront, {2, 0}}};
-const std::vector<Shared::ImageData> attackUp{
-    {HeroAttackBack, {0, 0}}, {HeroAttackBack, {1, 0}}, {HeroAttackBack, {2, 0}}};
-const std::vector<Shared::ImageData> attackWLeft{
-    {HeroAttackWeaponSide, {0, 0}, true}, {HeroAttackWeaponSide, {1, 0}, true}, {HeroAttackWeaponSide, {2, 0}, true}};
-const std::vector<Shared::ImageData> attackWRight{
-    {HeroAttackWeaponSide, {0, 0}}, {HeroAttackWeaponSide, {1, 0}}, {HeroAttackWeaponSide, {2, 0}}};
-const std::vector<Shared::ImageData> attackWDown{
-    {HeroAttackWeaponFront, {0, 0}}, {HeroAttackWeaponFront, {1, 0}}, {HeroAttackWeaponFront, {2, 0}}};
-const std::vector<Shared::ImageData> attackWUp{
-    {HeroAttackWeaponBack, {0, 0}}, {HeroAttackWeaponBack, {1, 0}}, {HeroAttackWeaponBack, {2, 0}}};
+const Shared::SheetItem idleSide1{HeroIdleSide, {0, 0}};
+const Shared::SheetItem idleFront1{HeroIdleFront, {0, 0}};
+const Shared::SheetItem idleBack1{HeroIdleBack, {0, 0}};
+
+const Shared::SheetItem moveSide1{HeroWalkSide, {0, 0}};
+const Shared::SheetItem moveSide2{HeroWalkSide, {1, 0}};
+const Shared::SheetItem moveSide3{HeroWalkSide, {2, 0}};
+const Shared::SheetItem moveSide4{HeroWalkSide, {3, 0}};
+const Shared::SheetItem moveSide5{HeroWalkSide, {4, 0}};
+const Shared::SheetItem moveSide6{HeroWalkSide, {5, 0}};
+
+const Shared::SheetItem moveDown1{HeroWalkFront, {0, 0}};
+const Shared::SheetItem moveDown2{HeroWalkFront, {1, 0}};
+const Shared::SheetItem moveDown3{HeroWalkFront, {2, 0}};
+const Shared::SheetItem moveDown4{HeroWalkFront, {3, 0}};
+const Shared::SheetItem moveDown5{HeroWalkFront, {4, 0}};
+const Shared::SheetItem moveDown6{HeroWalkFront, {5, 0}};
+
+const Shared::SheetItem moveUp1{HeroWalkBack, {0, 0}};
+const Shared::SheetItem moveUp2{HeroWalkBack, {1, 0}};
+const Shared::SheetItem moveUp3{HeroWalkBack, {2, 0}};
+const Shared::SheetItem moveUp4{HeroWalkBack, {3, 0}};
+const Shared::SheetItem moveUp5{HeroWalkBack, {4, 0}};
+const Shared::SheetItem moveUp6{HeroWalkBack, {5, 0}};
+
+const Shared::SheetItem attackSide1{HeroAttackSide, {0, 0}};
+const Shared::SheetItem attackSide2{HeroAttackSide, {1, 0}};
+const Shared::SheetItem attackSide3{HeroAttackSide, {2, 0}};
+
+const Shared::SheetItem attackDown1{HeroAttackFront, {0, 0}};
+const Shared::SheetItem attackDown2{HeroAttackFront, {1, 0}};
+const Shared::SheetItem attackDown3{HeroAttackFront, {2, 0}};
+
+const Shared::SheetItem attackUp1{HeroAttackBack, {0, 0}};
+const Shared::SheetItem attackUp2{HeroAttackBack, {1, 0}};
+const Shared::SheetItem attackUp3{HeroAttackBack, {2, 0}};
+
+const Shared::SheetItem attackWSide1{HeroAttackWeaponSide, {0, 0}};
+const Shared::SheetItem attackWSide2{HeroAttackWeaponSide, {1, 0}};
+const Shared::SheetItem attackWSide3{HeroAttackWeaponSide, {2, 0}};
+
+const Shared::SheetItem attackWDown1{HeroAttackWeaponFront, {0, 0}};
+const Shared::SheetItem attackWDown2{HeroAttackWeaponFront, {1, 0}};
+const Shared::SheetItem attackWDown3{HeroAttackWeaponFront, {2, 0}};
+
+const Shared::SheetItem attackWUp1{HeroAttackWeaponBack, {0, 0}};
+const Shared::SheetItem attackWUp2{HeroAttackWeaponBack, {1, 0}};
+const Shared::SheetItem attackWUp3{HeroAttackWeaponBack, {2, 0}};
+
+const std::vector<Shared::ImageData> idleLeft{{idleSide1, true}};
+const std::vector<Shared::ImageData> idleRight{idleSide1};
+const std::vector<Shared::ImageData> idleFront{idleFront1};
+const std::vector<Shared::ImageData> idleBack{idleBack1};
+const std::vector<Shared::ImageData> moveLeft{{moveSide1, true}, {moveSide2, true}, {moveSide3, true},
+                                              {moveSide4, true}, {moveSide5, true}, {moveSide6, true}};
+const std::vector<Shared::ImageData> moveRight{moveSide1, moveSide2, moveSide3, moveSide4, moveSide5, moveSide6};
+const std::vector<Shared::ImageData> moveDown{moveDown1, moveDown2, moveDown3, moveDown4, moveDown5, moveDown6};
+const std::vector<Shared::ImageData> moveUp{moveUp1, moveUp2, moveUp3, moveUp4, moveUp5, moveUp6};
+
+const std::vector<Shared::ImageData> attackLeft{{attackSide1, true}, {attackSide2, true}, {attackSide3, true}};
+const std::vector<Shared::ImageData> attackRight{attackSide1, attackSide2, attackSide3};
+const std::vector<Shared::ImageData> attackDown{attackDown1, attackDown2, attackDown3};
+const std::vector<Shared::ImageData> attackUp{attackUp1, attackUp2, attackUp3};
+
+const std::vector<Shared::ImageData> attackWLeft{{attackWSide1, true}, {attackWSide2, true}, {attackWSide3, true}};
+const std::vector<Shared::ImageData> attackWRight{attackWSide1, attackWSide2, attackWSide3};
+const std::vector<Shared::ImageData> attackWDown{attackWDown1, attackWDown2, attackWDown3};
+const std::vector<Shared::ImageData> attackWUp{attackWUp1, attackWUp2, attackWUp3};
 
 const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> idleData{{FaceDirection::Left, idleLeft},
                                                                                  {FaceDirection::Right, idleRight},
@@ -91,39 +130,25 @@ const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackWD
     {FaceDirection::Down, attackWDown},
     {FaceDirection::Up, attackWUp}};
 
-//
-const std::vector<Shared::ColliderData> colliderIdleLeft{{HeroIdleSide, {0, 0}}};
-const std::vector<Shared::ColliderData> colliderIdleRight{{HeroIdleSide, {0, 0}}};
-const std::vector<Shared::ColliderData> colliderIdleFront{{HeroIdleFront, {0, 0}}};
-const std::vector<Shared::ColliderData> colliderIdleBack{{HeroIdleBack, {0, 0}}};
-const std::vector<Shared::ColliderData> colliderMoveLeft{{HeroWalkSide, {0, 0}}, {HeroWalkSide, {1, 0}},
-                                                         {HeroWalkSide, {2, 0}}, {HeroWalkSide, {3, 0}},
-                                                         {HeroWalkSide, {4, 0}}, {HeroWalkSide, {5, 0}}};
-const std::vector<Shared::ColliderData> colliderMoveRight{{HeroWalkSide, {0, 0}}, {HeroWalkSide, {1, 0}},
-                                                          {HeroWalkSide, {2, 0}}, {HeroWalkSide, {3, 0}},
-                                                          {HeroWalkSide, {4, 0}}, {HeroWalkSide, {5, 0}}};
-const std::vector<Shared::ColliderData> colliderMoveDown{{HeroWalkFront, {0, 0}}, {HeroWalkFront, {1, 0}},
-                                                         {HeroWalkFront, {2, 0}}, {HeroWalkFront, {3, 0}},
-                                                         {HeroWalkFront, {4, 0}}, {HeroWalkFront, {5, 0}}};
-const std::vector<Shared::ColliderData> colliderMoveUp{{HeroWalkBack, {0, 0}}, {HeroWalkBack, {1, 0}},
-                                                       {HeroWalkBack, {2, 0}}, {HeroWalkBack, {3, 0}},
-                                                       {HeroWalkBack, {4, 0}}, {HeroWalkBack, {5, 0}}};
-const std::vector<Shared::ColliderData> colliderAttackLeft{
-    {HeroAttackSide, {0, 0}}, {HeroAttackSide, {1, 0}}, {HeroAttackSide, {2, 0}}};
-const std::vector<Shared::ColliderData> colliderAttackRight{
-    {HeroAttackSide, {0, 0}}, {HeroAttackSide, {1, 0}}, {HeroAttackSide, {2, 0}}};
-const std::vector<Shared::ColliderData> colliderAttackDown{
-    {HeroAttackFront, {0, 0}}, {HeroAttackFront, {1, 0}}, {HeroAttackFront, {2, 0}}};
-const std::vector<Shared::ColliderData> colliderAttackUp{
-    {HeroAttackBack, {0, 0}}, {HeroAttackBack, {1, 0}}, {HeroAttackBack, {2, 0}}};
-const std::vector<Shared::ColliderData> colliderAttackWLeft{
-    {HeroAttackWeaponSide, {0, 0}}, {HeroAttackWeaponSide, {1, 0}}, {HeroAttackWeaponSide, {2, 0}}};
-const std::vector<Shared::ColliderData> colliderAttackWRight{
-    {HeroAttackWeaponSide, {0, 0}}, {HeroAttackWeaponSide, {1, 0}}, {HeroAttackWeaponSide, {2, 0}}};
-const std::vector<Shared::ColliderData> colliderAttackWDown{
-    {HeroAttackWeaponFront, {0, 0}}, {HeroAttackWeaponFront, {1, 0}}, {HeroAttackWeaponFront, {2, 0}}};
-const std::vector<Shared::ColliderData> colliderAttackWUp{
-    {HeroAttackWeaponBack, {0, 0}}, {HeroAttackWeaponBack, {1, 0}}, {HeroAttackWeaponBack, {2, 0}}};
+const std::vector<Shared::ColliderData> colliderIdleLeft{idleSide1};
+const std::vector<Shared::ColliderData> colliderIdleRight{idleSide1};
+const std::vector<Shared::ColliderData> colliderIdleFront{idleFront1};
+const std::vector<Shared::ColliderData> colliderIdleBack{idleBack1};
+const std::vector<Shared::ColliderData> colliderMoveLeft{moveSide1, moveSide2, moveSide3,
+                                                         moveSide4, moveSide5, moveSide6};
+const std::vector<Shared::ColliderData> colliderMoveRight{moveSide1, moveSide2, moveSide3,
+                                                          moveSide4, moveSide5, moveSide6};
+const std::vector<Shared::ColliderData> colliderMoveDown{moveDown1, moveDown2, moveDown3,
+                                                         moveDown4, moveDown5, moveDown6};
+const std::vector<Shared::ColliderData> colliderMoveUp{moveUp1, moveUp2, moveUp3, moveUp4, moveUp5, moveUp6};
+const std::vector<Shared::ColliderData> colliderAttackLeft{attackSide1, attackSide2, attackSide3};
+const std::vector<Shared::ColliderData> colliderAttackRight{attackSide1, attackSide2, attackSide3};
+const std::vector<Shared::ColliderData> colliderAttackDown{attackDown1, attackDown2, attackDown3};
+const std::vector<Shared::ColliderData> colliderAttackUp{attackUp1, attackUp2, attackUp3};
+const std::vector<Shared::ColliderData> colliderAttackWLeft{attackWSide1, attackWSide2, attackWSide3};
+const std::vector<Shared::ColliderData> colliderAttackWRight{attackWSide1, attackWSide2, attackWSide3};
+const std::vector<Shared::ColliderData> colliderAttackWDown{attackWDown1, attackWDown2, attackWDown3};
+const std::vector<Shared::ColliderData> colliderAttackWUp{attackWUp1, attackWUp2, attackWUp3};
 
 const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderIdleData{
     {FaceDirection::Left, colliderIdleLeft},

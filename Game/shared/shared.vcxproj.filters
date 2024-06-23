@@ -126,6 +126,9 @@
     <ClInclude Include="Include\Resource\ColliderFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Resource\SheetItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\MessageBus.cpp">

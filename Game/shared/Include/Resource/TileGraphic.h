@@ -19,8 +19,7 @@ using FA::Util::operator<<;
 
 struct TileGraphic
 {
-    using Animation = std::vector<ImageData>;
-    Animation animation_;
+    std::vector<ImageData> animation_;
     ImageData image_;
 };
 
