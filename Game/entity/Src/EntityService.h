@@ -69,7 +69,7 @@ private:
     EntityManager &entityManager_;
 
 private:
-    Shared::TextureRect MirrorX(const Shared::TextureRect &rect) const;
+    Shared::TextureRect MirrorX(const Shared::TextureRect &textureRect) const;
 };
 
 }  // namespace Entity

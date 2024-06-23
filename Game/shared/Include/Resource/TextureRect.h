@@ -6,9 +6,7 @@
 
 #pragma once
 
-#include <tuple>
-
-#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
 #include "ResourceId.h"
 #include "SfmlPrint.h"
@@ -21,29 +19,25 @@ struct TextureRect
 {
     TextureRect() = default;
 
-    TextureRect(ResourceId id, const sf::Vector2i& position, const sf::Vector2i& size)
+    TextureRect(ResourceId id, const sf::IntRect& rect)
         : id_(id)
-        , position_(position)
-        , size_(size)
+        , rect_(rect)
         , isValid_(true)
     {}
 
     ResourceId id_{};
-    sf::Vector2i position_;
-    sf::Vector2i size_;
+    sf::IntRect rect_{};
     bool isValid_{false};
 };
 
 inline bool operator==(const TextureRect& lhs, const TextureRect& rhs)
 {
-    return std::tie(lhs.id_, lhs.position_, lhs.size_, lhs.isValid_) ==
-           std::tie(rhs.id_, rhs.position_, rhs.size_, rhs.isValid_);
+    return std::tie(lhs.id_, lhs.rect_, lhs.isValid_) == std::tie(rhs.id_, rhs.rect_, rhs.isValid_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const TextureRect& p)
 {
-    os << OUT2("id", p.id_) << DELIM << OUT2("position", p.position_) << DELIM << OUT2("size", p.size_) << DELIM
-       << OUT2("isValid", p.isValid_);
+    os << OUT2("id", p.id_) << DELIM << OUT2("rect", p.rect_) << DELIM << OUT2("isValid", p.isValid_);
 
     return os;
 }

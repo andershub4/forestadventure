@@ -54,10 +54,9 @@ Graphic::Sprite LevelCreator::CreateSprite(const TileMap::TileData &data) const
     auto imageData = data.graphic_.image_;
     auto textureRect = sheetManager_.GetRect(imageData.sheetItem_);
     const auto *texture = textureManager_.Get(textureRect.id_);
-    sf::IntRect rect{textureRect.position_.x, textureRect.position_.y, textureRect.size_.x, textureRect.size_.y};
     Graphic::Sprite sprite;
     sprite.setTexture(*texture);
-    sprite.setTextureRect(rect);
+    sprite.setTextureRect(textureRect.rect_);
     sprite.setPosition(data.position_);
 
     return sprite;

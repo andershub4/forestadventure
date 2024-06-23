@@ -29,7 +29,7 @@ TEST_F(SpriteSheetTest, AtInsideSheetShouldReturnValidRect)
 {
     SpriteSheet s(111, {100, 100}, {10, 10});
     auto rect = s.At({2, 1});
-    TextureRect expected(111, {20, 10}, {10, 10});
+    TextureRect expected(111, {20, 10, 10, 10});
     EXPECT_TRUE(rect.isValid_);
     EXPECT_THAT(rect, Eq(expected));
 }

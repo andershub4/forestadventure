@@ -26,7 +26,7 @@ class SheetManagerTest : public testing::Test
 protected:
     SheetManagerTest()
         : sheetMockProxy_(std::make_unique<SpriteSheetMockProxy>(sheetMock_))
-        , rect1_(3142, {0, 0}, {10, 10})
+        , rect1_(3142, {0, 0, 10, 10})
     {}
 
     SheetManager sheetManager_;

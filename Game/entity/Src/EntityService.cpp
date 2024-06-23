@@ -47,10 +47,10 @@ Shared::AnimationSprite EntityService::MakeAnimation(const std::vector<Shared::I
     Shared::AnimationSprite animation(seq);
 
     for (const auto& item : data) {
-        auto rect = sheetManager_.GetRect(item.sheetItem_);
-        rect = item.mirror_ ? MirrorX(rect) : rect;
-        const auto* texture = textureManager_.Get(rect.id_);
-        animation.AddFrame({texture, {rect.position_.x, rect.position_.y, rect.size_.x, rect.size_.y}});
+        auto textureRect = sheetManager_.GetRect(item.sheetItem_);
+        textureRect = item.mirror_ ? MirrorX(textureRect) : textureRect;
+        const auto* texture = textureManager_.Get(textureRect.id_);
+        animation.AddFrame({texture, textureRect.rect_});
     }
 
     return animation;
@@ -72,8 +72,8 @@ Shared::Collider EntityService::MakeCollider(const std::vector<Shared::ColliderD
             center = colliderSize / 2;
         }
         else {
-            auto spriteRect = sheetManager_.GetRect(item.sheetItem_);
-            sf::Vector2i spriteSize{spriteRect.size_.x, spriteRect.size_.y};
+            auto textureRect = sheetManager_.GetRect(item.sheetItem_);
+            sf::Vector2i spriteSize{textureRect.rect_.width, textureRect.rect_.height};
             colliderSize = spriteSize;
 
             if (item.rect_ != sf::IntRect{}) {
@@ -128,11 +128,11 @@ EntityType EntityService::GetType(EntityId id) const
     return entityManager_.GetType(id);
 }
 
-Shared::TextureRect EntityService::MirrorX(const Shared::TextureRect& rect) const
+Shared::TextureRect EntityService::MirrorX(const Shared::TextureRect& textureRect) const
 {
-    Shared::TextureRect mirrorRect = rect;
-    mirrorRect.position_.x = mirrorRect.position_.x + mirrorRect.size_.x;
-    mirrorRect.size_.x = -rect.size_.x;
+    Shared::TextureRect mirrorRect = textureRect;
+    mirrorRect.rect_.left = mirrorRect.rect_.left + mirrorRect.rect_.width;
+    mirrorRect.rect_.width = -textureRect.rect_.width;
 
     return mirrorRect;
 }

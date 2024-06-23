@@ -22,16 +22,16 @@ TEST(TextureRectTest, DefaultConstructorGivesInvalidRect)
 
 TEST(TextureRectTest, ConstructorGivesValidRect)
 {
-    TextureRect r(343, {3, 3}, {10, 10});
+    TextureRect r(343, {3, 3, 10, 10});
     EXPECT_TRUE(r.isValid_);
 }
 
 TEST(TextureRectTest, TestTextureRectEqualToOperator)
 {
-    TextureRect r1(343, {3, 3}, {10, 10});
+    TextureRect r1(343, {3, 3, 10, 10});
     TextureRect r2 = r1;
     EXPECT_TRUE(r1 == r2);
-    r1.size_ = sf::Vector2i(5, 5);
+    r1.rect_.height = 5;
     EXPECT_FALSE(r1 == r2);
 }
 

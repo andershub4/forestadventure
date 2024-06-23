@@ -43,7 +43,7 @@ TextureRect SpriteSheet::At(const sf::Vector2u& uvCoord) const
         int top = static_cast<int>(uvCoord.y * rectSize_.y);
         int width = static_cast<int>(rectSize_.x);
         int height = static_cast<int>(rectSize_.y);
-        return TextureRect(textureId_, {left, top}, {width, height});
+        return TextureRect(textureId_, {left, top, width, height});
     }
 
     LOG_ERROR("Invalid sheet %s %s", DUMP(textureSize_), DUMP(rectCount_));
