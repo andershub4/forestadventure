@@ -18,7 +18,7 @@ namespace Shared {
 
 struct Frame;
 
-class AnimationSpriteIf
+class ImageAnimationIf
 {
 public:
     virtual void Update(float deltaTime) = 0;

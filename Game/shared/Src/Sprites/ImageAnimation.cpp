@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Sprites/AnimationSprite.h"
+#include "Sprites/ImageAnimation.h"
 
 #include "Logging.h"
 #include "SpriteIf.h"
@@ -13,16 +13,16 @@ namespace FA {
 
 namespace Shared {
 
-AnimationSprite::AnimationSprite(std::shared_ptr<SequenceIf<Frame>> seq)
+ImageAnimation::ImageAnimation(std::shared_ptr<SequenceIf<Frame>> seq)
     : seq_(seq)
 {}
 
-void AnimationSprite::Update(float deltaTime)
+void ImageAnimation::Update(float deltaTime)
 {
     seq_->Update(deltaTime);
 }
 
-void AnimationSprite::ApplyTo(Graphic::SpriteIf& sprite, bool center) const
+void ImageAnimation::ApplyTo(Graphic::SpriteIf& sprite, bool center) const
 {
     if (!seq_->IsEmpty()) {
         auto frame = seq_->GetCurrent();
@@ -34,22 +34,22 @@ void AnimationSprite::ApplyTo(Graphic::SpriteIf& sprite, bool center) const
     }
 }
 
-void AnimationSprite::Start()
+void ImageAnimation::Start()
 {
     seq_->Start();
 }
 
-void AnimationSprite::Stop()
+void ImageAnimation::Stop()
 {
     seq_->Stop();
 }
 
-bool AnimationSprite::IsCompleted() const
+bool ImageAnimation::IsCompleted() const
 {
     return seq_->IsCompleted();
 }
 
-void AnimationSprite::AddFrame(const Frame& frame)
+void ImageAnimation::AddFrame(const Frame& frame)
 {
     bool isValid = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
 

@@ -22,7 +22,7 @@
 #include "Resource/TextureManager.h"
 #include "Resource/TextureRect.h"
 #include "Sequence.h"
-#include "Sprites/AnimationSprite.h"
+#include "Sprites/ImageAnimation.h"
 
 namespace FA {
 
@@ -40,11 +40,11 @@ EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::Textu
 
 EntityService::~EntityService() = default;
 
-Shared::AnimationSprite EntityService::MakeAnimation(const std::vector<Shared::ImageData>& data) const
+Shared::ImageAnimation EntityService::MakeAnimation(const std::vector<Shared::ImageData>& data) const
 {
     float t = Constant::stdSwitchTime;
     auto seq = std::make_shared<Shared::Sequence<Shared::Frame>>(t);
-    Shared::AnimationSprite animation(seq);
+    Shared::ImageAnimation animation(seq);
 
     for (const auto& item : data) {
         auto textureRect = sheetManager_.GetTextureRect(item.sheetItem_);

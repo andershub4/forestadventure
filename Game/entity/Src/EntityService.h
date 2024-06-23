@@ -21,7 +21,7 @@ namespace Shared {
 
 class CameraViews;
 class CameraView;
-class AnimationSprite;
+class ImageAnimation;
 class Collider;
 class SheetManager;
 struct ImageData;
@@ -48,7 +48,7 @@ public:
                   EntityManager &entityManager);
     ~EntityService();
 
-    Shared::AnimationSprite MakeAnimation(const std::vector<Shared::ImageData> &data) const;
+    Shared::ImageAnimation MakeAnimation(const std::vector<Shared::ImageData> &data) const;
     Shared::Collider MakeCollider(const std::vector<Shared::ColliderData> &data) const;
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);

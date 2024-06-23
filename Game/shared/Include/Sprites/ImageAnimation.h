@@ -9,7 +9,7 @@
 #include <memory>
 #include <vector>
 
-#include "AnimationSpriteIf.h"
+#include "ImageAnimationIf.h"
 
 #include "Resource/Frame.h"
 #include "SequenceIf.h"
@@ -18,10 +18,10 @@ namespace FA {
 
 namespace Shared {
 
-class AnimationSprite : public AnimationSpriteIf
+class ImageAnimation : public ImageAnimationIf
 {
 public:
-    AnimationSprite(std::shared_ptr<SequenceIf<Frame>> seq);
+    ImageAnimation(std::shared_ptr<SequenceIf<Frame>> seq);
 
     virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
     virtual void ApplyTo(Graphic::SpriteIf &sprite, bool center) const override;
