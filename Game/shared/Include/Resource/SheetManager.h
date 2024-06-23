@@ -22,7 +22,7 @@ class SheetManager
 {
 public:
     void AddSheet(const std::string &name, std::unique_ptr<SpriteSheetIf> sheet);
-    TextureRect GetRect(const SheetItem &item) const;
+    TextureRect GetTextureRect(const SheetItem &item) const;
 
 private:
     std::unordered_map<std::string, std::unique_ptr<SpriteSheetIf>> sheetMap_;

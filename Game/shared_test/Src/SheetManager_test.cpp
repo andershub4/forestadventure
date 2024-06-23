@@ -39,7 +39,7 @@ protected:
 TEST_F(SheetManagerTest, MakeRectShouldReturnInvalidRectDueToSheetIdNotFound)
 {
     EXPECT_CALL(loggerMock_, MakeErrorLogEntry(ContainsRegex(".*mysheetId.*not found")));
-    auto result = sheetManager_.GetRect({"mysheetId", {1, 1}});
+    auto result = sheetManager_.GetTextureRect({"mysheetId", {1, 1}});
     TextureRect expected;
     EXPECT_FALSE(result.isValid_);
     EXPECT_THAT(result, Eq(expected));
@@ -50,7 +50,7 @@ TEST_F(SheetManagerTest, MakeRectShouldReturnValidRect)
     SheetItem item{"blackEnemyId", {23, 33}};
     sheetManager_.AddSheet("blackEnemyId", std::move(sheetMockProxy_));
     EXPECT_CALL(sheetMock_, At(Eq(sf::Vector2u(23, 33)))).WillOnce(Return(rect1_));
-    auto result = sheetManager_.GetRect(item);
+    auto result = sheetManager_.GetTextureRect(item);
     TextureRect expected = rect1_;
     EXPECT_THAT(result, Eq(expected));
 }

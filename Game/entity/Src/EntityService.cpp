@@ -47,7 +47,7 @@ Shared::AnimationSprite EntityService::MakeAnimation(const std::vector<Shared::I
     Shared::AnimationSprite animation(seq);
 
     for (const auto& item : data) {
-        auto textureRect = sheetManager_.GetRect(item.sheetItem_);
+        auto textureRect = sheetManager_.GetTextureRect(item.sheetItem_);
         textureRect = item.mirror_ ? MirrorX(textureRect) : textureRect;
         const auto* texture = textureManager_.Get(textureRect.id_);
         animation.AddFrame({texture, textureRect.rect_});
@@ -72,7 +72,7 @@ Shared::Collider EntityService::MakeCollider(const std::vector<Shared::ColliderD
             center = colliderSize / 2;
         }
         else {
-            auto textureRect = sheetManager_.GetRect(item.sheetItem_);
+            auto textureRect = sheetManager_.GetTextureRect(item.sheetItem_);
             sf::Vector2i spriteSize{textureRect.rect_.width, textureRect.rect_.height};
             colliderSize = spriteSize;
 

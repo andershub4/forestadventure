@@ -52,7 +52,7 @@ std::vector<Graphic::Sprite> LevelCreator::CreateFringe(const std::vector<TileMa
 Graphic::Sprite LevelCreator::CreateSprite(const TileMap::TileData &data) const
 {
     auto imageData = data.graphic_.image_;
-    auto textureRect = sheetManager_.GetRect(imageData.sheetItem_);
+    auto textureRect = sheetManager_.GetTextureRect(imageData.sheetItem_);
     const auto *texture = textureManager_.Get(textureRect.id_);
     Graphic::Sprite sprite;
     sprite.setTexture(*texture);
