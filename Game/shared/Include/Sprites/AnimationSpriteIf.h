@@ -22,7 +22,7 @@ class AnimationSpriteIf
 {
 public:
     virtual void Update(float deltaTime) = 0;
-    virtual void ApplyTo(Graphic::SpriteIf &sprite) const = 0;
+    virtual void ApplyTo(Graphic::SpriteIf &sprite, bool center) const = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual bool IsCompleted() const = 0;

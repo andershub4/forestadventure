@@ -22,12 +22,15 @@ void AnimationSprite::Update(float deltaTime)
     seq_->Update(deltaTime);
 }
 
-void AnimationSprite::ApplyTo(Graphic::SpriteIf& sprite) const
+void AnimationSprite::ApplyTo(Graphic::SpriteIf& sprite, bool center) const
 {
     auto frame = seq_->GetCurrent();
     if (frame != InvalidFrame) {
         sprite.setTexture(*frame.texture_);
         sprite.setTextureRect(frame.rect_);
+        if (center) {
+            sprite.setOrigin(frame.center_.x, frame.center_.y);
+        }
     }
 }
 

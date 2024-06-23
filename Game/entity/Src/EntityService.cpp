@@ -48,9 +48,11 @@ Shared::AnimationSprite EntityService::MakeAnimation(const std::vector<Shared::I
 
     for (const auto& item : data) {
         auto textureRect = sheetManager_.GetTextureRect(item.sheetItem_);
+        auto textureSize = sf::Vector2i(textureRect.rect_.width, textureRect.rect_.height);
         textureRect = item.mirror_ ? MirrorX(textureRect) : textureRect;
         const auto* texture = textureManager_.Get(textureRect.id_);
-        animation.AddFrame({texture, textureRect.rect_});
+        sf::Vector2i center = textureSize / 2;
+        animation.AddFrame({texture, textureRect.rect_, static_cast<sf::Vector2f>(center)});
     }
 
     return animation;

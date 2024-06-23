@@ -29,7 +29,7 @@ protected:
 
     Graphic::TextureMock textureMock_;
     sf::IntRect rect_{0, 0, 10, 12};
-    Frame frame_{&textureMock_, rect_};
+    Frame frame_{&textureMock_, rect_, {5, 6}};
     StrictMock<Graphic::SpriteMock> spriteMock_;
     StrictMock<LoggerMock> loggerMock_;
     std::shared_ptr<StrictMock<SequenceMock<Shared::Frame>>> seqMock_;
@@ -40,7 +40,7 @@ TEST_F(AnimationSpriteTest, ApplyToWithInvalidFrameShouldDoNothing)
 {
     Shared::Frame invalid{};
     EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(invalid));
-    sprite_.ApplyTo(spriteMock_);
+    sprite_.ApplyTo(spriteMock_, false);
 }
 
 TEST_F(AnimationSpriteTest, ApplyToWithValidFrameShouldSetTexture)
@@ -48,7 +48,16 @@ TEST_F(AnimationSpriteTest, ApplyToWithValidFrameShouldSetTexture)
     EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(frame_));
     EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
     EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
-    sprite_.ApplyTo(spriteMock_);
+    sprite_.ApplyTo(spriteMock_, false);
+}
+
+TEST_F(AnimationSpriteTest, ApplyToWithValidFrameAndCenterShouldSetTextureAndSetOrigin)
+{
+    EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(frame_));
+    EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
+    EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
+    EXPECT_CALL(spriteMock_, setOrigin(5, 6));
+    sprite_.ApplyTo(spriteMock_, true);
 }
 
 TEST_F(AnimationSpriteTest, AddFrameWithInvalidTextureShouldWarn)

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Vector2.hpp>
 
 #include "SfmlPrint.h"
 
@@ -24,13 +25,14 @@ struct Frame
 {
     const Graphic::TextureIf* texture_ = nullptr;
     sf::IntRect rect_;
+    sf::Vector2f center_{};
 };
 
 const Frame InvalidFrame{nullptr, sf::IntRect{}};
 
 inline bool operator==(const Frame& lhs, const Frame& rhs)
 {
-    return std::tie(lhs.texture_, lhs.rect_) == std::tie(rhs.texture_, rhs.rect_);
+    return std::tie(lhs.texture_, lhs.rect_, lhs.center_) == std::tie(rhs.texture_, rhs.rect_, rhs.center_);
 }
 
 inline bool operator!=(const Frame& lhs, const Frame& rhs)
@@ -40,7 +42,7 @@ inline bool operator!=(const Frame& lhs, const Frame& rhs)
 
 inline std::ostream& operator<<(std::ostream& os, const Frame& p)
 {
-    os << OUT2("texture", p.texture_) << DELIM << OUT2("rect", p.rect_);
+    os << OUT2("texture", p.texture_) << DELIM << OUT2("rect", p.rect_) << DELIM << OUT2("center", p.center_);
 
     return os;
 }

@@ -48,14 +48,7 @@ public:
         updateCB_(currentAnimation_);
     }
 
-    virtual void ApplyTo(Graphic::SpriteIf &sprite) const override
-    {
-        currentAnimation_.ApplyTo(sprite);
-
-        if (center_) {
-            sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
-        }
-    }
+    virtual void ApplyTo(Graphic::SpriteIf &sprite) const override { currentAnimation_.ApplyTo(sprite, center_); }
 
     void RegisterAnimation(const KeyT key, const Shared::AnimationSprite &animation)
     {
