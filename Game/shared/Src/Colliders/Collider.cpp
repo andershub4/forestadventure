@@ -54,7 +54,7 @@ bool Collider::IsCompleted() const
 
 void Collider::AddRect(const Shared::ColliderFrame& frame)
 {
-    bool isValid = frame != InvalidColliderFrame;
+    bool isValid = frame.size_ != sf::Vector2f{};
 
     if (isValid) {
         seq_->Add(frame);
