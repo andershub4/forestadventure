@@ -26,17 +26,6 @@ TEST(FrameTest, TestFrameEqualToOperator)
     EXPECT_FALSE(d1 == d2);
 }
 
-TEST(FrameTest, TestNotFrameEqualToOperator)
-{
-    sf::IntRect rect{12, 12, 10, 10};
-    Graphic::TextureIf* texture = nullptr;
-    Frame d1{texture, rect};
-    Frame d2 = d1;
-    EXPECT_FALSE(d1 != d2);
-    d1.rect_.left = 399;
-    EXPECT_TRUE(d1 != d2);
-}
-
 }  // namespace Shared
 
 }  // namespace FA

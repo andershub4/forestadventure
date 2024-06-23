@@ -154,6 +154,17 @@ TEST_F(SequenceTest, AddShouldNotInsertNewElementWhenSequenceIsStarted)
     EXPECT_THAT(e2, Eq(3));
 }
 
+TEST_F(SequenceTest, IsEmptyWithNoElementsShouldReturnTrue)
+{
+    EXPECT_TRUE(seq_.IsEmpty());
+}
+
+TEST_F(SequenceTest, IsEmptyWithTwoElementsShouldReturnFalse)
+{
+    seq_.Add(111);
+    EXPECT_FALSE(seq_.IsEmpty());
+}
+
 TEST_F(SequenceTest, IsCompletedWithNoElementsShouldAlwaysReturnTrue)
 {
     EXPECT_CALL(loggerMock_, MakeWarnLogEntry("Can't start sequence, no elements"));

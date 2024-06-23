@@ -20,16 +20,9 @@ struct ColliderFrame
     sf::Vector2f center_{};
 };
 
-const ColliderFrame InvalidColliderFrame{};
-
 inline bool operator==(const ColliderFrame& lhs, const ColliderFrame& rhs)
 {
     return std::tie(lhs.size_, lhs.center_) == std::tie(rhs.size_, rhs.center_);
-}
-
-inline bool operator!=(const ColliderFrame& lhs, const ColliderFrame& rhs)
-{
-    return !operator==(lhs, rhs);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const ColliderFrame& p)

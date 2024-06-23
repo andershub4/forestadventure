@@ -37,11 +37,11 @@ public:
             }
         }
     }
-    virtual T GetCurrent() const override { return nElements_ >= 1 ? elements_[iElement_] : T{}; }
+    virtual T GetCurrent() const override { return IsEmpty() ? T{} : elements_[iElement_]; }
     virtual void Start() override
     {
         isCompleted_ = false;
-        if (nElements_ <= 0) {
+        if (IsEmpty()) {
             LOG_WARN("Can't start sequence, no elements");
         }
         else {
@@ -53,6 +53,7 @@ public:
         isStopped_ = true;
         iElement_ = 0;
     }
+    virtual bool IsEmpty() const override { return nElements_ <= 0; }
     virtual bool IsCompleted() const override { return nElements_ > 1 ? isCompleted_ : true; }
     virtual void Add(const T &element) override
     {

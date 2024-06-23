@@ -36,23 +36,24 @@ protected:
     AnimationSprite sprite_;
 };
 
-TEST_F(AnimationSpriteTest, ApplyToWithInvalidFrameShouldDoNothing)
+TEST_F(AnimationSpriteTest, ApplyToWithEmptyContentShouldDoNothing)
 {
-    Shared::Frame invalid{};
-    EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(invalid));
+    EXPECT_CALL(*seqMock_, IsEmpty).WillOnce(Return(true));
     sprite_.ApplyTo(spriteMock_, false);
 }
 
-TEST_F(AnimationSpriteTest, ApplyToWithValidFrameShouldSetTexture)
+TEST_F(AnimationSpriteTest, ApplyToWithContentShouldSetTexture)
 {
+    EXPECT_CALL(*seqMock_, IsEmpty).WillOnce(Return(false));
     EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(frame_));
     EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
     EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
     sprite_.ApplyTo(spriteMock_, false);
 }
 
-TEST_F(AnimationSpriteTest, ApplyToWithValidFrameAndCenterShouldSetTextureAndSetOrigin)
+TEST_F(AnimationSpriteTest, ApplyToWithContentAndCenterShouldSetTextureAndSetOrigin)
 {
+    EXPECT_CALL(*seqMock_, IsEmpty).WillOnce(Return(false));
     EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(frame_));
     EXPECT_CALL(spriteMock_, setTextureImpl(Address(&textureMock_), false));
     EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));

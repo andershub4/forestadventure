@@ -28,16 +28,9 @@ struct Frame
     sf::Vector2f center_{};
 };
 
-const Frame InvalidFrame{nullptr, sf::IntRect{}};
-
 inline bool operator==(const Frame& lhs, const Frame& rhs)
 {
     return std::tie(lhs.texture_, lhs.rect_, lhs.center_) == std::tie(rhs.texture_, rhs.rect_, rhs.center_);
-}
-
-inline bool operator!=(const Frame& lhs, const Frame& rhs)
-{
-    return !operator==(lhs, rhs);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Frame& p)

@@ -24,8 +24,8 @@ void AnimationSprite::Update(float deltaTime)
 
 void AnimationSprite::ApplyTo(Graphic::SpriteIf& sprite, bool center) const
 {
-    auto frame = seq_->GetCurrent();
-    if (frame != InvalidFrame) {
+    if (!seq_->IsEmpty()) {
+        auto frame = seq_->GetCurrent();
         sprite.setTexture(*frame.texture_);
         sprite.setTextureRect(frame.rect_);
         if (center) {

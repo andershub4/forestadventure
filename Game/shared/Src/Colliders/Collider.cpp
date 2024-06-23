@@ -27,9 +27,9 @@ void Collider::Update(float deltaTime)
 
 void Collider::ApplyTo(Graphic::RectangleShapeIf& rectShape, bool center) const
 {
-    auto frame = seq_->GetCurrent();
-    auto size = frame.size_;
-    if (size != sf::Vector2f{}) {
+    if (!seq_->IsEmpty()) {
+        auto frame = seq_->GetCurrent();
+        auto size = frame.size_;
         rectShape.setSize(size);
         if (center) {
             rectShape.setOrigin(frame.center_.x, frame.center_.y);
