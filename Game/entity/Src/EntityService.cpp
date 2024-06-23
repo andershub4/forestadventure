@@ -8,7 +8,7 @@
 
 #include "CameraView.h"
 #include "CameraViews.h"
-#include "Colliders/Collider.h"
+#include "Colliders/ColliderAnimation.h"
 #include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Enum/EntityType.h"
@@ -58,11 +58,11 @@ Shared::ImageAnimation EntityService::MakeAnimation(const std::vector<Shared::Im
     return animation;
 }
 
-Shared::Collider EntityService::MakeCollider(const std::vector<Shared::ColliderData>& data) const
+Shared::ColliderAnimation EntityService::MakeCollider(const std::vector<Shared::ColliderData>& data) const
 {
     float t = Constant::stdSwitchTime;
     auto seq = std::make_shared<Shared::Sequence<Shared::ColliderFrame>>(t);
-    Shared::Collider collider(seq);
+    Shared::ColliderAnimation animation(seq);
 
     for (const auto& item : data) {
         Shared::ColliderFrame frame{};
@@ -87,10 +87,10 @@ Shared::Collider EntityService::MakeCollider(const std::vector<Shared::ColliderD
         }
 
         frame = {static_cast<sf::Vector2f>(colliderSize), static_cast<sf::Vector2f>(center)};
-        collider.AddFrame(frame);
+        animation.AddFrame(frame);
     }
 
-    return collider;
+    return animation;
 }
 
 void EntityService::SendMessage(std::shared_ptr<Shared::Message> msg)

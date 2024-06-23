@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Colliders/Collider.h"
+#include "Colliders/ColliderAnimation.h"
 
 #include <SFML/Graphics/Rect.hpp>
 
@@ -16,16 +16,16 @@ namespace FA {
 
 namespace Shared {
 
-Collider::Collider(std::shared_ptr<SequenceIf<Shared::ColliderFrame>> seq)
+ColliderAnimation::ColliderAnimation(std::shared_ptr<SequenceIf<Shared::ColliderFrame>> seq)
     : seq_(seq)
 {}
 
-void Collider::Update(float deltaTime)
+void ColliderAnimation::Update(float deltaTime)
 {
     seq_->Update(deltaTime);
 }
 
-void Collider::ApplyTo(Graphic::RectangleShapeIf& rectShape, bool center) const
+void ColliderAnimation::ApplyTo(Graphic::RectangleShapeIf& rectShape, bool center) const
 {
     if (!seq_->IsEmpty()) {
         auto frame = seq_->GetCurrent();
@@ -37,22 +37,22 @@ void Collider::ApplyTo(Graphic::RectangleShapeIf& rectShape, bool center) const
     }
 }
 
-void Collider::Start()
+void ColliderAnimation::Start()
 {
     seq_->Start();
 }
 
-void Collider::Stop()
+void ColliderAnimation::Stop()
 {
     seq_->Stop();
 }
 
-bool Collider::IsCompleted() const
+bool ColliderAnimation::IsCompleted() const
 {
     return seq_->IsCompleted();
 }
 
-void Collider::AddFrame(const Shared::ColliderFrame& frame)
+void ColliderAnimation::AddFrame(const Shared::ColliderFrame& frame)
 {
     bool isValid = frame.size_ != sf::Vector2f{};
 

@@ -21,7 +21,7 @@ namespace Shared {
 
 struct ColliderFrame;
 
-class ColliderIf
+class ColliderAnimationIf
 {
 public:
     virtual void Update(float deltaTime) = 0;

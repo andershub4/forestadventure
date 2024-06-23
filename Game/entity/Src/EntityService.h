@@ -22,7 +22,7 @@ namespace Shared {
 class CameraViews;
 class CameraView;
 class ImageAnimation;
-class Collider;
+class ColliderAnimation;
 class SheetManager;
 struct ImageData;
 struct ColliderData;
@@ -49,7 +49,7 @@ public:
     ~EntityService();
 
     Shared::ImageAnimation MakeAnimation(const std::vector<Shared::ImageData> &data) const;
-    Shared::Collider MakeCollider(const std::vector<Shared::ColliderData> &data) const;
+    Shared::ColliderAnimation MakeCollider(const std::vector<Shared::ColliderData> &data) const;
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);
     void AddSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes,

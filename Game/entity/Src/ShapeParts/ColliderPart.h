@@ -11,7 +11,7 @@
 #include <unordered_map>
 
 #include "BasicColliderPart.h"
-#include "Colliders/Collider.h"
+#include "Colliders/ColliderAnimation.h"
 #include "Logging.h"
 #include "RectangleShapeIf.h"
 #include "Sequence.h"
@@ -24,9 +24,10 @@ template <class KeyT>
 class ColliderPartWith : public BasicColliderPart
 {
 public:
-    static std::shared_ptr<ColliderPartWith<KeyT>> Create(const Shared::Collider &collider, bool center = true)
+    static std::shared_ptr<ColliderPartWith<KeyT>> Create(const Shared::ColliderAnimation &animation,
+                                                          bool center = true)
     {
-        return std::make_shared<CtorHelper>(collider, center);
+        return std::make_shared<CtorHelper>(animation, center);
     }
 
     static std::shared_ptr<ColliderPartWith<KeyT>> Create(KeyT &lookupKey, bool center = true)
@@ -38,49 +39,49 @@ public:
 
     virtual void Enter() override
     {
-        currentCollider_ = GetCollider(lookupKey_);
-        currentCollider_.Start();
+        currentAnimation_ = GetAnimation(lookupKey_);
+        currentAnimation_.Start();
     }
 
     virtual void Update(float deltaTime) override
     {
-        currentCollider_.Update(deltaTime);
-        updateCB_(currentCollider_);
+        currentAnimation_.Update(deltaTime);
+        updateCB_(currentAnimation_);
     }
 
     virtual void ApplyTo(Graphic::RectangleShapeIf &rectShape) const override
     {
-        currentCollider_.ApplyTo(rectShape, center_);
+        currentAnimation_.ApplyTo(rectShape, center_);
     }
 
-    void RegisterCollider(const KeyT key, const Shared::Collider &collider)
+    void RegisterCollider(const KeyT key, const Shared::ColliderAnimation &animation)
     {
-        auto res = map_.emplace(key, collider);
+        auto res = map_.emplace(key, animation);
         if (!res.second) {
             LOG_WARN("%s is already inserted", DUMP(key));
         }
     }
-    void RegisterUpdateCB(std::function<void(const Shared::Collider &)> updateCB) { updateCB_ = updateCB; }
+    void RegisterUpdateCB(std::function<void(const Shared::ColliderAnimation &)> updateCB) { updateCB_ = updateCB; }
 
 private:
     /* Constructor for multiple colliders, depending on KeyT */
     ColliderPartWith(KeyT &lookupKey, bool center = true)
         : lookupKey_(lookupKey)
-        , defaultCollider_(std::make_shared<Shared::Sequence<Shared::ColliderFrame>>(1.0f))
-        , currentCollider_(defaultCollider_)
-        , updateCB_([](const Shared::Collider &) {})
+        , defaultAnimation_(std::make_shared<Shared::Sequence<Shared::ColliderFrame>>(1.0f))
+        , currentAnimation_(defaultAnimation_)
+        , updateCB_([](const Shared::ColliderAnimation &) {})
         , center_(center)
     {}
 
     /* Constructor for singel animation */
-    ColliderPartWith(const Shared::Collider &collider, bool center = true)
+    ColliderPartWith(const Shared::ColliderAnimation &animation, bool center = true)
         : lookupKey_(defaultKey_)
-        , defaultCollider_(collider)
-        , currentCollider_(defaultCollider_)
-        , updateCB_([](const Shared::Collider &) {})
+        , defaultAnimation_(animation)
+        , currentAnimation_(defaultAnimation_)
+        , updateCB_([](const Shared::ColliderAnimation &) {})
         , center_(center)
     {
-        RegisterCollider(defaultKey_, collider);
+        RegisterCollider(defaultKey_, animation);
     }
 
 private:
@@ -90,28 +91,28 @@ private:
             : ColliderPartWith<KeyT>(lookupKey, center)
         {}
 
-        CtorHelper(const Shared::Collider &collider, bool center = true)
-            : ColliderPartWith<KeyT>(collider, center)
+        CtorHelper(const Shared::ColliderAnimation &animation, bool center = true)
+            : ColliderPartWith<KeyT>(animation, center)
         {}
     };
 
     KeyT defaultKey_{};
-    Shared::Collider defaultCollider_;
+    Shared::ColliderAnimation defaultAnimation_;
     KeyT &lookupKey_;
-    std::unordered_map<KeyT, Shared::Collider> map_;
-    Shared::Collider currentCollider_;
-    std::function<void(const Shared::Collider &)> updateCB_;
+    std::unordered_map<KeyT, Shared::ColliderAnimation> map_;
+    Shared::ColliderAnimation currentAnimation_;
+    std::function<void(const Shared::ColliderAnimation &)> updateCB_;
     bool center_{};
 
 private:
-    Shared::Collider GetCollider(const KeyT &key)
+    Shared::ColliderAnimation GetAnimation(const KeyT &key)
     {
         if (map_.find(key) != map_.end()) {
             return map_.at(key);
         }
 
         LOG_ERROR("Could not find %s", DUMP(key));
-        return defaultCollider_;
+        return defaultAnimation_;
     }
 };
 

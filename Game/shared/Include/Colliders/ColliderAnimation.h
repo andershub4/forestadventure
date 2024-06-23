@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include "ColliderIf.h"
+#include "ColliderAnimationIf.h"
 
 #include "Resource/ColliderFrame.h"
 #include "SequenceIf.h"
@@ -17,10 +17,10 @@ namespace FA {
 
 namespace Shared {
 
-class Collider : public ColliderIf
+class ColliderAnimation : public ColliderAnimationIf
 {
 public:
-    Collider(std::shared_ptr<SequenceIf<Shared::ColliderFrame>> seq);
+    ColliderAnimation(std::shared_ptr<SequenceIf<Shared::ColliderFrame>> seq);
 
     virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
     virtual void ApplyTo(Graphic::RectangleShapeIf &rectShape, bool center) const override;

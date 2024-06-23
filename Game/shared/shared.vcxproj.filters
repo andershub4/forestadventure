@@ -117,10 +117,10 @@
     <ClInclude Include="Include\Sequence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Colliders\ColliderIf.h">
+    <ClInclude Include="Include\Colliders\ColliderAnimationIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Colliders\Collider.h">
+    <ClInclude Include="Include\Colliders\ColliderAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Resource\ColliderFrame.h">
@@ -152,7 +152,7 @@
     <ClCompile Include="Src\CameraViews.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Colliders\Collider.cpp">
+    <ClCompile Include="Src\Colliders\ColliderAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
