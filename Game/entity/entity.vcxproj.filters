@@ -138,9 +138,6 @@
     <ClInclude Include="Src\Events\CollisionEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ShapeParts\NoShapePart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\ShapeParts\ColliderPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
