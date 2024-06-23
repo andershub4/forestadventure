@@ -10,8 +10,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "Animation/ColliderAnimation.h"
 #include "BasicColliderPart.h"
-#include "Colliders/ColliderAnimation.h"
 #include "Logging.h"
 #include "RectangleShapeIf.h"
 #include "Sequence.h"

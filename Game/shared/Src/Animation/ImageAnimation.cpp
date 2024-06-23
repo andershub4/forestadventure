@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Sprites/ImageAnimation.h"
+#include "Animation/ImageAnimation.h"
 
 #include "Logging.h"
 #include "SpriteIf.h"

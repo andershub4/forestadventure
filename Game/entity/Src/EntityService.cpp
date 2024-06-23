@@ -6,9 +6,10 @@
 
 #include "EntityService.h"
 
+#include "Animation/ColliderAnimation.h"
+#include "Animation/ImageAnimation.h"
 #include "CameraView.h"
 #include "CameraViews.h"
-#include "Colliders/ColliderAnimation.h"
 #include "Constant/Entity.h"
 #include "EntityManager.h"
 #include "Enum/EntityType.h"
@@ -22,7 +23,6 @@
 #include "Resource/TextureManager.h"
 #include "Resource/TextureRect.h"
 #include "Sequence.h"
-#include "Sprites/ImageAnimation.h"
 
 namespace FA {
 

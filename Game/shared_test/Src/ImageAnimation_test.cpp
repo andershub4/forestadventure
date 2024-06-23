@@ -7,10 +7,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "Animation/ImageAnimation.h"
 #include "Mock/LoggerMock.h"
 #include "Mock/SequenceMock.h"
 #include "SpriteMock.h"
-#include "Sprites/ImageAnimation.h"
 #include "TextureMock.h"
 
 using namespace testing;

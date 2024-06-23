@@ -10,11 +10,11 @@
 #include <string>
 #include <unordered_map>
 
+#include "Animation/ImageAnimation.h"
 #include "BasicShapePart.h"
 #include "Logging.h"
 #include "Sequence.h"
 #include "Sprite.h"
-#include "Sprites/ImageAnimation.h"
 
 namespace FA {
 

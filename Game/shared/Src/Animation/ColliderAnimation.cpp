@@ -4,7 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
-#include "Colliders/ColliderAnimation.h"
+#include "Animation/ColliderAnimation.h"
 
 #include <SFML/Graphics/Rect.hpp>
 
