@@ -87,7 +87,7 @@ Shared::Collider EntityService::MakeCollider(const std::vector<Shared::ColliderD
         }
 
         frame = {static_cast<sf::Vector2f>(colliderSize), static_cast<sf::Vector2f>(center)};
-        collider.AddRect(frame);
+        collider.AddFrame(frame);
     }
 
     return collider;
