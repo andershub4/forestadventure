@@ -40,16 +40,16 @@ EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::Textu
 
 EntityService::~EntityService() = default;
 
-Shared::ImageAnimation EntityService::MakeAnimation(const std::vector<Shared::ImageData>& data) const
+Shared::ImageAnimation EntityService::MakeAnimation(const std::vector<Shared::ImageData>& images) const
 {
     float t = Constant::stdSwitchTime;
     auto seq = std::make_shared<Shared::Sequence<Shared::Frame>>(t);
     Shared::ImageAnimation animation(seq);
 
-    for (const auto& item : data) {
-        auto textureRect = sheetManager_.GetTextureRect(item.sheetItem_);
+    for (const auto& image : images) {
+        auto textureRect = sheetManager_.GetTextureRect(image.sheetItem_);
         auto textureSize = sf::Vector2i(textureRect.rect_.width, textureRect.rect_.height);
-        textureRect = item.mirror_ ? MirrorX(textureRect) : textureRect;
+        textureRect = image.mirror_ ? MirrorX(textureRect) : textureRect;
         const auto* texture = textureManager_.Get(textureRect.id_);
         sf::Vector2i center = textureSize / 2;
         animation.AddFrame({texture, textureRect.rect_, static_cast<sf::Vector2f>(center)});
@@ -58,32 +58,32 @@ Shared::ImageAnimation EntityService::MakeAnimation(const std::vector<Shared::Im
     return animation;
 }
 
-Shared::ColliderAnimation EntityService::MakeCollider(const std::vector<Shared::ColliderData>& data) const
+Shared::ColliderAnimation EntityService::MakeAnimation(const std::vector<Shared::ColliderData>& colliders) const
 {
     float t = Constant::stdSwitchTime;
     auto seq = std::make_shared<Shared::Sequence<Shared::ColliderFrame>>(t);
     Shared::ColliderAnimation animation(seq);
 
-    for (const auto& item : data) {
+    for (const auto& collider : colliders) {
         Shared::ColliderFrame frame{};
         sf::Vector2i colliderSize{};
         sf::Vector2i center{};
 
-        if (item.sheetItem_.id_ == Shared::SheetId::Unknown) {
-            colliderSize = {item.rect_.width, item.rect_.height};
+        if (collider.sheetItem_.id_ == Shared::SheetId::Unknown) {
+            colliderSize = {collider.rect_.width, collider.rect_.height};
             center = colliderSize / 2;
         }
         else {
-            auto textureRect = sheetManager_.GetTextureRect(item.sheetItem_);
+            auto textureRect = sheetManager_.GetTextureRect(collider.sheetItem_);
             sf::Vector2i spriteSize{textureRect.rect_.width, textureRect.rect_.height};
             colliderSize = spriteSize;
 
-            if (item.rect_ != sf::IntRect{}) {
-                colliderSize = {item.rect_.width, item.rect_.height};
+            if (collider.rect_ != sf::IntRect{}) {
+                colliderSize = {collider.rect_.width, collider.rect_.height};
             }
             center = spriteSize / 2;
-            center.x -= item.rect_.left;
-            center.y -= item.rect_.top;
+            center.x -= collider.rect_.left;
+            center.y -= collider.rect_.top;
         }
 
         frame = {static_cast<sf::Vector2f>(colliderSize), static_cast<sf::Vector2f>(center)};

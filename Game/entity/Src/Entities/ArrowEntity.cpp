@@ -124,11 +124,14 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
     idleState->RegisterIgnoreEvents({EventType::Collision});
 
     auto moveState = RegisterState(StateType::Move);
-    auto animation = service_.MakeAnimation({{{Shared::SheetId::Arrow, {0, 0}}}});
-    auto shapePart = AnimationPart::Create(animation);
+    Shared::SheetItem arrow{Shared::SheetId::Arrow, {0, 0}};
+    std::vector<Shared::ImageData> images{arrow};
+    auto imageAnimation = service_.MakeAnimation(images);
+    auto shapePart = AnimationPart::Create(imageAnimation);
     moveState->RegisterShapePart(shapePart);
-    auto collider = service_.MakeCollider({{{Shared::SheetId::Arrow, {0, 0}}}});
-    auto colliderPart = ColliderPart::Create(collider);
+    std::vector<Shared::ColliderData> colliders{arrow};
+    auto colliderAnimation = service_.MakeAnimation(colliders);
+    auto colliderPart = ColliderPart::Create(colliderAnimation);
     moveState->RegisterColliderPart(colliderPart);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity * 8.0f, [this](MoveDirection d) { OnBeginMove(d); },

@@ -230,7 +230,7 @@ std::shared_ptr<ColliderPartWith<FaceDirection>> MoleEntity::MakeColliderPart(
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
     auto part = ColliderPartWith<FaceDirection>::Create(*dir);
     for (const auto& entry : data) {
-        part->RegisterCollider(entry.first, service_.MakeCollider(entry.second));
+        part->RegisterCollider(entry.first, service_.MakeAnimation(entry.second));
     }
 
     return part;

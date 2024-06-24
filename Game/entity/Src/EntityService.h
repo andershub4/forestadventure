@@ -48,8 +48,8 @@ public:
                   EntityManager &entityManager);
     ~EntityService();
 
-    Shared::ImageAnimation MakeAnimation(const std::vector<Shared::ImageData> &data) const;
-    Shared::ColliderAnimation MakeCollider(const std::vector<Shared::ColliderData> &data) const;
+    Shared::ImageAnimation MakeAnimation(const std::vector<Shared::ImageData> &images) const;
+    Shared::ColliderAnimation MakeAnimation(const std::vector<Shared::ColliderData> &colliders) const;
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);
     void AddSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes,
