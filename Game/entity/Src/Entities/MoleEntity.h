@@ -42,9 +42,9 @@ private:
     void OnUpdateMove(const sf::Vector2f& delta);
 
     std::shared_ptr<AnimationPartWith<FaceDirection>> MakeShapePart(
-        const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& data);
+        const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages);
     std::shared_ptr<ColliderPartWith<FaceDirection>> MakeColliderPart(
-        const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& data);
+        const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders);
 
     void DefineIdleState(std::shared_ptr<State> state);
     void DefineMoveState(std::shared_ptr<State> state);
