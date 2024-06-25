@@ -31,6 +31,13 @@ namespace Entity {
 
 namespace {
 
+using namespace Shared::SheetId;
+
+const Shared::SheetItem arrow{Arrow, {0, 0}};
+
+const std::vector<Shared::ImageData> images{arrow};
+const std::vector<Shared::ColliderData> colliders{arrow};
+
 const std::unordered_map<MoveDirection, float> arrowRotation = {{MoveDirection::Down, 180.0f},
                                                                 {MoveDirection::Left, 270.0f},
                                                                 {MoveDirection::Right, 90.0f},
@@ -124,12 +131,9 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
     idleState->RegisterIgnoreEvents({EventType::Collision});
 
     auto moveState = RegisterState(StateType::Move);
-    Shared::SheetItem arrow{Shared::SheetId::Arrow, {0, 0}};
-    std::vector<Shared::ImageData> images{arrow};
     auto imageAnimation = service_.MakeAnimation(images);
     auto shapePart = AnimationPart::Create(imageAnimation);
     moveState->RegisterShapePart(shapePart);
-    std::vector<Shared::ColliderData> colliders{arrow};
     auto colliderAnimation = service_.MakeAnimation(colliders);
     auto colliderPart = ColliderPart::Create(colliderAnimation);
     moveState->RegisterColliderPart(colliderPart);

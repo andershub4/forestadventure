@@ -27,8 +27,8 @@ const Shared::SheetItem coin2{Coin, {1, 0}};
 const Shared::SheetItem coin3{Coin, {2, 0}};
 const Shared::SheetItem coin4{Coin, {3, 0}};
 
-const std::vector<Shared::ImageData> idle{coin1, coin2, coin3, coin4};
-const std::vector<Shared::ColliderData> colliderIdle{coin1, coin2, coin3, coin4};
+const std::vector<Shared::ImageData> idleImages{coin1, coin2, coin3, coin4};
+const std::vector<Shared::ColliderData> idleColliders{coin1, coin2, coin3, coin4};
 
 }  // namespace
 
@@ -44,10 +44,10 @@ CoinEntity::~CoinEntity() = default;
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto imageAnimation = service_.MakeAnimation(idle);
+    auto imageAnimation = service_.MakeAnimation(idleImages);
     auto shapePart = AnimationPart::Create(imageAnimation);
     idleState->RegisterShapePart(shapePart);
-    auto colliderAnimation = service_.MakeAnimation(colliderIdle);
+    auto colliderAnimation = service_.MakeAnimation(idleColliders);
     auto colliderPart = ColliderPart::Create(colliderAnimation);
     idleState->RegisterColliderPart(colliderPart);
 }

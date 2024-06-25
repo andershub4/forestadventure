@@ -92,84 +92,88 @@ const Shared::SheetItem attackWUp1{HeroAttackWeaponBack, {0, 0}};
 const Shared::SheetItem attackWUp2{HeroAttackWeaponBack, {1, 0}};
 const Shared::SheetItem attackWUp3{HeroAttackWeaponBack, {2, 0}};
 
-const std::vector<Shared::ImageData> idleLeft{{idleSide1, true}};
-const std::vector<Shared::ImageData> idleRight{idleSide1};
-const std::vector<Shared::ImageData> idleFront{idleFront1};
-const std::vector<Shared::ImageData> idleBack{idleBack1};
-const std::vector<Shared::ImageData> moveLeft{{moveSide1, true}, {moveSide2, true}, {moveSide3, true},
-                                              {moveSide4, true}, {moveSide5, true}, {moveSide6, true}};
-const std::vector<Shared::ImageData> moveRight{moveSide1, moveSide2, moveSide3, moveSide4, moveSide5, moveSide6};
-const std::vector<Shared::ImageData> moveDown{moveDown1, moveDown2, moveDown3, moveDown4, moveDown5, moveDown6};
-const std::vector<Shared::ImageData> moveUp{moveUp1, moveUp2, moveUp3, moveUp4, moveUp5, moveUp6};
+const std::vector<Shared::ImageData> idleLeftImages{{idleSide1, true}};
+const std::vector<Shared::ImageData> idleRightImages{idleSide1};
+const std::vector<Shared::ImageData> idleFrontImages{idleFront1};
+const std::vector<Shared::ImageData> idleBackImages{idleBack1};
+const std::vector<Shared::ImageData> moveLeftImages{{moveSide1, true}, {moveSide2, true}, {moveSide3, true},
+                                                    {moveSide4, true}, {moveSide5, true}, {moveSide6, true}};
+const std::vector<Shared::ImageData> moveRightImages{moveSide1, moveSide2, moveSide3, moveSide4, moveSide5, moveSide6};
+const std::vector<Shared::ImageData> moveDownImages{moveDown1, moveDown2, moveDown3, moveDown4, moveDown5, moveDown6};
+const std::vector<Shared::ImageData> moveUpImages{moveUp1, moveUp2, moveUp3, moveUp4, moveUp5, moveUp6};
 
-const std::vector<Shared::ImageData> attackLeft{{attackSide1, true}, {attackSide2, true}, {attackSide3, true}};
-const std::vector<Shared::ImageData> attackRight{attackSide1, attackSide2, attackSide3};
-const std::vector<Shared::ImageData> attackDown{attackDown1, attackDown2, attackDown3};
-const std::vector<Shared::ImageData> attackUp{attackUp1, attackUp2, attackUp3};
+const std::vector<Shared::ImageData> attackLeftImages{{attackSide1, true}, {attackSide2, true}, {attackSide3, true}};
+const std::vector<Shared::ImageData> attackRightImages{attackSide1, attackSide2, attackSide3};
+const std::vector<Shared::ImageData> attackDownImages{attackDown1, attackDown2, attackDown3};
+const std::vector<Shared::ImageData> attackUpImages{attackUp1, attackUp2, attackUp3};
 
-const std::vector<Shared::ImageData> attackWLeft{{attackWSide1, true}, {attackWSide2, true}, {attackWSide3, true}};
-const std::vector<Shared::ImageData> attackWRight{attackWSide1, attackWSide2, attackWSide3};
-const std::vector<Shared::ImageData> attackWDown{attackWDown1, attackWDown2, attackWDown3};
-const std::vector<Shared::ImageData> attackWUp{attackWUp1, attackWUp2, attackWUp3};
+const std::vector<Shared::ImageData> attackWLeftImages{
+    {attackWSide1, true}, {attackWSide2, true}, {attackWSide3, true}};
+const std::vector<Shared::ImageData> attackWRightImages{attackWSide1, attackWSide2, attackWSide3};
+const std::vector<Shared::ImageData> attackWDownImages{attackWDown1, attackWDown2, attackWDown3};
+const std::vector<Shared::ImageData> attackWUpImages{attackWUp1, attackWUp2, attackWUp3};
 
-const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> idleData{{FaceDirection::Left, idleLeft},
-                                                                                 {FaceDirection::Right, idleRight},
-                                                                                 {FaceDirection::Down, idleFront},
-                                                                                 {FaceDirection::Up, idleBack}};
-const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> moveData{{FaceDirection::Left, moveLeft},
-                                                                                 {FaceDirection::Right, moveRight},
-                                                                                 {FaceDirection::Down, moveDown},
-                                                                                 {FaceDirection::Up, moveUp}};
-const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackData{{FaceDirection::Left, attackLeft},
-                                                                                   {FaceDirection::Right, attackRight},
-                                                                                   {FaceDirection::Down, attackDown},
-                                                                                   {FaceDirection::Up, attackUp}};
-const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackWData{
-    {FaceDirection::Left, attackWLeft},
-    {FaceDirection::Right, attackWRight},
-    {FaceDirection::Down, attackWDown},
-    {FaceDirection::Up, attackWUp}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> idleFaceDirImages{
+    {FaceDirection::Left, idleLeftImages},
+    {FaceDirection::Right, idleRightImages},
+    {FaceDirection::Down, idleFrontImages},
+    {FaceDirection::Up, idleBackImages}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> moveFaceDirImages{
+    {FaceDirection::Left, moveLeftImages},
+    {FaceDirection::Right, moveRightImages},
+    {FaceDirection::Down, moveDownImages},
+    {FaceDirection::Up, moveUpImages}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackFaceDirImages{
+    {FaceDirection::Left, attackLeftImages},
+    {FaceDirection::Right, attackRightImages},
+    {FaceDirection::Down, attackDownImages},
+    {FaceDirection::Up, attackUpImages}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackWFaceDirImages{
+    {FaceDirection::Left, attackWLeftImages},
+    {FaceDirection::Right, attackWRightImages},
+    {FaceDirection::Down, attackWDownImages},
+    {FaceDirection::Up, attackWUpImages}};
 
-const std::vector<Shared::ColliderData> colliderIdleLeft{idleSide1};
-const std::vector<Shared::ColliderData> colliderIdleRight{idleSide1};
-const std::vector<Shared::ColliderData> colliderIdleFront{idleFront1};
-const std::vector<Shared::ColliderData> colliderIdleBack{idleBack1};
-const std::vector<Shared::ColliderData> colliderMoveLeft{moveSide1, moveSide2, moveSide3,
-                                                         moveSide4, moveSide5, moveSide6};
-const std::vector<Shared::ColliderData> colliderMoveRight{moveSide1, moveSide2, moveSide3,
+const std::vector<Shared::ColliderData> idleLeftColliders{idleSide1};
+const std::vector<Shared::ColliderData> idleRightColliders{idleSide1};
+const std::vector<Shared::ColliderData> idleFrontColliders{idleFront1};
+const std::vector<Shared::ColliderData> idleBackColliders{idleBack1};
+const std::vector<Shared::ColliderData> moveLeftColliders{moveSide1, moveSide2, moveSide3,
                                                           moveSide4, moveSide5, moveSide6};
-const std::vector<Shared::ColliderData> colliderMoveDown{moveDown1, moveDown2, moveDown3,
-                                                         moveDown4, moveDown5, moveDown6};
-const std::vector<Shared::ColliderData> colliderMoveUp{moveUp1, moveUp2, moveUp3, moveUp4, moveUp5, moveUp6};
-const std::vector<Shared::ColliderData> colliderAttackLeft{attackSide1, attackSide2, attackSide3};
-const std::vector<Shared::ColliderData> colliderAttackRight{attackSide1, attackSide2, attackSide3};
-const std::vector<Shared::ColliderData> colliderAttackDown{attackDown1, attackDown2, attackDown3};
-const std::vector<Shared::ColliderData> colliderAttackUp{attackUp1, attackUp2, attackUp3};
-const std::vector<Shared::ColliderData> colliderAttackWLeft{attackWSide1, attackWSide2, attackWSide3};
-const std::vector<Shared::ColliderData> colliderAttackWRight{attackWSide1, attackWSide2, attackWSide3};
-const std::vector<Shared::ColliderData> colliderAttackWDown{attackWDown1, attackWDown2, attackWDown3};
-const std::vector<Shared::ColliderData> colliderAttackWUp{attackWUp1, attackWUp2, attackWUp3};
+const std::vector<Shared::ColliderData> moveRightColliders{moveSide1, moveSide2, moveSide3,
+                                                           moveSide4, moveSide5, moveSide6};
+const std::vector<Shared::ColliderData> moveDownColliders{moveDown1, moveDown2, moveDown3,
+                                                          moveDown4, moveDown5, moveDown6};
+const std::vector<Shared::ColliderData> moveUpColliders{moveUp1, moveUp2, moveUp3, moveUp4, moveUp5, moveUp6};
+const std::vector<Shared::ColliderData> attackLeftColliders{attackSide1, attackSide2, attackSide3};
+const std::vector<Shared::ColliderData> attackRightColliders{attackSide1, attackSide2, attackSide3};
+const std::vector<Shared::ColliderData> attackDownColliders{attackDown1, attackDown2, attackDown3};
+const std::vector<Shared::ColliderData> attackUpColliders{attackUp1, attackUp2, attackUp3};
+const std::vector<Shared::ColliderData> attackWLeftColliders{attackWSide1, attackWSide2, attackWSide3};
+const std::vector<Shared::ColliderData> attackWRightColliders{attackWSide1, attackWSide2, attackWSide3};
+const std::vector<Shared::ColliderData> attackWDownColliders{attackWDown1, attackWDown2, attackWDown3};
+const std::vector<Shared::ColliderData> attackWUpColliders{attackWUp1, attackWUp2, attackWUp3};
 
-const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderIdleData{
-    {FaceDirection::Left, colliderIdleLeft},
-    {FaceDirection::Right, colliderIdleRight},
-    {FaceDirection::Down, colliderIdleFront},
-    {FaceDirection::Up, colliderIdleBack}};
-const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderMoveData{
-    {FaceDirection::Left, colliderMoveLeft},
-    {FaceDirection::Right, colliderMoveRight},
-    {FaceDirection::Down, colliderMoveDown},
-    {FaceDirection::Up, colliderMoveUp}};
-const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderAttackData{
-    {FaceDirection::Left, colliderAttackLeft},
-    {FaceDirection::Right, colliderAttackRight},
-    {FaceDirection::Down, colliderAttackDown},
-    {FaceDirection::Up, colliderAttackUp}};
-const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderAttackWData{
-    {FaceDirection::Left, colliderAttackWLeft},
-    {FaceDirection::Right, colliderAttackWRight},
-    {FaceDirection::Down, colliderAttackWDown},
-    {FaceDirection::Up, colliderAttackWUp}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> idleFaceDirColliders{
+    {FaceDirection::Left, idleLeftColliders},
+    {FaceDirection::Right, idleRightColliders},
+    {FaceDirection::Down, idleFrontColliders},
+    {FaceDirection::Up, idleBackColliders}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> moveFaceDirColliders{
+    {FaceDirection::Left, moveLeftColliders},
+    {FaceDirection::Right, moveRightColliders},
+    {FaceDirection::Down, moveDownColliders},
+    {FaceDirection::Up, moveUpColliders}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> attackFaceDirColliders{
+    {FaceDirection::Left, attackLeftColliders},
+    {FaceDirection::Right, attackRightColliders},
+    {FaceDirection::Down, attackDownColliders},
+    {FaceDirection::Up, attackUpColliders}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> attackWFaceDirColliders{
+    {FaceDirection::Left, attackWLeftColliders},
+    {FaceDirection::Right, attackWRightColliders},
+    {FaceDirection::Down, attackWDownColliders},
+    {FaceDirection::Up, attackWUpColliders}};
 
 FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 {
@@ -309,9 +313,9 @@ void PlayerEntity::OnInit()
 
 void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 {
-    auto shapePart = MakeShapePart(idleData);
+    auto shapePart = MakeShapePart(idleFaceDirImages);
     state->RegisterShapePart(shapePart);
-    auto colliderPart = MakeColliderPart(colliderIdleData);
+    auto colliderPart = MakeColliderPart(idleFaceDirColliders);
     state->RegisterColliderPart(colliderPart);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -326,9 +330,9 @@ void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 {
-    auto shapePart = MakeShapePart(moveData);
+    auto shapePart = MakeShapePart(moveFaceDirImages);
     state->RegisterShapePart(shapePart);
-    auto colliderPart = MakeColliderPart(colliderMoveData);
+    auto colliderPart = MakeColliderPart(moveFaceDirColliders);
     state->RegisterColliderPart(colliderPart);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
@@ -347,9 +351,9 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto shapePart = MakeShapePart(attackData);
+    auto shapePart = MakeShapePart(attackFaceDirImages);
     state->RegisterShapePart(shapePart);
-    auto colliderPart = MakeColliderPart(colliderAttackData);
+    auto colliderPart = MakeColliderPart(attackFaceDirColliders);
     state->RegisterColliderPart(colliderPart);
     shapePart->RegisterUpdateCB(updateCB);
     state->RegisterEventCB(EventType::StartMove,
@@ -365,9 +369,9 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto shapePart = MakeShapePart(attackWData);
+    auto shapePart = MakeShapePart(attackWFaceDirImages);
     state->RegisterShapePart(shapePart);
-    auto colliderPart = MakeColliderPart(colliderAttackWData);
+    auto colliderPart = MakeColliderPart(attackWFaceDirColliders);
     state->RegisterColliderPart(colliderPart);
     shapePart->RegisterUpdateCB(updateCB);
     state->RegisterEventCB(EventType::StartMove,

@@ -54,46 +54,49 @@ const Shared::SheetItem collision4{Death, {3, 0}};
 const Shared::SheetItem collision5{Death, {4, 0}};
 const Shared::SheetItem collision6{Death, {5, 0}};
 
-const std::vector<Shared::ImageData> idleLeft{{idleSide1, true}};
-const std::vector<Shared::ImageData> idleRight{idleSide1};
-const std::vector<Shared::ImageData> idleFront{idleFront1};
-const std::vector<Shared::ImageData> idleBack{idleBack1};
-const std::vector<Shared::ImageData> moveLeft{
+const std::vector<Shared::ImageData> idleLeftImages{{idleSide1, true}};
+const std::vector<Shared::ImageData> idleRightImages{idleSide1};
+const std::vector<Shared::ImageData> idleFrontImages{idleFront1};
+const std::vector<Shared::ImageData> idleBackImages{idleBack1};
+const std::vector<Shared::ImageData> moveLeftImages{
     {moveSide1, true}, {moveSide2, true}, {moveSide3, true}, {moveSide4, true}};
-const std::vector<Shared::ImageData> moveRight{moveSide1, moveSide2, moveSide3, moveSide4};
-const std::vector<Shared::ImageData> moveDown{moveDown1, moveDown2, moveDown3, moveDown4};
-const std::vector<Shared::ImageData> moveUp{moveUp1, moveUp2, moveUp3, moveUp4};
+const std::vector<Shared::ImageData> moveRightImages{moveSide1, moveSide2, moveSide3, moveSide4};
+const std::vector<Shared::ImageData> moveDownImages{moveDown1, moveDown2, moveDown3, moveDown4};
+const std::vector<Shared::ImageData> moveUpImages{moveUp1, moveUp2, moveUp3, moveUp4};
 
-const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> idleData{{FaceDirection::Left, idleLeft},
-                                                                                 {FaceDirection::Right, idleRight},
-                                                                                 {FaceDirection::Down, idleFront},
-                                                                                 {FaceDirection::Up, idleBack}};
-const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> moveData{{FaceDirection::Left, moveLeft},
-                                                                                 {FaceDirection::Right, moveRight},
-                                                                                 {FaceDirection::Down, moveDown},
-                                                                                 {FaceDirection::Up, moveUp}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> idleFaceDirImages{
+    {FaceDirection::Left, idleLeftImages},
+    {FaceDirection::Right, idleRightImages},
+    {FaceDirection::Down, idleFrontImages},
+    {FaceDirection::Up, idleBackImages}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> moveFaceDirImages{
+    {FaceDirection::Left, moveLeftImages},
+    {FaceDirection::Right, moveRightImages},
+    {FaceDirection::Down, moveDownImages},
+    {FaceDirection::Up, moveUpImages}};
 
-const std::vector<Shared::ImageData> collision{collision1, collision2, collision3, collision4, collision5, collision6};
+const std::vector<Shared::ImageData> collisionImages{collision1, collision2, collision3,
+                                                     collision4, collision5, collision6};
 
-const std::vector<Shared::ColliderData> colliderIdleLeft{idleSide1};
-const std::vector<Shared::ColliderData> colliderIdleRight{idleSide1};
-const std::vector<Shared::ColliderData> colliderIdleFront{idleFront1};
-const std::vector<Shared::ColliderData> colliderIdleBack{idleBack1};
-const std::vector<Shared::ColliderData> colliderMoveLeft{moveSide1, moveSide2, moveSide3, moveSide4};
-const std::vector<Shared::ColliderData> colliderMoveRight{moveSide1, moveSide2, moveSide3, moveSide4};
-const std::vector<Shared::ColliderData> colliderMoveDown{moveDown1, moveDown2, moveDown3, moveDown4};
-const std::vector<Shared::ColliderData> colliderMoveUp{moveUp1, moveUp2, moveUp3, moveUp4};
+const std::vector<Shared::ColliderData> idleLeftColliders{idleSide1};
+const std::vector<Shared::ColliderData> idleRightColliders{idleSide1};
+const std::vector<Shared::ColliderData> idleFrontColliders{idleFront1};
+const std::vector<Shared::ColliderData> idleBackColliders{idleBack1};
+const std::vector<Shared::ColliderData> moveLeftColliders{moveSide1, moveSide2, moveSide3, moveSide4};
+const std::vector<Shared::ColliderData> moveRightColliders{moveSide1, moveSide2, moveSide3, moveSide4};
+const std::vector<Shared::ColliderData> moveDownColliders{moveDown1, moveDown2, moveDown3, moveDown4};
+const std::vector<Shared::ColliderData> moveUpColliders{moveUp1, moveUp2, moveUp3, moveUp4};
 
-const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderIdleData{
-    {FaceDirection::Left, colliderIdleLeft},
-    {FaceDirection::Right, colliderIdleRight},
-    {FaceDirection::Down, colliderIdleFront},
-    {FaceDirection::Up, colliderIdleBack}};
-const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> colliderMoveData{
-    {FaceDirection::Left, colliderMoveLeft},
-    {FaceDirection::Right, colliderMoveRight},
-    {FaceDirection::Down, colliderMoveDown},
-    {FaceDirection::Up, colliderMoveUp}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> idleFaceDirColliders{
+    {FaceDirection::Left, idleLeftColliders},
+    {FaceDirection::Right, idleRightColliders},
+    {FaceDirection::Down, idleFrontColliders},
+    {FaceDirection::Up, idleBackColliders}};
+const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> moveFaceDirColliders{
+    {FaceDirection::Left, moveLeftColliders},
+    {FaceDirection::Right, moveRightColliders},
+    {FaceDirection::Down, moveDownColliders},
+    {FaceDirection::Up, moveUpColliders}};
 
 FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 {
@@ -160,9 +163,9 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 
 void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 {
-    auto shapePart = MakeShapePart(idleData);
+    auto shapePart = MakeShapePart(idleFaceDirImages);
     state->RegisterShapePart(shapePart);
-    auto colliderPart = MakeColliderPart(colliderIdleData);
+    auto colliderPart = MakeColliderPart(idleFaceDirColliders);
     state->RegisterColliderPart(colliderPart);
 
     state->RegisterEventCB(EventType::StartMove,
@@ -178,9 +181,9 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 
 void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
 {
-    auto shapePart = MakeShapePart(moveData);
+    auto shapePart = MakeShapePart(moveFaceDirImages);
     state->RegisterShapePart(shapePart);
-    auto colliderPart = MakeColliderPart(colliderMoveData);
+    auto colliderPart = MakeColliderPart(moveFaceDirColliders);
     state->RegisterColliderPart(colliderPart);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
@@ -203,7 +206,7 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
             HandleEvent(std::make_shared<DeadEvent>());
         }
     };
-    auto animation = service_.MakeAnimation(collision);
+    auto animation = service_.MakeAnimation(collisionImages);
     auto shapePart = AnimationPart::Create(animation);
     shapePart->RegisterUpdateCB(updateCB);
     state->RegisterShapePart(shapePart);
