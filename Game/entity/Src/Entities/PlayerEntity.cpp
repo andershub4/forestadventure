@@ -325,7 +325,6 @@ void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
     state->RegisterEventCB(EventType::AttackWeapon, [this](std::shared_ptr<BasicEvent> event) {
         ChangeStateTo(StateType::AttackWeapon, event);
     });
-    state->RegisterIgnoreEvents({EventType::Collision});
 }
 
 void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)

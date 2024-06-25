@@ -128,7 +128,6 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
 {
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
-    idleState->RegisterIgnoreEvents({EventType::Collision});
 
     auto moveState = RegisterState(StateType::Move);
     auto imageAnimation = service_.MakeAnimation(images);

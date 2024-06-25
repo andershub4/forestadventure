@@ -210,7 +210,6 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
     auto shapePart = AnimationPart::Create(animation);
     shapePart->RegisterUpdateCB(updateCB);
     state->RegisterShapePart(shapePart);
-    state->RegisterIgnoreEvents({EventType::Collision});
 }
 
 std::shared_ptr<AnimationPartWith<FaceDirection>> MoleEntity::MakeShapePart(

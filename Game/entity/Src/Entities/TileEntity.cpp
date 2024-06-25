@@ -30,7 +30,6 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     auto animation = service_.MakeAnimation(data.graphic_.animation_);
     auto part = AnimationPart::Create(animation, false);
     idleState->RegisterShapePart(part);
-    idleState->RegisterIgnoreEvents({EventType::Collision});
 }
 
 }  // namespace Entity
