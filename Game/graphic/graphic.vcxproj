@@ -145,6 +145,7 @@
     <ClInclude Include="Include\DrawableIf.h" />
     <ClInclude Include="Include\FontIf.h" />
     <ClInclude Include="Include\RectangleShapeIf.h" />
+    <ClInclude Include="Include\RectangleShapeMock.h" />
     <ClInclude Include="Include\RenderTargetIf.h" />
     <ClInclude Include="Include\RenderTextureIf.h" />
     <ClInclude Include="Include\RenderWindowIf.h" />
