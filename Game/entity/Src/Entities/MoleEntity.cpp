@@ -78,14 +78,20 @@ const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> moveFace
 const std::vector<Shared::ImageData> collisionImages{collision1, collision2, collision3,
                                                      collision4, collision5, collision6};
 
-const std::vector<Shared::ColliderData> idleLeftColliders{idleSide1};
-const std::vector<Shared::ColliderData> idleRightColliders{idleSide1};
-const std::vector<Shared::ColliderData> idleFrontColliders{idleFront1};
-const std::vector<Shared::ColliderData> idleBackColliders{idleBack1};
-const std::vector<Shared::ColliderData> moveLeftColliders{moveSide1, moveSide2, moveSide3, moveSide4};
-const std::vector<Shared::ColliderData> moveRightColliders{moveSide1, moveSide2, moveSide3, moveSide4};
-const std::vector<Shared::ColliderData> moveDownColliders{moveDown1, moveDown2, moveDown3, moveDown4};
-const std::vector<Shared::ColliderData> moveUpColliders{moveUp1, moveUp2, moveUp3, moveUp4};
+const sf::IntRect rect{6, 4, 12, 18};
+
+const std::vector<Shared::ColliderData> idleLeftColliders{{idleSide1, rect}};
+const std::vector<Shared::ColliderData> idleRightColliders{{idleSide1, rect}};
+const std::vector<Shared::ColliderData> idleFrontColliders{{idleFront1, rect}};
+const std::vector<Shared::ColliderData> idleBackColliders{{idleBack1, rect}};
+const std::vector<Shared::ColliderData> moveLeftColliders{
+    {moveSide1, rect}, {moveSide2, rect}, {moveSide3, rect}, {moveSide4, rect}};
+const std::vector<Shared::ColliderData> moveRightColliders{
+    {moveSide1, rect}, {moveSide2, rect}, {moveSide3, rect}, {moveSide4, rect}};
+const std::vector<Shared::ColliderData> moveDownColliders{
+    {moveDown1, rect}, {moveDown2, rect}, {moveDown3, rect}, {moveDown4, rect}};
+const std::vector<Shared::ColliderData> moveUpColliders{
+    {moveUp1, rect}, {moveUp2, rect}, {moveUp3, rect}, {moveUp4, rect}};
 
 const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> idleFaceDirColliders{
     {FaceDirection::Left, idleLeftColliders},

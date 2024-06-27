@@ -134,25 +134,34 @@ const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackWF
     {FaceDirection::Down, attackWDownImages},
     {FaceDirection::Up, attackWUpImages}};
 
-const std::vector<Shared::ColliderData> idleLeftColliders{idleSide1};
-const std::vector<Shared::ColliderData> idleRightColliders{idleSide1};
-const std::vector<Shared::ColliderData> idleFrontColliders{idleFront1};
-const std::vector<Shared::ColliderData> idleBackColliders{idleBack1};
-const std::vector<Shared::ColliderData> moveLeftColliders{moveSide1, moveSide2, moveSide3,
-                                                          moveSide4, moveSide5, moveSide6};
-const std::vector<Shared::ColliderData> moveRightColliders{moveSide1, moveSide2, moveSide3,
-                                                           moveSide4, moveSide5, moveSide6};
-const std::vector<Shared::ColliderData> moveDownColliders{moveDown1, moveDown2, moveDown3,
-                                                          moveDown4, moveDown5, moveDown6};
-const std::vector<Shared::ColliderData> moveUpColliders{moveUp1, moveUp2, moveUp3, moveUp4, moveUp5, moveUp6};
-const std::vector<Shared::ColliderData> attackLeftColliders{attackSide1, attackSide2, attackSide3};
-const std::vector<Shared::ColliderData> attackRightColliders{attackSide1, attackSide2, attackSide3};
-const std::vector<Shared::ColliderData> attackDownColliders{attackDown1, attackDown2, attackDown3};
-const std::vector<Shared::ColliderData> attackUpColliders{attackUp1, attackUp2, attackUp3};
-const std::vector<Shared::ColliderData> attackWLeftColliders{attackWSide1, attackWSide2, attackWSide3};
-const std::vector<Shared::ColliderData> attackWRightColliders{attackWSide1, attackWSide2, attackWSide3};
-const std::vector<Shared::ColliderData> attackWDownColliders{attackWDown1, attackWDown2, attackWDown3};
-const std::vector<Shared::ColliderData> attackWUpColliders{attackWUp1, attackWUp2, attackWUp3};
+const sf::IntRect rect{9, 8, 14, 22};
+
+const std::vector<Shared::ColliderData> idleLeftColliders{{idleSide1, rect}};
+const std::vector<Shared::ColliderData> idleRightColliders{{idleSide1, rect}};
+const std::vector<Shared::ColliderData> idleFrontColliders{{idleFront1, rect}};
+const std::vector<Shared::ColliderData> idleBackColliders{{idleBack1, rect}};
+const std::vector<Shared::ColliderData> moveLeftColliders{{moveSide1, rect}, {moveSide2, rect}, {moveSide3, rect},
+                                                          {moveSide4, rect}, {moveSide5, rect}, {moveSide6, rect}};
+const std::vector<Shared::ColliderData> moveRightColliders{{moveSide1, rect}, {moveSide2, rect}, {moveSide3, rect},
+                                                           {moveSide4, rect}, {moveSide5, rect}, {moveSide6, rect}};
+const std::vector<Shared::ColliderData> moveDownColliders{{moveDown1, rect}, {moveDown2, rect}, {moveDown3, rect},
+                                                          {moveDown4, rect}, {moveDown5, rect}, {moveDown6, rect}};
+const std::vector<Shared::ColliderData> moveUpColliders{{moveUp1, rect}, {moveUp2, rect}, {moveUp3, rect},
+                                                        {moveUp4, rect}, {moveUp5, rect}, {moveUp6, rect}};
+const std::vector<Shared::ColliderData> attackLeftColliders{
+    {attackSide1, rect}, {attackSide2, rect}, {attackSide3, rect}};
+const std::vector<Shared::ColliderData> attackRightColliders{
+    {attackSide1, rect}, {attackSide2, rect}, {attackSide3, rect}};
+const std::vector<Shared::ColliderData> attackDownColliders{
+    {attackDown1, rect}, {attackDown2, rect}, {attackDown3, rect}};
+const std::vector<Shared::ColliderData> attackUpColliders{{attackUp1, rect}, {attackUp2, rect}, {attackUp3, rect}};
+const std::vector<Shared::ColliderData> attackWLeftColliders{
+    {attackWSide1, rect}, {attackWSide2, rect}, {attackWSide3, rect}};
+const std::vector<Shared::ColliderData> attackWRightColliders{
+    {attackWSide1, rect}, {attackWSide2, rect}, {attackWSide3, rect}};
+const std::vector<Shared::ColliderData> attackWDownColliders{
+    {attackWDown1, rect}, {attackWDown2, rect}, {attackWDown3, rect}};
+const std::vector<Shared::ColliderData> attackWUpColliders{{attackWUp1, rect}, {attackWUp2, rect}, {attackWUp3, rect}};
 
 const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> idleFaceDirColliders{
     {FaceDirection::Left, idleLeftColliders},
