@@ -8,9 +8,6 @@
 
 #include <gmock/gmock.h>
 
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/System/Vector2.hpp>
-
 #include "RectangleShapeIf.h"
 #include "SfmlFwd.h"
 
@@ -23,14 +20,14 @@ class RectangleShapeMock : public RectangleShapeIf
 public:
     MOCK_METHOD((sf::FloatRect), getLocalBounds, (), (const override));
     MOCK_METHOD((sf::FloatRect), getGlobalBounds, (), (const override));
-    MOCK_METHOD((void), setSize, (const sf::Vector2f &size), (override));
-    MOCK_METHOD((void), setPosition, (float x, float y), (override));
-    MOCK_METHOD((void), setPosition, (const sf::Vector2f &position), (override));
-    MOCK_METHOD((void), setRotation, (float angle), (override));
-    MOCK_METHOD((void), setFillColor, (const sf::Color &color), (override));
-    MOCK_METHOD((void), setOutlineColor, (const sf::Color &color), (override));
-    MOCK_METHOD((void), setOutlineThickness, (float thickness), (override));
-    MOCK_METHOD((void), setOrigin, (float x, float y), (override));
+    MOCK_METHOD((void), setSize, (const sf::Vector2f&), (override));
+    MOCK_METHOD((void), setPosition, (float, float), (override));
+    MOCK_METHOD((void), setPosition, (const sf::Vector2f &), (override));
+    MOCK_METHOD((void), setRotation, (float), (override));
+    MOCK_METHOD((void), setFillColor, (const sf::Color &), (override));
+    MOCK_METHOD((void), setOutlineColor, (const sf::Color &), (override));
+    MOCK_METHOD((void), setOutlineThickness, (float), (override));
+    MOCK_METHOD((void), setOrigin, (float, float), (override));
 
 private:
     MOCK_METHOD((const sf::Drawable &), conversionOperator, (), (const));

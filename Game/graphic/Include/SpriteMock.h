@@ -8,8 +8,6 @@
 
 #include <gmock/gmock.h>
 
-#include <SFML/Graphics/Rect.hpp>
-
 #include "SfmlFwd.h"
 #include "SpriteIf.h"
 

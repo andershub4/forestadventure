@@ -8,8 +8,7 @@
 
 #include <gmock/gmock.h>
 
-#include <SFML/System/Vector2.hpp>
-
+#include "SfmlFwd.h"
 #include "TextureIf.h"
 
 namespace FA {
