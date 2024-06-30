@@ -48,7 +48,7 @@
     <ClInclude Include="Include\Animation\ImageAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Resource\Frame.h">
+    <ClInclude Include="Include\Resource\ImageFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Resource\ImageData.h">

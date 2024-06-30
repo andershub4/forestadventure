@@ -16,7 +16,7 @@ class SpriteIf;
 
 namespace Shared {
 
-struct Frame;
+struct ImageFrame;
 
 class ImageAnimationIf
 {

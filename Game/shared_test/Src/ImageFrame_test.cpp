@@ -6,7 +6,7 @@
 
 #include <gtest/gtest.h>
 
-#include "Resource/Frame.h"
+#include "Resource/ImageFrame.h"
 #include "TextureIf.h"
 
 using namespace testing;
@@ -15,12 +15,12 @@ namespace FA {
 
 namespace Shared {
 
-TEST(FrameTest, TestFrameEqualToOperator)
+TEST(ImageFrameTest, TestFrameEqualToOperator)
 {
     sf::IntRect rect{12, 12, 10, 10};
     Graphic::TextureIf* texture = nullptr;
-    Frame d1{texture, rect};
-    Frame d2 = d1;
+    ImageFrame d1{texture, rect};
+    ImageFrame d2 = d1;
     EXPECT_TRUE(d1 == d2);
     d1.rect_.left = 399;
     EXPECT_FALSE(d1 == d2);

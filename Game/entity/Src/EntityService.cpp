@@ -43,7 +43,7 @@ EntityService::~EntityService() = default;
 Shared::ImageAnimation EntityService::MakeAnimation(const std::vector<Shared::ImageData>& images) const
 {
     float t = Constant::stdSwitchTime;
-    auto seq = std::make_shared<Shared::Sequence<Shared::Frame>>(t);
+    auto seq = std::make_shared<Shared::Sequence<Shared::ImageFrame>>(t);
 
     for (const auto& image : images) {
         auto textureRect = sheetManager_.GetTextureRect(image.sheetItem_);

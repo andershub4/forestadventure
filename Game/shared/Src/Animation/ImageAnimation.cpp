@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Shared {
 
-ImageAnimation::ImageAnimation(std::shared_ptr<SequenceIf<Frame>> seq)
+ImageAnimation::ImageAnimation(std::shared_ptr<SequenceIf<ImageFrame>> seq)
     : seq_(seq)
 {}
 

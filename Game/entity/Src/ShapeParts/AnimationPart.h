@@ -63,7 +63,7 @@ private:
     /* Constructor for multiple animation, depending on KeyT */
     AnimationPartWith(KeyT &lookupKey, bool center = true)
         : lookupKey_(lookupKey)
-        , defaultAnimation_(std::make_shared<Shared::Sequence<Shared::Frame>>(1.0f))
+        , defaultAnimation_(std::make_shared<Shared::Sequence<Shared::ImageFrame>>(1.0f))
         , currentAnimation_(defaultAnimation_)
         , updateCB_([](const Shared::ImageAnimation &) {})
         , center_(center)

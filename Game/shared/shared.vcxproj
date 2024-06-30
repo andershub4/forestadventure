@@ -170,7 +170,7 @@
     <ClInclude Include="Include\Message\MessageBus.h" />
     <ClInclude Include="Include\Message\MessageType.h" />
     <ClInclude Include="Include\Animation\ImageAnimation.h" />
-    <ClInclude Include="Include\Resource\Frame.h" />
+    <ClInclude Include="Include\Resource\ImageFrame.h" />
     <ClInclude Include="Include\Resource\TileGraphic.h" />
     <ClInclude Include="Include\Resource\ImageData.h" />
     <ClInclude Include="Include\Resource\ResourceManager.h" />

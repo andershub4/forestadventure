@@ -11,7 +11,7 @@
 
 #include "ImageAnimationIf.h"
 
-#include "Resource/Frame.h"
+#include "Resource/ImageFrame.h"
 #include "SequenceIf.h"
 
 namespace FA {
@@ -21,7 +21,7 @@ namespace Shared {
 class ImageAnimation : public ImageAnimationIf
 {
 public:
-    ImageAnimation(std::shared_ptr<SequenceIf<Frame>> seq);
+    ImageAnimation(std::shared_ptr<SequenceIf<ImageFrame>> seq);
 
     virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
     virtual void ApplyTo(Graphic::SpriteIf &sprite, bool center) const override;
@@ -30,7 +30,7 @@ public:
     virtual bool IsCompleted() const override;
 
 private:
-    std::shared_ptr<SequenceIf<Frame>> seq_;
+    std::shared_ptr<SequenceIf<ImageFrame>> seq_;
 };
 
 }  // namespace Shared

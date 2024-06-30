@@ -22,15 +22,15 @@ class ImageAnimationTest : public testing::Test
 {
 protected:
     ImageAnimationTest()
-        : seqMock_(std::make_shared<StrictMock<SequenceMock<Shared::Frame>>>())
+        : seqMock_(std::make_shared<StrictMock<SequenceMock<Shared::ImageFrame>>>())
         , animation_(seqMock_)
     {}
 
     Graphic::TextureMock textureMock_;
     sf::IntRect rect_{0, 0, 10, 12};
-    Frame frame_{&textureMock_, rect_, {5, 6}};
+    ImageFrame frame_{&textureMock_, rect_, {5, 6}};
     StrictMock<Graphic::SpriteMock> spriteMock_;
-    std::shared_ptr<StrictMock<SequenceMock<Shared::Frame>>> seqMock_;
+    std::shared_ptr<StrictMock<SequenceMock<Shared::ImageFrame>>> seqMock_;
     ImageAnimation animation_;
 };
 

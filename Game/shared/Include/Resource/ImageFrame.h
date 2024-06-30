@@ -21,19 +21,19 @@ class TextureIf;
 
 namespace Shared {
 
-struct Frame
+struct ImageFrame
 {
     const Graphic::TextureIf* texture_ = nullptr;
     sf::IntRect rect_;
     sf::Vector2f center_{};
 };
 
-inline bool operator==(const Frame& lhs, const Frame& rhs)
+inline bool operator==(const ImageFrame& lhs, const ImageFrame& rhs)
 {
     return std::tie(lhs.texture_, lhs.rect_, lhs.center_) == std::tie(rhs.texture_, rhs.rect_, rhs.center_);
 }
 
-inline std::ostream& operator<<(std::ostream& os, const Frame& p)
+inline std::ostream& operator<<(std::ostream& os, const ImageFrame& p)
 {
     os << OUT2("texture", p.texture_) << DELIM << OUT2("rect", p.rect_) << DELIM << OUT2("center", p.center_);
 
