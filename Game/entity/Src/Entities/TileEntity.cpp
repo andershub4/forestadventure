@@ -27,7 +27,7 @@ TileEntity::~TileEntity() = default;
 void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto animation = service_.MakeAnimation(data.graphic_.animation_);
+    auto animation = Shared::ImageAnimation(service_.CreateSequence(data.graphic_.animation_));
     auto part = AnimationPart::Create(animation, false);
     idleState->RegisterShapePart(part);
 }

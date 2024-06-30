@@ -130,10 +130,10 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
 
     auto moveState = RegisterState(StateType::Move);
-    auto imageAnimation = service_.MakeAnimation(images);
+    auto imageAnimation = Shared::ImageAnimation(service_.CreateSequence(images));
     auto shapePart = AnimationPart::Create(imageAnimation);
     moveState->RegisterShapePart(shapePart);
-    auto colliderAnimation = service_.MakeAnimation(colliders);
+    auto colliderAnimation = Shared::ColliderAnimation(service_.CreateSequence(colliders));
     auto colliderPart = ColliderPart::Create(colliderAnimation);
     moveState->RegisterColliderPart(colliderPart);
     auto move = std::make_shared<MoveAbility>(

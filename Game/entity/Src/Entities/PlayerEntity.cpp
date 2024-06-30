@@ -394,7 +394,7 @@ std::shared_ptr<AnimationPartWith<FaceDirection>> PlayerEntity::MakeShapePart(
     propertyStore_.GetPtr("FaceDirection", dir);
     auto part = AnimationPartWith<FaceDirection>::Create(*dir);
     for (const auto& entry : faceDirImages) {
-        part->RegisterAnimation(entry.first, service_.MakeAnimation(entry.second));
+        part->RegisterAnimation(entry.first, Shared::ImageAnimation(service_.CreateSequence(entry.second)));
     }
 
     return part;
@@ -407,7 +407,7 @@ std::shared_ptr<ColliderPartWith<FaceDirection>> PlayerEntity::MakeColliderPart(
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
     auto part = ColliderPartWith<FaceDirection>::Create(*dir);
     for (const auto& entry : faceDirColliders) {
-        part->RegisterCollider(entry.first, service_.MakeAnimation(entry.second));
+        part->RegisterCollider(entry.first, Shared::ColliderAnimation(service_.CreateSequence(entry.second)));
     }
 
     return part;

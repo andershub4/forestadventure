@@ -212,7 +212,7 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
             HandleEvent(std::make_shared<DeadEvent>());
         }
     };
-    auto animation = service_.MakeAnimation(collisionImages);
+    auto animation = Shared::ImageAnimation(service_.CreateSequence(collisionImages));
     auto shapePart = AnimationPart::Create(animation);
     shapePart->RegisterUpdateCB(updateCB);
     state->RegisterShapePart(shapePart);
@@ -225,7 +225,7 @@ std::shared_ptr<AnimationPartWith<FaceDirection>> MoleEntity::MakeShapePart(
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
     auto part = AnimationPartWith<FaceDirection>::Create(*dir);
     for (const auto& entry : faceDirImages) {
-        part->RegisterAnimation(entry.first, service_.MakeAnimation(entry.second));
+        part->RegisterAnimation(entry.first, Shared::ImageAnimation(service_.CreateSequence(entry.second)));
     }
 
     return part;
@@ -238,7 +238,7 @@ std::shared_ptr<ColliderPartWith<FaceDirection>> MoleEntity::MakeColliderPart(
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
     auto part = ColliderPartWith<FaceDirection>::Create(*dir);
     for (const auto& entry : faceDirColliders) {
-        part->RegisterCollider(entry.first, service_.MakeAnimation(entry.second));
+        part->RegisterCollider(entry.first, Shared::ColliderAnimation(service_.CreateSequence(entry.second)));
     }
 
     return part;

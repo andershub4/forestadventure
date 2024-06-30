@@ -21,16 +21,18 @@ namespace Shared {
 
 class CameraViews;
 class CameraView;
-class ImageAnimation;
-class ColliderAnimation;
 class SheetManager;
 struct ImageData;
 struct ColliderData;
+struct ImageFrame;
+struct ColliderFrame;
 class MessageBus;
 class Message;
 enum class MessageType;
 struct MapData;
 struct TextureRect;
+template <class T>
+class Sequence;
 
 }  // namespace Shared
 
@@ -48,8 +50,10 @@ public:
                   EntityManager &entityManager);
     ~EntityService();
 
-    Shared::ImageAnimation MakeAnimation(const std::vector<Shared::ImageData> &images) const;
-    Shared::ColliderAnimation MakeAnimation(const std::vector<Shared::ColliderData> &colliders) const;
+    std::shared_ptr<Shared::Sequence<Shared::ImageFrame>> CreateSequence(
+        const std::vector<Shared::ImageData> &images) const;
+    std::shared_ptr<Shared::Sequence<Shared::ColliderFrame>> CreateSequence(
+        const std::vector<Shared::ColliderData> &colliders) const;
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);
     void AddSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes,

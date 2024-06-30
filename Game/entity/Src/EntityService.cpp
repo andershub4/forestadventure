@@ -6,8 +6,6 @@
 
 #include "EntityService.h"
 
-#include "Animation/ColliderAnimation.h"
-#include "Animation/ImageAnimation.h"
 #include "CameraView.h"
 #include "CameraViews.h"
 #include "Constant/Entity.h"
@@ -17,6 +15,7 @@
 #include "Resource/ColliderData.h"
 #include "Resource/ColliderFrame.h"
 #include "Resource/ImageData.h"
+#include "Resource/ImageFrame.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "Resource/SheetManager.h"
@@ -40,7 +39,8 @@ EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::Textu
 
 EntityService::~EntityService() = default;
 
-Shared::ImageAnimation EntityService::MakeAnimation(const std::vector<Shared::ImageData>& images) const
+std::shared_ptr<Shared::Sequence<Shared::ImageFrame>> EntityService::CreateSequence(
+    const std::vector<Shared::ImageData>& images) const
 {
     float t = Constant::stdSwitchTime;
     auto seq = std::make_shared<Shared::Sequence<Shared::ImageFrame>>(t);
@@ -54,10 +54,11 @@ Shared::ImageAnimation EntityService::MakeAnimation(const std::vector<Shared::Im
         seq->Add({texture, textureRect.rect_, static_cast<sf::Vector2f>(center)});
     }
 
-    return {seq};
+    return seq;
 }
 
-Shared::ColliderAnimation EntityService::MakeAnimation(const std::vector<Shared::ColliderData>& colliders) const
+std::shared_ptr<Shared::Sequence<Shared::ColliderFrame>> EntityService::CreateSequence(
+    const std::vector<Shared::ColliderData>& colliders) const
 {
     float t = Constant::stdSwitchTime;
     auto seq = std::make_shared<Shared::Sequence<Shared::ColliderFrame>>(t);
@@ -88,7 +89,7 @@ Shared::ColliderAnimation EntityService::MakeAnimation(const std::vector<Shared:
         seq->Add(frame);
     }
 
-    return {seq};
+    return seq;
 }
 
 void EntityService::SendMessage(std::shared_ptr<Shared::Message> msg)
