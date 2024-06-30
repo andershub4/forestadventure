@@ -29,7 +29,6 @@ public:
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual bool IsCompleted() const = 0;
-    virtual void AddFrame(const Shared::ColliderFrame &frame) = 0;
 };
 
 }  // namespace Shared

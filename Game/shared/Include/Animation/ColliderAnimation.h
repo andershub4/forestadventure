@@ -27,7 +27,6 @@ public:
     virtual void Start() override;
     virtual void Stop() override;
     virtual bool IsCompleted() const override;
-    virtual void AddFrame(const Shared::ColliderFrame &frame) override;
 
 private:
     std::shared_ptr<SequenceIf<Shared::ColliderFrame>> seq_;

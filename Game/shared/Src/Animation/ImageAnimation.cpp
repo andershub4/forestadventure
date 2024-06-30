@@ -6,7 +6,6 @@
 
 #include "Animation/ImageAnimation.h"
 
-#include "Logging.h"
 #include "SpriteIf.h"
 
 namespace FA {
@@ -47,18 +46,6 @@ void ImageAnimation::Stop()
 bool ImageAnimation::IsCompleted() const
 {
     return seq_->IsCompleted();
-}
-
-void ImageAnimation::AddFrame(const Frame& frame)
-{
-    bool isValid = frame.texture_ != nullptr && frame.rect_.width != 0 && frame.rect_.height != 0;
-
-    if (isValid) {
-        seq_->Add(frame);
-    }
-    else {
-        LOG_WARN("%s is invalid", DUMP(frame));
-    }
 }
 
 }  // namespace Shared

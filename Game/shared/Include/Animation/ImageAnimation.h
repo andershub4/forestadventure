@@ -28,7 +28,6 @@ public:
     virtual void Start() override;
     virtual void Stop() override;
     virtual bool IsCompleted() const override;
-    virtual void AddFrame(const Frame &frame) override;
 
 private:
     std::shared_ptr<SequenceIf<Frame>> seq_;

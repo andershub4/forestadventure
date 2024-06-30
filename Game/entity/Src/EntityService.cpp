@@ -44,7 +44,6 @@ Shared::ImageAnimation EntityService::MakeAnimation(const std::vector<Shared::Im
 {
     float t = Constant::stdSwitchTime;
     auto seq = std::make_shared<Shared::Sequence<Shared::Frame>>(t);
-    Shared::ImageAnimation animation(seq);
 
     for (const auto& image : images) {
         auto textureRect = sheetManager_.GetTextureRect(image.sheetItem_);
@@ -52,17 +51,16 @@ Shared::ImageAnimation EntityService::MakeAnimation(const std::vector<Shared::Im
         textureRect = image.mirror_ ? MirrorX(textureRect) : textureRect;
         const auto* texture = textureManager_.Get(textureRect.id_);
         sf::Vector2i center = textureSize / 2;
-        animation.AddFrame({texture, textureRect.rect_, static_cast<sf::Vector2f>(center)});
+        seq->Add({texture, textureRect.rect_, static_cast<sf::Vector2f>(center)});
     }
 
-    return animation;
+    return {seq};
 }
 
 Shared::ColliderAnimation EntityService::MakeAnimation(const std::vector<Shared::ColliderData>& colliders) const
 {
     float t = Constant::stdSwitchTime;
     auto seq = std::make_shared<Shared::Sequence<Shared::ColliderFrame>>(t);
-    Shared::ColliderAnimation animation(seq);
 
     for (const auto& collider : colliders) {
         Shared::ColliderFrame frame{};
@@ -87,10 +85,10 @@ Shared::ColliderAnimation EntityService::MakeAnimation(const std::vector<Shared:
         }
 
         frame = {static_cast<sf::Vector2f>(colliderSize), static_cast<sf::Vector2f>(center)};
-        animation.AddFrame(frame);
+        seq->Add(frame);
     }
 
-    return animation;
+    return {seq};
 }
 
 void EntityService::SendMessage(std::shared_ptr<Shared::Message> msg)

@@ -26,7 +26,6 @@ public:
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual bool IsCompleted() const = 0;
-    virtual void AddFrame(const Frame &frame) = 0;
 };
 
 }  // namespace Shared

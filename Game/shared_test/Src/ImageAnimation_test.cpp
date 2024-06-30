@@ -8,7 +8,6 @@
 #include <gtest/gtest.h>
 
 #include "Animation/ImageAnimation.h"
-#include "Mock/LoggerMock.h"
 #include "Mock/SequenceMock.h"
 #include "SpriteMock.h"
 #include "TextureMock.h"
@@ -31,7 +30,6 @@ protected:
     sf::IntRect rect_{0, 0, 10, 12};
     Frame frame_{&textureMock_, rect_, {5, 6}};
     StrictMock<Graphic::SpriteMock> spriteMock_;
-    StrictMock<LoggerMock> loggerMock_;
     std::shared_ptr<StrictMock<SequenceMock<Shared::Frame>>> seqMock_;
     ImageAnimation animation_;
 };
@@ -59,33 +57,6 @@ TEST_F(ImageAnimationTest, ApplyToWithContentAndCenterShouldSetTextureAndSetOrig
     EXPECT_CALL(spriteMock_, setTextureRect(Eq(rect_)));
     EXPECT_CALL(spriteMock_, setOrigin(5, 6));
     animation_.ApplyTo(spriteMock_, true);
-}
-
-TEST_F(ImageAnimationTest, AddFrameWithInvalidTextureShouldWarn)
-{
-    sf::IntRect rect{0, 0, 0, 12};
-    Frame frame{nullptr, rect};
-    EXPECT_CALL(loggerMock_, MakeWarnLogEntry(ContainsRegex(".*is invalid")));
-
-    animation_.AddFrame(frame);
-}
-
-TEST_F(ImageAnimationTest, AddFrameWithInvalidWidthShouldWarn)
-{
-    sf::IntRect rect{0, 0, 0, 12};
-    Frame frame{&textureMock_, rect};
-    EXPECT_CALL(loggerMock_, MakeWarnLogEntry(ContainsRegex(".*is invalid")));
-
-    animation_.AddFrame(frame);
-}
-
-TEST_F(ImageAnimationTest, AddFrameWithInvalidHeightShouldWarn)
-{
-    sf::IntRect rect{0, 0, 10, 0};
-    Frame frame{&textureMock_, rect};
-    EXPECT_CALL(loggerMock_, MakeWarnLogEntry(ContainsRegex(".*is invalid")));
-
-    animation_.AddFrame(frame);
 }
 
 }  // namespace Shared

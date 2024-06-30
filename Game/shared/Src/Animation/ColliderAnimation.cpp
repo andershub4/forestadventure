@@ -8,7 +8,6 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
-#include "Logging.h"
 #include "RectangleShapeIf.h"
 #include "SfmlPrint.h"
 
@@ -50,18 +49,6 @@ void ColliderAnimation::Stop()
 bool ColliderAnimation::IsCompleted() const
 {
     return seq_->IsCompleted();
-}
-
-void ColliderAnimation::AddFrame(const Shared::ColliderFrame& frame)
-{
-    bool isValid = frame.size_ != sf::Vector2f{};
-
-    if (isValid) {
-        seq_->Add(frame);
-    }
-    else {
-        LOG_WARN("%s is invalid", DUMP(frame));
-    }
 }
 
 }  // namespace Shared
