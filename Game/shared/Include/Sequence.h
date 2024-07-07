@@ -48,11 +48,15 @@ public:
             isStopped_ = false;
         }
     }
-    virtual void Stop() override
+    virtual void Stop() override { isStopped_ = true; }
+
+    virtual void Restart() override
     {
-        isStopped_ = true;
+        Stop();
         iElement_ = 0;
+        Start();
     }
+
     virtual bool IsEmpty() const override { return nElements_ <= 0; }
     virtual bool IsCompleted() const override { return nElements_ > 1 ? isCompleted_ : true; }
     virtual void Add(const T &element) override

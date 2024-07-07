@@ -34,6 +34,7 @@ public:
     virtual bool Intersects(const ColliderAnimationIf &other) const override;
     virtual void Start() override;
     virtual void Stop() override;
+    virtual void Restart() override;
     virtual bool IsCompleted() const override;
     virtual void Center() override;
     virtual void SetPosition(const sf::Vector2f &position) override;

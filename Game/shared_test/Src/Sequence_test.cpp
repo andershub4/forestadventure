@@ -93,7 +93,7 @@ TEST_F(SequenceTest, GetCurrentWithMultipleElementsShouldAdvanceAndWrapAroundToD
     EXPECT_THAT(e2, Eq(123));
 }
 
-TEST_F(SequenceTest, StopShouldRestoreToDefaultIndex0AndNotAdvance)
+TEST_F(SequenceTest, StopShouldNotAdvance)
 {
     seq_.Add(111);
     seq_.Add(222);
@@ -107,12 +107,27 @@ TEST_F(SequenceTest, StopShouldRestoreToDefaultIndex0AndNotAdvance)
     seq_.Update(deltaTimeToMakeAdvancement_);
 
     auto e2 = seq_.GetCurrent();
-    EXPECT_THAT(e2, Eq(111));
+    EXPECT_THAT(e2, Eq(222));
 
     seq_.Update(deltaTimeToMakeAdvancement_);
 
     auto e3 = seq_.GetCurrent();
-    EXPECT_THAT(e3, Eq(111));
+    EXPECT_THAT(e3, Eq(222));
+}
+
+TEST_F(SequenceTest, RestartShouldRestoreToIndex0)
+{
+    seq_.Add(111);
+    seq_.Add(222);
+    seq_.Start();
+
+    seq_.Update(deltaTimeToMakeAdvancement_);
+    auto e1 = seq_.GetCurrent();
+    EXPECT_THAT(e1, Eq(222));
+
+    seq_.Restart();
+    auto e2 = seq_.GetCurrent();
+    EXPECT_THAT(e2, Eq(111));
 }
 
 TEST_F(SequenceTest, GetCurrentWithMultipleElementsWhenSequenceNotStartedShouldNotAdvance)

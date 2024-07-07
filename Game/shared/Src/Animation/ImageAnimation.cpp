@@ -54,6 +54,11 @@ void ImageAnimation::Stop()
     seq_->Stop();
 }
 
+void ImageAnimation::Restart()
+{
+    seq_->Restart();
+}
+
 bool ImageAnimation::IsCompleted() const
 {
     return seq_->IsCompleted();

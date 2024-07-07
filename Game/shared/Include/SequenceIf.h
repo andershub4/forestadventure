@@ -18,6 +18,7 @@ public:
     virtual T GetCurrent() const = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
+    virtual void Restart() = 0;
     virtual bool IsEmpty() const = 0;
     virtual bool IsCompleted() const = 0;
     virtual void Add(const T &element) = 0;

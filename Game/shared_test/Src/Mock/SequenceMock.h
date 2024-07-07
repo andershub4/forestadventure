@@ -22,6 +22,7 @@ public:
     MOCK_METHOD(T, GetCurrent, (), (const override));
     MOCK_METHOD(void, Start, (), (override));
     MOCK_METHOD(void, Stop, (), (override));
+    MOCK_METHOD(void, Restart, (), (override));
     MOCK_METHOD(bool, IsEmpty, (), (const override));
     MOCK_METHOD(bool, IsCompleted, (), (const override));
     MOCK_METHOD(void, Add, (const T&), (override));

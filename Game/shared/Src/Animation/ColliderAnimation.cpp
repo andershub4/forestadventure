@@ -60,6 +60,11 @@ void ColliderAnimation::Stop()
     seq_->Stop();
 }
 
+void ColliderAnimation::Restart()
+{
+    seq_->Restart();
+}
+
 bool ColliderAnimation::IsCompleted() const
 {
     return seq_->IsCompleted();

@@ -39,7 +39,7 @@ public:
     virtual void Enter() override
     {
         currentAnimation_ = GetAnimation(lookupKey_);
-        currentAnimation_.Start();
+        currentAnimation_.Restart();
     }
 
     virtual void Update(float deltaTime) override
