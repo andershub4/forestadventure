@@ -32,7 +32,7 @@ enum class MessageType;
 struct MapData;
 struct TextureRect;
 template <class T>
-class Sequence;
+class SequenceIf;
 
 }  // namespace Shared
 
@@ -50,9 +50,9 @@ public:
                   EntityManager &entityManager);
     ~EntityService();
 
-    std::shared_ptr<Shared::Sequence<Shared::ImageFrame>> CreateSequence(
+    std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> CreateSequence(
         const std::vector<Shared::ImageData> &images) const;
-    std::shared_ptr<Shared::Sequence<Shared::ColliderFrame>> CreateSequence(
+    std::shared_ptr<Shared::SequenceIf<Shared::ColliderFrame>> CreateSequence(
         const std::vector<Shared::ColliderData> &colliders) const;
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);

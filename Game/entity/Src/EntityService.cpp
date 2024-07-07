@@ -39,7 +39,7 @@ EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::Textu
 
 EntityService::~EntityService() = default;
 
-std::shared_ptr<Shared::Sequence<Shared::ImageFrame>> EntityService::CreateSequence(
+std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> EntityService::CreateSequence(
     const std::vector<Shared::ImageData>& images) const
 {
     float t = Constant::stdSwitchTime;
@@ -57,7 +57,7 @@ std::shared_ptr<Shared::Sequence<Shared::ImageFrame>> EntityService::CreateSeque
     return seq;
 }
 
-std::shared_ptr<Shared::Sequence<Shared::ColliderFrame>> EntityService::CreateSequence(
+std::shared_ptr<Shared::SequenceIf<Shared::ColliderFrame>> EntityService::CreateSequence(
     const std::vector<Shared::ColliderData>& colliders) const
 {
     float t = Constant::stdSwitchTime;
