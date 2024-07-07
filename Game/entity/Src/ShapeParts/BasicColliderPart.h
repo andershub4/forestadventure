@@ -6,11 +6,14 @@
 
 #pragma once
 
+#include "SfmlFwd.h"
+
 namespace FA {
 
 namespace Graphic {
 
 class RectangleShapeIf;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -23,7 +26,10 @@ public:
 
     virtual void Enter() = 0;
     virtual void Update(float deltaTime) = 0;
-    virtual void ApplyTo(Graphic::RectangleShapeIf &rectShape) const = 0;
+    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const = 0;
+    virtual bool Intersects(const BasicColliderPart &otherPart) = 0;
+    virtual void SetPosition(const sf::Vector2f &position) = 0;
+    virtual void SetRotation(float angle) = 0;
 };
 
 }  // namespace Entity

@@ -44,10 +44,14 @@ CoinEntity::~CoinEntity() = default;
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto imageAnimation = Shared::ImageAnimation(service_.CreateSequence(idleImages));
+    auto imageAnimation =
+        Shared::ImageAnimation(std::make_shared<Graphic::Sprite>(), service_.CreateSequence(idleImages));
+    imageAnimation.Center();
     auto shapePart = AnimationPart::Create(imageAnimation);
     idleState->RegisterShapePart(shapePart);
-    auto colliderAnimation = Shared::ColliderAnimation(service_.CreateSequence(idleColliders));
+    auto colliderAnimation =
+        Shared::ColliderAnimation(std::make_shared<Graphic::RectangleShape>(), service_.CreateSequence(idleColliders));
+    colliderAnimation.Center();
     auto colliderPart = ColliderPart::Create(colliderAnimation);
     idleState->RegisterColliderPart(colliderPart);
 }

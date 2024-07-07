@@ -9,8 +9,6 @@
 #include <memory>
 #include <vector>
 
-#include "SFML/Graphics/Rect.hpp"
-
 #ifdef _DEBUG
 #include "RectangleShape.h"
 #endif
@@ -23,8 +21,6 @@ namespace FA {
 namespace Graphic {
 
 class RenderTargetIf;
-class SpriteIf;
-class RectangleShapeIf;
 
 }  // namespace Graphic
 
@@ -46,20 +42,8 @@ public:
     bool Intersect(const Shape &shape) const;
 
 private:
-    struct ShapePartEntry
-    {
-        std::shared_ptr<BasicShapePart> part_;
-        std::shared_ptr<Graphic::SpriteIf> sprite_{};
-    };
-
-    struct ColliderPartEntry
-    {
-        std::shared_ptr<BasicColliderPart> part_;
-        std::shared_ptr<Graphic::RectangleShapeIf> hitRect_{};
-    };
-
-    std::vector<ColliderPartEntry> colliderParts_;
-    std::vector<ShapePartEntry> shapeParts_;
+    std::vector<std::shared_ptr<BasicColliderPart>> colliderParts_;
+    std::vector<std::shared_ptr<BasicShapePart>> shapeParts_;
     Body &body_;
 #ifdef _DEBUG
     Graphic::RectangleShape rShape_;

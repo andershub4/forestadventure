@@ -6,10 +6,7 @@
 
 #include "Shape.h"
 
-#include "SFML/Graphics/Color.hpp"
-
 #include "Body.h"
-#include "RectangleShape.h"
 #include "RenderTargetIf.h"
 #include "Sprite.h"
 
@@ -29,18 +26,16 @@ Shape::~Shape() = default;
 
 void Shape::Enter()
 {
-    for (auto &entry : shapeParts_) {
-        entry.part_->Enter();
-        entry.part_->ApplyTo(*entry.sprite_);
-        entry.sprite_->setPosition(body_.position_);
-        entry.sprite_->setRotation(body_.rotation_);
+    for (auto part : shapeParts_) {
+        part->Enter();
+        part->SetPosition(body_.position_);
+        part->SetRotation(body_.rotation_);
     }
 
-    for (auto &entry : colliderParts_) {
-        entry.part_->Enter();
-        entry.part_->ApplyTo(*entry.hitRect_);
-        entry.hitRect_->setPosition(body_.position_);
-        entry.hitRect_->setRotation(body_.rotation_);
+    for (auto part : colliderParts_) {
+        part->Enter();
+        part->SetPosition(body_.position_);
+        part->SetRotation(body_.rotation_);
     }
 
 #ifdef _DEBUG
@@ -50,18 +45,16 @@ void Shape::Enter()
 
 void Shape::Update(float deltaTime)
 {
-    for (auto &entry : shapeParts_) {
-        entry.part_->Update(deltaTime);
-        entry.part_->ApplyTo(*entry.sprite_);
-        entry.sprite_->setPosition(body_.position_);
-        entry.sprite_->setRotation(body_.rotation_);
+    for (auto part : shapeParts_) {
+        part->Update(deltaTime);
+        part->SetPosition(body_.position_);
+        part->SetRotation(body_.rotation_);
     }
 
-    for (auto &entry : colliderParts_) {
-        entry.part_->Update(deltaTime);
-        entry.part_->ApplyTo(*entry.hitRect_);
-        entry.hitRect_->setPosition(body_.position_);
-        entry.hitRect_->setRotation(body_.rotation_);
+    for (auto part : colliderParts_) {
+        part->Update(deltaTime);
+        part->SetPosition(body_.position_);
+        part->SetRotation(body_.rotation_);
     }
 
 #ifdef _DEBUG
@@ -71,28 +64,23 @@ void Shape::Update(float deltaTime)
 
 void Shape::RegisterShapePart(std::shared_ptr<BasicShapePart> part)
 {
-    shapeParts_.push_back({part, std::make_shared<Graphic::Sprite>()});
+    shapeParts_.push_back(part);
 }
 
 void Shape::RegisterColliderPart(std::shared_ptr<BasicColliderPart> part)
 {
-    auto hitSprite = std::make_shared<Graphic::RectangleShape>();
-    hitSprite->setFillColor(sf::Color::Transparent);
-    hitSprite->setOutlineColor(sf::Color::Red);
-    hitSprite->setOutlineThickness(1.0f);
-    colliderParts_.push_back({part, hitSprite});
+    colliderParts_.push_back(part);
 }
 
 void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const
 {
-    for (auto &entry : shapeParts_) {
-        renderTarget.draw(*entry.sprite_);
+    for (auto part : shapeParts_) {
+        part->DrawTo(renderTarget);
     }
 
 #ifdef _DEBUG
-    for (auto &entry : colliderParts_) {
-        auto rectShape = entry.hitRect_;
-        renderTarget.draw(*rectShape);
+    for (auto part : colliderParts_) {
+        part->DrawTo(renderTarget);
     }
 #endif  // _DEBUG
 
@@ -105,9 +93,9 @@ bool Shape::Intersect(const Shape &otherShape) const
 {
     bool intersect = false;
 
-    for (auto &entry : colliderParts_) {
-        for (auto &otherEntry : otherShape.colliderParts_) {
-            intersect |= entry.hitRect_->getGlobalBounds().intersects(otherEntry.hitRect_->getGlobalBounds());
+    for (auto part : colliderParts_) {
+        for (auto otherPart : otherShape.colliderParts_) {
+            intersect |= part->Intersects(*otherPart);
         }
     }
 

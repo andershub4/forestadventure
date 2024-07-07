@@ -6,11 +6,13 @@
 
 #pragma once
 
+#include "SfmlFwd.h"
+
 namespace FA {
 
 namespace Graphic {
 
-class SpriteIf;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -22,10 +24,14 @@ class ImageAnimationIf
 {
 public:
     virtual void Update(float deltaTime) = 0;
-    virtual void ApplyTo(Graphic::SpriteIf &sprite, bool center) const = 0;
+    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const = 0;
+    virtual bool Intersects(const ImageAnimationIf &other) const = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual bool IsCompleted() const = 0;
+    virtual void Center() = 0;
+    virtual void SetPosition(const sf::Vector2f &position) = 0;
+    virtual void SetRotation(float angle) = 0;
 };
 
 }  // namespace Shared

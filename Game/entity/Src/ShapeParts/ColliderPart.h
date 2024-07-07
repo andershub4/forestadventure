@@ -13,7 +13,7 @@
 #include "Animation/ColliderAnimation.h"
 #include "BasicColliderPart.h"
 #include "Logging.h"
-#include "RectangleShapeIf.h"
+#include "RectangleShape.h"
 #include "Sequence.h"
 
 namespace FA {
@@ -24,15 +24,14 @@ template <class KeyT>
 class ColliderPartWith : public BasicColliderPart
 {
 public:
-    static std::shared_ptr<ColliderPartWith<KeyT>> Create(const Shared::ColliderAnimation &animation,
-                                                          bool center = true)
+    static std::shared_ptr<ColliderPartWith<KeyT>> Create(const Shared::ColliderAnimation &animation)
     {
-        return std::make_shared<CtorHelper>(animation, center);
+        return std::make_shared<CtorHelper>(animation);
     }
 
-    static std::shared_ptr<ColliderPartWith<KeyT>> Create(KeyT &lookupKey, bool center = true)
+    static std::shared_ptr<ColliderPartWith<KeyT>> Create(KeyT &lookupKey)
     {
-        return std::make_shared<CtorHelper>(lookupKey, center);
+        return std::make_shared<CtorHelper>(lookupKey);
     }
 
     virtual ~ColliderPartWith() = default;
@@ -49,9 +48,16 @@ public:
         updateCB_(currentAnimation_);
     }
 
-    virtual void ApplyTo(Graphic::RectangleShapeIf &rectShape) const override
+    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const { currentAnimation_.DrawTo(renderTarget); }
+
+    virtual void SetPosition(const sf::Vector2f &position) override { currentAnimation_.SetPosition(position); }
+
+    virtual void SetRotation(float angle) override { currentAnimation_.SetRotation(angle); }
+
+    bool Intersects(const BasicColliderPart &otherPart)
     {
-        currentAnimation_.ApplyTo(rectShape, center_);
+        auto other = static_cast<const ColliderPartWith<KeyT> &>(otherPart);
+        return currentAnimation_.Intersects(other.currentAnimation_);
     }
 
     void RegisterCollider(const KeyT key, const Shared::ColliderAnimation &animation)
@@ -65,21 +71,20 @@ public:
 
 private:
     /* Constructor for multiple colliders, depending on KeyT */
-    ColliderPartWith(KeyT &lookupKey, bool center = true)
+    ColliderPartWith(KeyT &lookupKey)
         : lookupKey_(lookupKey)
-        , defaultAnimation_(std::make_shared<Shared::Sequence<Shared::ColliderFrame>>(1.0f))
+        , defaultAnimation_(std::make_shared<Graphic::RectangleShape>(),
+                            std::make_shared<Shared::Sequence<Shared::ColliderFrame>>(1.0f))
         , currentAnimation_(defaultAnimation_)
         , updateCB_([](const Shared::ColliderAnimation &) {})
-        , center_(center)
     {}
 
     /* Constructor for singel animation */
-    ColliderPartWith(const Shared::ColliderAnimation &animation, bool center = true)
+    ColliderPartWith(const Shared::ColliderAnimation &animation)
         : lookupKey_(defaultKey_)
         , defaultAnimation_(animation)
         , currentAnimation_(defaultAnimation_)
         , updateCB_([](const Shared::ColliderAnimation &) {})
-        , center_(center)
     {
         RegisterCollider(defaultKey_, animation);
     }
@@ -87,12 +92,12 @@ private:
 private:
     struct CtorHelper : public ColliderPartWith<KeyT>
     {
-        CtorHelper(KeyT &lookupKey, bool center = true)
-            : ColliderPartWith<KeyT>(lookupKey, center)
+        CtorHelper(KeyT &lookupKey)
+            : ColliderPartWith<KeyT>(lookupKey)
         {}
 
-        CtorHelper(const Shared::ColliderAnimation &animation, bool center = true)
-            : ColliderPartWith<KeyT>(animation, center)
+        CtorHelper(const Shared::ColliderAnimation &animation)
+            : ColliderPartWith<KeyT>(animation)
         {}
     };
 
@@ -102,7 +107,6 @@ private:
     std::unordered_map<KeyT, Shared::ColliderAnimation> map_;
     Shared::ColliderAnimation currentAnimation_;
     std::function<void(const Shared::ColliderAnimation &)> updateCB_;
-    bool center_{};
 
 private:
     Shared::ColliderAnimation GetAnimation(const KeyT &key)

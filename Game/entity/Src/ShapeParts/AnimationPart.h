@@ -24,14 +24,14 @@ template <class KeyT>
 class AnimationPartWith : public BasicShapePart
 {
 public:
-    static std::shared_ptr<AnimationPartWith<KeyT>> Create(const Shared::ImageAnimation &animation, bool center = true)
+    static std::shared_ptr<AnimationPartWith<KeyT>> Create(const Shared::ImageAnimation &animation)
     {
-        return std::make_shared<CtorHelper>(animation, center);
+        return std::make_shared<CtorHelper>(animation);
     }
 
-    static std::shared_ptr<AnimationPartWith<KeyT>> Create(KeyT &lookupKey, bool center = true)
+    static std::shared_ptr<AnimationPartWith<KeyT>> Create(KeyT &lookupKey)
     {
-        return std::make_shared<CtorHelper>(lookupKey, center);
+        return std::make_shared<CtorHelper>(lookupKey);
     }
 
     virtual ~AnimationPartWith() = default;
@@ -48,7 +48,17 @@ public:
         updateCB_(currentAnimation_);
     }
 
-    virtual void ApplyTo(Graphic::SpriteIf &sprite) const override { currentAnimation_.ApplyTo(sprite, center_); }
+    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const { currentAnimation_.DrawTo(renderTarget); }
+
+    virtual void SetPosition(const sf::Vector2f &position) override { currentAnimation_.SetPosition(position); }
+
+    virtual void SetRotation(float angle) override { currentAnimation_.SetRotation(angle); }
+
+    bool Intersects(const BasicShapePart &otherPart)
+    {
+        auto other = static_cast<const AnimationPartWith<KeyT> &>(otherPart);
+        return currentAnimation_.Intersects(other.currentAnimation_);
+    }
 
     void RegisterAnimation(const KeyT key, const Shared::ImageAnimation &animation)
     {
@@ -61,21 +71,20 @@ public:
 
 private:
     /* Constructor for multiple animation, depending on KeyT */
-    AnimationPartWith(KeyT &lookupKey, bool center = true)
+    AnimationPartWith(KeyT &lookupKey)
         : lookupKey_(lookupKey)
-        , defaultAnimation_(std::make_shared<Shared::Sequence<Shared::ImageFrame>>(1.0f))
+        , defaultAnimation_(std::make_shared<Graphic::Sprite>(),
+                            std::make_shared<Shared::Sequence<Shared::ImageFrame>>(1.0f))
         , currentAnimation_(defaultAnimation_)
         , updateCB_([](const Shared::ImageAnimation &) {})
-        , center_(center)
     {}
 
     /* Constructor for singel animation */
-    AnimationPartWith(const Shared::ImageAnimation &animation, bool center = true)
+    AnimationPartWith(const Shared::ImageAnimation &animation)
         : lookupKey_(defaultKey_)
         , defaultAnimation_(animation)
         , currentAnimation_(defaultAnimation_)
         , updateCB_([](const Shared::ImageAnimation &) {})
-        , center_(center)
     {
         RegisterAnimation(defaultKey_, animation);
     }
@@ -83,12 +92,12 @@ private:
 private:
     struct CtorHelper : public AnimationPartWith<KeyT>
     {
-        CtorHelper(KeyT &lookupKey, bool center = true)
-            : AnimationPartWith<KeyT>(lookupKey, center)
+        CtorHelper(KeyT &lookupKey)
+            : AnimationPartWith<KeyT>(lookupKey)
         {}
 
-        CtorHelper(const Shared::ImageAnimation &animation, bool center = true)
-            : AnimationPartWith<KeyT>(animation, center)
+        CtorHelper(const Shared::ImageAnimation &animation)
+            : AnimationPartWith<KeyT>(animation)
         {}
     };
 
@@ -98,7 +107,6 @@ private:
     std::unordered_map<KeyT, Shared::ImageAnimation> map_;
     Shared::ImageAnimation currentAnimation_;
     std::function<void(const Shared::ImageAnimation &)> updateCB_;
-    bool center_{};
 
 private:
     Shared::ImageAnimation GetAnimation(const KeyT &key)
