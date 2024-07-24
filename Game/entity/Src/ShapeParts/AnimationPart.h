@@ -81,12 +81,10 @@ private:
     /* Constructor for multiple animation, depending on KeyT */
     AnimationPartWith(SelectFn selectFn)
         : selectFn_(selectFn)
-        , updateCB_([](const Shared::ImageAnimation &) {})
     {}
 
     /* Constructor for singel animation */
     AnimationPartWith(std::shared_ptr<Shared::ImageAnimation> animation)
-        : updateCB_([](const Shared::ImageAnimation &) {})
     {
         KeyT defaultKey{};
         selectFn_ = [defaultKey](const std::unordered_map<KeyT, std::shared_ptr<Shared::ImageAnimation>> &animations) {
@@ -118,7 +116,7 @@ private:
     std::unordered_map<KeyT, std::shared_ptr<Shared::ImageAnimation>> map_;
     SelectFn selectFn_;
     Shared::ImageAnimation *currentAnimation_{nullptr};
-    std::function<void(const Shared::ImageAnimation &)> updateCB_;
+    std::function<void(const Shared::ImageAnimation &)> updateCB_{[](const Shared::ImageAnimation &) {}};
 };
 
 using AnimationPart = AnimationPartWith<int>;

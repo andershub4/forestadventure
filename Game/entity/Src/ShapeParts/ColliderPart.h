@@ -82,12 +82,10 @@ private:
     /* Constructor for multiple colliders */
     ColliderPartWith(SelectFn selectFn)
         : selectFn_(selectFn)
-        , updateCB_([](const Shared::ColliderAnimation &) {})
     {}
 
     /* Constructor for singel collider */
     ColliderPartWith(std::shared_ptr<Shared::ColliderAnimation> animation)
-        : updateCB_([](const Shared::ColliderAnimation &) {})
     {
         KeyT defaultKey{};
         selectFn_ =
@@ -120,7 +118,7 @@ private:
     std::unordered_map<KeyT, std::shared_ptr<Shared::ColliderAnimation>> map_;
     SelectFn selectFn_;
     Shared::ColliderAnimation *currentAnimation_{nullptr};
-    std::function<void(const Shared::ColliderAnimation &)> updateCB_;
+    std::function<void(const Shared::ColliderAnimation &)> updateCB_{[](const Shared::ColliderAnimation &) {}};
 };
 
 using ColliderPart = ColliderPartWith<int>;
