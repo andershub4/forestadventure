@@ -6,6 +6,8 @@
 
 #include "MoleEntity.h"
 
+#include <memory>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
@@ -212,9 +214,9 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
             HandleEvent(std::make_shared<DeadEvent>());
         }
     };
-    auto animation =
-        Shared::ImageAnimation(std::make_shared<Graphic::Sprite>(), service_.CreateSequence(collisionImages));
-    animation.Center();
+    auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
+                                                              service_.CreateSequence(collisionImages));
+    animation->Center();
     auto shapePart = AnimationPart::Create(animation);
     shapePart->RegisterUpdateCB(updateCB);
     state->RegisterShapePart(shapePart);
@@ -225,10 +227,23 @@ std::shared_ptr<AnimationPartWith<FaceDirection>> MoleEntity::MakeShapePart(
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto part = AnimationPartWith<FaceDirection>::Create(*dir);
+    auto selectAnimationFn =
+        [dir](const std::unordered_map<FaceDirection, std::shared_ptr<Shared::ImageAnimation>>& animations) {
+            bool found = animations.find(*dir) != animations.end();
+            Shared::ImageAnimation* result = nullptr;
+
+            if (found) {
+                result = animations.at(*dir).get();
+            }
+
+            return result;
+        };
+
+    auto part = AnimationPartWith<FaceDirection>::Create(selectAnimationFn);
     for (const auto& entry : faceDirImages) {
-        Shared::ImageAnimation animation(std::make_shared<Graphic::Sprite>(), service_.CreateSequence(entry.second));
-        animation.Center();
+        auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
+                                                                  service_.CreateSequence(entry.second));
+        animation->Center();
         part->RegisterAnimation(entry.first, animation);
     }
 
@@ -240,11 +255,23 @@ std::shared_ptr<ColliderPartWith<FaceDirection>> MoleEntity::MakeColliderPart(
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto part = ColliderPartWith<FaceDirection>::Create(*dir);
+    auto selectColliderFn =
+        [dir](const std::unordered_map<FaceDirection, std::shared_ptr<Shared::ColliderAnimation>>& animations) {
+            bool found = animations.find(*dir) != animations.end();
+            Shared::ColliderAnimation* result = nullptr;
+
+            if (found) {
+                result = animations.at(*dir).get();
+            }
+
+            return result;
+        };
+
+    auto part = ColliderPartWith<FaceDirection>::Create(selectColliderFn);
     for (const auto& entry : faceDirColliders) {
-        Shared::ColliderAnimation animation(std::make_shared<Graphic::RectangleShape>(),
-                                            service_.CreateSequence(entry.second));
-        animation.Center();
+        auto animation = std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
+                                                                     service_.CreateSequence(entry.second));
+        animation->Center();
         part->RegisterCollider(entry.first, animation);
     }
 

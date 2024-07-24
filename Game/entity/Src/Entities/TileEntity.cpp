@@ -6,6 +6,8 @@
 
 #include "TileEntity.h"
 
+#include <memory>
+
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
 #include "ShapeParts/AnimationPart.h"
@@ -27,8 +29,8 @@ TileEntity::~TileEntity() = default;
 void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto animation =
-        Shared::ImageAnimation(std::make_shared<Graphic::Sprite>(), service_.CreateSequence(data.graphic_.animation_));
+    auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
+                                                              service_.CreateSequence(data.graphic_.animation_));
     auto part = AnimationPart::Create(animation);
     idleState->RegisterShapePart(part);
 }

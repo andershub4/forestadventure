@@ -6,6 +6,8 @@
 
 #include "PlayerEntity.h"
 
+#include <memory>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
@@ -392,10 +394,24 @@ std::shared_ptr<AnimationPartWith<FaceDirection>> PlayerEntity::MakeShapePart(
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
-    auto part = AnimationPartWith<FaceDirection>::Create(*dir);
+
+    auto selectAnimationFn =
+        [dir](const std::unordered_map<FaceDirection, std::shared_ptr<Shared::ImageAnimation>>& animations) {
+            bool found = animations.find(*dir) != animations.end();
+            Shared::ImageAnimation* result = nullptr;
+
+            if (found) {
+                result = animations.at(*dir).get();
+            }
+
+            return result;
+        };
+
+    auto part = AnimationPartWith<FaceDirection>::Create(selectAnimationFn);
     for (const auto& entry : faceDirImages) {
-        Shared::ImageAnimation animation(std::make_shared<Graphic::Sprite>(), service_.CreateSequence(entry.second));
-        animation.Center();
+        auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
+                                                                  service_.CreateSequence(entry.second));
+        animation->Center();
         part->RegisterAnimation(entry.first, animation);
     }
 
@@ -407,11 +423,23 @@ std::shared_ptr<ColliderPartWith<FaceDirection>> PlayerEntity::MakeColliderPart(
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto part = ColliderPartWith<FaceDirection>::Create(*dir);
+    auto selectColliderFn =
+        [dir](const std::unordered_map<FaceDirection, std::shared_ptr<Shared::ColliderAnimation>>& animations) {
+            bool found = animations.find(*dir) != animations.end();
+            Shared::ColliderAnimation* result = nullptr;
+
+            if (found) {
+                result = animations.at(*dir).get();
+            }
+
+            return result;
+        };
+
+    auto part = ColliderPartWith<FaceDirection>::Create(selectColliderFn);
     for (const auto& entry : faceDirColliders) {
-        Shared::ColliderAnimation animation(std::make_shared<Graphic::RectangleShape>(),
-                                            service_.CreateSequence(entry.second));
-        animation.Center();
+        auto animation = std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
+                                                                     service_.CreateSequence(entry.second));
+        animation->Center();
         part->RegisterCollider(entry.first, animation);
     }
 
