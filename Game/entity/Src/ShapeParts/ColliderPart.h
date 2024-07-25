@@ -61,7 +61,7 @@ public:
         return currentAnimation_->Intersects(*other.currentAnimation_);
     }
 
-    void RegisterCollider(const KeyT key, std::shared_ptr<Shared::ColliderAnimation> animation)
+    void RegisterCollider(const KeyT &key, std::shared_ptr<Shared::ColliderAnimation> animation)
     {
         auto res = map_.emplace(key, animation);
         if (!res.second) {

@@ -61,7 +61,7 @@ public:
         return currentAnimation_->Intersects(*other.currentAnimation_);
     }
 
-    void RegisterAnimation(const KeyT key, std::shared_ptr<Shared::ImageAnimation> animation)
+    void RegisterAnimation(const KeyT &key, std::shared_ptr<Shared::ImageAnimation> animation)
     {
         auto res = map_.emplace(key, animation);
         if (!res.second) {
