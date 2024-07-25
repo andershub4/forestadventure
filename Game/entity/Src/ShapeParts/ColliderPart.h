@@ -24,13 +24,10 @@ namespace Entity {
 template <class KeyT>
 class ColliderPartWith : public BasicColliderPart
 {
-    using SelectFn = std::function<Shared::ColliderAnimation *(
-        const std::unordered_map<KeyT, std::shared_ptr<Shared::ColliderAnimation>> &)>;
-
 public:
-    static std::shared_ptr<ColliderPartWith<KeyT>> Create(SelectFn selectFn)
+    static std::shared_ptr<ColliderPartWith<KeyT>> Create(const KeyT *const key)
     {
-        return std::make_shared<CtorHelper>(selectFn);
+        return std::make_shared<CtorHelper>(key);
     }
 
     static std::shared_ptr<ColliderPartWith<KeyT>> Create(std::shared_ptr<Shared::ColliderAnimation> animation)
@@ -43,10 +40,6 @@ public:
     virtual void Enter() override
     {
         currentAnimation_ = selectFn_(map_);
-        if (currentAnimation_ == nullptr) {
-            LOG_ERROR("Can not select animation");
-        }
-
         currentAnimation_->Restart();
     }
 
@@ -79,10 +72,26 @@ public:
     void RegisterUpdateCB(std::function<void(const Shared::ColliderAnimation &)> updateCB) { updateCB_ = updateCB; }
 
 private:
+    using SelectFn = std::function<Shared::ColliderAnimation *(
+        const std::unordered_map<KeyT, std::shared_ptr<Shared::ColliderAnimation>> &)>;
+
     /* Constructor for multiple colliders */
-    ColliderPartWith(SelectFn selectFn)
-        : selectFn_(selectFn)
-    {}
+    ColliderPartWith(const KeyT *const key)
+    {
+        selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<Shared::ColliderAnimation>> &animations) {
+            bool found = animations.find(*key) != animations.end();
+            Shared::ColliderAnimation *result = nullptr;
+
+            if (found) {
+                result = animations.at(*key).get();
+            }
+            else {
+                LOG_ERROR("%s can not be found", DUMP(key));
+            }
+
+            return result;
+        };
+    }
 
     /* Constructor for singel collider */
     ColliderPartWith(std::shared_ptr<Shared::ColliderAnimation> animation)
@@ -106,8 +115,8 @@ private:
 private:
     struct CtorHelper : public ColliderPartWith<KeyT>
     {
-        CtorHelper(SelectFn selectFn)
-            : ColliderPartWith<KeyT>(selectFn)
+        CtorHelper(const KeyT *const key)
+            : ColliderPartWith<KeyT>(key)
         {}
 
         CtorHelper(std::shared_ptr<Shared::ColliderAnimation> animation)

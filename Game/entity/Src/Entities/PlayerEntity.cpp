@@ -394,20 +394,7 @@ std::shared_ptr<AnimationPartWith<FaceDirection>> PlayerEntity::MakeShapePart(
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
-
-    auto selectAnimationFn =
-        [dir](const std::unordered_map<FaceDirection, std::shared_ptr<Shared::ImageAnimation>>& animations) {
-            bool found = animations.find(*dir) != animations.end();
-            Shared::ImageAnimation* result = nullptr;
-
-            if (found) {
-                result = animations.at(*dir).get();
-            }
-
-            return result;
-        };
-
-    auto part = AnimationPartWith<FaceDirection>::Create(selectAnimationFn);
+    auto part = AnimationPartWith<FaceDirection>::Create(dir);
     for (const auto& entry : faceDirImages) {
         auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
                                                                   service_.CreateSequence(entry.second));
@@ -423,19 +410,7 @@ std::shared_ptr<ColliderPartWith<FaceDirection>> PlayerEntity::MakeColliderPart(
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto selectColliderFn =
-        [dir](const std::unordered_map<FaceDirection, std::shared_ptr<Shared::ColliderAnimation>>& animations) {
-            bool found = animations.find(*dir) != animations.end();
-            Shared::ColliderAnimation* result = nullptr;
-
-            if (found) {
-                result = animations.at(*dir).get();
-            }
-
-            return result;
-        };
-
-    auto part = ColliderPartWith<FaceDirection>::Create(selectColliderFn);
+    auto part = ColliderPartWith<FaceDirection>::Create(dir);
     for (const auto& entry : faceDirColliders) {
         auto animation = std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
                                                                      service_.CreateSequence(entry.second));

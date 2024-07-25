@@ -24,13 +24,10 @@ namespace Entity {
 template <class KeyT>
 class AnimationPartWith : public BasicShapePart
 {
-    using SelectFn = std::function<Shared::ImageAnimation *(
-        const std::unordered_map<KeyT, std::shared_ptr<Shared::ImageAnimation>> &)>;
-
 public:
-    static std::shared_ptr<AnimationPartWith<KeyT>> Create(SelectFn selectFn)
+    static std::shared_ptr<AnimationPartWith<KeyT>> Create(const KeyT *const key)
     {
-        return std::make_shared<CtorHelper>(selectFn);
+        return std::make_shared<CtorHelper>(key);
     }
 
     static std::shared_ptr<AnimationPartWith<KeyT>> Create(std::shared_ptr<Shared::ImageAnimation> animation)
@@ -43,10 +40,6 @@ public:
     virtual void Enter() override
     {
         currentAnimation_ = selectFn_(map_);
-        if (currentAnimation_ == nullptr) {
-            LOG_ERROR("Can not select animation");
-        }
-
         currentAnimation_->Restart();
     }
 
@@ -78,10 +71,26 @@ public:
     void RegisterUpdateCB(std::function<void(const Shared::ImageAnimation &)> updateCB) { updateCB_ = updateCB; }
 
 private:
+    using SelectFn = std::function<Shared::ImageAnimation *(
+        const std::unordered_map<KeyT, std::shared_ptr<Shared::ImageAnimation>> &)>;
+
     /* Constructor for multiple animation, depending on KeyT */
-    AnimationPartWith(SelectFn selectFn)
-        : selectFn_(selectFn)
-    {}
+    AnimationPartWith(const KeyT *const key)
+    {
+        selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<Shared::ImageAnimation>> &animations) {
+            bool found = animations.find(*key) != animations.end();
+            Shared::ImageAnimation *result = nullptr;
+
+            if (found) {
+                result = animations.at(*key).get();
+            }
+            else {
+                LOG_ERROR("%s can not be found", DUMP(key));
+            }
+
+            return result;
+        };
+    }
 
     /* Constructor for singel animation */
     AnimationPartWith(std::shared_ptr<Shared::ImageAnimation> animation)
@@ -104,8 +113,8 @@ private:
 private:
     struct CtorHelper : public AnimationPartWith<KeyT>
     {
-        CtorHelper(SelectFn selectFn)
-            : AnimationPartWith<KeyT>(selectFn)
+        CtorHelper(const KeyT *const key)
+            : AnimationPartWith<KeyT>(key)
         {}
 
         CtorHelper(std::shared_ptr<Shared::ImageAnimation> animation)
