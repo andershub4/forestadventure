@@ -8,6 +8,7 @@
 
 #include <memory>
 
+#include "Animation/ImageAnimation.h"
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
 #include "ShapeParts/AnimationPart.h"
@@ -32,7 +33,7 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 {
     auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
                                                               service_.CreateSequence(data.graphic_.animation_));
-    auto part = std::make_shared<AnimationPart>(animation);
+    auto part = std::make_shared<AnimationPart<Shared::ImageAnimation>>(animation);
     idleState->RegisterShapePart(part);
 }
 

@@ -11,6 +11,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
+#include "Animation/ColliderAnimation.h"
 #include "CameraView.h"
 #include "Constant/Entity.h"
 #include "Entities/ArrowEntity.h"
@@ -31,7 +32,6 @@
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "ShapeParts/AnimationPart.h"
-#include "ShapeParts/ColliderPart.h"
 #include "Sprite.h"
 #include "State.h"
 
@@ -391,12 +391,12 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 }
 
-std::shared_ptr<AnimationPartWith<FaceDirection>> PlayerEntity::MakeShapePart(
+std::shared_ptr<AnimationPart<Shared::ImageAnimation, FaceDirection>> PlayerEntity::MakeShapePart(
     const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
-    auto part = std::make_shared<AnimationPartWith<FaceDirection>>(dir);
+    auto part = std::make_shared<AnimationPart<Shared::ImageAnimation, FaceDirection>>(dir);
     for (const auto& entry : faceDirImages) {
         auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
                                                                   service_.CreateSequence(entry.second));
@@ -407,17 +407,17 @@ std::shared_ptr<AnimationPartWith<FaceDirection>> PlayerEntity::MakeShapePart(
     return part;
 }
 
-std::shared_ptr<ColliderPartWith<FaceDirection>> PlayerEntity::MakeColliderPart(
+std::shared_ptr<AnimationPart<Shared::ColliderAnimation, FaceDirection>> PlayerEntity::MakeColliderPart(
     const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto part = std::make_shared<ColliderPartWith<FaceDirection>>(dir);
+    auto part = std::make_shared<AnimationPart<Shared::ColliderAnimation, FaceDirection>>(dir);
     for (const auto& entry : faceDirColliders) {
         auto animation = std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
                                                                      service_.CreateSequence(entry.second));
         animation->Center();
-        part->RegisterCollider(entry.first, animation);
+        part->RegisterAnimation(entry.first, animation);
     }
 
     return part;

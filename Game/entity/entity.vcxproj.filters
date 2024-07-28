@@ -81,9 +81,6 @@
     <ClInclude Include="Src\Properties\Property.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ShapeParts\AnimationPart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\ShapeParts\BasicPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -132,16 +129,13 @@
     <ClInclude Include="Src\Events\DestroyEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ShapeParts\BasicShapePart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Events\CollisionEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ShapeParts\ColliderPart.h">
+    <ClInclude Include="Src\ShapeParts\AnimationPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ShapeParts\BasicColliderPart.h">
+    <ClInclude Include="Src\ShapeParts\BasicAnimationPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

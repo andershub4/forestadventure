@@ -176,11 +176,9 @@
     <ClInclude Include="Src\PropertyData.h" />
     <ClInclude Include="Src\PropertyStore.h" />
     <ClInclude Include="Src\Shape.h" />
-    <ClInclude Include="Src\ShapeParts\AnimationPart.h" />
-    <ClInclude Include="Src\ShapeParts\BasicColliderPart.h" />
+    <ClInclude Include="Src\ShapeParts\BasicAnimationPart.h" />
     <ClInclude Include="Src\ShapeParts\BasicPart.h" />
-    <ClInclude Include="Src\ShapeParts\BasicShapePart.h" />
-    <ClInclude Include="Src\ShapeParts\ColliderPart.h" />
+    <ClInclude Include="Src\ShapeParts\AnimationPart.h" />
     <ClInclude Include="Src\State.h" />
     <ClInclude Include="Src\StateMachine.h" />
     <ClInclude Include="Src\StateType.h" />
