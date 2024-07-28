@@ -23,14 +23,41 @@ template <class KeyT>
 class ColliderPartWith : public BasicColliderPart
 {
 public:
-    static std::shared_ptr<ColliderPartWith<KeyT>> Create(const KeyT *const key)
+    /* Constructor for multiple colliders */
+    ColliderPartWith(const KeyT *const key)
     {
-        return std::make_shared<CtorHelper>(key);
+        selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<Shared::ColliderAnimation>> &animations) {
+            bool found = animations.find(*key) != animations.end();
+            Shared::ColliderAnimation *result = nullptr;
+
+            if (found) {
+                result = animations.at(*key).get();
+            }
+            else {
+                LOG_ERROR("%s can not be found", DUMP(key));
+            }
+
+            return result;
+        };
     }
 
-    static std::shared_ptr<ColliderPartWith<KeyT>> Create(std::shared_ptr<Shared::ColliderAnimation> animation)
+    /* Constructor for singel collider */
+    ColliderPartWith(std::shared_ptr<Shared::ColliderAnimation> animation)
     {
-        return std::make_shared<CtorHelper>(animation);
+        KeyT defaultKey{};
+        selectFn_ =
+            [defaultKey](const std::unordered_map<KeyT, std::shared_ptr<Shared::ColliderAnimation>> &animations) {
+                bool found = animations.find(defaultKey) != animations.end();
+                Shared::ColliderAnimation *result = nullptr;
+
+                if (found) {
+                    result = animations.at(defaultKey).get();
+                }
+
+                return result;
+            };
+
+        RegisterCollider(defaultKey, animation);
     }
 
     virtual ~ColliderPartWith() = default;
@@ -72,55 +99,6 @@ public:
 private:
     using SelectFn = std::function<Shared::ColliderAnimation *(
         const std::unordered_map<KeyT, std::shared_ptr<Shared::ColliderAnimation>> &)>;
-
-    /* Constructor for multiple colliders */
-    ColliderPartWith(const KeyT *const key)
-    {
-        selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<Shared::ColliderAnimation>> &animations) {
-            bool found = animations.find(*key) != animations.end();
-            Shared::ColliderAnimation *result = nullptr;
-
-            if (found) {
-                result = animations.at(*key).get();
-            }
-            else {
-                LOG_ERROR("%s can not be found", DUMP(key));
-            }
-
-            return result;
-        };
-    }
-
-    /* Constructor for singel collider */
-    ColliderPartWith(std::shared_ptr<Shared::ColliderAnimation> animation)
-    {
-        KeyT defaultKey{};
-        selectFn_ =
-            [defaultKey](const std::unordered_map<KeyT, std::shared_ptr<Shared::ColliderAnimation>> &animations) {
-                bool found = animations.find(defaultKey) != animations.end();
-                Shared::ColliderAnimation *result = nullptr;
-
-                if (found) {
-                    result = animations.at(defaultKey).get();
-                }
-
-                return result;
-            };
-
-        RegisterCollider(defaultKey, animation);
-    }
-
-private:
-    struct CtorHelper : public ColliderPartWith<KeyT>
-    {
-        CtorHelper(const KeyT *const key)
-            : ColliderPartWith<KeyT>(key)
-        {}
-
-        CtorHelper(std::shared_ptr<Shared::ColliderAnimation> animation)
-            : ColliderPartWith<KeyT>(animation)
-        {}
-    };
 
     std::unordered_map<KeyT, std::shared_ptr<Shared::ColliderAnimation>> map_;
     SelectFn selectFn_;
