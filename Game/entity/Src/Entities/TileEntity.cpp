@@ -11,6 +11,7 @@
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
 #include "ShapeParts/AnimationPart.h"
+#include "Sprite.h"
 #include "State.h"
 
 namespace FA {

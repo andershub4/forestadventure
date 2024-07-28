@@ -14,8 +14,6 @@
 #include "Animation/ColliderAnimation.h"
 #include "BasicColliderPart.h"
 #include "Logging.h"
-#include "RectangleShape.h"
-#include "Sequence.h"
 
 namespace FA {
 

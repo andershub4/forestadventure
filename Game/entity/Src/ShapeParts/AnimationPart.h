@@ -14,8 +14,6 @@
 #include "Animation/ImageAnimation.h"
 #include "BasicShapePart.h"
 #include "Logging.h"
-#include "Sequence.h"
-#include "Sprite.h"
 
 namespace FA {
 

@@ -9,11 +9,13 @@
 #include <memory>
 
 #include "PropertyData.h"
+#include "RectangleShape.h"
 #include "Resource/ColliderData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "ShapeParts/AnimationPart.h"
 #include "ShapeParts/ColliderPart.h"
+#include "Sprite.h"
 #include "State.h"
 
 namespace FA {
