@@ -52,12 +52,14 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     auto imageAnimation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
                                                                    service_.CreateSequence(idleImages));
     imageAnimation->Center();
-    auto shapePart = std::make_shared<AnimationPart<Shared::ImageAnimation>>(imageAnimation);
+    auto shapePart = std::make_shared<AnimationPart<Shared::ImageAnimation>>(
+        std::make_shared<SingleSelection<Shared::ImageAnimation>>(imageAnimation));
     idleState->RegisterShapePart(shapePart);
     auto colliderAnimation = std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
                                                                          service_.CreateSequence(idleColliders));
     colliderAnimation->Center();
-    auto colliderPart = std::make_shared<AnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
+    auto colliderPart = std::make_shared<AnimationPart<Shared::ColliderAnimation>>(
+        std::make_shared<SingleSelection<Shared::ColliderAnimation>>(colliderAnimation));
     idleState->RegisterColliderPart(colliderPart);
 }
 

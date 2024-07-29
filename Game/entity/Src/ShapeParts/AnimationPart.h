@@ -18,19 +18,42 @@ namespace FA {
 
 namespace Entity {
 
-template <class AnimationT, class KeyT = int>
-class AnimationPart : public BasicAnimationPart
+template <class ValueT>
+class SelectionBaseIf
 {
 public:
-    /* Constructor for multiple animations */
-    AnimationPart(const KeyT *const key)
+    virtual ~SelectionBaseIf() = default;
+    virtual ValueT *Get() const = 0;
+};
+
+template <class ValueT>
+class SingleSelection : public SelectionBaseIf<ValueT>
+{
+public:
+    SingleSelection(std::shared_ptr<ValueT> selection)
+        : selection_(selection)
+    {}
+
+    virtual ValueT *Get() const override { return selection_.get(); }
+
+private:
+    std::shared_ptr<ValueT> selection_;
+};
+
+template <class ValueT, class KeyT>
+class MultiSelection : public SelectionBaseIf<ValueT>
+{
+    using SelectFn = std::function<ValueT *(const std::unordered_map<KeyT, std::shared_ptr<ValueT>> &)>;
+
+public:
+    MultiSelection(const KeyT *const key)
     {
-        selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<AnimationT>> &animations) {
-            bool found = animations.find(*key) != animations.end();
-            AnimationT *result = nullptr;
+        selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<ValueT>> &map) {
+            bool found = map.find(*key) != map.end();
+            ValueT *result = nullptr;
 
             if (found) {
-                result = animations.at(*key).get();
+                result = map.at(*key).get();
             }
             else {
                 LOG_ERROR("%s can not be found", DUMP(key));
@@ -40,29 +63,37 @@ public:
         };
     }
 
-    /* Constructor for singel animation */
-    AnimationPart(std::shared_ptr<AnimationT> animation)
+    void RegisterSelection(const KeyT &key, std::shared_ptr<ValueT> selection)
     {
-        KeyT defaultKey{};
-        selectFn_ = [defaultKey](const std::unordered_map<KeyT, std::shared_ptr<AnimationT>> &animations) {
-            bool found = animations.find(defaultKey) != animations.end();
-            AnimationT *result = nullptr;
-
-            if (found) {
-                result = animations.at(defaultKey).get();
-            }
-
-            return result;
-        };
-
-        RegisterAnimation(defaultKey, animation);
+        auto it = map_.find(key);
+        if (it != map_.end()) {
+            LOG_WARN("%s is already registered", DUMP(key));
+        }
+        else {
+            map_.insert({key, selection});
+        }
     }
+
+    virtual ValueT *Get() const override { return selectFn_(map_); }
+
+private:
+    SelectFn selectFn_;
+    std::unordered_map<KeyT, std::shared_ptr<ValueT>> map_;
+};
+
+template <class AnimationT>
+class AnimationPart : public BasicAnimationPart
+{
+public:
+    AnimationPart(std::shared_ptr<SelectionBaseIf<AnimationT>> selection)
+        : selection_(selection)
+    {}
 
     virtual ~AnimationPart() = default;
 
     virtual void Enter() override
     {
-        currentAnimation_ = selectFn_(map_);
+        currentAnimation_ = selection_->Get();
         currentAnimation_->Restart();
     }
 
@@ -80,25 +111,14 @@ public:
 
     bool Intersects(const BasicAnimationPart &otherPart)
     {
-        auto other = static_cast<const AnimationPart<AnimationT, KeyT> &>(otherPart);
+        auto other = static_cast<const AnimationPart<AnimationT> &>(otherPart);
         return currentAnimation_->Intersects(*other.currentAnimation_);
-    }
-
-    void RegisterAnimation(const KeyT &key, std::shared_ptr<AnimationT> animation)
-    {
-        auto res = map_.emplace(key, animation);
-        if (!res.second) {
-            LOG_WARN("%s is already inserted", DUMP(key));
-        }
     }
 
     void RegisterUpdateCB(std::function<void(const AnimationT &)> updateCB) { updateCB_ = updateCB; }
 
 private:
-    using SelectFn = std::function<AnimationT *(const std::unordered_map<KeyT, std::shared_ptr<AnimationT>> &)>;
-
-    std::unordered_map<KeyT, std::shared_ptr<AnimationT>> map_;
-    SelectFn selectFn_;
+    std::shared_ptr<SelectionBaseIf<AnimationT>> selection_;
     AnimationT *currentAnimation_{nullptr};
     std::function<void(const AnimationT &)> updateCB_{[](const AnimationT &) {}};
 };

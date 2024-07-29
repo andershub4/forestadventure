@@ -391,35 +391,37 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 }
 
-std::shared_ptr<AnimationPart<Shared::ImageAnimation, FaceDirection>> PlayerEntity::MakeShapePart(
+std::shared_ptr<AnimationPart<Shared::ImageAnimation>> PlayerEntity::MakeShapePart(
     const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
-    auto part = std::make_shared<AnimationPart<Shared::ImageAnimation, FaceDirection>>(dir);
+    auto selection = std::make_shared<MultiSelection<Shared::ImageAnimation, FaceDirection>>(dir);
     for (const auto& entry : faceDirImages) {
         auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
                                                                   service_.CreateSequence(entry.second));
         animation->Center();
-        part->RegisterAnimation(entry.first, animation);
+        selection->RegisterSelection(entry.first, animation);
     }
 
+    auto part = std::make_shared<AnimationPart<Shared::ImageAnimation>>(selection);
     return part;
 }
 
-std::shared_ptr<AnimationPart<Shared::ColliderAnimation, FaceDirection>> PlayerEntity::MakeColliderPart(
+std::shared_ptr<AnimationPart<Shared::ColliderAnimation>> PlayerEntity::MakeColliderPart(
     const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto part = std::make_shared<AnimationPart<Shared::ColliderAnimation, FaceDirection>>(dir);
+    auto selection = std::make_shared<MultiSelection<Shared::ColliderAnimation, FaceDirection>>(dir);
     for (const auto& entry : faceDirColliders) {
         auto animation = std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
                                                                      service_.CreateSequence(entry.second));
         animation->Center();
-        part->RegisterAnimation(entry.first, animation);
+        selection->RegisterSelection(entry.first, animation);
     }
 
+    auto part = std::make_shared<AnimationPart<Shared::ColliderAnimation>>(selection);
     return part;
 }
 

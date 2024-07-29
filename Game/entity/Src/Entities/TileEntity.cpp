@@ -33,7 +33,8 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 {
     auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
                                                               service_.CreateSequence(data.graphic_.animation_));
-    auto part = std::make_shared<AnimationPart<Shared::ImageAnimation>>(animation);
+    auto part = std::make_shared<AnimationPart<Shared::ImageAnimation>>(
+        std::make_shared<SingleSelection<Shared::ImageAnimation>>(animation));
     idleState->RegisterShapePart(part);
 }
 
