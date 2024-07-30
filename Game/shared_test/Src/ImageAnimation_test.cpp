@@ -43,31 +43,31 @@ TEST_F(ImageAnimationTest, UpdateWithEmptyContentShouldDoNothing)
 TEST_F(ImageAnimationTest, UpdateWithContentShoulSetTexture)
 {
     EXPECT_CALL(*seqMock_, IsEmpty).WillOnce(Return(false));
-    ImageAnimation animation_(spriteMock_, seqMock_);
+    ImageAnimation animation(spriteMock_, seqMock_);
     EXPECT_CALL(*seqMock_, Update(0.01f));
     EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(frame_));
     EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
     EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-    animation_.Update(0.01f);
+    animation.Update(0.01f);
 }
 
 TEST_F(ImageAnimationTest, UpdateWithContentAndCenterShoulSetTextureAndSetOrigin)
 {
     EXPECT_CALL(*seqMock_, IsEmpty).WillOnce(Return(false));
-    ImageAnimation animation_(spriteMock_, seqMock_);
+    ImageAnimation animation(spriteMock_, seqMock_);
     EXPECT_CALL(*seqMock_, Update(0.01f));
     EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(frame_));
     EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
     EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
     EXPECT_CALL(*spriteMock_, setOrigin(5, 6));
-    animation_.Center();
-    animation_.Update(0.01f);
+    animation.Center();
+    animation.Update(0.01f);
 }
 
 TEST_F(ImageAnimationTest, IntersectsWithIntersectingSpritesShouldReturnTrue)
 {
     EXPECT_CALL(*seqMock_, IsEmpty).WillOnce(Return(false));
-    ImageAnimation animation_(spriteMock_, seqMock_);
+    ImageAnimation animation(spriteMock_, seqMock_);
     auto otherSeqMock = std::make_shared<StrictMock<SequenceMock<Shared::ImageFrame>>>();
     auto otherSpriteMock = std::make_shared<StrictMock<Graphic::SpriteMock>>();
     EXPECT_CALL(*otherSeqMock, IsEmpty).WillOnce(Return(false));
@@ -77,22 +77,22 @@ TEST_F(ImageAnimationTest, IntersectsWithIntersectingSpritesShouldReturnTrue)
     EXPECT_CALL(*spriteMock_, getGlobalBounds).WillOnce(Return(rect));
     EXPECT_CALL(*otherSpriteMock, getGlobalBounds).WillOnce(Return(otherRect));
 
-    bool result = animation_.Intersects(other);
+    bool result = animation.Intersects(other);
     EXPECT_TRUE(result);
 }
 
 TEST_F(ImageAnimationTest, RegisterUpdateCBShouldBeCalledDuringUpdate)
 {
     EXPECT_CALL(*seqMock_, IsEmpty).WillOnce(Return(false));
-    ImageAnimation animation_(spriteMock_, seqMock_);
+    ImageAnimation animation(spriteMock_, seqMock_);
     MockFunction<void(const ImageAnimationIf&)> callbackFunctionMock;
-    animation_.RegisterUpdateCB(callbackFunctionMock.AsStdFunction());
+    animation.RegisterUpdateCB(callbackFunctionMock.AsStdFunction());
     EXPECT_CALL(*seqMock_, Update(0.01f));
     EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(frame_));
     EXPECT_CALL(*spriteMock_, setTextureImpl(Address(&textureMock_), false));
     EXPECT_CALL(*spriteMock_, setTextureRect(Eq(rect_)));
-    EXPECT_CALL(callbackFunctionMock, Call(Ref(animation_)));
-    animation_.Update(0.01f);
+    EXPECT_CALL(callbackFunctionMock, Call(Ref(animation)));
+    animation.Update(0.01f);
 }
 
 }  // namespace Shared
