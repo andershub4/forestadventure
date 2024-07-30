@@ -20,6 +20,8 @@
 #include "RectangleShape.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
+#include "Selections/MultiSelection.h"
+#include "Selections/SingleSelection.h"
 #include "ShapeParts/AnimationPart.h"
 #include "Sprite.h"
 #include "State.h"

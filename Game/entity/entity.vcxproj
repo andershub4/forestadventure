@@ -175,6 +175,9 @@
     <ClInclude Include="Src\PropertyConverter.h" />
     <ClInclude Include="Src\PropertyData.h" />
     <ClInclude Include="Src\PropertyStore.h" />
+    <ClInclude Include="Src\Selections\MultiSelection.h" />
+    <ClInclude Include="Src\Selections\SelectionBaseIf.h" />
+    <ClInclude Include="Src\Selections\SingleSelection.h" />
     <ClInclude Include="Src\Shape.h" />
     <ClInclude Include="Src\ShapeParts\AnimationPartIf.h" />
     <ClInclude Include="Src\ShapeParts\BasicPart.h" />

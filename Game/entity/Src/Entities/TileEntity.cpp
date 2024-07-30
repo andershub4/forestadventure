@@ -11,6 +11,7 @@
 #include "Animation/ImageAnimation.h"
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
+#include "Selections/SingleSelection.h"
 #include "ShapeParts/AnimationPart.h"
 #include "Sprite.h"
 #include "State.h"
