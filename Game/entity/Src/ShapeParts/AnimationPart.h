@@ -32,13 +32,16 @@ public:
 
     virtual void Update(float deltaTime) override { currentAnimation_->Update(deltaTime); }
 
-    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override { currentAnimation_->DrawTo(renderTarget); }
+    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override
+    {
+        currentAnimation_->DrawTo(renderTarget);
+    }
 
     virtual void SetPosition(const sf::Vector2f &position) override { currentAnimation_->SetPosition(position); }
 
     virtual void SetRotation(float angle) override { currentAnimation_->SetRotation(angle); }
 
-    virtual bool Intersects(const AnimationPartIf &otherPart) override
+    virtual bool Intersects(const AnimationPartIf &otherPart) const override
     {
         auto other = static_cast<const AnimationPart<AnimationT> &>(otherPart);
         return currentAnimation_->Intersects(*other.currentAnimation_);
