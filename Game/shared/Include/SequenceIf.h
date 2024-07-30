@@ -14,6 +14,7 @@ template <class T>
 class SequenceIf
 {
 public:
+    virtual ~SequenceIf() = default;
     virtual void Update(float deltaTime) = 0;
     virtual T GetCurrent() const = 0;
     virtual void Start() = 0;

@@ -26,6 +26,7 @@ struct ColliderFrame;
 class ColliderAnimationIf
 {
 public:
+    virtual ~ColliderAnimationIf() = default;
     virtual void Update(float deltaTime) = 0;
     virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const = 0;
     virtual bool Intersects(const ColliderAnimationIf &other) const = 0;

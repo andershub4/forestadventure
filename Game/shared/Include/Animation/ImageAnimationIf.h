@@ -25,6 +25,7 @@ struct ImageFrame;
 class ImageAnimationIf
 {
 public:
+    virtual ~ImageAnimationIf() = default;
     virtual void Update(float deltaTime) = 0;
     virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const = 0;
     virtual bool Intersects(const ImageAnimationIf &other) const = 0;
