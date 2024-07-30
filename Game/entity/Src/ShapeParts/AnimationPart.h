@@ -11,7 +11,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "BasicAnimationPart.h"
+#include "AnimationPartIf.h"
 #include "Logging.h"
 
 namespace FA {
@@ -82,7 +82,7 @@ private:
 };
 
 template <class AnimationT>
-class AnimationPart : public BasicAnimationPart
+class AnimationPart : public AnimationPartIf
 {
 public:
     AnimationPart(std::shared_ptr<SelectionBaseIf<AnimationT>> selection)
@@ -105,7 +105,7 @@ public:
 
     virtual void SetRotation(float angle) override { currentAnimation_->SetRotation(angle); }
 
-    virtual bool Intersects(const BasicAnimationPart &otherPart) override
+    virtual bool Intersects(const AnimationPartIf &otherPart) override
     {
         auto other = static_cast<const AnimationPart<AnimationT> &>(otherPart);
         return currentAnimation_->Intersects(*other.currentAnimation_);

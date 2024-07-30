@@ -13,7 +13,7 @@
 #include "RectangleShape.h"
 #endif
 
-#include "ShapeParts/BasicAnimationPart.h"
+#include "ShapeParts/AnimationPartIf.h"
 
 namespace FA {
 
@@ -33,16 +33,16 @@ public:
     Shape(Body &body);
     ~Shape();
 
-    void RegisterShapePart(std::shared_ptr<BasicAnimationPart> part);
-    void RegisterColliderPart(std::shared_ptr<BasicAnimationPart> part);
+    void RegisterShapePart(std::shared_ptr<AnimationPartIf> part);
+    void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part);
     void Enter();
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
     bool Intersect(const Shape &shape) const;
 
 private:
-    std::vector<std::shared_ptr<BasicAnimationPart>> colliderParts_;
-    std::vector<std::shared_ptr<BasicAnimationPart>> shapeParts_;
+    std::vector<std::shared_ptr<AnimationPartIf>> colliderParts_;
+    std::vector<std::shared_ptr<AnimationPartIf>> shapeParts_;
     Body &body_;
 #ifdef _DEBUG
     Graphic::RectangleShape rShape_;

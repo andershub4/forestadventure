@@ -49,8 +49,8 @@ public:
     void RegisterEnterCB(std::function<void()> enterCB);
     void RegisterExitCB(std::function<void()> exitCB);
     void RegisterAbility(std::shared_ptr<AbilityIf> ability);
-    void RegisterShapePart(std::shared_ptr<BasicAnimationPart> part);
-    void RegisterColliderPart(std::shared_ptr<BasicAnimationPart> part);
+    void RegisterShapePart(std::shared_ptr<AnimationPartIf> part);
+    void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part);
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
     void RegisterIgnoreEvents(const std::vector<EventType>& eventTypes);
     void IgnoreAllEventsExcept(const std::unordered_set<EventType>& notIgnorableEventTypes);

@@ -135,7 +135,7 @@
     <ClInclude Include="Src\ShapeParts\AnimationPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ShapeParts\BasicAnimationPart.h">
+    <ClInclude Include="Src\ShapeParts\AnimationPartIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
