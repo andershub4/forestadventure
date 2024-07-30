@@ -27,6 +27,7 @@ void ImageAnimation::Update(float deltaTime)
         auto frame = seq_->GetCurrent();
         sprite_->setTexture(*frame.texture_);
         sprite_->setTextureRect(frame.rect_);
+        updateCB_(*this);
         if (center_) {
             sprite_->setOrigin(frame.center_.x, frame.center_.y);
         }
@@ -42,6 +43,11 @@ bool ImageAnimation::Intersects(const ImageAnimationIf& other) const
 {
     auto otherImpl = static_cast<const ImageAnimation&>(other);
     return sprite_->getGlobalBounds().intersects(otherImpl.sprite_->getGlobalBounds());
+}
+
+void ImageAnimation::RegisterUpdateCB(std::function<void(const ImageAnimationIf&)> updateCB)
+{
+    updateCB_ = updateCB;
 }
 
 void ImageAnimation::Start()

@@ -32,6 +32,7 @@ public:
     virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
     virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override;
     virtual bool Intersects(const ColliderAnimationIf &other) const override;
+    virtual void RegisterUpdateCB(std::function<void(const ColliderAnimationIf &)> updateCB) override;
     virtual void Start() override;
     virtual void Stop() override;
     virtual void Restart() override;
@@ -45,6 +46,7 @@ private:
     std::shared_ptr<SequenceIf<Shared::ColliderFrame>> seq_;
     bool center_{false};
     bool validSeq_{false};
+    std::function<void(const ColliderAnimationIf &)> updateCB_{[](const ColliderAnimationIf &) {}};
 };
 
 }  // namespace Shared

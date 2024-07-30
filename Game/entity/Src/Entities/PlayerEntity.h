@@ -50,7 +50,8 @@ private:
     void OnShoot();
 
     std::shared_ptr<AnimationPart<Shared::ImageAnimation>> MakeShapePart(
-        const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages);
+        const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages,
+        std::function<void(const Shared::ImageAnimationIf&)> updateCB);
     std::shared_ptr<AnimationPart<Shared::ColliderAnimation>> MakeColliderPart(
         const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders);
 

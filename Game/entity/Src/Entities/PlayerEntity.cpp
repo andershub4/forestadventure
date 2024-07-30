@@ -326,7 +326,8 @@ void PlayerEntity::OnInit()
 
 void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 {
-    auto shapePart = MakeShapePart(idleFaceDirImages);
+    auto updateCB = [](const Shared::ImageAnimationIf& animation) {};
+    auto shapePart = MakeShapePart(idleFaceDirImages, updateCB);
     state->RegisterShapePart(shapePart);
     auto colliderPart = MakeColliderPart(idleFaceDirColliders);
     state->RegisterColliderPart(colliderPart);
@@ -342,7 +343,8 @@ void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 {
-    auto shapePart = MakeShapePart(moveFaceDirImages);
+    auto updateCB = [](const Shared::ImageAnimationIf& animation) {};
+    auto shapePart = MakeShapePart(moveFaceDirImages, updateCB);
     state->RegisterShapePart(shapePart);
     auto colliderPart = MakeColliderPart(moveFaceDirColliders);
     state->RegisterColliderPart(colliderPart);
@@ -358,16 +360,15 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
 {
-    auto updateCB = [this](const Shared::ImageAnimation& animation) {
+    auto updateCB = [this](const Shared::ImageAnimationIf& animation) {
         if (animation.IsCompleted()) {
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto shapePart = MakeShapePart(attackFaceDirImages);
+    auto shapePart = MakeShapePart(attackFaceDirImages, updateCB);
     state->RegisterShapePart(shapePart);
     auto colliderPart = MakeColliderPart(attackFaceDirColliders);
     state->RegisterColliderPart(colliderPart);
-    shapePart->RegisterUpdateCB(updateCB);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
@@ -375,24 +376,24 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
 {
-    auto updateCB = [this](const Shared::ImageAnimation& animation) {
+    auto updateCB = [this](const Shared::ImageAnimationIf& animation) {
         if (animation.IsCompleted()) {
             OnShoot();
             ChangeStateTo(StateType::Idle, nullptr);
         }
     };
-    auto shapePart = MakeShapePart(attackWFaceDirImages);
+    auto shapePart = MakeShapePart(attackWFaceDirImages, updateCB);
     state->RegisterShapePart(shapePart);
     auto colliderPart = MakeColliderPart(attackWFaceDirColliders);
     state->RegisterColliderPart(colliderPart);
-    shapePart->RegisterUpdateCB(updateCB);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 }
 
 std::shared_ptr<AnimationPart<Shared::ImageAnimation>> PlayerEntity::MakeShapePart(
-    const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages)
+    const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages,
+    std::function<void(const Shared::ImageAnimationIf&)> updateCB)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
@@ -401,6 +402,7 @@ std::shared_ptr<AnimationPart<Shared::ImageAnimation>> PlayerEntity::MakeShapePa
         auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
                                                                   service_.CreateSequence(entry.second));
         animation->Center();
+        animation->RegisterUpdateCB(updateCB);
         selection->RegisterSelection(entry.first, animation);
     }
 

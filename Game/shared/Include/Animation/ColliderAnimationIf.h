@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <functional>
+
 #include "SfmlFwd.h"
 
 namespace FA {
@@ -27,6 +29,7 @@ public:
     virtual void Update(float deltaTime) = 0;
     virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const = 0;
     virtual bool Intersects(const ColliderAnimationIf &other) const = 0;
+    virtual void RegisterUpdateCB(std::function<void(const ColliderAnimationIf &)> updateCB) = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual void Restart() = 0;

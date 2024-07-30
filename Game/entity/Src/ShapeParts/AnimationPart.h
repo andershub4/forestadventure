@@ -97,11 +97,7 @@ public:
         currentAnimation_->Restart();
     }
 
-    virtual void Update(float deltaTime) override
-    {
-        currentAnimation_->Update(deltaTime);
-        updateCB_(*currentAnimation_);
-    }
+    virtual void Update(float deltaTime) override { currentAnimation_->Update(deltaTime); }
 
     virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const { currentAnimation_->DrawTo(renderTarget); }
 
@@ -115,12 +111,9 @@ public:
         return currentAnimation_->Intersects(*other.currentAnimation_);
     }
 
-    void RegisterUpdateCB(std::function<void(const AnimationT &)> updateCB) { updateCB_ = updateCB; }
-
 private:
     std::shared_ptr<SelectionBaseIf<AnimationT>> selection_;
     AnimationT *currentAnimation_{nullptr};
-    std::function<void(const AnimationT &)> updateCB_{[](const AnimationT &) {}};
 };
 
 }  // namespace Entity

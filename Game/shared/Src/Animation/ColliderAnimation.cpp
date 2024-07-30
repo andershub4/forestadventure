@@ -33,6 +33,7 @@ void ColliderAnimation::Update(float deltaTime)
         seq_->Update(deltaTime);
         auto frame = seq_->GetCurrent();
         rectShape_->setSize(frame.size_);
+        updateCB_(*this);
         if (center_) {
             rectShape_->setOrigin(frame.center_.x, frame.center_.y);
         }
@@ -48,6 +49,11 @@ bool ColliderAnimation::Intersects(const ColliderAnimationIf &other) const
 {
     auto otherImpl = static_cast<const ColliderAnimation &>(other);
     return rectShape_->getGlobalBounds().intersects(otherImpl.rectShape_->getGlobalBounds());
+}
+
+void ColliderAnimation::RegisterUpdateCB(std::function<void(const ColliderAnimationIf &)> updateCB)
+{
+    updateCB_ = updateCB;
 }
 
 void ColliderAnimation::Start()
