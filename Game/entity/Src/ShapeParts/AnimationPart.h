@@ -32,7 +32,7 @@ public:
 
     virtual void Update(float deltaTime) override { currentAnimation_->Update(deltaTime); }
 
-    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const { currentAnimation_->DrawTo(renderTarget); }
+    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override { currentAnimation_->DrawTo(renderTarget); }
 
     virtual void SetPosition(const sf::Vector2f &position) override { currentAnimation_->SetPosition(position); }
 
