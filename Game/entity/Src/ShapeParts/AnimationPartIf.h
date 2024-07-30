@@ -12,7 +12,6 @@ namespace FA {
 
 namespace Graphic {
 
-class RectangleShapeIf;
 class RenderTargetIf;
 
 }  // namespace Graphic
