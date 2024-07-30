@@ -105,7 +105,7 @@ public:
 
     virtual void SetRotation(float angle) override { currentAnimation_->SetRotation(angle); }
 
-    bool Intersects(const BasicAnimationPart &otherPart)
+    virtual bool Intersects(const BasicAnimationPart &otherPart) override
     {
         auto other = static_cast<const AnimationPart<AnimationT> &>(otherPart);
         return currentAnimation_->Intersects(*other.currentAnimation_);
