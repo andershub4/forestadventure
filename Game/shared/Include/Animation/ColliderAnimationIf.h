@@ -1,4 +1,3 @@
-#pragma once
 /*
  *	Copyright (C) 2024 Anders Wennmo
  *	This file is part of forestadventure which is released under MIT license.
@@ -20,8 +19,6 @@ class RenderTargetIf;
 }  // namespace Graphic
 
 namespace Shared {
-
-struct ColliderFrame;
 
 class ColliderAnimationIf
 {

@@ -20,8 +20,6 @@ class RenderTargetIf;
 
 namespace Shared {
 
-struct ImageFrame;
-
 class ImageAnimationIf
 {
 public:
