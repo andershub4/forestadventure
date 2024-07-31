@@ -10,6 +10,8 @@
 
 #include "Animation/ColliderAnimation.h"
 #include "Animation/ImageAnimation.h"
+#include "Events/CollisionEvent.h"
+#include "Events/DeadEvent.h"
 #include "PropertyData.h"
 #include "RectangleShape.h"
 #include "Resource/ColliderData.h"
@@ -62,6 +64,12 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     auto colliderPart = std::make_shared<AnimationPart<Shared::ColliderAnimation>>(
         std::make_shared<SingleSelection<Shared::ColliderAnimation>>(colliderAnimation));
     idleState->RegisterColliderPart(colliderPart);
+    idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
+        auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
+        if (service_.GetType(collisionEvent->id_) == EntityType::Player) {
+            HandleEvent(std::make_shared<DeadEvent>());
+        }
+    });
 }
 
 }  // namespace Entity

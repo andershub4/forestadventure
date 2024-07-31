@@ -17,6 +17,7 @@
 #include "Entities/ArrowEntity.h"
 #include "Events/AttackEvent.h"
 #include "Events/AttackWeaponEvent.h"
+#include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
 #include "Events/StartMoveEvent.h"
 #include "Events/StopMoveEvent.h"
@@ -353,10 +354,15 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
     state->RegisterAbility(move);
-
     state->RegisterEventCB(EventType::StopMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     state->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
+    state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
+        auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
+        if (service_.GetType(collisionEvent->id_) == EntityType::Coin) {
+            coins_++;
+        }
+    });
 }
 
 void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)

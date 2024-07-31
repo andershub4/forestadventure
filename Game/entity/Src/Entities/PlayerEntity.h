@@ -59,6 +59,9 @@ private:
     void DefineMoveState(std::shared_ptr<State> state);
     void DefineAttackState(std::shared_ptr<State> state);
     void DefineAttackWeaponState(std::shared_ptr<State> state);
+
+private:
+    unsigned int coins_{0};
 };
 
 }  // namespace Entity
