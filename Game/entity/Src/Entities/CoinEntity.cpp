@@ -35,8 +35,10 @@ const Shared::SheetItem coin2{Coin, {1, 0}};
 const Shared::SheetItem coin3{Coin, {2, 0}};
 const Shared::SheetItem coin4{Coin, {3, 0}};
 
+const sf::IntRect rect{1, 1, 4, 5};
+
 const std::vector<Shared::ImageData> idleImages{coin1, coin2, coin3, coin4};
-const std::vector<Shared::ColliderData> idleColliders{coin1, coin2, coin3, coin4};
+const std::vector<Shared::ColliderData> idleColliders{{coin1, rect}, {coin2, rect}, {coin3, rect}, {coin4, rect}};
 
 }  // namespace
 
