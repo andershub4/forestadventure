@@ -140,7 +140,7 @@ const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackWF
     {FaceDirection::Down, attackWDownImages},
     {FaceDirection::Up, attackWUpImages}};
 
-const sf::IntRect vrect{11, 8, 10, 22};
+const sf::IntRect vrect{11, 9, 10, 20};
 const sf::IntRect hrect{10, 10, 12, 19};
 
 const std::vector<Shared::ColliderData> idleLeftColliders{{idleSide1, vrect}};
