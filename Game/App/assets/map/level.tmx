@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="18">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="40">
  <tileset firstgid="1" source="tileset.tsx"/>
  <tileset firstgid="1089" source="simplewater.tsx"/>
  <layer id="6" name="Ground Layer 1" width="100" height="100">
@@ -367,6 +367,42 @@
    <point/>
   </object>
   <object id="8" type="Coin" x="742.667" y="344.667">
+   <point/>
+  </object>
+  <object id="25" type="Coin" x="585.167" y="300.5">
+   <point/>
+  </object>
+  <object id="26" type="Coin" x="585.167" y="317.167">
+   <point/>
+  </object>
+  <object id="27" type="Coin" x="568" y="300">
+   <point/>
+  </object>
+  <object id="28" type="Coin" x="568" y="317.5">
+   <point/>
+  </object>
+  <object id="29" type="Coin" x="585.167" y="355.5">
+   <point/>
+  </object>
+  <object id="30" type="Coin" x="585.167" y="372.167">
+   <point/>
+  </object>
+  <object id="31" type="Coin" x="568" y="355">
+   <point/>
+  </object>
+  <object id="32" type="Coin" x="568" y="372.5">
+   <point/>
+  </object>
+  <object id="37" type="Coin" x="725" y="344.67">
+   <point/>
+  </object>
+  <object id="38" type="Coin" x="725" y="328.5">
+   <point/>
+  </object>
+  <object id="39" type="Mole" x="688.5" y="335">
+   <properties>
+    <property name="FaceDirection" value="Left"/>
+   </properties>
    <point/>
   </object>
  </objectgroup>
