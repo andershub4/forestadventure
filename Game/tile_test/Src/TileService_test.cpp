@@ -63,10 +63,10 @@ protected:
     TileData tileData3{frame3, {}};
     TileSetData imageTileSetData_{{image1, image2, image3}, {{0, tileData1}, {1, tileData2}, {2, tileData3}}};
 
-    TmxParserMock tmxParserMock_;
-    TsxParserMock tsxParserMock_;
-    TileSetFactoryMock tileSetFactoryMock_;
-    Util::ByteStreamFactoryMock byteStreamFactoryMock_;
+    StrictMock<TmxParserMock> tmxParserMock_;
+    StrictMock<TsxParserMock> tsxParserMock_;
+    StrictMock<TileSetFactoryMock> tileSetFactoryMock_;
+    StrictMock<Util::ByteStreamFactoryMock> byteStreamFactoryMock_;
     StrictMock<LoggerMock> loggerMock_;
 
     std::unique_ptr<TileService<XMLDocumentMock, XMLElementMock, XMLErrorMock>> service_;

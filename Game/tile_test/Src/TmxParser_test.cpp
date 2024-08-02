@@ -26,7 +26,7 @@ protected:
     using ParseResult = ParseResult<XMLErrorMock>;
 
     TmxParserTest()
-        : helperMock_(std::make_shared<ParseHelperMock>())
+        : helperMock_(std::make_shared<StrictMock<ParseHelperMock>>())
         , parser_(helperMock_)
     {}
 
@@ -41,11 +41,11 @@ protected:
     const ParsedObjectGroup group_{2, "ObjectGroup1", {object1_, object2_}};
     const std::vector<ParseResult> parseResult_;
 
-    XMLDocumentMock docMock_;
-    XMLElementMock mapElementMock_;
+    StrictMock<XMLDocumentMock> docMock_;
+    StrictMock<XMLElementMock> mapElementMock_;
 
     StrictMock<LoggerMock> loggerMock_;
-    std::shared_ptr<ParseHelperMock> helperMock_;
+    std::shared_ptr<StrictMock<ParseHelperMock>> helperMock_;
     TmxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock> parser_;
 };
 

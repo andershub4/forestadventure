@@ -26,7 +26,7 @@ protected:
     using ParseResult = ParseResult<XMLErrorMock>;
 
     TsxParserTest()
-        : helperMock_(std::make_shared<ParseHelperMock>())
+        : helperMock_(std::make_shared<StrictMock<ParseHelperMock>>())
         , parser_(helperMock_)
     {}
 
@@ -42,9 +42,9 @@ protected:
     const ParsedTile tile3_{111, image_, animation3_};
     const std::vector<ParseResult> parseResult_;
 
-    XMLDocumentMock docMock_;
-    XMLElementMock tileSetElementMock_;
-    std::shared_ptr<ParseHelperMock> helperMock_;
+    StrictMock<XMLDocumentMock> docMock_;
+    StrictMock<XMLElementMock> tileSetElementMock_;
+    std::shared_ptr<StrictMock<ParseHelperMock>> helperMock_;
     TsxParser<XMLDocumentMock, XMLElementMock, XMLErrorMock> parser_;
     StrictMock<LoggerMock> loggerMock_;
 };
