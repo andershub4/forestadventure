@@ -30,11 +30,11 @@ protected:
         : resourceManager_(createFn_.AsStdFunction())
     {}
 
-    virtual void SetUp() override { resourceMock_ = std::make_unique<SomeResourceMock>(); }
+    virtual void SetUp() override { resourceMock_ = std::make_unique<StrictMock<SomeResourceMock>>(); }
 
     const std::string path_ = "C:/MyFolder/MyFile.jpg";
     StrictMock<LoggerMock> loggerMock_;
-    std::unique_ptr<SomeResourceMock> resourceMock_;
+    std::unique_ptr<StrictMock<SomeResourceMock>> resourceMock_;
     MockFunction<std::unique_ptr<SomeResourceMock>()> createFn_;
     ResourceManager<SomeResourceMock> resourceManager_;
 };

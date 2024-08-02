@@ -41,7 +41,7 @@ protected:
         return std::make_shared<ImageAnimation>(spriteMock, seqMock);
     }
 
-    Graphic::TextureMock textureMock_;
+    StrictMock<Graphic::TextureMock> textureMock_;
     sf::IntRect rect_{0, 0, 10, 12};
     ImageFrame frame_{&textureMock_, rect_, {5, 6}};
     std::shared_ptr<StrictMock<Graphic::SpriteMock>> spriteMock_;

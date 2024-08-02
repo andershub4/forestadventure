@@ -25,14 +25,14 @@ class SheetManagerTest : public testing::Test
 {
 protected:
     SheetManagerTest()
-        : sheetMockProxy_(std::make_unique<SpriteSheetMockProxy>(sheetMock_))
+        : sheetMockProxy_(std::make_unique<StrictMock<SpriteSheetMockProxy>>(sheetMock_))
         , rect1_(3142, {0, 0, 10, 10})
     {}
 
     SheetManager sheetManager_;
     StrictMock<LoggerMock> loggerMock_;
-    SpriteSheetMock sheetMock_;
-    std::unique_ptr<SpriteSheetMockProxy> sheetMockProxy_;
+    StrictMock<SpriteSheetMock> sheetMock_;
+    std::unique_ptr<StrictMock<SpriteSheetMockProxy>> sheetMockProxy_;
     TextureRect rect1_;
 };
 
