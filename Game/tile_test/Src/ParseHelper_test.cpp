@@ -23,7 +23,6 @@ class ParseHelperTest : public testing::Test
 protected:
     using ParseResult = ParseResult<XMLErrorMock>;
 
-    //XMLElementMock tileSetMock_;
     ParseHelper<XMLElementMock, XMLErrorMock> helper_;
 
 protected:
