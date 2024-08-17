@@ -33,6 +33,8 @@ struct MapData;
 struct TextureRect;
 template <class T>
 class SequenceIf;
+class ImageAnimation;
+class ColliderAnimation;
 
 }  // namespace Shared
 
@@ -50,10 +52,9 @@ public:
                   EntityManager &entityManager);
     ~EntityService();
 
-    std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> CreateSequence(
-        const std::vector<Shared::ImageData> &images) const;
-    std::shared_ptr<Shared::SequenceIf<Shared::ColliderFrame>> CreateSequence(
-        const std::vector<Shared::ColliderData> &colliders) const;
+    std::shared_ptr<Shared::ImageAnimation> CreateImageAnimation(const std::vector<Shared::ImageData> &images);
+    std::shared_ptr<Shared::ColliderAnimation> CreateColliderAnimation(
+        const std::vector<Shared::ColliderData> &colliders);
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);
     void AddSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes,
@@ -73,6 +74,10 @@ private:
     EntityManager &entityManager_;
 
 private:
+    std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> CreateSequence(
+        const std::vector<Shared::ImageData> &images) const;
+    std::shared_ptr<Shared::SequenceIf<Shared::ColliderFrame>> CreateSequence(
+        const std::vector<Shared::ColliderData> &colliders) const;
     Shared::TextureRect MirrorX(const Shared::TextureRect &textureRect) const;
 };
 

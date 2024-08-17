@@ -13,7 +13,6 @@
 #include "Resource/ImageData.h"
 #include "Selections/SingleSelection.h"
 #include "ShapeParts/AnimationPart.h"
-#include "Sprite.h"
 #include "State.h"
 
 namespace FA {
@@ -32,8 +31,7 @@ TileEntity::~TileEntity() = default;
 void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
-                                                              service_.CreateSequence(data.graphic_.animation_));
+    auto animation = service_.CreateImageAnimation(data.graphic_.animation_);
     auto part = std::make_shared<AnimationPart<Shared::ImageAnimation>>(
         std::make_shared<SingleSelection<Shared::ImageAnimation>>(animation));
     idleState->RegisterShapePart(part);

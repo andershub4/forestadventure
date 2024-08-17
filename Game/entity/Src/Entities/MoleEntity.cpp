@@ -17,13 +17,11 @@
 #include "Events/DeadEvent.h"
 #include "PropertyConverter.h"
 #include "PropertyData.h"
-#include "RectangleShape.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "Selections/MultiSelection.h"
 #include "Selections/SingleSelection.h"
 #include "ShapeParts/AnimationPart.h"
-#include "Sprite.h"
 #include "State.h"
 
 namespace FA {
@@ -218,8 +216,7 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
             HandleEvent(std::make_shared<DeadEvent>());
         }
     };
-    auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
-                                                              service_.CreateSequence(collisionImages));
+    auto animation = service_.CreateImageAnimation(collisionImages);
     animation->Center();
     animation->RegisterUpdateCB(updateCB);
     auto shapePart = std::make_shared<AnimationPart<Shared::ImageAnimation>>(
@@ -234,8 +231,7 @@ std::shared_ptr<AnimationPart<Shared::ImageAnimation>> MoleEntity::MakeShapePart
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
     auto selection = std::make_shared<MultiSelection<Shared::ImageAnimation, FaceDirection>>(dir);
     for (const auto& entry : faceDirImages) {
-        auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
-                                                                  service_.CreateSequence(entry.second));
+        auto animation = service_.CreateImageAnimation(entry.second);
         animation->Center();
         selection->RegisterSelection(entry.first, animation);
     }
@@ -251,8 +247,7 @@ std::shared_ptr<AnimationPart<Shared::ColliderAnimation>> MoleEntity::MakeCollid
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
     auto selection = std::make_shared<MultiSelection<Shared::ColliderAnimation, FaceDirection>>(dir);
     for (const auto& entry : faceDirColliders) {
-        auto animation = std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
-                                                                     service_.CreateSequence(entry.second));
+        auto animation = service_.CreateColliderAnimation(entry.second);
         animation->Center();
         selection->RegisterSelection(entry.first, animation);
     }

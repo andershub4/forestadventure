@@ -29,12 +29,10 @@
 #include "Message/MessageType.h"
 #include "PropertyConverter.h"
 #include "PropertyData.h"
-#include "RectangleShape.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "Selections/MultiSelection.h"
 #include "ShapeParts/AnimationPart.h"
-#include "Sprite.h"
 #include "State.h"
 
 namespace FA {
@@ -168,7 +166,8 @@ const std::vector<Shared::ColliderData> attackWRightColliders{
     {attackWSide1, vrect}, {attackWSide2, vrect}, {attackWSide3, vrect}};
 const std::vector<Shared::ColliderData> attackWDownColliders{
     {attackWDown1, hrect}, {attackWDown2, hrect}, {attackWDown3, hrect}};
-const std::vector<Shared::ColliderData> attackWUpColliders{{attackWUp1, hrect}, {attackWUp2, hrect}, {attackWUp3, hrect}};
+const std::vector<Shared::ColliderData> attackWUpColliders{
+    {attackWUp1, hrect}, {attackWUp2, hrect}, {attackWUp3, hrect}};
 
 const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> idleFaceDirColliders{
     {FaceDirection::Left, idleLeftColliders},
@@ -407,8 +406,7 @@ std::shared_ptr<AnimationPart<Shared::ImageAnimation>> PlayerEntity::MakeShapePa
     propertyStore_.GetPtr("FaceDirection", dir);
     auto selection = std::make_shared<MultiSelection<Shared::ImageAnimation, FaceDirection>>(dir);
     for (const auto& entry : faceDirImages) {
-        auto animation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
-                                                                  service_.CreateSequence(entry.second));
+        auto animation = service_.CreateImageAnimation(entry.second);
         animation->Center();
         animation->RegisterUpdateCB(updateCB);
         selection->RegisterSelection(entry.first, animation);
@@ -425,8 +423,7 @@ std::shared_ptr<AnimationPart<Shared::ColliderAnimation>> PlayerEntity::MakeColl
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
     auto selection = std::make_shared<MultiSelection<Shared::ColliderAnimation, FaceDirection>>(dir);
     for (const auto& entry : faceDirColliders) {
-        auto animation = std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
-                                                                     service_.CreateSequence(entry.second));
+        auto animation = service_.CreateColliderAnimation(entry.second);
         animation->Center();
         selection->RegisterSelection(entry.first, animation);
     }

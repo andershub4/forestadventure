@@ -13,13 +13,11 @@
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
 #include "PropertyData.h"
-#include "RectangleShape.h"
 #include "Resource/ColliderData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "Selections/SingleSelection.h"
 #include "ShapeParts/AnimationPart.h"
-#include "Sprite.h"
 #include "State.h"
 
 namespace FA {
@@ -54,14 +52,12 @@ CoinEntity::~CoinEntity() = default;
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto imageAnimation = std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(),
-                                                                   service_.CreateSequence(idleImages));
+    auto imageAnimation = service_.CreateImageAnimation(idleImages);
     imageAnimation->Center();
     auto shapePart = std::make_shared<AnimationPart<Shared::ImageAnimation>>(
         std::make_shared<SingleSelection<Shared::ImageAnimation>>(imageAnimation));
     idleState->RegisterShapePart(shapePart);
-    auto colliderAnimation = std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
-                                                                         service_.CreateSequence(idleColliders));
+    auto colliderAnimation = service_.CreateColliderAnimation(idleColliders);
     colliderAnimation->Center();
     auto colliderPart = std::make_shared<AnimationPart<Shared::ColliderAnimation>>(
         std::make_shared<SingleSelection<Shared::ColliderAnimation>>(colliderAnimation));

@@ -20,14 +20,12 @@
 #include "Events/StartMoveEvent.h"
 #include "PropertyConverter.h"
 #include "PropertyData.h"
-#include "RectangleShape.h"
 #include "Resource/ColliderData.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "Selections/SingleSelection.h"
 #include "ShapeParts/AnimationPart.h"
-#include "Sprite.h"
 #include "State.h"
 
 namespace FA {
@@ -135,14 +133,12 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
 
     auto moveState = RegisterState(StateType::Move);
-    auto imageAnimation =
-        std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(), service_.CreateSequence(images));
+    auto imageAnimation = service_.CreateImageAnimation(images);
     imageAnimation->Center();
     auto shapePart = std::make_shared<AnimationPart<Shared::ImageAnimation>>(
         std::make_shared<SingleSelection<Shared::ImageAnimation>>(imageAnimation));
     moveState->RegisterShapePart(shapePart);
-    auto colliderAnimation = std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
-                                                                         service_.CreateSequence(colliders));
+    auto colliderAnimation = service_.CreateColliderAnimation(colliders);
     colliderAnimation->Center();
     auto colliderPart = std::make_shared<AnimationPart<Shared::ColliderAnimation>>(
         std::make_shared<SingleSelection<Shared::ColliderAnimation>>(colliderAnimation));
