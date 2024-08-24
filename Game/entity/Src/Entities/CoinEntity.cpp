@@ -16,7 +16,6 @@
 #include "Resource/ColliderData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
-#include "Selections/SingleSelection.h"
 #include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
@@ -54,13 +53,11 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 {
     auto imageAnimation = service_.CreateImageAnimation(idleImages);
     imageAnimation->Center();
-    auto shapePart = std::make_shared<AnimationPart<Shared::ImageAnimation>>(
-        std::make_shared<SingleSelection<Shared::ImageAnimation>>(imageAnimation));
+    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(imageAnimation);
     idleState->RegisterShapePart(shapePart);
     auto colliderAnimation = service_.CreateColliderAnimation(idleColliders);
     colliderAnimation->Center();
-    auto colliderPart = std::make_shared<AnimationPart<Shared::ColliderAnimation>>(
-        std::make_shared<SingleSelection<Shared::ColliderAnimation>>(colliderAnimation));
+    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
     idleState->RegisterColliderPart(colliderPart);
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);

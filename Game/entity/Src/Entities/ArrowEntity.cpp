@@ -24,7 +24,6 @@
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
-#include "Selections/SingleSelection.h"
 #include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
@@ -135,13 +134,11 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
     auto moveState = RegisterState(StateType::Move);
     auto imageAnimation = service_.CreateImageAnimation(images);
     imageAnimation->Center();
-    auto shapePart = std::make_shared<AnimationPart<Shared::ImageAnimation>>(
-        std::make_shared<SingleSelection<Shared::ImageAnimation>>(imageAnimation));
+    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(imageAnimation);
     moveState->RegisterShapePart(shapePart);
     auto colliderAnimation = service_.CreateColliderAnimation(colliders);
     colliderAnimation->Center();
-    auto colliderPart = std::make_shared<AnimationPart<Shared::ColliderAnimation>>(
-        std::make_shared<SingleSelection<Shared::ColliderAnimation>>(colliderAnimation));
+    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
     moveState->RegisterColliderPart(colliderPart);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity * 8.0f, [this](MoveDirection d) { OnBeginMove(d); },

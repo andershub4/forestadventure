@@ -10,46 +10,98 @@
 
 #include "AnimationPartIf.h"
 
-#include "Selections/SelectionBaseIf.h"
+#include <functional>
+#include <unordered_map>
+
+#include "Logging.h"
 
 namespace FA {
 
 namespace Entity {
 
 template <class AnimationT>
-class AnimationPart : public AnimationPartIf
+class AnimationPartBase : public AnimationPartIf
 {
 public:
-    AnimationPart(std::shared_ptr<SelectionBaseIf<AnimationT>> selection)
-        : selection_(selection)
+    AnimationPartBase(std::shared_ptr<AnimationT> animation)
+        : animation_(animation)
     {}
 
-    virtual void Enter() override
-    {
-        currentAnimation_ = selection_->Get();
-        currentAnimation_->Restart();
-    }
+    AnimationPartBase() = default;
 
-    virtual void Update(float deltaTime) override { currentAnimation_->Update(deltaTime); }
+    virtual void Update(float deltaTime) override { animation_->Update(deltaTime); }
 
-    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override
-    {
-        currentAnimation_->DrawTo(renderTarget);
-    }
+    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override { animation_->DrawTo(renderTarget); }
 
-    virtual void SetPosition(const sf::Vector2f &position) override { currentAnimation_->SetPosition(position); }
+    virtual void SetPosition(const sf::Vector2f &position) override { animation_->SetPosition(position); }
 
-    virtual void SetRotation(float angle) override { currentAnimation_->SetRotation(angle); }
+    virtual void SetRotation(float angle) override { animation_->SetRotation(angle); }
 
     virtual bool Intersects(const AnimationPartIf &otherPart) const override
     {
-        auto other = static_cast<const AnimationPart<AnimationT> &>(otherPart);
-        return currentAnimation_->Intersects(*other.currentAnimation_);
+        const auto &other = static_cast<const AnimationPartBase<AnimationT> &>(otherPart);
+        return animation_->Intersects(*other.animation_);
+    }
+
+protected:
+    std::shared_ptr<AnimationT> animation_;
+};
+
+template <class AnimationT>
+class SingleAnimationPart : public AnimationPartBase<AnimationT>
+{
+public:
+    SingleAnimationPart(std::shared_ptr<AnimationT> animation)
+        : AnimationPartBase<AnimationT>(animation)
+    {}
+
+    virtual void Enter() override { this->animation_->Restart(); }
+};
+
+template <class KeyT, class AnimationT>
+class MultiAnimationPart : public AnimationPartBase<AnimationT>
+{
+    using SelectFn =
+        std::function<std::shared_ptr<AnimationT>(const std::unordered_map<KeyT, std::shared_ptr<AnimationT>> &)>;
+
+public:
+    MultiAnimationPart(const KeyT *const key)
+    {
+        selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<AnimationT>> &map) {
+            bool found = map.find(*key) != map.end();
+            std::shared_ptr<AnimationT> result{};
+
+            if (found) {
+                result = map.at(*key);
+            }
+            else {
+                LOG_ERROR("%s can not be found", DUMP(key));
+            }
+
+            return result;
+        };
+    }
+
+    virtual void Enter() override
+    {
+        this->animation_ = selectFn_(map_);
+        this->animation_->Restart();
+    }
+
+    void Register(const KeyT &key, std::shared_ptr<AnimationT> animation)
+    {
+        auto it = map_.find(key);
+        if (it != map_.end()) {
+            LOG_WARN("%s is already registered", DUMP(key));
+        }
+        else {
+            map_.insert({key, animation});
+        }
     }
 
 private:
-    std::shared_ptr<SelectionBaseIf<AnimationT>> selection_;
-    AnimationT *currentAnimation_{nullptr};
+    SelectFn selectFn_;
+    std::unordered_map<KeyT, std::shared_ptr<AnimationT>> map_;
 };
 
 }  // namespace Entity

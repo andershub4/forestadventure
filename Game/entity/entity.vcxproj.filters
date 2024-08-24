@@ -138,15 +138,6 @@
     <ClInclude Include="Src\ShapeParts\AnimationPartIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Selections\SelectionBaseIf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Selections\SingleSelection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Selections\MultiSelection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Abilities\MoveAbility.cpp">

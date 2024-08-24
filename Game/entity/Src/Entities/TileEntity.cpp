@@ -11,7 +11,6 @@
 #include "Animation/ImageAnimation.h"
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
-#include "Selections/SingleSelection.h"
 #include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
@@ -32,8 +31,7 @@ void TileEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
                                 const PropertyData& data)
 {
     auto animation = service_.CreateImageAnimation(data.graphic_.animation_);
-    auto part = std::make_shared<AnimationPart<Shared::ImageAnimation>>(
-        std::make_shared<SingleSelection<Shared::ImageAnimation>>(animation));
+    auto part = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(animation);
     idleState->RegisterShapePart(part);
 }
 

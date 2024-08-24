@@ -19,8 +19,6 @@
 #include "PropertyData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
-#include "Selections/MultiSelection.h"
-#include "Selections/SingleSelection.h"
 #include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
@@ -219,40 +217,37 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
     auto animation = service_.CreateImageAnimation(collisionImages);
     animation->Center();
     animation->RegisterUpdateCB(updateCB);
-    auto shapePart = std::make_shared<AnimationPart<Shared::ImageAnimation>>(
-        std::make_shared<SingleSelection<Shared::ImageAnimation>>(animation));
+    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(animation);
     state->RegisterShapePart(shapePart);
 }
 
-std::shared_ptr<AnimationPart<Shared::ImageAnimation>> MoleEntity::MakeShapePart(
+std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>> MoleEntity::MakeShapePart(
     const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto selection = std::make_shared<MultiSelection<Shared::ImageAnimation, FaceDirection>>(dir);
+    auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>>(dir);
     for (const auto& entry : faceDirImages) {
         auto animation = service_.CreateImageAnimation(entry.second);
         animation->Center();
-        selection->RegisterSelection(entry.first, animation);
+        part->Register(entry.first, animation);
     }
 
-    auto part = std::make_shared<AnimationPart<Shared::ImageAnimation>>(selection);
     return part;
 }
 
-std::shared_ptr<AnimationPart<Shared::ColliderAnimation>> MoleEntity::MakeColliderPart(
+std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>> MoleEntity::MakeColliderPart(
     const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto selection = std::make_shared<MultiSelection<Shared::ColliderAnimation, FaceDirection>>(dir);
+    auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>>(dir);
     for (const auto& entry : faceDirColliders) {
         auto animation = service_.CreateColliderAnimation(entry.second);
         animation->Center();
-        selection->RegisterSelection(entry.first, animation);
+        part->Register(entry.first, animation);
     }
 
-    auto part = std::make_shared<AnimationPart<Shared::ColliderAnimation>>(selection);
     return part;
 }
 

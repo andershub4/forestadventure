@@ -31,7 +31,6 @@
 #include "PropertyData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
-#include "Selections/MultiSelection.h"
 #include "ShapeParts/AnimationPart.h"
 #include "State.h"
 
@@ -398,37 +397,35 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
 }
 
-std::shared_ptr<AnimationPart<Shared::ImageAnimation>> PlayerEntity::MakeShapePart(
+std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>> PlayerEntity::MakeShapePart(
     const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages,
     std::function<void(const Shared::ImageAnimationIf&)> updateCB)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
-    auto selection = std::make_shared<MultiSelection<Shared::ImageAnimation, FaceDirection>>(dir);
+    auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>>(dir);
     for (const auto& entry : faceDirImages) {
         auto animation = service_.CreateImageAnimation(entry.second);
         animation->Center();
         animation->RegisterUpdateCB(updateCB);
-        selection->RegisterSelection(entry.first, animation);
+        part->Register(entry.first, animation);
     }
 
-    auto part = std::make_shared<AnimationPart<Shared::ImageAnimation>>(selection);
     return part;
 }
 
-std::shared_ptr<AnimationPart<Shared::ColliderAnimation>> PlayerEntity::MakeColliderPart(
+std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>> PlayerEntity::MakeColliderPart(
     const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto selection = std::make_shared<MultiSelection<Shared::ColliderAnimation, FaceDirection>>(dir);
+    auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>>(dir);
     for (const auto& entry : faceDirColliders) {
         auto animation = service_.CreateColliderAnimation(entry.second);
         animation->Center();
-        selection->RegisterSelection(entry.first, animation);
+        part->Register(entry.first, animation);
     }
 
-    auto part = std::make_shared<AnimationPart<Shared::ColliderAnimation>>(selection);
     return part;
 }
 
