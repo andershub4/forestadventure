@@ -19,7 +19,8 @@
 #include "PropertyData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
-#include "ShapeParts/AnimationPart.h"
+#include "ShapeParts/MultiAnimationPart.h"
+#include "ShapeParts/SingleAnimationPart.h"
 #include "State.h"
 
 namespace FA {

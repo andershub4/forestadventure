@@ -16,7 +16,7 @@
 #include "Enum/MoveDirection.h"
 #include "Resource/ColliderData.h"
 #include "Resource/ImageData.h"
-#include "ShapeParts/AnimationPart.h"
+#include "ShapeParts/MultiAnimationPart.h"
 
 namespace FA {
 

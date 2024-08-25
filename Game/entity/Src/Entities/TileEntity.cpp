@@ -11,7 +11,7 @@
 #include "Animation/ImageAnimation.h"
 #include "PropertyData.h"
 #include "Resource/ImageData.h"
-#include "ShapeParts/AnimationPart.h"
+#include "ShapeParts/SingleAnimationPart.h"
 #include "State.h"
 
 namespace FA {

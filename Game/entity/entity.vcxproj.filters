@@ -132,10 +132,22 @@
     <ClInclude Include="Src\Events\CollisionEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ShapeParts\AnimationPart.h">
+    <ClInclude Include="Src\ShapeParts\SingleAnimationPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\ShapeParts\AnimationPartIf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ShapeParts\AnimationPartBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ShapeParts\SingleAnimationPartIf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ShapeParts\MultiAnimationPartIf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ShapeParts\MultiAnimationPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
