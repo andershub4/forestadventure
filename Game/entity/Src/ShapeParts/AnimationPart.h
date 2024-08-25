@@ -19,8 +19,8 @@ namespace FA {
 
 namespace Entity {
 
-template <class AnimationT, template <class...> class AnimationPartIfT, typename... Args>
-class AnimationPartBase : public AnimationPartIfT<Args...>
+template <template <class...> class AnimationPartIfT, class AnimationT, class... Args>
+class AnimationPartBase : public AnimationPartIfT<AnimationT, Args...>
 {
 public:
     AnimationPartBase(std::shared_ptr<AnimationT> animation)
@@ -39,7 +39,7 @@ public:
 
     virtual bool Intersects(const AnimationPartIf &otherPart) const override
     {
-        const auto &other = static_cast<const AnimationPartBase<AnimationT, AnimationPartIfT, Args...> &>(otherPart);
+        const auto &other = static_cast<const AnimationPartBase<AnimationPartIfT, AnimationT, Args...> &>(otherPart);
         return animation_->Intersects(*other.animation_);
     }
 
@@ -49,20 +49,21 @@ protected:
 
 template <class AnimationT>
 class SingleAnimationPartIf : public AnimationPartIf
-{};
+{
+};
 
 template <class AnimationT>
-class SingleAnimationPart : public AnimationPartBase<AnimationT, SingleAnimationPartIf, AnimationT>
+class SingleAnimationPart : public AnimationPartBase<SingleAnimationPartIf, AnimationT>
 {
 public:
     SingleAnimationPart(std::shared_ptr<AnimationT> animation)
-        : AnimationPartBase<AnimationT, SingleAnimationPartIf, AnimationT>(animation)
+        : AnimationPartBase<SingleAnimationPartIf, AnimationT>(animation)
     {}
 
     virtual void Enter() override { this->animation_->Restart(); }
 };
 
-template <class KeyT, class AnimationT>
+template <class AnimationT, class KeyT>
 class MultiAnimationPartIf : public AnimationPartIf
 {
 public:
@@ -70,14 +71,14 @@ public:
 };
 
 template <class KeyT, class AnimationT>
-class MultiAnimationPart : public AnimationPartBase<AnimationT, MultiAnimationPartIf, KeyT, AnimationT>
+class MultiAnimationPart : public AnimationPartBase<MultiAnimationPartIf, AnimationT, KeyT>
 {
     using SelectFn =
         std::function<std::shared_ptr<AnimationT>(const std::unordered_map<KeyT, std::shared_ptr<AnimationT>> &)>;
 
 public:
     MultiAnimationPart(const KeyT *const key)
-        : AnimationPartBase<AnimationT, MultiAnimationPartIf, KeyT, AnimationT>()
+        : AnimationPartBase<MultiAnimationPartIf, AnimationT, KeyT>()
     {
         selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<AnimationT>> &map) {
             bool found = map.find(*key) != map.end();
