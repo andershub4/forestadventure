@@ -19,8 +19,8 @@ namespace FA {
 
 namespace Entity {
 
-template <class AnimationT>
-class AnimationPartBase : public AnimationPartIf
+template <class AnimationT, template <class...> class AnimationPartIfT, typename... Args>
+class AnimationPartBase : public AnimationPartIfT<Args...>
 {
 public:
     AnimationPartBase(std::shared_ptr<AnimationT> animation)
@@ -39,7 +39,7 @@ public:
 
     virtual bool Intersects(const AnimationPartIf &otherPart) const override
     {
-        const auto &other = static_cast<const AnimationPartBase<AnimationT> &>(otherPart);
+        const auto &other = static_cast<const AnimationPartBase<AnimationT, AnimationPartIfT, Args...> &>(otherPart);
         return animation_->Intersects(*other.animation_);
     }
 
@@ -48,24 +48,36 @@ protected:
 };
 
 template <class AnimationT>
-class SingleAnimationPart : public AnimationPartBase<AnimationT>
+class SingleAnimationPartIf : public AnimationPartIf
+{};
+
+template <class AnimationT>
+class SingleAnimationPart : public AnimationPartBase<AnimationT, SingleAnimationPartIf, AnimationT>
 {
 public:
     SingleAnimationPart(std::shared_ptr<AnimationT> animation)
-        : AnimationPartBase<AnimationT>(animation)
+        : AnimationPartBase<AnimationT, SingleAnimationPartIf, AnimationT>(animation)
     {}
 
     virtual void Enter() override { this->animation_->Restart(); }
 };
 
 template <class KeyT, class AnimationT>
-class MultiAnimationPart : public AnimationPartBase<AnimationT>
+class MultiAnimationPartIf : public AnimationPartIf
+{
+public:
+    virtual void Register(const KeyT &key, std::shared_ptr<AnimationT> animation) = 0;
+};
+
+template <class KeyT, class AnimationT>
+class MultiAnimationPart : public AnimationPartBase<AnimationT, MultiAnimationPartIf, KeyT, AnimationT>
 {
     using SelectFn =
         std::function<std::shared_ptr<AnimationT>(const std::unordered_map<KeyT, std::shared_ptr<AnimationT>> &)>;
 
 public:
     MultiAnimationPart(const KeyT *const key)
+        : AnimationPartBase<AnimationT, MultiAnimationPartIf, KeyT, AnimationT>()
     {
         selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<AnimationT>> &map) {
             bool found = map.find(*key) != map.end();
@@ -88,7 +100,7 @@ public:
         this->animation_->Restart();
     }
 
-    void Register(const KeyT &key, std::shared_ptr<AnimationT> animation)
+    virtual void Register(const KeyT &key, std::shared_ptr<AnimationT> animation) override
     {
         auto it = map_.find(key);
         if (it != map_.end()) {
