@@ -52,7 +52,7 @@ TEST(ParsedElementsTest, TestParsedLayerEqualToOperator)
 
 TEST(ParsedElementsTest, TestParsedObjectEqualToOperator)
 {
-    ParsedObject d1{1, "type", 143, 1, {{"aialgo", "astar"}}};
+    ParsedObject d1{1, "type", 143, 1, 20, 20, {{"aialgo", "astar"}}};
     ParsedObject d2 = d1;
     EXPECT_TRUE(d1 == d2);
     d1.type_ = "newtype";
@@ -61,8 +61,8 @@ TEST(ParsedElementsTest, TestParsedObjectEqualToOperator)
 
 TEST(ParsedElementsTest, TestParsedObjectGroupEqualToOperator)
 {
-    ParsedObject o1{1, "type", 143, 1, {{"aialgo", "astar"}}};
-    ParsedObject o2{2, "type", 1, 32, {{"aialgo", "astar"}}};
+    ParsedObject o1{1, "type", 143, 1, 30, 3, {{"aialgo", "astar"}}};
+    ParsedObject o2{2, "type", 1, 32, 3, 30, {{"aialgo", "astar"}}};
     ParsedObjectGroup d1{1, "name", {o1, o2}};
     ParsedObjectGroup d2 = d1;
     EXPECT_TRUE(d1 == d2);

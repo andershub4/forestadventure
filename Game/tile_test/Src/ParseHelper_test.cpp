@@ -28,6 +28,8 @@ protected:
 protected:
     void ExpectParseObject(XMLElementMock *mock, XMLElementMock *propertiesMock, std::vector<XMLElementMock> &propMocks,
                            const ParsedObject &expected) const;
+    void ExpectParseRectObject(XMLElementMock *mock, XMLElementMock *propertiesMock,
+                               std::vector<XMLElementMock> &propMocks, const ParsedObject &expected) const;
     void ExpectParseImage(XMLElementMock *mock, const ParsedImage &expected) const;
     void ExpectParseFrame(XMLElementMock *mock, const ParsedFrame &expected) const;
     void ExpectParseAnimation(XMLElementMock *parentMock, XMLElementMock *animationMock,
@@ -45,6 +47,47 @@ void ParseHelperTest::ExpectParseObject(XMLElementMock *mock, XMLElementMock *pr
         .WillOnce(DoAll(SetArgPointee<1>(expected.x_), Return(XML_SUCCESS)));
     EXPECT_CALL(*mock, QueryAttribute(StrEq("y"), An<int *>()))
         .WillOnce(DoAll(SetArgPointee<1>(expected.y_), Return(XML_SUCCESS)));
+    EXPECT_CALL(*mock, QueryAttribute(StrEq("width"), An<int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(0), Return(XML_NO_ATTRIBUTE)));
+    EXPECT_CALL(*mock, QueryAttribute(StrEq("height"), An<int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(0), Return(XML_NO_ATTRIBUTE)));
+
+    EXPECT_CALL(*mock, FirstChildElement(StrEq("properties"))).WillOnce(Return(propertiesMock));
+
+    auto &propMock1 = propMocks.at(0);
+    EXPECT_CALL(*propertiesMock, FirstChildElement(StrEq("property"))).WillOnce(Return(&propMock1));
+
+    EXPECT_CALL(propMock1, QueryStringAttribute(StrEq("name"), An<const char **>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.properties_.at(0).first.c_str()), Return(XML_SUCCESS)));
+    EXPECT_CALL(propMock1, QueryStringAttribute(StrEq("value"), An<const char **>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.properties_.at(0).second.c_str()), Return(XML_SUCCESS)));
+
+    auto &propMock2 = propMocks.at(1);
+    EXPECT_CALL(propMock1, NextSiblingElement(StrEq("property"))).WillOnce(Return(&propMock2));
+
+    EXPECT_CALL(propMock2, QueryStringAttribute(StrEq("name"), An<const char **>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.properties_.at(1).first.c_str()), Return(XML_SUCCESS)));
+    EXPECT_CALL(propMock2, QueryStringAttribute(StrEq("value"), An<const char **>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.properties_.at(1).second.c_str()), Return(XML_SUCCESS)));
+
+    EXPECT_CALL(propMock2, NextSiblingElement(StrEq("property"))).WillOnce(Return(nullptr));
+}
+
+void ParseHelperTest::ExpectParseRectObject(XMLElementMock *mock, XMLElementMock *propertiesMock,
+                                            std::vector<XMLElementMock> &propMocks, const ParsedObject &expected) const
+{
+    EXPECT_CALL(*mock, QueryAttribute(StrEq("id"), An<int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.id_), Return(XML_SUCCESS)));
+    EXPECT_CALL(*mock, QueryStringAttribute(StrEq("type"), An<const char **>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.type_.c_str()), Return(XML_SUCCESS)));
+    EXPECT_CALL(*mock, QueryAttribute(StrEq("x"), An<int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.x_), Return(XML_SUCCESS)));
+    EXPECT_CALL(*mock, QueryAttribute(StrEq("y"), An<int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.y_), Return(XML_SUCCESS)));
+    EXPECT_CALL(*mock, QueryAttribute(StrEq("width"), An<int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.width_), Return(XML_SUCCESS)));
+    EXPECT_CALL(*mock, QueryAttribute(StrEq("height"), An<int *>()))
+        .WillOnce(DoAll(SetArgPointee<1>(expected.height_), Return(XML_SUCCESS)));
 
     EXPECT_CALL(*mock, FirstChildElement(StrEq("properties"))).WillOnce(Return(propertiesMock));
 
@@ -180,9 +223,10 @@ TEST_F(ParseHelperTest, ParseObjectGroupShouldSucceed)
 {
     ParsedObjectGroup expected{1122,
                                "name",
-                               {{1, "enemy1", 120, 120, {{"prop1", "value1"}, {"prop2", "value2"}}},
-                                {2, "enemy2", 220, 220, {{"prop1", "value1"}, {"prop2", "value2"}}},
-                                {3, "enemy3", 1120, 1120, {{"prop1", "value1"}, {"prop2", "value2"}}}}};
+                               {{1, "enemy1", 120, 120, 0, 0, {{"prop1", "value1"}, {"prop2", "value2"}}},
+                                {2, "enemy2", 220, 220, 0, 0, {{"prop1", "value1"}, {"prop2", "value2"}}},
+                                {3, "enemy3", 1120, 1120, 0, 0, {{"prop1", "value1"}, {"prop2", "value2"}}},
+                                {4, "rect", 10, 11, 300, 200, {{"prop1", "value1"}, {"prop2", "value2"}}}}};
     XMLElementMock mock;
 
     EXPECT_CALL(mock, QueryAttribute(StrEq("id"), An<int *>()))
@@ -208,7 +252,13 @@ TEST_F(ParseHelperTest, ParseObjectGroupShouldSucceed)
     EXPECT_CALL(objectMock2, NextSiblingElement(StrEq("object"))).WillOnce(Return(&objectMock3));
     ExpectParseObject(&objectMock3, &propertiesMock3, propMocks3, expected.objects_.at(2));
 
-    EXPECT_CALL(objectMock3, NextSiblingElement(StrEq("object"))).WillOnce(Return(nullptr));
+    XMLElementMock objectMock4;
+    XMLElementMock propertiesMock4;
+    std::vector<XMLElementMock> propMocks4(2);
+    EXPECT_CALL(objectMock3, NextSiblingElement(StrEq("object"))).WillOnce(Return(&objectMock4));
+    ExpectParseRectObject(&objectMock4, &propertiesMock4, propMocks4, expected.objects_.at(3));
+
+    EXPECT_CALL(objectMock4, NextSiblingElement(StrEq("object"))).WillOnce(Return(nullptr));
 
     ParsedObjectGroup group;
     auto result = helper_.ParseObjectGroup(&mock, group);
@@ -216,14 +266,22 @@ TEST_F(ParseHelperTest, ParseObjectGroupShouldSucceed)
         ParseResult{"id", XMLErrorMock::XML_SUCCESS}, ParseResult{"name", XMLErrorMock::XML_SUCCESS},
         ParseResult{"id", XMLErrorMock::XML_SUCCESS}, ParseResult{"type", XMLErrorMock::XML_SUCCESS},
         ParseResult{"x", XMLErrorMock::XML_SUCCESS}, ParseResult{"y", XMLErrorMock::XML_SUCCESS},
+        ParseResult{"width", XMLErrorMock::XML_SUCCESS}, ParseResult{"height", XMLErrorMock::XML_SUCCESS},
         ParseResult{"name", XMLErrorMock::XML_SUCCESS}, ParseResult{"value", XMLErrorMock::XML_SUCCESS},
         ParseResult{"name", XMLErrorMock::XML_SUCCESS}, ParseResult{"value", XMLErrorMock::XML_SUCCESS},
         ParseResult{"id", XMLErrorMock::XML_SUCCESS}, ParseResult{"type", XMLErrorMock::XML_SUCCESS},
         ParseResult{"x", XMLErrorMock::XML_SUCCESS}, ParseResult{"y", XMLErrorMock::XML_SUCCESS},
+        ParseResult{"width", XMLErrorMock::XML_SUCCESS}, ParseResult{"height", XMLErrorMock::XML_SUCCESS},
         ParseResult{"name", XMLErrorMock::XML_SUCCESS}, ParseResult{"value", XMLErrorMock::XML_SUCCESS},
         ParseResult{"name", XMLErrorMock::XML_SUCCESS}, ParseResult{"value", XMLErrorMock::XML_SUCCESS},
         ParseResult{"id", XMLErrorMock::XML_SUCCESS}, ParseResult{"type", XMLErrorMock::XML_SUCCESS},
         ParseResult{"x", XMLErrorMock::XML_SUCCESS}, ParseResult{"y", XMLErrorMock::XML_SUCCESS},
+        ParseResult{"width", XMLErrorMock::XML_SUCCESS}, ParseResult{"height", XMLErrorMock::XML_SUCCESS},
+        ParseResult{"name", XMLErrorMock::XML_SUCCESS}, ParseResult{"value", XMLErrorMock::XML_SUCCESS},
+        ParseResult{"name", XMLErrorMock::XML_SUCCESS}, ParseResult{"value", XMLErrorMock::XML_SUCCESS},
+        ParseResult{"id", XMLErrorMock::XML_SUCCESS}, ParseResult{"type", XMLErrorMock::XML_SUCCESS},
+        ParseResult{"x", XMLErrorMock::XML_SUCCESS}, ParseResult{"y", XMLErrorMock::XML_SUCCESS},
+        ParseResult{"width", XMLErrorMock::XML_SUCCESS}, ParseResult{"height", XMLErrorMock::XML_SUCCESS},
         ParseResult{"name", XMLErrorMock::XML_SUCCESS}, ParseResult{"value", XMLErrorMock::XML_SUCCESS},
         ParseResult{"name", XMLErrorMock::XML_SUCCESS}, ParseResult{"value", XMLErrorMock::XML_SUCCESS});
     EXPECT_THAT(result, matcher);

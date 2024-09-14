@@ -110,6 +110,13 @@ private:
         return std::make_tuple(attrName, r);
     }
 
+    template <class ValueT>
+    auto ParseOptionalElement(ElementT* element, const std::string& attrName, ValueT& attrValue) const
+    {
+        element->QueryAttribute(attrName.c_str(), &attrValue);
+        return std::make_tuple(attrName, ErrorT::XML_SUCCESS);
+    }
+
     template <>
     auto ParseElement(ElementT* element, const std::string& attrName, std::string& attrValue) const
     {
@@ -152,7 +159,9 @@ private:
         std::vector<ParseResult<ErrorT>> results{{ParseElement(element, "id", object.id_)},
                                                  {ParseElement(element, "type", object.type_)},
                                                  {ParseElement(element, "x", object.x_)},
-                                                 {ParseElement(element, "y", object.y_)}};
+                                                 {ParseElement(element, "y", object.y_)},
+                                                 {ParseOptionalElement(element, "width", object.width_)},
+                                                 {ParseOptionalElement(element, "height", object.height_)}};
 
         auto r1 = ParseProperties(element, object.properties_);
         results.insert(results.end(), r1.begin(), r1.end());

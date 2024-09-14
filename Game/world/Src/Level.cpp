@@ -69,7 +69,9 @@ void Level::Update(float deltaTime)
     cameraViews_.Update(deltaTime);
     entityManager_->Update(deltaTime);
     entityManager_->DetectCollisions();
+    entityManager_->DetectStaticCollisions();
     entityManager_->HandleCollisions();
+    entityManager_->HandleStaticCollisions();
     entityManager_->HandleDeletedEntities();
 }
 
@@ -120,6 +122,9 @@ void Level::CreateEntities()
     Shared::MapData mapData{tileMap_->GetSize()};
     for (const auto &data : tileMap_->GetObjectGroup("Object Layer 1")) {
         entityManager_->CreateEntity(data.typeStr_, data.position_, data.properties_, mapData);
+    }
+    for (const auto &data : tileMap_->GetObjectGroup("Collision Layer 1")) {
+        entityManager_->CreateStaticEntity(data.position_, data.size_, mapData);
     }
     for (const auto &data : tileMap_->GetLayer("Dynamic Layer 1")) {
         entityManager_->CreateTileEntity(data.position_, data.graphic_, mapData);

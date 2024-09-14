@@ -50,6 +50,7 @@ public:
     void DrawTo(Graphic::RenderTargetIf& renderTarget) const;
     bool Intersect(const BasicEntity& otherEntity) const;
     void HandleCollision(const EntityId id);
+    void HandleStaticCollision();
     EntityId GetId() const { return id_; }
 
 protected:

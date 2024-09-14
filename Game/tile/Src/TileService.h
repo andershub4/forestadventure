@@ -119,6 +119,8 @@ public:
                 object.typeStr_ = parsedObject.type_;
                 object.x_ = parsedObject.x_;
                 object.y_ = parsedObject.y_;
+                object.width_ = parsedObject.width_;
+                object.height_ = parsedObject.height_;
                 for (const auto &parsedProperty : parsedObject.properties_) {
                     auto key = parsedProperty.first;
                     auto value = parsedProperty.second;

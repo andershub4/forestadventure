@@ -97,19 +97,21 @@ struct ParsedObject
     std::string type_{};
     int x_{};
     int y_{};
+    int width_{};
+    int height_{};
     std::vector<Property> properties_;
 };
 
 inline bool operator==(const ParsedObject& lhs, const ParsedObject& rhs)
 {
-    return std::tie(lhs.id_, lhs.type_, lhs.x_, lhs.y_, lhs.properties_) ==
-           std::tie(rhs.id_, rhs.type_, rhs.x_, rhs.y_, rhs.properties_);
+    return std::tie(lhs.id_, lhs.type_, lhs.x_, lhs.y_, lhs.width_, lhs.height_, lhs.properties_) ==
+           std::tie(rhs.id_, rhs.type_, rhs.x_, rhs.y_, rhs.width_, rhs.height_, rhs.properties_);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const ParsedObject& p)
 {
-    os << "id: " << p.id_ << " type: " << p.type_ << " x: " << p.x_ << " y: " << p.y_
-       << " properties: " << p.properties_;
+    os << "id: " << p.id_ << " type: " << p.type_ << " x: " << p.x_ << " y: " << p.y_ << " width: " << p.width_
+       << " height: " << p.height_ << " properties: " << p.properties_;
 
     return os;
 }

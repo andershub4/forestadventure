@@ -36,8 +36,8 @@ protected:
     const ParsedTmxTileSet tmxTileSet_{1, "tileset.tsx"};
     const ParsedLayer layer1_{1, "Ground Layer 1", 100, 100, "849, 849, 850"};
     const ParsedLayer layer2_{1, "Ground Layer 2", 100, 100, "149, 149, 150"};
-    const ParsedObject object1_{4, "Player", 360, 296, {{"FaceDirection", "Down"}}};
-    const ParsedObject object2_{5, "Enemy", 260, 196, {{"FaceDirection", "Down"}}};
+    const ParsedObject object1_{4, "Player", 360, 296, 100, 200, {{"FaceDirection", "Down"}}};
+    const ParsedObject object2_{5, "Enemy", 260, 196, 200, 100, {{"FaceDirection", "Down"}}};
     const ParsedObjectGroup group_{2, "ObjectGroup1", {object1_, object2_}};
     const std::vector<ParseResult> parseResult_;
 

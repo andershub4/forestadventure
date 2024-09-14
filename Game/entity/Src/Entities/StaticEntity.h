@@ -22,6 +22,10 @@ public:
 
     virtual EntityType Type() const override { return EntityType::Static; }
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
+
+private:
+    virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+                                const PropertyData& data) override;
 };
 
 }  // namespace Entity

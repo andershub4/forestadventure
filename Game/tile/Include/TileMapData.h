@@ -88,6 +88,8 @@ struct TileMapData
         std::string typeStr_{};
         int x_{};
         int y_{};
+        int width_{};
+        int height_{};
         std::unordered_map<std::string, std::string> properties_;
     };
 

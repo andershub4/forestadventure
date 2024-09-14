@@ -38,9 +38,10 @@ protected:
     const ParsedTmxTileSet tmxTileSet_{12, "tileset.tsx"};
     const ParsedLayer layer1_{1, "Ground Layer 1", 100, 100, "849, 849, 850"};
     const ParsedLayer layer2_{1, "Ground Layer 2", 100, 100, "149, 149, 150"};
-    const ParsedObject object1_{4, "Player", 360, 296, {{"FaceDirection", "Down"}}};
-    const ParsedObject object2_{5, "Enemy", 260, 196, {{"FaceDirection", "Down"}}};
-    const ParsedObjectGroup group_{2, "ObjectGroup1", {object1_, object2_}};
+    const ParsedObject object1_{4, "Player", 360, 296, 0, 0, {{"FaceDirection", "Down"}}};
+    const ParsedObject object2_{5, "Enemy", 260, 196, 0, 0, {{"FaceDirection", "Down"}}};
+    const ParsedObject object3_{5, "Rect", 260, 196, 20, 10, {{"Solid", "1"}}};
+    const ParsedObjectGroup group_{2, "ObjectGroup1", {object1_, object2_, object3_}};
 
     const ParsedTileSet tileSet_{"tsname", 16, 80, 3, 0};
     const ParsedImage image_{"myImage1.png", 16, 16};
@@ -176,7 +177,9 @@ TEST_F(TileServiceTest, ReadObjectGroupsShouldSucceed)
     auto objectGroups = service_->ReadObjectGroups();
     std::vector<TileMapData::ObjectGroup> expectedObjectGroups{
         {"ObjectGroup1",
-         {{"Player", 360, 296, {{"FaceDirection", "Down"}}}, {"Enemy", 260, 196, {{"FaceDirection", "Down"}}}}}};
+         {{"Player", 360, 296, 0, 0, {{"FaceDirection", "Down"}}},
+          {"Enemy", 260, 196, 0, 0, {{"FaceDirection", "Down"}}},
+          {"Rect", 260, 196, 20, 10, {{"Solid", "1"}}}}}};
     EXPECT_THAT(objectGroups, Eq(expectedObjectGroups));
 }
 

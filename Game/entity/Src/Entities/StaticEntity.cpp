@@ -6,9 +6,10 @@
 
 #include "StaticEntity.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
-
-#include "Message/MessageBus.h"
+#include "ShapeParts/SingleAnimationPart.h"
+#include "Animation/ColliderAnimation.h"
+#include "State.h"
+#include "Resource/ColliderData.h"
 
 namespace FA {
 
@@ -22,6 +23,17 @@ StaticEntity::StaticEntity(EntityId id, const PropertyData& data, const Shared::
 {}
 
 StaticEntity::~StaticEntity() = default;
+
+void StaticEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+                                const PropertyData& data)
+{
+    const sf::Vector2i rectSize = static_cast<sf::Vector2i>(data.size_);
+    const Shared::ColliderData colliderData(rectSize);
+    const std::vector<Shared::ColliderData> idleColliders{colliderData};
+    auto colliderAnimation = service_.CreateColliderAnimation(idleColliders);
+    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
+    idleState->RegisterColliderPart(colliderPart);
+}
 
 }  // namespace Entity
 

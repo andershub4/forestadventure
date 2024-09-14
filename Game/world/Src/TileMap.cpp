@@ -107,6 +107,7 @@ void TileMap::SetupObjectGroups()
         for (const auto& object : group.objects_) {
             TileMap::ObjectData objectData;
             objectData.position_ = sf::Vector2f(static_cast<float>(object.x_), static_cast<float>(object.y_));
+            objectData.size_ = sf::Vector2f(static_cast<float>(object.width_), static_cast<float>(object.height_));
             objectData.typeStr_ = object.typeStr_;
             objectData.properties_ = object.properties_;
             objectDatas.push_back(objectData);

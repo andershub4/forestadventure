@@ -30,7 +30,7 @@ LevelLayer::~LevelLayer() = default;
 
 void LevelLayer::OnLoad()
 {
-    level_->Load("level.tmx");
+    level_->Load("levelCollider.tmx");
 }
 
 void LevelLayer::OnCreate()

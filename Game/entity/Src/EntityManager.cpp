@@ -10,6 +10,7 @@
 
 #include "Entities/BasicEntity.h"
 #include "Entities/TileEntity.h"
+#include "Entities/StaticEntity.h"
 #include "EntityService.h"
 #include "Factory.h"
 #include "Logging.h"
@@ -38,6 +39,10 @@ void EntityManager::DrawTo(Graphic::RenderTargetIf& renderTarget) const
         auto id = p.second.id_;
         entityMap_.at(id)->DrawTo(renderTarget);
     }
+    for (auto p : staticDrawables_) {
+        auto id = p.second.id_;
+        staticEntityMap_.at(id)->DrawTo(renderTarget);
+    }
 }
 
 void EntityManager::DetectCollisions()
@@ -57,6 +62,19 @@ void EntityManager::DetectCollisions()
     }
 }
 
+void EntityManager::DetectStaticCollisions()
+{
+    for (const auto& entry : entityMap_) {
+        for (const auto& staticEntry : staticEntityMap_) {
+            bool intersect = entry.second->Intersect(*staticEntry.second);
+            EntityId id = entry.second->GetId();
+            if (intersect) {
+                staticCollisions_.push_back(id);
+            }
+        }
+    }
+}
+
 void EntityManager::HandleCollisions()
 {
     for (const auto& pair : collisionPairs_) {
@@ -68,6 +86,15 @@ void EntityManager::HandleCollisions()
     collisionPairs_.clear();
 }
 
+void EntityManager::HandleStaticCollisions()
+{
+    for (const auto id : staticCollisions_) {
+        auto& entity = *entityMap_.at(id);
+        entity.HandleStaticCollision();
+    }
+    staticCollisions_.clear();
+}
+
 EntityType EntityManager::GetType(EntityId id) const
 {
     return entityMap_.at(id)->Type();
@@ -76,6 +103,9 @@ EntityType EntityManager::GetType(EntityId id) const
 void EntityManager::Update(float deltaTime)
 {
     for (const auto& entry : entityMap_) {
+        entry.second->Update(deltaTime);
+    }
+    for (const auto& entry : staticEntityMap_) {
         entry.second->Update(deltaTime);
     }
 }
@@ -107,6 +137,16 @@ void EntityManager::CreateTileEntity(const sf::Vector2f& pos, const Shared::Tile
     CreateEntity(data, mapData);
 }
 
+void EntityManager::CreateStaticEntity(const sf::Vector2f& pos, const sf::Vector2f &size, const Shared::MapData& mapData)
+{
+    PropertyData data;
+    data.typeStr_ = StaticEntity::str;
+    data.position_ = pos;
+    data.size_ = size;
+    auto entity = factory_->Create(data, mapData, *service_);
+    createdStaticEntities_.push_back(std::move(entity));
+}
+
 void EntityManager::DeleteEntity(EntityId id)
 {
     if (std::find(deletedEntities_.begin(), deletedEntities_.end(), id) != deletedEntities_.end()) {
@@ -123,6 +163,13 @@ void EntityManager::HandleCreatedEntities()
         AddEntity(std::move(entity));
     }
     createdEntities_.clear();
+    
+    for (auto& entity : createdStaticEntities_) {
+        entity->Init();
+        AddStaticDrawable(entity->GetId(), entity->GetLayer());
+        AddStaticEntity(std::move(entity));
+    }
+    createdStaticEntities_.clear();
 }
 
 void EntityManager::HandleDeletedEntities()
@@ -146,12 +193,31 @@ void EntityManager::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)
     }
 }
 
+void EntityManager::AddStaticEntity(std::unique_ptr<Entity::BasicEntity> entity)
+{
+    auto id = entity->GetId();
+    if (staticEntityMap_.find(id) == staticEntityMap_.end()) {
+        staticEntityMap_[id] = std::move(entity);
+    }
+    else {
+        LOG_ERROR("%s already exist", DUMP(id));
+    }
+}
+
 void EntityManager::AddDrawable(EntityId id, LayerType layer)
 {
     std::stringstream ss;
     int l = static_cast<int>(layer);
     ss << l << "_" << id;
     drawables_[ss.str()] = {layer, id};
+}
+
+void EntityManager::AddStaticDrawable(EntityId id, LayerType layer)
+{
+    std::stringstream ss;
+    int l = static_cast<int>(layer);
+    ss << l << "_" << id;
+    staticDrawables_[ss.str()] = {layer, id};
 }
 
 void EntityManager::RemoveDrawable(EntityId id)

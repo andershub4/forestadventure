@@ -50,10 +50,14 @@ protected:
     const std::string xmlStartObject_ = "<object id=\"1\" type=\"Player\" x=\"24\" y=\"48\">";
     const std::string xmlEndObject_ = "</object>";
 
+    const std::string xmlStartRect_ = "<object id=\"2\" type=\"Rect\" x=\"124\" y=\"148\" width=\"10\" height=\"20\">";
+    const std::string xmlEndRect_ = "</object>";
+
     const std::string xmlStartProperties_ = "<properties>";
     const std::string xmlEndProperties_ = "</properties>";
 
     const std::string xmlObjectProperty_ = "<property name=\"Strength\" value=\"4\"/>";
+    const std::string xmlRectProperty_ = "<property name=\"Solid\" value=\"1\"/>";
 
     const std::string xmlLayerStartData_ = "<data encoding = \"csv\">864, 626, 626, 626, 322, 120, 120, 310, 310";
     const std::string xmlLayerEndData_ = "</data>";
@@ -112,14 +116,18 @@ TEST_F(TmxParserInt, ParseValidMapShouldSucceed)
     std::stringstream ss;
     ss << xmlVersion_ << xmlStartMap_ << xmlTileSet_ << xmlStartLayer_ << xmlLayerStartData_ << xmlLayerEndData_
        << xmlEndLayer_ << xmlStartObjectGroup_ << xmlStartObject_ << xmlStartProperties_ << xmlObjectProperty_
-       << xmlEndProperties_ << xmlEndObject_ << xmlEndObjectGroup_ << xmlEndMap_;
+       << xmlEndProperties_ << xmlEndObject_ << xmlStartRect_ << xmlStartProperties_ << xmlRectProperty_
+       << xmlEndProperties_ << xmlEndRect_ << xmlEndObjectGroup_ << xmlEndMap_;
     bool success = parser_.Parse(doc_, ss.str(), parsedTmx);
 
     ParsedMap expectedMap{"right-down", 3, 3, 16, 16};
-    ParsedTmx expected{expectedMap,
-                       {{1, "tileset1.tsx"}, {500, "tileset2.tsx"}},
-                       {{1, "Ground Layer 1", 3, 3, "864, 626, 626, 626, 322, 120, 120, 310, 310"}},
-                       {{1, "Object Layer 1", {{1, "Player", 24, 48, {{"Strength", "4"}}}}}}};
+    ParsedTmx expected{
+        expectedMap,
+        {{1, "tileset1.tsx"}, {500, "tileset2.tsx"}},
+        {{1, "Ground Layer 1", 3, 3, "864, 626, 626, 626, 322, 120, 120, 310, 310"}},
+        {{1,
+          "Object Layer 1",
+          {{1, "Player", 24, 48, 0, 0, {{"Strength", "4"}}}, {2, "Rect", 124, 148, 10, 20, {{"Solid", "1"}}}}}}};
 
     EXPECT_TRUE(success);
     EXPECT_THAT(parsedTmx, Eq(expected));

@@ -48,6 +48,7 @@ public:
     {
         std::string typeStr_{};
         sf::Vector2f position_{};
+        sf::Vector2f size_{};
         std::unordered_map<std::string, std::string> properties_;
     };
 

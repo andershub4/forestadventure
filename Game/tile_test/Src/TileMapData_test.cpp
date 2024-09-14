@@ -81,7 +81,7 @@ TEST(TileMapDataTest, TestLayerEqualToOperator)
 
 TEST(TileMapDataTest, TestObjectEqualToOperator)
 {
-    TileMapData::Object d1{"obj1", 12, 13, {{"speed", "4"}, {"money", "100"}}};
+    TileMapData::Object d1{"obj1", 12, 13, 2, 3, {{"speed", "4"}, {"money", "100"}}};
     auto d2 = d1;
     EXPECT_TRUE(d1 == d2);
     d2.properties_ = {{"speed", "5"}, {"money", "0"}};
@@ -90,8 +90,8 @@ TEST(TileMapDataTest, TestObjectEqualToOperator)
 
 TEST(TileMapDataTest, TestObjectGroupEqualToOperator)
 {
-    TileMapData::Object obj1{"obj1", 12, 13, {{"speed", "4"}, {"money", "100"}}};
-    TileMapData::Object obj2{"obj2", 12, 13, {{"speed", "40"}, {"money", "0"}}};
+    TileMapData::Object obj1{"obj1", 12, 13, 0, 0, {{"speed", "4"}, {"money", "100"}}};
+    TileMapData::Object obj2{"obj2", 12, 13, 10, 10, {{"speed", "40"}, {"money", "0"}}};
     TileMapData::ObjectGroup d1{"group1", {obj1, obj2}};
     auto d2 = d1;
     EXPECT_TRUE(d1 == d2);
@@ -109,7 +109,7 @@ TEST(TileMapDataTest, TestTileMapDataEqualToOperator)
     TileMapData::MapProperties mp{100, 100, 16, 16};
     std::map<int, TileSetData, std::greater<int>> tileSets{{0, tsd}};
     std::vector<TileMapData::Layer> layers{{"ObjLayer1", {1, 2, 34}}, {"ObjLayer2", {2, 3, 4, 5, 6, 7}}};
-    TileMapData::Object obj1{"type1", 12, 33, {{"AiMoveAlgo", "AStar"}}};
+    TileMapData::Object obj1{"type1", 12, 33, 4, 2, {{"AiMoveAlgo", "AStar"}}};
     std::vector<TileMapData::ObjectGroup> objectGroups{{"group1", {obj1}}};
 
     TileMapData d1{mp, tileSets, layers, objectGroups};
