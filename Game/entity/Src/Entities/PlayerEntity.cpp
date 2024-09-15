@@ -20,6 +20,7 @@
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
 #include "Events/StartMoveEvent.h"
+#include "Events/StaticCollisionEvent.h"
 #include "Events/StopMoveEvent.h"
 #include "MapData.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
@@ -137,8 +138,9 @@ const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> attackWF
     {FaceDirection::Down, attackWDownImages},
     {FaceDirection::Up, attackWUpImages}};
 
-const sf::IntRect vrect{11, 9, 10, 20};
-const sf::IntRect hrect{10, 10, 12, 19};
+// Need to align, otherwise collision will be detected differently when colliding to a wall
+const sf::IntRect vrect{11, 10, 10, 18};
+const sf::IntRect hrect{11, 10, 10, 18};
 
 const std::vector<Shared::ColliderData> idleLeftColliders{{idleSide1, vrect}};
 const std::vector<Shared::ColliderData> idleRightColliders{{idleSide1, vrect}};
@@ -270,6 +272,7 @@ void PlayerEntity::OnBeginMove(MoveDirection moveDirection)
 
 void PlayerEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
+    body_.prevPosition_ = body_.position_;
     body_.position_ += delta;
 }
 
@@ -356,6 +359,8 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
     state->RegisterEventCB(EventType::StopMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     state->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
+    state->RegisterEventCB(EventType::StaticCollision,
+                           [this](std::shared_ptr<BasicEvent> event) { body_.position_ = body_.prevPosition_; });
     state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
         if (service_.GetType(collisionEvent->id_) == EntityType::Coin) {
