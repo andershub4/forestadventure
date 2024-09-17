@@ -9,7 +9,6 @@
 #include <sstream>
 
 #include "Events/CollisionEvent.h"
-#include "Events/StaticCollisionEvent.h"
 #include "Events/DestroyEvent.h"
 #include "Events/InitEvent.h"
 #include "MapData.h"
@@ -83,14 +82,9 @@ bool BasicEntity::Intersect(const BasicEntity& otherEntity) const
     return stateMachine_.GetShape().Intersect(otherEntity.stateMachine_.GetShape());
 }
 
-void BasicEntity::HandleCollision(const EntityId id)
+void BasicEntity::HandleCollision(const EntityId id, bool isSolid)
 {
-    HandleEvent(std::make_shared<CollisionEvent>(id));
-}
-
-void BasicEntity::HandleStaticCollision()
-{
-    HandleEvent(std::make_shared<StaticCollisionEvent>());
+    HandleEvent(std::make_shared<CollisionEvent>(id, isSolid));
 }
 
 void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)

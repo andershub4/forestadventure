@@ -26,6 +26,8 @@ public:
 
     virtual EntityType Type() const override { return EntityType::Arrow; }
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
+    virtual bool IsStatic() const override { return false; }
+    virtual bool IsSolid() const override { return false; }
 
 private:
     virtual void RegisterProperties() override;

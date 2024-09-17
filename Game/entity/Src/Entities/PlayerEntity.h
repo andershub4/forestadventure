@@ -32,6 +32,8 @@ public:
 
     virtual EntityType Type() const override { return EntityType::Player; }
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
+    virtual bool IsStatic() const override { return false; }
+    virtual bool IsSolid() const override { return false; }
 
 protected:
     virtual std::vector<Shared::MessageType> Messages() const override;

@@ -43,14 +43,15 @@ public:
 
     virtual EntityType Type() const = 0;
     virtual LayerType GetLayer() const = 0;
+    virtual bool IsStatic() const = 0;
+    virtual bool IsSolid() const = 0;
 
     void Destroy();
     void Init();
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf& renderTarget) const;
     bool Intersect(const BasicEntity& otherEntity) const;
-    void HandleCollision(const EntityId id);
-    void HandleStaticCollision();
+    void HandleCollision(const EntityId id, bool isSolid);
     EntityId GetId() const { return id_; }
 
 protected:

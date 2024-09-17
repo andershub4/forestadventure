@@ -22,6 +22,8 @@ public:
 
     virtual EntityType Type() const override { return EntityType::Coin; }
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
+    virtual bool IsStatic() const override { return true; }
+    virtual bool IsSolid() const override { return false; }
 
 private:
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,

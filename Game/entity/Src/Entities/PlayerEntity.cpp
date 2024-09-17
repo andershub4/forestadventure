@@ -20,7 +20,6 @@
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
 #include "Events/StartMoveEvent.h"
-#include "Events/StaticCollisionEvent.h"
 #include "Events/StopMoveEvent.h"
 #include "MapData.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
@@ -359,11 +358,12 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
     state->RegisterEventCB(EventType::StopMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     state->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
-    state->RegisterEventCB(EventType::StaticCollision,
-                           [this](std::shared_ptr<BasicEvent> event) { body_.position_ = body_.prevPosition_; });
     state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        if (service_.GetType(collisionEvent->id_) == EntityType::Coin) {
+        if (collisionEvent->isSolid_) {
+            body_.position_ = body_.prevPosition_;
+        }
+        else if (service_.GetType(collisionEvent->id_) == EntityType::Coin) {
             coins_++;
         }
     });

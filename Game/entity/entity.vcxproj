@@ -150,7 +150,7 @@
     <ClInclude Include="Src\Entities\CoinEntity.h" />
     <ClInclude Include="Src\Entities\MoleEntity.h" />
     <ClInclude Include="Src\Entities\PlayerEntity.h" />
-    <ClInclude Include="Src\Entities\StaticEntity.h" />
+    <ClInclude Include="Src\Entities\RectEntity.h" />
     <ClInclude Include="Src\Entities\TileEntity.h" />
     <ClInclude Include="Include\EntityManager.h" />
     <ClInclude Include="Src\EntityService.h" />
@@ -165,7 +165,6 @@
     <ClInclude Include="Src\Events\DestroyEvent.h" />
     <ClInclude Include="Src\Events\InitEvent.h" />
     <ClInclude Include="Src\Events\StartMoveEvent.h" />
-    <ClInclude Include="Src\Events\StaticCollisionEvent.h" />
     <ClInclude Include="Src\Events\StopMoveEvent.h" />
     <ClInclude Include="Src\EventType.h" />
     <ClInclude Include="Src\Factory.h" />
@@ -195,7 +194,7 @@
     <ClCompile Include="Src\Entities\CoinEntity.cpp" />
     <ClCompile Include="Src\Entities\MoleEntity.cpp" />
     <ClCompile Include="Src\Entities\PlayerEntity.cpp" />
-    <ClCompile Include="Src\Entities\StaticEntity.cpp" />
+    <ClCompile Include="Src\Entities\RectEntity.cpp" />
     <ClCompile Include="Src\Entities\TileEntity.cpp" />
     <ClCompile Include="Src\EntityManager.cpp" />
     <ClCompile Include="Src\EntityService.cpp" />

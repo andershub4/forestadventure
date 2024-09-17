@@ -4,27 +4,27 @@
  *	See file LICENSE for full license details.
  */
 
-#include "StaticEntity.h"
+#include "RectEntity.h"
 
-#include "ShapeParts/SingleAnimationPart.h"
 #include "Animation/ColliderAnimation.h"
-#include "State.h"
 #include "Resource/ColliderData.h"
+#include "ShapeParts/SingleAnimationPart.h"
+#include "State.h"
 
 namespace FA {
 
 namespace Entity {
 
-const std::string StaticEntity::str = "Static";
+const std::string RectEntity::str = "Rect";
 
-StaticEntity::StaticEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                           const EntityService& service)
+RectEntity::RectEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                       const EntityService& service)
     : BasicEntity(id, data, mapData, service)
 {}
 
-StaticEntity::~StaticEntity() = default;
+RectEntity::~RectEntity() = default;
 
-void StaticEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
+void RectEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
     const sf::Vector2i rectSize = static_cast<sf::Vector2i>(data.size_);

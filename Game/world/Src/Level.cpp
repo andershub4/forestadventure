@@ -71,7 +71,6 @@ void Level::Update(float deltaTime)
     entityManager_->DetectCollisions();
     entityManager_->DetectStaticCollisions();
     entityManager_->HandleCollisions();
-    entityManager_->HandleStaticCollisions();
     entityManager_->HandleDeletedEntities();
 }
 
@@ -121,10 +120,10 @@ void Level::CreateEntities()
     LOG_INFO("Create entities");
     Shared::MapData mapData{tileMap_->GetSize()};
     for (const auto &data : tileMap_->GetObjectGroup("Object Layer 1")) {
-        entityManager_->CreateEntity(data.typeStr_, data.position_, data.properties_, mapData);
+        entityManager_->CreateEntity(data.typeStr_, data.position_, data.size_, data.properties_, mapData);
     }
     for (const auto &data : tileMap_->GetObjectGroup("Collision Layer 1")) {
-        entityManager_->CreateStaticEntity(data.position_, data.size_, mapData);
+        entityManager_->CreateEntity(data.typeStr_, data.position_, data.size_, data.properties_, mapData);
     }
     for (const auto &data : tileMap_->GetLayer("Dynamic Layer 1")) {
         entityManager_->CreateTileEntity(data.position_, data.graphic_, mapData);

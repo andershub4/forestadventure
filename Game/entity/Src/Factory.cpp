@@ -10,8 +10,8 @@
 #include "Entities/CoinEntity.h"
 #include "Entities/MoleEntity.h"
 #include "Entities/PlayerEntity.h"
+#include "Entities/RectEntity.h"
 #include "Entities/TileEntity.h"
-#include "Entities/StaticEntity.h"
 #include "Logging.h"
 
 namespace FA {
@@ -40,9 +40,9 @@ Factory::Factory()
                    [](EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& s) {
                        return std::make_unique<CoinEntity>(id, data, mapData, s);
                    });
-    RegisterEntity(StaticEntity::str,
+    RegisterEntity(RectEntity::str,
                    [](EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& s) {
-                       return std::make_unique<StaticEntity>(id, data, mapData, s);
+                       return std::make_unique<RectEntity>(id, data, mapData, s);
                    });
 }
 

@@ -407,7 +407,7 @@
   </object>
  </objectgroup>
  <objectgroup id="11" name="Collision Layer 1">
-  <object id="41" x="218.5" y="56.5" width="330.5" height="223"/>
+  <object id="41" type="Rect" x="218.5" y="56.5" width="330.5" height="223"/>
  </objectgroup>
  <layer id="8" name="Fringe Layer" width="100" height="100" visible="0">
   <data encoding="csv">

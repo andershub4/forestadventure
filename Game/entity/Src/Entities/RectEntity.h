@@ -12,16 +12,18 @@ namespace FA {
 
 namespace Entity {
 
-class StaticEntity : public BasicEntity
+class RectEntity : public BasicEntity
 {
 public:
     static const std::string str;
 
-    StaticEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& service);
-    virtual ~StaticEntity();
+    RectEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& service);
+    virtual ~RectEntity();
 
-    virtual EntityType Type() const override { return EntityType::Static; }
+    virtual EntityType Type() const override { return EntityType::Rect; }
     virtual LayerType GetLayer() const override { return LayerType::Ground; }
+    virtual bool IsStatic() const override { return true; }
+    virtual bool IsSolid() const override { return true; }
 
 private:
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
