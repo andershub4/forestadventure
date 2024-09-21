@@ -45,12 +45,15 @@ void EntityManager::DetectCollisions()
     for (const auto firstId : entities_) {
         for (const auto secondId : entities_) {
             if (firstId != secondId) {
-                const auto& entity = *entityMap_.at(firstId);
-                const auto& otherEntity = *entityMap_.at(secondId);
-                bool intersect = entity.Intersect(otherEntity);
-                if (intersect) {
-                    std::pair<EntityId, EntityId> pair{firstId, secondId};
-                    collisionPairs_.insert(pair);
+                std::pair<EntityId, EntityId> pair{firstId, secondId};
+                bool found = collisionPairs_.find(pair) != collisionPairs_.end();
+                if (!found) {
+                    const auto& entity = *entityMap_.at(firstId);
+                    const auto& otherEntity = *entityMap_.at(secondId);
+                    bool intersect = entity.Intersect(otherEntity);
+                    if (intersect) {
+                        collisionPairs_.insert(pair);
+                    }
                 }
             }
         }
@@ -63,10 +66,13 @@ void EntityManager::DetectStaticCollisions()
         for (const auto staticEntityId : staticEntities_) {
             const auto& entity = *entityMap_.at(entityId);
             const auto& staticEntity = *entityMap_.at(staticEntityId);
-            bool intersect = entity.Intersect(staticEntity);
-            if (intersect) {
-                std::pair<EntityId, EntityId> pair{entityId, staticEntityId};
-                collisionPairs_.insert(pair);
+            std::pair<EntityId, EntityId> pair{entityId, staticEntityId};
+            bool found = collisionPairs_.find(pair) != collisionPairs_.end();
+            if (!found) {
+                bool intersect = entity.Intersect(staticEntity);
+                if (intersect) {
+                    collisionPairs_.insert(pair);
+                }
             }
         }
     }
