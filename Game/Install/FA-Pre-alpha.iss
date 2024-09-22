@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "FA-Pre-alpha"
-#define MyAppVersion "0.52"
+#define MyAppVersion "0.53"
 #define MyAppExeName "FA-Pre-alpha.exe"
 
 [Setup]
@@ -18,7 +18,7 @@ LicenseFile=..\..\LICENSE
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir=..\..\Releases\Pre-alpha
-OutputBaseFilename=FA-Pre-alpha-0.52
+OutputBaseFilename=FA-Pre-alpha-0.53
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
