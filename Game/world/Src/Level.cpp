@@ -69,7 +69,6 @@ void Level::Update(float deltaTime)
     cameraViews_.Update(deltaTime);
     entityManager_->Update(deltaTime);
     entityManager_->DetectCollisions();
-    entityManager_->DetectStaticCollisions();
     entityManager_->HandleCollisions();
     entityManager_->HandleDeletedEntities();
 }

@@ -42,38 +42,38 @@ void EntityManager::DrawTo(Graphic::RenderTargetIf& renderTarget) const
 
 void EntityManager::DetectCollisions()
 {
-    for (const auto firstId : entities_) {
-        for (const auto secondId : entities_) {
-            if (firstId != secondId) {
-                std::pair<EntityId, EntityId> pair{firstId, secondId};
-                bool found = collisionPairs_.find(pair) != collisionPairs_.end();
-                if (!found) {
-                    const auto& entity = *entityMap_.at(firstId);
-                    const auto& otherEntity = *entityMap_.at(secondId);
-                    bool intersect = entity.Intersect(otherEntity);
-                    if (intersect) {
-                        collisionPairs_.insert(pair);
-                    }
-                }
-            }
+    for (const auto id : entities_) {
+        DetectEntityCollisions(id);
+        DetectStaticCollisions(id);
+    }
+}
+
+void EntityManager::DetectEntityCollisions(EntityId id)
+{
+    for (const auto otherId : entities_) {
+        if (id != otherId) {
+            DetectCollision(id, otherId);
         }
     }
 }
 
-void EntityManager::DetectStaticCollisions()
+void EntityManager::DetectStaticCollisions(EntityId id)
 {
-    for (const auto entityId : entities_) {
-        for (const auto staticEntityId : staticEntities_) {
-            const auto& entity = *entityMap_.at(entityId);
-            const auto& staticEntity = *entityMap_.at(staticEntityId);
-            std::pair<EntityId, EntityId> pair{entityId, staticEntityId};
-            bool found = collisionPairs_.find(pair) != collisionPairs_.end();
-            if (!found) {
-                bool intersect = entity.Intersect(staticEntity);
-                if (intersect) {
-                    collisionPairs_.insert(pair);
-                }
-            }
+    for (const auto otherId : staticEntities_) {
+        DetectCollision(id, otherId);
+    }
+}
+
+void EntityManager::DetectCollision(EntityId id, EntityId otherId)
+{
+    std::pair<EntityId, EntityId> pair{id, otherId};
+    bool found = collisionPairs_.find(pair) != collisionPairs_.end();
+    if (!found) {
+        const auto& entity = *entityMap_.at(id);
+        const auto& otherEntity = *entityMap_.at(otherId);
+        bool intersect = entity.Intersect(otherEntity);
+        if (intersect) {
+            collisionPairs_.insert(pair);
         }
     }
 }

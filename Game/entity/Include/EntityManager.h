@@ -53,7 +53,7 @@ public:
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
     void DetectCollisions();
-    void DetectStaticCollisions();
+    // void DetectStaticCollisions();
     void HandleCollisions();
     EntityType GetType(EntityId id) const;
     void CreateEntity(const PropertyData &data, const Shared::MapData &mapData);
@@ -100,6 +100,9 @@ private:
     void RemoveDrawable(EntityId id);
     void RemoveEntity(EntityId id);
     void RemoveStaticEntity(EntityId id);
+    void DetectEntityCollisions(EntityId id);
+    void DetectStaticCollisions(EntityId id);
+    void DetectCollision(EntityId id, EntityId otherId);
 };
 
 }  // namespace Entity
