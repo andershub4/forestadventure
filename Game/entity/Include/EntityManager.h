@@ -53,7 +53,6 @@ public:
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
     void DetectCollisions();
-    // void DetectStaticCollisions();
     void HandleCollisions();
     EntityType GetType(EntityId id) const;
     void CreateEntity(const PropertyData &data, const Shared::MapData &mapData);
