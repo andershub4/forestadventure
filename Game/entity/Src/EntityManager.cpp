@@ -105,7 +105,7 @@ void EntityManager::CreateEntity(const PropertyData& data, const Shared::MapData
 {
     auto entity = factory_->Create(data, mapData, *service_);
     auto id = entity->GetId();
-    createdEntities_.push_back(id);
+    createdEntities_.insert(id);
     AddEntity(std::move(entity));
 }
 
@@ -133,10 +133,7 @@ void EntityManager::CreateTileEntity(const sf::Vector2f& pos, const Shared::Tile
 
 void EntityManager::DeleteEntity(EntityId id)
 {
-    if (std::find(deletedEntities_.begin(), deletedEntities_.end(), id) != deletedEntities_.end()) {
-        LOG_WARN("%s is already ready to be deleted", DUMP(id));
-    }
-    deletedEntities_.push_back(id);
+    deletedEntities_.insert(id);
 }
 
 void EntityManager::HandleCreatedEntities()
@@ -146,10 +143,10 @@ void EntityManager::HandleCreatedEntities()
         entity.Init();
         AddDrawable(id, entity.GetLayer());
         if (entity.IsStatic()) {
-            staticEntities_.push_back(id);
+            staticEntities_.insert(id);
         }
         else {
-            entities_.push_back(id);
+            entities_.insert(id);
         }
     }
 
@@ -163,10 +160,10 @@ void EntityManager::HandleDeletedEntities()
         entity.Destroy();
         RemoveDrawable(id);
         if (entity.IsStatic()) {
-            RemoveStaticEntity(id);
+            staticEntities_.erase(id);
         }
         else {
-            RemoveEntity(id);
+            entities_.erase(id);
         }
         entityMap_.erase(id);
     }
@@ -198,22 +195,6 @@ void EntityManager::RemoveDrawable(EntityId id)
     auto it = std::find_if(drawables_.begin(), drawables_.end(), [id](const auto& p) { return p.second.id_ == id; });
     if (it != drawables_.end()) {
         drawables_.erase(it);
-    }
-}
-
-void EntityManager::RemoveEntity(EntityId id)
-{
-    auto it = std::find_if(entities_.begin(), entities_.end(), [id](const auto& p) { return p == id; });
-    if (it != entities_.end()) {
-        entities_.erase(it);
-    }
-}
-
-void EntityManager::RemoveStaticEntity(EntityId id)
-{
-    auto it = std::find_if(staticEntities_.begin(), staticEntities_.end(), [id](const auto& p) { return p == id; });
-    if (it != staticEntities_.end()) {
-        staticEntities_.erase(it);
     }
 }
 

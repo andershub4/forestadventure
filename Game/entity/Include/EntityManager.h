@@ -10,7 +10,7 @@
 #include <memory>
 #include <set>
 #include <unordered_map>
-#include <vector>
+#include <unordered_set>
 
 #include "Id.h"
 #include "LayerType.h"
@@ -83,12 +83,12 @@ private:
     };
 
     std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
-    std::vector<EntityId> entities_;
-    std::vector<EntityId> staticEntities_;
+    std::unordered_set<EntityId> entities_;
+    std::unordered_set<EntityId> staticEntities_;
     std::unique_ptr<Factory> factory_;
     std::unique_ptr<EntityService> service_;
-    std::vector<EntityId> createdEntities_;
-    std::vector<EntityId> deletedEntities_;
+    std::unordered_set<EntityId> createdEntities_;
+    std::unordered_set<EntityId> deletedEntities_;
     std::map<std::string, DrawableInfo> drawables_;
     std::set<std::pair<EntityId, EntityId>, customPairLess<EntityId>> collisionPairs_;
 
@@ -96,8 +96,6 @@ private:
     void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);
     void AddDrawable(EntityId id, LayerType layer);
     void RemoveDrawable(EntityId id);
-    void RemoveEntity(EntityId id);
-    void RemoveStaticEntity(EntityId id);
     void DetectEntityCollisions(EntityId id);
     void DetectStaticCollisions(EntityId id);
     void DetectCollision(EntityId id, EntityId otherId);
