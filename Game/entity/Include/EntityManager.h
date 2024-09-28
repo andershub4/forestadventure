@@ -87,8 +87,7 @@ private:
     std::vector<EntityId> staticEntities_;
     std::unique_ptr<Factory> factory_;
     std::unique_ptr<EntityService> service_;
-    std::vector<std::unique_ptr<BasicEntity>> createdEntities_;
-    std::vector<std::unique_ptr<BasicEntity>> createdStaticEntities_;
+    std::vector<EntityId> createdEntities_;
     std::vector<EntityId> deletedEntities_;
     std::map<std::string, DrawableInfo> drawables_;
     std::set<std::pair<EntityId, EntityId>, customPairLess<EntityId>> collisionPairs_;

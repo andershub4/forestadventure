@@ -104,12 +104,9 @@ void EntityManager::Update(float deltaTime)
 void EntityManager::CreateEntity(const PropertyData& data, const Shared::MapData& mapData)
 {
     auto entity = factory_->Create(data, mapData, *service_);
-    if (entity->IsStatic()) {
-        createdStaticEntities_.push_back(std::move(entity));
-    }
-    else {
-        createdEntities_.push_back(std::move(entity));
-    }
+    auto id = entity->GetId();
+    createdEntities_.push_back(id);
+    AddEntity(std::move(entity));
 }
 
 void EntityManager::CreateEntity(const std::string& typeStr, const sf::Vector2f& pos, const sf::Vector2f& size,
@@ -144,21 +141,19 @@ void EntityManager::DeleteEntity(EntityId id)
 
 void EntityManager::HandleCreatedEntities()
 {
-    for (auto& entity : createdEntities_) {
-        entity->Init();
-        AddDrawable(entity->GetId(), entity->GetLayer());
-        entities_.push_back(entity->GetId());
-        AddEntity(std::move(entity));
+    for (const auto id : createdEntities_) {
+        auto& entity = *entityMap_.at(id);
+        entity.Init();
+        AddDrawable(id, entity.GetLayer());
+        if (entity.IsStatic()) {
+            staticEntities_.push_back(id);
+        }
+        else {
+            entities_.push_back(id);
+        }
     }
-    createdEntities_.clear();
 
-    for (auto& entity : createdStaticEntities_) {
-        entity->Init();
-        staticEntities_.push_back(entity->GetId());
-        AddDrawable(entity->GetId(), entity->GetLayer());
-        AddEntity(std::move(entity));
-    }
-    createdStaticEntities_.clear();
+    createdEntities_.clear();
 }
 
 void EntityManager::HandleDeletedEntities()
