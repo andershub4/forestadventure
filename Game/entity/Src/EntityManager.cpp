@@ -8,8 +8,11 @@
 
 #include "EntityManager.h"
 
+#include "CollisionHandler.h"
 #include "Entities/BasicEntity.h"
 #include "Entities/TileEntity.h"
+#include "EntityCreator.h"
+#include "EntityDb.h"
 #include "EntityService.h"
 #include "Factory.h"
 #include "Logging.h"
@@ -19,167 +22,89 @@ namespace FA {
 
 namespace Entity {
 
-EntityManager::EntityManager(Shared::MessageBus& messageBus, const Shared::TextureManager& textureManager,
-                             const Shared::SheetManager& sheetManager, const Shared::CameraViews& cameraViews)
+EntityManager::EntityManager(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
+                             const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews)
     : factory_(std::make_unique<Factory>())
-    , service_(std::make_unique<EntityService>(messageBus, textureManager, sheetManager, cameraViews, *this))
-{}
-
-EntityManager::~EntityManager()
+    , entityDb_(std::make_unique<EntityDb>())
+    , collisionHandler_(std::make_unique<CollisionHandler>(*entityDb_))
+    , entityCreator_(std::make_unique<EntityCreator>(*entityDb_))
+    , service_(std::make_unique<EntityService>(messageBus, textureManager, sheetManager, cameraViews, *entityDb_,
+                                               *entityCreator_))
 {
-    for (const auto& entry : entityMap_) {
-        entry.second->Destroy();
-    }
+    entityCreator_->RegisterOnCreateFn([this](const BasicEntity &entity) {
+        allEntities_.insert(entity.GetId());
+        AddDrawable(entity.GetId(), entity.GetLayer());
+        collisionHandler_->AddCollider(entity.GetId(), entity.IsStatic());
+    });
+    entityCreator_->RegisterOnDeleteFn([this](const BasicEntity &entity) {
+        allEntities_.erase(entity.GetId());
+        RemoveDrawable(entity.GetId());
+        collisionHandler_->RemoveCollider(entity.GetId(), entity.IsStatic());
+    });
 }
 
-void EntityManager::DrawTo(Graphic::RenderTargetIf& renderTarget) const
+EntityManager::~EntityManager() = default;
+
+void EntityManager::DrawTo(Graphic::RenderTargetIf &renderTarget) const
 {
     for (auto p : drawables_) {
         auto id = p.second.id_;
-        entityMap_.at(id)->DrawTo(renderTarget);
+        entityDb_->GetEntity(id).DrawTo(renderTarget);
     }
 }
 
 void EntityManager::DetectCollisions()
 {
-    for (const auto id : entities_) {
-        DetectEntityCollisions(id);
-        DetectStaticCollisions(id);
-    }
+    collisionHandler_->DetectCollisions();
 }
-
-void EntityManager::DetectEntityCollisions(EntityId id)
-{
-    for (const auto otherId : entities_) {
-        if (id != otherId) {
-            DetectCollision(id, otherId);
-        }
-    }
-}
-
-void EntityManager::DetectStaticCollisions(EntityId id)
-{
-    for (const auto otherId : staticEntities_) {
-        DetectCollision(id, otherId);
-    }
-}
-
-void EntityManager::DetectCollision(EntityId id, EntityId otherId)
-{
-    std::pair<EntityId, EntityId> pair{id, otherId};
-    bool found = collisionPairs_.find(pair) != collisionPairs_.end();
-    if (!found) {
-        const auto& entity = *entityMap_.at(id);
-        const auto& otherEntity = *entityMap_.at(otherId);
-        bool intersect = entity.Intersect(otherEntity);
-        if (intersect) {
-            collisionPairs_.insert(pair);
-        }
-    }
-}
-
 void EntityManager::HandleCollisions()
 {
-    for (const auto& pair : collisionPairs_) {
-        auto& first = *entityMap_.at(pair.first);
-        auto& second = *entityMap_.at(pair.second);
-        first.HandleCollision(pair.second, entityMap_.at(pair.second)->IsSolid());
-        second.HandleCollision(pair.first, entityMap_.at(pair.first)->IsSolid());
-    }
-    collisionPairs_.clear();
+    collisionHandler_->HandleCollisions();
 }
 
 EntityType EntityManager::GetType(EntityId id) const
 {
-    return entityMap_.at(id)->Type();
+    return entityDb_->GetEntity(id).Type();
 }
 
 void EntityManager::Update(float deltaTime)
 {
-    for (const auto& entry : entityMap_) {
-        entry.second->Update(deltaTime);
+    for (const auto id : allEntities_) {
+        entityDb_->GetEntity(id).Update(deltaTime);
     }
 }
 
-void EntityManager::CreateEntity(const PropertyData& data, const Shared::MapData& mapData)
+void EntityManager::CreateEntity(const PropertyData &data, const Shared::MapData &mapData)
 {
-    auto entity = factory_->Create(data, mapData, *service_);
-    auto id = entity->GetId();
-    createdEntities_.insert(id);
-    AddEntity(std::move(entity));
+    entityCreator_->CreateEntity(data, mapData);
 }
 
-void EntityManager::CreateEntity(const std::string& typeStr, const sf::Vector2f& pos, const sf::Vector2f& size,
+void EntityManager::CreateEntity(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
                                  std::unordered_map<std::string, std::string> properties,
-                                 const Shared::MapData& mapData)
+                                 const Shared::MapData &mapData)
 {
-    PropertyData data;
-    data.typeStr_ = typeStr;
-    data.position_ = pos;
-    data.size_ = size;
-    data.properties_ = properties;
-    CreateEntity(data, mapData);
+    entityCreator_->CreateEntity(typeStr, pos, size, properties, mapData);
 }
 
-void EntityManager::CreateTileEntity(const sf::Vector2f& pos, const Shared::TileGraphic& graphic,
-                                     const Shared::MapData& mapData)
+void EntityManager::CreateTileEntity(const sf::Vector2f &pos, const Shared::TileGraphic &graphic,
+                                     const Shared::MapData &mapData)
 {
-    PropertyData data;
-    data.typeStr_ = TileEntity::str;
-    data.position_ = pos;
-    data.graphic_ = graphic;
-    CreateEntity(data, mapData);
+    entityCreator_->CreateTileEntity(pos, graphic, mapData);
 }
 
 void EntityManager::DeleteEntity(EntityId id)
 {
-    deletedEntities_.insert(id);
+    entityCreator_->DeleteEntity(id);
 }
 
 void EntityManager::HandleCreatedEntities()
 {
-    for (const auto id : createdEntities_) {
-        auto& entity = *entityMap_.at(id);
-        entity.Init();
-        AddDrawable(id, entity.GetLayer());
-        if (entity.IsStatic()) {
-            staticEntities_.insert(id);
-        }
-        else {
-            entities_.insert(id);
-        }
-    }
-
-    createdEntities_.clear();
+    entityCreator_->HandleCreatedEntities(*factory_, *service_);
 }
 
 void EntityManager::HandleDeletedEntities()
 {
-    for (const auto id : deletedEntities_) {
-        auto& entity = *entityMap_.at(id);
-        entity.Destroy();
-        RemoveDrawable(id);
-        if (entity.IsStatic()) {
-            staticEntities_.erase(id);
-        }
-        else {
-            entities_.erase(id);
-        }
-        entityMap_.erase(id);
-    }
-
-    deletedEntities_.clear();
-}
-
-void EntityManager::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)
-{
-    auto id = entity->GetId();
-    if (entityMap_.find(id) == entityMap_.end()) {
-        entityMap_[id] = std::move(entity);
-    }
-    else {
-        LOG_ERROR("%s already exist", DUMP(id));
-    }
+    entityCreator_->HandleDeletedEntities();
 }
 
 void EntityManager::AddDrawable(EntityId id, LayerType layer)
@@ -192,7 +117,7 @@ void EntityManager::AddDrawable(EntityId id, LayerType layer)
 
 void EntityManager::RemoveDrawable(EntityId id)
 {
-    auto it = std::find_if(drawables_.begin(), drawables_.end(), [id](const auto& p) { return p.second.id_ == id; });
+    auto it = std::find_if(drawables_.begin(), drawables_.end(), [id](const auto &p) { return p.second.id_ == id; });
     if (it != drawables_.end()) {
         drawables_.erase(it);
     }

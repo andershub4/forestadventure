@@ -144,6 +144,7 @@
     <ClInclude Include="Src\Abilities\AbilityIf.h" />
     <ClInclude Include="Src\Abilities\MoveAbility.h" />
     <ClInclude Include="Src\Body.h" />
+    <ClInclude Include="Src\CollisionHandler.h" />
     <ClInclude Include="Src\Constant\Entity.h" />
     <ClInclude Include="Src\Entities\ArrowEntity.h" />
     <ClInclude Include="Src\Entities\BasicEntity.h" />
@@ -153,6 +154,8 @@
     <ClInclude Include="Src\Entities\RectEntity.h" />
     <ClInclude Include="Src\Entities\TileEntity.h" />
     <ClInclude Include="Include\EntityManager.h" />
+    <ClInclude Include="Src\EntityCreator.h" />
+    <ClInclude Include="Src\EntityDb.h" />
     <ClInclude Include="Src\EntityService.h" />
     <ClInclude Include="Src\Enum\EntityType.h" />
     <ClInclude Include="Src\Enum\FaceDirection.h" />
@@ -189,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Abilities\MoveAbility.cpp" />
+    <ClCompile Include="Src\CollisionHandler.cpp" />
     <ClCompile Include="Src\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Src\Entities\BasicEntity.cpp" />
     <ClCompile Include="Src\Entities\CoinEntity.cpp" />
@@ -196,6 +200,8 @@
     <ClCompile Include="Src\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Src\Entities\RectEntity.cpp" />
     <ClCompile Include="Src\Entities\TileEntity.cpp" />
+    <ClCompile Include="Src\EntityCreator.cpp" />
+    <ClCompile Include="Src\EntityDb.cpp" />
     <ClCompile Include="Src\EntityManager.cpp" />
     <ClCompile Include="Src\EntityService.cpp" />
     <ClCompile Include="Src\Factory.cpp" />

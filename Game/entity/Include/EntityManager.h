@@ -8,7 +8,6 @@
 
 #include <map>
 #include <memory>
-#include <set>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -42,6 +41,9 @@ class Factory;
 class EntityService;
 struct PropertyData;
 enum class EntityType;
+class EntityDb;
+class EntityCreator;
+class CollisionHandler;
 
 class EntityManager
 {
@@ -70,35 +72,17 @@ private:
         EntityId id_{};
     };
 
-    template <typename T>
-    struct customPairLess
-    {
-        bool operator()(const std::pair<T, T> &lhs, const std::pair<T, T> &rhs) const
-        {
-            const auto lhs_order = lhs.first < lhs.second ? lhs : std::tie(lhs.second, lhs.first);
-            const auto rhs_order = rhs.first < rhs.second ? rhs : std::tie(rhs.second, rhs.first);
-
-            return lhs_order < rhs_order;
-        }
-    };
-
-    std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::BasicEntity>> entityMap_;
-    std::unordered_set<EntityId> entities_;
-    std::unordered_set<EntityId> staticEntities_;
+    std::unordered_set<EntityId> allEntities_;
     std::unique_ptr<Factory> factory_;
+    std::unique_ptr<EntityDb> entityDb_;
+    std::unique_ptr<CollisionHandler> collisionHandler_;
+    std::unique_ptr<EntityCreator> entityCreator_;
     std::unique_ptr<EntityService> service_;
-    std::unordered_set<EntityId> createdEntities_;
-    std::unordered_set<EntityId> deletedEntities_;
     std::map<std::string, DrawableInfo> drawables_;
-    std::set<std::pair<EntityId, EntityId>, customPairLess<EntityId>> collisionPairs_;
 
 private:
-    void AddEntity(std::unique_ptr<Entity::BasicEntity> entity);
     void AddDrawable(EntityId id, LayerType layer);
     void RemoveDrawable(EntityId id);
-    void DetectEntityCollisions(EntityId id);
-    void DetectStaticCollisions(EntityId id);
-    void DetectCollision(EntityId id, EntityId otherId);
 };
 
 }  // namespace Entity

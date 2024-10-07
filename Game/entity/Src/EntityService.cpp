@@ -11,7 +11,9 @@
 #include "CameraView.h"
 #include "CameraViews.h"
 #include "Constant/Entity.h"
-#include "EntityManager.h"
+#include "Entities/BasicEntity.h"
+#include "EntityCreator.h"
+#include "EntityDb.h"
 #include "Enum/EntityType.h"
 #include "Message/MessageBus.h"
 #include "RectangleShape.h"
@@ -33,12 +35,13 @@ namespace Entity {
 
 EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::TextureManager& textureManager,
                              const Shared::SheetManager& sheetManager, const Shared::CameraViews& cameraViews,
-                             EntityManager& entityManager)
+                             const EntityDb& entityDb, EntityCreator& entityCreator)
     : messageBus_(messageBus)
     , textureManager_(textureManager)
     , sheetManager_(sheetManager)
     , cameraViews_(cameraViews)
-    , entityManager_(entityManager)
+    , entityDb_(entityDb)
+    , entityCreator_(entityCreator)
 {}
 
 EntityService::~EntityService() = default;
@@ -133,17 +136,17 @@ Shared::CameraView& EntityService::GetCameraView() const
 
 void EntityService::CreateEntity(const PropertyData& data, const Shared::MapData& mapData)
 {
-    entityManager_.CreateEntity(data, mapData);
+    entityCreator_.CreateEntity(data, mapData);
 }
 
 void EntityService::DeleteEntity(EntityId id)
 {
-    entityManager_.DeleteEntity(id);
+    entityCreator_.DeleteEntity(id);
 }
 
 EntityType EntityService::GetType(EntityId id) const
 {
-    return entityManager_.GetType(id);
+    return entityDb_.GetEntity(id).Type();
 }
 
 Shared::TextureRect EntityService::MirrorX(const Shared::TextureRect& textureRect) const

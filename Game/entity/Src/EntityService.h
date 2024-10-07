@@ -41,7 +41,8 @@ class ColliderAnimation;
 namespace Entity {
 
 struct PropertyData;
-class EntityManager;
+class EntityDb;
+class EntityCreator;
 enum class EntityType;
 
 class EntityService
@@ -49,7 +50,7 @@ class EntityService
 public:
     EntityService(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
                   const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews,
-                  EntityManager &entityManager);
+                  const EntityDb &entityDb, EntityCreator &entityCreator);
     ~EntityService();
 
     std::shared_ptr<Shared::ImageAnimation> CreateImageAnimation(const std::vector<Shared::ImageData> &images);
@@ -71,7 +72,8 @@ private:
     const Shared::TextureManager &textureManager_;
     const Shared::SheetManager &sheetManager_;
     const Shared::CameraViews &cameraViews_;
-    EntityManager &entityManager_;
+    const EntityDb &entityDb_;
+    EntityCreator &entityCreator_;
 
 private:
     std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> CreateSequence(
