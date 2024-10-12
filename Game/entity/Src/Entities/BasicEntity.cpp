@@ -21,10 +21,10 @@ namespace FA {
 namespace Entity {
 
 BasicEntity::BasicEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                         const EntityService& service)
+                         std::unique_ptr<EntityService> service)
     : id_(id)
     , data_(data)
-    , service_(service)
+    , service_(std::move(service))
 {
     mapRect_ = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(mapData.size_));
     RegisterUninitializedState();
@@ -47,7 +47,7 @@ void BasicEntity::InitCB()
 
     Subscribe(Messages());
     OnInit();  // must do this after setting position
-    service_.SendMessage(std::make_shared<Shared::EntityInitializedMessage>());
+    service_->SendMessage(std::make_shared<Shared::EntityInitializedMessage>());
     ChangeStateTo(StateType::Idle, nullptr);
 }
 
@@ -59,7 +59,7 @@ void BasicEntity::Init()
 void BasicEntity::DestroyCB()
 {
     Unsubscribe(Messages());
-    service_.SendMessage(std::make_shared<Shared::EntityDestroyedMessage>());
+    service_->SendMessage(std::make_shared<Shared::EntityDestroyedMessage>());
 }
 
 void BasicEntity::Destroy()
@@ -108,7 +108,7 @@ std::shared_ptr<State> BasicEntity::RegisterState(StateType stateType)
 
 void BasicEntity::SendMessage(std::shared_ptr<Shared::Message> message)
 {
-    service_.SendMessage(message);
+    service_->SendMessage(message);
 }
 
 void BasicEntity::Subscribe(const std::vector<Shared::MessageType>& messageTypes)
@@ -116,8 +116,8 @@ void BasicEntity::Subscribe(const std::vector<Shared::MessageType>& messageTypes
     std::stringstream ss;
     ss << Type();
 
-    service_.AddSubscriber(ss.str(), messageTypes,
-                           [this](std::shared_ptr<Shared::Message> message) { OnMessage(message); });
+    service_->AddSubscriber(ss.str(), messageTypes,
+                            [this](std::shared_ptr<Shared::Message> message) { OnMessage(message); });
 }
 
 void BasicEntity::Unsubscribe(const std::vector<Shared::MessageType>& messageTypes)
@@ -125,7 +125,7 @@ void BasicEntity::Unsubscribe(const std::vector<Shared::MessageType>& messageTyp
     std::stringstream ss;
     ss << Type();
 
-    service_.RemoveSubscriber(ss.str(), messageTypes);
+    service_->RemoveSubscriber(ss.str(), messageTypes);
 }
 
 void BasicEntity::RegisterUninitializedState()
@@ -140,7 +140,7 @@ std::shared_ptr<State> BasicEntity::RegisterDeadState()
     auto deadState = stateMachine_.RegisterState(StateType::Dead, body_);
     deadState->RegisterEnterCB([this]() {
         OnBeginDie();
-        service_.DeleteEntity(id_);
+        service_->DeleteEntity(id_);
     });
     deadState->IgnoreAllEventsExcept({EventType::Destroy});
     deadState->RegisterEventCB(EventType::Destroy, [this](std::shared_ptr<BasicEvent> event) { DestroyCB(); });

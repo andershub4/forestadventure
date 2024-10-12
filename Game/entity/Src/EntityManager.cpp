@@ -4,6 +4,7 @@
  *	See file LICENSE for full license details.
  */
 
+#include <memory>
 #include <sstream>
 
 #include "EntityManager.h"
@@ -26,9 +27,8 @@ EntityManager::EntityManager(Shared::MessageBus &messageBus, const Shared::Textu
     : factory_(std::make_unique<Factory>())
     , entityDb_(std::make_unique<EntityDb>())
     , collisionHandler_(std::make_unique<CollisionHandler>(*entityDb_))
-    , entityCreator_(std::make_unique<EntityCreator>(*entityDb_))
-    , service_(std::make_unique<EntityService>(messageBus, textureManager, sheetManager, cameraViews, *entityDb_,
-                                               *entityCreator_))
+    , entityCreator_(
+          std::make_unique<EntityCreator>(messageBus, textureManager, sheetManager, cameraViews, *factory_, *entityDb_))
 {
     entityCreator_->RegisterOnCreateFn([this](const BasicEntity &entity) {
         allEntities_.insert(entity.GetId());
@@ -87,7 +87,7 @@ void EntityManager::DeleteEntity(EntityId id)
 
 void EntityManager::HandleCreatedEntities()
 {
-    entityCreator_->HandleCreatedEntities(*factory_, *service_);
+    entityCreator_->HandleCreatedEntities();
 }
 
 void EntityManager::HandleDeletedEntities()

@@ -14,6 +14,7 @@
 #include "Id.h"
 #include "MapData.h"
 #include "PropertyData.h"
+#include "Resource/TextureManager.h"
 #include "SfmlFwd.h"
 
 namespace FA {
@@ -21,6 +22,9 @@ namespace FA {
 namespace Shared {
 
 struct TileGraphic;
+class MessageBus;
+class SheetManager;
+class CameraViews;
 
 }  // namespace Shared
 
@@ -29,12 +33,13 @@ namespace Entity {
 class BasicEntity;
 class Factory;
 class EntityDb;
-class EntityService;
 
 class EntityCreator
 {
 public:
-    EntityCreator(EntityDb &entityDb);
+    EntityCreator(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
+                  const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews,
+                  const Factory &factory, EntityDb &entityDb);
 
     void RegisterOnCreateFn(std::function<void(BasicEntity &)> fn);
     void RegisterOnDeleteFn(std::function<void(BasicEntity &)> fn);
@@ -42,10 +47,15 @@ public:
     void CreateEntity(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
                       std::unordered_map<std::string, std::string> properties, const Shared::MapData &mapData);
     void DeleteEntity(EntityId id);
-    void HandleCreatedEntities(const Factory &factory, const EntityService &service);
+    void HandleCreatedEntities();
     void HandleDeletedEntities();
 
 private:
+    Shared::MessageBus &messageBus_;
+    const Shared::TextureManager &textureManager_;
+    const Shared::SheetManager &sheetManager_;
+    const Shared::CameraViews &cameraViews_;
+    const Factory &factory_;
     EntityDb &entityDb_;
 
     struct CreatedItem

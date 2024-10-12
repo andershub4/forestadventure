@@ -21,7 +21,8 @@ public:
     static const std::string str;
     static PropertyData CreatePropertyData(const sf::Vector2f& position, FaceDirection dir);
 
-    ArrowEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& service);
+    ArrowEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                std::unique_ptr<EntityService> service);
     virtual ~ArrowEntity();
 
     virtual EntityType Type() const override { return EntityType::Arrow; }

@@ -38,7 +38,6 @@ namespace Entity {
 
 class BasicEntity;
 class Factory;
-class EntityService;
 struct PropertyData;
 enum class EntityType;
 class EntityDb;
@@ -75,7 +74,6 @@ private:
     std::unique_ptr<EntityDb> entityDb_;
     std::unique_ptr<CollisionHandler> collisionHandler_;
     std::unique_ptr<EntityCreator> entityCreator_;
-    std::unique_ptr<EntityService> service_;
     std::map<std::string, DrawableInfo> drawables_;
 
 private:

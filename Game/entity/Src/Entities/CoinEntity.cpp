@@ -42,8 +42,8 @@ const std::vector<Shared::ColliderData> idleColliders{{coin1, rect}, {coin2, rec
 const std::string CoinEntity::str = "Coin";
 
 CoinEntity::CoinEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                       const EntityService& service)
-    : BasicEntity(id, data, mapData, service)
+                       std::unique_ptr<EntityService> service)
+    : BasicEntity(id, data, mapData, std::move(service))
 {}
 
 CoinEntity::~CoinEntity() = default;
@@ -51,17 +51,17 @@ CoinEntity::~CoinEntity() = default;
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                 const PropertyData& data)
 {
-    auto imageAnimation = service_.CreateImageAnimation(idleImages);
+    auto imageAnimation = service_->CreateImageAnimation(idleImages);
     imageAnimation->Center();
     auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(imageAnimation);
     idleState->RegisterShapePart(shapePart);
-    auto colliderAnimation = service_.CreateColliderAnimation(idleColliders);
+    auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
     colliderAnimation->Center();
     auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
     idleState->RegisterColliderPart(colliderPart);
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        if (service_.GetType(collisionEvent->id_) == EntityType::Player) {
+        if (service_->GetType(collisionEvent->id_) == EntityType::Player) {
             HandleEvent(std::make_shared<DeadEvent>());
         }
     });

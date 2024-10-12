@@ -80,8 +80,8 @@ PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, FaceD
 }
 
 ArrowEntity::ArrowEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                         const EntityService& service)
-    : BasicEntity(id, data, mapData, service)
+                         std::unique_ptr<EntityService> service)
+    : BasicEntity(id, data, mapData, std::move(service))
 {}
 
 ArrowEntity::~ArrowEntity() = default;
@@ -132,11 +132,11 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
 
     auto moveState = RegisterState(StateType::Move);
-    auto imageAnimation = service_.CreateImageAnimation(images);
+    auto imageAnimation = service_->CreateImageAnimation(images);
     imageAnimation->Center();
     auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(imageAnimation);
     moveState->RegisterShapePart(shapePart);
-    auto colliderAnimation = service_.CreateColliderAnimation(colliders);
+    auto colliderAnimation = service_->CreateColliderAnimation(colliders);
     colliderAnimation->Center();
     auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
     moveState->RegisterColliderPart(colliderPart);
@@ -148,7 +148,7 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     moveState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        if (service_.GetType(collisionEvent->id_) == EntityType::Mole) {
+        if (service_->GetType(collisionEvent->id_) == EntityType::Mole) {
             HandleEvent(std::make_shared<DeadEvent>());
         }
     });

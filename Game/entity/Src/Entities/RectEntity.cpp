@@ -18,8 +18,8 @@ namespace Entity {
 const std::string RectEntity::str = "Rect";
 
 RectEntity::RectEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                       const EntityService& service)
-    : BasicEntity(id, data, mapData, service)
+                       std::unique_ptr<EntityService> service)
+    : BasicEntity(id, data, mapData, std::move(service))
 {}
 
 RectEntity::~RectEntity() = default;
@@ -30,7 +30,7 @@ void RectEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     const sf::Vector2i rectSize = static_cast<sf::Vector2i>(data.size_);
     const Shared::ColliderData colliderData(rectSize);
     const std::vector<Shared::ColliderData> idleColliders{colliderData};
-    auto colliderAnimation = service_.CreateColliderAnimation(idleColliders);
+    auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
     auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
     idleState->RegisterColliderPart(colliderPart);
 }

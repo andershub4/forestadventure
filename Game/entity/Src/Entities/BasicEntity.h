@@ -38,7 +38,8 @@ namespace Entity {
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& service);
+    BasicEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                std::unique_ptr<EntityService> service);
     virtual ~BasicEntity();
 
     virtual EntityType Type() const = 0;
@@ -56,7 +57,7 @@ public:
 
 protected:
     PropertyStore propertyStore_;
-    EntityService service_;
+    std::unique_ptr<EntityService> service_;
     Body body_{};
     sf::FloatRect mapRect_;
 

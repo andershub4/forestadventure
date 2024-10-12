@@ -211,8 +211,8 @@ FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 const std::string PlayerEntity::str = "Player";
 
 PlayerEntity::PlayerEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                           const EntityService& service)
-    : BasicEntity(id, data, mapData, service)
+                           std::unique_ptr<EntityService> service)
+    : BasicEntity(id, data, mapData, std::move(service))
 {}
 
 PlayerEntity::~PlayerEntity() = default;
@@ -284,13 +284,13 @@ void PlayerEntity::OnShoot()
     Shared::MapData mapData;
     mapData.size_.x = static_cast<unsigned int>(mapRect_.width);
     mapData.size_.y = static_cast<unsigned int>(mapRect_.height);
-    service_.CreateEntity(data, mapData);
+    service_->CreateEntity(data, mapData);
 }
 
 void PlayerEntity::OnBeginDie()
 {
     SendMessage(std::make_shared<Shared::GameOverMessage>());
-    auto& cameraView = service_.GetCameraView();
+    auto& cameraView = service_->GetCameraView();
     cameraView.SetFixPoint(body_.position_);
 }
 
@@ -323,7 +323,7 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
 
 void PlayerEntity::OnInit()
 {
-    auto& cameraView = service_.GetCameraView();
+    auto& cameraView = service_->GetCameraView();
     cameraView.SetTrackPoint(body_.position_);
 }
 
@@ -363,7 +363,7 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
         if (collisionEvent->isSolid_) {
             body_.position_ = body_.prevPosition_;
         }
-        else if (service_.GetType(collisionEvent->id_) == EntityType::Coin) {
+        else if (service_->GetType(collisionEvent->id_) == EntityType::Coin) {
             coins_++;
         }
     });
@@ -410,7 +410,7 @@ std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>> Playe
     propertyStore_.GetPtr("FaceDirection", dir);
     auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>>(dir);
     for (const auto& entry : faceDirImages) {
-        auto animation = service_.CreateImageAnimation(entry.second);
+        auto animation = service_->CreateImageAnimation(entry.second);
         animation->Center();
         animation->RegisterUpdateCB(updateCB);
         part->Register(entry.first, animation);
@@ -426,7 +426,7 @@ std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>> Pl
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
     auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>>(dir);
     for (const auto& entry : faceDirColliders) {
-        auto animation = service_.CreateColliderAnimation(entry.second);
+        auto animation = service_->CreateColliderAnimation(entry.second);
         animation->Center();
         part->Register(entry.first, animation);
     }

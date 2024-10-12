@@ -6,16 +6,26 @@
 
 #include "EntityCreator.h"
 
+#include <memory>
+
 #include "Entities/BasicEntity.h"
 #include "EntityDb.h"
+#include "EntityService.h"
 #include "Factory.h"
 
 namespace FA {
 
 namespace Entity {
 
-EntityCreator::EntityCreator(EntityDb &entityDb)
-    : entityDb_(entityDb)
+EntityCreator::EntityCreator(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
+                             const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews,
+                             const Factory &factory, EntityDb &entityDb)
+    : messageBus_(messageBus)
+    , textureManager_(textureManager)
+    , sheetManager_(sheetManager)
+    , cameraViews_(cameraViews)
+    , factory_(factory)
+    , entityDb_(entityDb)
 {}
 
 void EntityCreator::RegisterOnCreateFn(std::function<void(BasicEntity &)> fn)
@@ -50,10 +60,12 @@ void EntityCreator::DeleteEntity(EntityId id)
     deletedEntities_.insert(id);
 }
 
-void EntityCreator::HandleCreatedEntities(const Factory &factory, const EntityService &service)
+void EntityCreator::HandleCreatedEntities()
 {
     for (const auto data : createdEntities_) {
-        auto entity = factory.Create(data.propertyData_, data.mapData_, service);
+        auto service = std::make_unique<EntityService>(messageBus_, textureManager_, sheetManager_, cameraViews_,
+                                                       entityDb_, *this);
+        auto entity = factory_.Create(data.propertyData_, data.mapData_, std::move(service));
         entity->Init();
         onCreateFn_(*entity);
         entityDb_.AddEntity(std::move(entity));

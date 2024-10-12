@@ -34,11 +34,11 @@ public:
     ~Factory();
 
     std::unique_ptr<BasicEntity> Create(const PropertyData& data, const Shared::MapData& mapData,
-                                        const EntityService& service) const;
+                                        std::unique_ptr<EntityService> service) const;
 
 private:
-    using CreateFn = std::function<std::unique_ptr<BasicEntity>(EntityId, const PropertyData&,
-                                                                const Shared::MapData& mapData, const EntityService&)>;
+    using CreateFn = std::function<std::unique_ptr<BasicEntity>(
+        EntityId, const PropertyData&, const Shared::MapData& mapData, std::unique_ptr<EntityService>)>;
 
     mutable EntityId id_{0};
     std::unordered_map<std::string, CreateFn> map_;

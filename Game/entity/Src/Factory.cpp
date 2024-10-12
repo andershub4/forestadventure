@@ -19,37 +19,37 @@ namespace Entity {
 
 Factory::Factory()
 {
-    RegisterEntity(MoleEntity::str,
-                   [](EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& s) {
-                       return std::make_unique<MoleEntity>(id, data, mapData, s);
-                   });
-    RegisterEntity(PlayerEntity::str,
-                   [](EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& s) {
-                       return std::make_unique<PlayerEntity>(id, data, mapData, s);
-                   });
-    RegisterEntity(ArrowEntity::str,
-                   [](EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& s) {
-                       return std::make_unique<ArrowEntity>(id, data, mapData, s);
-                   });
-    RegisterEntity(CoinEntity::str,
-                   [](EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& s) {
-                       return std::make_unique<CoinEntity>(id, data, mapData, s);
-                   });
-    RegisterEntity(RectEntity::str,
-                   [](EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& s) {
-                       return std::make_unique<RectEntity>(id, data, mapData, s);
-                   });
+    RegisterEntity(MoleEntity::str, [](EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                                       std::unique_ptr<EntityService> s) {
+        return std::make_unique<MoleEntity>(id, data, mapData, std::move(s));
+    });
+    RegisterEntity(PlayerEntity::str, [](EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                                         std::unique_ptr<EntityService> s) {
+        return std::make_unique<PlayerEntity>(id, data, mapData, std::move(s));
+    });
+    RegisterEntity(ArrowEntity::str, [](EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                                        std::unique_ptr<EntityService> s) {
+        return std::make_unique<ArrowEntity>(id, data, mapData, std::move(s));
+    });
+    RegisterEntity(CoinEntity::str, [](EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                                       std::unique_ptr<EntityService> s) {
+        return std::make_unique<CoinEntity>(id, data, mapData, std::move(s));
+    });
+    RegisterEntity(RectEntity::str, [](EntityId id, const PropertyData& data, const Shared::MapData& mapData,
+                                       std::unique_ptr<EntityService> s) {
+        return std::make_unique<RectEntity>(id, data, mapData, std::move(s));
+    });
 }
 
 Factory::~Factory() = default;
 
 std::unique_ptr<BasicEntity> Factory::Create(const PropertyData& data, const Shared::MapData& mapData,
-                                             const EntityService& service) const
+                                             std::unique_ptr<EntityService> service) const
 {
     auto it = map_.find(data.typeStr_);
 
     if (it != map_.end()) {
-        return it->second(id_++, data, mapData, service);
+        return it->second(id_++, data, mapData, std::move(service));
     }
 
     LOG_ERROR("Could not create entity of %s", DUMP2("type", data.typeStr_));

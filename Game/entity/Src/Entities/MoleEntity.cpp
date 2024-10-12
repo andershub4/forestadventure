@@ -128,8 +128,8 @@ FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 const std::string MoleEntity::str = "Mole";
 
 MoleEntity::MoleEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                       const EntityService& service)
-    : BasicEntity(id, data, mapData, service)
+                       std::unique_ptr<EntityService> service)
+    : BasicEntity(id, data, mapData, std::move(service))
 {}
 
 MoleEntity::~MoleEntity() = default;
@@ -181,7 +181,7 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        if (service_.GetType(collisionEvent->id_) == EntityType::Arrow) {
+        if (service_->GetType(collisionEvent->id_) == EntityType::Arrow) {
             ChangeStateTo(StateType::Collision, event);
         }
     });
@@ -202,7 +202,7 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        if (service_.GetType(collisionEvent->id_) == EntityType::Arrow) {
+        if (service_->GetType(collisionEvent->id_) == EntityType::Arrow) {
             ChangeStateTo(StateType::Collision, event);
         }
     });
@@ -215,7 +215,7 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
             HandleEvent(std::make_shared<DeadEvent>());
         }
     };
-    auto animation = service_.CreateImageAnimation(collisionImages);
+    auto animation = service_->CreateImageAnimation(collisionImages);
     animation->Center();
     animation->RegisterUpdateCB(updateCB);
     auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(animation);
@@ -229,7 +229,7 @@ std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>> MoleE
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
     auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>>(dir);
     for (const auto& entry : faceDirImages) {
-        auto animation = service_.CreateImageAnimation(entry.second);
+        auto animation = service_->CreateImageAnimation(entry.second);
         animation->Center();
         part->Register(entry.first, animation);
     }
@@ -244,7 +244,7 @@ std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>> Mo
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
     auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>>(dir);
     for (const auto& entry : faceDirColliders) {
-        auto animation = service_.CreateColliderAnimation(entry.second);
+        auto animation = service_->CreateColliderAnimation(entry.second);
         animation->Center();
         part->Register(entry.first, animation);
     }
