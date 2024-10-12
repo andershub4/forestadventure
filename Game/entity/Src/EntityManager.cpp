@@ -61,11 +61,6 @@ void EntityManager::HandleCollisions()
     collisionHandler_->HandleCollisions();
 }
 
-EntityType EntityManager::GetType(EntityId id) const
-{
-    return entityDb_->GetEntity(id).Type();
-}
-
 void EntityManager::Update(float deltaTime)
 {
     for (const auto id : allEntities_) {

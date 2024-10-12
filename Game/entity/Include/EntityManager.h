@@ -39,7 +39,6 @@ namespace Entity {
 class BasicEntity;
 class Factory;
 struct PropertyData;
-enum class EntityType;
 class EntityDb;
 class EntityCreator;
 class CollisionHandler;
@@ -55,7 +54,6 @@ public:
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
     void DetectCollisions();
     void HandleCollisions();
-    EntityType GetType(EntityId id) const;
     void CreateEntity(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
                       std::unordered_map<std::string, std::string> properties, const Shared::MapData &mapData);
     void DeleteEntity(EntityId id);
