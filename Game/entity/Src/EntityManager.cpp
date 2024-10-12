@@ -10,7 +10,6 @@
 
 #include "CollisionHandler.h"
 #include "Entities/BasicEntity.h"
-#include "Entities/TileEntity.h"
 #include "EntityCreator.h"
 #include "EntityDb.h"
 #include "EntityService.h"
@@ -74,22 +73,11 @@ void EntityManager::Update(float deltaTime)
     }
 }
 
-void EntityManager::CreateEntity(const PropertyData &data, const Shared::MapData &mapData)
-{
-    entityCreator_->CreateEntity(data, mapData);
-}
-
 void EntityManager::CreateEntity(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
                                  std::unordered_map<std::string, std::string> properties,
                                  const Shared::MapData &mapData)
 {
     entityCreator_->CreateEntity(typeStr, pos, size, properties, mapData);
-}
-
-void EntityManager::CreateTileEntity(const sf::Vector2f &pos, const Shared::TileGraphic &graphic,
-                                     const Shared::MapData &mapData)
-{
-    entityCreator_->CreateTileEntity(pos, graphic, mapData);
 }
 
 void EntityManager::DeleteEntity(EntityId id)

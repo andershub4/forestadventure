@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "Animation/ImageAnimation.h"
 #include "CameraViews.h"
 #include "RenderTexture.h"
 #include "Resource/SheetManager.h"
@@ -19,7 +20,7 @@ namespace Graphic {
 
 class View;
 
-}
+}  // namespace Graphic
 
 namespace Entity {
 
@@ -56,6 +57,7 @@ private:
     Graphic::RenderTexture backgroundTexture_;
     Graphic::Sprite backgroundSprite_;
     std::vector<Graphic::Sprite> fringeLayer_;
+    std::vector<Shared::ImageAnimation> animationLayer_;
     Shared::TextureManager& textureManager_;
     Shared::SheetManager sheetManager_;
     std::unique_ptr<TileMap> tileMap_;

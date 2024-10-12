@@ -23,10 +23,13 @@ class RenderTargetIf;
 namespace Shared {
 
 class SheetManager;
+class ImageAnimation;
 
 }  // namespace Shared
 
 namespace World {
+
+constexpr float switchTime = 0.1f;
 
 class LevelCreator
 {
@@ -37,6 +40,7 @@ public:
     void CreateBackground(Graphic::RenderTargetIf &texture) const;
 
     std::vector<Graphic::Sprite> CreateFringe(const std::vector<TileMap::TileData> &layer) const;
+    std::vector<Shared::ImageAnimation> CreateAnimations(const std::vector<TileMap::TileData> &layer) const;
 
 private:
     const Shared::TextureManager &textureManager_;
@@ -45,6 +49,7 @@ private:
 
 private:
     Graphic::Sprite CreateSprite(const TileMap::TileData &data) const;
+    Shared::ImageAnimation CreateAnimation(const TileMap::TileData &data) const;
 };
 
 }  // namespace World

@@ -11,7 +11,6 @@
 #include "Entities/MoleEntity.h"
 #include "Entities/PlayerEntity.h"
 #include "Entities/RectEntity.h"
-#include "Entities/TileEntity.h"
 #include "Logging.h"
 
 namespace FA {
@@ -31,10 +30,6 @@ Factory::Factory()
     RegisterEntity(ArrowEntity::str,
                    [](EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& s) {
                        return std::make_unique<ArrowEntity>(id, data, mapData, s);
-                   });
-    RegisterEntity(TileEntity::str,
-                   [](EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& s) {
-                       return std::make_unique<TileEntity>(id, data, mapData, s);
                    });
     RegisterEntity(CoinEntity::str,
                    [](EntityId id, const PropertyData& data, const Shared::MapData& mapData, const EntityService& s) {

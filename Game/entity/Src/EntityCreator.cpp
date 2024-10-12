@@ -7,7 +7,6 @@
 #include "EntityCreator.h"
 
 #include "Entities/BasicEntity.h"
-#include "Entities/TileEntity.h"
 #include "EntityDb.h"
 #include "Factory.h"
 
@@ -43,16 +42,6 @@ void EntityCreator::CreateEntity(const std::string &typeStr, const sf::Vector2f 
     data.position_ = pos;
     data.size_ = size;
     data.properties_ = properties;
-    CreateEntity(data, mapData);
-}
-
-void EntityCreator::CreateTileEntity(const sf::Vector2f &pos, const Shared::TileGraphic &graphic,
-                                     const Shared::MapData &mapData)
-{
-    PropertyData data;
-    data.typeStr_ = TileEntity::str;
-    data.position_ = pos;
-    data.graphic_ = graphic;
     CreateEntity(data, mapData);
 }
 

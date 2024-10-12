@@ -67,6 +67,9 @@ void Level::Update(float deltaTime)
 {
     entityManager_->HandleCreatedEntities();
     cameraViews_.Update(deltaTime);
+    for (auto &animation : animationLayer_) {
+        animation.Update(deltaTime);
+    }
     entityManager_->Update(deltaTime);
     entityManager_->DetectCollisions();
     entityManager_->HandleCollisions();
@@ -79,6 +82,9 @@ void Level::Draw(Graphic::RenderTargetIf &renderTarget)
     entityManager_->DrawTo(renderTarget);
     for (const auto &tile : fringeLayer_) {
         renderTarget.draw(tile);
+    }
+    for (const auto &animation : animationLayer_) {
+        animation.DrawTo(renderTarget);
     }
 }
 
@@ -112,6 +118,7 @@ void Level::CreateMap()
     backgroundTexture_.display();
     backgroundSprite_.setTexture(backgroundTexture_.getTexture());
     fringeLayer_ = levelCreator_->CreateFringe(tileMap_->GetLayer("Fringe Layer"));
+    animationLayer_ = levelCreator_->CreateAnimations(tileMap_->GetLayer("Dynamic Layer 1"));
 }
 
 void Level::CreateEntities()
@@ -124,9 +131,7 @@ void Level::CreateEntities()
     for (const auto &data : tileMap_->GetObjectGroup("Collision Layer 1")) {
         entityManager_->CreateEntity(data.typeStr_, data.position_, data.size_, data.properties_, mapData);
     }
-    for (const auto &data : tileMap_->GetLayer("Dynamic Layer 1")) {
-        entityManager_->CreateTileEntity(data.position_, data.graphic_, mapData);
-    }
+
     entityManager_->HandleCreatedEntities();
 }
 
