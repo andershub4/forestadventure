@@ -144,9 +144,9 @@ void EntityService::DeleteEntity(EntityId id)
     entityCreator_.DeleteEntity(id);
 }
 
-EntityType EntityService::GetType(EntityId id) const
+BasicEntity& EntityService::GetEntity(EntityId id) const
 {
-    return entityDb_.GetEntity(id).Type();
+    return entityDb_.GetEntity(id);
 }
 
 Shared::TextureRect EntityService::MirrorX(const Shared::TextureRect& textureRect) const

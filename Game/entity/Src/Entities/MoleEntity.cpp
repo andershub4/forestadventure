@@ -181,7 +181,7 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        if (service_->GetType(collisionEvent->id_) == EntityType::Arrow) {
+        if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Arrow) {
             ChangeStateTo(StateType::Collision, event);
         }
     });
@@ -202,7 +202,7 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        if (service_->GetType(collisionEvent->id_) == EntityType::Arrow) {
+        if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Arrow) {
             ChangeStateTo(StateType::Collision, event);
         }
     });

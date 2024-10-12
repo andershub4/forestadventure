@@ -11,7 +11,6 @@
 #include <string>
 #include <vector>
 
-#include "Enum/EntityType.h"
 #include "Id.h"
 #include "Resource/TextureManager.h"
 
@@ -43,7 +42,7 @@ namespace Entity {
 struct PropertyData;
 class EntityDb;
 class EntityCreator;
-enum class EntityType;
+class BasicEntity;
 
 class EntityService
 {
@@ -65,7 +64,7 @@ public:
     Shared::CameraView &GetCameraView() const;
     void CreateEntity(const PropertyData &data, const Shared::MapData &mapData);
     void DeleteEntity(EntityId id);
-    EntityType GetType(EntityId id) const;
+    BasicEntity& GetEntity(EntityId id) const;
 
 private:
     Shared::MessageBus &messageBus_;

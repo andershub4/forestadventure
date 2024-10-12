@@ -148,7 +148,7 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Idle, event); });
     moveState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        if (service_->GetType(collisionEvent->id_) == EntityType::Mole) {
+        if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Mole) {
             HandleEvent(std::make_shared<DeadEvent>());
         }
     });

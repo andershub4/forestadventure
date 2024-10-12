@@ -61,7 +61,7 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     idleState->RegisterColliderPart(colliderPart);
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        if (service_->GetType(collisionEvent->id_) == EntityType::Player) {
+        if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Player) {
             HandleEvent(std::make_shared<DeadEvent>());
         }
     });

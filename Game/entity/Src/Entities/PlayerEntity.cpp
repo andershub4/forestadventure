@@ -363,7 +363,7 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
         if (collisionEvent->isSolid_) {
             body_.position_ = body_.prevPosition_;
         }
-        else if (service_->GetType(collisionEvent->id_) == EntityType::Coin) {
+        else if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Coin) {
             coins_++;
         }
     });
