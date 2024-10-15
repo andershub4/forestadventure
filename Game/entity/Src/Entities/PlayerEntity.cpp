@@ -284,7 +284,7 @@ void PlayerEntity::OnShoot()
     Shared::MapData mapData;
     mapData.size_.x = static_cast<unsigned int>(mapRect_.width);
     mapData.size_.y = static_cast<unsigned int>(mapRect_.height);
-    service_->CreateEntity(data, mapData);
+    service_->AddToCreationQueue(data, mapData);
 }
 
 void PlayerEntity::OnBeginDie()

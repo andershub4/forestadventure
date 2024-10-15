@@ -40,7 +40,7 @@ class BasicEntity;
 class Factory;
 struct PropertyData;
 class EntityDb;
-class EntityCreator;
+class EntityLifeQueue;
 class CollisionHandler;
 
 class EntityManager
@@ -54,11 +54,11 @@ public:
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
     void DetectCollisions();
     void HandleCollisions();
-    void CreateEntity(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                      std::unordered_map<std::string, std::string> properties, const Shared::MapData &mapData);
-    void DeleteEntity(EntityId id);
-    void HandleCreatedEntities();
-    void HandleDeletedEntities();
+    void AddToCreationQueue(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
+                            std::unordered_map<std::string, std::string> properties, const Shared::MapData &mapData);
+    void AddToDeletionQueue(EntityId id);
+    void HandleCreationQueue();
+    void HandleDeletionQueue();
 
 private:
     struct DrawableInfo
@@ -68,10 +68,14 @@ private:
     };
 
     std::unordered_set<EntityId> allEntities_;
+    Shared::MessageBus &messageBus_;
+    const Shared::TextureManager &textureManager_;
+    const Shared::SheetManager &sheetManager_;
+    const Shared::CameraViews &cameraViews_;
     std::unique_ptr<Factory> factory_;
     std::unique_ptr<EntityDb> entityDb_;
     std::unique_ptr<CollisionHandler> collisionHandler_;
-    std::unique_ptr<EntityCreator> entityCreator_;
+    std::unique_ptr<EntityLifeQueue> entityLifeQueue_;
     std::map<std::string, DrawableInfo> drawables_;
 
 private:

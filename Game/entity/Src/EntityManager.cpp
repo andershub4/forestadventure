@@ -11,8 +11,8 @@
 
 #include "CollisionHandler.h"
 #include "Entities/BasicEntity.h"
-#include "EntityCreator.h"
 #include "EntityDb.h"
+#include "EntityLifeQueue.h"
 #include "EntityService.h"
 #include "Factory.h"
 #include "Logging.h"
@@ -24,23 +24,15 @@ namespace Entity {
 
 EntityManager::EntityManager(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
                              const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews)
-    : factory_(std::make_unique<Factory>())
+    : messageBus_(messageBus)
+    , textureManager_(textureManager)
+    , sheetManager_(sheetManager)
+    , cameraViews_(cameraViews)
+    , factory_(std::make_unique<Factory>())
     , entityDb_(std::make_unique<EntityDb>())
     , collisionHandler_(std::make_unique<CollisionHandler>(*entityDb_))
-    , entityCreator_(
-          std::make_unique<EntityCreator>(messageBus, textureManager, sheetManager, cameraViews, *factory_, *entityDb_))
-{
-    entityCreator_->RegisterOnCreateFn([this](const BasicEntity &entity) {
-        allEntities_.insert(entity.GetId());
-        AddDrawable(entity.GetId(), entity.GetLayer());
-        collisionHandler_->AddCollider(entity.GetId(), entity.IsStatic());
-    });
-    entityCreator_->RegisterOnDeleteFn([this](const BasicEntity &entity) {
-        allEntities_.erase(entity.GetId());
-        RemoveDrawable(entity.GetId());
-        collisionHandler_->RemoveCollider(entity.GetId(), entity.IsStatic());
-    });
-}
+    , entityLifeQueue_(std::make_unique<EntityLifeQueue>())
+{}
 
 EntityManager::~EntityManager() = default;
 
@@ -68,26 +60,45 @@ void EntityManager::Update(float deltaTime)
     }
 }
 
-void EntityManager::CreateEntity(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                                 std::unordered_map<std::string, std::string> properties,
-                                 const Shared::MapData &mapData)
+void EntityManager::AddToCreationQueue(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
+                                       std::unordered_map<std::string, std::string> properties,
+                                       const Shared::MapData &mapData)
 {
-    entityCreator_->CreateEntity(typeStr, pos, size, properties, mapData);
+    entityLifeQueue_->AddToCreationQueue(typeStr, pos, size, properties, mapData);
 }
 
-void EntityManager::DeleteEntity(EntityId id)
+void EntityManager::AddToDeletionQueue(EntityId id)
 {
-    entityCreator_->DeleteEntity(id);
+    entityLifeQueue_->AddToDeletionQueue(id);
 }
 
-void EntityManager::HandleCreatedEntities()
+void EntityManager::HandleCreationQueue()
 {
-    entityCreator_->HandleCreatedEntities();
+    auto creationQueue = entityLifeQueue_->MoveCreationQueue();
+    for (const auto &data : creationQueue) {
+        auto service = std::make_unique<EntityService>(messageBus_, textureManager_, sheetManager_, cameraViews_,
+                                                       *entityDb_, *entityLifeQueue_);
+        auto entity = factory_->Create(data.propertyData_, data.mapData_, std::move(service));
+        allEntities_.insert(entity->GetId());
+        entity->Init();
+        allEntities_.insert(entity->GetId());
+        AddDrawable(entity->GetId(), entity->GetLayer());
+        collisionHandler_->AddCollider(entity->GetId(), entity->IsStatic());
+        entityDb_->AddEntity(std::move(entity));
+    }
 }
 
-void EntityManager::HandleDeletedEntities()
+void EntityManager::HandleDeletionQueue()
 {
-    entityCreator_->HandleDeletedEntities();
+    auto deletionQueue = entityLifeQueue_->MoveDeletionQueue();
+    for (const auto &id : deletionQueue) {
+        auto &entity = entityDb_->GetEntity(id);
+        entity.Destroy();
+        allEntities_.erase(entity.GetId());
+        RemoveDrawable(entity.GetId());
+        collisionHandler_->RemoveCollider(entity.GetId(), entity.IsStatic());
+        entityDb_->DeleteEntity(id);
+    }
 }
 
 void EntityManager::AddDrawable(EntityId id, LayerType layer)

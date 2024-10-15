@@ -65,7 +65,7 @@ Graphic::View Level::GetView() const
 
 void Level::Update(float deltaTime)
 {
-    entityManager_->HandleCreatedEntities();
+    entityManager_->HandleCreationQueue();
     cameraViews_.Update(deltaTime);
     for (auto &animation : animationLayer_) {
         animation.Update(deltaTime);
@@ -73,7 +73,7 @@ void Level::Update(float deltaTime)
     entityManager_->Update(deltaTime);
     entityManager_->DetectCollisions();
     entityManager_->HandleCollisions();
-    entityManager_->HandleDeletedEntities();
+    entityManager_->HandleDeletionQueue();
 }
 
 void Level::Draw(Graphic::RenderTargetIf &renderTarget)
@@ -126,13 +126,13 @@ void Level::CreateEntities()
     LOG_INFO("Create entities");
     Shared::MapData mapData{tileMap_->GetSize()};
     for (const auto &data : tileMap_->GetObjectGroup("Object Layer 1")) {
-        entityManager_->CreateEntity(data.typeStr_, data.position_, data.size_, data.properties_, mapData);
+        entityManager_->AddToCreationQueue(data.typeStr_, data.position_, data.size_, data.properties_, mapData);
     }
     for (const auto &data : tileMap_->GetObjectGroup("Collision Layer 1")) {
-        entityManager_->CreateEntity(data.typeStr_, data.position_, data.size_, data.properties_, mapData);
+        entityManager_->AddToCreationQueue(data.typeStr_, data.position_, data.size_, data.properties_, mapData);
     }
 
-    entityManager_->HandleCreatedEntities();
+    entityManager_->HandleCreationQueue();
 }
 
 }  // namespace World
