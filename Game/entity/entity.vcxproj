@@ -166,6 +166,7 @@
     <ClInclude Include="Src\Events\DeadEvent.h" />
     <ClInclude Include="Src\Events\DestroyEvent.h" />
     <ClInclude Include="Src\Events\InitEvent.h" />
+    <ClInclude Include="Src\Events\OutsideTileMapEvent.h" />
     <ClInclude Include="Src\Events\StartMoveEvent.h" />
     <ClInclude Include="Src\Events\StopMoveEvent.h" />
     <ClInclude Include="Src\EventType.h" />

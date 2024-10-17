@@ -21,7 +21,6 @@
 #include "Events/DeadEvent.h"
 #include "Events/StartMoveEvent.h"
 #include "Events/StopMoveEvent.h"
-#include "MapData.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
 #include "Message/BroadcastMessage/IsKeyPressedMessage.h"
 #include "Message/BroadcastMessage/KeyPressedMessage.h"
@@ -210,9 +209,8 @@ FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 
 const std::string PlayerEntity::str = "Player";
 
-PlayerEntity::PlayerEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                           std::unique_ptr<EntityService> service)
-    : BasicEntity(id, data, mapData, std::move(service))
+PlayerEntity::PlayerEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
+    : BasicEntity(id, data, std::move(service))
 {}
 
 PlayerEntity::~PlayerEntity() = default;
@@ -281,10 +279,7 @@ void PlayerEntity::OnShoot()
     propertyStore_.Get("FaceDirection", dir);
     auto position = body_.position_ + arrowOffset.at(dir);
     auto data = ArrowEntity::CreatePropertyData(position, dir);
-    Shared::MapData mapData;
-    mapData.size_.x = static_cast<unsigned int>(mapRect_.width);
-    mapData.size_.y = static_cast<unsigned int>(mapRect_.height);
-    service_->AddToCreationQueue(data, mapData);
+    service_->AddToCreationQueue(data);
 }
 
 void PlayerEntity::OnBeginDie()

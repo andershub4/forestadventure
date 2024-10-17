@@ -79,9 +79,8 @@ PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, FaceD
     return data;
 }
 
-ArrowEntity::ArrowEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                         std::unique_ptr<EntityService> service)
-    : BasicEntity(id, data, mapData, std::move(service))
+ArrowEntity::ArrowEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
+    : BasicEntity(id, data, std::move(service))
 {}
 
 ArrowEntity::~ArrowEntity() = default;
@@ -118,11 +117,6 @@ void ArrowEntity::OnBeginMove(MoveDirection moveDirection)
 void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 {
     body_.position_ += delta;
-    bool outsideMap = !mapRect_.contains(body_.position_);
-
-    if (outsideMap) {
-        HandleEvent(std::make_shared<DeadEvent>());
-    }
 }
 
 void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
@@ -151,6 +145,9 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
         if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Mole) {
             HandleEvent(std::make_shared<DeadEvent>());
         }
+    });
+    moveState->RegisterEventCB(EventType::OutsideTileMap, [this](std::shared_ptr<BasicEvent> event) {
+        HandleEvent(std::make_shared<DeadEvent>());
     });
 }
 

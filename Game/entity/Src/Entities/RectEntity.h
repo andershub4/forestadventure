@@ -17,8 +17,7 @@ class RectEntity : public BasicEntity
 public:
     static const std::string str;
 
-    RectEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-               std::unique_ptr<EntityService> service);
+    RectEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service);
     virtual ~RectEntity();
 
     virtual EntityType Type() const override { return EntityType::Rect; }

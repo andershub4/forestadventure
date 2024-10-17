@@ -29,7 +29,6 @@ namespace Shared {
 
 class Message;
 enum class MessageType;
-struct MapData;
 
 }  // namespace Shared
 
@@ -38,8 +37,7 @@ namespace Entity {
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                std::unique_ptr<EntityService> service);
+    BasicEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service);
     virtual ~BasicEntity();
 
     virtual EntityType Type() const = 0;
@@ -52,14 +50,15 @@ public:
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf& renderTarget) const;
     bool Intersect(const BasicEntity& otherEntity) const;
+    bool IsOutsideTileMap(const sf::FloatRect& rect) const;
     void HandleCollision(const EntityId id, bool isSolid);
+    void HandleOutsideTileMap();
     EntityId GetId() const { return id_; }
 
 protected:
     PropertyStore propertyStore_;
     std::unique_ptr<EntityService> service_;
     Body body_{};
-    sf::FloatRect mapRect_;
 
 protected:
     virtual std::vector<Shared::MessageType> Messages() const { return {}; }

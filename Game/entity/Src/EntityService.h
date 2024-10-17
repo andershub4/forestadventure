@@ -28,7 +28,6 @@ struct ColliderFrame;
 class MessageBus;
 class Message;
 enum class MessageType;
-struct MapData;
 struct TextureRect;
 template <class T>
 class SequenceIf;
@@ -62,7 +61,7 @@ public:
 
     void RemoveSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes);
     Shared::CameraView &GetCameraView() const;
-    void AddToCreationQueue(const PropertyData &data, const Shared::MapData &mapData);
+    void AddToCreationQueue(const PropertyData &data);
     void AddToDeletionQueue(EntityId id);
     BasicEntity &GetEntity(EntityId id) const;
 

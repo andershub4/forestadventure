@@ -13,7 +13,6 @@
 #include "Folder.h"
 #include "LevelCreator.h"
 #include "Logging.h"
-#include "MapData.h"
 #include "RenderTargetIf.h"
 #include "Resource/ResourceId.h"
 #include "Resource/SpriteSheet.h"
@@ -72,7 +71,9 @@ void Level::Update(float deltaTime)
     }
     entityManager_->Update(deltaTime);
     entityManager_->DetectCollisions();
+    entityManager_->DetectOutsideTileMap(tileMap_->GetSize());
     entityManager_->HandleCollisions();
+    entityManager_->HandleOutsideTileMap();
     entityManager_->HandleDeletionQueue();
 }
 
@@ -124,12 +125,11 @@ void Level::CreateMap()
 void Level::CreateEntities()
 {
     LOG_INFO("Create entities");
-    Shared::MapData mapData{tileMap_->GetSize()};
     for (const auto &data : tileMap_->GetObjectGroup("Object Layer 1")) {
-        entityManager_->AddToCreationQueue(data.typeStr_, data.position_, data.size_, data.properties_, mapData);
+        entityManager_->AddToCreationQueue(data.typeStr_, data.position_, data.size_, data.properties_);
     }
     for (const auto &data : tileMap_->GetObjectGroup("Collision Layer 1")) {
-        entityManager_->AddToCreationQueue(data.typeStr_, data.position_, data.size_, data.properties_, mapData);
+        entityManager_->AddToCreationQueue(data.typeStr_, data.position_, data.size_, data.properties_);
     }
 
     entityManager_->HandleCreationQueue();

@@ -81,9 +81,6 @@
     <ClInclude Include="Include\Resource\TileGraphic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\MapData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\CameraView.h">
       <Filter>Header Files</Filter>
     </ClInclude>

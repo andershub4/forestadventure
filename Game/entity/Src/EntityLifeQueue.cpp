@@ -10,21 +10,20 @@ namespace FA {
 
 namespace Entity {
 
-void EntityLifeQueue::AddToCreationQueue(const PropertyData &data, const Shared::MapData &mapData)
+void EntityLifeQueue::AddToCreationQueue(const PropertyData &data)
 {
-    creationQueue_.push_back({data, mapData});
+    creationQueue_.push_back(data);
 }
 
 void EntityLifeQueue::AddToCreationQueue(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                                         std::unordered_map<std::string, std::string> properties,
-                                         const Shared::MapData &mapData)
+                                         std::unordered_map<std::string, std::string> properties)
 {
     PropertyData data;
     data.typeStr_ = typeStr;
     data.position_ = pos;
     data.size_ = size;
     data.properties_ = properties;
-    AddToCreationQueue(data, mapData);
+    AddToCreationQueue(data);
 }
 
 void EntityLifeQueue::AddToDeletionQueue(EntityId id)
@@ -32,7 +31,7 @@ void EntityLifeQueue::AddToDeletionQueue(EntityId id)
     deletionQueue_.insert(id);
 }
 
-std::vector<EntityLifeQueue::CreatedItem> &&EntityLifeQueue::MoveCreationQueue()
+std::vector<PropertyData> &&EntityLifeQueue::MoveCreationQueue()
 {
     return std::move(creationQueue_);
 }

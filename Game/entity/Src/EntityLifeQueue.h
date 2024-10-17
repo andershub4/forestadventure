@@ -6,13 +6,11 @@
 
 #pragma once
 
-//#include <functional>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
 #include "Id.h"
-#include "MapData.h"
 #include "PropertyData.h"
 #include "SfmlFwd.h"
 
@@ -23,22 +21,15 @@ namespace Entity {
 class EntityLifeQueue
 {
 public:
-    struct CreatedItem
-    {
-        PropertyData propertyData_;
-        Shared::MapData mapData_;
-    };
-
-public:
-    void AddToCreationQueue(const PropertyData &data, const Shared::MapData &mapData);
+    void AddToCreationQueue(const PropertyData &data);
     void AddToCreationQueue(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                            std::unordered_map<std::string, std::string> properties, const Shared::MapData &mapData);
+                            std::unordered_map<std::string, std::string> properties);
     void AddToDeletionQueue(EntityId id);
-    std::vector<CreatedItem> &&MoveCreationQueue();
+    std::vector<PropertyData> &&MoveCreationQueue();
     std::unordered_set<EntityId> &&MoveDeletionQueue();
 
 private:
-    std::vector<CreatedItem> creationQueue_;
+    std::vector<PropertyData> creationQueue_;
     std::unordered_set<EntityId> deletionQueue_;
 };
 

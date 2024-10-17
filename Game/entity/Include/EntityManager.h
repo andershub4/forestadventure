@@ -26,7 +26,6 @@ class RenderTargetIf;
 
 namespace Shared {
 
-struct MapData;
 struct TileGraphic;
 class MessageBus;
 class SheetManager;
@@ -53,9 +52,11 @@ public:
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
     void DetectCollisions();
+    void DetectOutsideTileMap(const sf::Vector2u &mapSize);
     void HandleCollisions();
+    void HandleOutsideTileMap();
     void AddToCreationQueue(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                            std::unordered_map<std::string, std::string> properties, const Shared::MapData &mapData);
+                            std::unordered_map<std::string, std::string> properties);
     void AddToDeletionQueue(EntityId id);
     void HandleCreationQueue();
     void HandleDeletionQueue();

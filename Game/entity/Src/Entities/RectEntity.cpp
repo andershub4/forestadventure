@@ -17,9 +17,8 @@ namespace Entity {
 
 const std::string RectEntity::str = "Rect";
 
-RectEntity::RectEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                       std::unique_ptr<EntityService> service)
-    : BasicEntity(id, data, mapData, std::move(service))
+RectEntity::RectEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
+    : BasicEntity(id, data, std::move(service))
 {}
 
 RectEntity::~RectEntity() = default;

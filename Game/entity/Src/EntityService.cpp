@@ -134,9 +134,9 @@ Shared::CameraView& EntityService::GetCameraView() const
     return cameraViews_.GetCameraView();
 }
 
-void EntityService::AddToCreationQueue(const PropertyData& data, const Shared::MapData& mapData)
+void EntityService::AddToCreationQueue(const PropertyData& data)
 {
-    entityLifeQueue_.AddToCreationQueue(data, mapData);
+    entityLifeQueue_.AddToCreationQueue(data);
 }
 
 void EntityService::AddToDeletionQueue(EntityId id)

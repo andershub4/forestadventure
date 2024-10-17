@@ -17,8 +17,7 @@ class CoinEntity : public BasicEntity
 public:
     static const std::string str;
 
-    CoinEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-               std::unique_ptr<EntityService> service);
+    CoinEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service);
     virtual ~CoinEntity();
 
     virtual EntityType Type() const override { return EntityType::Coin; }

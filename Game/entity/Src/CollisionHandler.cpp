@@ -6,6 +6,8 @@
 
 #include "CollisionHandler.h"
 
+#include <SFML/System/Vector2.hpp>
+
 #include "Entities/BasicEntity.h"
 #include "EntityDb.h"
 
@@ -42,6 +44,19 @@ void CollisionHandler::DetectCollisions()
     for (const auto id : entities_) {
         DetectEntityCollisions(id);
         DetectStaticCollisions(id);
+    }
+}
+
+void CollisionHandler::DetectOutsideTileMap(const sf::Vector2u &mapSize)
+{
+    auto rect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(mapSize));
+
+    for (const auto id : entities_) {
+        const auto &entity = entityDb_.GetEntity(id);
+        bool isOutside = entity.IsOutsideTileMap(rect);
+        if (isOutside) {
+            entitiesOutsideTileMap_.insert(id);
+        }
     }
 }
 
@@ -84,6 +99,15 @@ void CollisionHandler::HandleCollisions()
         second.HandleCollision(pair.first, entityDb_.GetEntity(pair.first).IsSolid());
     }
     collisionPairs_.clear();
+}
+
+void CollisionHandler::HandleOutsideTileMap()
+{
+    for (const auto id : entitiesOutsideTileMap_) {
+        auto &entity = entityDb_.GetEntity(id);
+        entity.HandleOutsideTileMap();
+    }
+    entitiesOutsideTileMap_.clear();
 }
 
 }  // namespace Entity

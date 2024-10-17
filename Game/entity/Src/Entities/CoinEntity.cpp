@@ -41,9 +41,8 @@ const std::vector<Shared::ColliderData> idleColliders{{coin1, rect}, {coin2, rec
 
 const std::string CoinEntity::str = "Coin";
 
-CoinEntity::CoinEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                       std::unique_ptr<EntityService> service)
-    : BasicEntity(id, data, mapData, std::move(service))
+CoinEntity::CoinEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
+    : BasicEntity(id, data, std::move(service))
 {}
 
 CoinEntity::~CoinEntity() = default;

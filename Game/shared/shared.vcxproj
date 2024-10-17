@@ -158,7 +158,6 @@
     <ClInclude Include="Include\SfmlPrint.h" />
     <ClInclude Include="Include\Animation\ImageAnimationIf.h" />
     <ClInclude Include="Include\Logging.h" />
-    <ClInclude Include="Include\MapData.h" />
     <ClInclude Include="Include\Message\BroadcastMessage\CloseWindowMessage.h" />
     <ClInclude Include="Include\Message\BroadcastMessage\EntityCreatedMessage.h" />
     <ClInclude Include="Include\Message\BroadcastMessage\EntityDestroyedMessage.h" />

@@ -11,7 +11,7 @@
 #include "Events/CollisionEvent.h"
 #include "Events/DestroyEvent.h"
 #include "Events/InitEvent.h"
-#include "MapData.h"
+#include "Events/OutsideTileMapEvent.h"
 #include "Message/BroadcastMessage/EntityCreatedMessage.h"
 #include "Message/BroadcastMessage/EntityDestroyedMessage.h"
 #include "State.h"
@@ -20,13 +20,11 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, const PropertyData& data, const Shared::MapData& mapData,
-                         std::unique_ptr<EntityService> service)
+BasicEntity::BasicEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
     : id_(id)
     , data_(data)
     , service_(std::move(service))
 {
-    mapRect_ = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(mapData.size_));
     RegisterUninitializedState();
 }
 
@@ -82,9 +80,19 @@ bool BasicEntity::Intersect(const BasicEntity& otherEntity) const
     return stateMachine_.GetShape().Intersect(otherEntity.stateMachine_.GetShape());
 }
 
+bool BasicEntity::IsOutsideTileMap(const sf::FloatRect& rect) const
+{
+    return !rect.contains(body_.position_);
+}
+
 void BasicEntity::HandleCollision(const EntityId id, bool isSolid)
 {
     HandleEvent(std::make_shared<CollisionEvent>(id, isSolid));
+}
+
+void BasicEntity::HandleOutsideTileMap()
+{
+    HandleEvent(std::make_shared<OutsideTileMapEvent>());
 }
 
 void BasicEntity::HandleEvent(std::shared_ptr<BasicEvent> event)

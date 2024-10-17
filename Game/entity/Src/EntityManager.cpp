@@ -48,9 +48,20 @@ void EntityManager::DetectCollisions()
 {
     collisionHandler_->DetectCollisions();
 }
+
+void EntityManager::DetectOutsideTileMap(const sf::Vector2u &mapSize)
+{
+    collisionHandler_->DetectOutsideTileMap(mapSize);
+}
+
 void EntityManager::HandleCollisions()
 {
     collisionHandler_->HandleCollisions();
+}
+
+void EntityManager::HandleOutsideTileMap()
+{
+    collisionHandler_->HandleOutsideTileMap();
 }
 
 void EntityManager::Update(float deltaTime)
@@ -61,10 +72,9 @@ void EntityManager::Update(float deltaTime)
 }
 
 void EntityManager::AddToCreationQueue(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                                       std::unordered_map<std::string, std::string> properties,
-                                       const Shared::MapData &mapData)
+                                       std::unordered_map<std::string, std::string> properties)
 {
-    entityLifeQueue_->AddToCreationQueue(typeStr, pos, size, properties, mapData);
+    entityLifeQueue_->AddToCreationQueue(typeStr, pos, size, properties);
 }
 
 void EntityManager::AddToDeletionQueue(EntityId id)
@@ -78,7 +88,7 @@ void EntityManager::HandleCreationQueue()
     for (const auto &data : creationQueue) {
         auto service = std::make_unique<EntityService>(messageBus_, textureManager_, sheetManager_, cameraViews_,
                                                        *entityDb_, *entityLifeQueue_);
-        auto entity = factory_->Create(data.propertyData_, data.mapData_, std::move(service));
+        auto entity = factory_->Create(data, std::move(service));
         allEntities_.insert(entity->GetId());
         entity->Init();
         allEntities_.insert(entity->GetId());

@@ -10,6 +10,7 @@
 #include <unordered_set>
 
 #include "Id.h"
+#include "SfmlFwd.h"
 
 namespace FA {
 
@@ -25,7 +26,9 @@ public:
     void AddCollider(EntityId id, bool isStatic);
     void RemoveCollider(EntityId id, bool isStatic);
     void DetectCollisions();
+    void DetectOutsideTileMap(const sf::Vector2u &mapSize);
     void HandleCollisions();
+    void HandleOutsideTileMap();
 
 private:
     template <typename T>
@@ -44,6 +47,7 @@ private:
 
     std::unordered_set<EntityId> entities_;
     std::unordered_set<EntityId> staticEntities_;
+    std::unordered_set<EntityId> entitiesOutsideTileMap_;
     std::set<std::pair<EntityId, EntityId>, customPairLess<EntityId>> collisionPairs_;
 
 private:
