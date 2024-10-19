@@ -33,12 +33,12 @@ template <class T>
 class SequenceIf;
 class ImageAnimation;
 class ColliderAnimation;
+struct EntityData;
 
 }  // namespace Shared
 
 namespace Entity {
 
-struct PropertyData;
 class EntityDb;
 class EntityLifePool;
 class BasicEntity;
@@ -61,7 +61,7 @@ public:
 
     void RemoveSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes);
     Shared::CameraView &GetCameraView() const;
-    void AddToCreationPool(const PropertyData &data);
+    void AddToCreationPool(const Shared::EntityData &data);
     void AddToDeletionPool(EntityId id);
     BasicEntity &GetEntity(EntityId id) const;
 

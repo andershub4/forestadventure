@@ -12,6 +12,7 @@
 #include "Entities/PlayerEntity.h"
 #include "Entities/RectEntity.h"
 #include "Logging.h"
+#include "Resource/EntityData.h"
 
 namespace FA {
 
@@ -19,26 +20,28 @@ namespace Entity {
 
 Factory::Factory()
 {
-    RegisterEntity(MoleEntity::str, [](EntityId id, const PropertyData& data, std::unique_ptr<EntityService> s) {
+    RegisterEntity(MoleEntity::str, [](EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> s) {
         return std::make_unique<MoleEntity>(id, data, std::move(s));
     });
-    RegisterEntity(PlayerEntity::str, [](EntityId id, const PropertyData& data, std::unique_ptr<EntityService> s) {
-        return std::make_unique<PlayerEntity>(id, data, std::move(s));
-    });
-    RegisterEntity(ArrowEntity::str, [](EntityId id, const PropertyData& data, std::unique_ptr<EntityService> s) {
+    RegisterEntity(PlayerEntity::str,
+                   [](EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> s) {
+                       return std::make_unique<PlayerEntity>(id, data, std::move(s));
+                   });
+    RegisterEntity(ArrowEntity::str, [](EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> s) {
         return std::make_unique<ArrowEntity>(id, data, std::move(s));
     });
-    RegisterEntity(CoinEntity::str, [](EntityId id, const PropertyData& data, std::unique_ptr<EntityService> s) {
+    RegisterEntity(CoinEntity::str, [](EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> s) {
         return std::make_unique<CoinEntity>(id, data, std::move(s));
     });
-    RegisterEntity(RectEntity::str, [](EntityId id, const PropertyData& data, std::unique_ptr<EntityService> s) {
+    RegisterEntity(RectEntity::str, [](EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> s) {
         return std::make_unique<RectEntity>(id, data, std::move(s));
     });
 }
 
 Factory::~Factory() = default;
 
-std::unique_ptr<BasicEntity> Factory::Create(const PropertyData& data, std::unique_ptr<EntityService> service) const
+std::unique_ptr<BasicEntity> Factory::Create(const Shared::EntityData& data,
+                                             std::unique_ptr<EntityService> service) const
 {
     auto it = map_.find(data.typeStr_);
 

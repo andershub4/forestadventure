@@ -27,7 +27,7 @@ class MoleEntity : public BasicEntity
 public:
     static const std::string str;
 
-    MoleEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service);
+    MoleEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service);
     virtual ~MoleEntity();
 
     virtual EntityType Type() const override { return EntityType::Mole; }
@@ -39,7 +39,7 @@ private:
     virtual void RegisterProperties() override;
     virtual void ReadProperties(const std::unordered_map<std::string, std::string>& properties) override;
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
-                                const PropertyData& data) override;
+                                const Shared::EntityData& data) override;
 
     void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);

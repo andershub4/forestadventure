@@ -27,7 +27,7 @@ class PlayerEntity : public BasicEntity
 public:
     static const std::string str;
 
-    PlayerEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service);
+    PlayerEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service);
     virtual ~PlayerEntity();
 
     virtual EntityType Type() const override { return EntityType::Player; }
@@ -42,7 +42,7 @@ private:
     virtual void RegisterProperties() override;
     virtual void ReadProperties(const std::unordered_map<std::string, std::string>& properties) override;
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
-                                const PropertyData& data) override;
+                                const Shared::EntityData& data) override;
     virtual void OnInit() override;
     virtual void OnMessage(std::shared_ptr<Shared::Message> msg) override;
     virtual void OnBeginDie() override;

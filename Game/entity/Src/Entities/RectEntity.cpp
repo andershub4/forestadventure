@@ -17,14 +17,14 @@ namespace Entity {
 
 const std::string RectEntity::str = "Rect";
 
-RectEntity::RectEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
+RectEntity::RectEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service)
     : BasicEntity(id, data, std::move(service))
 {}
 
 RectEntity::~RectEntity() = default;
 
 void RectEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
-                                const PropertyData& data)
+                                const Shared::EntityData& data)
 {
     const sf::Vector2i rectSize = static_cast<sf::Vector2i>(data.size_);
     const Shared::ColliderData colliderData(rectSize);

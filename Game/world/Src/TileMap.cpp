@@ -38,7 +38,7 @@ void TileMap::Setup()
 {
     LOG_INFO("Setup tile map");
     SetupLayers();
-    SetupObjectGroups();
+    SetupEntityGroups();
 }
 
 void TileMap::LoadTileSets()
@@ -99,20 +99,20 @@ void TileMap::SetupLayers()
     }
 }
 
-void TileMap::SetupObjectGroups()
+void TileMap::SetupEntityGroups()
 {
     for (const auto& group : tileMapData_->objectGroups_) {
         auto groupName = group.name_;
-        std::vector<TileMap::ObjectData> objectDatas;
+        std::vector<Shared::EntityData> entityDatas;
         for (const auto& object : group.objects_) {
-            TileMap::ObjectData objectData;
-            objectData.position_ = sf::Vector2f(static_cast<float>(object.x_), static_cast<float>(object.y_));
-            objectData.size_ = sf::Vector2f(static_cast<float>(object.width_), static_cast<float>(object.height_));
-            objectData.typeStr_ = object.typeStr_;
-            objectData.properties_ = object.properties_;
-            objectDatas.push_back(objectData);
+            Shared::EntityData entityData;
+            entityData.position_ = sf::Vector2f(static_cast<float>(object.x_), static_cast<float>(object.y_));
+            entityData.size_ = sf::Vector2f(static_cast<float>(object.width_), static_cast<float>(object.height_));
+            entityData.typeStr_ = object.typeStr_;
+            entityData.properties_ = object.properties_;
+            entityDatas.push_back(entityData);
         }
-        objectGroups_[groupName] = objectDatas;
+        entityGroups_[groupName] = entityDatas;
     }
 }
 
@@ -121,9 +121,9 @@ const std::vector<TileMap::TileData> TileMap::GetLayer(const std::string& name) 
     return layers_.at(name);
 }
 
-const std::vector<TileMap::ObjectData> TileMap::GetObjectGroup(const std::string& name) const
+const std::vector<Shared::EntityData> TileMap::GetEntityGroup(const std::string& name) const
 {
-    return objectGroups_.at(name);
+    return entityGroups_.at(name);
 }
 
 sf::Vector2u TileMap::GetSize() const

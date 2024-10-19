@@ -134,7 +134,7 @@ Shared::CameraView& EntityService::GetCameraView() const
     return cameraViews_.GetCameraView();
 }
 
-void EntityService::AddToCreationPool(const PropertyData& data)
+void EntityService::AddToCreationPool(const Shared::EntityData& data)
 {
     entityLifePool_.AddToCreationPool(data);
 }

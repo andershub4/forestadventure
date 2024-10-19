@@ -105,9 +105,6 @@
     <ClInclude Include="Src\PropertyConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\PropertyData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\PropertyStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>

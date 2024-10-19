@@ -12,7 +12,6 @@
 #include "Animation/ImageAnimation.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
-#include "PropertyData.h"
 #include "Resource/ColliderData.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
@@ -42,14 +41,14 @@ const std::vector<Shared::ColliderData> idleColliders{{coin1, rect}, {coin2, rec
 
 const std::string CoinEntity::str = "Coin";
 
-CoinEntity::CoinEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
+CoinEntity::CoinEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service)
     : BasicEntity(id, data, std::move(service))
 {}
 
 CoinEntity::~CoinEntity() = default;
 
 void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
-                                const PropertyData& data)
+                                const Shared::EntityData& data)
 {
     auto imageAnimation = service_->CreateImageAnimation(idleImages);
     imageAnimation->Center();

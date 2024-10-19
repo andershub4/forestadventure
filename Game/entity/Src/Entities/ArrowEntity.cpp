@@ -19,8 +19,8 @@
 #include "Events/DeadEvent.h"
 #include "Events/StartMoveEvent.h"
 #include "PropertyConverter.h"
-#include "PropertyData.h"
 #include "Resource/ColliderData.h"
+#include "Resource/EntityData.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
@@ -65,9 +65,9 @@ MoveDirection FaceDirToMoveDir(FaceDirection faceDir)
 
 const std::string ArrowEntity::str = "Arrow";
 
-PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, FaceDirection dir)
+Shared::EntityData ArrowEntity::CreateEntityData(const sf::Vector2f& position, FaceDirection dir)
 {
-    PropertyData data;
+    Shared::EntityData data;
     std::unordered_map<std::string, std::string> properties;
     std::stringstream ss;
     ss << dir;
@@ -79,7 +79,7 @@ PropertyData ArrowEntity::CreatePropertyData(const sf::Vector2f& position, FaceD
     return data;
 }
 
-ArrowEntity::ArrowEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
+ArrowEntity::ArrowEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service)
     : BasicEntity(id, data, std::move(service))
 {}
 
@@ -120,7 +120,7 @@ void ArrowEntity::OnUpdateMove(const sf::Vector2f& delta)
 }
 
 void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
-                                 const PropertyData& data)
+                                 const Shared::EntityData& data)
 {
     idleState->RegisterEventCB(EventType::StartMove,
                                [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });

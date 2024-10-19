@@ -13,8 +13,8 @@
 #include "Enum/EntityType.h"
 #include "Id.h"
 #include "LayerType.h"
-#include "PropertyData.h"
 #include "PropertyStore.h"
+#include "Resource/EntityData.h"
 #include "StateMachine.h"
 
 namespace FA {
@@ -37,7 +37,7 @@ namespace Entity {
 class BasicEntity
 {
 public:
-    BasicEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service);
+    BasicEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service);
     virtual ~BasicEntity();
 
     virtual EntityType Type() const = 0;
@@ -70,12 +70,12 @@ protected:
 
 private:
     EntityId id_ = InvalidEntityId;
-    const PropertyData data_;
+    const Shared::EntityData data_;
     StateMachine stateMachine_;
 
 private:
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
-                                const PropertyData& data)
+                                const Shared::EntityData& data)
     {}
     virtual void RegisterProperties() {}
     virtual void ReadProperties(const std::unordered_map<std::string, std::string>& properties) {}

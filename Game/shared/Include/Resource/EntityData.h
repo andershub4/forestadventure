@@ -1,5 +1,5 @@
 /*
- *	Copyright (C) 2021 Anders Wennmo
+ *	Copyright (C) 2024 Anders Wennmo
  *	This file is part of forestadventure which is released under MIT license.
  *	See file LICENSE for full license details.
  */
@@ -13,9 +13,9 @@
 
 namespace FA {
 
-namespace Entity {
+namespace Shared {
 
-struct PropertyData
+struct EntityData
 {
     std::string typeStr_{};
     sf::Vector2f position_{};
@@ -23,6 +23,6 @@ struct PropertyData
     std::unordered_map<std::string, std::string> properties_;
 };
 
-}  // namespace Entity
+}  // namespace Shared
 
 }  // namespace FA

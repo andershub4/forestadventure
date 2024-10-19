@@ -26,7 +26,7 @@ class RenderTargetIf;
 
 namespace Shared {
 
-struct TileGraphic;
+struct EntityData;
 class MessageBus;
 class SheetManager;
 class CameraViews;
@@ -37,7 +37,6 @@ namespace Entity {
 
 class BasicEntity;
 class Factory;
-struct PropertyData;
 class EntityDb;
 class EntityLifePool;
 class CollisionHandler;
@@ -55,8 +54,7 @@ public:
     void DetectOutsideTileMap(const sf::Vector2u &mapSize);
     void HandleCollisions();
     void HandleOutsideTileMap();
-    void AddToCreationPool(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                           std::unordered_map<std::string, std::string> properties);
+    void AddToCreationPool(const Shared::EntityData &entityData);
     void AddToDeletionPool(EntityId id);
     void HandleCreationPool();
     void HandleDeletionPool();
@@ -82,7 +80,7 @@ private:
 private:
     void AddDrawable(EntityId id, LayerType layer);
     void RemoveDrawable(EntityId id);
-    void HandleCreation(const PropertyData &data);
+    void HandleCreation(const Shared::EntityData &data);
     void HandleDeletion(EntityId id);
 };
 

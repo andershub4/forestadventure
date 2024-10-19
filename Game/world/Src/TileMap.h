@@ -14,6 +14,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "Resource/EntityData.h"
 #include "Resource/TextureManager.h"
 #include "Resource/TileGraphic.h"
 
@@ -44,21 +45,13 @@ public:
         Shared::TileGraphic graphic_{};
     };
 
-    struct ObjectData
-    {
-        std::string typeStr_{};
-        sf::Vector2f position_{};
-        sf::Vector2f size_{};
-        std::unordered_map<std::string, std::string> properties_;
-    };
-
 public:
     TileMap(Shared::TextureManager &textureManager, Shared::SheetManager &sheetManager);
     ~TileMap();
     void Load(const std::string &fileName);
     void Setup();
     const std::vector<TileData> GetLayer(const std::string &name) const;
-    const std::vector<ObjectData> GetObjectGroup(const std::string &name) const;
+    const std::vector<Shared::EntityData> GetEntityGroup(const std::string &name) const;
     sf::Vector2u GetSize() const;
 
 private:
@@ -67,12 +60,12 @@ private:
     std::unique_ptr<Tile::TileMapData> tileMapData_ = nullptr;
     std::unique_ptr<Tile::TileMapParser> tileMapParser_ = nullptr;
     std::map<std::string, std::vector<TileData>> layers_;
-    std::map<std::string, std::vector<ObjectData>> objectGroups_;
+    std::map<std::string, std::vector<Shared::EntityData>> entityGroups_;
 
 private:
     void LoadTileSets();
     void SetupLayers();
-    void SetupObjectGroups();
+    void SetupEntityGroups();
     Tile::TileData LookupTileData(int id);
 };
 

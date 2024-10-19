@@ -176,7 +176,6 @@
     <ClInclude Include="Src\Properties\PropertyIf.h" />
     <ClInclude Include="Src\Properties\Property.h" />
     <ClInclude Include="Src\PropertyConverter.h" />
-    <ClInclude Include="Src\PropertyData.h" />
     <ClInclude Include="Src\PropertyStore.h" />
     <ClInclude Include="Src\Shape.h" />
     <ClInclude Include="Src\ShapeParts\AnimationPartBase.h" />

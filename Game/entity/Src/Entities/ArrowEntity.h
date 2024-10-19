@@ -19,9 +19,9 @@ class ArrowEntity : public BasicEntity
 {
 public:
     static const std::string str;
-    static PropertyData CreatePropertyData(const sf::Vector2f& position, FaceDirection dir);
+    static Shared::EntityData CreateEntityData(const sf::Vector2f& position, FaceDirection dir);
 
-    ArrowEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service);
+    ArrowEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service);
     virtual ~ArrowEntity();
 
     virtual EntityType Type() const override { return EntityType::Arrow; }
@@ -33,7 +33,7 @@ private:
     virtual void RegisterProperties() override;
     virtual void ReadProperties(const std::unordered_map<std::string, std::string>& properties) override;
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
-                                const PropertyData& data) override;
+                                const Shared::EntityData& data) override;
 
     virtual void OnBeginIdle() override;
     void OnBeginMove(MoveDirection moveDirection);

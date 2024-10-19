@@ -27,7 +27,7 @@
 #include "Message/BroadcastMessage/KeyReleasedMessage.h"
 #include "Message/MessageType.h"
 #include "PropertyConverter.h"
-#include "PropertyData.h"
+#include "Resource/EntityData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "ShapeParts/MultiAnimationPart.h"
@@ -209,7 +209,7 @@ FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 
 const std::string PlayerEntity::str = "Player";
 
-PlayerEntity::PlayerEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
+PlayerEntity::PlayerEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service)
     : BasicEntity(id, data, std::move(service))
 {}
 
@@ -278,7 +278,7 @@ void PlayerEntity::OnShoot()
     FaceDirection dir;
     propertyStore_.Get("FaceDirection", dir);
     auto position = body_.position_ + arrowOffset.at(dir);
-    auto data = ArrowEntity::CreatePropertyData(position, dir);
+    auto data = ArrowEntity::CreateEntityData(position, dir);
     service_->AddToCreationPool(data);
 }
 
@@ -305,7 +305,7 @@ void PlayerEntity::ReadProperties(const std::unordered_map<std::string, std::str
 }
 
 void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
-                                  const PropertyData& data)
+                                  const Shared::EntityData& data)
 {
     DefineIdleState(idleState);
     auto moveState = RegisterState(StateType::Move);

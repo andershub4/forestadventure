@@ -10,20 +10,9 @@ namespace FA {
 
 namespace Entity {
 
-void EntityLifePool::AddToCreationPool(const PropertyData &data)
+void EntityLifePool::AddToCreationPool(const Shared::EntityData &data)
 {
     creationPool_.push_back(data);
-}
-
-void EntityLifePool::AddToCreationPool(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                                       std::unordered_map<std::string, std::string> properties)
-{
-    PropertyData data;
-    data.typeStr_ = typeStr;
-    data.position_ = pos;
-    data.size_ = size;
-    data.properties_ = properties;
-    AddToCreationPool(data);
 }
 
 void EntityLifePool::AddToDeletionPool(EntityId id)
@@ -31,7 +20,7 @@ void EntityLifePool::AddToDeletionPool(EntityId id)
     deletionPool_.insert(id);
 }
 
-std::vector<PropertyData> &&EntityLifePool::MoveCreationPool()
+std::vector<Shared::EntityData> &&EntityLifePool::MoveCreationPool()
 {
     return std::move(creationPool_);
 }

@@ -17,7 +17,7 @@ class RectEntity : public BasicEntity
 public:
     static const std::string str;
 
-    RectEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service);
+    RectEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service);
     virtual ~RectEntity();
 
     virtual EntityType Type() const override { return EntityType::Rect; }
@@ -27,7 +27,7 @@ public:
 
 private:
     virtual void RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
-                                const PropertyData& data) override;
+                                const Shared::EntityData& data) override;
 };
 
 }  // namespace Entity

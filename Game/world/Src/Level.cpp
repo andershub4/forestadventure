@@ -125,11 +125,11 @@ void Level::CreateMap()
 void Level::CreateEntities()
 {
     LOG_INFO("Create entities");
-    for (const auto &data : tileMap_->GetObjectGroup("Object Layer 1")) {
-        entityManager_->AddToCreationPool(data.typeStr_, data.position_, data.size_, data.properties_);
+    for (const auto &data : tileMap_->GetEntityGroup("Object Layer 1")) {
+        entityManager_->AddToCreationPool(data);
     }
-    for (const auto &data : tileMap_->GetObjectGroup("Collision Layer 1")) {
-        entityManager_->AddToCreationPool(data.typeStr_, data.position_, data.size_, data.properties_);
+    for (const auto &data : tileMap_->GetEntityGroup("Collision Layer 1")) {
+        entityManager_->AddToCreationPool(data);
     }
 
     entityManager_->HandleCreationPool();

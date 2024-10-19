@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "Id.h"
-#include "PropertyData.h"
+#include "Resource/EntityData.h"
 #include "SfmlFwd.h"
 
 namespace FA {
@@ -21,15 +21,13 @@ namespace Entity {
 class EntityLifePool
 {
 public:
-    void AddToCreationPool(const PropertyData &data);
-    void AddToCreationPool(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                           std::unordered_map<std::string, std::string> properties);
+    void AddToCreationPool(const Shared::EntityData &data);
     void AddToDeletionPool(EntityId id);
-    std::vector<PropertyData> &&MoveCreationPool();
+    std::vector<Shared::EntityData> &&MoveCreationPool();
     std::unordered_set<EntityId> &&MoveDeletionPool();
 
 private:
-    std::vector<PropertyData> creationPool_;
+    std::vector<Shared::EntityData> creationPool_;
     std::unordered_set<EntityId> deletionPool_;
 };
 

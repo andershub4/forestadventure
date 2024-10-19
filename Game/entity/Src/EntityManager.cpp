@@ -16,7 +16,6 @@
 #include "EntityService.h"
 #include "Factory.h"
 #include "Logging.h"
-#include "PropertyData.h"
 
 namespace FA {
 
@@ -71,10 +70,9 @@ void EntityManager::Update(float deltaTime)
     }
 }
 
-void EntityManager::AddToCreationPool(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                                      std::unordered_map<std::string, std::string> properties)
+void EntityManager::AddToCreationPool(const Shared::EntityData &entityData)
 {
-    entityLifePool_->AddToCreationPool(typeStr, pos, size, properties);
+    entityLifePool_->AddToCreationPool(entityData);
 }
 
 void EntityManager::AddToDeletionPool(EntityId id)
@@ -98,7 +96,7 @@ void EntityManager::HandleDeletionPool()
     }
 }
 
-void EntityManager::HandleCreation(const PropertyData &data)
+void EntityManager::HandleCreation(const Shared::EntityData &data)
 {
     auto service = std::make_unique<EntityService>(messageBus_, textureManager_, sheetManager_, cameraViews_,
                                                    *entityDb_, *entityLifePool_);

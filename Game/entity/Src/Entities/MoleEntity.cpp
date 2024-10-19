@@ -16,7 +16,7 @@
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
 #include "PropertyConverter.h"
-#include "PropertyData.h"
+#include "Resource/EntityData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "ShapeParts/MultiAnimationPart.h"
@@ -127,7 +127,7 @@ FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 
 const std::string MoleEntity::str = "Mole";
 
-MoleEntity::MoleEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
+MoleEntity::MoleEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service)
     : BasicEntity(id, data, std::move(service))
 {}
 
@@ -160,7 +160,7 @@ void MoleEntity::ReadProperties(const std::unordered_map<std::string, std::strin
 }
 
 void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
-                                const PropertyData& data)
+                                const Shared::EntityData& data)
 {
     DefineIdleState(idleState);
     auto moveState = RegisterState(StateType::Move);

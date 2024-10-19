@@ -22,7 +22,7 @@ namespace FA {
 
 namespace Entity {
 
-BasicEntity::BasicEntity(EntityId id, const PropertyData& data, std::unique_ptr<EntityService> service)
+BasicEntity::BasicEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service)
     : id_(id)
     , data_(data)
     , service_(std::move(service))

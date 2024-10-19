@@ -148,6 +148,7 @@
     <ClInclude Include="Include\Animation\ColliderAnimationIf.h" />
     <ClInclude Include="Include\Resource\ColliderData.h" />
     <ClInclude Include="Include\Resource\ColliderFrame.h" />
+    <ClInclude Include="Include\Resource\EntityData.h" />
     <ClInclude Include="Include\Resource\ResourceId.h" />
     <ClInclude Include="Include\Resource\SheetItem.h" />
     <ClInclude Include="Include\Resource\SpriteSheetIf.h" />
