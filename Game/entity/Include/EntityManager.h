@@ -6,9 +6,7 @@
 
 #pragma once
 
-#include <map>
 #include <memory>
-#include <unordered_map>
 #include <unordered_set>
 
 #include "Id.h"
@@ -40,6 +38,7 @@ class Factory;
 class EntityDb;
 class EntityLifePool;
 class CollisionHandler;
+class DrawHandler;
 
 class EntityManager
 {
@@ -60,12 +59,6 @@ public:
     void HandleDeletionPool();
 
 private:
-    struct DrawableInfo
-    {
-        LayerType layer_{};
-        EntityId id_{};
-    };
-
     std::unordered_set<EntityId> allEntities_;
     Shared::MessageBus &messageBus_;
     const Shared::TextureManager &textureManager_;
@@ -74,8 +67,8 @@ private:
     std::unique_ptr<Factory> factory_;
     std::unique_ptr<EntityDb> entityDb_;
     std::unique_ptr<CollisionHandler> collisionHandler_;
+    std::unique_ptr<DrawHandler> drawHandler_;
     std::unique_ptr<EntityLifePool> entityLifePool_;
-    std::map<std::string, DrawableInfo> drawables_;
 
 private:
     void AddDrawable(EntityId id, LayerType layer);

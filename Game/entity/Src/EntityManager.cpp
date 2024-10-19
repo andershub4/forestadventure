@@ -4,12 +4,12 @@
  *	See file LICENSE for full license details.
  */
 
-#include <memory>
-#include <sstream>
-
 #include "EntityManager.h"
 
+#include <memory>
+
 #include "CollisionHandler.h"
+#include "DrawHandler.h"
 #include "Entities/BasicEntity.h"
 #include "EntityDb.h"
 #include "EntityLifePool.h"
@@ -30,6 +30,7 @@ EntityManager::EntityManager(Shared::MessageBus &messageBus, const Shared::Textu
     , factory_(std::make_unique<Factory>())
     , entityDb_(std::make_unique<EntityDb>())
     , collisionHandler_(std::make_unique<CollisionHandler>(*entityDb_))
+    , drawHandler_(std::make_unique<DrawHandler>(*entityDb_))
     , entityLifePool_(std::make_unique<EntityLifePool>())
 {}
 
@@ -37,10 +38,7 @@ EntityManager::~EntityManager() = default;
 
 void EntityManager::DrawTo(Graphic::RenderTargetIf &renderTarget) const
 {
-    for (auto p : drawables_) {
-        auto id = p.second.id_;
-        entityDb_->GetEntity(id).DrawTo(renderTarget);
-    }
+    drawHandler_->DrawTo(renderTarget);
 }
 
 void EntityManager::DetectCollisions()
@@ -121,18 +119,12 @@ void EntityManager::HandleDeletion(EntityId id)
 
 void EntityManager::AddDrawable(EntityId id, LayerType layer)
 {
-    std::stringstream ss;
-    int l = static_cast<int>(layer);
-    ss << l << "_" << id;
-    drawables_[ss.str()] = {layer, id};
+    drawHandler_->AddDrawable(id, layer);
 }
 
 void EntityManager::RemoveDrawable(EntityId id)
 {
-    auto it = std::find_if(drawables_.begin(), drawables_.end(), [id](const auto &p) { return p.second.id_ == id; });
-    if (it != drawables_.end()) {
-        drawables_.erase(it);
-    }
+    drawHandler_->RemoveDrawable(id);
 }
 
 }  // namespace Entity

@@ -146,6 +146,7 @@
     <ClInclude Include="Src\Body.h" />
     <ClInclude Include="Src\CollisionHandler.h" />
     <ClInclude Include="Src\Constant\Entity.h" />
+    <ClInclude Include="Src\DrawHandler.h" />
     <ClInclude Include="Src\Entities\ArrowEntity.h" />
     <ClInclude Include="Src\Entities\BasicEntity.h" />
     <ClInclude Include="Src\Entities\CoinEntity.h" />
@@ -192,6 +193,7 @@
   <ItemGroup>
     <ClCompile Include="Src\Abilities\MoveAbility.cpp" />
     <ClCompile Include="Src\CollisionHandler.cpp" />
+    <ClCompile Include="Src\DrawHandler.cpp" />
     <ClCompile Include="Src\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Src\Entities\BasicEntity.cpp" />
     <ClCompile Include="Src\Entities\CoinEntity.cpp" />
