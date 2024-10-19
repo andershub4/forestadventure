@@ -41,7 +41,7 @@ namespace Entity {
 
 class EntityDb;
 class EntityLifePool;
-class BasicEntity;
+class EntityIf;
 
 class EntityService
 {
@@ -63,7 +63,7 @@ public:
     Shared::CameraView &GetCameraView() const;
     void AddToCreationPool(const Shared::EntityData &data);
     void AddToDeletionPool(EntityId id);
-    BasicEntity &GetEntity(EntityId id) const;
+    EntityIf &GetEntity(EntityId id) const;
 
 private:
     Shared::MessageBus &messageBus_;

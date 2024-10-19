@@ -23,7 +23,7 @@ struct EntityData;
 
 namespace Entity {
 
-class BasicEntity;
+class EntityIf;
 class EntityService;
 
 class Factory
@@ -32,11 +32,11 @@ public:
     Factory();
     ~Factory();
 
-    std::unique_ptr<BasicEntity> Create(const Shared::EntityData& data, std::unique_ptr<EntityService> service) const;
+    std::unique_ptr<EntityIf> Create(const Shared::EntityData& data, std::unique_ptr<EntityService> service) const;
 
 private:
-    using CreateFn = std::function<std::unique_ptr<BasicEntity>(EntityId, const Shared::EntityData&,
-                                                                std::unique_ptr<EntityService>)>;
+    using CreateFn =
+        std::function<std::unique_ptr<EntityIf>(EntityId, const Shared::EntityData&, std::unique_ptr<EntityService>)>;
 
     mutable EntityId id_{0};
     std::unordered_map<std::string, CreateFn> map_;

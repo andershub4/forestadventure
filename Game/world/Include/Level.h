@@ -6,8 +6,13 @@
 
 #pragma once
 
+#include <memory>
+#include <unordered_set>
+#include <vector>
+
 #include "Animation/ImageAnimation.h"
 #include "CameraViews.h"
+#include "Id.h"
 #include "RenderTexture.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
@@ -24,13 +29,18 @@ class View;
 
 namespace Entity {
 
-class EntityManager;
+class Factory;
+class EntityDb;
+class EntityLifePool;
+class CollisionHandler;
+class DrawHandler;
 
 }  // namespace Entity
 
 namespace Shared {
 
 class MessageBus;
+struct EntityData;
 
 }  // namespace Shared
 
@@ -58,11 +68,17 @@ private:
     Graphic::Sprite backgroundSprite_;
     std::vector<Graphic::Sprite> fringeLayer_;
     std::vector<Shared::ImageAnimation> animationLayer_;
+    Shared::MessageBus& messageBus_;
     Shared::TextureManager& textureManager_;
     Shared::SheetManager sheetManager_;
     std::unique_ptr<TileMap> tileMap_;
     Shared::CameraViews cameraViews_;
-    std::unique_ptr<Entity::EntityManager> entityManager_;
+    std::unordered_set<Entity::EntityId> allEntities_;
+    std::unique_ptr<Entity::Factory> factory_;
+    std::unique_ptr<Entity::EntityDb> entityDb_;
+    std::unique_ptr<Entity::CollisionHandler> collisionHandler_;
+    std::unique_ptr<Entity::DrawHandler> drawHandler_;
+    std::unique_ptr<Entity::EntityLifePool> entityLifePool_;
     std::unique_ptr<LevelCreator> levelCreator_;
     const float zoomFactor_{0.4f};
 
@@ -71,6 +87,8 @@ private:
     void LoadTileMap(const std::string& levelName);
     void CreateMap();
     void CreateEntities();
+    void HandleCreation(const Shared::EntityData& data);
+    void HandleDeletion(Entity::EntityId id);
 };
 
 }  // namespace World

@@ -40,8 +40,7 @@ Factory::Factory()
 
 Factory::~Factory() = default;
 
-std::unique_ptr<BasicEntity> Factory::Create(const Shared::EntityData& data,
-                                             std::unique_ptr<EntityService> service) const
+std::unique_ptr<EntityIf> Factory::Create(const Shared::EntityData& data, std::unique_ptr<EntityService> service) const
 {
     auto it = map_.find(data.typeStr_);
 

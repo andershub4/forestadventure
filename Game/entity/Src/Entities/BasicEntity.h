@@ -9,8 +9,8 @@
 #include <vector>
 
 #include "Body.h"
+#include "EntityIf.h"
 #include "EntityService.h"
-#include "Enum/EntityType.h"
 #include "Id.h"
 #include "LayerType.h"
 #include "PropertyStore.h"
@@ -34,7 +34,7 @@ enum class MessageType;
 
 namespace Entity {
 
-class BasicEntity
+class BasicEntity : public EntityIf
 {
 public:
     BasicEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service);
@@ -49,7 +49,7 @@ public:
     void Init();
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf& renderTarget) const;
-    bool Intersect(const BasicEntity& otherEntity) const;
+    bool Intersect(const EntityIf& otherEntity) const;
     bool IsOutsideTileMap(const sf::FloatRect& rect) const;
     void HandleCollision(const EntityId id, bool isSolid);
     void HandleOutsideTileMap();

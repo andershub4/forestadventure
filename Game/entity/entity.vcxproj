@@ -141,23 +141,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EntityIf.h" />
     <ClInclude Include="Src\Abilities\AbilityIf.h" />
     <ClInclude Include="Src\Abilities\MoveAbility.h" />
     <ClInclude Include="Src\Body.h" />
-    <ClInclude Include="Src\CollisionHandler.h" />
+    <ClInclude Include="Include\CollisionHandler.h" />
     <ClInclude Include="Src\Constant\Entity.h" />
-    <ClInclude Include="Src\DrawHandler.h" />
+    <ClInclude Include="Include\DrawHandler.h" />
     <ClInclude Include="Src\Entities\ArrowEntity.h" />
     <ClInclude Include="Src\Entities\BasicEntity.h" />
     <ClInclude Include="Src\Entities\CoinEntity.h" />
     <ClInclude Include="Src\Entities\MoleEntity.h" />
     <ClInclude Include="Src\Entities\PlayerEntity.h" />
     <ClInclude Include="Src\Entities\RectEntity.h" />
-    <ClInclude Include="Include\EntityManager.h" />
-    <ClInclude Include="Src\EntityLifePool.h" />
-    <ClInclude Include="Src\EntityDb.h" />
-    <ClInclude Include="Src\EntityService.h" />
-    <ClInclude Include="Src\Enum\EntityType.h" />
+    <ClInclude Include="Include\EntityLifePool.h" />
+    <ClInclude Include="Include\EntityDb.h" />
+    <ClInclude Include="Include\EntityService.h" />
+    <ClInclude Include="Include\EntityType.h" />
     <ClInclude Include="Src\Enum\FaceDirection.h" />
     <ClInclude Include="Src\Enum\MoveDirection.h" />
     <ClInclude Include="Src\Events\AttackEvent.h" />
@@ -171,8 +171,7 @@
     <ClInclude Include="Src\Events\StartMoveEvent.h" />
     <ClInclude Include="Src\Events\StopMoveEvent.h" />
     <ClInclude Include="Src\EventType.h" />
-    <ClInclude Include="Src\Factory.h" />
-    <ClInclude Include="Include\Id.h" />
+    <ClInclude Include="Include\Factory.h" />
     <ClInclude Include="Include\LayerType.h" />
     <ClInclude Include="Src\Properties\PropertyIf.h" />
     <ClInclude Include="Src\Properties\Property.h" />
@@ -202,7 +201,6 @@
     <ClCompile Include="Src\Entities\RectEntity.cpp" />
     <ClCompile Include="Src\EntityLifePool.cpp" />
     <ClCompile Include="Src\EntityDb.cpp" />
-    <ClCompile Include="Src\EntityManager.cpp" />
     <ClCompile Include="Src\EntityService.cpp" />
     <ClCompile Include="Src\Factory.cpp" />
     <ClCompile Include="Src\PropertyConverter.cpp" />

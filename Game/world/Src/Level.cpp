@@ -9,7 +9,13 @@
 #include "Level.h"
 
 #include "CameraView.h"
-#include "EntityManager.h"
+#include "CollisionHandler.h"
+#include "DrawHandler.h"
+#include "EntityDb.h"
+#include "EntityIf.h"
+#include "EntityLifePool.h"
+#include "EntityService.h"
+#include "Factory.h"
 #include "Folder.h"
 #include "LevelCreator.h"
 #include "Logging.h"
@@ -25,11 +31,16 @@ namespace FA {
 namespace World {
 
 Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureManager, const sf::Vector2u &viewSize)
-    : textureManager_(textureManager)
+    : messageBus_(messageBus)
+    , textureManager_(textureManager)
     , sheetManager_()
     , tileMap_(std::make_unique<TileMap>(textureManager, sheetManager_))
     , viewSize_(viewSize)
-    , entityManager_(std::make_unique<Entity::EntityManager>(messageBus, textureManager, sheetManager_, cameraViews_))
+    , factory_(std::make_unique<Entity::Factory>())
+    , entityDb_(std::make_unique<Entity::EntityDb>())
+    , collisionHandler_(std::make_unique<Entity::CollisionHandler>(*entityDb_))
+    , drawHandler_(std::make_unique<Entity::DrawHandler>(*entityDb_))
+    , entityLifePool_(std::make_unique<Entity::EntityLifePool>())
     , levelCreator_(std::make_unique<LevelCreator>(textureManager, sheetManager_))
 {}
 
@@ -64,23 +75,31 @@ Graphic::View Level::GetView() const
 
 void Level::Update(float deltaTime)
 {
-    entityManager_->HandleCreationPool();
+    auto creationPool = entityLifePool_->MoveCreationPool();
+    for (const auto &data : creationPool) {
+        HandleCreation(data);
+    }
     cameraViews_.Update(deltaTime);
     for (auto &animation : animationLayer_) {
         animation.Update(deltaTime);
     }
-    entityManager_->Update(deltaTime);
-    entityManager_->DetectCollisions();
-    entityManager_->DetectOutsideTileMap(tileMap_->GetSize());
-    entityManager_->HandleCollisions();
-    entityManager_->HandleOutsideTileMap();
-    entityManager_->HandleDeletionPool();
+    for (const auto id : allEntities_) {
+        entityDb_->GetEntity(id).Update(deltaTime);
+    }
+    collisionHandler_->DetectCollisions();
+    collisionHandler_->DetectOutsideTileMap(tileMap_->GetSize());
+    collisionHandler_->HandleCollisions();
+    collisionHandler_->HandleOutsideTileMap();
+    auto deletionPool = entityLifePool_->MoveDeletionPool();
+    for (const auto &id : deletionPool) {
+        HandleDeletion(id);
+    }
 }
 
 void Level::Draw(Graphic::RenderTargetIf &renderTarget)
 {
     renderTarget.draw(backgroundSprite_);
-    entityManager_->DrawTo(renderTarget);
+    drawHandler_->DrawTo(renderTarget);
     for (const auto &tile : fringeLayer_) {
         renderTarget.draw(tile);
     }
@@ -126,13 +145,39 @@ void Level::CreateEntities()
 {
     LOG_INFO("Create entities");
     for (const auto &data : tileMap_->GetEntityGroup("Object Layer 1")) {
-        entityManager_->AddToCreationPool(data);
+        entityLifePool_->AddToCreationPool(data);
     }
     for (const auto &data : tileMap_->GetEntityGroup("Collision Layer 1")) {
-        entityManager_->AddToCreationPool(data);
+        entityLifePool_->AddToCreationPool(data);
     }
 
-    entityManager_->HandleCreationPool();
+    auto creationPool = entityLifePool_->MoveCreationPool();
+    for (const auto &data : creationPool) {
+        HandleCreation(data);
+    }
+}
+
+void Level::HandleCreation(const Shared::EntityData &data)
+{
+    auto service = std::make_unique<Entity::EntityService>(messageBus_, textureManager_, sheetManager_, cameraViews_,
+                                                           *entityDb_, *entityLifePool_);
+    auto entity = factory_->Create(data, std::move(service));
+    allEntities_.insert(entity->GetId());
+    entity->Init();
+    allEntities_.insert(entity->GetId());
+    drawHandler_->AddDrawable(entity->GetId(), entity->GetLayer());
+    collisionHandler_->AddCollider(entity->GetId(), entity->IsStatic());
+    entityDb_->AddEntity(std::move(entity));
+}
+
+void Level::HandleDeletion(Entity::EntityId id)
+{
+    auto &entity = entityDb_->GetEntity(id);
+    entity.Destroy();
+    allEntities_.erase(entity.GetId());
+    drawHandler_->RemoveDrawable(entity.GetId());
+    collisionHandler_->RemoveCollider(entity.GetId(), entity.IsStatic());
+    entityDb_->DeleteEntity(id);
 }
 
 }  // namespace World

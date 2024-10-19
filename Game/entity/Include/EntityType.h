@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <ostream>
+
 namespace FA {
 
 namespace Entity {

@@ -6,7 +6,7 @@
 
 #include "EntityDb.h"
 
-#include "Entities/BasicEntity.h"
+#include "EntityIf.h"
 #include "Logging.h"
 
 namespace FA {
@@ -20,7 +20,7 @@ EntityDb::~EntityDb()
     }
 }
 
-void EntityDb::AddEntity(std::unique_ptr<Entity::BasicEntity> entity)
+void EntityDb::AddEntity(std::unique_ptr<Entity::EntityIf> entity)
 {
     auto id = entity->GetId();
     if (entityMap_.find(id) == entityMap_.end()) {
@@ -36,7 +36,7 @@ void EntityDb::DeleteEntity(EntityId id)
     entityMap_.erase(id);
 }
 
-BasicEntity& EntityDb::GetEntity(EntityId id) const
+EntityIf& EntityDb::GetEntity(EntityId id) const
 {
     return *entityMap_.at(id);
 }

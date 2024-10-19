@@ -14,7 +14,8 @@
 #include "Entities/BasicEntity.h"
 #include "EntityDb.h"
 #include "EntityLifePool.h"
-#include "Enum/EntityType.h"
+//#include "Enum/EntityType.h"
+#include "EntityType.h"
 #include "Message/MessageBus.h"
 #include "RectangleShape.h"
 #include "Resource/ColliderData.h"
@@ -144,7 +145,8 @@ void EntityService::AddToDeletionPool(EntityId id)
     entityLifePool_.AddToDeletionPool(id);
 }
 
-BasicEntity& EntityService::GetEntity(EntityId id) const
+//BasicEntity& EntityService::GetEntity(EntityId id) const
+EntityIf& EntityService::GetEntity(EntityId id) const
 {
     return entityDb_.GetEntity(id);
 }

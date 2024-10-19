@@ -77,9 +77,10 @@ void BasicEntity::DrawTo(Graphic::RenderTargetIf& renderTarget) const
     stateMachine_.GetShape().DrawTo(renderTarget);
 }
 
-bool BasicEntity::Intersect(const BasicEntity& otherEntity) const
+bool BasicEntity::Intersect(const EntityIf& otherEntity) const
 {
-    return stateMachine_.GetShape().Intersect(otherEntity.stateMachine_.GetShape());
+    const auto& other = static_cast<const BasicEntity&>(otherEntity);
+    return stateMachine_.GetShape().Intersect(other.stateMachine_.GetShape());
 }
 
 bool BasicEntity::IsOutsideTileMap(const sf::FloatRect& rect) const

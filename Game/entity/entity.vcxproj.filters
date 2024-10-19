@@ -18,7 +18,7 @@
     <ClInclude Include="Src\Constant\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Enum\EntityType.h">
+    <ClInclude Include="Include\EntityType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Enum\FaceDirection.h">
@@ -84,19 +84,13 @@
     <ClInclude Include="Src\Body.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EntityManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\EntityService.h">
+    <ClInclude Include="Include\EntityService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\EventType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Factory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Id.h">
+    <ClInclude Include="Include\Factory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\LayerType.h">
@@ -144,19 +138,22 @@
     <ClInclude Include="Src\ShapeParts\MultiAnimationPart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\EntityDb.h">
+    <ClInclude Include="Include\EntityDb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\EntityLifePool.h">
+    <ClInclude Include="Include\EntityLifePool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\CollisionHandler.h">
+    <ClInclude Include="Include\CollisionHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Events\OutsideTileMapEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\DrawHandler.h">
+    <ClInclude Include="Include\DrawHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EntityIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -180,9 +177,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\Entities\RectEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\EntityService.cpp">
