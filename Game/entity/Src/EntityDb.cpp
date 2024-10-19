@@ -20,7 +20,7 @@ EntityDb::~EntityDb()
     }
 }
 
-void EntityDb::AddEntity(std::unique_ptr<Entity::EntityIf> entity)
+void EntityDb::AddEntity(std::unique_ptr<EntityIf> entity)
 {
     auto id = entity->GetId();
     if (entityMap_.find(id) == entityMap_.end()) {

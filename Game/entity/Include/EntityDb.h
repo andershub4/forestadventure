@@ -22,12 +22,12 @@ class EntityDb
 public:
     ~EntityDb();
 
-    void AddEntity(std::unique_ptr<Entity::EntityIf> entity);
+    void AddEntity(std::unique_ptr<EntityIf> entity);
     void DeleteEntity(EntityId id);
     EntityIf& GetEntity(EntityId id) const;
 
 private:
-    std::unordered_map<Entity::EntityId, std::unique_ptr<Entity::EntityIf>> entityMap_;
+    std::unordered_map<EntityId, std::unique_ptr<EntityIf>> entityMap_;
 };
 
 }  // namespace Entity
