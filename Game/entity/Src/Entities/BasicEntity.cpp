@@ -148,7 +148,7 @@ std::shared_ptr<State> BasicEntity::RegisterDeadState()
     auto deadState = stateMachine_.RegisterState(StateType::Dead, body_);
     deadState->RegisterEnterCB([this]() {
         OnBeginDie();
-        service_->AddToDeletionQueue(id_);
+        service_->AddToDeletionPool(id_);
     });
     deadState->IgnoreAllEventsExcept({EventType::Destroy});
     deadState->RegisterEventCB(EventType::Destroy, [this](std::shared_ptr<BasicEvent> event) { DestroyCB(); });

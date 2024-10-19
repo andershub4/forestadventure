@@ -153,7 +153,7 @@
     <ClInclude Include="Src\Entities\PlayerEntity.h" />
     <ClInclude Include="Src\Entities\RectEntity.h" />
     <ClInclude Include="Include\EntityManager.h" />
-    <ClInclude Include="Src\EntityLifeQueue.h" />
+    <ClInclude Include="Src\EntityLifePool.h" />
     <ClInclude Include="Src\EntityDb.h" />
     <ClInclude Include="Src\EntityService.h" />
     <ClInclude Include="Src\Enum\EntityType.h" />
@@ -199,7 +199,7 @@
     <ClCompile Include="Src\Entities\MoleEntity.cpp" />
     <ClCompile Include="Src\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Src\Entities\RectEntity.cpp" />
-    <ClCompile Include="Src\EntityLifeQueue.cpp" />
+    <ClCompile Include="Src\EntityLifePool.cpp" />
     <ClCompile Include="Src\EntityDb.cpp" />
     <ClCompile Include="Src\EntityManager.cpp" />
     <ClCompile Include="Src\EntityService.cpp" />

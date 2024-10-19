@@ -40,7 +40,7 @@ namespace Entity {
 
 struct PropertyData;
 class EntityDb;
-class EntityLifeQueue;
+class EntityLifePool;
 class BasicEntity;
 
 class EntityService
@@ -48,7 +48,7 @@ class EntityService
 public:
     EntityService(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
                   const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews,
-                  const EntityDb &entityDb, EntityLifeQueue &entityLifeQueue);
+                  const EntityDb &entityDb, EntityLifePool &entityLifePool);
     ~EntityService();
 
     std::shared_ptr<Shared::ImageAnimation> CreateImageAnimation(const std::vector<Shared::ImageData> &images);
@@ -61,8 +61,8 @@ public:
 
     void RemoveSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes);
     Shared::CameraView &GetCameraView() const;
-    void AddToCreationQueue(const PropertyData &data);
-    void AddToDeletionQueue(EntityId id);
+    void AddToCreationPool(const PropertyData &data);
+    void AddToDeletionPool(EntityId id);
     BasicEntity &GetEntity(EntityId id) const;
 
 private:
@@ -71,7 +71,7 @@ private:
     const Shared::SheetManager &sheetManager_;
     const Shared::CameraViews &cameraViews_;
     const EntityDb &entityDb_;
-    EntityLifeQueue &entityLifeQueue_;
+    EntityLifePool &entityLifePool_;
 
 private:
     std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> CreateSequence(

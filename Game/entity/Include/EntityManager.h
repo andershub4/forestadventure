@@ -39,7 +39,7 @@ class BasicEntity;
 class Factory;
 struct PropertyData;
 class EntityDb;
-class EntityLifeQueue;
+class EntityLifePool;
 class CollisionHandler;
 
 class EntityManager
@@ -55,11 +55,11 @@ public:
     void DetectOutsideTileMap(const sf::Vector2u &mapSize);
     void HandleCollisions();
     void HandleOutsideTileMap();
-    void AddToCreationQueue(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                            std::unordered_map<std::string, std::string> properties);
-    void AddToDeletionQueue(EntityId id);
-    void HandleCreationQueue();
-    void HandleDeletionQueue();
+    void AddToCreationPool(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
+                           std::unordered_map<std::string, std::string> properties);
+    void AddToDeletionPool(EntityId id);
+    void HandleCreationPool();
+    void HandleDeletionPool();
 
 private:
     struct DrawableInfo
@@ -76,7 +76,7 @@ private:
     std::unique_ptr<Factory> factory_;
     std::unique_ptr<EntityDb> entityDb_;
     std::unique_ptr<CollisionHandler> collisionHandler_;
-    std::unique_ptr<EntityLifeQueue> entityLifeQueue_;
+    std::unique_ptr<EntityLifePool> entityLifePool_;
     std::map<std::string, DrawableInfo> drawables_;
 
 private:

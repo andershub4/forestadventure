@@ -150,7 +150,7 @@
     <ClInclude Include="Src\EntityDb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\EntityLifeQueue.h">
+    <ClInclude Include="Src\EntityLifePool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\CollisionHandler.h">
@@ -206,7 +206,7 @@
     <ClCompile Include="Src\EntityDb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\EntityLifeQueue.cpp">
+    <ClCompile Include="Src\EntityLifePool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\CollisionHandler.cpp">

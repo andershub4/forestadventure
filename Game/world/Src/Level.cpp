@@ -64,7 +64,7 @@ Graphic::View Level::GetView() const
 
 void Level::Update(float deltaTime)
 {
-    entityManager_->HandleCreationQueue();
+    entityManager_->HandleCreationPool();
     cameraViews_.Update(deltaTime);
     for (auto &animation : animationLayer_) {
         animation.Update(deltaTime);
@@ -74,7 +74,7 @@ void Level::Update(float deltaTime)
     entityManager_->DetectOutsideTileMap(tileMap_->GetSize());
     entityManager_->HandleCollisions();
     entityManager_->HandleOutsideTileMap();
-    entityManager_->HandleDeletionQueue();
+    entityManager_->HandleDeletionPool();
 }
 
 void Level::Draw(Graphic::RenderTargetIf &renderTarget)
@@ -126,13 +126,13 @@ void Level::CreateEntities()
 {
     LOG_INFO("Create entities");
     for (const auto &data : tileMap_->GetObjectGroup("Object Layer 1")) {
-        entityManager_->AddToCreationQueue(data.typeStr_, data.position_, data.size_, data.properties_);
+        entityManager_->AddToCreationPool(data.typeStr_, data.position_, data.size_, data.properties_);
     }
     for (const auto &data : tileMap_->GetObjectGroup("Collision Layer 1")) {
-        entityManager_->AddToCreationQueue(data.typeStr_, data.position_, data.size_, data.properties_);
+        entityManager_->AddToCreationPool(data.typeStr_, data.position_, data.size_, data.properties_);
     }
 
-    entityManager_->HandleCreationQueue();
+    entityManager_->HandleCreationPool();
 }
 
 }  // namespace World

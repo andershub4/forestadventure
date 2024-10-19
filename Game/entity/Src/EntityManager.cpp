@@ -12,7 +12,7 @@
 #include "CollisionHandler.h"
 #include "Entities/BasicEntity.h"
 #include "EntityDb.h"
-#include "EntityLifeQueue.h"
+#include "EntityLifePool.h"
 #include "EntityService.h"
 #include "Factory.h"
 #include "Logging.h"
@@ -31,7 +31,7 @@ EntityManager::EntityManager(Shared::MessageBus &messageBus, const Shared::Textu
     , factory_(std::make_unique<Factory>())
     , entityDb_(std::make_unique<EntityDb>())
     , collisionHandler_(std::make_unique<CollisionHandler>(*entityDb_))
-    , entityLifeQueue_(std::make_unique<EntityLifeQueue>())
+    , entityLifePool_(std::make_unique<EntityLifePool>())
 {}
 
 EntityManager::~EntityManager() = default;
@@ -71,23 +71,23 @@ void EntityManager::Update(float deltaTime)
     }
 }
 
-void EntityManager::AddToCreationQueue(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
-                                       std::unordered_map<std::string, std::string> properties)
+void EntityManager::AddToCreationPool(const std::string &typeStr, const sf::Vector2f &pos, const sf::Vector2f &size,
+                                      std::unordered_map<std::string, std::string> properties)
 {
-    entityLifeQueue_->AddToCreationQueue(typeStr, pos, size, properties);
+    entityLifePool_->AddToCreationPool(typeStr, pos, size, properties);
 }
 
-void EntityManager::AddToDeletionQueue(EntityId id)
+void EntityManager::AddToDeletionPool(EntityId id)
 {
-    entityLifeQueue_->AddToDeletionQueue(id);
+    entityLifePool_->AddToDeletionPool(id);
 }
 
-void EntityManager::HandleCreationQueue()
+void EntityManager::HandleCreationPool()
 {
-    auto creationQueue = entityLifeQueue_->MoveCreationQueue();
-    for (const auto &data : creationQueue) {
+    auto creationPool = entityLifePool_->MoveCreationPool();
+    for (const auto &data : creationPool) {
         auto service = std::make_unique<EntityService>(messageBus_, textureManager_, sheetManager_, cameraViews_,
-                                                       *entityDb_, *entityLifeQueue_);
+                                                       *entityDb_, *entityLifePool_);
         auto entity = factory_->Create(data, std::move(service));
         allEntities_.insert(entity->GetId());
         entity->Init();
@@ -98,10 +98,10 @@ void EntityManager::HandleCreationQueue()
     }
 }
 
-void EntityManager::HandleDeletionQueue()
+void EntityManager::HandleDeletionPool()
 {
-    auto deletionQueue = entityLifeQueue_->MoveDeletionQueue();
-    for (const auto &id : deletionQueue) {
+    auto deletionPool = entityLifePool_->MoveDeletionPool();
+    for (const auto &id : deletionPool) {
         auto &entity = entityDb_->GetEntity(id);
         entity.Destroy();
         allEntities_.erase(entity.GetId());

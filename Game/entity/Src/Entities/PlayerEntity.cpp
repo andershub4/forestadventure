@@ -279,7 +279,7 @@ void PlayerEntity::OnShoot()
     propertyStore_.Get("FaceDirection", dir);
     auto position = body_.position_ + arrowOffset.at(dir);
     auto data = ArrowEntity::CreatePropertyData(position, dir);
-    service_->AddToCreationQueue(data);
+    service_->AddToCreationPool(data);
 }
 
 void PlayerEntity::OnBeginDie()
