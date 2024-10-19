@@ -82,6 +82,8 @@ private:
 private:
     void AddDrawable(EntityId id, LayerType layer);
     void RemoveDrawable(EntityId id);
+    void HandleCreation(const PropertyData &data);
+    void HandleDeletion(EntityId id);
 };
 
 }  // namespace Entity

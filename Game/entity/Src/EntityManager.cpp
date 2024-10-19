@@ -86,15 +86,7 @@ void EntityManager::HandleCreationPool()
 {
     auto creationPool = entityLifePool_->MoveCreationPool();
     for (const auto &data : creationPool) {
-        auto service = std::make_unique<EntityService>(messageBus_, textureManager_, sheetManager_, cameraViews_,
-                                                       *entityDb_, *entityLifePool_);
-        auto entity = factory_->Create(data, std::move(service));
-        allEntities_.insert(entity->GetId());
-        entity->Init();
-        allEntities_.insert(entity->GetId());
-        AddDrawable(entity->GetId(), entity->GetLayer());
-        collisionHandler_->AddCollider(entity->GetId(), entity->IsStatic());
-        entityDb_->AddEntity(std::move(entity));
+        HandleCreation(data);
     }
 }
 
@@ -102,13 +94,31 @@ void EntityManager::HandleDeletionPool()
 {
     auto deletionPool = entityLifePool_->MoveDeletionPool();
     for (const auto &id : deletionPool) {
-        auto &entity = entityDb_->GetEntity(id);
-        entity.Destroy();
-        allEntities_.erase(entity.GetId());
-        RemoveDrawable(entity.GetId());
-        collisionHandler_->RemoveCollider(entity.GetId(), entity.IsStatic());
-        entityDb_->DeleteEntity(id);
+        HandleDeletion(id);
     }
+}
+
+void EntityManager::HandleCreation(const PropertyData &data)
+{
+    auto service = std::make_unique<EntityService>(messageBus_, textureManager_, sheetManager_, cameraViews_,
+                                                   *entityDb_, *entityLifePool_);
+    auto entity = factory_->Create(data, std::move(service));
+    allEntities_.insert(entity->GetId());
+    entity->Init();
+    allEntities_.insert(entity->GetId());
+    AddDrawable(entity->GetId(), entity->GetLayer());
+    collisionHandler_->AddCollider(entity->GetId(), entity->IsStatic());
+    entityDb_->AddEntity(std::move(entity));
+}
+
+void EntityManager::HandleDeletion(EntityId id)
+{
+    auto &entity = entityDb_->GetEntity(id);
+    entity.Destroy();
+    allEntities_.erase(entity.GetId());
+    RemoveDrawable(entity.GetId());
+    collisionHandler_->RemoveCollider(entity.GetId(), entity.IsStatic());
+    entityDb_->DeleteEntity(id);
 }
 
 void EntityManager::AddDrawable(EntityId id, LayerType layer)
