@@ -162,7 +162,6 @@ void Level::HandleCreation(const Shared::EntityData &data)
     auto service = std::make_unique<Entity::EntityService>(messageBus_, textureManager_, sheetManager_, cameraViews_,
                                                            *entityDb_, *entityLifePool_);
     auto entity = factory_->Create(data, std::move(service));
-    allEntities_.insert(entity->GetId());
     entity->Init();
     allEntities_.insert(entity->GetId());
     drawHandler_->AddDrawable(entity->GetId(), entity->GetLayer());
