@@ -14,6 +14,7 @@
 #include "Events/DeadEvent.h"
 #include "PropertyData.h"
 #include "Resource/ColliderData.h"
+#include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "ShapeParts/SingleAnimationPart.h"

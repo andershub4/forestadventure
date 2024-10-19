@@ -8,6 +8,8 @@
 
 #include <sstream>
 
+#include <SFML/Graphics/Rect.hpp>
+
 #include "Events/CollisionEvent.h"
 #include "Events/DestroyEvent.h"
 #include "Events/InitEvent.h"

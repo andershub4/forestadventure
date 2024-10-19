@@ -11,8 +11,6 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#include "Resource/TileGraphic.h"
-
 namespace FA {
 
 namespace Entity {
@@ -23,7 +21,6 @@ struct PropertyData
     sf::Vector2f position_{};
     sf::Vector2f size_{};
     std::unordered_map<std::string, std::string> properties_;
-    Shared::TileGraphic graphic_;
 };
 
 }  // namespace Entity
