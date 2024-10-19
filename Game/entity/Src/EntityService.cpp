@@ -145,7 +145,6 @@ void EntityService::AddToDeletionPool(EntityId id)
     entityLifePool_.AddToDeletionPool(id);
 }
 
-//BasicEntity& EntityService::GetEntity(EntityId id) const
 EntityIf& EntityService::GetEntity(EntityId id) const
 {
     return entityDb_.GetEntity(id);
