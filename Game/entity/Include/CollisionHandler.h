@@ -23,8 +23,8 @@ class CollisionHandler
 public:
     CollisionHandler(const EntityDb &entityDb);
 
-    void AddCollider(EntityId id, bool isStatic);
-    void RemoveCollider(EntityId id, bool isStatic);
+    void AddCollider(EntityId id);
+    void RemoveCollider(EntityId id);
     void DetectCollisions();
     void DetectOutsideTileMap(const sf::Vector2u &mapSize);
     void HandleCollisions();

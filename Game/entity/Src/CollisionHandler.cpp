@@ -9,7 +9,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "Entities/BasicEntity.h"
+#include "EntityIf.h"
 #include "EntityDb.h"
 
 namespace FA {
@@ -20,8 +20,11 @@ CollisionHandler::CollisionHandler(const EntityDb &entityDb)
     : entityDb_(entityDb)
 {}
 
-void CollisionHandler::AddCollider(EntityId id, bool isStatic)
+void CollisionHandler::AddCollider(EntityId id)
 {
+    const auto &entity = entityDb_.GetEntity(id);
+    bool isStatic = entity.IsStatic();
+
     if (isStatic) {
         staticEntities_.insert(id);
     }
@@ -30,8 +33,11 @@ void CollisionHandler::AddCollider(EntityId id, bool isStatic)
     }
 }
 
-void CollisionHandler::RemoveCollider(EntityId id, bool isStatic)
+void CollisionHandler::RemoveCollider(EntityId id)
 {
+    const auto &entity = entityDb_.GetEntity(id);
+    bool isStatic = entity.IsStatic();
+
     if (isStatic) {
         staticEntities_.erase(id);
     }

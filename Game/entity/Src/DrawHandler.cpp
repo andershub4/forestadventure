@@ -8,7 +8,7 @@
 
 #include <sstream>
 
-#include "Entities/BasicEntity.h"
+#include "EntityIf.h"
 #include "EntityDb.h"
 
 namespace FA {
@@ -19,8 +19,11 @@ DrawHandler::DrawHandler(const EntityDb &entityDb)
     : entityDb_(entityDb)
 {}
 
-void DrawHandler::AddDrawable(EntityId id, LayerType layer)
+void DrawHandler::AddDrawable(EntityId id)
 {
+    const auto &entity = entityDb_.GetEntity(id);
+    auto layer = entity.GetLayer();
+
     std::stringstream ss;
     int l = static_cast<int>(layer);
     ss << l << "_" << id;

@@ -163,19 +163,20 @@ void Level::HandleCreation(const Shared::EntityData &data)
                                                            *entityDb_, *entityLifePool_);
     auto entity = factory_->Create(data, std::move(service));
     entity->Init();
-    allEntities_.insert(entity->GetId());
-    drawHandler_->AddDrawable(entity->GetId(), entity->GetLayer());
-    collisionHandler_->AddCollider(entity->GetId(), entity->IsStatic());
+    auto id = entity->GetId();
     entityDb_->AddEntity(std::move(entity));
+    allEntities_.insert(id);
+    drawHandler_->AddDrawable(id);
+    collisionHandler_->AddCollider(id);
 }
 
 void Level::HandleDeletion(Entity::EntityId id)
 {
     auto &entity = entityDb_->GetEntity(id);
     entity.Destroy();
-    allEntities_.erase(entity.GetId());
-    drawHandler_->RemoveDrawable(entity.GetId());
-    collisionHandler_->RemoveCollider(entity.GetId(), entity.IsStatic());
+    allEntities_.erase(id);
+    drawHandler_->RemoveDrawable(id);
+    collisionHandler_->RemoveCollider(id);
     entityDb_->DeleteEntity(id);
 }
 

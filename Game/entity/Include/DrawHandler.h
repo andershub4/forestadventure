@@ -28,7 +28,7 @@ class DrawHandler
 public:
     DrawHandler(const EntityDb &entityDb);
 
-    void AddDrawable(EntityId id, LayerType layer);
+    void AddDrawable(EntityId id);
     void RemoveDrawable(EntityId id);
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
 
