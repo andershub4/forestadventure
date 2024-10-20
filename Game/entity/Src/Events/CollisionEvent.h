@@ -16,15 +16,13 @@ namespace Entity {
 
 struct CollisionEvent : public BasicEvent
 {
-    CollisionEvent(EntityId id, bool isSolid)
+    CollisionEvent(EntityId id)
         : id_(id)
-        , isSolid_(isSolid)
     {}
 
     virtual EventType GetEventType() const { return EventType::Collision; }
 
     EntityId id_ = InvalidEntityId;
-    bool isSolid_{false};
 };
 
 }  // namespace Entity

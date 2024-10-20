@@ -88,9 +88,9 @@ bool BasicEntity::IsOutsideTileMap(const sf::FloatRect& rect) const
     return !rect.contains(body_.position_);
 }
 
-void BasicEntity::HandleCollision(const EntityId id, bool isSolid)
+void BasicEntity::HandleCollision(const EntityId id)
 {
-    HandleEvent(std::make_shared<CollisionEvent>(id, isSolid));
+    HandleEvent(std::make_shared<CollisionEvent>(id));
 }
 
 void BasicEntity::HandleOutsideTileMap()

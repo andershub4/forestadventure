@@ -355,7 +355,7 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
     state->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
     state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        if (collisionEvent->isSolid_) {
+        if (service_->GetEntity(collisionEvent->id_).IsSolid()) {
             body_.position_ = body_.prevPosition_;
         }
         else if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Coin) {

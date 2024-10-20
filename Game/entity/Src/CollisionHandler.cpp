@@ -104,8 +104,8 @@ void CollisionHandler::HandleCollisions()
     for (const auto &pair : collisionPairs_) {
         auto &first = entityDb_.GetEntity(pair.first);
         auto &second = entityDb_.GetEntity(pair.second);
-        first.HandleCollision(pair.second, entityDb_.GetEntity(pair.second).IsSolid());
-        second.HandleCollision(pair.first, entityDb_.GetEntity(pair.first).IsSolid());
+        first.HandleCollision(pair.second);
+        second.HandleCollision(pair.first);
     }
     collisionPairs_.clear();
 }

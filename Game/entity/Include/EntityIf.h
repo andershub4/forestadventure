@@ -37,7 +37,7 @@ public:
     virtual void DrawTo(Graphic::RenderTargetIf& renderTarget) const = 0;
     virtual bool Intersect(const EntityIf& otherEntity) const = 0;
     virtual bool IsOutsideTileMap(const sf::FloatRect& rect) const = 0;
-    virtual void HandleCollision(const EntityId id, bool isSolid) = 0;
+    virtual void HandleCollision(const EntityId id) = 0;
     virtual void HandleOutsideTileMap() = 0;
     virtual EntityId GetId() const = 0;
 };

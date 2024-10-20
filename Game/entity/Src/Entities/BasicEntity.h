@@ -51,7 +51,7 @@ public:
     void DrawTo(Graphic::RenderTargetIf& renderTarget) const;
     bool Intersect(const EntityIf& otherEntity) const;
     bool IsOutsideTileMap(const sf::FloatRect& rect) const;
-    void HandleCollision(const EntityId id, bool isSolid);
+    void HandleCollision(const EntityId id);
     void HandleOutsideTileMap();
     EntityId GetId() const { return id_; }
 
