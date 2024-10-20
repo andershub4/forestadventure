@@ -14,7 +14,7 @@
 #include "EntityDb.h"
 #include "EntityHandler.h"
 #include "EntityIf.h"
-#include "EntityLifePool.h"
+#include "EntityLifeHandler.h"
 #include "Factory.h"
 #include "Folder.h"
 #include "Id.h"
@@ -41,7 +41,7 @@ Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureMana
     , entityDb_(std::make_unique<Entity::EntityDb>())
     , collisionHandler_(std::make_unique<Entity::CollisionHandler>(*entityDb_))
     , drawHandler_(std::make_unique<Entity::DrawHandler>(*entityDb_))
-    , entityLifePool_(std::make_unique<Entity::EntityLifePool>())
+    , entityLifeHandler_(std::make_unique<Entity::EntityLifeHandler>())
     , entityHandler_(std::make_unique<Entity::EntityHandler>(*entityDb_))
     , levelCreator_(std::make_unique<LevelCreator>(textureManager, sheetManager_))
 {}
@@ -139,20 +139,20 @@ void Level::CreateEntities()
 {
     LOG_INFO("Create entities");
     for (const auto &data : tileMap_->GetEntityGroup("Object Layer 1")) {
-        entityLifePool_->AddToCreationPool(data);
+        entityLifeHandler_->AddToCreationPool(data);
     }
     for (const auto &data : tileMap_->GetEntityGroup("Collision Layer 1")) {
-        entityLifePool_->AddToCreationPool(data);
+        entityLifeHandler_->AddToCreationPool(data);
     }
     HandleCreationPool();
 }
 
 void Level::HandleCreationPool()
 {
-    auto creationPool = entityLifePool_->MoveCreationPool();
+    auto creationPool = entityLifeHandler_->MoveCreationPool();
     for (const auto &data : creationPool) {
         auto id = entityHandler_->AddEntity(data, *factory_, messageBus_, textureManager_, sheetManager_, cameraViews_,
-                                            *entityLifePool_);
+                                            *entityLifeHandler_);
         drawHandler_->AddDrawable(id);
         collisionHandler_->AddCollider(id);
     }
@@ -160,7 +160,7 @@ void Level::HandleCreationPool()
 
 void Level::HandleDeletionPool()
 {
-    auto deletionPool = entityLifePool_->MoveDeletionPool();
+    auto deletionPool = entityLifeHandler_->MoveDeletionPool();
     for (const auto &id : deletionPool) {
         drawHandler_->RemoveDrawable(id);
         collisionHandler_->RemoveCollider(id);

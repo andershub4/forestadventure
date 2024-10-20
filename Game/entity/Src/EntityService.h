@@ -40,7 +40,7 @@ struct EntityData;
 namespace Entity {
 
 class EntityDb;
-class EntityLifePool;
+class EntityLifeHandler;
 class EntityIf;
 
 class EntityService
@@ -48,7 +48,7 @@ class EntityService
 public:
     EntityService(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
                   const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews,
-                  const EntityDb &entityDb, EntityLifePool &entityLifePool);
+                  const EntityDb &entityDb, EntityLifeHandler &entityLifeHandler);
     ~EntityService();
 
     std::shared_ptr<Shared::ImageAnimation> CreateImageAnimation(const std::vector<Shared::ImageData> &images);
@@ -71,7 +71,7 @@ private:
     const Shared::SheetManager &sheetManager_;
     const Shared::CameraViews &cameraViews_;
     const EntityDb &entityDb_;
-    EntityLifePool &entityLifePool_;
+    EntityLifeHandler &entityLifeHandler_;
 
 private:
     std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> CreateSequence(

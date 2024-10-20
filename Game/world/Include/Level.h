@@ -29,7 +29,7 @@ namespace Entity {
 
 class Factory;
 class EntityDb;
-class EntityLifePool;
+class EntityLifeHandler;
 class CollisionHandler;
 class DrawHandler;
 class EntityHandler;
@@ -76,7 +76,7 @@ private:
     std::unique_ptr<Entity::EntityDb> entityDb_;
     std::unique_ptr<Entity::CollisionHandler> collisionHandler_;
     std::unique_ptr<Entity::DrawHandler> drawHandler_;
-    std::unique_ptr<Entity::EntityLifePool> entityLifePool_;
+    std::unique_ptr<Entity::EntityLifeHandler> entityLifeHandler_;
     std::unique_ptr<Entity::EntityHandler> entityHandler_;
     std::unique_ptr<LevelCreator> levelCreator_;
     const float zoomFactor_{0.4f};

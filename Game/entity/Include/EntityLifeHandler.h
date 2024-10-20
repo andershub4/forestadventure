@@ -18,10 +18,10 @@ namespace FA {
 
 namespace Entity {
 
-class EntityLifePool
+class EntityLifeHandler
 {
 public:
-    ~EntityLifePool();
+    ~EntityLifeHandler();
 
     void AddToCreationPool(const Shared::EntityData &data);
     void AddToDeletionPool(EntityId id);

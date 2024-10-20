@@ -33,10 +33,10 @@ void EntityHandler::Update(float deltaTime)
 EntityId EntityHandler::AddEntity(const Shared::EntityData &data, const Factory &factory,
                                   Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
                                   const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews,
-                                  EntityLifePool &entityLifePool)
+                                  EntityLifeHandler &entityLifeHandler)
 {
     auto service = std::make_unique<Entity::EntityService>(messageBus, textureManager, sheetManager, cameraViews,
-                                                           entityDb_, entityLifePool);
+                                                           entityDb_, entityLifeHandler);
     auto entity = factory.Create(data, std::move(service));
     entity->Init();
     auto id = entity->GetId();

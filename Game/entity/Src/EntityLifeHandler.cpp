@@ -4,30 +4,30 @@
  *	See file LICENSE for full license details.
  */
 
-#include "EntityLifePool.h"
+#include "EntityLifeHandler.h"
 
 namespace FA {
 
 namespace Entity {
 
-EntityLifePool::~EntityLifePool() = default;
+EntityLifeHandler::~EntityLifeHandler() = default;
 
-void EntityLifePool::AddToCreationPool(const Shared::EntityData &data)
+void EntityLifeHandler::AddToCreationPool(const Shared::EntityData &data)
 {
     creationPool_.push_back(data);
 }
 
-void EntityLifePool::AddToDeletionPool(EntityId id)
+void EntityLifeHandler::AddToDeletionPool(EntityId id)
 {
     deletionPool_.insert(id);
 }
 
-std::vector<Shared::EntityData> &&EntityLifePool::MoveCreationPool()
+std::vector<Shared::EntityData> &&EntityLifeHandler::MoveCreationPool()
 {
     return std::move(creationPool_);
 }
 
-std::unordered_set<EntityId> &&EntityLifePool::MoveDeletionPool()
+std::unordered_set<EntityId> &&EntityLifeHandler::MoveDeletionPool()
 {
     return std::move(deletionPool_);
 }

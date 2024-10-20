@@ -13,8 +13,7 @@
 #include "Constant/Entity.h"
 #include "Entities/BasicEntity.h"
 #include "EntityDb.h"
-#include "EntityLifePool.h"
-//#include "Enum/EntityType.h"
+#include "EntityLifeHandler.h"
 #include "EntityType.h"
 #include "Message/MessageBus.h"
 #include "RectangleShape.h"
@@ -36,13 +35,13 @@ namespace Entity {
 
 EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::TextureManager& textureManager,
                              const Shared::SheetManager& sheetManager, const Shared::CameraViews& cameraViews,
-                             const EntityDb& entityDb, EntityLifePool& entityLifePool)
+                             const EntityDb& entityDb, EntityLifeHandler& entityLifeHandler)
     : messageBus_(messageBus)
     , textureManager_(textureManager)
     , sheetManager_(sheetManager)
     , cameraViews_(cameraViews)
     , entityDb_(entityDb)
-    , entityLifePool_(entityLifePool)
+    , entityLifeHandler_(entityLifeHandler)
 {}
 
 EntityService::~EntityService() = default;
@@ -137,12 +136,12 @@ Shared::CameraView& EntityService::GetCameraView() const
 
 void EntityService::AddToCreationPool(const Shared::EntityData& data)
 {
-    entityLifePool_.AddToCreationPool(data);
+    entityLifeHandler_.AddToCreationPool(data);
 }
 
 void EntityService::AddToDeletionPool(EntityId id)
 {
-    entityLifePool_.AddToDeletionPool(id);
+    entityLifeHandler_.AddToDeletionPool(id);
 }
 
 EntityIf& EntityService::GetEntity(EntityId id) const
