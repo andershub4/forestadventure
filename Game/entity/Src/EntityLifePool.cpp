@@ -10,6 +10,8 @@ namespace FA {
 
 namespace Entity {
 
+EntityLifePool::~EntityLifePool() = default;
+
 void EntityLifePool::AddToCreationPool(const Shared::EntityData &data)
 {
     creationPool_.push_back(data);

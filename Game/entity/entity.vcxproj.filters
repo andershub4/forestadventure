@@ -84,7 +84,7 @@
     <ClInclude Include="Src\Body.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EntityService.h">
+    <ClInclude Include="Src\EntityService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\EventType.h">
@@ -156,6 +156,9 @@
     <ClInclude Include="Include\EntityIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EntityHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Abilities\MoveAbility.cpp">
@@ -207,6 +210,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\DrawHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EntityHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

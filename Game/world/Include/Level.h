@@ -34,6 +34,7 @@ class EntityDb;
 class EntityLifePool;
 class CollisionHandler;
 class DrawHandler;
+class EntityHandler;
 
 }  // namespace Entity
 
@@ -73,12 +74,12 @@ private:
     Shared::SheetManager sheetManager_;
     std::unique_ptr<TileMap> tileMap_;
     Shared::CameraViews cameraViews_;
-    std::unordered_set<Entity::EntityId> allEntities_;
     std::unique_ptr<Entity::Factory> factory_;
     std::unique_ptr<Entity::EntityDb> entityDb_;
     std::unique_ptr<Entity::CollisionHandler> collisionHandler_;
     std::unique_ptr<Entity::DrawHandler> drawHandler_;
     std::unique_ptr<Entity::EntityLifePool> entityLifePool_;
+    std::unique_ptr<Entity::EntityHandler> entityHandler_;
     std::unique_ptr<LevelCreator> levelCreator_;
     const float zoomFactor_{0.4f};
 

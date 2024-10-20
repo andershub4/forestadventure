@@ -8,8 +8,8 @@
 
 #include <sstream>
 
-#include "EntityIf.h"
 #include "EntityDb.h"
+#include "EntityIf.h"
 
 namespace FA {
 
@@ -18,6 +18,8 @@ namespace Entity {
 DrawHandler::DrawHandler(const EntityDb &entityDb)
     : entityDb_(entityDb)
 {}
+
+DrawHandler::~DrawHandler() = default;
 
 void DrawHandler::AddDrawable(EntityId id)
 {

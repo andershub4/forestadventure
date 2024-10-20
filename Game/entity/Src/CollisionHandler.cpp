@@ -9,8 +9,8 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "EntityIf.h"
 #include "EntityDb.h"
+#include "EntityIf.h"
 
 namespace FA {
 
@@ -19,6 +19,8 @@ namespace Entity {
 CollisionHandler::CollisionHandler(const EntityDb &entityDb)
     : entityDb_(entityDb)
 {}
+
+CollisionHandler::~CollisionHandler() = default;
 
 void CollisionHandler::AddCollider(EntityId id)
 {

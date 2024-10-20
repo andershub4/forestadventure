@@ -27,6 +27,7 @@ class DrawHandler
 {
 public:
     DrawHandler(const EntityDb &entityDb);
+    ~DrawHandler();
 
     void AddDrawable(EntityId id);
     void RemoveDrawable(EntityId id);

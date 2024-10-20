@@ -22,6 +22,7 @@ class CollisionHandler
 {
 public:
     CollisionHandler(const EntityDb &entityDb);
+    ~CollisionHandler();
 
     void AddCollider(EntityId id);
     void RemoveCollider(EntityId id);

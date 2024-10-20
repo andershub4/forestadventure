@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EntityHandler.h" />
     <ClInclude Include="Include\EntityIf.h" />
     <ClInclude Include="Src\Abilities\AbilityIf.h" />
     <ClInclude Include="Src\Abilities\MoveAbility.h" />
@@ -156,7 +157,7 @@
     <ClInclude Include="Src\Entities\RectEntity.h" />
     <ClInclude Include="Include\EntityLifePool.h" />
     <ClInclude Include="Include\EntityDb.h" />
-    <ClInclude Include="Include\EntityService.h" />
+    <ClInclude Include="Src\EntityService.h" />
     <ClInclude Include="Include\EntityType.h" />
     <ClInclude Include="Src\Enum\FaceDirection.h" />
     <ClInclude Include="Src\Enum\MoveDirection.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="Src\Entities\MoleEntity.cpp" />
     <ClCompile Include="Src\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Src\Entities\RectEntity.cpp" />
+    <ClCompile Include="Src\EntityHandler.cpp" />
     <ClCompile Include="Src\EntityLifePool.cpp" />
     <ClCompile Include="Src\EntityDb.cpp" />
     <ClCompile Include="Src\EntityService.cpp" />

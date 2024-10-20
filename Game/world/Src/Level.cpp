@@ -12,9 +12,9 @@
 #include "CollisionHandler.h"
 #include "DrawHandler.h"
 #include "EntityDb.h"
+#include "EntityHandler.h"
 #include "EntityIf.h"
 #include "EntityLifePool.h"
-#include "EntityService.h"
 #include "Factory.h"
 #include "Folder.h"
 #include "LevelCreator.h"
@@ -41,6 +41,7 @@ Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureMana
     , collisionHandler_(std::make_unique<Entity::CollisionHandler>(*entityDb_))
     , drawHandler_(std::make_unique<Entity::DrawHandler>(*entityDb_))
     , entityLifePool_(std::make_unique<Entity::EntityLifePool>())
+    , entityHandler_(std::make_unique<Entity::EntityHandler>(*entityDb_))
     , levelCreator_(std::make_unique<LevelCreator>(textureManager, sheetManager_))
 {}
 
@@ -83,9 +84,7 @@ void Level::Update(float deltaTime)
     for (auto &animation : animationLayer_) {
         animation.Update(deltaTime);
     }
-    for (const auto id : allEntities_) {
-        entityDb_->GetEntity(id).Update(deltaTime);
-    }
+    entityHandler_->Update(deltaTime);
     collisionHandler_->DetectCollisions();
     collisionHandler_->DetectOutsideTileMap(tileMap_->GetSize());
     collisionHandler_->HandleCollisions();
@@ -159,25 +158,17 @@ void Level::CreateEntities()
 
 void Level::HandleCreation(const Shared::EntityData &data)
 {
-    auto service = std::make_unique<Entity::EntityService>(messageBus_, textureManager_, sheetManager_, cameraViews_,
-                                                           *entityDb_, *entityLifePool_);
-    auto entity = factory_->Create(data, std::move(service));
-    entity->Init();
-    auto id = entity->GetId();
-    entityDb_->AddEntity(std::move(entity));
-    allEntities_.insert(id);
+    auto id = entityHandler_->AddEntity(data, *factory_, messageBus_, textureManager_, sheetManager_, cameraViews_,
+                                        *entityLifePool_);
     drawHandler_->AddDrawable(id);
     collisionHandler_->AddCollider(id);
 }
 
 void Level::HandleDeletion(Entity::EntityId id)
 {
-    auto &entity = entityDb_->GetEntity(id);
-    entity.Destroy();
-    allEntities_.erase(id);
     drawHandler_->RemoveDrawable(id);
     collisionHandler_->RemoveCollider(id);
-    entityDb_->DeleteEntity(id);
+    entityHandler_->RemoveEntity(id);
 }
 
 }  // namespace World

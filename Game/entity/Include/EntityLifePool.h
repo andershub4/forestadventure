@@ -21,6 +21,8 @@ namespace Entity {
 class EntityLifePool
 {
 public:
+    ~EntityLifePool();
+
     void AddToCreationPool(const Shared::EntityData &data);
     void AddToDeletionPool(EntityId id);
     std::vector<Shared::EntityData> &&MoveCreationPool();
