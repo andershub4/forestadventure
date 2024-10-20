@@ -17,6 +17,7 @@
 #include "EntityLifePool.h"
 #include "Factory.h"
 #include "Folder.h"
+#include "Id.h"
 #include "LevelCreator.h"
 #include "Logging.h"
 #include "RenderTargetIf.h"
@@ -76,10 +77,7 @@ Graphic::View Level::GetView() const
 
 void Level::Update(float deltaTime)
 {
-    auto creationPool = entityLifePool_->MoveCreationPool();
-    for (const auto &data : creationPool) {
-        HandleCreation(data);
-    }
+    HandleCreationPool();
     cameraViews_.Update(deltaTime);
     for (auto &animation : animationLayer_) {
         animation.Update(deltaTime);
@@ -89,10 +87,7 @@ void Level::Update(float deltaTime)
     collisionHandler_->DetectOutsideTileMap(tileMap_->GetSize());
     collisionHandler_->HandleCollisions();
     collisionHandler_->HandleOutsideTileMap();
-    auto deletionPool = entityLifePool_->MoveDeletionPool();
-    for (const auto &id : deletionPool) {
-        HandleDeletion(id);
-    }
+    HandleDeletionPool();
 }
 
 void Level::Draw(Graphic::RenderTargetIf &renderTarget)
@@ -149,26 +144,28 @@ void Level::CreateEntities()
     for (const auto &data : tileMap_->GetEntityGroup("Collision Layer 1")) {
         entityLifePool_->AddToCreationPool(data);
     }
+    HandleCreationPool();
+}
 
+void Level::HandleCreationPool()
+{
     auto creationPool = entityLifePool_->MoveCreationPool();
     for (const auto &data : creationPool) {
-        HandleCreation(data);
+        auto id = entityHandler_->AddEntity(data, *factory_, messageBus_, textureManager_, sheetManager_, cameraViews_,
+                                            *entityLifePool_);
+        drawHandler_->AddDrawable(id);
+        collisionHandler_->AddCollider(id);
     }
 }
 
-void Level::HandleCreation(const Shared::EntityData &data)
+void Level::HandleDeletionPool()
 {
-    auto id = entityHandler_->AddEntity(data, *factory_, messageBus_, textureManager_, sheetManager_, cameraViews_,
-                                        *entityLifePool_);
-    drawHandler_->AddDrawable(id);
-    collisionHandler_->AddCollider(id);
-}
-
-void Level::HandleDeletion(Entity::EntityId id)
-{
-    drawHandler_->RemoveDrawable(id);
-    collisionHandler_->RemoveCollider(id);
-    entityHandler_->RemoveEntity(id);
+    auto deletionPool = entityLifePool_->MoveDeletionPool();
+    for (const auto &id : deletionPool) {
+        drawHandler_->RemoveDrawable(id);
+        collisionHandler_->RemoveCollider(id);
+        entityHandler_->RemoveEntity(id);
+    }
 }
 
 }  // namespace World

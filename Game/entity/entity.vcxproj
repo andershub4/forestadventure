@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Include\EntityHandler.h" />
     <ClInclude Include="Include\EntityIf.h" />
+    <ClInclude Include="Include\Id.h" />
     <ClInclude Include="Src\Abilities\AbilityIf.h" />
     <ClInclude Include="Src\Abilities\MoveAbility.h" />
     <ClInclude Include="Src\Body.h" />

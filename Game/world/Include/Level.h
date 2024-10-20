@@ -7,12 +7,10 @@
 #pragma once
 
 #include <memory>
-#include <unordered_set>
 #include <vector>
 
 #include "Animation/ImageAnimation.h"
 #include "CameraViews.h"
-#include "Id.h"
 #include "RenderTexture.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureManager.h"
@@ -88,8 +86,8 @@ private:
     void LoadTileMap(const std::string& levelName);
     void CreateMap();
     void CreateEntities();
-    void HandleCreation(const Shared::EntityData& data);
-    void HandleDeletion(Entity::EntityId id);
+    void HandleCreationPool();
+    void HandleDeletionPool();
 };
 
 }  // namespace World
