@@ -40,20 +40,15 @@ public:
     BasicEntity(EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> service);
     virtual ~BasicEntity();
 
-    virtual EntityType Type() const = 0;
-    virtual LayerType GetLayer() const = 0;
-    virtual bool IsStatic() const = 0;
-    virtual bool IsSolid() const = 0;
-
-    void Destroy();
-    void Init();
-    void Update(float deltaTime);
-    void DrawTo(Graphic::RenderTargetIf& renderTarget) const;
-    bool Intersect(const EntityIf& otherEntity) const;
-    bool IsOutsideTileMap(const sf::FloatRect& rect) const;
-    void HandleCollision(const EntityId id);
-    void HandleOutsideTileMap();
-    EntityId GetId() const { return id_; }
+    void Destroy() final;
+    void Init() final;
+    void Update(float deltaTime) final;
+    void DrawTo(Graphic::RenderTargetIf& renderTarget) const final;
+    bool Intersect(const EntityIf& otherEntity) const final;
+    bool IsOutsideTileMap(const sf::FloatRect& rect) const final;
+    void HandleCollision(const EntityId id) final;
+    void HandleOutsideTileMap() final;
+    EntityId GetId() const final { return id_; }
 
 protected:
     PropertyStore propertyStore_;
