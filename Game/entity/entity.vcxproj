@@ -153,6 +153,7 @@
     <ClInclude Include="Src\Entities\ArrowEntity.h" />
     <ClInclude Include="Src\Entities\BasicEntity.h" />
     <ClInclude Include="Src\Entities\CoinEntity.h" />
+    <ClInclude Include="Src\Entities\EntranceEntity.h" />
     <ClInclude Include="Src\Entities\MoleEntity.h" />
     <ClInclude Include="Src\Entities\PlayerEntity.h" />
     <ClInclude Include="Src\Entities\RectEntity.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Src\Entities\ArrowEntity.cpp" />
     <ClCompile Include="Src\Entities\BasicEntity.cpp" />
     <ClCompile Include="Src\Entities\CoinEntity.cpp" />
+    <ClCompile Include="Src\Entities\EntranceEntity.cpp" />
     <ClCompile Include="Src\Entities\MoleEntity.cpp" />
     <ClCompile Include="Src\Entities\PlayerEntity.cpp" />
     <ClCompile Include="Src\Entities\RectEntity.cpp" />

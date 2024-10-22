@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="48">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="50">
  <tileset firstgid="1" source="tileset.tsx"/>
  <tileset firstgid="1089" source="simplewater.tsx"/>
  <layer id="6" name="Ground Layer 1" width="100" height="100">
@@ -402,6 +402,18 @@
   <object id="39" type="Mole" x="688.5" y="335">
    <properties>
     <property name="FaceDirection" value="Left"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="48" type="Entrance" x="117" y="312.5">
+   <properties>
+    <property name="ExitId" value="49"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="49" type="Entrance" x="231" y="312.5">
+   <properties>
+    <property name="ExitId" value="48"/>
    </properties>
    <point/>
   </object>

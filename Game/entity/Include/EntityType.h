@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Entity {
 
-enum class EntityType { Unknown, Rect, Player, Mole, Arrow, Coin };
+enum class EntityType { Unknown, Rect, Player, Mole, Arrow, Coin, Entrance };
 
 inline std::ostream& operator<<(std::ostream& os, const EntityType& e)
 {
@@ -23,6 +23,9 @@ inline std::ostream& operator<<(std::ostream& os, const EntityType& e)
             break;
         case EntityType::Coin:
             str = "Coin";
+            break;
+        case EntityType::Entrance:
+            str = "Entrance";
             break;
         case EntityType::Mole:
             str = "Mole";

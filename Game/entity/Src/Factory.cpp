@@ -8,6 +8,7 @@
 
 #include "Entities/ArrowEntity.h"
 #include "Entities/CoinEntity.h"
+#include "Entities/EntranceEntity.h"
 #include "Entities/MoleEntity.h"
 #include "Entities/PlayerEntity.h"
 #include "Entities/RectEntity.h"
@@ -36,6 +37,10 @@ Factory::Factory()
     RegisterEntity(RectEntity::str, [](EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> s) {
         return std::make_unique<RectEntity>(id, data, std::move(s));
     });
+    RegisterEntity(EntranceEntity::str,
+                   [](EntityId id, const Shared::EntityData& data, std::unique_ptr<EntityService> s) {
+                       return std::make_unique<EntranceEntity>(id, data, std::move(s));
+                   });
 }
 
 Factory::~Factory() = default;

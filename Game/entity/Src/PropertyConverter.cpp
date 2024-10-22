@@ -44,6 +44,12 @@ MoveDirection ToValue(const std::string &valueStr)
     return MoveDirection::None;
 }
 
+template <>
+int ToValue(const std::string &valueStr)
+{
+    return std::stoi(valueStr);
+}
+
 }  // namespace Entity
 
 }  // namespace FA
