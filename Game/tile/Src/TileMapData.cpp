@@ -94,13 +94,13 @@ std::ostream& operator<<(std::ostream& os, const TileMapData::Layer& p)
 
 bool operator==(const TileMapData::Object& lhs, const TileMapData::Object& rhs)
 {
-    return std::tie(lhs.typeStr_, lhs.x_, lhs.y_, lhs.width_, lhs.height_, lhs.properties_) ==
-           std::tie(rhs.typeStr_, rhs.x_, rhs.y_, rhs.width_, rhs.height_, rhs.properties_);
+    return std::tie(lhs.id_, lhs.typeStr_, lhs.x_, lhs.y_, lhs.width_, lhs.height_, lhs.properties_) ==
+           std::tie(rhs.id_, rhs.typeStr_, rhs.x_, rhs.y_, rhs.width_, rhs.height_, rhs.properties_);
 }
 
 std::ostream& operator<<(std::ostream& os, const TileMapData::Object& p)
 {
-    os << "typeStr: " << p.typeStr_ << " x: " << p.x_ << " y: " << p.y_ << " width: " << p.width_
+    os << "id: " << p.id_ << " typeStr: " << p.typeStr_ << " x: " << p.x_ << " y: " << p.y_ << " width: " << p.width_
        << " height: " << p.height_ << " properties: " << p.properties_;
 
     return os;

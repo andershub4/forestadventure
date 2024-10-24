@@ -116,6 +116,7 @@ public:
             group.name_ = parsedObjectGroup.name_;
             for (const auto &parsedObject : parsedObjectGroup.objects_) {
                 TileMapData::Object object;
+                object.id_ = parsedObject.id_;
                 object.typeStr_ = parsedObject.type_;
                 object.x_ = parsedObject.x_;
                 object.y_ = parsedObject.y_;

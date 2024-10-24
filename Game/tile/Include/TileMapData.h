@@ -85,6 +85,7 @@ struct TileMapData
 
     struct Object
     {
+        int id_;
         std::string typeStr_{};
         int x_{};
         int y_{};
