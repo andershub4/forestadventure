@@ -144,6 +144,7 @@
     <ClInclude Include="Include\EntityHandler.h" />
     <ClInclude Include="Include\EntityIf.h" />
     <ClInclude Include="Include\Id.h" />
+    <ClInclude Include="Include\ObjIdTranslator.h" />
     <ClInclude Include="Src\Abilities\AbilityIf.h" />
     <ClInclude Include="Src\Abilities\MoveAbility.h" />
     <ClInclude Include="Src\Body.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="Src\EntityDb.cpp" />
     <ClCompile Include="Src\EntityService.cpp" />
     <ClCompile Include="Src\Factory.cpp" />
+    <ClCompile Include="Src\ObjIdTranslator.cpp" />
     <ClCompile Include="Src\PropertyConverter.cpp" />
     <ClCompile Include="Src\Shape.cpp" />
     <ClCompile Include="Src\State.cpp" />

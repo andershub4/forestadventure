@@ -27,6 +27,7 @@ namespace Entity {
 class EntityDb;
 class Factory;
 class EntityLifeHandler;
+class ObjIdTranslator;
 
 class EntityHandler
 {
@@ -37,7 +38,8 @@ public:
     void Update(float deltaTime);
     EntityId AddEntity(const Shared::EntityData &data, const Factory &factory, Shared::MessageBus &messageBus,
                        const Shared::TextureManager &textureManager, const Shared::SheetManager &sheetManager,
-                       const Shared::CameraViews &cameraViews, EntityLifeHandler &entityLifeHandler);
+                       const Shared::CameraViews &cameraViews, EntityLifeHandler &entityLifeHandler,
+                       const ObjIdTranslator &objIdTranslator);
     void RemoveEntity(EntityId id);
 
 private:

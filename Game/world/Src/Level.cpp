@@ -20,6 +20,7 @@
 #include "Id.h"
 #include "LevelCreator.h"
 #include "Logging.h"
+#include "ObjIdTranslator.h"
 #include "RenderTargetIf.h"
 #include "Resource/ResourceId.h"
 #include "Resource/SpriteSheet.h"
@@ -43,6 +44,7 @@ Level::Level(Shared::MessageBus &messageBus, Shared::TextureManager &textureMana
     , drawHandler_(std::make_unique<Entity::DrawHandler>(*entityDb_))
     , entityLifeHandler_(std::make_unique<Entity::EntityLifeHandler>())
     , entityHandler_(std::make_unique<Entity::EntityHandler>(*entityDb_))
+    , objIdTranslator_(std::make_unique<Entity::ObjIdTranslator>())
     , levelCreator_(std::make_unique<LevelCreator>(textureManager, sheetManager_))
 {}
 
@@ -152,7 +154,8 @@ void Level::HandleCreationPool()
     auto creationPool = entityLifeHandler_->MoveCreationPool();
     for (const auto &data : creationPool) {
         auto id = entityHandler_->AddEntity(data, *factory_, messageBus_, textureManager_, sheetManager_, cameraViews_,
-                                            *entityLifeHandler_);
+                                            *entityLifeHandler_, *objIdTranslator_);
+        objIdTranslator_->Add(id, data.objId_);
         drawHandler_->AddDrawable(id);
         collisionHandler_->AddCollider(id);
     }
@@ -162,6 +165,7 @@ void Level::HandleDeletionPool()
 {
     auto deletionPool = entityLifeHandler_->MoveDeletionPool();
     for (const auto &id : deletionPool) {
+        objIdTranslator_->Remove(id);
         drawHandler_->RemoveDrawable(id);
         collisionHandler_->RemoveCollider(id);
         entityHandler_->RemoveEntity(id);

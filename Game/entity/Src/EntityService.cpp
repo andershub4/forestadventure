@@ -16,6 +16,7 @@
 #include "EntityLifeHandler.h"
 #include "EntityType.h"
 #include "Message/MessageBus.h"
+#include "ObjIdTranslator.h"
 #include "RectangleShape.h"
 #include "Resource/ColliderData.h"
 #include "Resource/ColliderFrame.h"
@@ -35,13 +36,15 @@ namespace Entity {
 
 EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::TextureManager& textureManager,
                              const Shared::SheetManager& sheetManager, const Shared::CameraViews& cameraViews,
-                             const EntityDb& entityDb, EntityLifeHandler& entityLifeHandler)
+                             const EntityDb& entityDb, EntityLifeHandler& entityLifeHandler,
+                             const ObjIdTranslator& objIdTranslator)
     : messageBus_(messageBus)
     , textureManager_(textureManager)
     , sheetManager_(sheetManager)
     , cameraViews_(cameraViews)
     , entityDb_(entityDb)
     , entityLifeHandler_(entityLifeHandler)
+    , objIdTranslator_(objIdTranslator)
 {}
 
 EntityService::~EntityService() = default;

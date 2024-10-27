@@ -42,13 +42,15 @@ namespace Entity {
 class EntityDb;
 class EntityLifeHandler;
 class EntityIf;
+class ObjIdTranslator;
 
 class EntityService
 {
 public:
     EntityService(Shared::MessageBus &messageBus, const Shared::TextureManager &textureManager,
                   const Shared::SheetManager &sheetManager, const Shared::CameraViews &cameraViews,
-                  const EntityDb &entityDb, EntityLifeHandler &entityLifeHandler);
+                  const EntityDb &entityDb, EntityLifeHandler &entityLifeHandler,
+                  const ObjIdTranslator &objIdTranslator);
     ~EntityService();
 
     std::shared_ptr<Shared::ImageAnimation> CreateImageAnimation(const std::vector<Shared::ImageData> &images);
@@ -72,6 +74,7 @@ private:
     const Shared::CameraViews &cameraViews_;
     const EntityDb &entityDb_;
     EntityLifeHandler &entityLifeHandler_;
+    const ObjIdTranslator &objIdTranslator_;
 
 private:
     std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> CreateSequence(

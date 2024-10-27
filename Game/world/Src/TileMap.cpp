@@ -106,6 +106,7 @@ void TileMap::SetupEntityGroups()
         std::vector<Shared::EntityData> entityDatas;
         for (const auto& object : group.objects_) {
             Shared::EntityData entityData;
+            entityData.objId_ = object.id_;
             entityData.position_ = sf::Vector2f(static_cast<float>(object.x_), static_cast<float>(object.y_));
             entityData.size_ = sf::Vector2f(static_cast<float>(object.width_), static_cast<float>(object.height_));
             entityData.typeStr_ = object.typeStr_;

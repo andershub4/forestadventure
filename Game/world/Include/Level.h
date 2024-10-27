@@ -33,6 +33,7 @@ class EntityLifeHandler;
 class CollisionHandler;
 class DrawHandler;
 class EntityHandler;
+class ObjIdTranslator;
 
 }  // namespace Entity
 
@@ -78,6 +79,7 @@ private:
     std::unique_ptr<Entity::DrawHandler> drawHandler_;
     std::unique_ptr<Entity::EntityLifeHandler> entityLifeHandler_;
     std::unique_ptr<Entity::EntityHandler> entityHandler_;
+    std::unique_ptr<Entity::ObjIdTranslator> objIdTranslator_;
     std::unique_ptr<LevelCreator> levelCreator_;
     const float zoomFactor_{0.4f};
 

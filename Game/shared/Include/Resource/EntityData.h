@@ -17,6 +17,7 @@ namespace Shared {
 
 struct EntityData
 {
+    int objId_{};
     std::string typeStr_{};
     sf::Vector2f position_{};
     sf::Vector2f size_{};
