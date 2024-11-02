@@ -63,6 +63,14 @@ protected:
     std::shared_ptr<State> RegisterState(StateType stateType);
     void SendMessage(std::shared_ptr<Shared::Message> message);
 
+    template <class T>
+    void GetProperty(const BasicEntity& entity, const std::string& name, T& value) const
+    {
+        entity.propertyStore_.Get(name, value);
+    }
+
+    sf::Vector2f GetPosition(const BasicEntity& entity) const { return entity.body_.position_; }
+
 private:
     EntityId id_ = InvalidEntityId;
     const Shared::EntityData data_;

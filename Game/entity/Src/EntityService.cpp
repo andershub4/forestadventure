@@ -152,6 +152,11 @@ EntityIf& EntityService::GetEntity(EntityId id) const
     return entityDb_.GetEntity(id);
 }
 
+EntityId EntityService::ObjIdToEntityId(int objId) const
+{
+    return objIdTranslator_.ObjIdToEntityId(objId);
+}
+
 Shared::TextureRect EntityService::MirrorX(const Shared::TextureRect& textureRect) const
 {
     Shared::TextureRect mirrorRect = textureRect;

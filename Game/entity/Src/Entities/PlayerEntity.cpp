@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "Abilities/DistanceRegisterAbility.h"
 #include "Abilities/MoveAbility.h"
 #include "Animation/ColliderAnimation.h"
 #include "CameraView.h"
@@ -310,6 +311,8 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
     DefineIdleState(idleState);
     auto moveState = RegisterState(StateType::Move);
     DefineMoveState(moveState);
+    auto autoMoveState = RegisterState(StateType::AutoMove);
+    DefineAutoMoveState(autoMoveState);
     auto attackState = RegisterState(StateType::Attack);
     DefineAttackState(attackState);
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
@@ -362,7 +365,48 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
         else if (collisionEntity.Type() == EntityType::Coin) {
             coins_++;
         }
+        else if (collisionEntity.Type() == EntityType::Entrance) {
+            FaceDirection dir;
+            propertyStore_.Get("FaceDirection", dir);
+            if (dir == FaceDirection::Up) {
+                auto& entrance = dynamic_cast<BasicEntity&>(collisionEntity);
+                int exitObjId = 0;
+                GetProperty(entrance, "ExitId", exitObjId);
+                int exitId = service_->ObjIdToEntityId(exitObjId);
+                auto& exit = dynamic_cast<BasicEntity&>(service_->GetEntity(exitId));
+                auto exitPos = GetPosition(exit);
+                body_.position_ = {exitPos.x + 5.0f, exitPos.y};
+                auto& cameraView = service_->GetCameraView();
+                sf::Vector2f cameraPos{exitPos.x + 5.0f, exitPos.y + 20.0f};
+                cameraView.SetFixPoint(cameraPos);
+                auto event = std::make_shared<StartMoveEvent>(MoveDirection::Down);
+                ChangeStateTo(StateType::AutoMove, event);
+            }
+        }
     });
+}
+
+void PlayerEntity::DefineAutoMoveState(std::shared_ptr<State> state)
+{
+    auto updateCB = [](const Shared::ImageAnimationIf& animation) {};
+    auto shapePart = MakeShapePart(moveFaceDirImages, updateCB);
+    state->RegisterShapePart(shapePart);
+
+    auto move = std::make_shared<MoveAbility>(
+        Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
+        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
+    state->RegisterAbility(move);
+
+    auto distanceRegister = std::make_shared<DistanceRegisterAbility>(Constant::stdVelocity, [this](float distance) {
+        if (distance > 20.0f) {
+            auto& cameraView = service_->GetCameraView();
+            cameraView.SetTrackPoint(body_.position_);
+            ChangeStateTo(StateType::Idle, nullptr);
+        }
+    });
+    state->RegisterAbility(distanceRegister);
+    state->RegisterIgnoreEvents(
+        {EventType::StartMove, EventType::StopMove, EventType::Attack, EventType::AttackWeapon});
 }
 
 void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)

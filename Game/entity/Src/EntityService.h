@@ -66,6 +66,7 @@ public:
     void AddToCreationPool(const Shared::EntityData &data);
     void AddToDeletionPool(EntityId id);
     EntityIf &GetEntity(EntityId id) const;
+    EntityId ObjIdToEntityId(int objId) const;
 
 private:
     Shared::MessageBus &messageBus_;
