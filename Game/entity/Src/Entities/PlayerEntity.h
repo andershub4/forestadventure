@@ -59,7 +59,7 @@ private:
 
     void DefineIdleState(std::shared_ptr<State> state);
     void DefineMoveState(std::shared_ptr<State> state);
-    void DefineAutoMoveState(std::shared_ptr<State> state);
+    void DefineDoorMoveState(std::shared_ptr<State> state);
     void DefineAttackState(std::shared_ptr<State> state);
     void DefineAttackWeaponState(std::shared_ptr<State> state);
 

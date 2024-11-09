@@ -22,6 +22,7 @@ enum class EventType {
     Collision,
     StaticCollision,
     OutsideTileMap,
+    StartDoorMove,
     Dead,
     Destroy
 };
@@ -44,6 +45,9 @@ inline std::ostream& operator<<(std::ostream& os, const EventType& e)
             break;
         case EventType::OutsideTileMap:
             str = "OutsideTileMap";
+            break;
+        case EventType::StartDoorMove:
+            str = "StartDoorMove";
             break;
         case EventType::Init:
             str = "Init";

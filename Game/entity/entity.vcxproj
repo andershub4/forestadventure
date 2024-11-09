@@ -146,7 +146,7 @@
     <ClInclude Include="Include\Id.h" />
     <ClInclude Include="Include\ObjIdTranslator.h" />
     <ClInclude Include="Src\Abilities\AbilityIf.h" />
-    <ClInclude Include="Src\Abilities\DistanceRegisterAbility.h" />
+    <ClInclude Include="Src\Abilities\DoorMoveAbility.h" />
     <ClInclude Include="Src\Abilities\MoveAbility.h" />
     <ClInclude Include="Src\Body.h" />
     <ClInclude Include="Include\CollisionHandler.h" />
@@ -171,6 +171,7 @@
     <ClInclude Include="Src\Events\CollisionEvent.h" />
     <ClInclude Include="Src\Events\DeadEvent.h" />
     <ClInclude Include="Src\Events\DestroyEvent.h" />
+    <ClInclude Include="Src\Events\StartDoorMoveEvent.h" />
     <ClInclude Include="Src\Events\InitEvent.h" />
     <ClInclude Include="Src\Events\OutsideTileMapEvent.h" />
     <ClInclude Include="Src\Events\StartMoveEvent.h" />
@@ -195,7 +196,7 @@
     <ClInclude Include="Src\StateType.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Abilities\DistanceRegisterAbility.cpp" />
+    <ClCompile Include="Src\Abilities\DoorMoveAbility.cpp" />
     <ClCompile Include="Src\Abilities\MoveAbility.cpp" />
     <ClCompile Include="Src\CollisionHandler.cpp" />
     <ClCompile Include="Src\DrawHandler.cpp" />

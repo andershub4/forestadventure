@@ -10,7 +10,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Abilities/DistanceRegisterAbility.h"
+#include "Abilities/DoorMoveAbility.h"
 #include "Abilities/MoveAbility.h"
 #include "Animation/ColliderAnimation.h"
 #include "CameraView.h"
@@ -18,6 +18,7 @@
 #include "Entities/ArrowEntity.h"
 #include "Events/AttackEvent.h"
 #include "Events/AttackWeaponEvent.h"
+#include "Events/StartDoorMoveEvent.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
 #include "Events/StartMoveEvent.h"
@@ -311,8 +312,8 @@ void PlayerEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_
     DefineIdleState(idleState);
     auto moveState = RegisterState(StateType::Move);
     DefineMoveState(moveState);
-    auto autoMoveState = RegisterState(StateType::AutoMove);
-    DefineAutoMoveState(autoMoveState);
+    auto doorMoveState = RegisterState(StateType::DoorMove);
+    DefineDoorMoveState(doorMoveState);
     auto attackState = RegisterState(StateType::Attack);
     DefineAttackState(attackState);
     auto attackWeaponState = RegisterState(StateType::AttackWeapon);
@@ -372,39 +373,42 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
                 auto& entrance = dynamic_cast<BasicEntity&>(collisionEntity);
                 int exitObjId = 0;
                 GetProperty(entrance, "ExitId", exitObjId);
-                int exitId = service_->ObjIdToEntityId(exitObjId);
+                EntityId exitId = service_->ObjIdToEntityId(exitObjId);
                 auto& exit = dynamic_cast<BasicEntity&>(service_->GetEntity(exitId));
                 auto exitPos = GetPosition(exit);
-                body_.position_ = {exitPos.x + 5.0f, exitPos.y};
-                auto& cameraView = service_->GetCameraView();
-                sf::Vector2f cameraPos{exitPos.x + 5.0f, exitPos.y + 20.0f};
-                cameraView.SetFixPoint(cameraPos);
-                auto event = std::make_shared<StartMoveEvent>(MoveDirection::Down);
-                ChangeStateTo(StateType::AutoMove, event);
+                auto event = std::make_shared<StartDoorMoveEvent>(exitPos);
+                ChangeStateTo(StateType::DoorMove, event);
             }
         }
     });
 }
 
-void PlayerEntity::DefineAutoMoveState(std::shared_ptr<State> state)
+void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
 {
     auto updateCB = [](const Shared::ImageAnimationIf& animation) {};
     auto shapePart = MakeShapePart(moveFaceDirImages, updateCB);
     state->RegisterShapePart(shapePart);
 
-    auto move = std::make_shared<MoveAbility>(
-        Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
-        [this](const sf::Vector2f& d) { OnUpdateMove(d); });
-    state->RegisterAbility(move);
-
-    auto distanceRegister = std::make_shared<DistanceRegisterAbility>(Constant::stdVelocity, [this](float distance) {
-        if (distance > 20.0f) {
+    auto doorMove = std::make_shared<DoorMoveAbility>(
+        body_, Constant::stdVelocity / 2, [this, shapePart=shapePart](const DoorMoveAbility::State& state, const sf::Vector2f& exitPos) {
             auto& cameraView = service_->GetCameraView();
-            cameraView.SetTrackPoint(body_.position_);
-            ChangeStateTo(StateType::Idle, nullptr);
-        }
-    });
-    state->RegisterAbility(distanceRegister);
+            if (state == DoorMoveAbility::State::StartMovingToEntrance) {
+                cameraView.SetFixPoint(body_.position_);
+            }
+            else if (state == DoorMoveAbility::State::StartMovingFromExit) {
+                FaceDirection faceDir = MoveDirToFaceDir(MoveDirection::Down);
+                propertyStore_.Set("FaceDirection", faceDir);
+                shapePart->Enter();
+                sf::Vector2f cameraPos{exitPos.x, exitPos.y + 20.0f};
+                cameraView.SetFixPoint(cameraPos);
+            }
+            else if (state == DoorMoveAbility::State::Done) {
+                cameraView.SetTrackPoint(body_.position_);
+                ChangeStateTo(StateType::Idle, nullptr);
+            }
+        });
+
+    state->RegisterAbility(doorMove);
     state->RegisterIgnoreEvents(
         {EventType::StartMove, EventType::StopMove, EventType::Attack, EventType::AttackWeapon});
 }
