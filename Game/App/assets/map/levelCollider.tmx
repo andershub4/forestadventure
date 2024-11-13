@@ -417,20 +417,20 @@
    </properties>
    <point/>
   </object>
-  <object id="50" type="Entrance" x="455.5" y="284">
+  <object id="50" type="Entrance" x="457.5" y="271.5">
    <properties>
     <property name="ExitId" value="51"/>
    </properties>
    <point/>
   </object>
-  <object id="51" type="Entrance" x="1496" y="159">
+  <object id="51" type="Entrance" x="1497" y="143.75">
    <properties>
     <property name="ExitId" value="50"/>
    </properties>
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="11" name="Collision Layer 1" visible="0">
+ <objectgroup id="11" name="Collision Layer 1">
   <object id="41" type="Rect" x="219.5" y="56.5" width="329.5" height="214.5"/>
   <object id="42" type="Rect" x="578.5" y="161" width="27.5" height="34"/>
   <object id="43" type="Rect" x="676.5" y="378" width="84" height="68.5"/>

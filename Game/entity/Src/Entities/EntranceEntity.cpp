@@ -43,7 +43,7 @@ void EntranceEntity::RegisterStates(std::shared_ptr<State> idleState, std::share
                                     const Shared::EntityData& data)
 {
     // const sf::Vector2i rectSize = static_cast<sf::Vector2i>(data.size_);
-    const sf::Vector2i rectSize = static_cast<sf::Vector2i>(sf::Vector2f(10.0f, 10.0f));
+    const sf::Vector2i rectSize = static_cast<sf::Vector2i>(sf::Vector2f(1.0f, 1.0f));
     const Shared::ColliderData colliderData(rectSize);
     const std::vector<Shared::ColliderData> idleColliders{colliderData};
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);

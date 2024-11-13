@@ -18,9 +18,9 @@
 #include "Entities/ArrowEntity.h"
 #include "Events/AttackEvent.h"
 #include "Events/AttackWeaponEvent.h"
-#include "Events/StartDoorMoveEvent.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
+#include "Events/StartDoorMoveEvent.h"
 #include "Events/StartMoveEvent.h"
 #include "Events/StopMoveEvent.h"
 #include "Message/BroadcastMessage/GameOverMessage.h"
@@ -375,8 +375,9 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
                 GetProperty(entrance, "ExitId", exitObjId);
                 EntityId exitId = service_->ObjIdToEntityId(exitObjId);
                 auto& exit = dynamic_cast<BasicEntity&>(service_->GetEntity(exitId));
+                auto enterPos = GetPosition(entrance);
                 auto exitPos = GetPosition(exit);
-                auto event = std::make_shared<StartDoorMoveEvent>(exitPos);
+                auto event = std::make_shared<StartDoorMoveEvent>(enterPos, exitPos);
                 ChangeStateTo(StateType::DoorMove, event);
             }
         }
@@ -390,7 +391,8 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
     state->RegisterShapePart(shapePart);
 
     auto doorMove = std::make_shared<DoorMoveAbility>(
-        body_, Constant::stdVelocity / 2, [this, shapePart=shapePart](const DoorMoveAbility::State& state, const sf::Vector2f& exitPos) {
+        body_, Constant::stdVelocity / 2,
+        [this, shapePart = shapePart](const DoorMoveAbility::State& state, const sf::Vector2f& exitPos) {
             auto& cameraView = service_->GetCameraView();
             if (state == DoorMoveAbility::State::StartMovingToEntrance) {
                 cameraView.SetFixPoint(body_.position_);

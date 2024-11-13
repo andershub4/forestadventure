@@ -16,12 +16,14 @@ namespace Entity {
 
 struct StartDoorMoveEvent : public BasicEvent
 {
-    StartDoorMoveEvent(const sf::Vector2f &exitPosition)
+    StartDoorMoveEvent(const sf::Vector2f &enterPosition, const sf::Vector2f &exitPosition)
         : exitPosition_(exitPosition)
+        , enterPosition_(enterPosition)
     {}
 
     virtual EventType GetEventType() const { return EventType::StartDoorMove; }
 
+    sf::Vector2f enterPosition_;
     sf::Vector2f exitPosition_;
 };
 

@@ -44,6 +44,7 @@ private:
     float currentVelocity_{};
     float distance_{};
     Body &body_;
+    sf::Vector2f enterPosition_{};
     sf::Vector2f exitPosition_{};
     sf::Vector2f movementVector_{};
     State state_{State::Uninitialized};
