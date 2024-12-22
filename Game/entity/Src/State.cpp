@@ -78,6 +78,16 @@ void State::RegisterAbility(std::shared_ptr<AbilityIf> ability)
     abilities_.emplace_back(ability);
 }
 
+void State::RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part)
+{
+    shape_.RegisterMainShapePart(part);
+}
+
+void State::RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part)
+{
+    shape_.RegisterMainColliderPart(part);
+}
+
 void State::RegisterShapePart(std::shared_ptr<AnimationPartIf> part)
 {
     shape_.RegisterShapePart(part);

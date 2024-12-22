@@ -33,6 +33,8 @@ public:
     Shape(Body &body);
     ~Shape();
 
+    void RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part);
+    void RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part);
     void RegisterShapePart(std::shared_ptr<AnimationPartIf> part);
     void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part);
     void Enter();
@@ -41,6 +43,8 @@ public:
     bool Intersect(const Shape &shape) const;
 
 private:
+    std::shared_ptr<AnimationPartIf> mainShapePart;
+    std::shared_ptr<AnimationPartIf> mainColliderPart;
     std::vector<std::shared_ptr<AnimationPartIf>> colliderParts_;
     std::vector<std::shared_ptr<AnimationPartIf>> shapeParts_;
     Body &body_;

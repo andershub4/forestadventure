@@ -48,7 +48,7 @@ void EntranceEntity::RegisterStates(std::shared_ptr<State> idleState, std::share
     const std::vector<Shared::ColliderData> idleColliders{colliderData};
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
     auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
-    idleState->RegisterColliderPart(colliderPart);
+    idleState->RegisterMainColliderPart(colliderPart);
 }
 
 }  // namespace Entity

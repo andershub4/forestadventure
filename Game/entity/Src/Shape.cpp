@@ -62,6 +62,18 @@ void Shape::Update(float deltaTime)
 #endif  // _DEBUG
 }
 
+void Shape::RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part)
+{
+    mainShapePart = part;
+    shapeParts_.push_back(part);
+}
+
+void Shape::RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part)
+{
+    mainColliderPart = part;
+    colliderParts_.push_back(part);
+}
+
 void Shape::RegisterShapePart(std::shared_ptr<AnimationPartIf> part)
 {
     shapeParts_.push_back(part);

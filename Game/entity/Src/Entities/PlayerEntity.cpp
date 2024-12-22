@@ -330,9 +330,9 @@ void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 {
     auto updateCB = [](const Shared::ImageAnimationIf& animation) {};
     auto shapePart = MakeShapePart(idleFaceDirImages, updateCB);
-    state->RegisterShapePart(shapePart);
+    state->RegisterMainShapePart(shapePart);
     auto colliderPart = MakeColliderPart(idleFaceDirColliders);
-    state->RegisterColliderPart(colliderPart);
+    state->RegisterMainColliderPart(colliderPart);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
@@ -347,9 +347,9 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 {
     auto updateCB = [](const Shared::ImageAnimationIf& animation) {};
     auto shapePart = MakeShapePart(moveFaceDirImages, updateCB);
-    state->RegisterShapePart(shapePart);
+    state->RegisterMainShapePart(shapePart);
     auto colliderPart = MakeColliderPart(moveFaceDirColliders);
-    state->RegisterColliderPart(colliderPart);
+    state->RegisterMainColliderPart(colliderPart);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
@@ -388,7 +388,7 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
 {
     auto updateCB = [](const Shared::ImageAnimationIf& animation) {};
     auto shapePart = MakeShapePart(moveFaceDirImages, updateCB);
-    state->RegisterShapePart(shapePart);
+    state->RegisterMainShapePart(shapePart);
 
     auto doorMove = std::make_shared<DoorMoveAbility>(
         body_, Constant::stdVelocity / 2,
@@ -423,9 +423,9 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
         }
     };
     auto shapePart = MakeShapePart(attackFaceDirImages, updateCB);
-    state->RegisterShapePart(shapePart);
+    state->RegisterMainShapePart(shapePart);
     auto colliderPart = MakeColliderPart(attackFaceDirColliders);
-    state->RegisterColliderPart(colliderPart);
+    state->RegisterMainColliderPart(colliderPart);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
@@ -440,9 +440,9 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
         }
     };
     auto shapePart = MakeShapePart(attackWFaceDirImages, updateCB);
-    state->RegisterShapePart(shapePart);
+    state->RegisterMainShapePart(shapePart);
     auto colliderPart = MakeColliderPart(attackWFaceDirColliders);
-    state->RegisterColliderPart(colliderPart);
+    state->RegisterMainColliderPart(colliderPart);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
