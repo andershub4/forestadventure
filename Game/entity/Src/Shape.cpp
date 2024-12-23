@@ -6,7 +6,11 @@
 
 #include "Shape.h"
 
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
+
 #include "Body.h"
+#include "RectangleShape.h"
 #include "RenderTargetIf.h"
 #include "Sprite.h"
 
@@ -28,14 +32,18 @@ void Shape::Enter()
 {
     for (auto part : shapeParts_) {
         part->Enter();
-        part->SetPosition(body_.position_);
-        part->SetRotation(body_.rotation_);
+    }
+    for (auto &sprite : sprites_) {
+        sprite->setPosition(body_.position_);
+        sprite->setRotation(body_.rotation_);
     }
 
     for (auto part : colliderParts_) {
         part->Enter();
-        part->SetPosition(body_.position_);
-        part->SetRotation(body_.rotation_);
+    }
+    for (auto &collider : colliders_) {
+        collider->setPosition(body_.position_);
+        collider->setRotation(body_.rotation_);
     }
 
 #ifdef _DEBUG
@@ -45,16 +53,24 @@ void Shape::Enter()
 
 void Shape::Update(float deltaTime)
 {
-    for (auto part : shapeParts_) {
-        part->Update(deltaTime);
-        part->SetPosition(body_.position_);
-        part->SetRotation(body_.rotation_);
+    for (auto &element : shapeElements_) {
+        element.animation_->Update(deltaTime);
+        element.animation_->ApplyTo(element.sprite_);
     }
 
-    for (auto part : colliderParts_) {
-        part->Update(deltaTime);
-        part->SetPosition(body_.position_);
-        part->SetRotation(body_.rotation_);
+    for (auto &element : colliderElements_) {
+        element.animation_->Update(deltaTime);
+        element.animation_->ApplyTo(element.rect_);
+    }
+
+    for (auto &sprite : sprites_) {
+        sprite->setPosition(body_.position_);
+        sprite->setRotation(body_.rotation_);
+    }
+
+    for (auto &collider : colliders_) {
+        collider->setPosition(body_.position_);
+        collider->setRotation(body_.rotation_);
     }
 
 #ifdef _DEBUG
@@ -62,15 +78,33 @@ void Shape::Update(float deltaTime)
 #endif  // _DEBUG
 }
 
-void Shape::RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part)
+void Shape::RegisterMainSprite(std::shared_ptr<Graphic::SpriteIf> sprite)
 {
-    mainShapePart = part;
+    mainSprite_ = sprite;
+    sprites_.push_back(sprite);
+}
+
+void Shape::RegisterMainCollider(std::shared_ptr<Graphic::RectangleShapeIf> rect)
+{
+    rect->setFillColor(sf::Color::Transparent);
+    rect->setOutlineColor(sf::Color::Red);
+    rect->setOutlineThickness(1.0f);
+    mainCollider_ = rect;
+    colliders_.push_back(rect);
+}
+
+void Shape::RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite)
+{
+    mainShapePart_ = part;
+    shapeElements_.push_back({part, sprite});
     shapeParts_.push_back(part);
 }
 
-void Shape::RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part)
+void Shape::RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part,
+                                     std::shared_ptr<Graphic::RectangleShapeIf> rect)
 {
-    mainColliderPart = part;
+    mainColliderPart_ = part;
+    colliderElements_.push_back({part, rect});
     colliderParts_.push_back(part);
 }
 
@@ -86,17 +120,15 @@ void Shape::RegisterColliderPart(std::shared_ptr<AnimationPartIf> part)
 
 void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const
 {
-    for (auto part : shapeParts_) {
-        part->DrawTo(renderTarget);
+    for (auto &sprite : sprites_) {
+        renderTarget.draw(*sprite);
     }
 
 #ifdef _DEBUG
-    for (auto part : colliderParts_) {
-        part->DrawTo(renderTarget);
+    for (auto &collider : colliders_) {
+        renderTarget.draw(*collider);
     }
-#endif  // _DEBUG
 
-#ifdef _DEBUG
     renderTarget.draw(rShape_);
 #endif
 }
@@ -105,9 +137,9 @@ bool Shape::Intersect(const Shape &otherShape) const
 {
     bool intersect = false;
 
-    for (auto part : colliderParts_) {
-        for (auto otherPart : otherShape.colliderParts_) {
-            intersect |= part->Intersects(*otherPart);
+    for (auto &collider : colliders_) {
+        for (auto &otherCollider : otherShape.colliders_) {
+            intersect |= collider->getGlobalBounds().intersects(otherCollider->getGlobalBounds());
         }
     }
 

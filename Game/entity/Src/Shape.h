@@ -20,6 +20,8 @@ namespace FA {
 namespace Graphic {
 
 class RenderTargetIf;
+class SpriteIf;
+class RectangleShapeIf;
 
 }  // namespace Graphic
 
@@ -33,8 +35,11 @@ public:
     Shape(Body &body);
     ~Shape();
 
-    void RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part);
-    void RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part);
+    void RegisterMainSprite(std::shared_ptr<Graphic::SpriteIf> sprite);
+    void RegisterMainCollider(std::shared_ptr<Graphic::RectangleShapeIf> rect);
+    void RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite);
+    void RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part,
+                                  std::shared_ptr<Graphic::RectangleShapeIf> rect);
     void RegisterShapePart(std::shared_ptr<AnimationPartIf> part);
     void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part);
     void Enter();
@@ -43,10 +48,27 @@ public:
     bool Intersect(const Shape &shape) const;
 
 private:
-    std::shared_ptr<AnimationPartIf> mainShapePart;
-    std::shared_ptr<AnimationPartIf> mainColliderPart;
+    struct AnimationElement
+    {
+        std::shared_ptr<AnimationPartIf> animation_;
+        std::shared_ptr<Graphic::SpriteIf> sprite_;
+    };
+    struct ColliderElement
+    {
+        std::shared_ptr<AnimationPartIf> animation_;
+        std::shared_ptr<Graphic::RectangleShapeIf> rect_;
+    };
+
+    std::shared_ptr<AnimationPartIf> mainShapePart_;
+    std::shared_ptr<AnimationPartIf> mainColliderPart_;
+    std::shared_ptr<Graphic::SpriteIf> mainSprite_;
+    std::shared_ptr<Graphic::RectangleShapeIf> mainCollider_;
     std::vector<std::shared_ptr<AnimationPartIf>> colliderParts_;
     std::vector<std::shared_ptr<AnimationPartIf>> shapeParts_;
+    std::vector<std::shared_ptr<Graphic::SpriteIf>> sprites_;
+    std::vector<std::shared_ptr<Graphic::RectangleShapeIf>> colliders_;
+    std::vector<AnimationElement> shapeElements_;
+    std::vector<ColliderElement> colliderElements_;
     Body &body_;
 #ifdef _DEBUG
     Graphic::RectangleShape rShape_;

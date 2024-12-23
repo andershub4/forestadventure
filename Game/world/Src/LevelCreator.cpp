@@ -34,14 +34,15 @@ void LevelCreator::CreateBackground(Graphic::RenderTargetIf &texture) const
     for (const auto &layer : layers_) {
         for (const auto &data : layer) {
             auto sprite = CreateSprite(data);
-            texture.draw(sprite);
+            texture.draw(*sprite);
         }
     }
 }
 
-std::vector<Graphic::Sprite> LevelCreator::CreateFringe(const std::vector<TileMap::TileData> &layer) const
+std::vector<std::shared_ptr<Graphic::SpriteIf>> LevelCreator::CreateFringe(
+    const std::vector<TileMap::TileData> &layer) const
 {
-    std::vector<Graphic::Sprite> fringe;
+    std::vector<std::shared_ptr<Graphic::SpriteIf>> fringe;
 
     for (const auto &data : layer) {
         auto sprite = CreateSprite(data);
@@ -51,32 +52,35 @@ std::vector<Graphic::Sprite> LevelCreator::CreateFringe(const std::vector<TileMa
     return fringe;
 }
 
-std::vector<Shared::ImageAnimation> LevelCreator::CreateAnimations(const std::vector<TileMap::TileData> &layer) const
+std::vector<std::tuple<std::shared_ptr<Shared::ImageAnimationIf>, std::shared_ptr<Graphic::SpriteIf>>>
+LevelCreator::CreateAnimations(const std::vector<TileMap::TileData> &layer) const
 {
-    std::vector<Shared::ImageAnimation> animations;
+    std::vector<std::tuple<std::shared_ptr<Shared::ImageAnimationIf>, std::shared_ptr<Graphic::SpriteIf>>> animations;
 
     for (const auto &data : layer) {
         auto animation = CreateAnimation(data);
-        animations.push_back(animation);
+        auto sprite = std::make_shared<Graphic::Sprite>();
+        sprite->setPosition(data.position_);
+        animations.push_back({animation, sprite});
     }
 
     return animations;
 }
 
-Graphic::Sprite LevelCreator::CreateSprite(const TileMap::TileData &data) const
+std::shared_ptr<Graphic::SpriteIf> LevelCreator::CreateSprite(const TileMap::TileData &data) const
 {
     auto imageData = data.graphic_.image_;
     auto textureRect = sheetManager_.GetTextureRect(imageData.sheetItem_);
     const auto *texture = textureManager_.Get(textureRect.id_);
-    Graphic::Sprite sprite;
-    sprite.setTexture(*texture);
-    sprite.setTextureRect(textureRect.rect_);
-    sprite.setPosition(data.position_);
+    auto sprite = std::make_shared<Graphic::Sprite>();
+    sprite->setTexture(*texture);
+    sprite->setTextureRect(textureRect.rect_);
+    sprite->setPosition(data.position_);
 
     return sprite;
 }
 
-Shared::ImageAnimation LevelCreator::CreateAnimation(const TileMap::TileData &data) const
+std::shared_ptr<Shared::ImageAnimationIf> LevelCreator::CreateAnimation(const TileMap::TileData &data) const
 {
     float t = switchTime;
     auto seq = std::make_shared<Shared::Sequence<Shared::ImageFrame>>(t);
@@ -88,9 +92,8 @@ Shared::ImageAnimation LevelCreator::CreateAnimation(const TileMap::TileData &da
         seq->Add({texture, textureRect.rect_, static_cast<sf::Vector2f>(center)});
     }
 
-    auto animation = Shared::ImageAnimation(std::make_shared<Graphic::Sprite>(), seq);
-    animation.SetPosition(data.position_);
-    animation.Start();
+    auto animation = std::make_shared<Shared::ImageAnimation>(seq);
+    animation->Start();
 
     return animation;
 }

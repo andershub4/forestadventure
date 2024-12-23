@@ -7,6 +7,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "Animation/ImageAnimation.h"
@@ -22,6 +23,8 @@ namespace FA {
 namespace Graphic {
 
 class View;
+class SpriteIf;
+class RenderTargetIf;
 
 }  // namespace Graphic
 
@@ -41,6 +44,7 @@ namespace Shared {
 
 class MessageBus;
 struct EntityData;
+class ImageAnimationIf;
 
 }  // namespace Shared
 
@@ -66,8 +70,9 @@ private:
     const sf::Vector2u viewSize_;
     Graphic::RenderTexture backgroundTexture_;
     Graphic::Sprite backgroundSprite_;
-    std::vector<Graphic::Sprite> fringeLayer_;
-    std::vector<Shared::ImageAnimation> animationLayer_;
+    std::vector<std::shared_ptr<Graphic::SpriteIf>> fringeLayer_;
+    std::vector<std::tuple<std::shared_ptr<Shared::ImageAnimationIf>, std::shared_ptr<Graphic::SpriteIf>>>
+        animationLayer_;
     Shared::MessageBus& messageBus_;
     Shared::TextureManager& textureManager_;
     Shared::SheetManager sheetManager_;

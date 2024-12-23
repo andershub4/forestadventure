@@ -7,14 +7,13 @@
 #pragma once
 
 #include <functional>
-
-#include "SfmlFwd.h"
+#include <memory>
 
 namespace FA {
 
 namespace Graphic {
 
-class RenderTargetIf;
+class DrawableIf;
 
 }  // namespace Graphic
 
@@ -25,16 +24,13 @@ class ColliderAnimationIf
 public:
     virtual ~ColliderAnimationIf() = default;
     virtual void Update(float deltaTime) = 0;
-    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const = 0;
-    virtual bool Intersects(const ColliderAnimationIf &other) const = 0;
+    virtual void ApplyTo(std::shared_ptr<Graphic::DrawableIf> drawable) const = 0;
     virtual void RegisterUpdateCB(std::function<void(const ColliderAnimationIf &)> updateCB) = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual void Restart() = 0;
     virtual bool IsCompleted() const = 0;
     virtual void Center() = 0;
-    virtual void SetPosition(const sf::Vector2f &position) = 0;
-    virtual void SetRotation(float angle) = 0;
 };
 
 }  // namespace Shared

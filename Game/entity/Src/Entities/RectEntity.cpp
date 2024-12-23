@@ -7,6 +7,7 @@
 #include "RectEntity.h"
 
 #include "Animation/ColliderAnimation.h"
+#include "RectangleShape.h"
 #include "Resource/ColliderData.h"
 #include "ShapeParts/SingleAnimationPart.h"
 #include "State.h"
@@ -31,7 +32,9 @@ void RectEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     const std::vector<Shared::ColliderData> idleColliders{colliderData};
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
     auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
-    idleState->RegisterMainColliderPart(colliderPart);
+    auto rect = std::make_shared<Graphic::RectangleShape>();
+    idleState->RegisterMainCollider(rect);
+    idleState->RegisterMainColliderPart(colliderPart, rect);
 }
 
 }  // namespace Entity

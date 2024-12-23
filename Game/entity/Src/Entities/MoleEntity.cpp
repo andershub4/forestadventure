@@ -16,11 +16,13 @@
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
 #include "PropertyConverter.h"
+#include "RectangleShape.h"
 #include "Resource/EntityData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "ShapeParts/MultiAnimationPart.h"
 #include "ShapeParts/SingleAnimationPart.h"
+#include "Sprite.h"
 #include "State.h"
 
 namespace FA {
@@ -172,9 +174,13 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 {
     auto shapePart = MakeShapePart(idleFaceDirImages);
-    state->RegisterMainShapePart(shapePart);
+    auto sprite = std::make_shared<Graphic::Sprite>();
+    state->RegisterMainSprite(sprite);
+    state->RegisterMainShapePart(shapePart, sprite);
     auto colliderPart = MakeColliderPart(idleFaceDirColliders);
-    state->RegisterMainColliderPart(colliderPart);
+    auto rect = std::make_shared<Graphic::RectangleShape>();
+    state->RegisterMainCollider(rect);
+    state->RegisterMainColliderPart(colliderPart, rect);
 
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -190,9 +196,13 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
 {
     auto shapePart = MakeShapePart(moveFaceDirImages);
-    state->RegisterMainShapePart(shapePart);
+    auto sprite = std::make_shared<Graphic::Sprite>();
+    state->RegisterMainSprite(sprite);
+    state->RegisterMainShapePart(shapePart, sprite);
     auto colliderPart = MakeColliderPart(moveFaceDirColliders);
-    state->RegisterMainColliderPart(colliderPart);
+    auto rect = std::make_shared<Graphic::RectangleShape>();
+    state->RegisterMainCollider(rect);
+    state->RegisterMainColliderPart(colliderPart, rect);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
@@ -218,7 +228,9 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
     animation->Center();
     animation->RegisterUpdateCB(updateCB);
     auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(animation);
-    state->RegisterMainShapePart(shapePart);
+    auto sprite = std::make_shared<Graphic::Sprite>();
+    state->RegisterMainSprite(sprite);
+    state->RegisterMainShapePart(shapePart, sprite);
 }
 
 std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>> MoleEntity::MakeShapePart(

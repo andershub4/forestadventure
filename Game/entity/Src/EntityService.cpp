@@ -17,7 +17,6 @@
 #include "EntityType.h"
 #include "Message/MessageBus.h"
 #include "ObjIdTranslator.h"
-#include "RectangleShape.h"
 #include "Resource/ColliderData.h"
 #include "Resource/ColliderFrame.h"
 #include "Resource/ImageData.h"
@@ -28,7 +27,6 @@
 #include "Resource/TextureManager.h"
 #include "Resource/TextureRect.h"
 #include "Sequence.h"
-#include "Sprite.h"
 
 namespace FA {
 
@@ -52,14 +50,13 @@ EntityService::~EntityService() = default;
 std::shared_ptr<Shared::ImageAnimation> EntityService::CreateImageAnimation(
     const std::vector<Shared::ImageData>& images)
 {
-    return std::make_shared<Shared::ImageAnimation>(std::make_shared<Graphic::Sprite>(), CreateSequence(images));
+    return std::make_shared<Shared::ImageAnimation>(CreateSequence(images));
 }
 
 std::shared_ptr<Shared::ColliderAnimation> EntityService::CreateColliderAnimation(
     const std::vector<Shared::ColliderData>& colliders)
 {
-    return std::make_shared<Shared::ColliderAnimation>(std::make_shared<Graphic::RectangleShape>(),
-                                                       CreateSequence(colliders));
+    return std::make_shared<Shared::ColliderAnimation>(CreateSequence(colliders));
 }
 
 std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> EntityService::CreateSequence(

@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <memory>
+#include <tuple>
 #include <vector>
 
 #include "Resource/TextureManager.h"
@@ -15,15 +17,15 @@ namespace FA {
 
 namespace Graphic {
 
-class Sprite;
 class RenderTargetIf;
+class SpriteIf;
 
 }  // namespace Graphic
 
 namespace Shared {
 
 class SheetManager;
-class ImageAnimation;
+class ImageAnimationIf;
 
 }  // namespace Shared
 
@@ -38,9 +40,9 @@ public:
 
     void AddBackground(const std::vector<TileMap::TileData> &layer);
     void CreateBackground(Graphic::RenderTargetIf &texture) const;
-
-    std::vector<Graphic::Sprite> CreateFringe(const std::vector<TileMap::TileData> &layer) const;
-    std::vector<Shared::ImageAnimation> CreateAnimations(const std::vector<TileMap::TileData> &layer) const;
+    std::vector<std::shared_ptr<Graphic::SpriteIf>> CreateFringe(const std::vector<TileMap::TileData> &layer) const;
+    std::vector<std::tuple<std::shared_ptr<Shared::ImageAnimationIf>, std::shared_ptr<Graphic::SpriteIf>>>
+    CreateAnimations(const std::vector<TileMap::TileData> &layer) const;
 
 private:
     const Shared::TextureManager &textureManager_;
@@ -48,8 +50,8 @@ private:
     std::vector<std::vector<TileMap::TileData>> layers_;
 
 private:
-    Graphic::Sprite CreateSprite(const TileMap::TileData &data) const;
-    Shared::ImageAnimation CreateAnimation(const TileMap::TileData &data) const;
+    std::shared_ptr<Graphic::SpriteIf> CreateSprite(const TileMap::TileData &data) const;
+    std::shared_ptr<Shared::ImageAnimationIf> CreateAnimation(const TileMap::TileData &data) const;
 };
 
 }  // namespace World

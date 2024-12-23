@@ -12,11 +12,13 @@
 #include "Animation/ImageAnimation.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
+#include "RectangleShape.h"
 #include "Resource/ColliderData.h"
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
 #include "ShapeParts/SingleAnimationPart.h"
+#include "Sprite.h"
 #include "State.h"
 
 namespace FA {
@@ -53,11 +55,15 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     auto imageAnimation = service_->CreateImageAnimation(idleImages);
     imageAnimation->Center();
     auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(imageAnimation);
-    idleState->RegisterMainShapePart(shapePart);
+    auto sprite = std::make_shared<Graphic::Sprite>();
+    idleState->RegisterMainSprite(sprite);
+    idleState->RegisterMainShapePart(shapePart, sprite);
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
     colliderAnimation->Center();
     auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
-    idleState->RegisterMainColliderPart(colliderPart);
+    auto rect = std::make_shared<Graphic::RectangleShape>();
+    idleState->RegisterMainCollider(rect);
+    idleState->RegisterMainColliderPart(colliderPart, rect);
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
         if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Player) {

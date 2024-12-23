@@ -10,15 +10,7 @@
 
 #include "AnimationPartIf.h"
 
-#include "SfmlFwd.h"
-
 namespace FA {
-
-namespace Graphic {
-
-class RenderTargetIf;
-
-}  // namespace Graphic
 
 namespace Entity {
 
@@ -34,17 +26,7 @@ public:
 
     virtual void Update(float deltaTime) override { animation_->Update(deltaTime); }
 
-    virtual void DrawTo(Graphic::RenderTargetIf &renderTarget) const override { animation_->DrawTo(renderTarget); }
-
-    virtual void SetPosition(const sf::Vector2f &position) override { animation_->SetPosition(position); }
-
-    virtual void SetRotation(float angle) override { animation_->SetRotation(angle); }
-
-    virtual bool Intersects(const AnimationPartIf &otherPart) const override
-    {
-        const auto &other = static_cast<const AnimationPartBase<AnimationPartIfT, AnimationT, Args...> &>(otherPart);
-        return animation_->Intersects(*other.animation_);
-    }
+    virtual void ApplyTo(std::shared_ptr<Graphic::DrawableIf> drawable) override { animation_->ApplyTo(drawable); }
 
 protected:
     std::shared_ptr<AnimationT> animation_;

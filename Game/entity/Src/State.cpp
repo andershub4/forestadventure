@@ -78,14 +78,25 @@ void State::RegisterAbility(std::shared_ptr<AbilityIf> ability)
     abilities_.emplace_back(ability);
 }
 
-void State::RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part)
+void State::RegisterMainSprite(std::shared_ptr<Graphic::SpriteIf> sprite)
 {
-    shape_.RegisterMainShapePart(part);
+    shape_.RegisterMainSprite(sprite);
 }
 
-void State::RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part)
+void State::RegisterMainCollider(std::shared_ptr<Graphic::RectangleShapeIf> rect)
 {
-    shape_.RegisterMainColliderPart(part);
+    shape_.RegisterMainCollider(rect);
+}
+
+void State::RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite)
+{
+    shape_.RegisterMainShapePart(part, sprite);
+}
+
+void State::RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part,
+                                     std::shared_ptr<Graphic::RectangleShapeIf> rect)
+{
+    shape_.RegisterMainColliderPart(part, rect);
 }
 
 void State::RegisterShapePart(std::shared_ptr<AnimationPartIf> part)

@@ -81,9 +81,13 @@ void Level::Update(float deltaTime)
 {
     HandleCreationPool();
     cameraViews_.Update(deltaTime);
-    for (auto &animation : animationLayer_) {
-        animation.Update(deltaTime);
+    for (auto &element : animationLayer_) {
+        auto animation = std::get<0>(element);
+        auto sprite = std::get<1>(element);
+        animation->Update(deltaTime);
+        animation->ApplyTo(sprite);
     }
+
     entityHandler_->Update(deltaTime);
     collisionHandler_->DetectCollisions();
     collisionHandler_->DetectOutsideTileMap(tileMap_->GetSize());
@@ -97,10 +101,11 @@ void Level::Draw(Graphic::RenderTargetIf &renderTarget)
     renderTarget.draw(backgroundSprite_);
     drawHandler_->DrawTo(renderTarget);
     for (const auto &tile : fringeLayer_) {
-        renderTarget.draw(tile);
+        renderTarget.draw(*tile);
     }
-    for (const auto &animation : animationLayer_) {
-        animation.DrawTo(renderTarget);
+    for (const auto &element : animationLayer_) {
+        auto sprite = std::get<1>(element);
+        renderTarget.draw(*sprite);
     }
 }
 
