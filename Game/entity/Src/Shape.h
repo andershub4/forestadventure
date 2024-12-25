@@ -35,13 +35,10 @@ public:
     Shape(Body &body);
     ~Shape();
 
-    std::shared_ptr<Graphic::SpriteIf> RegisterMainSprite();
-    std::shared_ptr<Graphic::RectangleShapeIf> RegisterMainCollider();
-    void RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite);
-    void RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part,
-                                  std::shared_ptr<Graphic::RectangleShapeIf> rect);
-    void RegisterShapePart(std::shared_ptr<AnimationPartIf> part);
-    void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part);
+    std::shared_ptr<Graphic::SpriteIf> RegisterSprite();
+    std::shared_ptr<Graphic::RectangleShapeIf> RegisterCollider();
+    void RegisterShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite);
+    void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::RectangleShapeIf> rect);
     void Enter();
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
@@ -59,10 +56,6 @@ private:
         std::shared_ptr<Graphic::RectangleShapeIf> rect_;
     };
 
-    std::shared_ptr<AnimationPartIf> mainShapePart_;
-    std::shared_ptr<AnimationPartIf> mainColliderPart_;
-    std::shared_ptr<Graphic::SpriteIf> mainSprite_;
-    std::shared_ptr<Graphic::RectangleShapeIf> mainCollider_;
     std::vector<std::shared_ptr<AnimationPartIf>> colliderParts_;
     std::vector<std::shared_ptr<AnimationPartIf>> shapeParts_;
     std::vector<std::shared_ptr<Graphic::SpriteIf>> sprites_;

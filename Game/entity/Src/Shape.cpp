@@ -78,49 +78,34 @@ void Shape::Update(float deltaTime)
 #endif  // _DEBUG
 }
 
-std::shared_ptr<Graphic::SpriteIf> Shape::RegisterMainSprite()
+std::shared_ptr<Graphic::SpriteIf> Shape::RegisterSprite()
 {
     auto sprite = std::make_shared<Graphic::Sprite>();
-    mainSprite_ = sprite;
     sprites_.push_back(sprite);
 
     return sprite;
 }
 
-std::shared_ptr<Graphic::RectangleShapeIf> Shape::RegisterMainCollider()
+std::shared_ptr<Graphic::RectangleShapeIf> Shape::RegisterCollider()
 {
     auto rect = std::make_shared<Graphic::RectangleShape>();
     rect->setFillColor(sf::Color::Transparent);
     rect->setOutlineColor(sf::Color::Red);
     rect->setOutlineThickness(1.0f);
-    mainCollider_ = rect;
     colliders_.push_back(rect);
 
     return rect;
 }
 
-void Shape::RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite)
+void Shape::RegisterShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite)
 {
-    mainShapePart_ = part;
     shapeElements_.push_back({part, sprite});
     shapeParts_.push_back(part);
 }
 
-void Shape::RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part,
-                                     std::shared_ptr<Graphic::RectangleShapeIf> rect)
+void Shape::RegisterColliderPart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::RectangleShapeIf> rect)
 {
-    mainColliderPart_ = part;
     colliderElements_.push_back({part, rect});
-    colliderParts_.push_back(part);
-}
-
-void Shape::RegisterShapePart(std::shared_ptr<AnimationPartIf> part)
-{
-    shapeParts_.push_back(part);
-}
-
-void Shape::RegisterColliderPart(std::shared_ptr<AnimationPartIf> part)
-{
     colliderParts_.push_back(part);
 }
 

@@ -78,35 +78,24 @@ void State::RegisterAbility(std::shared_ptr<AbilityIf> ability)
     abilities_.emplace_back(ability);
 }
 
-std::shared_ptr<Graphic::SpriteIf> State::RegisterMainSprite()
+std::shared_ptr<Graphic::SpriteIf> State::RegisterSprite()
 {
-    return shape_.RegisterMainSprite();
+    return shape_.RegisterSprite();
 }
 
-std::shared_ptr<Graphic::RectangleShapeIf> State::RegisterMainCollider()
+std::shared_ptr<Graphic::RectangleShapeIf> State::RegisterCollider()
 {
-    return shape_.RegisterMainCollider();
+    return shape_.RegisterCollider();
 }
 
-void State::RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite)
+void State::RegisterShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite)
 {
-    shape_.RegisterMainShapePart(part, sprite);
+    shape_.RegisterShapePart(part, sprite);
 }
 
-void State::RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part,
-                                     std::shared_ptr<Graphic::RectangleShapeIf> rect)
+void State::RegisterColliderPart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::RectangleShapeIf> rect)
 {
-    shape_.RegisterMainColliderPart(part, rect);
-}
-
-void State::RegisterShapePart(std::shared_ptr<AnimationPartIf> part)
-{
-    shape_.RegisterShapePart(part);
-}
-
-void State::RegisterColliderPart(std::shared_ptr<AnimationPartIf> part)
-{
-    shape_.RegisterColliderPart(part);
+    shape_.RegisterColliderPart(part, rect);
 }
 
 void State::RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)> event)

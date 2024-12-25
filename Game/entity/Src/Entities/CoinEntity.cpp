@@ -55,13 +55,13 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     auto imageAnimation = service_->CreateImageAnimation(idleImages);
     imageAnimation->Center();
     auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(imageAnimation);
-    auto sprite = idleState->RegisterMainSprite();
-    idleState->RegisterMainShapePart(shapePart, sprite);
+    auto sprite = idleState->RegisterSprite();
+    idleState->RegisterShapePart(shapePart, sprite);
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
     colliderAnimation->Center();
     auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
-    auto rect = idleState->RegisterMainCollider();
-    idleState->RegisterMainColliderPart(colliderPart, rect);
+    auto rect = idleState->RegisterCollider();
+    idleState->RegisterColliderPart(colliderPart, rect);
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
         if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Player) {

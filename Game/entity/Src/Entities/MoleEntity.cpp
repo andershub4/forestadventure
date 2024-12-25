@@ -174,11 +174,11 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 {
     auto shapePart = MakeShapePart(idleFaceDirImages);
-    auto sprite = state->RegisterMainSprite();
-    state->RegisterMainShapePart(shapePart, sprite);
+    auto sprite = state->RegisterSprite();
+    state->RegisterShapePart(shapePart, sprite);
     auto colliderPart = MakeColliderPart(idleFaceDirColliders);
-    auto rect = state->RegisterMainCollider();
-    state->RegisterMainColliderPart(colliderPart, rect);
+    auto rect = state->RegisterCollider();
+    state->RegisterColliderPart(colliderPart, rect);
 
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -194,11 +194,11 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
 {
     auto shapePart = MakeShapePart(moveFaceDirImages);
-    auto sprite = state->RegisterMainSprite();
-    state->RegisterMainShapePart(shapePart, sprite);
+    auto sprite = state->RegisterSprite();
+    state->RegisterShapePart(shapePart, sprite);
     auto colliderPart = MakeColliderPart(moveFaceDirColliders);
-    auto rect = state->RegisterMainCollider();
-    state->RegisterMainColliderPart(colliderPart, rect);
+    auto rect = state->RegisterCollider();
+    state->RegisterColliderPart(colliderPart, rect);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
@@ -224,8 +224,8 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
     animation->Center();
     animation->RegisterUpdateCB(updateCB);
     auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(animation);
-    auto sprite = state->RegisterMainSprite();
-    state->RegisterMainShapePart(shapePart, sprite);
+    auto sprite = state->RegisterSprite();
+    state->RegisterShapePart(shapePart, sprite);
 }
 
 std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>> MoleEntity::MakeShapePart(

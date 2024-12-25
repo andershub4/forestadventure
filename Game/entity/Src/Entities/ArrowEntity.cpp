@@ -131,13 +131,13 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
     auto imageAnimation = service_->CreateImageAnimation(images);
     imageAnimation->Center();
     auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(imageAnimation);
-    auto sprite = moveState->RegisterMainSprite();
-    moveState->RegisterMainShapePart(shapePart, sprite);
+    auto sprite = moveState->RegisterSprite();
+    moveState->RegisterShapePart(shapePart, sprite);
     auto colliderAnimation = service_->CreateColliderAnimation(colliders);
     colliderAnimation->Center();
     auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
-    auto rect = moveState->RegisterMainCollider();
-    moveState->RegisterMainColliderPart(colliderPart, rect);
+    auto rect = moveState->RegisterCollider();
+    moveState->RegisterColliderPart(colliderPart, rect);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity * 8.0f, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });

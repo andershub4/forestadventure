@@ -332,11 +332,11 @@ void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 {
     auto updateCB = [](const Shared::ImageAnimationIf& animation) {};
     auto shapePart = MakeShapePart(idleFaceDirImages, updateCB);
-    auto sprite = state->RegisterMainSprite();
-    state->RegisterMainShapePart(shapePart, sprite);
+    auto sprite = state->RegisterSprite();
+    state->RegisterShapePart(shapePart, sprite);
     auto colliderPart = MakeColliderPart(idleFaceDirColliders);
-    auto rect = state->RegisterMainCollider();
-    state->RegisterMainColliderPart(colliderPart, rect);
+    auto rect = state->RegisterCollider();
+    state->RegisterColliderPart(colliderPart, rect);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterEventCB(EventType::StopMove, [this](std::shared_ptr<BasicEvent> event) {});
@@ -351,11 +351,11 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 {
     auto updateCB = [](const Shared::ImageAnimationIf& animation) {};
     auto shapePart = MakeShapePart(moveFaceDirImages, updateCB);
-    auto sprite = state->RegisterMainSprite();
-    state->RegisterMainShapePart(shapePart, sprite);
+    auto sprite = state->RegisterSprite();
+    state->RegisterShapePart(shapePart, sprite);
     auto colliderPart = MakeColliderPart(moveFaceDirColliders);
-    auto rect = state->RegisterMainCollider();
-    state->RegisterMainColliderPart(colliderPart, rect);
+    auto rect = state->RegisterCollider();
+    state->RegisterColliderPart(colliderPart, rect);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
@@ -394,8 +394,8 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
 {
     auto updateCB = [](const Shared::ImageAnimationIf& animation) {};
     auto shapePart = MakeShapePart(moveFaceDirImages, updateCB);
-    auto sprite = state->RegisterMainSprite();
-    state->RegisterMainShapePart(shapePart, sprite);
+    auto sprite = state->RegisterSprite();
+    state->RegisterShapePart(shapePart, sprite);
 
     auto doorMove = std::make_shared<DoorMoveAbility>(
         body_, Constant::stdVelocity / 2,
@@ -430,11 +430,11 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
         }
     };
     auto shapePart = MakeShapePart(attackFaceDirImages, updateCB);
-    auto sprite = state->RegisterMainSprite();
-    state->RegisterMainShapePart(shapePart, sprite);
+    auto sprite = state->RegisterSprite();
+    state->RegisterShapePart(shapePart, sprite);
     auto colliderPart = MakeColliderPart(attackFaceDirColliders);
-    auto rect = state->RegisterMainCollider();
-    state->RegisterMainColliderPart(colliderPart, rect);
+    auto rect = state->RegisterCollider();
+    state->RegisterColliderPart(colliderPart, rect);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
@@ -449,11 +449,11 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
         }
     };
     auto shapePart = MakeShapePart(attackWFaceDirImages, updateCB);
-    auto sprite = state->RegisterMainSprite();
-    state->RegisterMainShapePart(shapePart, sprite);
+    auto sprite = state->RegisterSprite();
+    state->RegisterShapePart(shapePart, sprite);
     auto colliderPart = MakeColliderPart(attackWFaceDirColliders);
-    auto rect = state->RegisterMainCollider();
-    state->RegisterMainColliderPart(colliderPart, rect);
+    auto rect = state->RegisterCollider();
+    state->RegisterColliderPart(colliderPart, rect);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterIgnoreEvents({EventType::Attack, EventType::AttackWeapon});
