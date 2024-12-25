@@ -49,8 +49,8 @@ public:
     void RegisterEnterCB(std::function<void()> enterCB);
     void RegisterExitCB(std::function<void()> exitCB);
     void RegisterAbility(std::shared_ptr<AbilityIf> ability);
-    void RegisterMainSprite(std::shared_ptr<Graphic::SpriteIf> sprite);
-    void RegisterMainCollider(std::shared_ptr<Graphic::RectangleShapeIf> rect);
+    std::shared_ptr<Graphic::SpriteIf> RegisterMainSprite();
+    std::shared_ptr<Graphic::RectangleShapeIf> RegisterMainCollider();
     void RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite);
     void RegisterMainColliderPart(std::shared_ptr<AnimationPartIf> part,
                                   std::shared_ptr<Graphic::RectangleShapeIf> rect);

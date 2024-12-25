@@ -78,19 +78,25 @@ void Shape::Update(float deltaTime)
 #endif  // _DEBUG
 }
 
-void Shape::RegisterMainSprite(std::shared_ptr<Graphic::SpriteIf> sprite)
+std::shared_ptr<Graphic::SpriteIf> Shape::RegisterMainSprite()
 {
+    auto sprite = std::make_shared<Graphic::Sprite>();
     mainSprite_ = sprite;
     sprites_.push_back(sprite);
+
+    return sprite;
 }
 
-void Shape::RegisterMainCollider(std::shared_ptr<Graphic::RectangleShapeIf> rect)
+std::shared_ptr<Graphic::RectangleShapeIf> Shape::RegisterMainCollider()
 {
+    auto rect = std::make_shared<Graphic::RectangleShape>();
     rect->setFillColor(sf::Color::Transparent);
     rect->setOutlineColor(sf::Color::Red);
     rect->setOutlineThickness(1.0f);
     mainCollider_ = rect;
     colliders_.push_back(rect);
+
+    return rect;
 }
 
 void Shape::RegisterMainShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite)
