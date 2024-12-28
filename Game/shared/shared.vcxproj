@@ -157,7 +157,7 @@
     <ClInclude Include="Include\Sequence.h" />
     <ClInclude Include="Include\SequenceIf.h" />
     <ClInclude Include="Include\SfmlPrint.h" />
-    <ClInclude Include="Include\Animation\ImageAnimationIf.h" />
+    <ClInclude Include="Include\Animation\AnimationIf.h" />
     <ClInclude Include="Include\Logging.h" />
     <ClInclude Include="Include\Message\BroadcastMessage\CloseWindowMessage.h" />
     <ClInclude Include="Include\Message\BroadcastMessage\EntityCreatedMessage.h" />
@@ -169,7 +169,7 @@
     <ClInclude Include="Include\Message\Message.h" />
     <ClInclude Include="Include\Message\MessageBus.h" />
     <ClInclude Include="Include\Message\MessageType.h" />
-    <ClInclude Include="Include\Animation\ImageAnimation.h" />
+    <ClInclude Include="Include\Animation\Animation.h" />
     <ClInclude Include="Include\Resource\ImageFrame.h" />
     <ClInclude Include="Include\Resource\TileGraphic.h" />
     <ClInclude Include="Include\Resource\ImageData.h" />

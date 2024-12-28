@@ -6,7 +6,7 @@
 
 #include "RectEntity.h"
 
-#include "Animation/ImageAnimation.h"
+#include "Animation/Animation.h"
 #include "RectangleShape.h"
 #include "Resource/ColliderData.h"
 #include "ShapeParts/SingleAnimationPart.h"

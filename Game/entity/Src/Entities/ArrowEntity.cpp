@@ -12,7 +12,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
-#include "Animation/ImageAnimation.h"
+#include "Animation/Animation.h"
 #include "Constant/Entity.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"

@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-#include "Animation/ImageAnimation.h"
+#include "Animation/Animation.h"
 #include "CameraViews.h"
 #include "RenderTexture.h"
 #include "Resource/SheetManager.h"
@@ -45,7 +45,7 @@ namespace Shared {
 class MessageBus;
 struct EntityData;
 template <class T>
-class ImageAnimationIf;
+class AnimationIf;
 
 }  // namespace Shared
 
@@ -73,7 +73,7 @@ private:
     Graphic::Sprite backgroundSprite_;
     std::vector<std::shared_ptr<Graphic::SpriteIf>> fringeLayer_;
     std::vector<
-        std::tuple<std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
+        std::tuple<std::shared_ptr<Shared::AnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
         animationLayer_;
     Shared::MessageBus& messageBus_;
     Shared::TextureManager& textureManager_;

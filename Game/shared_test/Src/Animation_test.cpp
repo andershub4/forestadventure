@@ -7,7 +7,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "Animation/ImageAnimation.h"
+#include "Animation/Animation.h"
 #include "Mock/SequenceMock.h"
 
 using namespace testing;
@@ -42,24 +42,23 @@ struct AnimationTraits<Shared::TestFrame>
     }
 };
 
-class ImageAnimationTest : public testing::Test
+class AnimationTest : public testing::Test
 {
 protected:
-    ImageAnimationTest()
+    AnimationTest()
         : seqMock_(std::make_shared<StrictMock<SequenceMock<TestFrame>>>())
     {}
 
-    std::shared_ptr<ImageAnimation<TestFrame>> CreateAnimationWithEmptyContent(
+    std::shared_ptr<Animation<TestFrame>> CreateAnimationWithEmptyContent(
         std::shared_ptr<StrictMock<SequenceMock<TestFrame>>> seqMock)
     {
         EXPECT_CALL(*seqMock, IsEmpty).WillOnce(Return(true));
-        return std::make_shared<ImageAnimation<TestFrame>>(seqMock);
+        return std::make_shared<Animation<TestFrame>>(seqMock);
     }
-    std::shared_ptr<ImageAnimation<TestFrame>> CreateAnimation(
-        std::shared_ptr<StrictMock<SequenceMock<TestFrame>>> seqMock)
+    std::shared_ptr<Animation<TestFrame>> CreateAnimation(std::shared_ptr<StrictMock<SequenceMock<TestFrame>>> seqMock)
     {
         EXPECT_CALL(*seqMock, IsEmpty).WillOnce(Return(false));
-        return std::make_shared<ImageAnimation<TestFrame>>(seqMock);
+        return std::make_shared<Animation<TestFrame>>(seqMock);
     }
 
     TestFrame frame_{42, 43};
@@ -67,13 +66,13 @@ protected:
     std::shared_ptr<StrictMock<SequenceMock<TestFrame>>> seqMock_;
 };
 
-TEST_F(ImageAnimationTest, UpdateWithEmptyContentShouldDoNothing)
+TEST_F(AnimationTest, UpdateWithEmptyContentShouldDoNothing)
 {
     auto animation = CreateAnimationWithEmptyContent(seqMock_);
     animation->Update(0.01f);
 }
 
-TEST_F(ImageAnimationTest, UpdateAndApplyWithContentShoulSetTexture)
+TEST_F(AnimationTest, UpdateAndApplyWithContentShoulSetTexture)
 {
     auto animation = CreateAnimation(seqMock_);
     EXPECT_CALL(*seqMock_, Update(0.01f));
@@ -83,7 +82,7 @@ TEST_F(ImageAnimationTest, UpdateAndApplyWithContentShoulSetTexture)
     animation->ApplyTo(drawableMock_);
 }
 
-TEST_F(ImageAnimationTest, UpdateAndApplyWithContentAndCenterShoulSetTextureAndSetOrigin)
+TEST_F(AnimationTest, UpdateAndApplyWithContentAndCenterShoulSetTextureAndSetOrigin)
 {
     auto animation = CreateAnimation(seqMock_);
     animation->Center();
@@ -95,10 +94,10 @@ TEST_F(ImageAnimationTest, UpdateAndApplyWithContentAndCenterShoulSetTextureAndS
     animation->ApplyTo(drawableMock_);
 }
 
-TEST_F(ImageAnimationTest, RegisterUpdateCBShouldBeCalledDuringUpdate)
+TEST_F(AnimationTest, RegisterUpdateCBShouldBeCalledDuringUpdate)
 {
     auto animation = CreateAnimation(seqMock_);
-    MockFunction<void(const ImageAnimationIf<TestFrame>&)> callbackFunctionMock;
+    MockFunction<void(const AnimationIf<TestFrame>&)> callbackFunctionMock;
     animation->RegisterUpdateCB(callbackFunctionMock.AsStdFunction());
     EXPECT_CALL(*seqMock_, Update(0.01f));
     EXPECT_CALL(callbackFunctionMock, Call(Ref(*animation)));

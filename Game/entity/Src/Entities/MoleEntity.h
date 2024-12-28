@@ -10,7 +10,7 @@
 
 #include "BasicEntity.h"
 
-#include "Animation/ImageAnimation.h"
+#include "Animation/Animation.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 #include "Resource/ColliderData.h"

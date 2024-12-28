@@ -15,16 +15,16 @@ namespace FA {
 namespace Shared {
 
 template <class FrameT>
-class ImageAnimationIf
+class AnimationIf
 {
 protected:
     using DrawableType = typename AnimationTraits<FrameT>::DrawableT;
 
 public:
-    virtual ~ImageAnimationIf() = default;
+    virtual ~AnimationIf() = default;
     virtual void Update(float deltaTime) = 0;
     virtual void ApplyTo(DrawableType& drawable) const = 0;
-    virtual void RegisterUpdateCB(std::function<void(const ImageAnimationIf<FrameT>&)> updateCB) = 0;
+    virtual void RegisterUpdateCB(std::function<void(const AnimationIf<FrameT>&)> updateCB) = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual void Restart() = 0;

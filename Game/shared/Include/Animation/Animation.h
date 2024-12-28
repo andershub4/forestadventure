@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include "ImageAnimationIf.h"
+#include "AnimationIf.h"
 
 #include "ColliderTraits.h"
 #include "ImageTraits.h"
@@ -19,12 +19,12 @@ namespace FA {
 namespace Shared {
 
 template <class FrameT>
-class ImageAnimation : public ImageAnimationIf<FrameT>
+class Animation : public AnimationIf<FrameT>
 {
-    using ImageAnimationIf<FrameT>::DrawableType;
+    using AnimationIf<FrameT>::DrawableType;
 
 public:
-    ImageAnimation(std::shared_ptr<SequenceIf<FrameT>> seq)
+    Animation(std::shared_ptr<SequenceIf<FrameT>> seq)
         : seq_(seq)
     {
         validSeq_ = !seq->IsEmpty();
@@ -44,7 +44,7 @@ public:
         AnimationTraits<FrameT>::Apply(frame, drawable, center_);
     }
 
-    virtual void RegisterUpdateCB(std::function<void(const ImageAnimationIf<FrameT> &)> updateCB) override
+    virtual void RegisterUpdateCB(std::function<void(const AnimationIf<FrameT> &)> updateCB) override
     {
         updateCB_ = updateCB;
     }
@@ -58,7 +58,7 @@ private:
     std::shared_ptr<SequenceIf<FrameT>> seq_;
     bool center_{false};
     bool validSeq_{false};
-    std::function<void(const ImageAnimationIf<FrameT> &)> updateCB_{[](const ImageAnimationIf<FrameT> &) {}};
+    std::function<void(const AnimationIf<FrameT> &)> updateCB_{[](const AnimationIf<FrameT> &) {}};
 };
 
 }  // namespace Shared

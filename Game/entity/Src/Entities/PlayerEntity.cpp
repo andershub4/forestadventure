@@ -329,7 +329,7 @@ void PlayerEntity::OnInit()
 
 void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 {
-    auto updateCB = [](const Shared::ImageAnimationIf<Shared::ImageFrame>& animation) {};
+    auto updateCB = [](const Shared::AnimationIf<Shared::ImageFrame>& animation) {};
     auto sprite = state->RegisterSprite();
     auto shapePart = MakeShapePart(idleFaceDirImages, *sprite, updateCB);
     state->RegisterShapePart(shapePart);
@@ -348,7 +348,7 @@ void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 {
-    auto updateCB = [](const Shared::ImageAnimationIf<Shared::ImageFrame>& animation) {};
+    auto updateCB = [](const Shared::AnimationIf<Shared::ImageFrame>& animation) {};
     auto sprite = state->RegisterSprite();
     auto shapePart = MakeShapePart(moveFaceDirImages, *sprite, updateCB);
     state->RegisterShapePart(shapePart);
@@ -391,7 +391,7 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
 {
-    auto updateCB = [](const Shared::ImageAnimationIf<Shared::ImageFrame>& animation) {};
+    auto updateCB = [](const Shared::AnimationIf<Shared::ImageFrame>& animation) {};
     auto sprite = state->RegisterSprite();
     auto shapePart = MakeShapePart(moveFaceDirImages, *sprite, updateCB);
     state->RegisterShapePart(shapePart);
@@ -423,7 +423,7 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
 {
-    auto updateCB = [this](const Shared::ImageAnimationIf<Shared::ImageFrame>& animation) {
+    auto updateCB = [this](const Shared::AnimationIf<Shared::ImageFrame>& animation) {
         if (animation.IsCompleted()) {
             ChangeStateTo(StateType::Idle, nullptr);
         }
@@ -441,7 +441,7 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
 {
-    auto updateCB = [this](const Shared::ImageAnimationIf<Shared::ImageFrame>& animation) {
+    auto updateCB = [this](const Shared::AnimationIf<Shared::ImageFrame>& animation) {
         if (animation.IsCompleted()) {
             OnShoot();
             ChangeStateTo(StateType::Idle, nullptr);
@@ -460,7 +460,7 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
 
 std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageFrame>> PlayerEntity::MakeShapePart(
     const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages, Graphic::SpriteIf& sprite,
-    std::function<void(const Shared::ImageAnimationIf<Shared::ImageFrame>&)> updateCB)
+    std::function<void(const Shared::AnimationIf<Shared::ImageFrame>&)> updateCB)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);

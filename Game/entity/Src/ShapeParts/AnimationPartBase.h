@@ -17,7 +17,7 @@ namespace FA {
 namespace Shared {
 
 template <class T>
-class ImageAnimation;
+class Animation;
 
 }  // namespace Shared
 
@@ -30,7 +30,7 @@ protected:
     using DrawableType = typename Shared::AnimationTraits<FrameT>::DrawableT;
 
 public:
-    AnimationPartBase(std::shared_ptr<Shared::ImageAnimationIf<FrameT>> animation, DrawableType &drawable)
+    AnimationPartBase(std::shared_ptr<Shared::AnimationIf<FrameT>> animation, DrawableType &drawable)
         : animation_(animation)
         , drawable_(drawable)
     {}
@@ -46,7 +46,7 @@ public:
     }
 
 protected:
-    std::shared_ptr<Shared::ImageAnimationIf<FrameT>> animation_;
+    std::shared_ptr<Shared::AnimationIf<FrameT>> animation_;
     DrawableType &drawable_;
 };
 

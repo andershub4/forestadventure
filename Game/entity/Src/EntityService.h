@@ -32,7 +32,7 @@ struct TextureRect;
 template <class T>
 class SequenceIf;
 template <class T>
-class ImageAnimationIf;
+class AnimationIf;
 struct EntityData;
 
 }  // namespace Shared
@@ -53,9 +53,9 @@ public:
                   const ObjIdTranslator &objIdTranslator);
     ~EntityService();
 
-    std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>> CreateImageAnimation(
+    std::shared_ptr<Shared::AnimationIf<Shared::ImageFrame>> CreateImageAnimation(
         const std::vector<Shared::ImageData> &images);
-    std::shared_ptr<Shared::ImageAnimationIf<Shared::ColliderFrame>> CreateColliderAnimation(
+    std::shared_ptr<Shared::AnimationIf<Shared::ColliderFrame>> CreateColliderAnimation(
         const std::vector<Shared::ColliderData> &colliders);
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);

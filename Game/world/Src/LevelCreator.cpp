@@ -8,7 +8,7 @@
 
 #include "LevelCreator.h"
 
-#include "Animation/ImageAnimation.h"
+#include "Animation/Animation.h"
 #include "RenderTargetIf.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureRect.h"
@@ -52,12 +52,11 @@ std::vector<std::shared_ptr<Graphic::SpriteIf>> LevelCreator::CreateFringe(
     return fringe;
 }
 
-std::vector<
-    std::tuple<std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
+std::vector<std::tuple<std::shared_ptr<Shared::AnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
 LevelCreator::CreateAnimations(const std::vector<TileMap::TileData> &layer) const
 {
     std::vector<
-        std::tuple<std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
+        std::tuple<std::shared_ptr<Shared::AnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
         animations;
 
     for (const auto &data : layer) {
@@ -83,7 +82,7 @@ std::shared_ptr<Graphic::SpriteIf> LevelCreator::CreateSprite(const TileMap::Til
     return sprite;
 }
 
-std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>> LevelCreator::CreateAnimation(
+std::shared_ptr<Shared::AnimationIf<Shared::ImageFrame>> LevelCreator::CreateAnimation(
     const TileMap::TileData &data) const
 {
     float t = switchTime;
@@ -96,7 +95,7 @@ std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>> LevelCreator::Crea
         seq->Add({texture, textureRect.rect_, static_cast<sf::Vector2f>(center)});
     }
 
-    auto animation = std::make_shared<Shared::ImageAnimation<Shared::ImageFrame>>(seq);
+    auto animation = std::make_shared<Shared::Animation<Shared::ImageFrame>>(seq);
     animation->Start();
 
     return animation;

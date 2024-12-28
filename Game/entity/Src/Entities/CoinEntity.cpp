@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include "Animation/ImageAnimation.h"
+#include "Animation/Animation.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
 #include "RectangleShape.h"

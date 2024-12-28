@@ -10,7 +10,7 @@
 
 #include "BasicEntity.h"
 
-#include "Animation/ImageAnimation.h"
+#include "Animation/Animation.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
 #include "Resource/ColliderData.h"
@@ -52,7 +52,7 @@ private:
 
     std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageFrame>> MakeShapePart(
         const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages,
-        Graphic::SpriteIf& sprite, std::function<void(const Shared::ImageAnimationIf<Shared::ImageFrame>&)> updateCB);
+        Graphic::SpriteIf& sprite, std::function<void(const Shared::AnimationIf<Shared::ImageFrame>&)> updateCB);
     std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderFrame>> MakeColliderPart(
         const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders,
         Graphic::RectangleShapeIf& rect);

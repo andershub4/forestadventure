@@ -18,7 +18,7 @@ template <class FrameT, class KeyT>
 class MultiAnimationPartIf : public AnimationPartIf
 {
 public:
-    virtual void Register(const KeyT &key, std::shared_ptr<Shared::ImageAnimationIf<FrameT>> animation) = 0;
+    virtual void Register(const KeyT &key, std::shared_ptr<Shared::AnimationIf<FrameT>> animation) = 0;
 };
 
 }  // namespace Entity

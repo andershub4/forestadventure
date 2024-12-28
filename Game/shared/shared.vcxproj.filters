@@ -45,7 +45,7 @@
     <ClInclude Include="Include\Message\MessageType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Animation\ImageAnimation.h">
+    <ClInclude Include="Include\Animation\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Resource\ImageFrame.h">
@@ -99,7 +99,7 @@
     <ClInclude Include="Include\Resource\SpriteSheetIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Animation\ImageAnimationIf.h">
+    <ClInclude Include="Include\Animation\AnimationIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\CameraViewIf.h">

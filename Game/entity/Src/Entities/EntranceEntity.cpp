@@ -6,7 +6,7 @@
 
 #include "EntranceEntity.h"
 
-#include "Animation/ImageAnimation.h"
+#include "Animation/Animation.h"
 #include "PropertyConverter.h"
 #include "RectangleShape.h"
 #include "Resource/ColliderData.h"

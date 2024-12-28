@@ -23,16 +23,16 @@ template <class KeyT, class FrameT>
 class MultiAnimationPart : public AnimationPartBase<MultiAnimationPartIf, FrameT, KeyT>
 {
     using AnimationPartBase<MultiAnimationPartIf, FrameT, KeyT>::DrawableType;
-    using SelectFn = std::function<std::shared_ptr<Shared::ImageAnimationIf<FrameT>>(
-        const std::unordered_map<KeyT, std::shared_ptr<Shared::ImageAnimationIf<FrameT>>> &)>;
+    using SelectFn = std::function<std::shared_ptr<Shared::AnimationIf<FrameT>>(
+        const std::unordered_map<KeyT, std::shared_ptr<Shared::AnimationIf<FrameT>>> &)>;
 
 public:
     MultiAnimationPart(const KeyT *const key, DrawableType &drawable)
         : AnimationPartBase<MultiAnimationPartIf, FrameT, KeyT>(drawable)
     {
-        selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<Shared::ImageAnimationIf<FrameT>>> &map) {
+        selectFn_ = [key](const std::unordered_map<KeyT, std::shared_ptr<Shared::AnimationIf<FrameT>>> &map) {
             bool found = map.find(*key) != map.end();
-            std::shared_ptr<Shared::ImageAnimationIf<FrameT>> result{};
+            std::shared_ptr<Shared::AnimationIf<FrameT>> result{};
 
             if (found) {
                 result = map.at(*key);
@@ -51,7 +51,7 @@ public:
         this->animation_->Restart();
     }
 
-    virtual void Register(const KeyT &key, std::shared_ptr<Shared::ImageAnimationIf<FrameT>> animation) override
+    virtual void Register(const KeyT &key, std::shared_ptr<Shared::AnimationIf<FrameT>> animation) override
     {
         auto it = map_.find(key);
         if (it != map_.end()) {
@@ -64,7 +64,7 @@ public:
 
 private:
     SelectFn selectFn_;
-    std::unordered_map<KeyT, std::shared_ptr<Shared::ImageAnimationIf<FrameT>>> map_;
+    std::unordered_map<KeyT, std::shared_ptr<Shared::AnimationIf<FrameT>>> map_;
 };
 
 }  // namespace Entity

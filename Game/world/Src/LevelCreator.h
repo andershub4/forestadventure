@@ -26,7 +26,7 @@ namespace Shared {
 
 class SheetManager;
 template <class T>
-class ImageAnimationIf;
+class AnimationIf;
 struct ImageFrame;
 
 }  // namespace Shared
@@ -44,7 +44,7 @@ public:
     void CreateBackground(Graphic::RenderTargetIf &texture) const;
     std::vector<std::shared_ptr<Graphic::SpriteIf>> CreateFringe(const std::vector<TileMap::TileData> &layer) const;
     std::vector<
-        std::tuple<std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
+        std::tuple<std::shared_ptr<Shared::AnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
     CreateAnimations(const std::vector<TileMap::TileData> &layer) const;
 
 private:
@@ -54,7 +54,7 @@ private:
 
 private:
     std::shared_ptr<Graphic::SpriteIf> CreateSprite(const TileMap::TileData &data) const;
-    std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>> CreateAnimation(const TileMap::TileData &data) const;
+    std::shared_ptr<Shared::AnimationIf<Shared::ImageFrame>> CreateAnimation(const TileMap::TileData &data) const;
 };
 
 }  // namespace World

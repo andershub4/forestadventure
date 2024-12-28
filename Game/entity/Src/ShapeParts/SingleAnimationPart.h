@@ -21,7 +21,7 @@ class SingleAnimationPart : public AnimationPartBase<SingleAnimationPartIf, Fram
     using AnimationPartBase<SingleAnimationPartIf, FrameT>::DrawableType;
 
 public:
-    SingleAnimationPart(std::shared_ptr<Shared::ImageAnimationIf<FrameT>> animation, DrawableType& drawable)
+    SingleAnimationPart(std::shared_ptr<Shared::AnimationIf<FrameT>> animation, DrawableType& drawable)
         : AnimationPartBase<SingleAnimationPartIf, FrameT>(animation, drawable)
     {}
 
