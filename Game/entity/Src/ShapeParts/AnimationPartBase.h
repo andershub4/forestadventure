@@ -10,26 +10,44 @@
 
 #include "AnimationPartIf.h"
 
+#include "Animation/AnimationTraits.h"
+
 namespace FA {
+
+namespace Shared {
+
+template <class T>
+class ImageAnimation;
+
+}  // namespace Shared
 
 namespace Entity {
 
-template <template <class...> class AnimationPartIfT, class AnimationT, class... Args>
-class AnimationPartBase : public AnimationPartIfT<AnimationT, Args...>
+template <template <class...> class AnimationPartIfT, class FrameT, class... Args>
+class AnimationPartBase : public AnimationPartIfT<FrameT, Args...>
 {
+protected:
+    using DrawableType = typename Shared::AnimationTraits<FrameT>::DrawableT;
+
 public:
-    AnimationPartBase(std::shared_ptr<AnimationT> animation)
+    AnimationPartBase(std::shared_ptr<Shared::ImageAnimationIf<FrameT>> animation, DrawableType &drawable)
         : animation_(animation)
+        , drawable_(drawable)
     {}
 
-    AnimationPartBase() = default;
+    AnimationPartBase(DrawableType &drawable)
+        : drawable_(drawable)
+    {}
 
-    virtual void Update(float deltaTime) override { animation_->Update(deltaTime); }
-
-    virtual void ApplyTo(std::shared_ptr<Graphic::DrawableIf> drawable) override { animation_->ApplyTo(drawable); }
+    virtual void Update(float deltaTime) override
+    {
+        animation_->Update(deltaTime);
+        animation_->ApplyTo(drawable_);
+    }
 
 protected:
-    std::shared_ptr<AnimationT> animation_;
+    std::shared_ptr<Shared::ImageAnimationIf<FrameT>> animation_;
+    DrawableType &drawable_;
 };
 
 }  // namespace Entity

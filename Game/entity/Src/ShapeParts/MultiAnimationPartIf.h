@@ -14,11 +14,11 @@ namespace FA {
 
 namespace Entity {
 
-template <class AnimationT, class KeyT>
+template <class FrameT, class KeyT>
 class MultiAnimationPartIf : public AnimationPartIf
 {
 public:
-    virtual void Register(const KeyT &key, std::shared_ptr<AnimationT> animation) = 0;
+    virtual void Register(const KeyT &key, std::shared_ptr<Shared::ImageAnimationIf<FrameT>> animation) = 0;
 };
 
 }  // namespace Entity

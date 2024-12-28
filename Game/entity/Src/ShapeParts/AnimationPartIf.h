@@ -8,12 +8,6 @@
 
 namespace FA {
 
-namespace Graphic {
-
-class DrawableIf;
-
-}  // namespace Graphic
-
 namespace Entity {
 
 class AnimationPartIf
@@ -23,7 +17,6 @@ public:
 
     virtual void Enter() = 0;
     virtual void Update(float deltaTime) = 0;
-    virtual void ApplyTo(std::shared_ptr<Graphic::DrawableIf> drawable) = 0;
 };
 
 }  // namespace Entity

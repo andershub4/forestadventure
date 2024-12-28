@@ -6,7 +6,6 @@
 
 #include "EntityService.h"
 
-#include "Animation/ColliderAnimation.h"
 #include "Animation/ImageAnimation.h"
 #include "CameraView.h"
 #include "CameraViews.h"
@@ -47,16 +46,16 @@ EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::Textu
 
 EntityService::~EntityService() = default;
 
-std::shared_ptr<Shared::ImageAnimation> EntityService::CreateImageAnimation(
+std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>> EntityService::CreateImageAnimation(
     const std::vector<Shared::ImageData>& images)
 {
-    return std::make_shared<Shared::ImageAnimation>(CreateSequence(images));
+    return std::make_shared<Shared::ImageAnimation<Shared::ImageFrame>>(CreateSequence(images));
 }
 
-std::shared_ptr<Shared::ColliderAnimation> EntityService::CreateColliderAnimation(
+std::shared_ptr<Shared::ImageAnimationIf<Shared::ColliderFrame>> EntityService::CreateColliderAnimation(
     const std::vector<Shared::ColliderData>& colliders)
 {
-    return std::make_shared<Shared::ColliderAnimation>(CreateSequence(colliders));
+    return std::make_shared<Shared::ImageAnimation<Shared::ColliderFrame>>(CreateSequence(colliders));
 }
 
 std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> EntityService::CreateSequence(

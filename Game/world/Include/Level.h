@@ -44,6 +44,7 @@ namespace Shared {
 
 class MessageBus;
 struct EntityData;
+template <class T>
 class ImageAnimationIf;
 
 }  // namespace Shared
@@ -71,7 +72,8 @@ private:
     Graphic::RenderTexture backgroundTexture_;
     Graphic::Sprite backgroundSprite_;
     std::vector<std::shared_ptr<Graphic::SpriteIf>> fringeLayer_;
-    std::vector<std::tuple<std::shared_ptr<Shared::ImageAnimationIf>, std::shared_ptr<Graphic::SpriteIf>>>
+    std::vector<
+        std::tuple<std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
         animationLayer_;
     Shared::MessageBus& messageBus_;
     Shared::TextureManager& textureManager_;

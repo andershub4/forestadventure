@@ -8,7 +8,6 @@
 
 #include <memory>
 
-#include "Animation/ColliderAnimation.h"
 #include "Animation/ImageAnimation.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
@@ -54,14 +53,14 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 {
     auto imageAnimation = service_->CreateImageAnimation(idleImages);
     imageAnimation->Center();
-    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(imageAnimation);
     auto sprite = idleState->RegisterSprite();
-    idleState->RegisterShapePart(shapePart, sprite);
+    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageFrame>>(imageAnimation, *sprite);
+    idleState->RegisterShapePart(shapePart);
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
     colliderAnimation->Center();
-    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
     auto rect = idleState->RegisterCollider();
-    idleState->RegisterColliderPart(colliderPart, rect);
+    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderFrame>>(colliderAnimation, *rect);
+    idleState->RegisterColliderPart(colliderPart);
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
         if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Player) {

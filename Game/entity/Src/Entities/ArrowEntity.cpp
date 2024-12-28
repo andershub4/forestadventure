@@ -12,7 +12,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
-#include "Animation/ColliderAnimation.h"
 #include "Animation/ImageAnimation.h"
 #include "Constant/Entity.h"
 #include "Events/CollisionEvent.h"
@@ -130,14 +129,14 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
     auto moveState = RegisterState(StateType::Move);
     auto imageAnimation = service_->CreateImageAnimation(images);
     imageAnimation->Center();
-    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(imageAnimation);
     auto sprite = moveState->RegisterSprite();
-    moveState->RegisterShapePart(shapePart, sprite);
+    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageFrame>>(imageAnimation, *sprite);
+    moveState->RegisterShapePart(shapePart);
     auto colliderAnimation = service_->CreateColliderAnimation(colliders);
     colliderAnimation->Center();
-    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
     auto rect = moveState->RegisterCollider();
-    moveState->RegisterColliderPart(colliderPart, rect);
+    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderFrame>>(colliderAnimation, *rect);
+    moveState->RegisterColliderPart(colliderPart);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity * 8.0f, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });

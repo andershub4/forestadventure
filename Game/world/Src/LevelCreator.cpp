@@ -52,10 +52,13 @@ std::vector<std::shared_ptr<Graphic::SpriteIf>> LevelCreator::CreateFringe(
     return fringe;
 }
 
-std::vector<std::tuple<std::shared_ptr<Shared::ImageAnimationIf>, std::shared_ptr<Graphic::SpriteIf>>>
+std::vector<
+    std::tuple<std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
 LevelCreator::CreateAnimations(const std::vector<TileMap::TileData> &layer) const
 {
-    std::vector<std::tuple<std::shared_ptr<Shared::ImageAnimationIf>, std::shared_ptr<Graphic::SpriteIf>>> animations;
+    std::vector<
+        std::tuple<std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
+        animations;
 
     for (const auto &data : layer) {
         auto animation = CreateAnimation(data);
@@ -80,7 +83,8 @@ std::shared_ptr<Graphic::SpriteIf> LevelCreator::CreateSprite(const TileMap::Til
     return sprite;
 }
 
-std::shared_ptr<Shared::ImageAnimationIf> LevelCreator::CreateAnimation(const TileMap::TileData &data) const
+std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>> LevelCreator::CreateAnimation(
+    const TileMap::TileData &data) const
 {
     float t = switchTime;
     auto seq = std::make_shared<Shared::Sequence<Shared::ImageFrame>>(t);
@@ -92,7 +96,7 @@ std::shared_ptr<Shared::ImageAnimationIf> LevelCreator::CreateAnimation(const Ti
         seq->Add({texture, textureRect.rect_, static_cast<sf::Vector2f>(center)});
     }
 
-    auto animation = std::make_shared<Shared::ImageAnimation>(seq);
+    auto animation = std::make_shared<Shared::ImageAnimation<Shared::ImageFrame>>(seq);
     animation->Start();
 
     return animation;

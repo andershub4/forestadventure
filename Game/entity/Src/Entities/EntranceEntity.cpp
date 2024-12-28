@@ -6,10 +6,11 @@
 
 #include "EntranceEntity.h"
 
-#include "Animation/ColliderAnimation.h"
+#include "Animation/ImageAnimation.h"
 #include "PropertyConverter.h"
 #include "RectangleShape.h"
 #include "Resource/ColliderData.h"
+#include "Resource/ColliderFrame.h"
 #include "ShapeParts/SingleAnimationPart.h"
 #include "State.h"
 
@@ -48,9 +49,9 @@ void EntranceEntity::RegisterStates(std::shared_ptr<State> idleState, std::share
     const Shared::ColliderData colliderData(rectSize);
     const std::vector<Shared::ColliderData> idleColliders{colliderData};
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
-    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderAnimation>>(colliderAnimation);
     auto rect = idleState->RegisterCollider();
-    idleState->RegisterColliderPart(colliderPart, rect);
+    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderFrame>>(colliderAnimation, *rect);
+    idleState->RegisterColliderPart(colliderPart);
 }
 
 }  // namespace Entity

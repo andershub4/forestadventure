@@ -37,31 +37,18 @@ public:
 
     std::shared_ptr<Graphic::SpriteIf> RegisterSprite();
     std::shared_ptr<Graphic::RectangleShapeIf> RegisterCollider();
-    void RegisterShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite);
-    void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::RectangleShapeIf> rect);
+    void RegisterShapePart(std::shared_ptr<AnimationPartIf> part);
+    void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part);
     void Enter();
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
     bool Intersect(const Shape &shape) const;
 
 private:
-    struct AnimationElement
-    {
-        std::shared_ptr<AnimationPartIf> animation_;
-        std::shared_ptr<Graphic::SpriteIf> sprite_;
-    };
-    struct ColliderElement
-    {
-        std::shared_ptr<AnimationPartIf> animation_;
-        std::shared_ptr<Graphic::RectangleShapeIf> rect_;
-    };
-
     std::vector<std::shared_ptr<AnimationPartIf>> colliderParts_;
     std::vector<std::shared_ptr<AnimationPartIf>> shapeParts_;
     std::vector<std::shared_ptr<Graphic::SpriteIf>> sprites_;
     std::vector<std::shared_ptr<Graphic::RectangleShapeIf>> colliders_;
-    std::vector<AnimationElement> shapeElements_;
-    std::vector<ColliderElement> colliderElements_;
     Body &body_;
 #ifdef _DEBUG
     Graphic::RectangleShape rShape_;

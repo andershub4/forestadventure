@@ -25,7 +25,9 @@ class SpriteIf;
 namespace Shared {
 
 class SheetManager;
+template <class T>
 class ImageAnimationIf;
+struct ImageFrame;
 
 }  // namespace Shared
 
@@ -41,7 +43,8 @@ public:
     void AddBackground(const std::vector<TileMap::TileData> &layer);
     void CreateBackground(Graphic::RenderTargetIf &texture) const;
     std::vector<std::shared_ptr<Graphic::SpriteIf>> CreateFringe(const std::vector<TileMap::TileData> &layer) const;
-    std::vector<std::tuple<std::shared_ptr<Shared::ImageAnimationIf>, std::shared_ptr<Graphic::SpriteIf>>>
+    std::vector<
+        std::tuple<std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>>, std::shared_ptr<Graphic::SpriteIf>>>
     CreateAnimations(const std::vector<TileMap::TileData> &layer) const;
 
 private:
@@ -51,7 +54,7 @@ private:
 
 private:
     std::shared_ptr<Graphic::SpriteIf> CreateSprite(const TileMap::TileData &data) const;
-    std::shared_ptr<Shared::ImageAnimationIf> CreateAnimation(const TileMap::TileData &data) const;
+    std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>> CreateAnimation(const TileMap::TileData &data) const;
 };
 
 }  // namespace World

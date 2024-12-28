@@ -88,14 +88,14 @@ std::shared_ptr<Graphic::RectangleShapeIf> State::RegisterCollider()
     return shape_.RegisterCollider();
 }
 
-void State::RegisterShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite)
+void State::RegisterShapePart(std::shared_ptr<AnimationPartIf> part)
 {
-    shape_.RegisterShapePart(part, sprite);
+    shape_.RegisterShapePart(part);
 }
 
-void State::RegisterColliderPart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::RectangleShapeIf> rect)
+void State::RegisterColliderPart(std::shared_ptr<AnimationPartIf> part)
 {
-    shape_.RegisterColliderPart(part, rect);
+    shape_.RegisterColliderPart(part);
 }
 
 void State::RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)> event)

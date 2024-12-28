@@ -11,7 +11,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
-#include "Animation/ColliderAnimation.h"
 #include "Constant/Entity.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
@@ -173,12 +172,12 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 
 void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 {
-    auto shapePart = MakeShapePart(idleFaceDirImages);
     auto sprite = state->RegisterSprite();
-    state->RegisterShapePart(shapePart, sprite);
-    auto colliderPart = MakeColliderPart(idleFaceDirColliders);
+    auto shapePart = MakeShapePart(idleFaceDirImages, *sprite);
+    state->RegisterShapePart(shapePart);
     auto rect = state->RegisterCollider();
-    state->RegisterColliderPart(colliderPart, rect);
+    auto colliderPart = MakeColliderPart(idleFaceDirColliders, *rect);
+    state->RegisterColliderPart(colliderPart);
 
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -193,12 +192,12 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 
 void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
 {
-    auto shapePart = MakeShapePart(moveFaceDirImages);
     auto sprite = state->RegisterSprite();
-    state->RegisterShapePart(shapePart, sprite);
-    auto colliderPart = MakeColliderPart(moveFaceDirColliders);
+    auto shapePart = MakeShapePart(moveFaceDirImages, *sprite);
+    state->RegisterShapePart(shapePart);
     auto rect = state->RegisterCollider();
-    state->RegisterColliderPart(colliderPart, rect);
+    auto colliderPart = MakeColliderPart(moveFaceDirColliders, *rect);
+    state->RegisterColliderPart(colliderPart);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
@@ -215,7 +214,7 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
 
 void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
 {
-    auto updateCB = [this](const Shared::ImageAnimationIf& animation) {
+    auto updateCB = [this](const Shared::ImageAnimationIf<Shared::ImageFrame>& animation) {
         if (animation.IsCompleted()) {
             HandleEvent(std::make_shared<DeadEvent>());
         }
@@ -223,17 +222,17 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
     auto animation = service_->CreateImageAnimation(collisionImages);
     animation->Center();
     animation->RegisterUpdateCB(updateCB);
-    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageAnimation>>(animation);
     auto sprite = state->RegisterSprite();
-    state->RegisterShapePart(shapePart, sprite);
+    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageFrame>>(animation, *sprite);
+    state->RegisterShapePart(shapePart);
 }
 
-std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>> MoleEntity::MakeShapePart(
-    const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages)
+std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageFrame>> MoleEntity::MakeShapePart(
+    const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages, Graphic::SpriteIf& sprite)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>>(dir);
+    auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ImageFrame>>(dir, sprite);
     for (const auto& entry : faceDirImages) {
         auto animation = service_->CreateImageAnimation(entry.second);
         animation->Center();
@@ -243,12 +242,13 @@ std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>> MoleE
     return part;
 }
 
-std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>> MoleEntity::MakeColliderPart(
-    const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders)
+std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderFrame>> MoleEntity::MakeColliderPart(
+    const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders,
+    Graphic::RectangleShapeIf& rect)
 {
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>>(dir);
+    auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ColliderFrame>>(dir, rect);
     for (const auto& entry : faceDirColliders) {
         auto animation = service_->CreateColliderAnimation(entry.second);
         animation->Center();

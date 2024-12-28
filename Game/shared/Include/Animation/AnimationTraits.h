@@ -6,17 +6,22 @@
 
 #pragma once
 
-#include "AnimationPartIf.h"
-
 namespace FA {
 
-namespace Entity {
+namespace Graphic {
+
+class DrawableIf;
+
+}  // namespace Graphic
+
+namespace Shared {
 
 template <class FrameT>
-class SingleAnimationPartIf : public AnimationPartIf
+struct AnimationTraits
 {
+    using DrawableT = Graphic::DrawableIf;
 };
 
-}  // namespace Entity
+}  // namespace Shared
 
 }  // namespace FA

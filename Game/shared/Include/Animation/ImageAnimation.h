@@ -10,32 +10,55 @@
 
 #include "ImageAnimationIf.h"
 
-#include "Resource/ImageFrame.h"
+#include "ColliderTraits.h"
+#include "ImageTraits.h"
 #include "SequenceIf.h"
 
 namespace FA {
 
 namespace Shared {
 
-class ImageAnimation : public ImageAnimationIf
+template <class FrameT>
+class ImageAnimation : public ImageAnimationIf<FrameT>
 {
-public:
-    ImageAnimation(std::shared_ptr<SequenceIf<ImageFrame>> seq);
+    using ImageAnimationIf<FrameT>::DrawableType;
 
-    virtual void Update(float deltaTime) override;  // delta time; time since previous time to current frame
-    virtual void ApplyTo(std::shared_ptr<Graphic::DrawableIf> drawable) const override;
-    virtual void RegisterUpdateCB(std::function<void(const ImageAnimationIf &)> updateCB) override;
-    virtual void Start() override;
-    virtual void Stop() override;
-    virtual void Restart() override;
-    virtual bool IsCompleted() const override;
-    virtual void Center() override;
+public:
+    ImageAnimation(std::shared_ptr<SequenceIf<FrameT>> seq)
+        : seq_(seq)
+    {
+        validSeq_ = !seq->IsEmpty();
+    }
+
+    virtual void Update(float deltaTime) override  // delta time; time since previous time to current frame
+    {
+        if (validSeq_) {
+            seq_->Update(deltaTime);
+            updateCB_(*this);
+        }
+    }
+
+    virtual void ApplyTo(DrawableType &drawable) const override
+    {
+        auto frame = seq_->GetCurrent();
+        AnimationTraits<FrameT>::Apply(frame, drawable, center_);
+    }
+
+    virtual void RegisterUpdateCB(std::function<void(const ImageAnimationIf<FrameT> &)> updateCB) override
+    {
+        updateCB_ = updateCB;
+    }
+    virtual void Start() override { seq_->Start(); }
+    virtual void Stop() override { seq_->Stop(); }
+    virtual void Restart() override { seq_->Restart(); }
+    virtual bool IsCompleted() const override { return seq_->IsCompleted(); }
+    virtual void Center() override { center_ = true; }
 
 private:
-    std::shared_ptr<SequenceIf<ImageFrame>> seq_;
+    std::shared_ptr<SequenceIf<FrameT>> seq_;
     bool center_{false};
     bool validSeq_{false};
-    std::function<void(const ImageAnimationIf &)> updateCB_{[](const ImageAnimationIf &) {}};
+    std::function<void(const ImageAnimationIf<FrameT> &)> updateCB_{[](const ImageAnimationIf<FrameT> &) {}};
 };
 
 }  // namespace Shared

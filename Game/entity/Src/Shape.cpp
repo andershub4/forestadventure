@@ -53,14 +53,11 @@ void Shape::Enter()
 
 void Shape::Update(float deltaTime)
 {
-    for (auto &element : shapeElements_) {
-        element.animation_->Update(deltaTime);
-        element.animation_->ApplyTo(element.sprite_);
+    for (auto part : shapeParts_) {
+        part->Update(deltaTime);
     }
-
-    for (auto &element : colliderElements_) {
-        element.animation_->Update(deltaTime);
-        element.animation_->ApplyTo(element.rect_);
+    for (auto part : colliderParts_) {
+        part->Update(deltaTime);
     }
 
     for (auto &sprite : sprites_) {
@@ -97,15 +94,13 @@ std::shared_ptr<Graphic::RectangleShapeIf> Shape::RegisterCollider()
     return rect;
 }
 
-void Shape::RegisterShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite)
+void Shape::RegisterShapePart(std::shared_ptr<AnimationPartIf> part)
 {
-    shapeElements_.push_back({part, sprite});
     shapeParts_.push_back(part);
 }
 
-void Shape::RegisterColliderPart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::RectangleShapeIf> rect)
+void Shape::RegisterColliderPart(std::shared_ptr<AnimationPartIf> part)
 {
-    colliderElements_.push_back({part, rect});
     colliderParts_.push_back(part);
 }
 

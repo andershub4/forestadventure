@@ -10,7 +10,6 @@
 
 #include "BasicEntity.h"
 
-#include "Animation/ColliderAnimation.h"
 #include "Animation/ImageAnimation.h"
 #include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
@@ -44,10 +43,12 @@ private:
     void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
 
-    std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageAnimation>> MakeShapePart(
-        const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages);
-    std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderAnimation>> MakeColliderPart(
-        const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders);
+    std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageFrame>> MakeShapePart(
+        const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages,
+        Graphic::SpriteIf& sprite);
+    std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderFrame>> MakeColliderPart(
+        const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders,
+        Graphic::RectangleShapeIf& rect);
 
     void DefineIdleState(std::shared_ptr<State> state);
     void DefineMoveState(std::shared_ptr<State> state);

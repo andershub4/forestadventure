@@ -15,12 +15,14 @@ namespace FA {
 
 namespace Entity {
 
-template <class AnimationT>
-class SingleAnimationPart : public AnimationPartBase<SingleAnimationPartIf, AnimationT>
+template <class FrameT>
+class SingleAnimationPart : public AnimationPartBase<SingleAnimationPartIf, FrameT>
 {
+    using AnimationPartBase<SingleAnimationPartIf, FrameT>::DrawableType;
+
 public:
-    SingleAnimationPart(std::shared_ptr<AnimationT> animation)
-        : AnimationPartBase<SingleAnimationPartIf, AnimationT>(animation)
+    SingleAnimationPart(std::shared_ptr<Shared::ImageAnimationIf<FrameT>> animation, DrawableType& drawable)
+        : AnimationPartBase<SingleAnimationPartIf, FrameT>(animation, drawable)
     {}
 
     virtual void Enter() override { this->animation_->Restart(); }

@@ -31,8 +31,8 @@ enum class MessageType;
 struct TextureRect;
 template <class T>
 class SequenceIf;
-class ImageAnimation;
-class ColliderAnimation;
+template <class T>
+class ImageAnimationIf;
 struct EntityData;
 
 }  // namespace Shared
@@ -53,8 +53,9 @@ public:
                   const ObjIdTranslator &objIdTranslator);
     ~EntityService();
 
-    std::shared_ptr<Shared::ImageAnimation> CreateImageAnimation(const std::vector<Shared::ImageData> &images);
-    std::shared_ptr<Shared::ColliderAnimation> CreateColliderAnimation(
+    std::shared_ptr<Shared::ImageAnimationIf<Shared::ImageFrame>> CreateImageAnimation(
+        const std::vector<Shared::ImageData> &images);
+    std::shared_ptr<Shared::ImageAnimationIf<Shared::ColliderFrame>> CreateColliderAnimation(
         const std::vector<Shared::ColliderData> &colliders);
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);

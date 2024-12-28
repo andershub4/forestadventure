@@ -85,7 +85,7 @@ void Level::Update(float deltaTime)
         auto animation = std::get<0>(element);
         auto sprite = std::get<1>(element);
         animation->Update(deltaTime);
-        animation->ApplyTo(sprite);
+        animation->ApplyTo(*sprite);
     }
 
     entityHandler_->Update(deltaTime);

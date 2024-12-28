@@ -51,8 +51,8 @@ public:
     void RegisterAbility(std::shared_ptr<AbilityIf> ability);
     std::shared_ptr<Graphic::SpriteIf> RegisterSprite();
     std::shared_ptr<Graphic::RectangleShapeIf> RegisterCollider();
-    void RegisterShapePart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::SpriteIf> sprite);
-    void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part, std::shared_ptr<Graphic::RectangleShapeIf> rect);
+    void RegisterShapePart(std::shared_ptr<AnimationPartIf> part);
+    void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part);
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);
     void RegisterIgnoreEvents(const std::vector<EventType>& eventTypes);
     void IgnoreAllEventsExcept(const std::unordered_set<EventType>& notIgnorableEventTypes);

@@ -7,25 +7,24 @@
 #pragma once
 
 #include <functional>
-#include <memory>
+
+#include "Animation/AnimationTraits.h"
 
 namespace FA {
 
-namespace Graphic {
-
-class DrawableIf;
-
-}  // namespace Graphic
-
 namespace Shared {
 
+template <class FrameT>
 class ImageAnimationIf
 {
+protected:
+    using DrawableType = typename AnimationTraits<FrameT>::DrawableT;
+
 public:
     virtual ~ImageAnimationIf() = default;
     virtual void Update(float deltaTime) = 0;
-    virtual void ApplyTo(std::shared_ptr<Graphic::DrawableIf> drawable) const = 0;
-    virtual void RegisterUpdateCB(std::function<void(const ImageAnimationIf &)> updateCB) = 0;
+    virtual void ApplyTo(DrawableType& drawable) const = 0;
+    virtual void RegisterUpdateCB(std::function<void(const ImageAnimationIf<FrameT>&)> updateCB) = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual void Restart() = 0;
