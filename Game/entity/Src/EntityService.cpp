@@ -47,15 +47,15 @@ EntityService::EntityService(Shared::MessageBus& messageBus, const Shared::Textu
 EntityService::~EntityService() = default;
 
 std::shared_ptr<Shared::AnimationIf<Shared::ImageFrame>> EntityService::CreateImageAnimation(
-    const std::vector<Shared::ImageData>& images)
+    const std::vector<Shared::ImageData>& images, bool center)
 {
-    return std::make_shared<Shared::Animation<Shared::ImageFrame>>(CreateSequence(images));
+    return std::make_shared<Shared::Animation<Shared::ImageFrame>>(CreateSequence(images), center);
 }
 
 std::shared_ptr<Shared::AnimationIf<Shared::ColliderFrame>> EntityService::CreateColliderAnimation(
-    const std::vector<Shared::ColliderData>& colliders)
+    const std::vector<Shared::ColliderData>& colliders, bool center)
 {
-    return std::make_shared<Shared::Animation<Shared::ColliderFrame>>(CreateSequence(colliders));
+    return std::make_shared<Shared::Animation<Shared::ColliderFrame>>(CreateSequence(colliders), center);
 }
 
 std::shared_ptr<Shared::SequenceIf<Shared::ImageFrame>> EntityService::CreateSequence(

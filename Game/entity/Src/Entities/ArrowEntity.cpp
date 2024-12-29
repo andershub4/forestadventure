@@ -13,6 +13,7 @@
 
 #include "Abilities/MoveAbility.h"
 #include "Animation/Animation.h"
+#include "Animator/Animator.h"
 #include "Constant/Entity.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
@@ -24,7 +25,6 @@
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
-#include "ShapeParts/SingleAnimationPart.h"
 #include "Sprite.h"
 #include "State.h"
 
@@ -128,15 +128,15 @@ void ArrowEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_p
 
     auto moveState = RegisterState(StateType::Move);
     auto imageAnimation = service_->CreateImageAnimation(images);
-    imageAnimation->Center();
     auto sprite = moveState->RegisterSprite();
-    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageFrame>>(imageAnimation, *sprite);
-    moveState->RegisterShapePart(shapePart);
+    auto imageAnimator =
+        std::shared_ptr<AnimatorIf<Shared::ImageFrame>>(new Animator<Shared::ImageFrame>(*sprite, imageAnimation));
+    moveState->RegisterImageAnimator(imageAnimator);
     auto colliderAnimation = service_->CreateColliderAnimation(colliders);
-    colliderAnimation->Center();
     auto rect = moveState->RegisterCollider();
-    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderFrame>>(colliderAnimation, *rect);
-    moveState->RegisterColliderPart(colliderPart);
+    auto colliderAnimator = std::shared_ptr<AnimatorIf<Shared::ColliderFrame>>(
+        new Animator<Shared::ColliderFrame>(*rect, colliderAnimation));
+    moveState->RegisterColliderAnimator(colliderAnimator);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity * 8.0f, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });

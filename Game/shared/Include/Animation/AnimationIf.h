@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <functional>
-
 #include "Animation/AnimationTraits.h"
 
 namespace FA {
@@ -24,12 +22,10 @@ public:
     virtual ~AnimationIf() = default;
     virtual void Update(float deltaTime) = 0;
     virtual void ApplyTo(DrawableType& drawable) const = 0;
-    virtual void RegisterUpdateCB(std::function<void(const AnimationIf<FrameT>&)> updateCB) = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual void Restart() = 0;
     virtual bool IsCompleted() const = 0;
-    virtual void Center() = 0;
 };
 
 }  // namespace Shared

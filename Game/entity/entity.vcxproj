@@ -184,13 +184,9 @@
     <ClInclude Include="Src\PropertyConverter.h" />
     <ClInclude Include="Src\PropertyStore.h" />
     <ClInclude Include="Src\Shape.h" />
-    <ClInclude Include="Src\ShapeParts\AnimationPartBase.h" />
-    <ClInclude Include="Src\ShapeParts\AnimationPartIf.h" />
+    <ClInclude Include="Src\Animator\Animator.h" />
+    <ClInclude Include="Src\Animator\AnimatorIf.h" />
     <ClInclude Include="Src\ShapeParts\BasicPart.h" />
-    <ClInclude Include="Src\ShapeParts\SingleAnimationPart.h" />
-    <ClInclude Include="Src\ShapeParts\MultiAnimationPart.h" />
-    <ClInclude Include="Src\ShapeParts\MultiAnimationPartIf.h" />
-    <ClInclude Include="Src\ShapeParts\SingleAnimationPartIf.h" />
     <ClInclude Include="Src\State.h" />
     <ClInclude Include="Src\StateMachine.h" />
     <ClInclude Include="Src\StateType.h" />

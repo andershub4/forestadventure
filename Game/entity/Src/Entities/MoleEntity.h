@@ -10,12 +10,7 @@
 
 #include "BasicEntity.h"
 
-#include "Animation/Animation.h"
-#include "Enum/FaceDirection.h"
 #include "Enum/MoveDirection.h"
-#include "Resource/ColliderData.h"
-#include "Resource/ImageData.h"
-#include "ShapeParts/MultiAnimationPart.h"
 
 namespace FA {
 
@@ -42,13 +37,6 @@ private:
 
     void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
-
-    std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageFrame>> MakeShapePart(
-        const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages,
-        Graphic::SpriteIf& sprite);
-    std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderFrame>> MakeColliderPart(
-        const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders,
-        Graphic::RectangleShapeIf& rect);
 
     void DefineIdleState(std::shared_ptr<State> state);
     void DefineMoveState(std::shared_ptr<State> state);

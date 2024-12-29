@@ -55,10 +55,11 @@ protected:
         EXPECT_CALL(*seqMock, IsEmpty).WillOnce(Return(true));
         return std::make_shared<Animation<TestFrame>>(seqMock);
     }
-    std::shared_ptr<Animation<TestFrame>> CreateAnimation(std::shared_ptr<StrictMock<SequenceMock<TestFrame>>> seqMock)
+    std::shared_ptr<Animation<TestFrame>> CreateAnimation(std::shared_ptr<StrictMock<SequenceMock<TestFrame>>> seqMock,
+                                                          bool center)
     {
         EXPECT_CALL(*seqMock, IsEmpty).WillOnce(Return(false));
-        return std::make_shared<Animation<TestFrame>>(seqMock);
+        return std::make_shared<Animation<TestFrame>>(seqMock, center);
     }
 
     TestFrame frame_{42, 43};
@@ -72,9 +73,9 @@ TEST_F(AnimationTest, UpdateWithEmptyContentShouldDoNothing)
     animation->Update(0.01f);
 }
 
-TEST_F(AnimationTest, UpdateAndApplyWithContentShoulSetTexture)
+TEST_F(AnimationTest, UpdateAndApplyWithContentShoulSetValue)
 {
-    auto animation = CreateAnimation(seqMock_);
+    auto animation = CreateAnimation(seqMock_, false);
     EXPECT_CALL(*seqMock_, Update(0.01f));
     animation->Update(0.01f);
     EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(frame_));
@@ -82,26 +83,15 @@ TEST_F(AnimationTest, UpdateAndApplyWithContentShoulSetTexture)
     animation->ApplyTo(drawableMock_);
 }
 
-TEST_F(AnimationTest, UpdateAndApplyWithContentAndCenterShoulSetTextureAndSetOrigin)
+TEST_F(AnimationTest, UpdateAndApplyWithContentAndCenterShoulSetValeAndSetCenterValue)
 {
-    auto animation = CreateAnimation(seqMock_);
-    animation->Center();
+    auto animation = CreateAnimation(seqMock_, true);
     EXPECT_CALL(*seqMock_, Update(_));
     animation->Update(0.01f);
     EXPECT_CALL(*seqMock_, GetCurrent).WillOnce(Return(frame_));
     EXPECT_CALL(drawableMock_, SetValue(42));
     EXPECT_CALL(drawableMock_, SetCenterValue(43));
     animation->ApplyTo(drawableMock_);
-}
-
-TEST_F(AnimationTest, RegisterUpdateCBShouldBeCalledDuringUpdate)
-{
-    auto animation = CreateAnimation(seqMock_);
-    MockFunction<void(const AnimationIf<TestFrame>&)> callbackFunctionMock;
-    animation->RegisterUpdateCB(callbackFunctionMock.AsStdFunction());
-    EXPECT_CALL(*seqMock_, Update(0.01f));
-    EXPECT_CALL(callbackFunctionMock, Call(Ref(*animation)));
-    animation->Update(0.01f);
 }
 
 }  // namespace Shared

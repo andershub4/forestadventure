@@ -24,8 +24,9 @@ class Animation : public AnimationIf<FrameT>
     using AnimationIf<FrameT>::DrawableType;
 
 public:
-    Animation(std::shared_ptr<SequenceIf<FrameT>> seq)
+    Animation(std::shared_ptr<SequenceIf<FrameT>> seq, bool center = true)
         : seq_(seq)
+        , center_(center)
     {
         validSeq_ = !seq->IsEmpty();
     }
@@ -34,7 +35,6 @@ public:
     {
         if (validSeq_) {
             seq_->Update(deltaTime);
-            updateCB_(*this);
         }
     }
 
@@ -44,21 +44,15 @@ public:
         AnimationTraits<FrameT>::Apply(frame, drawable, center_);
     }
 
-    virtual void RegisterUpdateCB(std::function<void(const AnimationIf<FrameT> &)> updateCB) override
-    {
-        updateCB_ = updateCB;
-    }
     virtual void Start() override { seq_->Start(); }
     virtual void Stop() override { seq_->Stop(); }
     virtual void Restart() override { seq_->Restart(); }
     virtual bool IsCompleted() const override { return seq_->IsCompleted(); }
-    virtual void Center() override { center_ = true; }
 
 private:
     std::shared_ptr<SequenceIf<FrameT>> seq_;
     bool center_{false};
     bool validSeq_{false};
-    std::function<void(const AnimationIf<FrameT> &)> updateCB_{[](const AnimationIf<FrameT> &) {}};
 };
 
 }  // namespace Shared

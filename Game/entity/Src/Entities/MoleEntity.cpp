@@ -11,16 +11,19 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Abilities/MoveAbility.h"
+#include "Animation/AnimationIf.h"
+#include "Animator/Animator.h"
 #include "Constant/Entity.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
+#include "Logging.h"
 #include "PropertyConverter.h"
 #include "RectangleShape.h"
+#include "Resource/ColliderData.h"
 #include "Resource/EntityData.h"
+#include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
-#include "ShapeParts/MultiAnimationPart.h"
-#include "ShapeParts/SingleAnimationPart.h"
 #include "Sprite.h"
 #include "State.h"
 
@@ -68,17 +71,6 @@ const std::vector<Shared::ImageData> moveRightImages{moveSide1, moveSide2, moveS
 const std::vector<Shared::ImageData> moveDownImages{moveDown1, moveDown2, moveDown3, moveDown4};
 const std::vector<Shared::ImageData> moveUpImages{moveUp1, moveUp2, moveUp3, moveUp4};
 
-const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> idleFaceDirImages{
-    {FaceDirection::Left, idleLeftImages},
-    {FaceDirection::Right, idleRightImages},
-    {FaceDirection::Down, idleFrontImages},
-    {FaceDirection::Up, idleBackImages}};
-const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>> moveFaceDirImages{
-    {FaceDirection::Left, moveLeftImages},
-    {FaceDirection::Right, moveRightImages},
-    {FaceDirection::Down, moveDownImages},
-    {FaceDirection::Up, moveUpImages}};
-
 const std::vector<Shared::ImageData> collisionImages{collision1, collision2, collision3,
                                                      collision4, collision5, collision6};
 
@@ -97,17 +89,6 @@ const std::vector<Shared::ColliderData> moveDownColliders{
 const std::vector<Shared::ColliderData> moveUpColliders{
     {moveUp1, rect}, {moveUp2, rect}, {moveUp3, rect}, {moveUp4, rect}};
 
-const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> idleFaceDirColliders{
-    {FaceDirection::Left, idleLeftColliders},
-    {FaceDirection::Right, idleRightColliders},
-    {FaceDirection::Down, idleFrontColliders},
-    {FaceDirection::Up, idleBackColliders}};
-const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>> moveFaceDirColliders{
-    {FaceDirection::Left, moveLeftColliders},
-    {FaceDirection::Right, moveRightColliders},
-    {FaceDirection::Down, moveDownColliders},
-    {FaceDirection::Up, moveUpColliders}};
-
 FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 {
     FaceDirection faceDir = FaceDirection::Undefined;
@@ -122,6 +103,28 @@ FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
         faceDir = FaceDirection::Right;
 
     return faceDir;
+}
+
+template <class FrameT>
+std::function<std::shared_ptr<Shared::AnimationIf<FrameT>>(
+    const std::unordered_map<FaceDirection, std::shared_ptr<Shared::AnimationIf<FrameT>>>&)>
+SelectFn(const FaceDirection* const dir)
+{
+    auto selectFn = [dir](const std::unordered_map<FaceDirection, std::shared_ptr<Shared::AnimationIf<FrameT>>>& map) {
+        bool found = map.find(*dir) != map.end();
+        std::shared_ptr<Shared::AnimationIf<FrameT>> result{};
+
+        if (found) {
+            result = map.at(*dir);
+        }
+        else {
+            LOG_ERROR("%s can not be found", DUMP(*dir));
+        }
+
+        return result;
+    };
+
+    return selectFn;
 }
 
 }  // namespace
@@ -173,12 +176,25 @@ void MoleEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
 void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 {
     auto sprite = state->RegisterSprite();
-    auto shapePart = MakeShapePart(idleFaceDirImages, *sprite);
-    state->RegisterShapePart(shapePart);
+    FaceDirection* dir = nullptr;
+    propertyStore_.GetPtr("FaceDirection", dir);
+    auto imageAnimator =
+        std::shared_ptr<AnimatorIf<Shared::ImageFrame>>(new Animator<Shared::ImageFrame, FaceDirection>(
+            *sprite, SelectFn<Shared::ImageFrame>(dir),
+            {{FaceDirection::Left, service_->CreateImageAnimation(idleLeftImages)},
+             {FaceDirection::Right, service_->CreateImageAnimation(idleRightImages)},
+             {FaceDirection::Down, service_->CreateImageAnimation(idleFrontImages)},
+             {FaceDirection::Up, service_->CreateImageAnimation(idleBackImages)}}));
+    state->RegisterImageAnimator(imageAnimator);
     auto rect = state->RegisterCollider();
-    auto colliderPart = MakeColliderPart(idleFaceDirColliders, *rect);
-    state->RegisterColliderPart(colliderPart);
-
+    auto colliderAnimator =
+        std::shared_ptr<AnimatorIf<Shared::ColliderFrame>>(new Animator<Shared::ColliderFrame, FaceDirection>(
+            *rect, SelectFn<Shared::ColliderFrame>(dir),
+            {{FaceDirection::Left, service_->CreateColliderAnimation(idleLeftColliders)},
+             {FaceDirection::Right, service_->CreateColliderAnimation(idleRightColliders)},
+             {FaceDirection::Down, service_->CreateColliderAnimation(idleFrontColliders)},
+             {FaceDirection::Up, service_->CreateColliderAnimation(idleBackColliders)}}));
+    state->RegisterColliderAnimator(colliderAnimator);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
     state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
@@ -193,11 +209,25 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
 void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
 {
     auto sprite = state->RegisterSprite();
-    auto shapePart = MakeShapePart(moveFaceDirImages, *sprite);
-    state->RegisterShapePart(shapePart);
+    FaceDirection* dir = nullptr;
+    propertyStore_.GetPtr("FaceDirection", dir);
+    auto imageAnimator =
+        std::shared_ptr<AnimatorIf<Shared::ImageFrame>>(new Animator<Shared::ImageFrame, FaceDirection>(
+            *sprite, SelectFn<Shared::ImageFrame>(dir),
+            {{FaceDirection::Left, service_->CreateImageAnimation(moveLeftImages)},
+             {FaceDirection::Right, service_->CreateImageAnimation(moveRightImages)},
+             {FaceDirection::Down, service_->CreateImageAnimation(moveDownImages)},
+             {FaceDirection::Up, service_->CreateImageAnimation(moveUpImages)}}));
+    state->RegisterImageAnimator(imageAnimator);
     auto rect = state->RegisterCollider();
-    auto colliderPart = MakeColliderPart(moveFaceDirColliders, *rect);
-    state->RegisterColliderPart(colliderPart);
+    auto colliderAnimator =
+        std::shared_ptr<AnimatorIf<Shared::ColliderFrame>>(new Animator<Shared::ColliderFrame, FaceDirection>(
+            *rect, SelectFn<Shared::ColliderFrame>(dir),
+            {{FaceDirection::Left, service_->CreateColliderAnimation(moveLeftColliders)},
+             {FaceDirection::Right, service_->CreateColliderAnimation(moveRightColliders)},
+             {FaceDirection::Down, service_->CreateColliderAnimation(moveDownColliders)},
+             {FaceDirection::Up, service_->CreateColliderAnimation(moveUpColliders)}}));
+    state->RegisterColliderAnimator(colliderAnimator);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
@@ -220,42 +250,11 @@ void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
         }
     };
     auto animation = service_->CreateImageAnimation(collisionImages);
-    animation->Center();
-    animation->RegisterUpdateCB(updateCB);
     auto sprite = state->RegisterSprite();
-    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageFrame>>(animation, *sprite);
-    state->RegisterShapePart(shapePart);
-}
-
-std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ImageFrame>> MoleEntity::MakeShapePart(
-    const std::unordered_map<FaceDirection, std::vector<Shared::ImageData>>& faceDirImages, Graphic::SpriteIf& sprite)
-{
-    FaceDirection* dir = nullptr;
-    propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ImageFrame>>(dir, sprite);
-    for (const auto& entry : faceDirImages) {
-        auto animation = service_->CreateImageAnimation(entry.second);
-        animation->Center();
-        part->Register(entry.first, animation);
-    }
-
-    return part;
-}
-
-std::shared_ptr<MultiAnimationPart<FaceDirection, Shared::ColliderFrame>> MoleEntity::MakeColliderPart(
-    const std::unordered_map<FaceDirection, std::vector<Shared::ColliderData>>& faceDirColliders,
-    Graphic::RectangleShapeIf& rect)
-{
-    FaceDirection* dir = nullptr;
-    propertyStore_.GetPtr<FaceDirection>("FaceDirection", dir);
-    auto part = std::make_shared<MultiAnimationPart<FaceDirection, Shared::ColliderFrame>>(dir, rect);
-    for (const auto& entry : faceDirColliders) {
-        auto animation = service_->CreateColliderAnimation(entry.second);
-        animation->Center();
-        part->Register(entry.first, animation);
-    }
-
-    return part;
+    auto imageAnimator =
+        std::shared_ptr<AnimatorIf<Shared::ImageFrame>>(new Animator<Shared::ImageFrame>(*sprite, animation));
+    imageAnimator->RegisterUpdateCb(updateCB);
+    state->RegisterImageAnimator(imageAnimator);
 }
 
 }  // namespace Entity

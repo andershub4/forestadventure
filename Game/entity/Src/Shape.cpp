@@ -9,6 +9,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 
+#include "Animator/Animator.h"
 #include "Body.h"
 #include "RectangleShape.h"
 #include "RenderTargetIf.h"
@@ -30,16 +31,16 @@ Shape::~Shape() = default;
 
 void Shape::Enter()
 {
-    for (auto part : shapeParts_) {
-        part->Enter();
+    for (auto animator : imageAnimators_) {
+        animator->Enter();
     }
     for (auto &sprite : sprites_) {
         sprite->setPosition(body_.position_);
         sprite->setRotation(body_.rotation_);
     }
 
-    for (auto part : colliderParts_) {
-        part->Enter();
+    for (auto animator : colliderAnimators_) {
+        animator->Enter();
     }
     for (auto &collider : colliders_) {
         collider->setPosition(body_.position_);
@@ -53,18 +54,17 @@ void Shape::Enter()
 
 void Shape::Update(float deltaTime)
 {
-    for (auto part : shapeParts_) {
-        part->Update(deltaTime);
+    for (auto animator : imageAnimators_) {
+        animator->Update(deltaTime);
     }
-    for (auto part : colliderParts_) {
-        part->Update(deltaTime);
+    for (auto animator : colliderAnimators_) {
+        animator->Update(deltaTime);
     }
 
     for (auto &sprite : sprites_) {
         sprite->setPosition(body_.position_);
         sprite->setRotation(body_.rotation_);
     }
-
     for (auto &collider : colliders_) {
         collider->setPosition(body_.position_);
         collider->setRotation(body_.rotation_);
@@ -94,14 +94,14 @@ std::shared_ptr<Graphic::RectangleShapeIf> Shape::RegisterCollider()
     return rect;
 }
 
-void Shape::RegisterShapePart(std::shared_ptr<AnimationPartIf> part)
+void Shape::RegisterImageAnimator(std::shared_ptr<AnimatorIf<Shared::ImageFrame>> animator)
 {
-    shapeParts_.push_back(part);
+    imageAnimators_.push_back(animator);
 }
 
-void Shape::RegisterColliderPart(std::shared_ptr<AnimationPartIf> part)
+void Shape::RegisterColliderAnimator(std::shared_ptr<AnimatorIf<Shared::ColliderFrame>> animator)
 {
-    colliderParts_.push_back(part);
+    colliderAnimators_.push_back(animator);
 }
 
 void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const

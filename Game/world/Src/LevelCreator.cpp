@@ -95,7 +95,7 @@ std::shared_ptr<Shared::AnimationIf<Shared::ImageFrame>> LevelCreator::CreateAni
         seq->Add({texture, textureRect.rect_, static_cast<sf::Vector2f>(center)});
     }
 
-    auto animation = std::make_shared<Shared::Animation<Shared::ImageFrame>>(seq);
+    auto animation = std::make_shared<Shared::Animation<Shared::ImageFrame>>(seq, false);
     animation->Start();
 
     return animation;

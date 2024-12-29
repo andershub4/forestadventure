@@ -13,8 +13,6 @@
 #include "RectangleShape.h"
 #endif
 
-#include "ShapeParts/AnimationPartIf.h"
-
 namespace FA {
 
 namespace Graphic {
@@ -25,9 +23,18 @@ class RectangleShapeIf;
 
 }  // namespace Graphic
 
+namespace Shared {
+
+struct ImageFrame;
+struct ColliderFrame;
+
+}  // namespace Shared
+
 namespace Entity {
 
 struct Body;
+template <class T>
+class AnimatorIf;
 
 class Shape
 {
@@ -37,16 +44,16 @@ public:
 
     std::shared_ptr<Graphic::SpriteIf> RegisterSprite();
     std::shared_ptr<Graphic::RectangleShapeIf> RegisterCollider();
-    void RegisterShapePart(std::shared_ptr<AnimationPartIf> part);
-    void RegisterColliderPart(std::shared_ptr<AnimationPartIf> part);
+    void RegisterImageAnimator(std::shared_ptr<AnimatorIf<Shared::ImageFrame>> animator);
+    void RegisterColliderAnimator(std::shared_ptr<AnimatorIf<Shared::ColliderFrame>> animator);
     void Enter();
     void Update(float deltaTime);
     void DrawTo(Graphic::RenderTargetIf &renderTarget) const;
     bool Intersect(const Shape &shape) const;
 
 private:
-    std::vector<std::shared_ptr<AnimationPartIf>> colliderParts_;
-    std::vector<std::shared_ptr<AnimationPartIf>> shapeParts_;
+    std::vector<std::shared_ptr<AnimatorIf<Shared::ImageFrame>>> imageAnimators_;
+    std::vector<std::shared_ptr<AnimatorIf<Shared::ColliderFrame>>> colliderAnimators_;
     std::vector<std::shared_ptr<Graphic::SpriteIf>> sprites_;
     std::vector<std::shared_ptr<Graphic::RectangleShapeIf>> colliders_;
     Body &body_;

@@ -6,17 +6,28 @@
 
 #pragma once
 
+#include <functional>
+
 namespace FA {
+
+namespace Shared {
+
+template <class T>
+class AnimationIf;
+
+}  // namespace Shared
 
 namespace Entity {
 
-class AnimationPartIf
+template <class FrameT>
+class AnimatorIf
 {
 public:
-    virtual ~AnimationPartIf() = default;
+    virtual ~AnimatorIf() = default;
 
     virtual void Enter() = 0;
     virtual void Update(float deltaTime) = 0;
+    virtual void RegisterUpdateCb(std::function<void(const Shared::AnimationIf<FrameT> &animation)> updateCb) = 0;
 };
 
 }  // namespace Entity

@@ -54,9 +54,9 @@ public:
     ~EntityService();
 
     std::shared_ptr<Shared::AnimationIf<Shared::ImageFrame>> CreateImageAnimation(
-        const std::vector<Shared::ImageData> &images);
+        const std::vector<Shared::ImageData> &images, bool center = true);
     std::shared_ptr<Shared::AnimationIf<Shared::ColliderFrame>> CreateColliderAnimation(
-        const std::vector<Shared::ColliderData> &colliders);
+        const std::vector<Shared::ColliderData> &colliders, bool center = true);
 
     void SendMessage(std::shared_ptr<Shared::Message> msg);
     void AddSubscriber(const std::string &subscriber, const std::vector<Shared::MessageType> &messageTypes,

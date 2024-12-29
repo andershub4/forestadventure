@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "Animation/Animation.h"
+#include "Animator/Animator.h"
 #include "Events/CollisionEvent.h"
 #include "Events/DeadEvent.h"
 #include "RectangleShape.h"
@@ -16,7 +17,6 @@
 #include "Resource/ImageData.h"
 #include "Resource/SheetId.h"
 #include "Resource/SheetItem.h"
-#include "ShapeParts/SingleAnimationPart.h"
 #include "Sprite.h"
 #include "State.h"
 
@@ -52,15 +52,15 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
                                 const Shared::EntityData& data)
 {
     auto imageAnimation = service_->CreateImageAnimation(idleImages);
-    imageAnimation->Center();
     auto sprite = idleState->RegisterSprite();
-    auto shapePart = std::make_shared<SingleAnimationPart<Shared::ImageFrame>>(imageAnimation, *sprite);
-    idleState->RegisterShapePart(shapePart);
+    auto imageAnimator =
+        std::shared_ptr<AnimatorIf<Shared::ImageFrame>>(new Animator<Shared::ImageFrame>(*sprite, imageAnimation));
+    idleState->RegisterImageAnimator(imageAnimator);
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
-    colliderAnimation->Center();
     auto rect = idleState->RegisterCollider();
-    auto colliderPart = std::make_shared<SingleAnimationPart<Shared::ColliderFrame>>(colliderAnimation, *rect);
-    idleState->RegisterColliderPart(colliderPart);
+    auto colliderAnimator = std::shared_ptr<AnimatorIf<Shared::ColliderFrame>>(
+        new Animator<Shared::ColliderFrame>(*rect, colliderAnimation));
+    idleState->RegisterColliderAnimator(colliderAnimator);
     idleState->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
         if (service_->GetEntity(collisionEvent->id_).Type() == EntityType::Player) {
