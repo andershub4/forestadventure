@@ -313,7 +313,6 @@ void PlayerEntity::OnInit()
 
 void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 {
-    auto updateCB = [](const Shared::AnimationIf<Shared::ImageFrame>& animation) {};
     auto sprite = state->RegisterSprite();
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
@@ -346,7 +345,6 @@ void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 {
-    auto updateCB = [](const Shared::AnimationIf<Shared::ImageFrame>& animation) {};
     auto sprite = state->RegisterSprite();
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
@@ -403,7 +401,6 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
 {
-    auto updateCB = [](const Shared::AnimationIf<Shared::ImageFrame>& animation) {};
     auto sprite = state->RegisterSprite();
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
