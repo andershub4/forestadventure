@@ -50,8 +50,7 @@ void EntranceEntity::RegisterStates(std::shared_ptr<State> idleState, std::share
     const std::vector<Shared::ColliderData> idleColliders{colliderData};
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
     auto rect = idleState->RegisterCollider();
-    auto colliderAnimator = std::shared_ptr<AnimatorIf<Shared::ColliderFrame>>(
-        new Animator<Shared::ColliderFrame>(*rect, colliderAnimation));
+    auto colliderAnimator = std::make_shared<Animator<Shared::ColliderFrame>>(*rect, colliderAnimation);
     idleState->RegisterColliderAnimator(colliderAnimator);
 }
 
