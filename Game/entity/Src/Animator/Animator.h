@@ -25,20 +25,18 @@ class Animator : public AnimatorIf<FrameT>
 {
     using Animation = std::shared_ptr<Shared::AnimationIf<FrameT>>;
     using DrawableType = typename Shared::AnimationTraits<FrameT>::DrawableT;
-    using SelectFn = std::function<Animation(const std::unordered_map<KeyT, Animation> &)>;
 
 public:
-    Animator(DrawableType &drawable, SelectFn selectFn,
-             const std::initializer_list<std::pair<const KeyT, Animation>> &selections)
+    Animator(DrawableType &drawable, const std::initializer_list<std::pair<const KeyT, Animation>> &selections, const KeyT &key)
         : drawable_(drawable)
-        , selectFn_(selectFn)
         , updateCb_{[](const Shared::AnimationIf<FrameT> &) {}}
         , map_(selections)
+        , key_(key)
     {}
 
     virtual void Enter() override
     {
-        animation_ = selectFn_(map_);
+        SetAnimation();
         animation_->Restart();
     }
 
@@ -57,9 +55,23 @@ public:
 private:
     DrawableType &drawable_;
     Animation animation_;
-    SelectFn selectFn_;
     std::unordered_map<KeyT, Animation> map_;
     std::function<void(const Shared::AnimationIf<FrameT> &)> updateCb_;
+    const KeyT &key_;
+
+private:
+    void SetAnimation()
+    {
+        std::shared_ptr<Shared::AnimationIf<FrameT>> nullAnimation{};
+        animation_ = nullAnimation;
+        bool found = map_.find(key_) != map_.end();
+        if (found) {
+            animation_ = map_.at(key_);
+        }
+        else {
+            LOG_ERROR("%s can not be found", DUMP(key_));
+        }
+    }
 };
 
 template <class FrameT>

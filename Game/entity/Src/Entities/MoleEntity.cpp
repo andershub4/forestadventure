@@ -109,28 +109,6 @@ FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
     return faceDir;
 }
 
-template <class FrameT>
-std::function<std::shared_ptr<Shared::AnimationIf<FrameT>>(
-    const std::unordered_map<FaceDirection, std::shared_ptr<Shared::AnimationIf<FrameT>>>&)>
-SelectFn(const FaceDirection* const dir)
-{
-    auto selectFn = [dir](const std::unordered_map<FaceDirection, std::shared_ptr<Shared::AnimationIf<FrameT>>>& map) {
-        bool found = map.find(*dir) != map.end();
-        std::shared_ptr<Shared::AnimationIf<FrameT>> result{};
-
-        if (found) {
-            result = map.at(*dir);
-        }
-        else {
-            LOG_ERROR("%s can not be found", DUMP(*dir));
-        }
-
-        return result;
-    };
-
-    return selectFn;
-}
-
 }  // namespace
 
 const std::string MoleEntity::str = "Mole";
@@ -187,8 +165,7 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
         {FaceDirection::Right, service_->CreateImageAnimation(idleRightImages)},
         {FaceDirection::Down, service_->CreateImageAnimation(idleFrontImages)},
         {FaceDirection::Up, service_->CreateImageAnimation(idleBackImages)}};
-    auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(
-        *sprite, SelectFn<Shared::ImageFrame>(dir), imageSelections);
+    auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
     state->RegisterImageAnimator(imageAnimator);
     auto rect = state->RegisterCollider();
     std::initializer_list<ColliderSelection> colliderSelections{
@@ -196,8 +173,8 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
         {FaceDirection::Right, service_->CreateColliderAnimation(idleRightColliders)},
         {FaceDirection::Down, service_->CreateColliderAnimation(idleFrontColliders)},
         {FaceDirection::Up, service_->CreateColliderAnimation(idleBackColliders)}};
-    auto colliderAnimator = std::make_shared<Animator<Shared::ColliderFrame, FaceDirection>>(
-        *rect, SelectFn<Shared::ColliderFrame>(dir), colliderSelections);
+    auto colliderAnimator =
+        std::make_shared<Animator<Shared::ColliderFrame, FaceDirection>>(*rect, colliderSelections, *dir);
     state->RegisterColliderAnimator(colliderAnimator);
     state->RegisterEventCB(EventType::StartMove,
                            [this](std::shared_ptr<BasicEvent> event) { ChangeStateTo(StateType::Move, event); });
@@ -220,8 +197,7 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
         {FaceDirection::Right, service_->CreateImageAnimation(moveRightImages)},
         {FaceDirection::Down, service_->CreateImageAnimation(moveDownImages)},
         {FaceDirection::Up, service_->CreateImageAnimation(moveUpImages)}};
-    auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(
-        *sprite, SelectFn<Shared::ImageFrame>(dir), imageSelections);
+    auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
     state->RegisterImageAnimator(imageAnimator);
     auto rect = state->RegisterCollider();
     std::initializer_list<ColliderSelection> colliderSelections{
@@ -229,8 +205,8 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
         {FaceDirection::Right, service_->CreateColliderAnimation(moveRightColliders)},
         {FaceDirection::Down, service_->CreateColliderAnimation(moveDownColliders)},
         {FaceDirection::Up, service_->CreateColliderAnimation(moveUpColliders)}};
-    auto colliderAnimator = std::make_shared<Animator<Shared::ColliderFrame, FaceDirection>>(
-        *rect, SelectFn<Shared::ColliderFrame>(dir), colliderSelections);
+    auto colliderAnimator =
+        std::make_shared<Animator<Shared::ColliderFrame, FaceDirection>>(*rect, colliderSelections, *dir);
     state->RegisterColliderAnimator(colliderAnimator);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
