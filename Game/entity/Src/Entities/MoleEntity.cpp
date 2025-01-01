@@ -224,15 +224,14 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
 
 void MoleEntity::DefineCollisionState(std::shared_ptr<State> state)
 {
-    auto updateCB = [this](const Shared::AnimationIf<Shared::ImageFrame>& animation) {
+    auto updateCB = [this](Graphic::SpriteIf& drawable, const Shared::AnimationIf<Shared::ImageFrame>& animation) {
         if (animation.IsCompleted()) {
             HandleEvent(std::make_shared<DeadEvent>());
         }
     };
     auto animation = service_->CreateImageAnimation(collisionImages);
     auto sprite = state->RegisterSprite();
-    auto imageAnimator =
-        std::shared_ptr<AnimatorIf<Shared::ImageFrame>>(new Animator<Shared::ImageFrame>(*sprite, animation));
+    auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame>>(*sprite, animation);
     imageAnimator->RegisterUpdateCb(updateCB);
     state->RegisterImageAnimator(imageAnimator);
 }

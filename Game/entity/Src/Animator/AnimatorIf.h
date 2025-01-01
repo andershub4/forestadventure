@@ -8,6 +8,8 @@
 
 #include <functional>
 
+#include "Animation/AnimationTraits.h"
+
 namespace FA {
 
 namespace Shared {
@@ -22,12 +24,16 @@ namespace Entity {
 template <class FrameT>
 class AnimatorIf
 {
+protected:
+    using DrawableType = typename Shared::AnimationTraits<FrameT>::DrawableT;
+    using UpdateCb = std::function<void(DrawableType &drawable, const Shared::AnimationIf<FrameT> &)>;
+
 public:
     virtual ~AnimatorIf() = default;
 
     virtual void Enter() = 0;
     virtual void Update(float deltaTime) = 0;
-    virtual void RegisterUpdateCb(std::function<void(const Shared::AnimationIf<FrameT> &animation)> updateCb) = 0;
+    virtual void RegisterUpdateCb(UpdateCb updateCb) = 0;
 };
 
 }  // namespace Entity

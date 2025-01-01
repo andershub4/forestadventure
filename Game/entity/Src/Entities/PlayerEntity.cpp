@@ -419,7 +419,7 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
 {
-    auto updateCB = [this](const Shared::AnimationIf<Shared::ImageFrame>& animation) {
+    auto updateCB = [this](Graphic::SpriteIf& drawable, const Shared::AnimationIf<Shared::ImageFrame>& animation) {
         if (animation.IsCompleted()) {
             ChangeStateTo(StateType::Idle, nullptr);
         }
@@ -451,7 +451,7 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
 {
-    auto updateCB = [this](const Shared::AnimationIf<Shared::ImageFrame>& animation) {
+    auto updateCB = [this](Graphic::SpriteIf& drawable, const Shared::AnimationIf<Shared::ImageFrame>& animation) {
         if (animation.IsCompleted()) {
             OnShoot();
             ChangeStateTo(StateType::Idle, nullptr);

@@ -14,7 +14,9 @@
 
 #include "AnimatorIf.h"
 
-#include "Animation/AnimationTraits.h"
+// Include the traits here, so proper DrawableType can be derived in aliasing declarations
+#include "Animation/ColliderTraits.h"
+#include "Animation/ImageTraits.h"
 
 namespace FA {
 
@@ -24,14 +26,14 @@ template <class FrameT, class KeyT = void>
 class Animator : public AnimatorIf<FrameT>
 {
     using Animation = std::shared_ptr<Shared::AnimationIf<FrameT>>;
-    using DrawableType = typename Shared::AnimationTraits<FrameT>::DrawableT;
-    using UpdateCb = std::function<void(const Shared::AnimationIf<FrameT> &)>;
+    using DrawableType = AnimatorIf<FrameT>::DrawableType;
+    using UpdateCb = AnimatorIf<FrameT>::UpdateCb;
 
 public:
     Animator(DrawableType &drawable, const std::initializer_list<std::pair<const KeyT, Animation>> &selections,
              const KeyT &key)
         : drawable_(drawable)
-        , updateCb_{[](const Shared::AnimationIf<FrameT> &) {}}
+        , updateCb_{[](DrawableType &drawable, const Shared::AnimationIf<FrameT> &) {}}
         , map_(selections)
         , key_(key)
     {}
@@ -46,7 +48,7 @@ public:
     {
         animation_->Update(deltaTime);
         animation_->ApplyTo(drawable_);
-        updateCb_(*animation_);
+        updateCb_(drawable_, *animation_);
     }
 
     virtual void RegisterUpdateCb(UpdateCb updateCb) override { updateCb_ = updateCb; }
@@ -77,14 +79,14 @@ template <class FrameT>
 class Animator<FrameT, void> : public AnimatorIf<FrameT>
 {
     using Animation = std::shared_ptr<Shared::AnimationIf<FrameT>>;
-    using DrawableType = typename Shared::AnimationTraits<FrameT>::DrawableT;
-    using UpdateCb = std::function<void(const Shared::AnimationIf<FrameT> &)>;
+    using DrawableType = AnimatorIf<FrameT>::DrawableType;
+    using UpdateCb = AnimatorIf<FrameT>::UpdateCb;
 
 public:
     Animator(DrawableType &drawable, Animation animation)
         : drawable_(drawable)
         , animation_(animation)
-        , updateCb_{[](const Shared::AnimationIf<FrameT> &) {}}
+        , updateCb_{[](DrawableType &drawable, const Shared::AnimationIf<FrameT> &) {}}
     {}
 
     virtual void Enter() override { animation_->Restart(); }
@@ -93,7 +95,7 @@ public:
     {
         animation_->Update(deltaTime);
         animation_->ApplyTo(drawable_);
-        updateCb_(*animation_);
+        updateCb_(drawable_, *animation_);
     }
 
     virtual void RegisterUpdateCb(UpdateCb updateCb) override { updateCb_ = updateCb; }
