@@ -25,9 +25,11 @@ class Animator : public AnimatorIf<FrameT>
 {
     using Animation = std::shared_ptr<Shared::AnimationIf<FrameT>>;
     using DrawableType = typename Shared::AnimationTraits<FrameT>::DrawableT;
+    using UpdateCb = std::function<void(const Shared::AnimationIf<FrameT> &)>;
 
 public:
-    Animator(DrawableType &drawable, const std::initializer_list<std::pair<const KeyT, Animation>> &selections, const KeyT &key)
+    Animator(DrawableType &drawable, const std::initializer_list<std::pair<const KeyT, Animation>> &selections,
+             const KeyT &key)
         : drawable_(drawable)
         , updateCb_{[](const Shared::AnimationIf<FrameT> &) {}}
         , map_(selections)
@@ -47,16 +49,13 @@ public:
         updateCb_(*animation_);
     }
 
-    virtual void RegisterUpdateCb(std::function<void(const Shared::AnimationIf<FrameT> &animation)> updateCb) override
-    {
-        updateCb_ = updateCb;
-    }
+    virtual void RegisterUpdateCb(UpdateCb updateCb) override { updateCb_ = updateCb; }
 
 private:
     DrawableType &drawable_;
     Animation animation_;
     std::unordered_map<KeyT, Animation> map_;
-    std::function<void(const Shared::AnimationIf<FrameT> &)> updateCb_;
+    UpdateCb updateCb_;
     const KeyT &key_;
 
 private:
@@ -79,6 +78,7 @@ class Animator<FrameT, void> : public AnimatorIf<FrameT>
 {
     using Animation = std::shared_ptr<Shared::AnimationIf<FrameT>>;
     using DrawableType = typename Shared::AnimationTraits<FrameT>::DrawableT;
+    using UpdateCb = std::function<void(const Shared::AnimationIf<FrameT> &)>;
 
 public:
     Animator(DrawableType &drawable, Animation animation)
@@ -96,15 +96,12 @@ public:
         updateCb_(*animation_);
     }
 
-    virtual void RegisterUpdateCb(std::function<void(const Shared::AnimationIf<FrameT> &animation)> updateCb) override
-    {
-        updateCb_ = updateCb;
-    }
+    virtual void RegisterUpdateCb(UpdateCb updateCb) override { updateCb_ = updateCb; }
 
 private:
     DrawableType &drawable_;
     Animation animation_;
-    std::function<void(const Shared::AnimationIf<FrameT> &)> updateCb_;
+    UpdateCb updateCb_;
 };
 
 }  // namespace Entity
