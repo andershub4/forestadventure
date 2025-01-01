@@ -389,12 +389,12 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
         {FaceDirection::Right, service_->CreateImageAnimation(moveRightImages)},
         {FaceDirection::Down, service_->CreateImageAnimation(moveDownImages)},
         {FaceDirection::Up, service_->CreateImageAnimation(moveUpImages)}};
-    auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
+    auto imageAnimator =
+        std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir, true);
     state->RegisterImageAnimator(imageAnimator);
 
     auto doorMove = std::make_shared<DoorMoveAbility>(
-        body_, Constant::stdVelocity / 2,
-        [this, imageAnimator = imageAnimator](const DoorMoveAbility::State& state, const sf::Vector2f& exitPos) {
+        body_, Constant::stdVelocity / 2, [this](const DoorMoveAbility::State& state, const sf::Vector2f& exitPos) {
             auto& cameraView = service_->GetCameraView();
             if (state == DoorMoveAbility::State::StartMovingToEntrance) {
                 cameraView.SetFixPoint(body_.position_);
@@ -402,7 +402,6 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
             else if (state == DoorMoveAbility::State::StartMovingFromExit) {
                 FaceDirection faceDir = MoveDirToFaceDir(MoveDirection::Down);
                 propertyStore_.Set("FaceDirection", faceDir);
-                imageAnimator->Enter();
                 sf::Vector2f cameraPos{exitPos.x, exitPos.y + 20.0f};
                 cameraView.SetFixPoint(cameraPos);
             }

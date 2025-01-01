@@ -31,12 +31,23 @@ class Animator : public AnimatorIf<FrameT>
 
 public:
     Animator(DrawableType &drawable, const std::initializer_list<std::pair<const KeyT, Animation>> &selections,
-             const KeyT &key)
+             const KeyT &key, bool pollKeyEachUpdate = false)
         : drawable_(drawable)
         , updateCb_{[](DrawableType &drawable, const Shared::AnimationIf<FrameT> &) {}}
         , map_(selections)
         , key_(key)
-    {}
+        , currentKey_(key)
+        , pollKeySetAnimation_{[]() {}}
+    {
+        if (pollKeyEachUpdate) {
+            pollKeySetAnimation_ = [this]() {
+                if (currentKey_ != key_) {
+                    SetAnimation();
+                    animation_->Restart();
+                }
+            };
+        }
+    }
 
     virtual void Enter() override
     {
@@ -46,6 +57,7 @@ public:
 
     virtual void Update(float deltaTime) override
     {
+        pollKeySetAnimation_();
         animation_->Update(deltaTime);
         animation_->ApplyTo(drawable_);
         updateCb_(drawable_, *animation_);
@@ -59,6 +71,8 @@ private:
     std::unordered_map<KeyT, Animation> map_;
     UpdateCb updateCb_;
     const KeyT &key_;
+    KeyT currentKey_;
+    std::function<void()> pollKeySetAnimation_;
 
 private:
     void SetAnimation()
@@ -67,6 +81,7 @@ private:
         animation_ = nullAnimation;
         bool found = map_.find(key_) != map_.end();
         if (found) {
+            currentKey_ = key_;
             animation_ = map_.at(key_);
         }
         else {
