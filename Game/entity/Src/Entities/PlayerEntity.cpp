@@ -381,6 +381,9 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
 
 void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
 {
+    auto updateCB = [this](Graphic::SpriteIf& drawable, const Shared::AnimationIf<Shared::ImageFrame>& animation) {
+        drawable.setColor(sf::Color(255, 255, 255, 128));
+    };
     auto sprite = state->RegisterSprite();
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
@@ -391,6 +394,7 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
         {FaceDirection::Up, service_->CreateImageAnimation(moveUpImages)}};
     auto imageAnimator =
         std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir, true);
+    imageAnimator->RegisterUpdateCb(updateCB);
     state->RegisterImageAnimator(imageAnimator);
 
     auto doorMove = std::make_shared<DoorMoveAbility>(
