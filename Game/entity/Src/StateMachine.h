@@ -38,7 +38,7 @@ public:
     void HandleEvent(std::shared_ptr<BasicEvent> event);
     void Update(float deltaTime);
     void ChangeStateTo(StateType nextStateType, std::shared_ptr<BasicEvent> event);
-    Shape GetShape() const;
+    const Shape& GetShape() const;
 
 private:
     std::unordered_map<StateType, std::shared_ptr<State>> states_;

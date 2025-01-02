@@ -121,7 +121,7 @@ void State::IgnoreAllEventsExcept(const std::unordered_set<EventType> &notIgnora
     ignoreAllEvents_ = true;
 }
 
-Shape State::GetShape() const
+const Shape &State::GetShape() const
 {
     return shape_;
 }

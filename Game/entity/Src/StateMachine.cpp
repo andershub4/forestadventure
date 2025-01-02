@@ -51,7 +51,7 @@ void StateMachine::ChangeStateTo(StateType nextStateType, std::shared_ptr<BasicE
     currentState_->Enter(event);
 }
 
-Shape StateMachine::GetShape() const
+const Shape& StateMachine::GetShape() const
 {
     return currentState_->GetShape();
 }
