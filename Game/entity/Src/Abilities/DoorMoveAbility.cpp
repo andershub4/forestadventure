@@ -38,6 +38,7 @@ void DoorMoveAbility::Enter(std::shared_ptr<BasicEvent> event)
 {
     auto m = std::dynamic_pointer_cast<StartDoorMoveEvent>(event);
     exitPosition_ = m->exitPosition_;
+    exitPosition_.y -= 15.0f;
     enterPosition_ = m->enterPosition_;
     state_ = State::StartMovingToEntrance;
 }
@@ -66,7 +67,7 @@ void DoorMoveAbility::Update(float deltaTime)
         state_ = State::MovingFromExit;
     }
     else if (state_ == State::MovingFromExit) {
-        bool exitFinished = distance_ > 20.0f;
+        bool exitFinished = distance_ > 15.0f;
         if (exitFinished) {
             movementVector_ = {};
             currentVelocity_ = 0.0f;

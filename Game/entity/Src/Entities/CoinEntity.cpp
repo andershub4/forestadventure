@@ -56,7 +56,7 @@ void CoinEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame>>(*sprite, imageAnimation);
     idleState->RegisterImageAnimator(imageAnimator);
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
-    auto rect = idleState->RegisterCollider();
+    auto rect = idleState->RegisterCollider(Shape::ColliderType::Entity);
     auto colliderAnimator = std::shared_ptr<AnimatorIf<Shared::ColliderFrame>>(
         new Animator<Shared::ColliderFrame>(*rect, colliderAnimation));
     idleState->RegisterColliderAnimator(colliderAnimator);

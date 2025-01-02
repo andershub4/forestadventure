@@ -83,9 +83,9 @@ std::shared_ptr<Graphic::SpriteIf> State::RegisterSprite()
     return shape_.RegisterSprite();
 }
 
-std::shared_ptr<Graphic::RectangleShapeIf> State::RegisterCollider()
+std::shared_ptr<Graphic::RectangleShapeIf> State::RegisterCollider(Shape::ColliderType layer)
 {
-    return shape_.RegisterCollider();
+    return shape_.RegisterCollider(layer);
 }
 
 void State::RegisterImageAnimator(std::shared_ptr<AnimatorIf<Shared::ImageFrame>> animator)

@@ -167,7 +167,7 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
         {FaceDirection::Up, service_->CreateImageAnimation(idleBackImages)}};
     auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
     state->RegisterImageAnimator(imageAnimator);
-    auto rect = state->RegisterCollider();
+    auto rect = state->RegisterCollider(Shape::ColliderType::Entity);
     std::initializer_list<ColliderSelection> colliderSelections{
         {FaceDirection::Left, service_->CreateColliderAnimation(idleLeftColliders)},
         {FaceDirection::Right, service_->CreateColliderAnimation(idleRightColliders)},
@@ -199,7 +199,7 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
         {FaceDirection::Up, service_->CreateImageAnimation(moveUpImages)}};
     auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
     state->RegisterImageAnimator(imageAnimator);
-    auto rect = state->RegisterCollider();
+    auto rect = state->RegisterCollider(Shape::ColliderType::Entity);
     std::initializer_list<ColliderSelection> colliderSelections{
         {FaceDirection::Left, service_->CreateColliderAnimation(moveLeftColliders)},
         {FaceDirection::Right, service_->CreateColliderAnimation(moveRightColliders)},

@@ -158,6 +158,21 @@ const std::vector<Shared::ColliderData> attackWDownColliders{
 const std::vector<Shared::ColliderData> attackWUpColliders{
     {attackWUp1, hrect}, {attackWUp2, hrect}, {attackWUp3, hrect}};
 
+// Need to align, otherwise collision will be detected differently when colliding to a wall
+const sf::IntRect vrect2{11, 26, 10, 2};
+const sf::IntRect hrect2{11, 26, 10, 2};
+const std::vector<Shared::ColliderData> moveLeftColliders2{{moveSide1, vrect2}, {moveSide2, vrect2},
+                                                           {moveSide3, vrect2}, {moveSide4, vrect2},
+                                                           {moveSide5, vrect2}, {moveSide6, vrect2}};
+const std::vector<Shared::ColliderData> moveRightColliders2{{moveSide1, vrect2}, {moveSide2, vrect2},
+                                                            {moveSide3, vrect2}, {moveSide4, vrect2},
+                                                            {moveSide5, vrect2}, {moveSide6, vrect2}};
+const std::vector<Shared::ColliderData> moveDownColliders2{{moveDown1, hrect2}, {moveDown2, hrect2},
+                                                           {moveDown3, hrect2}, {moveDown4, hrect2},
+                                                           {moveDown5, hrect2}, {moveDown6, hrect2}};
+const std::vector<Shared::ColliderData> moveUpColliders2{{moveUp1, hrect2}, {moveUp2, hrect2}, {moveUp3, hrect2},
+                                                         {moveUp4, hrect2}, {moveUp5, hrect2}, {moveUp6, hrect2}};
+
 FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 {
     FaceDirection faceDir = FaceDirection::Undefined;
@@ -305,7 +320,7 @@ void PlayerEntity::DefineIdleState(std::shared_ptr<State> state)
         {FaceDirection::Up, service_->CreateImageAnimation(idleBackImages)}};
     auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
     state->RegisterImageAnimator(imageAnimator);
-    auto rect = state->RegisterCollider();
+    auto rect = state->RegisterCollider(Shape::ColliderType::Entity);
     std::initializer_list<ColliderSelection> colliderSelections{
         {FaceDirection::Left, service_->CreateColliderAnimation(idleLeftColliders)},
         {FaceDirection::Right, service_->CreateColliderAnimation(idleRightColliders)},
@@ -336,7 +351,7 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
         {FaceDirection::Up, service_->CreateImageAnimation(moveUpImages)}};
     auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
     state->RegisterImageAnimator(imageAnimator);
-    auto rect = state->RegisterCollider();
+    auto rect = state->RegisterCollider(Shape::ColliderType::Entity);
     std::initializer_list<ColliderSelection> colliderSelections{
         {FaceDirection::Left, service_->CreateColliderAnimation(moveLeftColliders)},
         {FaceDirection::Right, service_->CreateColliderAnimation(moveRightColliders)},
@@ -345,6 +360,15 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
     auto colliderAnimator =
         std::make_shared<Animator<Shared::ColliderFrame, FaceDirection>>(*rect, colliderSelections, *dir);
     state->RegisterColliderAnimator(colliderAnimator);
+    auto rect2 = state->RegisterCollider(Shape::ColliderType::Wall);
+    std::initializer_list<ColliderSelection> colliderSelections2{
+        {FaceDirection::Left, service_->CreateColliderAnimation(moveLeftColliders2)},
+        {FaceDirection::Right, service_->CreateColliderAnimation(moveRightColliders2)},
+        {FaceDirection::Down, service_->CreateColliderAnimation(moveDownColliders2)},
+        {FaceDirection::Up, service_->CreateColliderAnimation(moveUpColliders2)}};
+    auto colliderAnimator2 =
+        std::make_shared<Animator<Shared::ColliderFrame, FaceDirection>>(*rect2, colliderSelections2, *dir);
+    state->RegisterColliderAnimator(colliderAnimator2);
     auto move = std::make_shared<MoveAbility>(
         Constant::stdVelocity, [this](MoveDirection d) { OnBeginMove(d); },
         [this](const sf::Vector2f& d) { OnUpdateMove(d); });
@@ -371,6 +395,7 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
                 EntityId exitId = service_->ObjIdToEntityId(exitObjId);
                 auto& exit = dynamic_cast<BasicEntity&>(service_->GetEntity(exitId));
                 auto enterPos = GetPosition(entrance);
+                enterPos.y -= 15.0f;
                 auto exitPos = GetPosition(exit);
                 auto event = std::make_shared<StartDoorMoveEvent>(enterPos, exitPos);
                 ChangeStateTo(StateType::DoorMove, event);
@@ -406,7 +431,7 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
             else if (state == DoorMoveAbility::State::StartMovingFromExit) {
                 FaceDirection faceDir = MoveDirToFaceDir(MoveDirection::Down);
                 propertyStore_.Set("FaceDirection", faceDir);
-                sf::Vector2f cameraPos{exitPos.x, exitPos.y + 20.0f};
+                sf::Vector2f cameraPos{exitPos.x, exitPos.y + 15.0f};
                 cameraView.SetFixPoint(cameraPos);
             }
             else if (state == DoorMoveAbility::State::Done) {
@@ -438,7 +463,7 @@ void PlayerEntity::DefineAttackState(std::shared_ptr<State> state)
     auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
     imageAnimator->RegisterUpdateCb(updateCB);
     state->RegisterImageAnimator(imageAnimator);
-    auto rect = state->RegisterCollider();
+    auto rect = state->RegisterCollider(Shape::ColliderType::Entity);
     std::initializer_list<ColliderSelection> colliderSelections{
         {FaceDirection::Left, service_->CreateColliderAnimation(attackLeftColliders)},
         {FaceDirection::Right, service_->CreateColliderAnimation(attackRightColliders)},
@@ -471,7 +496,7 @@ void PlayerEntity::DefineAttackWeaponState(std::shared_ptr<State> state)
     auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
     imageAnimator->RegisterUpdateCb(updateCB);
     state->RegisterImageAnimator(imageAnimator);
-    auto rect = state->RegisterCollider();
+    auto rect = state->RegisterCollider(Shape::ColliderType::Entity);
     std::initializer_list<ColliderSelection> colliderSelections{
         {FaceDirection::Left, service_->CreateColliderAnimation(attackWLeftColliders)},
         {FaceDirection::Right, service_->CreateColliderAnimation(attackWRightColliders)},

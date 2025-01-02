@@ -59,7 +59,7 @@ public:
     void RegisterExitCB(std::function<void()> exitCB);
     void RegisterAbility(std::shared_ptr<AbilityIf> ability);
     std::shared_ptr<Graphic::SpriteIf> RegisterSprite();
-    std::shared_ptr<Graphic::RectangleShapeIf> RegisterCollider();
+    std::shared_ptr<Graphic::RectangleShapeIf> RegisterCollider(Shape::ColliderType layer);
     void RegisterImageAnimator(std::shared_ptr<AnimatorIf<Shared::ImageFrame>> animator);
     void RegisterColliderAnimator(std::shared_ptr<AnimatorIf<Shared::ColliderFrame>> animator);
     void RegisterEventCB(EventType eventType, std::function<void(std::shared_ptr<BasicEvent>)>);

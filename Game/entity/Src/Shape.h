@@ -39,11 +39,13 @@ class AnimatorIf;
 class Shape
 {
 public:
+    enum class ColliderType { Entity, Wall };
+
     Shape(Body &body);
     ~Shape();
 
     std::shared_ptr<Graphic::SpriteIf> RegisterSprite();
-    std::shared_ptr<Graphic::RectangleShapeIf> RegisterCollider();
+    std::shared_ptr<Graphic::RectangleShapeIf> RegisterCollider(ColliderType layer);
     void RegisterImageAnimator(std::shared_ptr<AnimatorIf<Shared::ImageFrame>> animator);
     void RegisterColliderAnimator(std::shared_ptr<AnimatorIf<Shared::ColliderFrame>> animator);
     void Enter();
@@ -52,10 +54,16 @@ public:
     bool Intersect(const Shape &shape) const;
 
 private:
+    struct ColliderElement
+    {
+        std::shared_ptr<Graphic::RectangleShapeIf> rect_;
+        ColliderType layer_;
+    };
+
     std::vector<std::shared_ptr<AnimatorIf<Shared::ImageFrame>>> imageAnimators_;
     std::vector<std::shared_ptr<AnimatorIf<Shared::ColliderFrame>>> colliderAnimators_;
     std::vector<std::shared_ptr<Graphic::SpriteIf>> sprites_;
-    std::vector<std::shared_ptr<Graphic::RectangleShapeIf>> colliders_;
+    std::vector<ColliderElement> colliders_;
     Body &body_;
 #ifdef _DEBUG
     Graphic::RectangleShape rShape_;

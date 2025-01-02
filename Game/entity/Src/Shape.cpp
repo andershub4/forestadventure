@@ -42,9 +42,9 @@ void Shape::Enter()
     for (auto animator : colliderAnimators_) {
         animator->Enter();
     }
-    for (auto &collider : colliders_) {
-        collider->setPosition(body_.position_);
-        collider->setRotation(body_.rotation_);
+    for (auto &element : colliders_) {
+        element.rect_->setPosition(body_.position_);
+        element.rect_->setRotation(body_.rotation_);
     }
 
 #ifdef _DEBUG
@@ -65,9 +65,9 @@ void Shape::Update(float deltaTime)
         sprite->setPosition(body_.position_);
         sprite->setRotation(body_.rotation_);
     }
-    for (auto &collider : colliders_) {
-        collider->setPosition(body_.position_);
-        collider->setRotation(body_.rotation_);
+    for (auto &element : colliders_) {
+        element.rect_->setPosition(body_.position_);
+        element.rect_->setRotation(body_.rotation_);
     }
 
 #ifdef _DEBUG
@@ -83,13 +83,13 @@ std::shared_ptr<Graphic::SpriteIf> Shape::RegisterSprite()
     return sprite;
 }
 
-std::shared_ptr<Graphic::RectangleShapeIf> Shape::RegisterCollider()
+std::shared_ptr<Graphic::RectangleShapeIf> Shape::RegisterCollider(ColliderType layer)
 {
     auto rect = std::make_shared<Graphic::RectangleShape>();
     rect->setFillColor(sf::Color::Transparent);
     rect->setOutlineColor(sf::Color::Red);
     rect->setOutlineThickness(1.0f);
-    colliders_.push_back(rect);
+    colliders_.push_back({rect, layer});
 
     return rect;
 }
@@ -111,8 +111,8 @@ void Shape::DrawTo(Graphic::RenderTargetIf &renderTarget) const
     }
 
 #ifdef _DEBUG
-    for (auto &collider : colliders_) {
-        renderTarget.draw(*collider);
+    for (auto &element : colliders_) {
+        renderTarget.draw(*element.rect_);
     }
 
     renderTarget.draw(rShape_);
@@ -123,9 +123,11 @@ bool Shape::Intersect(const Shape &otherShape) const
 {
     bool intersect = false;
 
-    for (auto &collider : colliders_) {
-        for (auto &otherCollider : otherShape.colliders_) {
-            intersect |= collider->getGlobalBounds().intersects(otherCollider->getGlobalBounds());
+    for (auto &element : colliders_) {
+        for (auto &otherElement : otherShape.colliders_) {
+            if (element.layer_ == otherElement.layer_) {
+                intersect |= element.rect_->getGlobalBounds().intersects(otherElement.rect_->getGlobalBounds());
+            }
         }
     }
 

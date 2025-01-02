@@ -31,7 +31,7 @@ void RectEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_pt
     const Shared::ColliderData colliderData(rectSize);
     const std::vector<Shared::ColliderData> idleColliders{colliderData};
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders, false);
-    auto rect = idleState->RegisterCollider();
+    auto rect = idleState->RegisterCollider(Shape::ColliderType::Wall);
     auto colliderAnimator = std::make_shared<Animator<Shared::ColliderFrame>>(*rect, colliderAnimation);
     idleState->RegisterColliderAnimator(colliderAnimator);
 }
