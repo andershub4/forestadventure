@@ -43,20 +43,20 @@ const Shared::SheetItem idleSide1{MoleIdleSide, {0, 0}};
 const Shared::SheetItem idleFront1{MoleIdleFront, {0, 0}};
 const Shared::SheetItem idleBack1{MoleIdleBack, {0, 0}};
 
-const Shared::SheetItem moveSide1{MoleWalkSide, {0, 0}};
-const Shared::SheetItem moveSide2{MoleWalkSide, {1, 0}};
-const Shared::SheetItem moveSide3{MoleWalkSide, {2, 0}};
-const Shared::SheetItem moveSide4{MoleWalkSide, {3, 0}};
+const Shared::SheetItem walkSide1{MoleWalkSide, {0, 0}};
+const Shared::SheetItem walkSide2{MoleWalkSide, {1, 0}};
+const Shared::SheetItem walkSide3{MoleWalkSide, {2, 0}};
+const Shared::SheetItem walkSide4{MoleWalkSide, {3, 0}};
 
-const Shared::SheetItem moveDown1{MoleWalkFront, {0, 0}};
-const Shared::SheetItem moveDown2{MoleWalkFront, {1, 0}};
-const Shared::SheetItem moveDown3{MoleWalkFront, {2, 0}};
-const Shared::SheetItem moveDown4{MoleWalkFront, {3, 0}};
+const Shared::SheetItem walkFront1{MoleWalkFront, {0, 0}};
+const Shared::SheetItem walkFront2{MoleWalkFront, {1, 0}};
+const Shared::SheetItem walkFront3{MoleWalkFront, {2, 0}};
+const Shared::SheetItem walkFront4{MoleWalkFront, {3, 0}};
 
-const Shared::SheetItem moveUp1{MoleWalkBack, {0, 0}};
-const Shared::SheetItem moveUp2{MoleWalkBack, {1, 0}};
-const Shared::SheetItem moveUp3{MoleWalkBack, {2, 0}};
-const Shared::SheetItem moveUp4{MoleWalkBack, {3, 0}};
+const Shared::SheetItem walkBack1{MoleWalkBack, {0, 0}};
+const Shared::SheetItem walkBack2{MoleWalkBack, {1, 0}};
+const Shared::SheetItem walkBack3{MoleWalkBack, {2, 0}};
+const Shared::SheetItem walkBack4{MoleWalkBack, {3, 0}};
 
 const Shared::SheetItem collision1{Death, {0, 0}};
 const Shared::SheetItem collision2{Death, {1, 0}};
@@ -69,11 +69,11 @@ const std::vector<Shared::ImageData> idleLeftImages{{idleSide1, true}};
 const std::vector<Shared::ImageData> idleRightImages{idleSide1};
 const std::vector<Shared::ImageData> idleFrontImages{idleFront1};
 const std::vector<Shared::ImageData> idleBackImages{idleBack1};
-const std::vector<Shared::ImageData> moveLeftImages{
-    {moveSide1, true}, {moveSide2, true}, {moveSide3, true}, {moveSide4, true}};
-const std::vector<Shared::ImageData> moveRightImages{moveSide1, moveSide2, moveSide3, moveSide4};
-const std::vector<Shared::ImageData> moveDownImages{moveDown1, moveDown2, moveDown3, moveDown4};
-const std::vector<Shared::ImageData> moveUpImages{moveUp1, moveUp2, moveUp3, moveUp4};
+const std::vector<Shared::ImageData> walkLeftImages{
+    {walkSide1, true}, {walkSide2, true}, {walkSide3, true}, {walkSide4, true}};
+const std::vector<Shared::ImageData> walkRightImages{walkSide1, walkSide2, walkSide3, walkSide4};
+const std::vector<Shared::ImageData> walkFrontImages{walkFront1, walkFront2, walkFront3, walkFront4};
+const std::vector<Shared::ImageData> walkBackImages{walkBack1, walkBack2, walkBack3, walkBack4};
 
 const std::vector<Shared::ImageData> collisionImages{collision1, collision2, collision3,
                                                      collision4, collision5, collision6};
@@ -84,23 +84,23 @@ const std::vector<Shared::ColliderData> idleLeftColliders{{idleSide1, rect}};
 const std::vector<Shared::ColliderData> idleRightColliders{{idleSide1, rect}};
 const std::vector<Shared::ColliderData> idleFrontColliders{{idleFront1, rect}};
 const std::vector<Shared::ColliderData> idleBackColliders{{idleBack1, rect}};
-const std::vector<Shared::ColliderData> moveLeftColliders{
-    {moveSide1, rect}, {moveSide2, rect}, {moveSide3, rect}, {moveSide4, rect}};
-const std::vector<Shared::ColliderData> moveRightColliders{
-    {moveSide1, rect}, {moveSide2, rect}, {moveSide3, rect}, {moveSide4, rect}};
-const std::vector<Shared::ColliderData> moveDownColliders{
-    {moveDown1, rect}, {moveDown2, rect}, {moveDown3, rect}, {moveDown4, rect}};
-const std::vector<Shared::ColliderData> moveUpColliders{
-    {moveUp1, rect}, {moveUp2, rect}, {moveUp3, rect}, {moveUp4, rect}};
+const std::vector<Shared::ColliderData> walkLeftColliders{
+    {walkSide1, rect}, {walkSide2, rect}, {walkSide3, rect}, {walkSide4, rect}};
+const std::vector<Shared::ColliderData> walkRightColliders{
+    {walkSide1, rect}, {walkSide2, rect}, {walkSide3, rect}, {walkSide4, rect}};
+const std::vector<Shared::ColliderData> walkFrontColliders{
+    {walkFront1, rect}, {walkFront2, rect}, {walkFront3, rect}, {walkFront4, rect}};
+const std::vector<Shared::ColliderData> walkBackColliders{
+    {walkBack1, rect}, {walkBack2, rect}, {walkBack3, rect}, {walkBack4, rect}};
 
 FaceDirection MoveDirToFaceDir(MoveDirection moveDirection)
 {
     FaceDirection faceDir = FaceDirection::Undefined;
 
     if (moveDirection == MoveDirection::Down)
-        faceDir = FaceDirection::Down;
+        faceDir = FaceDirection::Front;
     else if (moveDirection == MoveDirection::Up)
-        faceDir = FaceDirection::Up;
+        faceDir = FaceDirection::Back;
     else if (moveDirection == MoveDirection::Left)
         faceDir = FaceDirection::Left;
     else if (moveDirection == MoveDirection::Right)
@@ -132,7 +132,7 @@ void MoleEntity::OnUpdateMove(const sf::Vector2f& delta)
 
 void MoleEntity::RegisterProperties()
 {
-    propertyStore_.Register("FaceDirection", FaceDirection::Down);
+    propertyStore_.Register("FaceDirection", FaceDirection::Front);
 }
 
 void MoleEntity::ReadProperties(const std::unordered_map<std::string, std::string>& properties)
@@ -163,16 +163,16 @@ void MoleEntity::DefineIdleState(std::shared_ptr<State> state)
     std::initializer_list<ImageSelection> imageSelections{
         {FaceDirection::Left, service_->CreateImageAnimation(idleLeftImages)},
         {FaceDirection::Right, service_->CreateImageAnimation(idleRightImages)},
-        {FaceDirection::Down, service_->CreateImageAnimation(idleFrontImages)},
-        {FaceDirection::Up, service_->CreateImageAnimation(idleBackImages)}};
+        {FaceDirection::Front, service_->CreateImageAnimation(idleFrontImages)},
+        {FaceDirection::Back, service_->CreateImageAnimation(idleBackImages)}};
     auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
     state->RegisterImageAnimator(imageAnimator);
     auto rect = state->RegisterCollider(Shape::ColliderType::Entity);
     std::initializer_list<ColliderSelection> colliderSelections{
         {FaceDirection::Left, service_->CreateColliderAnimation(idleLeftColliders)},
         {FaceDirection::Right, service_->CreateColliderAnimation(idleRightColliders)},
-        {FaceDirection::Down, service_->CreateColliderAnimation(idleFrontColliders)},
-        {FaceDirection::Up, service_->CreateColliderAnimation(idleBackColliders)}};
+        {FaceDirection::Front, service_->CreateColliderAnimation(idleFrontColliders)},
+        {FaceDirection::Back, service_->CreateColliderAnimation(idleBackColliders)}};
     auto colliderAnimator =
         std::make_shared<Animator<Shared::ColliderFrame, FaceDirection>>(*rect, colliderSelections, *dir);
     state->RegisterColliderAnimator(colliderAnimator);
@@ -193,18 +193,18 @@ void MoleEntity::DefineMoveState(std::shared_ptr<State> state)
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
     std::initializer_list<ImageSelection> imageSelections{
-        {FaceDirection::Left, service_->CreateImageAnimation(moveLeftImages)},
-        {FaceDirection::Right, service_->CreateImageAnimation(moveRightImages)},
-        {FaceDirection::Down, service_->CreateImageAnimation(moveDownImages)},
-        {FaceDirection::Up, service_->CreateImageAnimation(moveUpImages)}};
+        {FaceDirection::Left, service_->CreateImageAnimation(walkLeftImages)},
+        {FaceDirection::Right, service_->CreateImageAnimation(walkRightImages)},
+        {FaceDirection::Front, service_->CreateImageAnimation(walkFrontImages)},
+        {FaceDirection::Back, service_->CreateImageAnimation(walkBackImages)}};
     auto imageAnimator = std::make_shared<Animator<Shared::ImageFrame, FaceDirection>>(*sprite, imageSelections, *dir);
     state->RegisterImageAnimator(imageAnimator);
     auto rect = state->RegisterCollider(Shape::ColliderType::Entity);
     std::initializer_list<ColliderSelection> colliderSelections{
-        {FaceDirection::Left, service_->CreateColliderAnimation(moveLeftColliders)},
-        {FaceDirection::Right, service_->CreateColliderAnimation(moveRightColliders)},
-        {FaceDirection::Down, service_->CreateColliderAnimation(moveDownColliders)},
-        {FaceDirection::Up, service_->CreateColliderAnimation(moveUpColliders)}};
+        {FaceDirection::Left, service_->CreateColliderAnimation(walkLeftColliders)},
+        {FaceDirection::Right, service_->CreateColliderAnimation(walkRightColliders)},
+        {FaceDirection::Front, service_->CreateColliderAnimation(walkFrontColliders)},
+        {FaceDirection::Back, service_->CreateColliderAnimation(walkBackColliders)}};
     auto colliderAnimator =
         std::make_shared<Animator<Shared::ColliderFrame, FaceDirection>>(*rect, colliderSelections, *dir);
     state->RegisterColliderAnimator(colliderAnimator);

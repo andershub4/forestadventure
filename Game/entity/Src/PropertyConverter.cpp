@@ -15,8 +15,8 @@ namespace Entity {
 template <>
 FaceDirection ToValue(const std::string &valueStr)
 {
-    static std::unordered_map<std::string, FaceDirection> map = {{"Down", FaceDirection::Down},
-                                                                 {"Up", FaceDirection::Up},
+    static std::unordered_map<std::string, FaceDirection> map = {{"Down", FaceDirection::Front},
+                                                                 {"Up", FaceDirection::Back},
                                                                  {"Left", FaceDirection::Left},
                                                                  {"Right", FaceDirection::Right}};
 

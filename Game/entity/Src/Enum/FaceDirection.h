@@ -12,7 +12,7 @@ namespace FA {
 
 namespace Entity {
 
-enum class FaceDirection { Undefined, Up, Right, Down, Left };
+enum class FaceDirection { Undefined, Back, Right, Front, Left };
 
 inline std::ostream& operator<<(std::ostream& os, const FaceDirection& e)
 {
@@ -21,14 +21,14 @@ inline std::ostream& operator<<(std::ostream& os, const FaceDirection& e)
         case FaceDirection::Undefined:
             str = "Undefined";
             break;
-        case FaceDirection::Up:
-            str = "Up";
+        case FaceDirection::Back:
+            str = "Back";
             break;
         case FaceDirection::Right:
             str = "Right";
             break;
-        case FaceDirection::Down:
-            str = "Down";
+        case FaceDirection::Front:
+            str = "Front";
             break;
         case FaceDirection::Left:
             str = "Left";

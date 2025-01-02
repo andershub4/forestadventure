@@ -50,9 +50,9 @@ MoveDirection FaceDirToMoveDir(FaceDirection faceDir)
 {
     MoveDirection moveDir = MoveDirection::None;
 
-    if (faceDir == FaceDirection::Down)
+    if (faceDir == FaceDirection::Front)
         moveDir = MoveDirection::Down;
-    else if (faceDir == FaceDirection::Up)
+    else if (faceDir == FaceDirection::Back)
         moveDir = MoveDirection::Up;
     else if (faceDir == FaceDirection::Left)
         moveDir = MoveDirection::Left;
