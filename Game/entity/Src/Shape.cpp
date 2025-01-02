@@ -125,7 +125,7 @@ bool Shape::Intersect(const Shape &otherShape) const
 
     for (auto &element : colliders_) {
         for (auto &otherElement : otherShape.colliders_) {
-            if (element.layer_ == otherElement.layer_) {
+            if (element.colliderType_ == otherElement.colliderType_) {
                 intersect |= element.rect_->getGlobalBounds().intersects(otherElement.rect_->getGlobalBounds());
             }
         }

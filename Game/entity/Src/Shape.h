@@ -57,7 +57,7 @@ private:
     struct ColliderElement
     {
         std::shared_ptr<Graphic::RectangleShapeIf> rect_;
-        ColliderType layer_;
+        ColliderType colliderType_;
     };
 
     std::vector<std::shared_ptr<AnimatorIf<Shared::ImageFrame>>> imageAnimators_;
