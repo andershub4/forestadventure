@@ -317,19 +317,19 @@
  <objectgroup id="9" name="Object Layer 1">
   <object id="4" type="Player" x="360" y="296">
    <properties>
-    <property name="FaceDirection" value="Down"/>
+    <property name="FaceDirection" value="Front"/>
    </properties>
    <point/>
   </object>
   <object id="5" type="Mole" x="176" y="140">
    <properties>
-    <property name="FaceDirection" value="Down"/>
+    <property name="FaceDirection" value="Front"/>
    </properties>
    <point/>
   </object>
   <object id="9" type="Mole" x="928" y="156">
    <properties>
-    <property name="FaceDirection" value="Down"/>
+    <property name="FaceDirection" value="Front"/>
    </properties>
    <point/>
   </object>
