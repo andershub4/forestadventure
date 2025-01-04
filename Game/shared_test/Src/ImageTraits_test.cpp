@@ -25,7 +25,7 @@ TEST(ImageTraitsTest, ApplyShouldSetTexture)
     sf::IntRect rect{0, 0, 10, 20};
     sf::Vector2f center{5.0f, 10.0f};
     ImageFrame frame{&textureMock, rect, center};
-    EXPECT_CALL(spriteMock, setTextureImpl(_, _));
+    EXPECT_CALL(spriteMock, setTextureImpl(Ref(textureMock), _));
     EXPECT_CALL(spriteMock, setTextureRect(Eq(rect)));
     AnimationTraits<ImageFrame>::Apply(frame, spriteMock, false);
 }
