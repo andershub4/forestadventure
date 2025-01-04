@@ -10,6 +10,7 @@
 
 #include "Animation/Animation.h"
 #include "RenderTargetIf.h"
+#include "Resource/ImageFrame.h"
 #include "Resource/SheetManager.h"
 #include "Resource/TextureRect.h"
 #include "Sequence.h"

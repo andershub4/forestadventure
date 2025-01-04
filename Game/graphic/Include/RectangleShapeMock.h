@@ -9,6 +9,11 @@
 #include <gmock/gmock.h>
 
 #include "RectangleShapeIf.h"
+
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Vector2.hpp>
+
 #include "SfmlFwd.h"
 
 namespace FA {
@@ -20,7 +25,7 @@ class RectangleShapeMock : public RectangleShapeIf
 public:
     MOCK_METHOD((sf::FloatRect), getLocalBounds, (), (const override));
     MOCK_METHOD((sf::FloatRect), getGlobalBounds, (), (const override));
-    MOCK_METHOD((void), setSize, (const sf::Vector2f&), (override));
+    MOCK_METHOD((void), setSize, (const sf::Vector2f &), (override));
     MOCK_METHOD((void), setPosition, (float, float), (override));
     MOCK_METHOD((void), setPosition, (const sf::Vector2f &), (override));
     MOCK_METHOD((void), setRotation, (float), (override));

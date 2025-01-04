@@ -8,25 +8,23 @@
 
 #include "AnimationTraits.h"
 
-#include "Resource/ImageFrame.h"
-#include "SpriteIf.h"
-
 namespace FA {
+
+namespace Graphic {
+
+class SpriteIf;
+
+}  // namespace Graphic
 
 namespace Shared {
 
+struct ImageFrame;
+
 template <>
-struct AnimationTraits<Shared::ImageFrame>
+struct AnimationTraits<ImageFrame>
 {
     using DrawableT = Graphic::SpriteIf;
-    static void Apply(const Shared::ImageFrame& frame, Graphic::SpriteIf& drawable, bool center)
-    {
-        drawable.setTexture(*frame.texture_);
-        drawable.setTextureRect(frame.rect_);
-        if (center) {
-            drawable.setOrigin(frame.center_.x, frame.center_.y);
-        }
-    }
+    static void Apply(const ImageFrame& frame, Graphic::SpriteIf& drawable, bool center);
 };
 
 }  // namespace Shared

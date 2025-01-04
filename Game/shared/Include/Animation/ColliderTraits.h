@@ -8,24 +8,23 @@
 
 #include "AnimationTraits.h"
 
-#include "RectangleShapeIf.h"
-#include "Resource/ColliderFrame.h"
-
 namespace FA {
+
+namespace Graphic {
+
+class RectangleShapeIf;
+
+}  // namespace Graphic
 
 namespace Shared {
 
+struct ColliderFrame;
+
 template <>
-struct AnimationTraits<Shared::ColliderFrame>
+struct AnimationTraits<ColliderFrame>
 {
     using DrawableT = Graphic::RectangleShapeIf;
-    static void Apply(const Shared::ColliderFrame& frame, Graphic::RectangleShapeIf& drawable, bool center)
-    {
-        drawable.setSize(frame.size_);
-        if (center) {
-            drawable.setOrigin(frame.center_.x, frame.center_.y);
-        }
-    }
+    static void Apply(const ColliderFrame& frame, Graphic::RectangleShapeIf& drawable, bool center);
 };
 
 }  // namespace Shared

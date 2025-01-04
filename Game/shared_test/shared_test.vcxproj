@@ -37,8 +37,10 @@
     <ClCompile Include="Src\Animation_test.cpp" />
     <ClCompile Include="Src\CameraView_test.cpp" />
     <ClCompile Include="Src\ColliderData_test.cpp" />
+    <ClCompile Include="Src\ColliderTraits_test.cpp" />
     <ClCompile Include="Src\ImageFrame_test.cpp" />
     <ClCompile Include="Src\ImageData_test.cpp" />
+    <ClCompile Include="Src\ImageTraits_test.cpp" />
     <ClCompile Include="Src\Mock\LoggerMock.cpp" />
     <ClCompile Include="Src\ResourceManager_test.cpp" />
     <ClCompile Include="Src\Sequence_test.cpp" />

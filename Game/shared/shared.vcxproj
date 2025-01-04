@@ -182,6 +182,8 @@
     <ClInclude Include="Include\Animation\AnimationTraits.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Animation\ColliderTraits.cpp" />
+    <ClCompile Include="Src\Animation\ImageTraits.cpp" />
     <ClCompile Include="Src\CameraView.cpp" />
     <ClCompile Include="Src\CameraViews.cpp" />
     <ClCompile Include="Src\Logging.cpp" />

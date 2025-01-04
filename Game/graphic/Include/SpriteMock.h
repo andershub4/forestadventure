@@ -11,6 +11,9 @@
 #include "SfmlFwd.h"
 #include "SpriteIf.h"
 
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Vector2.hpp>
+
 namespace FA {
 
 namespace Graphic {
