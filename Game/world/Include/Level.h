@@ -10,7 +10,6 @@
 #include <string>
 #include <vector>
 
-#include "Animation/Animation.h"
 #include "CameraViews.h"
 #include "RenderTexture.h"
 #include "Resource/SheetManager.h"
@@ -46,6 +45,7 @@ class MessageBus;
 struct EntityData;
 template <class T>
 class AnimationIf;
+struct ImageFrame;
 
 }  // namespace Shared
 

@@ -8,6 +8,7 @@
 
 #include "Level.h"
 
+#include "Animation/Animation.h"
 #include "CameraView.h"
 #include "CollisionHandler.h"
 #include "DrawHandler.h"
