@@ -399,7 +399,6 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
                 EntityId exitId = service_->ObjIdToEntityId(exitObjId);
                 auto& exit = dynamic_cast<BasicEntity&>(service_->GetEntity(exitId));
                 auto enterPos = GetPosition(entrance);
-                enterPos.y -= 15.0f;
                 auto exitPos = GetPosition(exit);
                 auto event = std::make_shared<StartDoorMoveEvent>(enterPos, exitPos);
                 ChangeStateTo(StateType::DoorMove, event);
@@ -417,8 +416,6 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
     FaceDirection* dir = nullptr;
     propertyStore_.GetPtr("FaceDirection", dir);
     std::initializer_list<ImageSelection> imageSelections{
-        {FaceDirection::Left, service_->CreateImageAnimation(walkLeftImages)},
-        {FaceDirection::Right, service_->CreateImageAnimation(walkRightImages)},
         {FaceDirection::Front, service_->CreateImageAnimation(walkFrontImages)},
         {FaceDirection::Back, service_->CreateImageAnimation(walkBackImages)}};
     auto imageAnimator =
@@ -427,16 +424,14 @@ void PlayerEntity::DefineDoorMoveState(std::shared_ptr<State> state)
     state->RegisterImageAnimator(imageAnimator);
 
     auto doorMove = std::make_shared<DoorMoveAbility>(
-        body_, Constant::stdVelocity / 2, [this](const DoorMoveAbility::State& state, const sf::Vector2f& exitPos) {
+        body_, [this](const DoorMoveAbility::State& state, const sf::Vector2f& exitPos) {
             auto& cameraView = service_->GetCameraView();
             if (state == DoorMoveAbility::State::StartMovingToEntrance) {
                 cameraView.SetFixPoint(body_.position_);
             }
             else if (state == DoorMoveAbility::State::StartMovingFromExit) {
-                FaceDirection faceDir = MoveDirToFaceDir(MoveDirection::Down);
-                propertyStore_.Set("FaceDirection", faceDir);
-                sf::Vector2f cameraPos{exitPos.x, exitPos.y + 15.0f};
-                cameraView.SetFixPoint(cameraPos);
+                propertyStore_.Set("FaceDirection", FaceDirection::Front);
+                cameraView.SetFixPoint(exitPos);
             }
             else if (state == DoorMoveAbility::State::Done) {
                 cameraView.SetTrackPoint(body_.position_);

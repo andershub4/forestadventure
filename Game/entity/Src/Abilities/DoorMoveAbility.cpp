@@ -9,6 +9,7 @@
 #include <unordered_map>
 
 #include "Body.h"
+#include "Constant/Entity.h"
 #include "Events/StartDoorMoveEvent.h"
 
 namespace FA {
@@ -25,10 +26,9 @@ const std::unordered_map<MoveDirection, sf::Vector2f> dirToVector = {{MoveDirect
 
 }  // namespace
 
-DoorMoveAbility::DoorMoveAbility(Body &body, float velocity,
-                                 std::function<void(State currentState, const sf::Vector2f &)> updateFn)
+DoorMoveAbility::DoorMoveAbility(Body &body, std::function<void(State currentState, const sf::Vector2f &)> updateFn)
     : body_(body)
-    , velocity_(velocity)
+    , velocity_(Constant::stdVelocity / 2)
     , updateFn_(updateFn)
 {}
 
@@ -37,9 +37,8 @@ DoorMoveAbility::~DoorMoveAbility() = default;
 void DoorMoveAbility::Enter(std::shared_ptr<BasicEvent> event)
 {
     auto m = std::dynamic_pointer_cast<StartDoorMoveEvent>(event);
-    exitPosition_ = m->exitPosition_;
-    exitPosition_.y -= 15.0f;
     enterPosition_ = m->enterPosition_;
+    exitPosition_ = m->exitPosition_;
     state_ = State::StartMovingToEntrance;
 }
 
@@ -55,7 +54,7 @@ void DoorMoveAbility::Update(float deltaTime)
         state_ = State::MovingToEntrance;
     }
     else if (state_ == State::MovingToEntrance) {
-        bool entranceFinished = body_.position_.y < enterPosition_.y;
+        bool entranceFinished = body_.position_.y < (enterPosition_.y - moveDistance_);
         if (entranceFinished) {
             state_ = State::StartMovingFromExit;
         }
@@ -64,10 +63,11 @@ void DoorMoveAbility::Update(float deltaTime)
         distance_ = 0.0f;
         movementVector_ = CalculateMovementVector(MoveDirection::Down);
         body_.position_ = exitPosition_;
+        body_.position_.y -= moveDistance_;
         state_ = State::MovingFromExit;
     }
     else if (state_ == State::MovingFromExit) {
-        bool exitFinished = distance_ > 15.0f;
+        bool exitFinished = distance_ > moveDistance_;
         if (exitFinished) {
             movementVector_ = {};
             currentVelocity_ = 0.0f;

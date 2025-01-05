@@ -32,7 +32,7 @@ public:
         Done
     };
 
-    DoorMoveAbility(Body &body, float velocity, std::function<void(State currentState, const sf::Vector2f &)> updateFn);
+    DoorMoveAbility(Body &body, std::function<void(State currentState, const sf::Vector2f &)> updateFn);
     virtual ~DoorMoveAbility();
 
     virtual void Enter(std::shared_ptr<BasicEvent> event) override;
@@ -40,6 +40,7 @@ public:
     virtual void Exit() override;
 
 private:
+    static constexpr float moveDistance_{15.0f};
     float velocity_{};
     float currentVelocity_{};
     float distance_{};
