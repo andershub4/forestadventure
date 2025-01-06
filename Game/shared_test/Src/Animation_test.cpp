@@ -73,6 +73,12 @@ TEST_F(AnimationTest, UpdateWithEmptyContentShouldDoNothing)
     animation->Update(0.01f);
 }
 
+TEST_F(AnimationTest, ApplyWithEmptyContentShouldDoNothing)
+{
+    auto animation = CreateAnimationWithEmptyContent(seqMock_);
+    animation->ApplyTo(drawableMock_);
+}
+
 TEST_F(AnimationTest, UpdateAndApplyWithContentShoulSetValue)
 {
     auto animation = CreateAnimation(seqMock_, false);

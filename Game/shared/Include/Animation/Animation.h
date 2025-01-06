@@ -40,8 +40,10 @@ public:
 
     virtual void ApplyTo(DrawableType &drawable) const override
     {
-        auto frame = seq_->GetCurrent();
-        AnimationTraits<FrameT>::Apply(frame, drawable, center_);
+        if (validSeq_) {
+            auto frame = seq_->GetCurrent();
+            AnimationTraits<FrameT>::Apply(frame, drawable, center_);
+        }
     }
 
     virtual void Start() override { seq_->Start(); }
