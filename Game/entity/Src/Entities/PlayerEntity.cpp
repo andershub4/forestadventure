@@ -270,6 +270,31 @@ void PlayerEntity::OnShoot()
     service_->AddToCreationPool(data);
 }
 
+void PlayerEntity::OnCollision(const EntityIf& collisionEntity)
+{
+    if (collisionEntity.IsSolid()) {
+        body_.position_ = body_.prevPosition_;
+    }
+    else if (collisionEntity.Type() == EntityType::Coin) {
+        coins_++;
+    }
+    else if (collisionEntity.Type() == EntityType::Entrance) {
+        FaceDirection dir;
+        propertyStore_.Get("FaceDirection", dir);
+        if (dir == FaceDirection::Back) {
+            const auto& entrance = dynamic_cast<const BasicEntity&>(collisionEntity);
+            int exitObjId = 0;
+            GetProperty(entrance, "ExitId", exitObjId);
+            EntityId exitId = service_->ObjIdToEntityId(exitObjId);
+            const auto& exit = dynamic_cast<const BasicEntity&>(service_->GetEntity(exitId));
+            auto enterPos = GetPosition(entrance);
+            auto exitPos = GetPosition(exit);
+            auto event = std::make_shared<StartDoorMoveEvent>(enterPos, exitPos);
+            ChangeStateTo(StateType::DoorMove, event);
+        }
+    }
+}
+
 void PlayerEntity::OnBeginDie()
 {
     SendMessage(std::make_shared<Shared::GameOverMessage>());
@@ -382,28 +407,8 @@ void PlayerEntity::DefineMoveState(std::shared_ptr<State> state)
     state->RegisterIgnoreEvents({EventType::StartMove, EventType::Attack, EventType::AttackWeapon});
     state->RegisterEventCB(EventType::Collision, [this](std::shared_ptr<BasicEvent> event) {
         auto collisionEvent = std::dynamic_pointer_cast<CollisionEvent>(event);
-        auto& collisionEntity = service_->GetEntity(collisionEvent->id_);
-        if (collisionEntity.IsSolid()) {
-            body_.position_ = body_.prevPosition_;
-        }
-        else if (collisionEntity.Type() == EntityType::Coin) {
-            coins_++;
-        }
-        else if (collisionEntity.Type() == EntityType::Entrance) {
-            FaceDirection dir;
-            propertyStore_.Get("FaceDirection", dir);
-            if (dir == FaceDirection::Back) {
-                auto& entrance = dynamic_cast<BasicEntity&>(collisionEntity);
-                int exitObjId = 0;
-                GetProperty(entrance, "ExitId", exitObjId);
-                EntityId exitId = service_->ObjIdToEntityId(exitObjId);
-                auto& exit = dynamic_cast<BasicEntity&>(service_->GetEntity(exitId));
-                auto enterPos = GetPosition(entrance);
-                auto exitPos = GetPosition(exit);
-                auto event = std::make_shared<StartDoorMoveEvent>(enterPos, exitPos);
-                ChangeStateTo(StateType::DoorMove, event);
-            }
-        }
+        const auto& collisionEntity = service_->GetEntity(collisionEvent->id_);
+        OnCollision(collisionEntity);
     });
 }
 

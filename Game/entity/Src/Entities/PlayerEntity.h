@@ -44,6 +44,7 @@ private:
     void OnBeginMove(MoveDirection moveDirection);
     void OnUpdateMove(const sf::Vector2f& delta);
     void OnShoot();
+    void OnCollision(const EntityIf& collisionEntity);
 
     void DefineIdleState(std::shared_ptr<State> state);
     void DefineMoveState(std::shared_ptr<State> state);
