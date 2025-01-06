@@ -83,13 +83,18 @@ std::shared_ptr<Graphic::SpriteIf> Shape::RegisterSprite()
     return sprite;
 }
 
-std::shared_ptr<Graphic::RectangleShapeIf> Shape::RegisterCollider(ColliderType layer)
+std::shared_ptr<Graphic::RectangleShapeIf> Shape::RegisterCollider(ColliderType type)
 {
     auto rect = std::make_shared<Graphic::RectangleShape>();
     rect->setFillColor(sf::Color::Transparent);
-    rect->setOutlineColor(sf::Color::Red);
+    if (type == ColliderType::Entity) {
+        rect->setOutlineColor(sf::Color::Red);
+    }
+    else {
+        rect->setOutlineColor(sf::Color::Blue);
+    }
     rect->setOutlineThickness(1.0f);
-    colliders_.push_back({rect, layer});
+    colliders_.push_back({rect, type});
 
     return rect;
 }

@@ -45,7 +45,7 @@ public:
     ~Shape();
 
     std::shared_ptr<Graphic::SpriteIf> RegisterSprite();
-    std::shared_ptr<Graphic::RectangleShapeIf> RegisterCollider(ColliderType layer);
+    std::shared_ptr<Graphic::RectangleShapeIf> RegisterCollider(ColliderType type);
     void RegisterImageAnimator(std::shared_ptr<AnimatorIf<Shared::ImageFrame>> animator);
     void RegisterColliderAnimator(std::shared_ptr<AnimatorIf<Shared::ColliderFrame>> animator);
     void Enter();
