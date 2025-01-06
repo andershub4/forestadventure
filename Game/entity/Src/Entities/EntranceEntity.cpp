@@ -44,9 +44,8 @@ void EntranceEntity::ReadProperties(const std::unordered_map<std::string, std::s
 void EntranceEntity::RegisterStates(std::shared_ptr<State> idleState, std::shared_ptr<State> deadState,
                                     const Shared::EntityData& data)
 {
-    // const sf::Vector2i rectSize = static_cast<sf::Vector2i>(data.size_);
-    const sf::Vector2i rectSize = static_cast<sf::Vector2i>(sf::Vector2f(1.0f, 1.0f));
-    const Shared::ColliderData colliderData(rectSize);
+    const sf::Vector2i size{1, 1};
+    const Shared::ColliderData colliderData(size);
     const std::vector<Shared::ColliderData> idleColliders{colliderData};
     auto colliderAnimation = service_->CreateColliderAnimation(idleColliders);
     auto rect = idleState->RegisterCollider(Shape::ColliderType::Wall);
