@@ -9,22 +9,46 @@
 #include "Folder.h"
 #include "Logger.h"
 
+namespace {
+
+FA::Util::LoggerIf& Logger()
+{
+    static FA::Util::Logger logger;
+
+    static bool once = []() {
+        logger.OpenLog(FA::Util::GetLogPath(), "log.txt", true);
+        return true;
+    }();
+
+    return logger;
+}
+
+}  // namespace
+
 namespace FA {
 
 namespace Shared {
 
 // Implementation must be in a cpp file, so it can be substituted during link time
 // for mocking purpose
-Util::LoggerIf& Logger()
+void MakeDebugLogEntry(const std::string& fn, const std::string& str)
 {
-    static Util::Logger logger;
+    Logger().MakeDebugLogEntry(fn, str);
+}
 
-    static bool once = []() {
-        logger.OpenLog(Util::GetLogPath(), "log.txt", true);
-        return true;
-    }();
+void MakeInfoLogEntry(const std::string& fn, const std::string& str)
+{
+    Logger().MakeInfoLogEntry(fn, str);
+}
 
-    return logger;
+void MakeWarnLogEntry(const std::string& fn, const std::string& str)
+{
+    Logger().MakeWarnLogEntry(fn, str);
+}
+
+void MakeErrorLogEntry(const std::string& fn, const std::string& str)
+{
+    Logger().MakeErrorLogEntry(fn, str);
 }
 
 }  // namespace Shared

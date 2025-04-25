@@ -101,9 +101,6 @@
     <ClInclude Include="Include\Mock\BasicLoggerMock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Mock\LoggerMockProxy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\LoggerIf.h">
       <Filter>Header Files</Filter>
     </ClInclude>

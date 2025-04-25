@@ -9,7 +9,6 @@
 #include <gmock/gmock.h>
 
 #include "Mock/BasicLoggerMock.h"
-#include "Mock/LoggerMockProxy.h"
 
 namespace FA {
 
@@ -18,13 +17,12 @@ namespace Shared {
 class LoggerMock : public Util::BasicLoggerMock
 {
 public:
-    LoggerMock() { proxy_ = new Util::LoggerMockProxy(*this); }
-    ~LoggerMock() { delete proxy_; }
-
-    static Util::LoggerIf& Proxy() { return *proxy_; }
+    LoggerMock() { instance_ = this; }
+    ~LoggerMock() { instance_ = nullptr; }
+    static LoggerMock& Instance() { return *instance_; }
 
 private:
-    static Util::LoggerIf* proxy_;
+    static LoggerMock* instance_;
 };
 
 }  // namespace Shared

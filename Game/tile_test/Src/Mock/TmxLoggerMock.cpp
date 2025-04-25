@@ -10,13 +10,26 @@ namespace FA {
 
 namespace Tile {
 
-Util::LoggerIf* LoggerMock::proxy_;
+LoggerMock* LoggerMock::instance_;
 
-// Implementation must be in a cpp file, so it can be substituted during link time
-// for mocking purpose
-Util::LoggerIf& Logger()
+void MakeDebugLogEntry(const std::string& fn, const std::string& str)
 {
-    return LoggerMock::Proxy();
+    // No need to test DebugLogEntry
+}
+
+void MakeInfoLogEntry(const std::string& fn, const std::string& str)
+{
+    LoggerMock::Instance().MakeInfoLogEntry(str);
+}
+
+void MakeWarnLogEntry(const std::string& fn, const std::string& str)
+{
+    LoggerMock::Instance().MakeWarnLogEntry(str);
+}
+
+void MakeErrorLogEntry(const std::string& fn, const std::string& str)
+{
+    LoggerMock::Instance().MakeErrorLogEntry(str);
 }
 
 }  // namespace Tile

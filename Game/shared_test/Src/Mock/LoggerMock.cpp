@@ -4,19 +4,38 @@
  *	See file LICENSE for full license details.
  */
 
+/*
+ *	This file is written as a part of of the shared_test library.
+ *	In order to use link time substitution for mocking purpose,
+ *	this file must be added (using Add->Existing Item...) to your test project
+ */
+
 #include "Mock/LoggerMock.h"
 
 namespace FA {
 
 namespace Shared {
 
-Util::LoggerIf* LoggerMock::proxy_;
+LoggerMock* LoggerMock::instance_;
 
-// Implementation must be in a cpp file, so it can be substituted during link time
-// for mocking purpose
-Util::LoggerIf& Logger()
+void MakeDebugLogEntry(const std::string& fn, const std::string& str)
 {
-    return LoggerMock::Proxy();
+    // No need to test DebugLogEntry
+}
+
+void MakeInfoLogEntry(const std::string& fn, const std::string& str)
+{
+    LoggerMock::Instance().MakeInfoLogEntry(str);
+}
+
+void MakeWarnLogEntry(const std::string& fn, const std::string& str)
+{
+    LoggerMock::Instance().MakeWarnLogEntry(str);
+}
+
+void MakeErrorLogEntry(const std::string& fn, const std::string& str)
+{
+    LoggerMock::Instance().MakeErrorLogEntry(str);
 }
 
 }  // namespace Shared

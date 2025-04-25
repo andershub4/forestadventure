@@ -34,7 +34,8 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="..\shared_test\Src\Mock\LoggerMock.cpp" />
+    <ClCompile Include="Src\EntityDb_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\entity\entity.vcxproj">
@@ -61,6 +62,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)shared_test\Include;$(SolutionDir)graphic\Include;$(SolutionDir)entity\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -92,6 +94,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>$(SolutionDir)util\Include;$(SolutionDir)shared_test\Include;$(SolutionDir)graphic\Include;$(SolutionDir)entity\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

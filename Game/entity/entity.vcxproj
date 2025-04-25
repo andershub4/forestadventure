@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Include\EntityHandler.h" />
     <ClInclude Include="Include\EntityIf.h" />
+    <ClInclude Include="Include\EntityMock.h" />
     <ClInclude Include="Include\Id.h" />
     <ClInclude Include="Include\ObjIdTranslator.h" />
     <ClInclude Include="Src\Abilities\AbilityIf.h" />
@@ -217,6 +218,9 @@
   <ItemGroup>
     <ProjectReference Include="..\graphic\graphic.vcxproj">
       <Project>{1a26709c-735a-4ddd-9b76-ac08544b4b82}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\shared\shared.vcxproj">
+      <Project>{30c8aeea-9f9c-4d4c-9aec-9402e8961540}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
