@@ -47,8 +47,6 @@ EntityId EntityHandler::AddEntity(const Shared::EntityData &data, const Factory 
 
 void EntityHandler::RemoveEntity(EntityId id)
 {
-    auto &entity = entityDb_.GetEntity(id);
-    entity.Destroy();
     allEntities_.erase(id);
     entityDb_.DeleteEntity(id);
 }

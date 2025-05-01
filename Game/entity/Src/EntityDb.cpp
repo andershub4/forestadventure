@@ -33,11 +33,17 @@ void EntityDb::AddEntity(std::unique_ptr<EntityIf> entity)
 
 void EntityDb::DeleteEntity(EntityId id)
 {
+    auto& entity = GetEntity(id);
+    entity.Destroy();
     entityMap_.erase(id);
 }
 
 EntityIf& EntityDb::GetEntity(EntityId id) const
 {
+    if (entityMap_.find(id) == entityMap_.end()) {
+        LOG_ERROR("%s does not exist", DUMP(id));
+    }
+
     return *entityMap_.at(id);
 }
 

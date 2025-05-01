@@ -46,12 +46,46 @@ TEST_F(EntityDbTest, AddEntityShouldSucceed)
 
 TEST_F(EntityDbTest, AddDuplicatedEntityShouldLogError)
 {
-    EXPECT_CALL(entityMock1_, GetId()).WillOnce(Return(1));
+    EntityId id{1};
+    EXPECT_CALL(entityMock1_, GetId()).WillOnce(Return(id));
     EXPECT_CALL(entityMock1_, Destroy());
     db_.AddEntity(std::move(entityMockProxy1_));
-    EXPECT_CALL(entityMock2_, GetId()).WillOnce(Return(1));
+    EXPECT_CALL(entityMock2_, GetId()).WillOnce(Return(id));
     EXPECT_CALL(loggerMock_, MakeErrorLogEntry("{id: 1} already exist"));
     db_.AddEntity(std::move(entityMockProxy2_));
+}
+
+TEST_F(EntityDbTest, GetEntityShouldReturnEntity)
+{
+    EntityId id{1};
+    EXPECT_CALL(entityMock1_, GetId()).WillRepeatedly(Return(id));
+    EXPECT_CALL(entityMock1_, Destroy());
+    db_.AddEntity(std::move(entityMockProxy1_));
+    auto& result = db_.GetEntity(id);
+    EXPECT_EQ(result.GetId(), id);
+}
+
+TEST_F(EntityDbTest, GetEntityShouldThrowWhenIdDoesNotExist)
+{
+    EntityId id{1};
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry("{id: 1} does not exist"));
+    EXPECT_THROW(db_.GetEntity(id), std::out_of_range);
+}
+
+TEST_F(EntityDbTest, DeleteEntityShouldSucceed)
+{
+    EntityId id{1};
+    EXPECT_CALL(entityMock1_, GetId()).WillOnce(Return(id));
+    db_.AddEntity(std::move(entityMockProxy1_));
+    EXPECT_CALL(entityMock1_, Destroy());
+    db_.DeleteEntity(id);
+}
+
+TEST_F(EntityDbTest, DeleteEntityShouldThrowWhenIdDoesNotExist)
+{
+    EntityId id{1};
+    EXPECT_CALL(loggerMock_, MakeErrorLogEntry("{id: 1} does not exist"));
+    EXPECT_THROW(db_.DeleteEntity(id), std::out_of_range);
 }
 
 }  // namespace Entity
