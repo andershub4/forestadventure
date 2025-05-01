@@ -40,6 +40,13 @@ public:
     virtual void HandleCollision(const EntityId id) = 0;
     virtual void HandleOutsideTileMap() = 0;
     virtual EntityId GetId() const = 0;
+
+protected:
+    EntityIf() = default;
+    EntityIf(const EntityIf&) = default;
+    EntityIf(EntityIf&&) = default;
+    EntityIf& operator=(const EntityIf&) = default;
+    EntityIf& operator=(EntityIf&&) = default;
 };
 
 }  // namespace Entity
