@@ -119,6 +119,84 @@ void CollisionHandler::HandleOutsideTileMap()
     entitiesOutsideTileMap_.clear();
 }
 
+CollisionHandler2::CollisionHandler2(const EntityDb &entityDb)
+    : entityDb_(entityDb)
+{}
+
+CollisionHandler2::~CollisionHandler2() = default;
+
+void CollisionHandler2::DetectCollisions(const std::unordered_set<EntityId> &entities,
+                                         const std::unordered_set<EntityId> &staticEntities)
+{
+    for (const auto id : entities) {
+        DetectEntityCollisions(id, entities);
+        DetectStaticCollisions(id, staticEntities);
+    }
+}
+
+void CollisionHandler2::DetectOutsideTileMap(const sf::Vector2u &mapSize, const std::unordered_set<EntityId> &entities)
+{
+    auto rect = sf::FloatRect({0.0f, 0.0f}, static_cast<sf::Vector2f>(mapSize));
+
+    for (const auto id : entities) {
+        const auto &entity = entityDb_.GetEntity(id);
+        bool isOutside = entity.IsOutsideTileMap(rect);
+        if (isOutside) {
+            entitiesOutsideTileMap_.insert(id);
+        }
+    }
+}
+
+void CollisionHandler2::DetectEntityCollisions(EntityId id, const std::unordered_set<EntityId> &entities)
+{
+    for (const auto otherId : entities) {
+        if (id != otherId) {
+            DetectCollision(id, otherId);
+        }
+    }
+}
+
+void CollisionHandler2::DetectStaticCollisions(EntityId id, const std::unordered_set<EntityId> &staticEntities)
+{
+    for (const auto otherId : staticEntities) {
+        DetectCollision(id, otherId);
+    }
+}
+
+void CollisionHandler2::DetectCollision(EntityId id, EntityId otherId)
+{
+    std::pair<EntityId, EntityId> pair{id, otherId};
+    bool found = collisionPairs_.find(pair) != collisionPairs_.end();
+    if (!found) {
+        const auto &entity = entityDb_.GetEntity(id);
+        const auto &otherEntity = entityDb_.GetEntity(otherId);
+        bool intersect = entity.Intersect(otherEntity);
+        if (intersect) {
+            collisionPairs_.insert(pair);
+        }
+    }
+}
+
+void CollisionHandler2::HandleCollisions()
+{
+    for (const auto &pair : collisionPairs_) {
+        auto &first = entityDb_.GetEntity(pair.first);
+        auto &second = entityDb_.GetEntity(pair.second);
+        first.HandleCollision(pair.second);
+        second.HandleCollision(pair.first);
+    }
+    collisionPairs_.clear();
+}
+
+void CollisionHandler2::HandleOutsideTileMap()
+{
+    for (const auto id : entitiesOutsideTileMap_) {
+        auto &entity = entityDb_.GetEntity(id);
+        entity.HandleOutsideTileMap();
+    }
+    entitiesOutsideTileMap_.clear();
+}
+
 }  // namespace Entity
 
 }  // namespace FA

@@ -141,9 +141,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\CollisionHandlerIf.h" />
+    <ClInclude Include="Include\CollisionHandlerMock.h" />
+    <ClInclude Include="Include\EntityDbIf.h" />
+    <ClInclude Include="Include\EntityDbMock.h" />
     <ClInclude Include="Include\EntityHandler.h" />
     <ClInclude Include="Include\EntityIf.h" />
     <ClInclude Include="Include\EntityMock.h" />
+    <ClInclude Include="Include\Grid.h" />
     <ClInclude Include="Include\Id.h" />
     <ClInclude Include="Include\ObjIdTranslator.h" />
     <ClInclude Include="Src\Abilities\AbilityIf.h" />
@@ -209,6 +214,7 @@
     <ClCompile Include="Src\EntityDb.cpp" />
     <ClCompile Include="Src\EntityService.cpp" />
     <ClCompile Include="Src\Factory.cpp" />
+    <ClCompile Include="Src\Grid.cpp" />
     <ClCompile Include="Src\ObjIdTranslator.cpp" />
     <ClCompile Include="Src\PropertyConverter.cpp" />
     <ClCompile Include="Src\Shape.cpp" />

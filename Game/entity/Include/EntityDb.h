@@ -9,6 +9,7 @@
 #include <memory>
 #include <unordered_map>
 
+#include "EntityDbIf.h"
 #include "Id.h"
 
 namespace FA {
@@ -17,14 +18,14 @@ namespace Entity {
 
 class EntityIf;
 
-class EntityDb
+class EntityDb : public EntityDbIf
 {
 public:
     ~EntityDb();
 
-    void AddEntity(std::unique_ptr<EntityIf> entity);
-    void DeleteEntity(EntityId id);
-    EntityIf& GetEntity(EntityId id) const;
+    virtual void AddEntity(std::unique_ptr<EntityIf> entity) override;
+    virtual void DeleteEntity(EntityId id) override;
+    virtual EntityIf& GetEntity(EntityId id) const override;
 
 private:
     std::unordered_map<EntityId, std::unique_ptr<EntityIf>> entityMap_;
